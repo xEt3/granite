@@ -1,0 +1,5 @@
+/*******************************
+     User Global Variables
+*******************************/
+@fontName: 'Oxygen';
+@googleFontRequest: 'Oxygen:400,300,700';
