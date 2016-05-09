@@ -1,0 +1,64 @@
+<h1 class="ui header">
+  Granite Living Style Guide
+  {{#if focus tagName='small'}}
+    {{#link-to 'beyonce' (query-params focus='null') class="text-sm"}}<i class="fa fa-fw fa-eye-slash"></i> Clear Focus{{/link-to}}
+  {{/if}}
+</h1>
+<hr />
+
+{{#sg/sg-section name="Colors" class="row" focus=focus}}
+  <div class="ui grid">
+    {{#each colors as |color|}}
+      {{sg/sg-color color=color}}
+    {{/each}}
+  </div>
+{{/sg/sg-section}}
+
+{{#sg/sg-section name="Typography" focus=focus squeeze=true}}
+  <h4 class="text-right">Family</h4>
+  <h1 class="text-center">Oxygen</h1>
+  <h4 class="text-right">Weights</h4>
+  {{#each typeSizes as |typeSize|}}
+    <h3 class="type-{{typeSize}}">Oxygen {{typeSize}}</h3>
+  {{/each}}
+  <h4 class="text-right">Paragraph</h4>
+  <p>{{ipsum}}</p>
+  <h5 class="text-right">text-muted</h5>
+  <p class="text-muted">{{ipsum}}</p>
+  <h5 class="text-right">text-sm</h5>
+  <p class="text-sm">{{ipsum}}</p>
+{{/sg/sg-section}}
+
+{{#sg/sg-section name="Headings" focus=focus}}
+  <h1 class="ui header">First header</h1>
+  <h2 class="ui header">Second header</h2>
+  <h3 class="ui header">Third header</h3>
+  <h4 class="ui header">Fourth header</h4>
+  <h5 class="ui header">Fifth header</h5>
+{{/sg/sg-section}}
+
+{{#sg/sg-section name="Buttons" class="center aligned" focus=focus}}
+  <a href="#" {{action "toggleProperty" "toggleLoading"}}>Toggle Loading State</a>
+  {{#each btnSizes as |size|}}
+    <div class="ui raised right aligned segment">
+      <h2 class="ui header">ui {{#if size}}{{size}}{{/if}}</h2>
+    </div>
+    {{#each btnColors as |color|}}
+      <button type="button" class="ui button {{if color color}} {{if size size}} {{if toggleLoading 'loading'}}">{{if color color 'default'}}</button>
+    {{/each}}
+
+    <div class="sg__spacer"></div>
+  {{/each}}
+{{/sg/sg-section}}
+{{#sg/sg-section name="Inverted Loading Buttons" focus=focus}}
+  {{#each btnSizes as |size|}}
+    <div class="ui raised right aligned segment">
+      <h2 class="ui header">ui {{#if size}}{{size}}{{/if}}</h2>
+    </div>
+    {{#each btnColors as |color|}}
+      <button class="facebook inverted ui button {{if color color}} {{if size size}}">{{if color color 'default'}}</button>
+    {{/each}}
+
+    <div class="sg__spacer"></div>
+  {{/each}}
+{{/sg/sg-section}}

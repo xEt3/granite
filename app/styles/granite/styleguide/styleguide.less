@@ -1,0 +1,82 @@
+/*
+  Style Guide Styles
+*/
+
+pre.hljs,
+code.hljs {
+  margin-top: 10px;
+  font-size: 75%;
+  border-radius: 5px;
+}
+
+.sg__section {
+  border-bottom: 1px solid @gray-lighter;
+  margin: 40px auto !important;
+  width: 75%;
+
+  .sg__section-title {
+    .clearfix;
+    color: @gray-light;
+    padding-bottom: 5px;
+    margin: 0 auto 20px auto;
+    border-bottom: 1px dotted @gray-lighter;
+  }
+
+  .sg__section-content.sg__squeeze-content {
+    width: 55%;
+    margin: 0 auto;
+
+    @media screen and (max-width: 800px) {
+      width: 95%;
+    }
+  }
+
+  .sg__color {
+    height: 100px;
+    color: white;
+    text-align: center;
+    padding-top: 30px !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 1px fade(@black, 80%);
+    font-size: 0.8em;
+
+    .make-sg-palette(black, @black);
+    .make-sg-palette(red, @red);
+    .make-sg-palette(orange, @orange);
+    .make-sg-palette(yellow, @yellow);
+    .make-sg-palette(olive, @olive);
+    .make-sg-palette(green, @green);
+    .make-sg-palette(teal, @teal);
+    .make-sg-palette(blue, @blue);
+    .make-sg-palette(violet, @violet);
+    .make-sg-palette(purple, @purple);
+    .make-sg-palette(pink, @pink);
+    .make-sg-palette(brown, @brown);
+    .make-sg-palette(grey, @grey);
+    .make-sg-palette(black, @black);
+    .make-sg-palette(primaryColor, @primaryColor);
+    .make-sg-palette(secondaryColor, @secondaryColor);
+    .make-sg-palette(~"gray-lighter", @gray-lighter);
+    .make-sg-palette(~"gray-light", @gray-light);
+    .make-sg-palette(gray, @gray);
+    .make-sg-palette(~"gray-dark", @gray-dark);
+    .make-sg-palette(~"gray-darker", @gray-darker);
+  }
+}
+
+.sg__spacer {
+  margin-bottom: 5px;
+}
+
+.make-sg-palette(@type; @color) {
+  &.sg__color-@{type} {
+    background-color: @color;
+    &:after {
+      content: "@{color}";
+      display: block;
+      text-align: center;
+      color: white;
+    }
+  }
+}

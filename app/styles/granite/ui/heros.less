@@ -1,0 +1,24 @@
+.ui.hero {
+  background-position: center;
+  background-repeat: no-repeat;
+
+  &.cover {
+    background-size: cover;
+    min-height: 90vh;
+  }
+
+  .makeHeroImage(~'granite-cover');
+
+  .hero__title {
+    text-align: center;
+    font-size: 4em;
+    color: white;
+    text-shadow: 1px 1px 2px fade(@black, 80%);
+  }
+}
+
+.makeHeroImage(@img) {
+  &.hero__@{img} {
+    background-image: url('images/@{img}.jpg');
+  }
+}
