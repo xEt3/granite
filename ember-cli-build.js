@@ -5,7 +5,8 @@ module.exports = function(defaults) {
     lessOptions: {
       paths: [
         'bower_components/semantic-ui'
-      ]
+      ],
+      plugins: [ require('less-plugin-glob') ]
     },
 
     SemanticUI: {
