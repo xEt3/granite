@@ -7,6 +7,10 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('vogue');
+  this.route('signup', function() {
+    this.route('billing');
+    this.route('information');
+  });
 });
 
 export default Router;
