@@ -8,18 +8,18 @@
 
 /* Colors */
 @black: #2D2D2F;
-@red            : #FF0000;
+@red            : @granite-red;
 @orange         : #FF5200;
 @yellow         : #FFD700;
 @olive          : #719F08;
-@green          : #016936;
+@green          : @granite-green;
 @teal           : #008080;
-@blue           : #005075;
+@blue           : @granite-blue;
 @violet         : #EE82EE;
 @purple         : #B413EC;
 @pink           : #FF1493;
 @brown          : #B28576;
-@grey           : #A0A0A0;
+@grey           : @granite-grey;
 @black          : #000000;
 @primaryColor   : @pink;
 @secondaryColor : @grey;
@@ -29,3 +29,5 @@
 @gray:                   lighten(#000, 33.5%); // #555
 @gray-light:             lighten(#000, 60%);   // #999
 @gray-lighter:           lighten(#000, 93.5%); // #eee
+
+@fontPath  : 'themes/default/assets/fonts';
