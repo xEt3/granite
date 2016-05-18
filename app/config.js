@@ -60,6 +60,11 @@ const states = [
   'Wyoming'
 ];
 
+const notifyDefaults = {
+  autoClear: true
+};
+
 export {
-  states
+  states,
+  notifyDefaults
 };

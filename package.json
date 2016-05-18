@@ -33,7 +33,7 @@
     "ember-cli-jshint": "^1.0.0",
     "ember-cli-less": "1.5.3",
     "ember-cli-maskedinput": "0.1.0",
-    "ember-cli-notifications": "3.3.1",
+    "ember-cli-notifications": "git+https://github.com/James1x0/ember-cli-notifications.git#5c07ff0c7413936a1cca916885de68bb3cfe671f",
     "ember-cli-qunit": "^1.4.0",
     "ember-cli-release": "0.2.8",
     "ember-cli-sri": "^2.1.0",

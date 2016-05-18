@@ -1,9 +1,7 @@
 .ui.hero {
   padding: 30px;
-  background-color: @granite-grey;
   background-position: center;
   background-repeat: no-repeat;
-  background-blend-mode: multiply;
 
   &.cover {
     background-size: cover;
@@ -11,6 +9,12 @@
   }
 
   .makeHeroImage(~'granite-cover');
+  .makeHeroImage(~'lift-cover');
+
+  &.grey.overlay {
+    background-color: @granite-grey;
+    background-blend-mode: multiply;
+  }
 
   .hero__title {
     text-align: center;
