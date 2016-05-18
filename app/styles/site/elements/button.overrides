@@ -4,4 +4,6 @@
 
 .ui.button {
   margin-bottom: 6px;
+  text-transform: uppercase;
+  transition: all 0.35s ease-in-out;
 }
