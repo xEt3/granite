@@ -40,11 +40,12 @@
         <label>Company Contact Phone Number</label>
           <div class="two fields">
             <div class="twelve wide field">
-              {{!-- TO-DO: make it required(validated) --}}
-              {{phone-number value=model.contactPhone placeholder="Phone Number"}}
+              {{#validated-input model=model valuePath="contactPhone"}}
+                {{masked-input placeholder="Phone Number" mask="(111) 111-1111" on-change=(action (mut model.contactPhone) value="target.value") name="phone-number"}}
+              {{/validated-input}}
             </div>
             <div class="four wide field">
-              {{input type="text" value=model.contactExtension placeholder="Extension"}}
+              {{input type="text" name="phone-extension" value=model.contactExtension placeholder="Extension"}}
             </div>
           </div>
       </div>
@@ -67,18 +68,19 @@
           {{validated-input type="text" model=model valuePath="addressCity" placeholder="City" id="city"}}
         </div>
         <div class="field">
-          {{!-- TO-DO: validate or require state--}}
-          {{#ui-dropdown class="selection" onChange=(action "updateSelected")}}
-            <div class="default text">Select a State</div>
-            <i class="dropdown icon"></i>
-            <div class="menu">
-              {{#each stateOptions as |state|}}
-                <div class="item" data-id="{{state}}" value=model.addressState>
-                  {{state}}
-                </div>
-              {{/each}}
-            </div>
-          {{/ui-dropdown}}
+          {{#validated-input model=model valuePath="addressState"}}
+            {{#ui-dropdown class="selection" name="address-state" onChange=(action (mut-select model 'addressState'))}}
+              <div class="default text">Select a State</div>
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                {{#each stateOptions as |state|}}
+                  <div class="item" data-id="{{state}}" value=model.addressState>
+                    {{state}}
+                  </div>
+                {{/each}}
+              </div>
+            {{/ui-dropdown}}
+          {{/validated-input}}
         </div>
         <div class="field">
           <label for="zipcode"></label>
