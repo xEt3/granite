@@ -1,7 +1,7 @@
 {
   "name": "granite",
   "version": "0.0.0",
-  "description": "Small description for granite goes here",
+  "description": "A solid solution for human resources",
   "private": true,
   "directories": {
     "doc": "doc",
@@ -12,11 +12,11 @@
     "start": "ember server",
     "test": "ember test"
   },
-  "repository": "",
+  "repository": "https://github.com/associatedemployers/granite",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Associated Employers",
   "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^6.0.4",
@@ -32,11 +32,17 @@
     "ember-cli-inject-live-reload": "^1.4.0",
     "ember-cli-jshint": "^1.0.0",
     "ember-cli-less": "1.5.3",
+    "ember-cli-masked-inputs": "^0.2.0",
+    "ember-cli-notifications": "3.3.1",
     "ember-cli-qunit": "^1.4.0",
     "ember-cli-release": "0.2.8",
+    "ember-cli-simple-validation": "^1.1.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^1.2.0",
+    "ember-cp-validations": "2.8.0",
     "ember-data": "^2.5.0",
+    "ember-easy-form": "1.0.0-rc.1",
+    "ember-easy-form-extensions": "2.0.0",
     "ember-export-application-global": "^1.0.5",
     "ember-load-initializers": "^0.5.1",
     "ember-resolver": "^2.0.3",
