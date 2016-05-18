@@ -1,14 +1,19 @@
 <div class="form-group">
-  {{input type=type value=value placeholder=placeholder class="form-control" name=valuePath}}
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{input type=type value=value placeholder=placeholder class="form-control" name=valuePath}}
+  {{/if}}
+
   {{#if isValid}}
-    <span class="valid-input fa fa-check"></span>
+    <i class="check icon"></i>
   {{/if}}
 
   <div class="input-error">
-      {{#if showMessage}}
-          <div class="error">
-              {{v-get model valuePath 'message'}}
-          </div>
-      {{/if}}
+    {{#if showMessage}}
+      <div class="error">
+        {{v-get model valuePath 'message'}}
+      </div>
+    {{/if}}
   </div>
 </div>

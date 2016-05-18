@@ -1,18 +1,14 @@
 import Ember from 'ember';
+import addEdit from 'granite/mixins/add-edit';
 import { states as stateOptions } from 'granite/config';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(addEdit, {
   stateOptions,
   selectedState: null,
   useMiddleName: false,
 
   actions: {
-
-    updateSelected: function(component, id, value) {
-      this.set('selectedState', id);
-    },
-
-    saveCompany: function() {
+    saveCompany () {
       var company = this.get('model');
       company.save().then(() => {
         this.transitionToRoute('signup.billing');

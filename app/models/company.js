@@ -10,6 +10,10 @@ const Validations = buildValidations({
     })
   ],
 
+  contactPhone: [
+    validator('presence', true)
+  ],
+
   contactFirstName: [
     validator('presence', true)
   ],
@@ -38,6 +42,10 @@ const Validations = buildValidations({
     validator('length', {
       min: 2
     })
+  ],
+
+  addressState: [
+    validator('presence', true)
   ],
 
   addressZipCode: [

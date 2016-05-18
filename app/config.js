@@ -60,6 +60,6 @@ const states = [
   'Wyoming'
 ];
 
-export default {
+export {
   states
 };
