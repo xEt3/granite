@@ -43,6 +43,5 @@
     "less-plugin-glob": "^1.1.1",
     "loader.js": "^4.0.1",
     "semantic-ui-ember": "0.9.3"
-  },
-  "dependencies": {}
+  }
 }

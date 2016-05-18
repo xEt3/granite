@@ -1,3 +1,23 @@
 <div class="header item nav__main-logo">
-  Granite HR
+  {{#link-to 'index'}}Granite HR{{/link-to}}
 </div>
+
+{{#if topLevel}}
+  <div class="right menu">
+    <div class="item">
+      {{#link-to 'about'}}About{{/link-to}}
+    </div>
+    <div class="item">
+      {{#link-to 'pricing'}}Pricing{{/link-to}}
+    </div>
+    <div class="item">
+      {{#link-to 'features'}}Features{{/link-to}}
+    </div>
+    <div class="item">
+      {{#link-to 'contact'}}Contact{{/link-to}}
+    </div>
+    <div class="item">
+      {{#link-to 'signup' class="ui green button"}}Sign Up{{/link-to}}
+    </div>
+  </div>
+{{/if}}

@@ -1,8 +1,52 @@
 .ui.nav__main {
-  font-size: 1.3em;
-  border-bottom: 2px solid @teal;
+  // border-bottom: 2px solid @teal;
 
   .nav__main-logo {
+    font-size: 1.3em;
     color: @black;
+
+    &:before {
+      display: none;
+    }
+  }
+
+  &.nav__main-transparent {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: none !important;
+    border: none;
+    box-shadow: none;
+    color: white !important;
+    z-index: 1000;
+
+    .nav__main-logo a {
+      color: white;
+
+      transition: all 0.4s ease-in-out;
+      text-shadow: 3px 2px 5px fade(black, 40%);
+
+      &:hover {
+        text-shadow: 1px 2px 1px fade(black, 80%);
+        color: @granite-blue !important;
+      }
+    }
+
+    .menu .item a {
+      text-transform: uppercase;
+      font-weight: 900;
+      color: @granite-offwhite !important;
+
+      &:not(.button) {
+        transition: all 0.4s ease-in-out;
+        text-shadow: 3px 2px 5px fade(black, 40%);
+
+        &:hover {
+          text-shadow: 1px 2px 1px fade(black, 80%);
+          color: @granite-blue !important;
+        }
+      }
+    }
   }
 }

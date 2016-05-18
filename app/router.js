@@ -11,6 +11,10 @@ Router.map(function() {
     this.route('billing');
     this.route('information');
   });
+  this.route('pricing');
+  this.route('features');
+  this.route('about');
+  this.route('contact');
 });
 
 export default Router;
