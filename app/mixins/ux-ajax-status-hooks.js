@@ -1,13 +1,8 @@
 import Ember from 'ember';
 
-var notificationOptions = {
-  positionClass: 'toast-bottom-center'
-};
-
 export default Ember.Mixin.create({
   successMessageTimeout: 3,
-  enableNotify: false,
-  notify: Ember.inject.service(),
+  enableNotify: true,
 
   ajaxError ( err, user ) {
     let errMsg = err && err.responseText ? err.responseText : err;
@@ -26,7 +21,7 @@ export default Ember.Mixin.create({
     });
 
     if ( this.get('enableNotify') ) {
-      this.get('notify').error(errMsg, user ? 'Whoops!' : 'Error Saving!', notificationOptions);
+      this.send('notify', 'error', 'Whoops! ' + errMsg);
     }
   },
 
@@ -44,7 +39,7 @@ export default Ember.Mixin.create({
     }, this.get('successMessageTimeout') * 1000);
 
     if ( this.get('enableNotify') ) {
-      this.get('notify').success(success || 'Successfully saved.', 'Saved!', notificationOptions);
+      this.send('notify', 'success', success || 'Successfully saved.');
     }
   },
 
