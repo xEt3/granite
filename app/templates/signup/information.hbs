@@ -1,86 +1,83 @@
 <div class="ui hero cover hero__lift-cover">
-  <div class="ui raised segment container grid">
-    <div class="four wide column"></div>
-    <div class="eight wide column grid-style">
-      <h1 class="centered">Tell us about yourself</h1>
-      <form class="ui form">
-        <div class="field">
-          <label for="company-name">Company Name</label>
-          {{validated-input type="text" model=model valuePath="name" placeholder="Company Name" id="company-name"}}
-        </div>
-        <div class="field">
-          <label>Company Contact</label>
-          <div class="three fields">
-            <div class="field">
-              <label for="first-name"></label>
-              {{validated-input type="text" model=model valuePath="contactFirstName" placeholder="First Name" id="first-name"}}
-            </div>
-            <div class="field">
-              <label for="middle-name"></label>
-              {{input type="text" value=model.contactMiddleName placeholder="Middle(Optional)" id="middle-name"}}
-            </div>
-            <div class="field">
-              <label for="last-name"></label>
-              {{validated-input type="text" model=model valuePath="contactLastName" placeholder="Last Name" id="last-name"}}
-            </div>
-          </div>
-          <div class="field">
-            <label for="company-email"></label>
-             {{validated-input type="text" model=model valuePath="email" placeholder="Email Address" id="company-email"}}
-          </div>
-          <label>Company Contact Phone Number</label>
-            <div class="two fields">
-              <div class="twelve wide field">
-                {{#validated-input model=model valuePath="contactPhone"}}
-                  {{masked-input placeholder="Phone Number" mask="(111) 111-1111" on-change=(action (mut model.contactPhone) value="target.value") name="phone-number"}}
-                {{/validated-input}}
-              </div>
-              <div class="four wide field">
-                {{input type="text" name="phone-extension" value=model.contactExtension placeholder="Extension"}}
-              </div>
-            </div>
-        </div>
-        <div class="field">
-          <label>Company Address</label>
-          <div class="fields">
-            <div class="twelve wide field">
-              <label for="street-address"></label>
-              {{validated-input type="text" model=model valuePath="addressLine1" placeholder="Street Address" id="street-address"}}
-            </div>
-            <div class="four wide field">
-              <label for="suite-number"></label>
-              {{validated-input type="text" model=model valuePath="addressLine2" placeholder="Suite #" id="suite-number"}}
-            </div>
-          </div>
-        </div>
+  <div class="ui raised opaque segment container">
+    <h1 class="centered">Tell us about yourself</h1>
+    <form class="ui form">
+      <div class="field">
+        <label for="company-name">Company Name</label>
+        {{validated-input type="text" model=model valuePath="name" placeholder="Company Name" id="company-name"}}
+      </div>
+      <div class="field">
+        <label>Company Contact</label>
         <div class="three fields">
           <div class="field">
-            <label for="city"></label>
-            {{validated-input type="text" model=model valuePath="addressCity" placeholder="City" id="city"}}
+            <label for="first-name"></label>
+            {{validated-input type="text" model=model valuePath="contactFirstName" placeholder="First Name" id="first-name"}}
           </div>
           <div class="field">
-            {{#validated-input model=model valuePath="addressState"}}
-              {{#ui-dropdown class="selection" name="address-state" onChange=(action (mut-select model 'addressState'))}}
-                <div class="default text">Select a State</div>
-                <i class="dropdown icon"></i>
-                <div class="menu">
-                  {{#each stateOptions as |state|}}
-                    <div class="item" data-id="{{state}}" value=model.addressState>
-                      {{state}}
-                    </div>
-                  {{/each}}
-                </div>
-              {{/ui-dropdown}}
-            {{/validated-input}}
+            <label for="middle-name"></label>
+            {{input type="text" value=model.contactMiddleName placeholder="Middle(Optional)" id="middle-name"}}
           </div>
           <div class="field">
-            <label for="zipcode"></label>
-            {{validated-input type="text" model=model valuePath="addressZipCode" placeholder="Zip Code" id="zipcode"}}
+            <label for="last-name"></label>
+            {{validated-input type="text" model=model valuePath="contactLastName" placeholder="Last Name" id="last-name"}}
           </div>
         </div>
-        <div class="ui divider"></div>
-        <button class="ui button" type="submit" model=model {{action 'test'}}>Submit</button>
-      </form>
-    </div>
+        <div class="field">
+          <label for="company-email"></label>
+           {{validated-input type="text" model=model valuePath="email" placeholder="Email Address" id="company-email"}}
+        </div>
+        <label>Company Contact Phone Number</label>
+          <div class="two fields">
+            <div class="twelve wide field">
+              {{#validated-input model=model valuePath="contactPhone"}}
+                {{masked-input placeholder="Phone Number" mask="(111) 111-1111" on-change=(action (mut model.contactPhone) value="target.value") name="phone-number"}}
+              {{/validated-input}}
+            </div>
+            <div class="four wide field">
+              {{input type="text" name="phone-extension" value=model.contactExtension placeholder="Extension"}}
+            </div>
+          </div>
+      </div>
+      <div class="field">
+        <label>Company Address</label>
+        <div class="fields">
+          <div class="twelve wide field">
+            <label for="street-address"></label>
+            {{validated-input type="text" model=model valuePath="addressLine1" placeholder="Street Address" id="street-address"}}
+          </div>
+          <div class="four wide field">
+            <label for="suite-number"></label>
+            {{validated-input type="text" model=model valuePath="addressLine2" placeholder="Suite #" id="suite-number"}}
+          </div>
+        </div>
+      </div>
+      <div class="three fields">
+        <div class="field">
+          <label for="city"></label>
+          {{validated-input type="text" model=model valuePath="addressCity" placeholder="City" id="city"}}
+        </div>
+        <div class="field">
+          {{#validated-input model=model valuePath="addressState"}}
+            {{#ui-dropdown class="selection" name="address-state" onChange=(action (mut-select model 'addressState'))}}
+              <div class="default text">Select a State</div>
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                {{#each stateOptions as |state|}}
+                  <div class="item" data-id="{{state}}" value=model.addressState>
+                    {{state}}
+                  </div>
+                {{/each}}
+              </div>
+            {{/ui-dropdown}}
+          {{/validated-input}}
+        </div>
+        <div class="field">
+          <label for="zipcode"></label>
+          {{validated-input type="text" model=model valuePath="addressZipCode" placeholder="Zip Code" id="zipcode"}}
+        </div>
+      </div>
+      <div class="ui divider"></div>
+      <button class="ui button" type="submit" model=model {{action 'test'}}>Submit</button>
+    </form>
   </div>
 </div>
