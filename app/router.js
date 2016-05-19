@@ -15,6 +15,10 @@ Router.map(function() {
   this.route('features');
   this.route('about');
   this.route('contact');
+  this.route('setup', function() {
+    this.route('email-sent');
+    this.route('set-password');
+  });
 });
 
 export default Router;
