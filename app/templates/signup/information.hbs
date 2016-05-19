@@ -1,111 +1,83 @@
-<div class="ui aligned grid">
-  <div class="four wide column"></div>
-  <div class=" eight wide column grid-style">
+<div class="ui hero cover hero__lift-cover">
+  <div class="ui raised opaque segment container">
     <h1 class="centered">Tell us about yourself</h1>
-    <hr />
     <form class="ui form">
       <div class="field">
-        <label>Company Name</label>
-        <input type="text" name="company[name]" placeholder="Company Name">
+        <label for="company-name">Company Name</label>
+        {{validated-input type="text" model=model valuePath="name" placeholder="Company Name" id="company-name"}}
       </div>
       <div class="field">
         <label>Company Contact</label>
         <div class="three fields">
           <div class="field">
-            <input type="text" name="company[contact[first-name]]" placeholder="First Name">
+            <label for="first-name"></label>
+            {{validated-input type="text" model=model valuePath="contactFirstName" placeholder="First Name" id="first-name"}}
           </div>
           <div class="field">
-            <input type="text" name="company[contact[middle-name]]" placeholder="Middle(Optional)">
+            <label for="middle-name"></label>
+            {{input type="text" value=model.contactMiddleName placeholder="Middle(Optional)" id="middle-name"}}
           </div>
           <div class="field">
-            <input type="text" name="company[contact[last-name]]" placeholder="Last Name">
-          </div>
-        </div>
-        <div class="inline fields">
-          <div class="field">
-            {{ui-checkbox}}
-          </div>
-          <div class="field">
-            <label>I prefer to go by my middle name</label>
+            <label for="last-name"></label>
+            {{validated-input type="text" model=model valuePath="contactLastName" placeholder="Last Name" id="last-name"}}
           </div>
         </div>
         <div class="field">
-          <input type="email" name="company[contact[email]]" placeholder="Company Contact Email">
+          <label for="company-email"></label>
+           {{validated-input type="text" model=model valuePath="email" placeholder="Email Address" id="company-email"}}
         </div>
-        <hr />
         <label>Company Contact Phone Number</label>
-        <div class="inline fields">
-          <div class="five wide field">
-            <input type="text" placeholder="(xxx)">
+          <div class="two fields">
+            <div class="twelve wide field">
+              {{#validated-input model=model valuePath="contactPhone"}}
+                {{masked-input placeholder="Phone Number" mask="(111) 111-1111" on-change=(action (mut model.contactPhone) value="target.value") name="phone-number"}}
+              {{/validated-input}}
+            </div>
+            <div class="four wide field">
+              {{input type="text" name="phone-extension" value=model.contactExtension placeholder="Extension"}}
+            </div>
           </div>
-          <div class="four wide field">
-            <input type="text" placeholder="xxx">
-          </div>
-          <div class="five wide field">
-            <input type="text" placeholder="xxxx">
-          </div>
-          <div class="two wide field">
-            <input type="text" placeholder="ext">
-          </div>
-        </div>
       </div>
       <div class="field">
         <label>Company Address</label>
         <div class="fields">
           <div class="twelve wide field">
-            <input type="text" name="company[address-1]" placeholder="Street Address">
+            <label for="street-address"></label>
+            {{validated-input type="text" model=model valuePath="addressLine1" placeholder="Street Address" id="street-address"}}
           </div>
           <div class="four wide field">
-            <input type="text" name="company[address-2]" placeholder="Suite #">
+            <label for="suite-number"></label>
+            {{validated-input type="text" model=model valuePath="addressLine2" placeholder="Suite #" id="suite-number"}}
           </div>
         </div>
       </div>
       <div class="three fields">
         <div class="field">
-          <input type="text" name="company[city]" placeholder="City">
+          <label for="city"></label>
+          {{validated-input type="text" model=model valuePath="addressCity" placeholder="City" id="city"}}
         </div>
         <div class="field">
-          {{#ui-dropdown class="selection" onChange=(action 'updateSelected')}}
-            <div class="default text">Select a State</div>
-            <i class="dropdown icon"></i>
-            <div class="menu">
-              {{#each stateOptions as |state|}}
-                <div class="item" data-id="{{state}}">
-                  {{state}}
-                </div>
-              {{/each}}
-            </div>
-          {{/ui-dropdown}}
+          {{#validated-input model=model valuePath="addressState"}}
+            {{#ui-dropdown class="selection" name="address-state" onChange=(action (mut-select model 'addressState'))}}
+              <div class="default text">Select a State</div>
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                {{#each stateOptions as |state|}}
+                  <div class="item" data-id="{{state}}" value=model.addressState>
+                    {{state}}
+                  </div>
+                {{/each}}
+              </div>
+            {{/ui-dropdown}}
+          {{/validated-input}}
         </div>
         <div class="field">
-          <input type="text" name="company[zip]" placeholder="Zip Code">
+          <label for="zipcode"></label>
+          {{validated-input type="text" model=model valuePath="addressZipCode" placeholder="Zip Code" id="zipcode"}}
         </div>
       </div>
-      <hr />
-      <div class="field">
-        {{ui-checkbox checked=agreeTerms}}
-        <label>I agree to the Terms and Conditions</label>
-      </div>
-      <button class="ui button" type="submit">Submit</button>
-      <div class="field">
-        {{#ui-shape}}
-          <div class="sides">
-            <img class="active side"src="http://fillmurray.com/200/200" alt="Bill">
-            <img class="side" src="http://www.placecage.com/200/200" alt="Nick">
-            <img class="side" src="http://stevensegallery.com/200/200" alt="Steven">
-            <img class="side" src="http://placekitten.com/200/200" alt="Kitty">
-          </div>
-        {{/ui-shape}}
-        <div class="ui buttons">
-          <button class="ui red button"{{action 'flip' 'over'}}>Flip over</button>
-          <div class="or"></div>
-          <button class="ui teal button"{{action 'flip' 'back'}}>Flip back</button>
-          <div class="or"></div>
-          <button class="ui yellow button"{{action 'flip' 'down'}}>Flip up</button>
-          <div class="or"></div>
-          <button class="ui orange button"{{action 'flip' 'up'}}>Flip down</button>
-        </div>
-      </div>
+      <div class="ui divider"></div>
+      <button class="ui button" type="submit" model=model {{action 'test'}}>Submit</button>
     </form>
   </div>
 </div>

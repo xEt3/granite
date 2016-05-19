@@ -2,6 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model () {
-    return Ember.$.get('api/bt/token');
+    return Ember.$.get('/bt/token');
   }
 });
