@@ -13,7 +13,9 @@ Router.map(function() {
   });
   this.route('pricing');
   this.route('features');
-  this.route('about');
+  this.route('about', function() {
+    this.route('pricing');
+  });
   this.route('contact');
   this.route('setup', function() {
     this.route('email-sent');
