@@ -9,7 +9,7 @@ Router.map(function() {
   this.route('vogue');
   this.route('signup', function() {
     this.route('billing');
-    this.route('information');
+    this.route('finish');
   });
   this.route('pricing');
   this.route('features');

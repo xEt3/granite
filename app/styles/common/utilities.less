@@ -8,3 +8,28 @@
     clear: both;
   }
 }
+
+.three-point-gradient(@1, @2, @3) {
+  @gradient:
+    linear-gradient(@1, transparent),
+    linear-gradient(90deg, @2, transparent),
+    linear-gradient(-90deg, @3, transparent);
+}
+
+.placeholder(@color) {
+  &::-webkit-input-placeholder {
+    color: @color;
+  }
+
+  &:-moz-placeholder { /* Firefox 18- */
+    color: @color;
+  }
+
+  &::-moz-placeholder {  /* Firefox 19+ */
+    color: @color;
+  }
+
+  &:-ms-input-placeholder {
+    color: @color;
+  }
+}

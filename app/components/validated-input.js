@@ -3,8 +3,8 @@ import Ember from 'ember';
 const { computed, defineProperty } = Ember;
 
 export default Ember.Component.extend({
-  classNames: ['validated-input'],
-  classNameBindings: ['showErrorClass:has-error', 'isValid:has-success'],
+  classNames: [ 'validated-input' ],
+  classNameBindings: [ 'showErrorClass:has-error', 'isValid:has-success' ],
   model: null,
   value: null,
   type: 'text',
@@ -25,7 +25,7 @@ export default Ember.Component.extend({
   hasContent: computed.notEmpty('value'),
   isValid: computed.and('hasContent', 'validation.isValid', 'notValidating'),
   isInvalid: computed.oneWay('validation.isInvalid'),
-  showErrorClass: computed.and('notValidating', 'showMessage', 'hasContent', 'validation'),
+  showErrorClass: computed.and('notValidating', 'showMessage', 'validation'),
   showMessage: computed('validation.isDirty', 'isInvalid', 'didValidate', function() {
     return (this.get('validation.isDirty') || this.get('didValidate')) && this.get('isInvalid');
   })

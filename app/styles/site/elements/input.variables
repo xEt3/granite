@@ -1,3 +1,6 @@
 /*******************************
     User Variable Overrides
 *******************************/
+
+@placeholderColor: white;
+@placeholderFocusColor: lighten(@granite-grey, 30%);
