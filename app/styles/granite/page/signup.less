@@ -1,0 +1,56 @@
+.ui.signup.steps {
+  border: none !important;
+  float: right;
+  margin-top: 50px;
+
+  .step, .step.active, .step.completed {
+    background: none !important;
+    border: none !important;
+    text-align: right;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    transition: all 0.35s ease-in-out;
+
+    &:after {
+      display: none !important;
+      // border-left-color: transparent !important;
+    }
+
+    &.active {
+      a {
+        transition: all 0.35s ease-in-out;
+        color: darken(@granite-blue, 20%);
+
+        .description, .title, .icon {
+          color: darken(@granite-blue, 20%) !important;
+        }
+
+        &:hover {
+          color: @granite-blue !important;
+
+          .description, .title, .icon {
+            color: @granite-blue !important;
+          }
+        }
+      }
+    }
+
+    a {
+      display: block;
+      color: white !important;
+      width: 100%;
+
+      .description, .title, .icon {
+        color: white !important;
+      }
+
+      &:hover {
+        color: @granite-offwhite !important;
+
+        .description, .title, .icon {
+          color: @granite-offwhite !important;
+        }
+      }
+    }
+  }
+}
