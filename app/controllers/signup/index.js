@@ -8,9 +8,6 @@ export default Ember.Controller.extend(addEdit, {
   useMiddleName: false,
 
   actions: {
-    test () {
-      this.send('notify', 'success', 'some test');
-    },
     saveCompany () {
       var company = this.get('model');
       company.save().then(() => {
