@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "ember build",
-    "start": "ember server",
+    "start": "ember server --proxy http://localhost:4000",
     "test": "ember test"
   },
   "repository": "https://github.com/associatedemployers/granite",
