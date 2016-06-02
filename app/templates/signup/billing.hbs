@@ -2,7 +2,7 @@
   <h1 class="ui header centered"><i class="lock icon"></i>Payment Information</h1>
 
   <div class="ui divider"></div>
-  {{braintree-dropin class="ui raised segment" token=model.token action=(action 'submit')}}
+  {{braintree-dropin class="ui raised segment" token=braintreeToken.token action=(action 'submit')}}
   <p class="right aligned very small text"><i class="lock icon"></i>Powered by Braintree Payments</p>
 
   <h4 class="ui horizontal divider header">Note</h4>
