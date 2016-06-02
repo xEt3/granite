@@ -1,4 +1,4 @@
-<form class="ui form">
+<form class="ui form" {{action "saveCompany" on="submit"}}>
   <h1 class="ui header centered">Company Information</h1>
   <div class="ui divider"></div>
 
@@ -75,5 +75,5 @@
     </div>
   </div>
   <div class="ui divider"></div>
-  <button type="submit" class="ui massive fluid green button" {{action 'test'}}>Next: Billing</button>
+  {{#form/action-button type="submit" class="ui massive fluid green button" loading=working}}Next: Billing{{/form/action-button}}
 </form>

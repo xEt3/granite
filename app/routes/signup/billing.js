@@ -1,7 +1,19 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
+const { Route, $, RSVP } = Ember;
+
+export default Route.extend({
   model () {
-    return Ember.$.get('/api/v1/bt/token');
+    return RSVP.hash({
+      token: $.get('/api/v1/bt/token'),
+      company: this.modelFor('signup.index')
+    });
+  },
+
+  setupController (controller, model) {
+    controller.setProperties({
+      model: model.company,
+      braintreeToken: model.token
+    });
   }
 });

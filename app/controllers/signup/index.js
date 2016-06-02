@@ -9,10 +9,16 @@ export default Ember.Controller.extend(addEdit, {
 
   actions: {
     saveCompany () {
-      var company = this.get('model');
-      company.save().then(() => {
+      let company = this.get('model');
+
+      this.ajaxStart();
+
+      company.save()
+      .then(() => {
+        this.ajaxSuccess();
         this.transitionToRoute('signup.billing');
-      });
+      })
+      .catch(this.ajaxError.bind(this));
     }
   }
 });

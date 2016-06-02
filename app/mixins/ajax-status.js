@@ -8,7 +8,7 @@ export default Ember.Mixin.create({
     let errMsg = err && err.responseText ? err.responseText : err;
 
     if ( errMsg && errMsg.errors ) {
-      errMsg = errMsg.errors.mapBy('detail').join(', ');
+      errMsg = (typeof errMsg.errors[0] === 'string' ? errMsg.errors : errMsg.errors.mapBy('detail')).join(', ');
     }
 
     if ( err && !user ) {
