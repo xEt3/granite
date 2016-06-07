@@ -7,20 +7,31 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('vogue');
+  this.route('pricing');
+  this.route('features');
+  this.route('contact');
+  this.route('about', function() {
+    this.route('pricing');
+  });
+
   this.route('signup', function() {
     this.route('billing');
     this.route('finish');
   });
-  this.route('pricing');
-  this.route('features');
-  this.route('about', function() {
-    this.route('pricing');
-  });
-  this.route('contact');
+
   this.route('setup', function() {
     this.route('email-sent');
     this.route('set-password');
   });
+
+  this.route('account', function() {
+    this.route('index', { path: '/dashboard' });
+  });
+
+  this.route('error');
+  this.route('not-found');
+  this.route('unauthorized');
+  this.route('catchall', {path: '/*wildcard'});
 });
 
 export default Router;

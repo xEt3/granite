@@ -1,0 +1,12 @@
+<div class="sidebar context">
+      {{#ui-sidebar ui_context=".sidebar.context"}}
+        <a class="item">1</a>
+        <a class="item">2</a>
+        <a class="item">3</a>
+      {{/ui-sidebar}}
+      <div class="pusher">
+        {{elements/company-navigation}}
+        {{outlet}}
+      </div>
+    </div>
+{{outlet}}

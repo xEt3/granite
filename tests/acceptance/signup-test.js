@@ -4,7 +4,7 @@ import moduleForAcceptance from 'granite/tests/helpers/module-for-acceptance';
 moduleForAcceptance('Acceptance | signup');
 
 test('completed signup redirects to billing', function(assert) {
-  visit('/signup/information');
+  visit('/signup');
   fillIn('input[id="company-name"]', 'Awesome Widgets Unincorporated');
   fillIn('input[id="first-name"]', 'Serious');
   fillIn('input[id="last-name"]', 'Sam');
