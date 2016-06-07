@@ -1,6 +1,6 @@
 {{notification-container notifications=notifications position="bottom"}}
 
-<div class="ui fluid container">
+<div class="ui fluid container {{unless topLevel 'in__application pusher'}}">
   {{#if topLevel}}
     {{elements/x-navigation transparent=navTransparent topLevel=topLevel}}
   {{/if}}
