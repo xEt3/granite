@@ -5,8 +5,39 @@
   }
 
   .nav__main-logo {
-    font-size: 1.3em;
-    color: @black;
+    padding: 0 10px;
+
+    a {
+      display: block;
+      font-size: 1em;
+      color: @granite-grey;
+
+      .logo {
+        width: 75px;
+        height: 20px;
+        background-image: url('images/granite-logo-mountains.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+      }
+
+      &:hover {
+        .logo-text {
+          display: block;
+          max-height: 20px;
+          transition: max-height 0.5s ease-in-out;
+        }
+      }
+
+      .logo-text {
+        height: 20px;
+        max-height: 0;
+        text-align: center;
+        overflow: hidden;
+        display: none;
+        transition: max-height 0.5s ease-in-out;
+      }
+    }
 
     &:before {
       display: none;

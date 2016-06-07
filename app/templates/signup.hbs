@@ -1,1 +1,17 @@
-{{outlet}}
+<div class="ui splash splash__signup fluid container">
+  <div class="ui stackable splash splash__signup grid">
+    <div class="three wide column">
+      <div class="ui vertical signup steps animated fadeInRight">
+        {{#each steps as |step|}}
+          {{display/ui-step step=step}}
+        {{/each}}
+      </div>
+    </div>
+    <div class="ten wide column">
+      <div class="ui tall stacked opaque very padded container segment">
+        {{outlet}}
+      </div>
+    </div>
+    <div class="three wide column"></div>
+  </div>
+</div>

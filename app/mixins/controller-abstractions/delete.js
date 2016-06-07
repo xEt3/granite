@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import AjaxHooks from '../ux-ajax-status-hooks';
+import AjaxHooks from '../ajax-status';
 
 export default Ember.Mixin.create(AjaxHooks, {
   actions: {

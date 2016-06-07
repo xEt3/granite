@@ -1,4 +1,12 @@
-      <form>
-        <div class="ui button" tabindex="0">Submit Order</div>
-        {{braintree-dropin token=model.token action='submit' braintreeOptions=braintreeConfig}}
-      </form>
+<form class="ui form">
+  <h1 class="ui header centered"><i class="lock icon"></i>Payment Information</h1>
+
+  <div class="ui divider"></div>
+  {{braintree-dropin class="ui raised segment" token=braintreeToken.token action=(action 'submit')}}
+  <p class="right aligned very small text"><i class="lock icon"></i>Powered by Braintree Payments</p>
+
+  <h4 class="ui horizontal divider header">Note</h4>
+  <p class="center aligned text">We won't charge your card until after the trial and have added active employees. You may also cancel at any time. Adding your payment information and completing your account setup creates a monthly subscription that adjusts based on active employees. {{#link-to 'pricing'}}Learn more about our pricing.{{/link-to}}</p>
+
+  {{#form/action-button type="submit" class="ui massive fluid green button" loading=working}}Start 14-day trial and setup Granite{{/form/action-button}}
+</form>
