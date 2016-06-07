@@ -26,6 +26,6 @@ export default Model.extend(Validations, {
   notifications: hasMany('notification', { async: true }),
   prerequisites: hasMany('prerequisite', { async: true }),
   tags:          hasMany('tag', { async: true }),
-  attachments:   hasMany('doucment', { async: true }),
+  attachments:   hasMany('document', { async: true }),
   milestones:    hasMany('milestone', { async: true })
 });
