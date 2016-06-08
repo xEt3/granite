@@ -3,11 +3,18 @@ html {
 }
 
 body {
+  height: auto !important;
   min-height: 100%;
 }
 
-body.application__in-account {
-  .three-point-gradient(lighten(@granite-blue, 40%), @granite-blue, darken(@granite-green, 20%));
-  background: @gradient;
+body.application__in-account > .pusher {
+  .three-point-gradient(@granite-blue, lighten(@granite-blue, 5%), darken(@granite-blue, 10%));
+  background: @gradient !important;
+  background-color: @granite-grey !important;
   background-repeat: no-repeat;
+}
+
+body > .pusher {
+  height: auto !important;
+  min-height: 100vh !important;
 }

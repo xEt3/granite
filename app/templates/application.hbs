@@ -1,3 +1,13 @@
+{{#ui-sidebar class="account__sidebar thin vertical inverted sidebar labeled icon menu" transition="scale down"}}
+  {{#link-to 'account.index' class="item"}}<i class="dashboard icon"></i>Dashboard{{/link-to}}
+  <a href="#" class="item"><i class="check icon"></i>Action Items</a>
+  {{#link-to 'account.employees' class="item"}}<i class="users icon"></i>Employees{{/link-to}}
+  <a href="#" class="item"><i class="newspaper icon"></i>Documents</a>
+  <a href="#" class="item"><i class="plane icon"></i>Leave Management</a>
+  <a href="#" class="item"><i class="wizard icon"></i>Corrective Actions</a>
+  <a href="#" class="item"><i class="add user icon"></i>Onboarding</a>
+{{/ui-sidebar}}
+
 {{notification-container notifications=notifications position="bottom"}}
 
 <div class="ui fluid container {{unless topLevel 'in__application pusher'}}">

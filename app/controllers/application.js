@@ -10,10 +10,7 @@ export default Controller.extend({
   }),
 
   updateBodyClass: on('init', observer('topLevel', function () {
-    console.log('test')
     run.next(() => {
-      console.log('topLevel changed');
-      console.log((this.get('topLevel') ? 'removeClass' : 'addClass'), 'application__in-account on body');
       $('body')[this.get('topLevel') ? 'removeClass' : 'addClass']('application__in-account');
     });
   }))
