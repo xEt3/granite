@@ -26,6 +26,8 @@ Router.map(function() {
 
   this.route('account', function() {
     this.route('index', { path: '/dashboard' });
+    this.route('employees');
+    this.route('employee');
   });
 
   this.route('error');

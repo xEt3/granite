@@ -1,8 +1,14 @@
 <div class="item">
-  <i class="large sidebar icon"></i>
+  <a href="#" {{action "toggle"}}><i class="large sidebar icon"></i></a>
 </div>
 <div class="right menu">
-  <div class="item">
-    <img src="https://upload.wikimedia.org/wikipedia/en/9/93/Billings_Clinic_logo.jpg" alt="Company Logo">
-  </div>
+  {{#ui-dropdown class="item company-logo-dropdown"}}
+    <div class="company-logo" style="background-image: url('http://img.jobing.com/company/images/3270///Xanterra%20blue%20reg.jpg')">
+    </div>
+    <i class="dropdown icon"></i>
+    <div class="menu">
+      <div class="item"><a href="account/settings"><i class="settings icon"></i>Settings</a></div>
+      <div class="item"><a href="#"><i class="sign out icon"></i>Sign Out</a></div>
+    </div>
+  {{/ui-dropdown}}
 </div>
