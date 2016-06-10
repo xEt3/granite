@@ -1,0 +1,27 @@
+.radio__button {
+  cursor: pointer !important;
+  padding: 5px 7px 7px 7px !important;
+
+  > label {
+    cursor: pointer !important;
+
+    padding: 0 !important;
+    &:before, &:after {
+      display: none;
+      visibility: hidden;
+    }
+
+    i {
+      color: darken(@gray-lighter, 10%) !important;
+      margin: 0 !important;
+    }
+  }
+
+  &.checked {
+    border-radius: 5px;
+
+    i {
+      color: @granite-blue !important;
+    }
+  }
+}

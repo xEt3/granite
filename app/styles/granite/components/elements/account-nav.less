@@ -1,3 +1,56 @@
 nav.ui.menu.account__navigation {
   border-radius: 0;
+
+  .item {
+    > a {
+      color: @granite-grey;
+      transition: all 0.35s ease-in-out;
+    }
+
+    &:hover > a {
+      color: @granite-blue;
+    }
+  }
+
+  > .item:first-child > a {
+    &:after {
+      content: 'Menu';
+      display: inline-block;
+      width: 0px;
+      overflow: hidden;
+      transition: all 0.35s ease-in-out;
+      line-height: 1;
+      vertical-align: middle;
+      font-size: 1.3em;
+    }
+
+    &:hover:after {
+      width: 48px;
+    }
+  }
+}
+
+.company-logo-dropdown {
+  padding: 0 1em 0 1em !important;
+}
+.company-logo {
+  height: 53px;
+  width: 60px;
+  margin: 5px 0;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+}
+
+.account__sidebar {
+  background: @granite-grey !important;
+}
+
+.account__breadcrumb {
+  margin: 0.3em 1.6em 3em 1.6em !important;
+  color: white;
+
+  a {
+    color: white !important;
+  }
 }

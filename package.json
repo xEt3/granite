@@ -24,6 +24,7 @@
     "ember-ajax": "0.7.1",
     "ember-braintree": "git+https://github.com/James1x0/ember-braintree.git#815446a21afd213e504777de36c4c7b9b18838ed",
     "ember-cli": "^2.5.1",
+    "ember-cli-active-link-wrapper": "0.2.0",
     "ember-cli-app-version": "^1.0.0",
     "ember-cli-babel": "5.1.6",
     "ember-cli-dependency-checker": "^1.2.0",

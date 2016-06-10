@@ -28,6 +28,9 @@ Router.map(function() {
     this.route('index', { path: '/dashboard' });
     this.route('employees');
     this.route('employee');
+    this.route('action-items');
+    this.route('documents');
+    this.route('recruiting');
   });
 
   this.route('error');
