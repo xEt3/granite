@@ -1,0 +1,7 @@
+{{#each segments as |segment|}}
+  {{#if segment.divider}}
+    <div class="divider"> / </div>
+  {{else}}
+    <div class="section{{if segment.last ' active'}}">{{#link-to segment.link}}{{segment.title}}{{/link-to}}</div>
+  {{/if}}
+{{/each}}
