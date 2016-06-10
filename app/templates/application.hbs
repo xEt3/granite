@@ -1,6 +1,12 @@
+{{#unless topLevel}}
+  {{elements/account-navigation links=accountNavigationItems}}
+{{/unless}}
+
 {{notification-container notifications=notifications position="bottom"}}
 
-<div class="ui fluid container">
-  {{elements/x-navigation transparent=navTransparent topLevel=topLevel}}
+<div class="ui fluid container {{unless topLevel 'in__application pusher'}}">
+  {{#if topLevel}}
+    {{elements/x-navigation transparent=navTransparent topLevel=topLevel}}
+  {{/if}}
   {{outlet}}
 </div>
