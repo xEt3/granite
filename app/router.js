@@ -26,7 +26,12 @@ Router.map(function() {
 
   this.route('account', function() {
     this.route('index', { path: '/dashboard' });
-    this.route('employees');
+    this.route('employees', function() {
+      this.route('add', function() {
+        this.route('census');
+        this.route('new');
+      });
+    });
     this.route('employee');
     this.route('action-items');
     this.route('documents');
