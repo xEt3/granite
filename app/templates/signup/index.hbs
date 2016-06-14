@@ -74,6 +74,13 @@
       {{validated-input type="text" model=model valuePath="addressZipCode" placeholder="Zip Code" id="zipcode"}}
     </div>
   </div>
+
+  <h3 class="ui horizontal divider header"><i class="setting icon"></i>Configuration</h3>
+  <div class="field">
+    <label for="url-prefix" class="sr-only">Employee Access URL</label>
+    {{validated-input type="text" model=model valuePath="urlPrefix" placeholder="Employee Access URL (generally your company's abbreviation)" id="url-prefix"}}
+  </div>
+  {{#display/preview-browser}}{{if model.urlPrefix model.urlPrefix 'portal'}}{{/display/preview-browser}}
   <div class="ui divider"></div>
   {{#form/action-button type="submit" class="ui massive fluid green button" loading=working}}Next: Billing{{/form/action-button}}
 </form>
