@@ -53,22 +53,33 @@ const Validations = buildValidations({
     validator('length', {
       is: 5
     })
+  ],
+
+  urlPrefix: [
+    validator('presence', true),
+    validator('length', {
+      max: 45
+    })
   ]
 });
 
 var attr = DS.attr;
 
 export default Model.extend(Validations, {
-  name: attr('string'),
+  name:  attr('string'),
   email: attr('string'),
-  addressLine1: attr('string'),
-  addressLine2: attr('string'),
-  addressCity: attr('string'),
-  addressState: attr('string'),
+
+  addressLine1:   attr('string'),
+  addressLine2:   attr('string'),
+  addressCity:    attr('string'),
+  addressState:   attr('string'),
   addressZipCode: attr('string'),
-  contactPhone: attr('string'),
-  contactExtension: attr('string'),
-  contactFirstName: attr('string'),
+
+  contactPhone:      attr('string'),
+  contactExtension:  attr('string'),
+  contactFirstName:  attr('string'),
   contactMiddleName: attr('string'),
-  contactLastName: attr('string')
+  contactLastName:   attr('string'),
+
+  urlPrefix: attr('string')
 });
