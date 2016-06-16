@@ -1,14 +1,19 @@
 import Ember from 'ember';
 import moment from 'moment';
 
-const { Service, computed, $, RSVP: { Promise } } = Ember;
+const { Service, inject, computed, $, on, RSVP: { Promise } } = Ember;
 
 export default Service.extend({
   authUrl: '/api/login',
+  clock: inject.service(),
 
   authenticated: computed.and('token', 'didSetHeaders'),
   token: computed.reads('session.token'),
   userId: computed.reads('session.user'),
+
+  initializeClock: on('init', function () {
+    this.get('clock');
+  }),
 
   /**
    * Login intent
@@ -89,5 +94,9 @@ export default Service.extend({
     }
 
     return this.store.find('user', userId);
+  }),
+
+  isExpired: computed('clock.minute', 'session.expires', function () {
+    return moment(this.get('session.expires')).isBefore(moment());
   })
 });
