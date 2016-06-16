@@ -22,20 +22,23 @@ export default Service.extend({
    * @return {Promise}         Resolves to session
    */
   login ( email, password ) {
-    return $.post(this.get('authUrl'), { email, password })
-    .done(response => {
-      var session = this.store.createRecord('session', {
-        token:   response.token,
-        expires: response.expiration,
-        user:    response.user
-      });
+    return new Promise((resolve, reject) => {
+      return $.post(this.get('authUrl'), { email, password })
+      .then(response => {
+        var session = this.store.createRecord('session', {
+          token:   response.token,
+          expires: response.expiration,
+          user:    response.user
+        });
 
-      return session.save()
+        return session.save();
+      })
       .then(record => {
         this.set('session', record);
         this.get('currentUser');
-        return record;
-      });
+        return resolve(record);
+      })
+      .fail(reject);
     });
   },
 

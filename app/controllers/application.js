@@ -32,7 +32,8 @@ export default Controller.extend({
   navTransparent: computed.equal('currentPath', 'index'),
 
   topLevel: computed('currentPath', function () {
-    return this.get('currentPath').indexOf('account') < 0;
+    const currentPath = this.get('currentPath');
+    return currentPath.indexOf('account') < 0 && currentPath.indexOf('login') < 0;
   }),
 
   updateBodyClass: on('init', observer('topLevel', function () {

@@ -42,6 +42,7 @@ Router.map(function() {
   this.route('not-found');
   this.route('unauthorized');
   this.route('catchall', {path: '/*wildcard'});
+  this.route('login');
 });
 
 export default Router;
