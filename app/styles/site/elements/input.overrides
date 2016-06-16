@@ -11,7 +11,7 @@
   margin: 3px 0;
   .placeholder(lighten(@granite-grey, 45%));
 
-  &:focus, &:active {
+  &:not(.transparent):focus, &:not(.transparent):active {
     border-color: white !important;
     box-shadow: 0px 3px 2px fade(@granite-grey, 35%) !important;
 

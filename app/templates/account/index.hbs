@@ -62,13 +62,13 @@
           </div>
         </div>
         <div class="meta">
-          {{#ui-popup tagName="span" position="top center" title="View profile"}}
+          {{#ui-popup tagName="span" position="bottom center" title="View profile"}}
             <a href="#">
               <i class="user icon"></i>
             </a>
           {{/ui-popup}}
 
-          {{#ui-popup tagName="span" position="top center" title="Thumbs up"}}
+          {{#ui-popup tagName="span" position="bottom center" title="Thumbs up"}}
             <a href="#" class="like">
               <i class="thumbs up icon"></i> 2
             </a>
@@ -136,6 +136,37 @@
 
     <div class="event">
       <div class="label">
+        <i class="check green icon"></i>
+      </div>
+      <div class="content">
+        <div class="summary">
+          <a href="#">
+            You
+          </a>
+          completed an offboarding action item task "Equipment Return" for
+          <a href="#">Monty Python</a>
+          <div class="date">
+            1 Week Ago
+          </div>
+        </div>
+        <div class="meta">
+          {{#ui-popup tagName="span" position="bottom center" title="View action item"}}
+            <a href="#">
+              <i class="list icon"></i>
+            </a>
+          {{/ui-popup}}
+
+          {{#ui-popup tagName="span" position="bottom center" title="Thumbs up"}}
+            <a href="#" class="like">
+              <i class="thumbs up icon"></i> 5
+            </a>
+          {{/ui-popup}}
+        </div>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="label">
         <i class="users icon"></i>
       </div>
       <div class="content">
@@ -154,12 +185,12 @@
 
   <div class="right aligned text">
     <span class="fields">
-      {{#ui-radio id="user-radio" class="radio__button" value="user"}}
+      {{#ui-radio id="user-radio" name="feed-source" class="radio__button" value="user" current=feedSource}}
         <label for="user-radio">
           {{ui-popup tagName="i" position="left center" class="user icon" content="Just your feed"}}
         </label>
       {{/ui-radio}}
-      {{#ui-radio id="all-radio" class="radio__button" value="all"}}
+      {{#ui-radio id="all-radio" name="feed-source" class="radio__button" value="all" current=feedSource}}
         <label for="all-radio">
           {{ui-popup tagName="i" position="left center" class="users icon" content="Entire company feed"}}
         </label>
