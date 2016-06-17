@@ -1,0 +1,22 @@
+<div class="ui raised very padded text container segment">
+  <form {{action "saveDocument" on="submit"}}>
+    <div class="ui form">
+      <div class="field">
+        <label><i class="pointing up icon"></i>Drag Your Files Here</label>
+        <ul class="file-upload-list">
+          {{#each files as |file|}}
+            <li>
+              {{file.name}}
+            </li>
+          {{/each}}
+        </ul>
+        <button class="ui button" {{action "triggerFileInput"}}>Select File</button>
+        <input class="input-hidden" type="file" id="{{inputId}}" multiple={{allowMulti}} {{action "selectFile" on="change"}} />
+      </div>
+      {{#if saveError}}
+        <p>{{saveError}}</p>
+      {{/if}}
+      <button type="submit" class="ui button">Upload</button>
+    </div>
+  </form>
+</div>
