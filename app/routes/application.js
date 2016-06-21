@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import { notifyDefaults } from 'granite/config';
 
+const { Route, $, Logger, inject } = Ember;
+
 const errorRouteMap = {
   401: 'unauthorized',
   404: 'not-found',
@@ -8,13 +10,19 @@ const errorRouteMap = {
   400: 'error'
 };
 
-export default Ember.Route.extend({
+export default Route.extend({
+  auth: inject.service(),
+
+  beforeModel () {
+    return this.get('auth').initializeExistingSession();
+  },
+
   actions: {
     notify (type) {
       const notifications = this.get('controller.notifications'),
             args = Array.prototype.slice.call(arguments, 1);
 
-      args[1] = args[1] ? Ember.$.extend(notifyDefaults, args[1]) : notifyDefaults;
+      args[1] = args[1] ? $.extend(notifyDefaults, args[1]) : notifyDefaults;
       notifications[type].apply(notifications, args);
     },
 
@@ -32,7 +40,7 @@ export default Ember.Route.extend({
         }
       }
 
-      Ember.Logger.log('Routing to', route, 'to handle UX error...');
+      Logger.log('Routing to', route, 'to handle UX error...');
 
       this.controllerFor(route).set('fromError', err);
       this.transitionTo('/' + route);
