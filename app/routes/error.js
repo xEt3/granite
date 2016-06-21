@@ -1,5 +1,13 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
-  titleToken: 'Error'
+const { Route } = Ember;
+
+export default Route.extend({
+  titleToken: 'Error',
+
+  afterModel () {
+    if ( !this.get('controller.fromError') ) {
+      return this.transitionTo('index');
+    }
+  }
 });

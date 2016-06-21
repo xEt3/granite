@@ -1,11 +1,13 @@
 import Ember from 'ember';
 
-const { Route, $, RSVP } = Ember;
+const { Route, RSVP, inject } = Ember;
 
 export default Route.extend({
+  ajax: inject.service(),
+
   model () {
     return RSVP.hash({
-      token: $.get('/api/v1/bt/token'),
+      token: this.get('ajax').request('/api/v1/bt/token'),
       company: this.modelFor('signup.index')
     });
   },
