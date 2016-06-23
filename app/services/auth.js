@@ -67,7 +67,7 @@ export default Service.extend({
     return this.get('store').findAll('session').then(sessions => {
       var existingSession;
       Logger.debug('AS :: Got local sessions');
-      sessions.forEach(session => {
+      sessions.toArray().forEach(session => {
         if ( moment(session.get('expires')).isAfter(moment()) ) {
           Logger.debug('AS :: Found active session');
           existingSession = session;
@@ -91,7 +91,7 @@ export default Service.extend({
       return undefined;
     }
 
-    return this.get('store').find('user', userId);
+    return this.get('store').find('company-user', userId);
   }),
 
   isExpired: computed('clock.minute', 'session.expires', function () {
