@@ -10,6 +10,10 @@ export default Component.extend({
   actions: {
     toggle () {
       $('.ui.sidebar').sidebar('toggle');
+    },
+
+    logout () {
+      this.get('logout')();
     }
   }
 });

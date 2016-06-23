@@ -17,8 +17,14 @@ export default Controller.extend(ajaxStatus, {
 
       this.auth.login(email, password)
       .then(() => {
+        let previousTransition = this.get('previousTransition');
         this.ajaxSuccess('Successfully logged in.');
-        this.transitionToRoute('index');
+
+        if ( previousTransition ) {
+          previousTransition.retry();
+        } else {
+          this.transitionToRoute('index');
+        }
       })
       .catch(this.ajaxError.bind(this));
     }
