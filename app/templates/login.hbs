@@ -1,5 +1,11 @@
 <div class="washout__white shadowed padded logo__mountains"></div>
 
+{{#if previousTransition}}
+  <div class="ui red inverted text segment container">
+    <h3><i class="warning icon"></i> You need to log in to access <strong>{{previousTransition.intent.url}}</strong></h3>
+  </div>
+{{/if}}
+
 <form class="ui very padded piled text segment container form" {{action "login" on="submit"}}>
   <hgroup class="ui center aligned header">
     <h1>Good {{relative-greeting-time}}!</h1>

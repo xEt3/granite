@@ -26,8 +26,8 @@ export default Route.extend({
       notifications[type].apply(notifications, args);
     },
 
-    error( error ) {
-      Ember.Logger.error(error);
+    error ( error ) {
+      Logger.error(error);
 
       var route = 'error',
           err = error.errors ? error.errors[0] : error;
@@ -44,6 +44,10 @@ export default Route.extend({
 
       this.controllerFor(route).set('fromError', err);
       this.transitionTo('/' + route);
+    },
+
+    logout () {
+      this.get('auth').logout();
     }
   }
 });

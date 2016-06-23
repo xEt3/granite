@@ -50,11 +50,18 @@ export default Service.extend({
    * @return {Promise} Resolves to destroyed session
    */
   logout () {
+    Logger.debug('AS :: Logout');
+
     if ( !this.get('session') ) {
+      Logger.debug('AS :: No session available - skipping logout');
       return Promise.resolve();
     }
 
-    return this.get('session').destroyRecord();
+    Logger.debug('AS :: Destroying session');
+    return this.get('session').destroyRecord()
+    .then(() => {
+      this.set('session', null);
+    });
   },
 
   /**
