@@ -17,7 +17,7 @@ export default Controller.extend(ajaxStatus, {
 
       this.auth.login(email, password)
       .then(() => {
-        this.ajaxSuccess();
+        this.ajaxSuccess('Successfully logged in.');
         this.transitionToRoute('index');
       })
       .catch(this.ajaxError.bind(this));

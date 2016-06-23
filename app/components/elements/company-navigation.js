@@ -1,12 +1,15 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component, $, inject } = Ember;
+
+export default Component.extend({
+  auth: inject.service(),
   tagName: 'nav',
   classNames: [ 'ui menu account__navigation' ],
 
   actions: {
-    toggle: function() {
-      Ember.$('.ui.sidebar').sidebar('toggle');
+    toggle () {
+      $('.ui.sidebar').sidebar('toggle');
     }
   }
 });
