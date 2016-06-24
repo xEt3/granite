@@ -35,7 +35,11 @@ Router.map(function() {
     this.route('employee');
     this.route('action-items');
     this.route('documents');
-    this.route('recruiting');
+    this.route('recruiting', function() {
+      this.route('job-description', { path: '/job/:id' }, function() {
+        this.route('settings');
+      });
+    });
   });
 
   this.route('error');
