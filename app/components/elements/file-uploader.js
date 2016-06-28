@@ -145,6 +145,9 @@ export default Ember.Component.extend({
 
     selectFile () {
       this._validateFiles( this.$().find('#' + this.get('inputId'))[0].files );
+      var files = this.get('files');
+      files.addObject(this.$().find('#' + this.get('inputId'))[0].files);
+      console.log(files);
     },
 
     saveDocument () {
