@@ -27,7 +27,7 @@ export default Ember.Component.extend({
     e.preventDefault();
     var files = this.get('files');
     var dropped = files.addObject(e.dataTransfer.files[0]);
-    console.log(dropped);
+    console.log('dropped', dropped, 'event', e);
   },
 
   uploadFile ( file, documentId ) {
@@ -37,7 +37,7 @@ export default Ember.Component.extend({
     return new Ember.RSVP.Promise((resolve, reject) => {
       Ember.$.ajax({
         type: 'POST',
-        url: '/api/documents/' + documentId,
+        url: '/api/documents/',
         data: formData,
         processData: false,
         contentType: false,
