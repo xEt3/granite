@@ -1,0 +1,15 @@
+<div class="ui raised padded segment container clearfix">
+  <hgroup class="clearfix">
+    <h1 class="ui header left floated">
+      New Position
+    </h1>
+  </hgroup>
+  <div class="ui divider"></div>
+
+  <form class="ui form" {{action "save" on="submit"}}>
+    <div class="large field">
+      <label for="job-title" class="sr-only">Job Title</label>
+      {{validated-input type="text" model=model valuePath="title" placeholder="Job Title" id="job-title"}}
+    </div>
+  </form>
+</div>
