@@ -42,7 +42,11 @@ export default Route.extend({
 
       Logger.log('Routing to', route, 'to handle UX error...');
 
-      this.controllerFor(route).set('fromError', err);
+      this.controllerFor(route).setProperties({
+        fromError: err,
+        previousRoute: this.get('controller.currentPath')
+      });
+
       this.transitionTo('/' + route);
     },
 

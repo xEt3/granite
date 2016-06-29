@@ -39,6 +39,7 @@ Router.map(function() {
       this.route('job-description', { path: '/job/:id' }, function() {
         this.route('settings');
       });
+      this.route('new');
     });
   });
 
