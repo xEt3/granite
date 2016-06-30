@@ -4,8 +4,10 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   files: Ember.A(),
   doesNotHaveFiles: Ember.computed.not('hasFiles'),
-  allowedExtensions: [ 'xls', 'xlsx', 'xlsm', 'csv', 'numbers', 'txt' ],
+  allowedExtensions: [ 'xls', 'xlsx', 'csv', 'numbers', 'txt'],
   allowMulti: true,
+  url: '',
+
 
   dragEnter(e) {
     e.stopPropagation();
@@ -25,31 +27,29 @@ export default Ember.Component.extend({
   drop(e) {
     e.stopPropagation();
     e.preventDefault();
-    var files = this.get('files');
-    var dropped = files.addObject(e.dataTransfer.files[0]);
-    console.log('dropped', dropped, 'event', e);
+    var addingFiles = this._buildFiles(e.dataTransfer.files);
+    this._validateFiles(addingFiles);
   },
 
   uploadFile ( file, documentId ) {
     let formData = new FormData();
     formData.append('file', file);
-
     return new Ember.RSVP.Promise((resolve, reject) => {
       Ember.$.ajax({
         type: 'POST',
-        url: '/api/documents/',
         data: formData,
+        url: this.get('url'),
         processData: false,
         contentType: false,
         cache: false,
         xhr: () => {
           let xhr = new window.XMLHttpRequest();
-
           xhr.upload.addEventListener('progress', evt => {
             if ( evt && evt.lengthComputable ) {
               this.set('uploadProgress', Math.round(evt.loaded / evt.total * 100));
             }
           }, false);
+          console.log('xhr response', xhr.responseText);
 
           return xhr;
         },
@@ -98,6 +98,15 @@ export default Ember.Component.extend({
     }
   },
 
+
+  _buildFiles (fileList) {
+    var files = [];
+    for (var i = 0; i < fileList.length; i++) {
+      files.push(fileList.item(i));
+    }
+    return files;
+  },
+
   _clearError () {
     this.set('fileError', null);
   },
@@ -144,15 +153,19 @@ export default Ember.Component.extend({
     },
 
     selectFile () {
-      this._validateFiles( this.$().find('#' + this.get('inputId'))[0].files );
-      var files = this.get('files');
-      files.addObject(this.$().find('#' + this.get('inputId'))[0].files);
-      console.log(files);
+      var addingFiles = this._buildFiles(this.$().find('#' + this.get('inputId'))[0].files);
+      this._validateFiles(addingFiles);
     },
 
     saveDocument () {
-      var file = this.get('file.firstObject');
-      this.uploadFile(file);
+      var file = this.get('files.firstObject');
+      this.uploadFile(file).then(successful => {
+        this.get('onWinning')(successful);
+        console.log('great success', successful);
+      }).catch(reason => {
+        this.get('onError')(reason);
+        console.log(reason.responseText);
+      });
     }
   }
 });
