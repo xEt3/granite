@@ -1,8 +1,8 @@
-<div class="field">
+<div class="field {{fieldClass}}">
   {{#if hasBlock}}
     {{yield}}
   {{else}}
-    {{input type=type value=value placeholder=placeholder name=valuePath}}
+    {{input type=type value=value placeholder=placeholder name=valuePath class=inputClass}}
   {{/if}}
 
   {{#if isValid}}
