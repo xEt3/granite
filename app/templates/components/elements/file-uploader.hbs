@@ -1,4 +1,9 @@
 <div class="ui raised very padded text container segment">
+  {{#if fileError}}
+    <p class="text-center text-danger">
+      <i class="red warning sign icon"></i> {{fileError}}
+    </p>
+  {{/if}}
   <form {{action "saveDocument" on="submit"}}>
     <div class="ui form">
       <div class="field">
