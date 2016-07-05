@@ -1,27 +1,40 @@
-<div class="ui raised very padded text container segment">
+<div class="ui raised very padded text container segment file-uploader">
   {{#if fileError}}
-    <p class="text-center text-danger">
+    <p class="ui red segment">
       <i class="red warning sign icon"></i> {{fileError}}
     </p>
   {{/if}}
   <form {{action "saveDocument" on="submit"}}>
     <div class="ui form">
       <div class="field">
-        <label><i class="pointing up icon"></i>Drag Your Files Here</label>
-        <ul class="file-upload-list">
-          {{#each files as |file|}}
-            <li>
-              {{file.name}}
-            </li>
-          {{/each}}
-        </ul>
-        <button class="ui button" {{action "triggerFileInput"}}>Select File</button>
-        <input class="input-hidden" type="file" id="{{inputId}}" multiple={{allowMulti}} {{action "selectFile" on="change"}} />
+        <div class="ui center aligned segment dropzone">
+          <i class="cloud upload massive icon"></i><p class="dragText">Drag Your Files Here.</p>
+          <p class="extensions">Supported file types are:
+            {{#each allowedExtensions as |extension|}}
+              {{extension}}
+            {{/each}}
+          </p>
+        </div>
+        {{#if files}}
+          <div class="ui green segment">
+            <h2 class="ui center aligned">Ready to Upload:</h2>
+            <ul class="file-upload-list">
+              {{#each files as |file|}}
+                <li>
+                  {{file.name}}
+                  <a href="#" {{action "removeFile" file}}><i class="red remove circle icon"></i></a>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/if}}
       </div>
+      <button class="ui button" {{action "triggerFileInput"}}>Choose File</button>
+      <input class="input-hidden" type="file" id="{{inputId}}" multiple={{allowMulti}} {{action "selectFile" on="change"}} />
       {{#if saveError}}
         <p>{{saveError}}</p>
       {{/if}}
-      <button type="submit" class="ui button">Upload</button>
+      <button type="submit" class="{{if files "positive"}} ui button">Upload</button>
     </div>
   </form>
 </div>
