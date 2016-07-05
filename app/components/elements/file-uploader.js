@@ -2,11 +2,13 @@ import Ember from 'ember';
 
 
 export default Ember.Component.extend({
+  classNameBindings: [ 'dragging' ],
   files: Ember.A(),
   doesNotHaveFiles: Ember.computed.not('hasFiles'),
   allowedExtensions: [ 'xls', 'xlsx', 'csv', 'numbers', 'txt'],
   allowMulti: true,
   url: '',
+  dragging: false,
 
 
   dragEnter(e) {
@@ -17,11 +19,13 @@ export default Ember.Component.extend({
   dragOver(e) {
     e.stopPropagation();
     e.preventDefault();
+    this.set('dragging', true);
   },
 
   dragLeave(e) {
     e.stopPropagation();
     e.preventDefault();
+    this.set('dragging', false);
   },
 
   drop(e) {
@@ -29,6 +33,7 @@ export default Ember.Component.extend({
     e.preventDefault();
     var addingFiles = this._buildFiles(e.dataTransfer.files);
     this._validateFiles(addingFiles);
+    this.set('dragging', false);
   },
 
   uploadFile ( file, documentId ) {
@@ -166,6 +171,13 @@ export default Ember.Component.extend({
         this.get('onError')(reason);
         console.log(reason.responseText);
       });
+    },
+
+    removeFile ( file ) {
+      this.get('files').removeObject( file );
+      if ( !this.get('files.length') ) {
+        this._resetFileInput();
+      }
     }
   }
 });
