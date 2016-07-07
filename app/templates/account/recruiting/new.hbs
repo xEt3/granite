@@ -14,7 +14,7 @@
 
     <div class="field">
       <label for="job-description" class="sr-only">Job Description</label>
-      {{froala-editor content=model.description options=(hash heightMin=250 placeholderText="Job Description")}}
+      {{froala-editor content=model.description contentChanged=(action (mut model.description)) options=(hash heightMin=250 placeholderText="Job Description")}}
     </div>
   </form>
 </div>
