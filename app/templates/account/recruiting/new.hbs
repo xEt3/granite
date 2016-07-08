@@ -16,5 +16,6 @@
       <label for="job-description" class="sr-only">Job Description</label>
       {{froala-editor content=model.description contentChanged=(action (mut model.description)) options=(hash heightMin=250 placeholderText="Job Description")}}
     </div>
+    <button class="ui positive button" onSubmit="{{action 'save'}}">Save</button>
   </form>
 </div>
