@@ -1,3 +1,8 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.responsive-table {
+  overflow-x: auto;
+  min-height: .01%;
+}
