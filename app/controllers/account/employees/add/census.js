@@ -77,17 +77,18 @@ export default Controller.extend(ajaxStatus, {
     },
 
     importRecords () {
-      let reference = this.get('data.firstObject');
+      let reference = this.get('data.firstObject'),
+          id = this.get('fileId');
 
       this.ajaxStart();
 
-      this.get('ajax').post('/createRecordsFromCensus', {
-        data: reference
+      this.get('ajax').post('/api/v1/employee/census/' + id + '/process', {
+        data: { reference }
       })
       .then(() => {
         this.ajaxSuccess();
       })
-      .catch(this.ajaxError);
+      .catch(this.ajaxError.bind(this));
     }
   }
 });
