@@ -4,6 +4,7 @@
 
 /* Fonts */
 @fontName: 'Oxygen';
+@fontNameMonospaced: 'Menlo', 'Lucida Console', Monaco, monospace;
 @googleFontRequest: 'Oxygen:400,300,700';
 
 /* Colors */
