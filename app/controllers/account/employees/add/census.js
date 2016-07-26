@@ -2,7 +2,7 @@ import Ember from 'ember';
 import Employee from 'granite/models/employee';
 import ajaxStatus from 'granite/mixins/ajax-status';
 
-const { Controller, A, RSVP, inject, get, computed, run } = Ember;
+const { Controller, A, inject, get, computed, run } = Ember;
 
 const apiFieldMap = {
   firstName: 'name.first',
