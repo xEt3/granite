@@ -6,7 +6,7 @@
 {{#if data}}
   <form {{action "importRecords" on="submit"}}>
     <div class="ui raised very padded fluid container">
-      <div class="responsive-table">
+      <div class="responsive-table census-table">
         <table class="ui striped celled table">
           <thead>
             <tr class="guess-fields-row">
@@ -19,6 +19,8 @@
                 <th>
                   <div class="field">
                     {{#ui-dropdown
+                      class="scrolling"
+                      direction="downward"
                       name="guess-column"
                       selected=guesses
                       onChange=(action (mut guesses))}}
