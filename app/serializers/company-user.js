@@ -17,7 +17,7 @@ export default ApplicationSerializer.extend({
     return this._super(...arguments);
   },
 
-  serialize: function ( snapshot, options ) {
+  serialize ( snapshot, options ) {
     var json = this._super(snapshot, options);
 
     json.name = {
