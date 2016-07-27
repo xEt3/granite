@@ -1,3 +1,7 @@
 /*******************************
     User Variable Overrides
 *******************************/
+
+@selectionMinHeight: @lineHeight;
+@selectionMinWidth: inherit;
+@menuMargin: 0em;
