@@ -33,7 +33,7 @@ Router.map(function() {
         this.route('new');
       });
     });
-    this.route('employee');
+    this.route('employee', { path: '/employee/:id' });
     this.route('action-items');
     this.route('documents');
     this.route('recruiting', function() {
