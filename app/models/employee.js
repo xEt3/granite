@@ -1,15 +1,14 @@
 import Ember from 'ember';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-// import { belongsTo, hasMany } from 'ember-data/relationships';
+import Validations from './validations/employee';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 
 const { computed } = Ember;
 
-export default Model.extend({
-  firstName:  attr('string'),
-  middleName: attr('string'),
-  lastName:   attr('string'),
-  suffixName: attr('string'),
+export default Model.extend(Validations, {
+
+  //Personal Information
 
   fullName: computed('firstName', 'lastName', 'middleInitial', 'suffix', function () {
     var n = this.getProperties('firstName', 'lastName', 'middleName', 'suffixName'),
@@ -23,11 +22,40 @@ export default Model.extend({
     return fullName.length > 0 ? fullName : undefined;
   }),
 
-  ssn:      attr('string'),
-  phone:    attr('string'),
-  email:    attr('string'),
+  firstName:                 attr('string'),
+  middleName:                attr('string'),
+  lastName:                  attr('string'),
+  suffixName:                attr('string'),
 
-  dateOfBirth: attr('date'),
+  addressLine1:              attr('string'),
+  addressLine2:              attr('string'),
+  addressCity:               attr('string'),
+  addressState:              attr('string'),
+  addressZipCode:            attr('string'),
+  email:                     attr('string'),
+  emergencyContactFirstName: attr('string'),
+  emergencyContactLastName:  attr('string'),
+  emergencyContactPhone:     attr('string'),
+  picture:                   attr('string'),
+  phone:                     attr('string'),
+  ssn:                       attr('string'),
+
+  //Company and Position Information
+
+  hireDate:      attr('date'),
+  jobTitle:      attr('string'),
+  payRateHourly: attr('number'),
+  payRateSalary: attr('number'),
+  payRateType:   attr('string', { defaultValue: 'Hourly' }),
+
+  company:       belongsTo('company', { async: true }),
+  location:      belongsTo('location', { async: true, inverse: false }),
+  department:    belongsTo('department', { async: true, inverse: false }),
+  supervisor:    belongsTo('employee', { async: true, inverse: 'supervises' }),
+  supervises:    hasMany('employee', { async: true, inverse: 'supervisor' }),
+
+  terminatedOn:  attr('date'),
+  dateOfBirth:   attr('date'),
 
   created: attr('date', {
     defaultValue () {
