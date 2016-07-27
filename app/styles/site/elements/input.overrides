@@ -8,7 +8,6 @@
   transition: all 0.35s ease-in-out !important;
   border-color: white !important;
   box-shadow: 0px 2px 3px fade(@granite-grey, 50%) !important;
-  margin: 3px 0;
   .placeholder(lighten(@granite-grey, 45%));
 
   &:not(.transparent):focus, &:not(.transparent):active {
@@ -46,7 +45,7 @@
 }
 
 .fields .field .ui.dropdown {
-  margin: 4px -10px !important;
+  // margin: 4px -10px !important;
 }
 
 .ui.form .has-error input {

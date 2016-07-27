@@ -33,7 +33,11 @@ Router.map(function() {
         this.route('new');
       });
     });
-    this.route('employee', { path: '/employee/:id' });
+    this.route('employee', { path: '/employee/:id' }, function() {
+      this.route('onboard', function() {
+        this.route('index', { path: '/start' });
+      });
+    });
     this.route('action-items');
     this.route('documents');
     this.route('recruiting', function() {

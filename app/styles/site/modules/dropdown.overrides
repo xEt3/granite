@@ -2,5 +2,5 @@
         User Overrides
 *******************************/
 .company-logo-dropdown {
-background: none !important;
+  background: none !important;
 }
