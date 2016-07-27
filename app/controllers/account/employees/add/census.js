@@ -76,6 +76,10 @@ export default Controller.extend(ajaxStatus, {
       this.send('notify', type, msg);
     },
 
+    reset () {
+      this.set('data', undefined);
+    },
+
     importRecords () {
       let reference = this.get('data.firstObject'),
           id = this.get('fileId');
@@ -87,6 +91,8 @@ export default Controller.extend(ajaxStatus, {
       })
       .then(() => {
         this.ajaxSuccess();
+        this.send('reset');
+        this.transitionToRoute('account.employees');
       })
       .catch(this.ajaxError.bind(this));
     }

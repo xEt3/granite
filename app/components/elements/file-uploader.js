@@ -33,6 +33,9 @@ export default Ember.Component.extend(ajaxStatus, {
     var addingFiles = this._buildFiles(e.dataTransfer.files);
     this._validateFiles(addingFiles);
     this.set('dragging', false);
+    if ( this.get('autoUpload') ) {
+      this.send('saveDocument');
+    }
   },
 
   uploadFile ( file ) {
@@ -101,7 +104,6 @@ export default Ember.Component.extend(ajaxStatus, {
       }
     }
   },
-
 
   _buildFiles (fileList) {
     var files = [];

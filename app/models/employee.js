@@ -12,6 +12,8 @@ export default Model.extend({
   phone:    attr('string'),
   email:    attr('string'),
 
+  dateOfBirth: attr('date'),
+
   created: attr('date', {
     defaultValue () {
       return new Date();
