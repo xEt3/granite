@@ -1,25 +1,32 @@
 {{intro-js steps=intros start-if=data}}
-<h1 class="ui center aligned inverted header">Census Upload</h1>
+<h1 class="ui center aligned inverted header">
+  Census Upload
+  {{#liquid-if data}}
+    <small><a href="#" class="census__start-over" {{action "reset"}}><i class="horizontally flipped repeat icon"></i>Start Over</a></small>
+  {{/liquid-if}}
+</h1>
 
 <div class="ui divider"></div>
 
-{{#if data}}
+{{#liquid-if data}}
   <form {{action "importRecords" on="submit"}}>
     <div class="ui raised very padded fluid container">
-      <div class="responsive-table census-table">
+      <div class="responsive-table census__table">
         <table class="ui striped celled table">
           <thead>
             <tr class="guess-fields-row">
               <th>
-                <div class="ui ribbon label">
-                Guessed Fields
+                <div class="ui red ribbon label">
+                  {{#ui-popup content='We have attempted to guess the columns that you uploaded. This row represents our guesses.'}}
+                    Guessed Fields
+                  {{/ui-popup}}
                 </div>
               </th>
               {{#each data.[0] as |guesses|}}
                 <th>
                   <div class="field">
                     {{#ui-dropdown
-                      class="scrolling"
+                      class="scrolling census__field-selection"
                       direction="downward"
                       name="guess-column"
                       selected=guesses
@@ -40,8 +47,10 @@
             </tr>
             <tr class="client-fields-row">
               <th>
-                <div class="ui ribbon label">
+                <div class="ui blue ribbon label">
+                  {{#ui-popup content='We show the column labels you originally uploaded here for reference.'}}
                   Your Columns
+                  {{/ui-popup}}
                 </div>
               </th>
               {{#each data.[1] as |clientDataNames|}}
@@ -82,4 +91,4 @@
     onWinning=(action "successHandler")
     onError=(action "fileUploadError")
     onNotify=(action "onNotify")}}
-{{/if}}
+{{/liquid-if}}
