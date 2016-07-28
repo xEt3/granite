@@ -7,9 +7,7 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 const { computed } = Ember;
 
 export default Model.extend(Validations, {
-
-  //Personal Information
-
+  // Personal Information
   fullName: computed('firstName', 'lastName', 'middleInitial', 'suffix', function () {
     var n = this.getProperties('firstName', 'lastName', 'middleName', 'suffixName'),
         fullName = '';
@@ -31,7 +29,7 @@ export default Model.extend(Validations, {
   addressLine2:              attr('string'),
   addressCity:               attr('string'),
   addressState:              attr('string'),
-  addressZipCode:            attr('string'),
+  addressZip:            attr('string'),
   email:                     attr('string'),
   emergencyContactFirstName: attr('string'),
   emergencyContactLastName:  attr('string'),
@@ -40,19 +38,21 @@ export default Model.extend(Validations, {
   phone:                     attr('string'),
   ssn:                       attr('string'),
 
-  //Company and Position Information
-
+  // Company and Position Information
   hireDate:      attr('date'),
   jobTitle:      attr('string'),
   payRateHourly: attr('number'),
   payRateSalary: attr('number'),
   payRateType:   attr('string', { defaultValue: 'Hourly' }),
 
-  company:       belongsTo('company', { async: true }),
-  location:      belongsTo('location', { async: true, inverse: false }),
-  department:    belongsTo('department', { async: true, inverse: false }),
-  supervisor:    belongsTo('employee', { async: true, inverse: 'supervises' }),
-  supervises:    hasMany('employee', { async: true, inverse: 'supervisor' }),
+  onboarding: attr('boolean'),
+  onboarder: belongsTo('company-user', { async: true, inverse: false }),
+
+  // company:       belongsTo('company', { async: true }),
+  // location:      belongsTo('location', { async: true, inverse: false }),
+  // department:    belongsTo('department', { async: true, inverse: false }),
+  // supervisor:    belongsTo('employee', { async: true, inverse: 'supervises' }),
+  // supervises:    hasMany('employee', { async: true, inverse: 'supervisor' }),
 
   terminatedOn:  attr('date'),
   dateOfBirth:   attr('date'),

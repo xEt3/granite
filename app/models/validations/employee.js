@@ -51,7 +51,7 @@ export default buildValidations({
     validator('presence', true)
   ],
 
-  addressZipCode: [
+  addressZip: [
     validator('presence', true),
     validator('length', {
       is: 5
