@@ -36,6 +36,8 @@ Router.map(function() {
     this.route('employee', { path: '/employee/:id' }, function() {
       this.route('onboard', function() {
         this.route('index', { path: '/start' });
+        this.route('job-information');
+        this.route('equipment');
       });
     });
     this.route('action-items');
