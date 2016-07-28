@@ -1,0 +1,19 @@
+{{#bs-modal id=modalId showModal=showModal modal-sm=true title=_confirmState.title static=true}}
+  <div class="modal-body">
+    <p class="x-confirm__modal-message">
+      {{_confirmState.message}}
+      {{yield}}
+    </p>
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      {{#if isConfirm}}
+        <button type="button" class="btn btn-success" {{action "close" true}}><i class="fa fa-fw fa-check"></i> Yes</button>
+        <button type="button" class="btn btn-danger" {{action "close" false}}><i class="fa fa-fw fa-times"></i> No</button>
+      {{/if}}
+      {{#if isAlert}}
+        <button type="button" class="btn btn-success" {{action "close"}}><i class="fa fa-fw fa-check"></i> Ok</button>
+      {{/if}}
+    </div>
+  </div>
+{{/bs-modal}}
