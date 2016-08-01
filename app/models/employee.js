@@ -13,7 +13,7 @@ export default Model.extend(Validations, {
         fullName = '';
 
     fullName += n.firstName || '';
-    fullName += n.middleName ? ' ' + n.middleName + '. ' : '';
+    fullName += n.middleName ? ' ' + n.middleName : '';
     fullName += n.lastName ? ' ' + n.lastName : '';
     fullName += n.suffixName ? ' ' + n.suffixName : '';
 
