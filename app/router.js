@@ -48,6 +48,9 @@ Router.map(function() {
       });
       this.route('new');
     });
+    this.route('assets', function() {
+      this.route('new');
+    });
   });
 
   this.route('error');
