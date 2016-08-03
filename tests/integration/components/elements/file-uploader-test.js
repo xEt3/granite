@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('elements/file-uploaader', 'Integration | Component | elements/file uploaader', {
+moduleForComponent('elements/file-uploader', 'Integration | Component | elements/file uploader', {
   integration: true
 });
 
@@ -9,15 +9,15 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{elements/file-uploaader}}`);
+  this.render(hbs`{{elements/file-uploader}}`);
 
   assert.equal(this.$().text().trim(), '');
 
   // Template block usage:
   this.render(hbs`
-    {{#elements/file-uploaader}}
+    {{#elements/file-uploader}}
       template block text
-    {{/elements/file-uploaader}}
+    {{/elements/file-uploader}}
   `);
 
   assert.equal(this.$().text().trim(), 'template block text');

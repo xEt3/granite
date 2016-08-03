@@ -4,6 +4,32 @@
     <label for="job-title">Job Title</label>
     {{validated-input type="text" model=model valuePath="jobTitle" placeholder="Job Title" id="job-title"}}
   </div>
+
+  <div class="three fields">
+    <div class="field">
+      Non-exempt
+      {{ui-checkbox class="toggle" label="Exempt" checked=pre_checked onChange=(action (mut pre_checked))}}
+    </div>
+    <div class="two fields">
+      <label for="pay-rate">Pay Rate</label>
+      <input type="number" id="pay-rate">
+        <div class="four wide field">
+          {{#ui-dropdown}}
+            <div class="default text">Unit</div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <div class="item" data-value="hour">
+                hour
+              </div>
+              <div class="item" data-value="year">
+                year
+              </div>
+            </div>
+          {{/ui-dropdown}}
+        </div>
+    </div>
+  </div>
+
   <div class="field">
     <label for="job-location">Location</label>
     {{#ui-dropdown class="selection" selected=model.location onChange=(action (mut model.location))}}
