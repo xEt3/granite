@@ -1,16 +1,26 @@
-<hgroup class="clearfix">
-  <h1 class="ui header">
-    <div class="ui tiny rounded left floated image">
-      <img src="assets/mock/avatars/small/7.png">
-    </div>
-    <div class="content">
-      Lumber Nickelson
-      <div class="sub header">
-        Chopping Organizer<br />
-        Since 2016
-      </div>
-    </div>
-  </h1>
-</hgroup>
+<div class="ui container employee__onboarding">
+  <div class="ui padded raised segment">
+    <hgroup class="clearfix">
+      <h1 class="ui header">
+        <div class="ui tiny rounded left floated image">
+          {{display/employee-picture url=model.picture}}
+        </div>
+        <div class="content">
+          {{model.fullName}}
+          <div class="sub header">
+            {{model.jobTitle}}
+            {{#if model.hireDate}}
+              Since {{time model.hireDate 'MMMM YYYY'}}
+            {{/if}}
+          </div>
+        </div>
+      </h1>
+    </hgroup>
 
-<div class="ui divider"></div>
+    <div class="ui divider"></div>
+
+    {{#if model.onboarding}}
+      {{#link-to 'account.employee.onboard' model.id class="ui huge fluid blue button"}}Continue onboarding{{/link-to}}
+    {{/if}}
+  </div>
+</div>
