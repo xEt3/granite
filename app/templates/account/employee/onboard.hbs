@@ -1,5 +1,9 @@
-<div class="ui container">
-  <div class="ui attached padded segment">
+<div class="ui container employee__onboarding">
+  {{#ui-progress percent=progress class="indicating employee__onboarding-progress"}}
+    <div class="bar"></div>
+  {{/ui-progress}}
+
+  <div class="ui padded segment employee__onboarding-segment">
     <hgroup class="clearfix">
       <h1 class="ui header">Onboard {{model.fullName}}</h1>
     </hgroup>
@@ -8,5 +12,5 @@
     {{outlet}}
   </div>
 
-  {{display/form-steps steps=steps basePath='account.employee.onboard' class='bottom attached'}}
+  {{display/form-steps steps=steps basePath='account.employee.onboard' class='employee__onboarding-steps'}}
 </div>

@@ -45,8 +45,10 @@ export default Model.extend(Validations, {
   payRateSalary: attr('number'),
   payRateType:   attr('string', { defaultValue: 'Hourly' }),
 
-  onboarding: attr('boolean'),
-  onboarder: belongsTo('company-user', { async: true, inverse: false }),
+  onboarding:         attr('boolean'),
+  onboardingStep:     attr('number'),
+  onboarder:          belongsTo('company-user', { async: true, inverse: false }),
+  onboardingProgress: attr('number'),
 
   // company:       belongsTo('company', { async: true }),
   // location:      belongsTo('location', { async: true, inverse: false }),
