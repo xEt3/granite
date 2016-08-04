@@ -7,6 +7,7 @@
   <div class="ui equal width form segment">
     <div class="three fields">
       <div class="field">
+        <label for="exemption-status">Exemption Status</label>
         Non-exempt
         {{ui-checkbox class="toggle" label="Exempt" checked=pre_checked onChange=(action (mut pre_checked))}}
       </div>
@@ -15,15 +16,18 @@
         <div class="ui left icon input pay-rate-number">
           <input type="number" id="pay-rate" value="Pay Rate">
           <i class="dollar icon"></i>
-          {{#ui-dropdown class="inline pay-rate-unit" selected="Bob" onChange=(action (mut gender))}}
+          {{#ui-dropdown class="inline pay-rate-unit" selected="yearly" onChange=(action (mut gender))}}
             <div class="default text">Unit</div>
             <i class="dropdown icon"></i>
             <div class="menu">
-              <div class="item" data-value="year">
-                year
+              <div class="item" data-value="yearly">
+                yearly
               </div>
-              <div class="item" data-value="hour">
-                hour
+              <div class="item" data-value="monthly">
+                monthly
+              </div>
+              <div class="item" data-value="hourly">
+                hourly
               </div>
             </div>
           {{/ui-dropdown}}
