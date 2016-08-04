@@ -1,16 +1,22 @@
-<div class="ui raised very padded text container segment">
-  <form class="ui form" {{action "saveAndContinue" on="submit"}}>
-    <h4 class="ui dividing header">Add a new asset</h4>
+<div class="ui raised very padded container segment">
+  <form class="ui form" {{action "save" on="submit"}}>
+    <h1 class="ui dividing header">Add a New Asset Category</h1>
     <div class="field">
       <label for="asset-name">Asset Name</label>
-      <input type="text" id="asset-name" placeholder="Spare Palm Pilot">
+      {{input type="text" value=model.name id="asset-name" placeholder="Keycards"}}
     </div>
     <div class="field">
-      <label for="asset-name">Description</label>
-      <input type="text" id="asset-name" placeholder="Blue with Snake Skin Case">
+      <label for="asset-description">Description</label>
+      {{input type="text" value=model.description id="asset-description" placeholder="All the keycards for our employees"}}
     </div>
-    <div class="field">
-      {{elements/file-uploader}}
+    <div class="field center aligned text">
+      <div class="ui toggle checkbox">
+        <input type="checkbox">
+        <label>Can {{if model.name model.name 'these assets'}} be shared by employees?</label>
+      </div>
     </div>
+    <div class="ui divider"></div>
+
+    <button class="ui hude fluid positive huge button"type="submit">Save</button>
   </form>
 </div>
