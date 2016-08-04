@@ -1,1 +1,16 @@
-{{outlet}}
+<div class="ui raised very padded text container segment">
+  <form class="ui form" {{action "saveAndContinue" on="submit"}}>
+    <h4 class="ui dividing header">Add a new asset</h4>
+    <div class="field">
+      <label for="asset-name">Asset Name</label>
+      <input type="text" id="asset-name" placeholder="Spare Palm Pilot">
+    </div>
+    <div class="field">
+      <label for="asset-name">Description</label>
+      <input type="text" id="asset-name" placeholder="Blue with Snake Skin Case">
+    </div>
+    <div class="field">
+      {{elements/file-uploader}}
+    </div>
+  </form>
+</div>
