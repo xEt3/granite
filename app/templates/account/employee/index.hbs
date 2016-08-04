@@ -1,4 +1,31 @@
-<div class="ui container employee__onboarding">
+<div class="ui container">
+  <div class="ui pointing menu">
+    {{#link-to 'account.employee.index.index' class="item"}}
+      <i class="list icon"></i>Summary
+    {{/link-to}}
+    {{#link-to 'account.employee.index.equipment' class="item"}}
+      <i class="mobile icon"></i>Equipment
+    {{/link-to}}
+    {{#link-to 'account.employee.index.job' class="item"}}
+      <i class="travel icon"></i>Job
+    {{/link-to}}
+    <div class="right menu">
+      {{#if model.onboarding}}
+        {{#link-to 'account.employee.onboard' model.id class="item text-blue"}}<i class="wizard icon"></i>Continue Onboarding{{/link-to}}
+      {{/if}}
+
+      {{#ui-dropdown class="item icon top right pointing"}}
+        <i class="wrench icon"></i><i class="dropdown icon"></i>
+        <div class="menu">
+          <div class="item"><i class="edit icon"></i>Edit</div>
+          <div class="item"><i class="settings icon"></i>Settings</div>
+          <div class="text-danger header">Danger Zone</div>
+          <div class="item"><a href="#" class="text-danger"><i class="trash icon"></i>Delete Record</a></div>
+        </div>
+      {{/ui-dropdown}}
+    </div>
+  </div>
+
   <div class="ui padded raised segment">
     <hgroup class="clearfix">
       <h1 class="ui header">
@@ -19,8 +46,6 @@
 
     <div class="ui divider"></div>
 
-    {{#if model.onboarding}}
-      {{#link-to 'account.employee.onboard' model.id class="ui huge fluid blue button"}}Continue onboarding{{/link-to}}
-    {{/if}}
+    {{outlet}}
   </div>
 </div>
