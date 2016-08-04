@@ -34,6 +34,11 @@ Router.map(function() {
       });
     });
     this.route('employee', { path: '/employee/:id' }, function() {
+      this.route('index', { path: '/' }, function() {
+        this.route('index', { path: '' });
+        this.route('equipment');
+        this.route('job');
+      });
       this.route('onboard', function() {
         this.route('index', { path: '/start' });
         this.route('job-information');
