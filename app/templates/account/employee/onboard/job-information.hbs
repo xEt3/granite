@@ -1,35 +1,40 @@
-<form class="ui form" {{action "save" on="submit"}}>
+<form class="ui form" {{action "saveAndContinue" on="submit"}}>
   <h4 class="ui dividing header">Add Position Information</h4>
   <div class="field">
     <label for="job-title">Job Title</label>
     {{validated-input type="text" model=model valuePath="jobTitle" placeholder="Job Title" id="job-title"}}
   </div>
-
-  <div class="three fields">
-    <div class="field">
-      Non-exempt
-      {{ui-checkbox class="toggle" label="Exempt" checked=pre_checked onChange=(action (mut pre_checked))}}
-    </div>
-    <div class="two fields">
-      <label for="pay-rate">Pay Rate</label>
-      <input type="number" id="pay-rate">
-        <div class="four wide field">
-          {{#ui-dropdown}}
+  <div class="ui equal width form segment">
+    <div class="three fields">
+      <div class="field">
+        Non-exempt
+        {{ui-checkbox class="toggle" label="Exempt" checked=pre_checked onChange=(action (mut pre_checked))}}
+      </div>
+      <div class="field">
+        <label for="pay-rate">Pay Rate</label>
+        <div class="ui left icon input pay-rate-number">
+          <input type="number" id="pay-rate" value="Pay Rate">
+          <i class="dollar icon"></i>
+          {{#ui-dropdown class="inline pay-rate-unit" selected="Bob" onChange=(action (mut gender))}}
             <div class="default text">Unit</div>
             <i class="dropdown icon"></i>
             <div class="menu">
-              <div class="item" data-value="hour">
-                hour
-              </div>
               <div class="item" data-value="year">
                 year
+              </div>
+              <div class="item" data-value="hour">
+                hour
               </div>
             </div>
           {{/ui-dropdown}}
         </div>
+      </div>
+      <div class="field">
+        <label for="workers-comp">Workers Comp Class Code</label>
+        <input type="text" id="workers-comp">
+      </div>
     </div>
   </div>
-
   <div class="field">
     <label for="job-location">Location</label>
     {{#ui-dropdown class="selection" selected=model.location onChange=(action (mut model.location))}}
@@ -87,7 +92,6 @@
     {{/ui-dropdown}}
   </div>
 
-
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class="ui massive fluid green button" loading=working}}Continue{{/form/action-button}}
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Continue{{/form/action-button}}
 </form>
