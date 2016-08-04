@@ -1,0 +1,41 @@
+<div class="ui container">
+  <div class="ui pointing menu">
+    {{#link-to 'account.asset.index' class="item"}}
+      <i class="list icon"></i>Stock
+    {{/link-to}}
+    {{#link-to 'account.asset.information' class="item"}}
+      <i class="info icon"></i>Attributes
+    {{/link-to}}
+    {{#link-to 'account.asset.documents' class="item"}}
+      <i class="file icon"></i>Associated Documents
+    {{/link-to}}
+    <div class="right menu">
+      {{#ui-dropdown class="item icon top right pointing"}}
+        <i class="wrench icon"></i><i class="dropdown icon"></i>
+        <div class="menu">
+          {{#link-to 'account.asset.edit' class="item"}}<i class="edit icon"></i>Edit{{/link-to}}
+          {{#link-to 'account.asset.settings' class="item"}}<i class="settings icon"></i>Settings{{/link-to}}
+          <div class="text-danger header">Danger Zone</div>
+          <div class="item"><a href="#" class="text-danger"><i class="trash icon"></i>Delete Record</a></div>
+        </div>
+      {{/ui-dropdown}}
+    </div>
+  </div>
+
+  <div class="ui padded raised segment">
+    <hgroup class="clearfix">
+      <h1 class="ui header">
+        <div class="content">
+          {{model.name}}
+          <div class="sub header">
+            Created {{time-ago model.created}} on {{time model.created}}
+          </div>
+        </div>
+      </h1>
+    </hgroup>
+
+    <div class="ui divider"></div>
+
+    {{outlet}}
+  </div>
+</div>
