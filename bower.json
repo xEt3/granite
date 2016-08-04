@@ -2,7 +2,7 @@
   "name": "granite",
   "dependencies": {
     "ember": "~2.7.0",
-    "ember-cli-shims": "0.1.1",
+    "ember-cli-shims": "~0.1.1",
     "semantic-ui": "^2.1.8",
     "jquery.inputmask": "^3.3.1",
     "moment": "^2.13.0",
