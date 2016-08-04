@@ -56,6 +56,12 @@ Router.map(function() {
     this.route('assets', function() {
       this.route('new');
     });
+    this.route('asset', { path: '/asset/:id' }, function() {
+      this.route('information');
+      this.route('documents');
+      this.route('settings');
+      this.route('edit');
+    });
   });
 
   this.route('error');

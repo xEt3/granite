@@ -24,6 +24,10 @@ export default Controller.extend({
     title: 'Documents',
     link: 'documents'
   }, {
+    icon: 'mobile',
+    title: 'Company Assets',
+    link: 'assets'
+  }, {
     icon: 'doctor',
     title: 'Leave Management',
     link: 'index'
