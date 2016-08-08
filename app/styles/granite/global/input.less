@@ -1,0 +1,30 @@
+.select-addon.input {
+  position: relative;
+
+  > .dropdown {
+    position: absolute !important;
+    top: .5em;
+    background-color: none !important;
+    box-shadow: none !important;
+  }
+
+  &.left {
+    > input {
+      padding-left: 5em !important;
+    }
+
+    > .dropdown {
+      left: 1em;
+    }
+  }
+
+  &.right {
+    > input {
+      padding-right: 5em !important;
+    }
+
+    > .dropdown {
+      right: 1em;
+    }
+  }
+}
