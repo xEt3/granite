@@ -87,7 +87,7 @@ export default Service.extend({
         this.set('session', existingSession);
       }
 
-      return existingSession || false;
+      return existingSession ? this.get('user').then(() => existingSession) : false;
     });
   },
 
@@ -95,7 +95,7 @@ export default Service.extend({
     const userId = this.get('userId');
 
     if ( !userId || !this.get('authenticated') ) {
-      return undefined;
+      return Ember.RSVP.Promise.resolve();
     }
 
     return this.get('store').find('company-user', userId);

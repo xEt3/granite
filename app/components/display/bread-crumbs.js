@@ -9,25 +9,52 @@ export default Component.extend({
   segments: computed('currentPath', function () {
     const path = this.get('currentPath'),
           pathSplit = path.split('.'),
-          pathLength = pathSplit.length;
+          pathLength = pathSplit.length,
+          overrides = this.get('overrides');
 
     let segments = A(),
         linkUntil;
 
+    let mutTitle = t => titleCase([t.replace(/-/g, ' ')]);
+
     pathSplit.forEach((segment, i) => {
+      if ( segment === 'index' ) {
+        linkUntil = pathSplit.slice(0, i + 1).join('.') + '.';
+        return;
+      }
+
+      if ( i !== 0 ) {
+        segments.pushObject({ divider: true });
+      }
+
       segments.pushObject({
-        title: titleCase([segment.replace(/-/g, ' ')]),
+        title: mutTitle(segment),
         segmentName: segment,
         link: linkUntil ? linkUntil + segment : segment,
         last: i + 1 === pathLength
       });
 
       linkUntil = pathSplit.slice(0, i + 1).join('.') + '.';
-
-      if ( pathLength !== i + 1 ) {
-        segments.pushObject({ divider: true });
-      }
     });
+
+    if ( overrides ) {
+      overrides.forEach(override => {
+        let segment = segments.findBy('segmentName', override.when);
+
+        if ( segment ) {
+          let i = segments.indexOf(segment);
+
+          segments.insertAt(i, {
+            title: mutTitle(override.prepend.segment),
+            segmentName: override.prepend.segment,
+            link: override.prepend.link,
+            last: false
+          });
+
+          segments.insertAt(i + 1, { divider: true });
+        }
+      });
+    }
 
     return segments;
   })
