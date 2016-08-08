@@ -12,7 +12,13 @@ nav.ui.menu.account__navigation {
     }
   }
 
-  > .item:first-child > a {
+  > a.item:first-child {
+    border-radius: 0 !important;
+
+    .icon {
+      margin: 0 !important;
+    }
+
     &:after {
       content: 'Menu';
       display: inline-block;
@@ -22,10 +28,16 @@ nav.ui.menu.account__navigation {
       line-height: 1;
       vertical-align: middle;
       font-size: 1.3em;
+      margin-left: 6px;
     }
 
-    &:hover:after {
-      width: 48px;
+    &:hover {
+      background-color: @granite-blue;
+      color: white;
+
+      &:after {
+        width: 48px;
+      }
     }
   }
 }
@@ -33,6 +45,7 @@ nav.ui.menu.account__navigation {
 .company-logo-dropdown {
   padding: 0 1em 0 1em !important;
 }
+
 .company-logo {
   height: 53px;
   width: 60px;

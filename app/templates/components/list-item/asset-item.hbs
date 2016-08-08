@@ -1,6 +1,9 @@
 {{#if hasBlock}}
   {{yield asset.name asset.description}}
 {{else}}
+  {{#if asset.icon}}
+    <i class="large middle aligned {{asset.icon}} icon"></i>
+  {{/if}}
   <div class="content">
     <div class="header">{{asset.name}}</div>
     <div class="meta">

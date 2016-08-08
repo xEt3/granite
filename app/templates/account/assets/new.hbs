@@ -3,7 +3,21 @@
     <h1 class="ui dividing header">Add a New Asset Category</h1>
     <div class="field">
       <label for="asset-name">Asset Name</label>
-      {{input type="text" value=model.name id="asset-name" placeholder="Keycards"}}
+      <div class="ui left select-addon input pay-rate-number">
+        {{#ui-dropdown class="inline scrolling" selected=model.icon onChange=(action (mut model.icon))}}
+          <div class="default text">Icon</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            {{#each icons as |icon|}}
+              <div class="item" data-value="{{icon}}">
+                <i class="{{icon}} icon"></i>
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+
+        {{input type="text" value=model.name id="asset-name" placeholder="Keycards"}}
+      </div>
     </div>
     <div class="field">
       <label for="asset-description">Description</label>

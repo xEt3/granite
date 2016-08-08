@@ -5,5 +5,6 @@ const { Controller } = Ember;
 
 export default Controller.extend(addEdit, {
   transitionAfterSave: 'account.asset',
-  transitionWithModel: true
+  transitionWithModel: true,
+  icons: 'mobile tablet desktop laptop car lab configure asterisk cube sound photo'.w()
 });
