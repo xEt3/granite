@@ -1,5 +1,6 @@
 James - 8/9/16
--
+- Fix initial page var bug in x-pagination
+- Fix some design files
 - Add `transitions.js` file for liquid fire use
 - Add `isExpiring` cp to `auth` service and stub `refreshSession` for future use
 - You can now add attributes to asset categories

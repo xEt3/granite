@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component, computed, assert } = Ember;
+const { Component, computed } = Ember;
 
 export default Component.extend({
   _pages: computed.reads('pages'),
@@ -8,7 +8,7 @@ export default Component.extend({
   maxButtons: 6,
 
   didReceiveAttrs () {
-    this.set('_page', parseFloat(this.get('page')));
+    this.set('_page', parseFloat(this.get('page')) || 1);
   },
 
   _buttons: computed('_pages', '_page', 'maxButtons', function () {
