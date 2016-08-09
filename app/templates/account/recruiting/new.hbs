@@ -12,9 +12,14 @@
       {{validated-input type="text" model=model valuePath="title" placeholder="Job Title" id="job-title" inputClass="ui large fluid input"}}
     </div>
 
-    <div class="field">
+    {{!-- <div class="field">
       <label for="job-description" class="sr-only">Job Description</label>
       {{froala-editor content=model.description contentChanged=(action (mut model.description)) options=(hash heightMin=250 placeholderText="Job Description")}}
+    </div> --}}
+
+    <div class="field">
+      <label for="secondary-description">Testing Description</label>
+      {{textarea value=model.description id="secondary-description" cols="80" rows="6" spellcheck="true"}}
     </div>
     <button class="ui positive button" onSubmit="{{action 'save'}}">Save</button>
   </form>
