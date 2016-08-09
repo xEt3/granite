@@ -1,4 +1,6 @@
-{{yield startConfirmation}}
+{{#if hasBlock}}
+  {{yield startConfirmation}}
+{{/if}}
 
 {{#ui-modal name="profile" id=modalId class="confirm-modal basic small"}}
   <i class="close icon"></i>

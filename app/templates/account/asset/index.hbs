@@ -1,1 +1,17 @@
-{{outlet}}
+<h3 class="ui header">
+  {{#liquid-if addingAsset}}
+    {{#link-to 'account.asset.index' class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
+  {{else}}
+    {{#link-to 'account.asset.index.new' class="right floated"}}<i class="plus icon"></i>{{/link-to}}
+  {{/liquid-if}}
+</h3>
+
+{{liquid-outlet class="add-asset-stock"}}
+
+<div class="ui relaxed divided list">
+  {{#each model as |asset|}}
+    {{list-item/asset-stock-item asset=asset}}
+  {{else}}
+    <h2 class="ui center aligned header">No assets available. {{#link-to 'account.asset.index.new'}}Add one?{{/link-to}}</h2>
+  {{/each}}
+</div>
