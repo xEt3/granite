@@ -10,3 +10,7 @@
   {{/if}}
   {{outlet}}
 </div>
+
+{{#if auth.isExpiring}}
+  {{confirm-modal confirmOnRender=true confirmContent='Your session is expiring. Would you like to continue?'}}
+{{/if}}

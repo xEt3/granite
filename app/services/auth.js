@@ -64,6 +64,8 @@ export default Service.extend({
     });
   },
 
+  refreshSession: Ember.K,
+
   /**
    * Initializes an existing session
    * @param  {Boolean} cleanup Cleans expirees as we get the session
@@ -103,5 +105,9 @@ export default Service.extend({
 
   isExpired: computed('clock.minute', 'session.expires', function () {
     return moment(this.get('session.expires')).isBefore(moment());
+  }),
+
+  isExpiring: computed('clock.minute', 'session.expires', function () {
+    return moment(this.get('session.expires')).subtract(2, 'minutes').isBefore(moment());
   })
 });

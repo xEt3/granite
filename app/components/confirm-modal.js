@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component, RSVP: { Promise }, computed } = Ember;
+const { Component, RSVP: { Promise }, computed, run } = Ember;
 
 export default Component.extend({
   responded: false,
@@ -8,6 +8,12 @@ export default Component.extend({
   modalId: computed('elementId', function () {
     return this.get('elementId') + '-modal';
   }),
+
+  didReceiveAttrs () {
+    if ( this.get('confirmOnRender') ) {
+      run.scheduleOnce('afterRender', () => this.get('startConfirmation')());
+    }
+  },
 
   createConfirm () {
     this.set('responded', false);
@@ -37,6 +43,13 @@ export default Component.extend({
       this.get(response ? 'resolve' : 'reject')();
       this.set('responded', true);
       this.closeModal();
+
+      // Bubble up the response to an action attr if available
+      let onResponse = this.get('onResponse');
+
+      if ( onResponse && typeof onResponse === 'function' ) {
+        onResponse(response);
+      }
     }
   }
 });
