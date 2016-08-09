@@ -1,0 +1,3 @@
+- Added account/asset/index/new
+- Added Array Transform
+- Added attributes key to asset model
