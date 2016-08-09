@@ -1,0 +1,55 @@
+<div class="ui container">
+  <div class="ui pointing menu">
+    {{#link-to 'account.employee.index.index' class="item"}}
+      <i class="list icon"></i>Summary
+    {{/link-to}}
+    {{#link-to 'account.employee.index.equipment' class="item"}}
+      <i class="mobile icon"></i>Equipment
+    {{/link-to}}
+    {{#link-to 'account.employee.index.job' class="item"}}
+      <i class="travel icon"></i>Job
+    {{/link-to}}
+    <div class="right menu">
+      {{#if model.onboarding}}
+        {{#link-to 'account.employee.onboard' model.id class="item text-blue"}}<i class="wizard icon"></i>Continue Onboarding{{/link-to}}
+      {{/if}}
+
+      {{#ui-dropdown class="item icon top right pointing"}}
+        <i class="wrench icon"></i><i class="dropdown icon"></i>
+        <div class="menu">
+          <div class="item"><i class="edit icon"></i>Edit</div>
+          <div class="item"><i class="settings icon"></i>Settings</div>
+          <div class="text-danger header">Danger Zone</div>
+          <div class="item">
+            {{#confirm-modal as |confirm|}}
+              <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}><i class="trash icon"></i>Delete Record</a>
+            {{/confirm-modal}}
+          </div>
+        </div>
+      {{/ui-dropdown}}
+    </div>
+  </div>
+
+  <div class="ui padded raised segment">
+    <hgroup class="clearfix">
+      <h1 class="ui header">
+        <div class="ui tiny rounded left floated image">
+          {{display/employee-picture url=model.picture}}
+        </div>
+        <div class="content">
+          {{model.fullName}}
+          <div class="sub header">
+            {{model.jobTitle}}
+            {{#if model.hireDate}}
+              Since {{time model.hireDate 'MMMM YYYY'}}
+            {{/if}}
+          </div>
+        </div>
+      </h1>
+    </hgroup>
+
+    <div class="ui divider"></div>
+
+    {{outlet}}
+  </div>
+</div>

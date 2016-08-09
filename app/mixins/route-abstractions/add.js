@@ -5,7 +5,12 @@ export default Ember.Mixin.create({
 
   model () {
     const modelName = this.get('modelName'),
-          defaults = this.get('modelDefaults');
+          defaults = this.get('modelDefaults'),
+          getDefaults = this.getModelDefaults;
+
+    if ( getDefaults && typeof getDefaults === 'function' ) {
+      Ember.$.extend(defaults, this.getModelDefaults());
+    }
 
     Ember.assert('You must specify a modelName.', modelName);
 

@@ -23,7 +23,7 @@ export default Controller.extend(ajaxStatus, {
         if ( previousTransition ) {
           previousTransition.retry();
         } else {
-          this.transitionToRoute('index');
+          this.transitionToRoute('account.index');
         }
       })
       .catch(this.ajaxError.bind(this));

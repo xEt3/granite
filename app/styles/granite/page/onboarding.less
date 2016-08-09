@@ -1,0 +1,67 @@
+.employee__onboarding .employee__onboarding-progress {
+  margin: 0 !important;
+  border-radius: 0 !important;
+
+  .bar {
+    height: .2em !important;
+  }
+}
+
+.employee__onboarding .employee__onboarding-steps {
+  margin: 0 -1px 0em;
+  border-radius: 0em 0em 0.28571429rem 0.28571429rem;
+  max-width: calc(100% + 2px );
+  border: none;
+  border-top: 1px solid @gray-lighter;
+  margin: 0;
+
+  @media all and (min-width: 768px) {
+    .step {
+      box-shadow: 0 4px 9px -4px fade(@granite-grey, 60%) inset;
+    }
+
+    .step:first-child {
+      border-radius: 0em 0em 0em 0.28571429rem;
+    }
+
+    .step:last-child {
+      border-radius: 0em 0em 0.28571429rem 0em;
+    }
+  }
+}
+
+.employee__onboarding .employee__onboarding-segment {
+  top: 0px;
+  bottom: 0px;
+  border-radius: 0px;
+  margin: 0;
+  max-width: calc(100% + 2px);
+  box-shadow: none;
+  border: none;
+}
+
+.pay-rate-number {
+  position: relative;
+}
+
+#pay-rate {
+  padding-right: 6em !important;
+}
+
+.pay-rate-unit {
+  position: absolute !important;
+  top: .5em;
+  right: 0;
+  background-color: none !important;
+  box-shadow: none !important;
+}
+
+.clearfix {
+  overflow: auto;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

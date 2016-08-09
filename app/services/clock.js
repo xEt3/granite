@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import moment from 'moment';
 
 const { Service, computed, on, run } = Ember;
 

@@ -1,0 +1,29 @@
+{{#if hasBlock}}
+  {{yield employee.fullName employee.title}}
+{{else}}
+  <div class="ui tiny rounded image">
+    <img src="{{if employee.picture employee.picture '/assets/images/default-avatar.png'}}">
+  </div>
+  <div class="content">
+    <div class="header">{{employee.fullName}}</div>
+    <div class="meta">
+      <span>{{employee.jobTitle}}</span>
+      <span class="ui small text right floated">{{time employee.created}}</span>
+    </div>
+    <div class="extra">
+      {{#if employee.onboarding}}
+        <div class="ui green label">
+          <i class="circle thin icon"></i>Onboarding
+          {{#if employee.onboardingProgress}}
+            {{employee.onboardingProgress}}% complete
+          {{else}}
+            in progress
+          {{/if}}
+          {{#if employee.onboarder}}
+            by {{employee.onboarder.fullName}}
+          {{/if}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+{{/if}}

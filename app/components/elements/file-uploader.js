@@ -1,7 +1,7 @@
 import Ember from 'ember';
+import ajaxStatus from 'granite/mixins/ajax-status';
 
-
-export default Ember.Component.extend({
+export default Ember.Component.extend(ajaxStatus, {
   classNameBindings: [ 'dragging' ],
   files: Ember.A(),
   doesNotHaveFiles: Ember.computed.not('hasFiles'),
@@ -9,7 +9,6 @@ export default Ember.Component.extend({
   allowMulti: true,
   url: '',
   dragging: false,
-
 
   dragEnter(e) {
     e.stopPropagation();
@@ -34,9 +33,12 @@ export default Ember.Component.extend({
     var addingFiles = this._buildFiles(e.dataTransfer.files);
     this._validateFiles(addingFiles);
     this.set('dragging', false);
+    if ( this.get('autoUpload') ) {
+      this.send('saveDocument');
+    }
   },
 
-  uploadFile ( file, documentId ) {
+  uploadFile ( file ) {
     let formData = new FormData();
     formData.append('file', file);
     return new Ember.RSVP.Promise((resolve, reject) => {
@@ -49,12 +51,12 @@ export default Ember.Component.extend({
         cache: false,
         xhr: () => {
           let xhr = new window.XMLHttpRequest();
+
           xhr.upload.addEventListener('progress', evt => {
             if ( evt && evt.lengthComputable ) {
               this.set('uploadProgress', Math.round(evt.loaded / evt.total * 100));
             }
           }, false);
-          console.log('xhr response', xhr.responseText);
 
           return xhr;
         },
@@ -80,7 +82,7 @@ export default Ember.Component.extend({
       return exts.length - 1 === index ? ext : ext + '|';
     }).join(''), 'i');
 
-    var handleError = function ( err ) {
+    var handleError = err => {
       self.set('fileError', err);
     };
 
@@ -102,7 +104,6 @@ export default Ember.Component.extend({
       }
     }
   },
-
 
   _buildFiles (fileList) {
     var files = [];
@@ -153,6 +154,10 @@ export default Ember.Component.extend({
 
 
   actions: {
+    notify ( type, msg ) {
+      this.get('onNotify')(type, msg);
+    },
+
     triggerFileInput () {
       this.$().find('#' + this.get('inputId')).click();
     },
@@ -160,16 +165,23 @@ export default Ember.Component.extend({
     selectFile () {
       var addingFiles = this._buildFiles(this.$().find('#' + this.get('inputId'))[0].files);
       this._validateFiles(addingFiles);
+
+      if ( this.get('autoUpload') ) {
+        this.send('saveDocument');
+      }
     },
 
     saveDocument () {
-      var file = this.get('files.firstObject');
-      this.uploadFile(file).then(successful => {
+      this.ajaxStart();
+
+      this.uploadFile(this.get('files.firstObject'))
+      .then(successful => {
+        this.set('uploadProgress', false);
         this.get('onWinning')(successful);
-        console.log('great success', successful);
-      }).catch(reason => {
-        this.get('onError')(reason);
-        console.log(reason.responseText);
+        this.ajaxSuccess();
+      }).catch(err => {
+        this.get('onError')(err);
+        this.ajaxError(err);
       });
     },
 

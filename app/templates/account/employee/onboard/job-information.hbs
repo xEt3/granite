@@ -1,0 +1,101 @@
+<form class="ui form" {{action "saveAndContinue" on="submit"}}>
+  <h4 class="ui dividing header">Add Position Information</h4>
+  <div class="field">
+    <label for="job-title">Job Title</label>
+    {{validated-input type="text" model=model valuePath="jobTitle" placeholder="Job Title" id="job-title"}}
+  </div>
+  <div class="ui equal width form segment">
+    <div class="three fields">
+      <div class="field">
+        <label for="exemption-status">Exemption Status</label>
+        Non-exempt
+        {{ui-checkbox class="toggle" label="Exempt" checked=pre_checked onChange=(action (mut pre_checked))}}
+      </div>
+      <div class="field">
+        <label for="pay-rate">Pay Rate</label>
+        <div class="ui left icon input pay-rate-number">
+          <input type="number" id="pay-rate" value="Pay Rate">
+          <i class="dollar icon"></i>
+          {{#ui-dropdown class="inline pay-rate-unit" selected="yearly" onChange=(action (mut gender))}}
+            <div class="default text">Unit</div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <div class="item" data-value="yearly">
+                yearly
+              </div>
+              <div class="item" data-value="monthly">
+                monthly
+              </div>
+              <div class="item" data-value="hourly">
+                hourly
+              </div>
+            </div>
+          {{/ui-dropdown}}
+        </div>
+      </div>
+      <div class="field">
+        <label for="workers-comp">Workers Comp Class Code</label>
+        <input type="text" id="workers-comp">
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <label for="job-location">Location</label>
+    {{#ui-dropdown class="selection" selected=model.location onChange=(action (mut model.location))}}
+      <div class="default text">Location</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each locations as |location|}}
+          <div class="item" data-value="{{location}}">
+            {{location}}
+          </div>
+        {{/each}}
+      </div>
+    {{/ui-dropdown}}
+  </div>
+  <div class="field">
+    <label for="job-department">Department</label>
+    {{#ui-dropdown class="selection" selected=model.department onChange=(action (mut model.department))}}
+      <div class="default text">Department</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each departments as |department|}}
+          <div class="item" data-value="{{department}}">
+            {{department}}
+          </div>
+        {{/each}}
+      </div>
+    {{/ui-dropdown}}
+  </div>
+  <div class="field">
+    <label for="supervisor">Supervisor</label>
+    {{#ui-dropdown class="selection" selected=model.supervisor onChange=(action (mut model.supervisor))}}
+      <div class="default text">Supervisor</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each supervisors as |supervisor|}}
+          <div class="item" data-value="{{supervisor}}">
+            {{supervisor}}
+          </div>
+        {{/each}}
+      </div>
+    {{/ui-dropdown}}
+  </div>
+  <div class="field">
+    <label for="supervisor">Supervises</label>
+    {{#ui-dropdown class="selection" selected=model.supervises onChange=(action (mut model.supervisor))}}
+      <div class="default text">Supervises</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each supervises as |supervisee|}}
+          <div class="item" data-value="{{supervisee}}">
+            {{supervisee}}
+          </div>
+        {{/each}}
+      </div>
+    {{/ui-dropdown}}
+  </div>
+
+  <div class="ui divider"></div>
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Continue{{/form/action-button}}
+</form>

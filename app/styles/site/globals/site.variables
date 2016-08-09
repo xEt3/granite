@@ -4,6 +4,7 @@
 
 /* Fonts */
 @fontName: 'Oxygen';
+@fontNameMonospaced: 'Menlo', 'Lucida Console', Monaco, monospace;
 @googleFontRequest: 'Oxygen:400,300,700';
 
 /* Colors */
@@ -21,7 +22,7 @@
 @brown          : #B28576;
 @grey           : @granite-grey;
 @black          : #000000;
-@primaryColor   : @pink;
+@primaryColor   : @blue;
 @secondaryColor : @grey;
 
 @gray-darker:            lighten(#000, 13.5%); // #222

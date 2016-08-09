@@ -1,0 +1,9 @@
+<form class="ui form" {{action "saveAndContinue" on="submit"}}>
+  <h4 class="ui dividing header">Assign Company Assets</h4>
+  <div class="field">
+    <label for="cell-phone">Cell Phone</label>
+    <input type="tel" placeholder="Phone Number">
+  </div>
+  <div class="ui divider"></div>
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Continue{{/form/action-button}}
+</form>

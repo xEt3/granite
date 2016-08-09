@@ -5,6 +5,8 @@ function upperCaseFirst ( str ) {
 export default function serializeObject ( object, prefix ) {
   var args = Array.prototype.slice.call(arguments, 2);
 
+  let pre = (a, key) => prefix === 'suffix' ? key + upperCaseFirst(a) : a + upperCaseFirst(key);
+
   if ( !object || typeof object !== 'object' ) {
     return object;
   }
@@ -16,11 +18,11 @@ export default function serializeObject ( object, prefix ) {
       }
 
       if ( typeof o[key] === 'object' ) {
-        setInside(o[key], a ? a + upperCaseFirst(key) : key );
+        setInside(o[key], a ? pre(a, key) : key );
         continue;
       }
 
-      var modifiedKey = a ? a + upperCaseFirst(key) : key;
+      var modifiedKey = a ? pre(a, key) : key;
       object[modifiedKey] = o[key];
     }
     return object;
