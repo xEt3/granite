@@ -1,1 +1,21 @@
-{{yield}}
+<div class="content">
+  <span class="header clearfix">
+    {{asset.identifier}}
+    {{#ui-popup tagName='span' content="View attributes"}}
+      <a href="#" {{action "toggleProperty" "details"}}><i class="{{if details 'up' 'down'}} angle icon"></i></a>
+    {{/ui-popup}}
+    <div class="description right floated text small">Created {{time-ago asset.created}}{{#if asset.creator}} by {{asset.creator.fullName}}{{/if}}</div>
+  </span>
+  {{#liquid-if details}}
+    <div class="ui segment">
+      {{#each attributes as |attr|}}
+        <div class="line-item-value">
+          <i>{{attr.key}}</i>
+          <u>
+            {{attr.value}}
+          </u>
+        </div>
+      {{/each}}
+    </div>
+  {{/liquid-if}}
+</div>
