@@ -14,3 +14,5 @@ James - 8/9/16
 - Added `account/asset/index/new`
 - Added Array Transform
 - Added `attributes` key to `asset` model
+Scott - 8/9/16
+- Added Route/Controller/Template for New Asset Item
