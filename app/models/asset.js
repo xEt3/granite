@@ -7,6 +7,7 @@ export default Model.extend({
   description: attr('string'),
   icon:        attr('string'),
   sharable:    attr('boolean'),
+  attributes:  attr('array'),
 
   creator:     belongsTo('company-user'),
   company:     belongsTo('company'),

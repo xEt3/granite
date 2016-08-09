@@ -57,7 +57,9 @@ Router.map(function() {
       this.route('new');
     });
     this.route('asset', { path: '/asset/:id' }, function() {
-      this.route('index', { path: '/stock' });
+      this.route('index', { path: '/stock' }, function() {
+        this.route('new');
+      });
       this.route('information');
       this.route('documents');
       this.route('settings');
