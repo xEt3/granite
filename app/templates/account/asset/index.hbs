@@ -10,8 +10,14 @@
 
 <div class="ui relaxed divided list">
   {{#each model as |asset|}}
-    {{list-item/asset-stock-item asset=asset}}
+    {{list-item/asset-stock-item asset=asset showAttributes=expandAttributes}}
   {{else}}
     <h2 class="ui center aligned header">No assets available. {{#link-to 'account.asset.index.new'}}Add one?{{/link-to}}</h2>
   {{/each}}
 </div>
+
+{{#if model}}
+  <p class="center aligned text">
+    <a href="#" {{action 'toggleProperty' 'expandAttributes'}}><i class="eye icon"></i> {{if expandAttributes 'Hide' 'Show'}} all stock attributes</a>
+  </p>
+{{/if}}

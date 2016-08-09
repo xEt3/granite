@@ -1,0 +1,36 @@
+.line-item-value {
+  position: relative;
+  font-size: .8em;
+  margin: 0;
+  .clearfix;
+
+  > u, > i {
+    position: relative;
+    z-index: 1;
+  }
+
+  > i {
+    padding-right: 3px;
+    font-weight: 900;
+    font-style: normal;
+    background-color: white;
+  }
+
+  > u {
+    padding-left: 3px;
+    color: @granite-grey;
+    text-decoration: none;
+    background-color: white;
+    float: right;
+  }
+
+  &:after {
+    display: block;
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    border-bottom: 1px dotted darken(@gray-lighter, 12%);
+    z-index: 0;
+  }
+}

@@ -1,4 +1,9 @@
 James - 8/9/16
+- Hooked up a "show attrs for all" button in `asset.index`
+- Added styles for .line-item-value
+- Duplicated refreshable mixin from slate repo
+- Added template/code for list-item/asset-stock-item
+- Add custom field component for custom attribute editing
 - Fix initial page var bug in x-pagination
 - Fix some design files
 - Add `transitions.js` file for liquid fire use
