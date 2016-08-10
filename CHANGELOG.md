@@ -17,3 +17,5 @@ James - 8/9/16
 
 Scott - 8/9/16
 - Added Route/Controller/Template for New Asset Item
+Scott - 8/10/16
+- Modified asset-stock-item
