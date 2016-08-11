@@ -1,3 +1,6 @@
+James - 8/11/16
+- Add "bubble-action" util
+
 James - 8/10/16
 - Auth's `isExpiring` now is true only if authenticated
 - Add dropdown for equipment assign page
