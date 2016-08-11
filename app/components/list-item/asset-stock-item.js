@@ -4,7 +4,6 @@ const { Component, computed } = Ember;
 
 export default Component.extend({
   classNames: [ 'item' ],
-
   didReceiveAttrs () {
     this.set('details', this.get('showAttributes'));
   },
@@ -28,6 +27,11 @@ export default Component.extend({
   }),
 
   actions: {
+
+    delete() {
+      this.get('onDelete')(this.get('asset'));
+    },
+
     toggleProperty ( prop ) {
       this.toggleProperty(prop);
     }

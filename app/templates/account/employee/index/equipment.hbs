@@ -1,1 +1,4 @@
 Some stuff about an employee's equipment
+{{#each model as |asset|}}
+  {{list-item/asset-stock-item asset=asset showAttributes=expandAttributes}}
+{{/each}}
