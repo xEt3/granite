@@ -1,57 +1,72 @@
+<h2 class="ui horizontal divider header">
+  Assets
+</h2>
+
 <form class="ui form" {{action "saveAndContinue" on="submit"}}>
-  <div class="right aligned text">
-    {{#ui-dropdown class="inline right pointing labeled employee__onboarding-asset-dropdown"}}
-      <h3 class="ui header"><a href="#"><i class="plus icon"></i></a></h3>
-      <div class="menu">
-        <div class="header">Click Equipment to Assign</div>
-        <div class="ui search icon input">
-          <i class="search icon"></i>
-          <input type="text" name="search" placeholder="Search Equipment...">
-        </div>
-        {{#each assignableAssets as |assetGroup|}}
+  <div class="ui basic segment">
+    <div class="right aligned text">
+      {{#input/equipment-picker assignableAssets=assignableAssets onSelect=(action 'selectAsset') onCreate=(action 'createAsset')}}
+        <h3 class="ui header"><a href="#"><i class="plus icon"></i></a></h3>
+      {{/input/equipment-picker}}
+    </div>
+
+    <div class="ui relaxed divided list">
+      {{#each groupedAssignedAssets as |assetGroup|}}
+        <h4 class="header">
+          {{#if assetGroup.asset.icon}}
+            <i class="{{assetGroup.asset.icon}} icon"></i>
+          {{/if}}
+          {{assetGroup.asset.name}}
+        </h4>
+        {{#each assetGroup.assets as |asset|}}
           <div class="item">
-            <i class="left dropdown icon"></i>
-            <span class="text">
-              {{#if assetGroup.asset.icon}}
-                <i class="{{assetGroup.asset.icon}} icon"></i>
-              {{/if}}
-              {{assetGroup.asset.name}}
+            {{asset.identifier}}
+            <span class="right floated">
+              {{#ui-popup content='Unassign asset'}}
+                <a href="#" class="text-danger" {{action "unassignAsset" asset}}><i class="minus icon"></i></a>
+              {{/ui-popup}}
             </span>
-            <div class="left menu">
-              <div class="center aligned header">
-                {{assetGroup.asset.name}}
-              </div>
-              {{#link-to 'account.asset' assetGroup.asset.id class="item"}}<i class="settings icon"></i>Configure {{assetGroup.asset.name}}{{/link-to}}
-              <div class="divider"></div>
-              <a href="#" class="item" {{action "createAsset"}}>
-                <i class="asterisk icon"></i> New Stock Item
-              </a>
-              <div class="divider"></div>
-              {{#each assetGroup.stock as |asset|}}
-                <a href="#" class="item" {{action "selectAsset" asset}}>
-                  {{asset.identifier}}
-                </a>
-              {{else}}
-                <div class="center aligned header">
-                  No available stock for {{assetGroup.asset.name}}.
-                </div>
-              {{/each}}
-            </div>
           </div>
         {{/each}}
-      </div>
-    {{/ui-dropdown}}
+      {{else}}
+        <h2 class="ui center aligned header">
+          No assets assigned. Click "+" to assign some! <i class="right floated clockwise rotated reply icon"></i>
+        </h2>
+      {{/each}}
+    </div>
   </div>
 
-  <div class="ui relaxed divided list">
-    {{#each assignedAssets as |asset|}}
-      <div class="item">
-        {{asset.identifier}}
-      </div>
-    {{else}}
-      <h2 class="ui center aligned header">
-        No assets assigned. Click "+" to assign some! <i class="right floated clockwise rotated reply icon"></i>
-      </h2>
-    {{/each}}
-  </div>
+  <div class="ui divider"></div>
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
 </form>
+
+{{#ui-modal name="new-asset" class="new-asset" onApprove=(action 'saveAsset') onDeny=(action 'abortAsset')}}
+  <i class="cancel close icon"></i>
+  <div class="header">
+    Creating a new item in "{{pendingAssetItem.asset.name}}" for {{model.firstName}}
+  </div>
+  <div class="content">
+    <form class="ui form container">
+      <div class="field">
+        <label for="asset-identifier">Asset Identifier</label>
+        {{input type="text" value=pendingAssetItem.identifier id="asset-identifier" placeholder="Unique identifier (VIN, Stock #, RFID)"}}
+      </div>
+
+      {{#if pendingAssetItem.asset.attributes}}
+        <div class="ui divider"></div>
+        {{#each pendingAssetItem.asset.attributes as |attribute|}}
+          {{input/custom-field object=pendingAssetItem.customFields attribute=attribute}}
+        {{/each}}
+      {{/if}}
+    </form>
+  </div>
+  <div class="actions">
+    <div class="ui negative deny button">
+      Cancel
+    </div>
+    <div class="ui positive right labeled icon button">
+      Create &amp; Assign Asset
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
+{{/ui-modal}}

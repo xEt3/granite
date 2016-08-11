@@ -1,5 +1,11 @@
 James - 8/11/16
 - Add "bubble-action" util
+- Add `ember-inflector`, `ember-cli-nprogress` dependencies
+- Swap onboarding divider headers for `dividing` headers
+- Add `input/equipment-picker` component
+- Add modal, interactions, and actions for creating, assigning and unassigning assets in the `employee/onboarding/equipment`
+- Add loading transition to application
+- Add `silent` option to `ajax-status#ajaxSuccess`
 
 James - 8/10/16
 - Auth's `isExpiring` now is true only if authenticated
@@ -28,5 +34,3 @@ James - 8/9/16
 
 Scott - 8/9/16
 - Added Route/Controller/Template for New Asset Item
-Scott - 8/10/16
-- Modified asset-stock-item

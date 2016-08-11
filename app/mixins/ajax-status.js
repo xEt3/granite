@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
-export default Ember.Mixin.create({
+const { Mixin, Logger, run } = Ember;
+
+export default Mixin.create({
   successMessageTimeout: 3,
   enableNotify: true,
 
@@ -12,7 +14,7 @@ export default Ember.Mixin.create({
     }
 
     if ( err && !user ) {
-      Ember.Logger.error(err);
+      Logger.error(err);
     }
 
     this.setProperties({
@@ -25,20 +27,20 @@ export default Ember.Mixin.create({
     }
   },
 
-  ajaxSuccess ( success ) {
+  ajaxSuccess ( success, silent ) {
     this.setProperties({
       working:        false,
       errorMessage:   null,
       successMessage: success
     });
 
-    Ember.run.later(() => {
+    run.later(() => {
       if ( !this.get('isDestroyed') && !this.get('isDestroying') ) {
         this.set('successMessage', null);
       }
     }, this.get('successMessageTimeout') * 1000);
 
-    if ( this.get('enableNotify') ) {
+    if ( !silent && this.get('enableNotify') ) {
       this.send('notify', 'success', success || 'Successfully saved.');
     }
   },

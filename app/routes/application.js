@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import progress from 'ember-cli-nprogress';
 import { notifyDefaults } from 'granite/config';
 
 const { Route, $, Logger, inject } = Ember;
@@ -52,6 +53,11 @@ export default Route.extend({
 
     logout () {
       this.get('auth').logout();
+    },
+
+    loading ( transition ) {
+      progress.start();
+      transition.finally(() => progress.done());
     }
   }
 });
