@@ -108,6 +108,6 @@ export default Service.extend({
   }),
 
   isExpiring: computed('clock.minute', 'session.expires', function () {
-    return moment(this.get('session.expires')).subtract(2, 'minutes').isBefore(moment());
+    return this.get('authenticated') && moment(this.get('session.expires')).subtract(2, 'minutes').isBefore(moment());
   })
 });

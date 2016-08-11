@@ -1,3 +1,11 @@
+James - 8/10/16
+- Auth's `isExpiring` now is true only if authenticated
+- Add dropdown for equipment assign page
+- Only show attributes in asset-stock-item if there are actually attrs
+
+Scott - 8/10/16
+- Modified asset-stock-item
+
 James - 8/9/16
 - Hooked up a "show attrs for all" button in `asset.index`
 - Added styles for .line-item-value
