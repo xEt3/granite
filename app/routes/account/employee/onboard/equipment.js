@@ -23,7 +23,7 @@ export default Route.extend({
 
       assignedAssets: this.store.query('asset-item', {
         'assignments.employee': employee.get('id')
-      })
+      }).then(assets => assets.toArray())
     });
   },
 
