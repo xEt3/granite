@@ -1,4 +1,16 @@
-Some stuff about an employee's equipment
-{{#each model as |asset|}}
-  {{list-item/asset-stock-item asset=asset showAttributes=expandAttributes}}
-{{/each}}
+{{#if model}}
+  <div class="ui basic segment">
+    <div class="ui four cards">
+      {{#each model as |asset|}}
+        {{list-item/assigned-asset-item asset=asset employee=employee onUnassign=(action 'unassignAsset')}}
+      {{/each}}
+    </div>
+    {{#if working}}
+      <div class="ui active dimmer">
+        <div class="ui loader"></div>
+      </div>
+    {{/if}}
+  </div>
+{{else}}
+  <div class="header">No Items Assigned, Yet!</div>
+{{/if}}
