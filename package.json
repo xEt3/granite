@@ -21,7 +21,7 @@
   "devDependencies": {
     "babel-eslint": "^6.0.4",
     "broccoli-asset-rev": "^2.4.2",
-    "ember-ajax": "2.4.1",
+    "ember-ajax": "^2.5.1",
     "ember-braintree": "git+https://github.com/James1x0/ember-braintree.git#815446a21afd213e504777de36c4c7b9b18838ed",
     "ember-cli": "^2.7.0",
     "ember-cli-active-link-wrapper": "0.2.0",
