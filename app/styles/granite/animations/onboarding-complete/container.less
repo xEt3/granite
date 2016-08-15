@@ -1,0 +1,32 @@
+.animation__onboarding-complete {
+  position: relative;
+  color: @granite-green;
+  background-color: white;
+  padding: 2em 3em;
+  text-align: center;
+  overflow: hidden;
+  min-height: 300px;
+  animation:
+    0.9s circleFillContainerFadeUp cubic-bezier(1,.01,0,.99),
+    1.4s 0.9s circleFillContainerAnimation ease-in-out forwards;
+
+  > .content {
+    position: relative;
+    z-index: 1;
+  }
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+
+    width: 450px;
+    height: 450px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    animation: 1.3s 0.9s circleFill cubic-bezier(1,.01,0,.99) forwards;
+    border-radius: 50%;
+  }
+}

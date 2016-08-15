@@ -44,6 +44,7 @@ Router.map(function() {
         this.route('job-information');
         this.route('equipment');
       });
+      this.route('onboard-complete');
     });
     this.route('action-items');
     this.route('documents');

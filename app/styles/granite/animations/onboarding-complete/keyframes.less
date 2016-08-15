@@ -1,0 +1,31 @@
+@keyframes circleFill {
+  from {
+    transform: translate(-50%, -50%) scale(0.0001);
+    background-color: @granite-green;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(2);
+  }
+}
+
+@keyframes circleFillContainerFadeUp {
+  from {
+    opacity: 0;
+    transform: translate(0, 100%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes circleFillContainerAnimation {
+  from {
+    color: @granite-green;
+    background-color: white;
+  }
+  to {
+    color: white;
+    background-color: @granite-green;
+  }
+}

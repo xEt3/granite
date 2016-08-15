@@ -15,7 +15,7 @@ export default Controller.extend({
     link: 'job-information'
   }, {
     icon: 'mobile',
-    title: 'Equipment',
+    title: 'Assets',
     link: 'equipment'
   }]),
 

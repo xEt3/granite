@@ -68,10 +68,16 @@ export default Controller.extend(ajaxStatus, {
     selectAsset ( asset ) {
       this.ajaxStart();
 
-      let user = this.get('auth.user');
+      let user = this.get('auth.user'),
+          employee = this.get('model');
+
+      if ( asset.get('assignments').findBy('employee.id', employee.get('id')) ) {
+        this.ajaxSuccess(null, true);
+        return;
+      }
 
       let assignment = this.store.createRecord('asset-assignment', {
-        employee: this.get('model'),
+        employee,
         assigner: user
       });
 
