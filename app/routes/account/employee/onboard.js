@@ -20,10 +20,18 @@ export default Route.extend(ajaxStatus, {
         onboardingProgress: parseInt(controller.get('progress'), 0)
       });
 
-      model.save().then(() => {
+      model.save()
+      .then(() => {
         this.ajaxSuccess('Successfully saved progress.');
+
+        if ( !controller.get('nextStep') ) {
+          this.transitionTo('account.employee.onboard-complete');
+          return;
+        }
+
         this.transitionTo('account.employee.onboard.' + controller.get('nextStep.link'));
-      }).catch(this.ajaxError.bind(this));
+      })
+      .catch(this.ajaxError.bind(this));
     }
   }
 });
