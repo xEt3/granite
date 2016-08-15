@@ -32,7 +32,8 @@ export default Service.extend({
       var session = this.get('store').createRecord('session', {
         token:   response.token,
         expires: response.expires,
-        user:    response.user
+        user:    response.user,
+        id:      response.id
       });
 
       return session.save();
@@ -64,7 +65,20 @@ export default Service.extend({
     });
   },
 
-  refreshSession: Ember.K,
+  refreshSession () {
+    if ( !this.get('authenticated') ) {
+      return Promise.resolve();
+    }
+
+    return this.get('ajax').request('/api/v1/grant/' + this.get('session.id') + '/refresh', {
+      method: 'POST'
+    })
+    .then(response => {
+      let session = this.get('session');
+      session.set('expires', response.expires);
+      return session.save();
+    });
+  },
 
   /**
    * Initializes an existing session
