@@ -8,7 +8,7 @@ export default Route.extend({
 
     return RSVP.hash({
       employee,
-      assignableAssets: this.store.query('asset').then(assets => {
+      assignableAssets: this.store.query('asset', {}).then(assets => {
         return RSVP.map(assets.toArray(), asset => {
           let itemQuery = { asset: asset.get('id') };
 
