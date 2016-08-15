@@ -1,0 +1,51 @@
+<div class="content">
+  <div class="header">
+    {{asset.identifier}}
+  </div>
+</div>
+<div class="content">
+  <h3 class="ui sub header">
+    Activity
+  </h3>
+  <div class="ui small feed">
+    <div class="event">
+      <div class="content">
+        <div class="summary">
+          {{#link-to 'account.employee' assignment.assigner}}
+            {{assignment.assigner.fullName}}
+          {{/link-to}}
+          assigned from
+          {{#link-to 'account.asset' asset.asset}}
+            {{asset.asset.name}}
+          {{/link-to}}
+          on {{time asset.created}}
+        </div>
+      </div>
+    </div>
+    {{#if attributes.length}}
+      {{#ui-popup tagName='span' content="View attributes"}}
+        <a href="#" {{action "toggleProperty" "details"}}><i class="info circle icon"></i></a>
+      {{/ui-popup}}
+    {{/if}}
+    {{#if attributes.length}}
+      {{#liquid-if details}}
+        <div class="ui segment">
+          {{#each attributes as |attr|}}
+            <div class="line-item-value">
+              <i>{{attr.key}}</i>
+              <u>
+                {{attr.value}}
+              </u>
+            </div>
+          {{/each}}
+        </div>
+      {{/liquid-if}}
+    {{/if}}
+  </div>
+</div>
+{{#confirm-modal confirmContent='Are you sure you want to unassign this item and return it to your stock?' as |confirm|}}
+  <div class="ui bottom attached button" {{action (pipe confirm (action 'unassign'))}}>
+    <i class="remove user icon"></i>
+    Unassign asset
+</div>
+{{/confirm-modal}}
