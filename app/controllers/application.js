@@ -44,5 +44,17 @@ export default Controller.extend({
     run.next(() => {
       $('body')[this.get('topLevel') ? 'removeClass' : 'addClass']('application__in-account');
     });
-  }))
+  })),
+
+  actions: {
+    authResponse ( response ) {
+      let auth = this.get('auth');
+
+      if ( response ) {
+        auth.refreshSession();
+      } else {
+        this.send('logout');
+      }
+    }
+  }
 });
