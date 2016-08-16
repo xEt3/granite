@@ -1,0 +1,15 @@
+<div class="ui text container">
+  <div class="ui pointing menu">
+    <div class="item"><i class="settings icon"></i></div>
+    {{#link-to 'account.settings.index' class="item"}}
+      <i class="setting icon"></i>General Settings
+    {{/link-to}}
+    {{#link-to 'account.settings.integrations' class="item"}}
+      <i class="exchange icon"></i>Integrations
+    {{/link-to}}
+  </div>
+
+  <div class="ui padded raised segment">
+    {{outlet}}
+  </div>
+</div>

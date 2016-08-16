@@ -11,6 +11,7 @@ Router.map(function() {
   this.route('pricing');
   this.route('features');
   this.route('contact');
+
   this.route('about', function() {
     this.route('pricing');
   });
@@ -27,6 +28,11 @@ Router.map(function() {
 
   this.route('account', function() {
     this.route('index', { path: '/dashboard' });
+
+    this.route('settings', function() {
+      this.route('integrations');
+    });
+
     this.route('employees', function() {
       this.route('add', function() {
         this.route('census');
