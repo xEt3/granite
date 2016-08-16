@@ -11,6 +11,7 @@ export default Route.extend(add,{
     return {
       asset: this.modelFor('account.asset'),
       company: this.get('auth.user.company'),
+      creator: this.get('auth.user'),
       customFields: {}
     };
   },
