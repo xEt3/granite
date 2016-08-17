@@ -1,1 +1,56 @@
-Some stuff about an employee
+<div class="ui two column grid">
+  <div class="column">
+    <div class="ui raised segment">
+      <a class="ui blue ribbon label"><i class="announcement icon"></i>Direct Contact</a>
+      <div class="ui basic segment">
+        <a href="mailto:{{model.email}}">
+          <i class="mail icon"></i>
+          {{model.email}}
+        </a> <br />
+        <a href="tel:{{model.phone}}">
+          <i class="phone icon"></i>
+          {{model.phone}}
+        </a>
+      </div>
+    </div>
+    <div class="ui raised segment">
+      <a class="ui teal ribbon label"><i class="mail icon"></i>Mailing Address</a>
+      <div class="ui basic segment">
+        <i class=" marker icon"></i>
+        {{model.addressLine1}},
+        {{#if model.addressLine2}}
+          {{model.addressLine2}},
+        {{/if}}
+        {{model.addressCity}},
+        {{model.addressState}}
+        {{model.addressZip}}
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="ui raised segment">
+      <a class="ui grey left ribbon label"><i class="birthday icon"></i>Anniversaries</a>
+      <div class="ui basic segment">
+        <p class="text">
+          Date of Hire: {{time model.hireDate}} <br />
+          Birthday: {{time model.dateOfBirth}}
+        </p>
+      </div>
+    </div>
+    <div class="ui raised segment">
+      <a class="ui red left ribbon label"><i class="emergency icon"></i>Emergency Contact</a>
+      <div class="ui basic segment">
+        <p class="text">
+          {{#if hasEmergencyContact}}
+            Emergency Contact:
+            {{model.emergencyContactNameFirst}} {{model.emergencyContactNameLast}} <br />
+            Contact Phone:
+            <a href="tel:{{model.emergencyContactPhone}}">{{model.emergencyContactPhone}}</a>
+          {{else}}
+            No Emergency Contact Available
+          {{/if}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

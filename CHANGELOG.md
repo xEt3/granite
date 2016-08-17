@@ -1,3 +1,7 @@
+Scott - 8/17/16
+- Added information to the employee/index/index
+- Stubbed out some information for the employee/index/job page
+- Created a controller for employee/index/index
 James - 8/11/16
 - Add "bubble-action" util
 - Add `ember-inflector`, `ember-cli-nprogress` dependencies
