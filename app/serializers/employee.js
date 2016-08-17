@@ -5,7 +5,7 @@ import serializeKeys from '../utils/expand-serialized-object';
 export default ApplicationSerializer.extend({
   normalize ( modelClass, hash ) {
     normalizeKeys(hash, 'suffix', 'name');
-    normalizeKeys(hash, true, 'address');
+    normalizeKeys(hash, true, 'address', 'emergencyContact');
     return this._super(...arguments);
   },
 
@@ -24,7 +24,7 @@ export default ApplicationSerializer.extend({
     delete json.lastName;
     delete json.suffixName;
 
-    serializeKeys(json, 'address');
+    serializeKeys(json, 'address', 'emergencyContact');
 
     return json;
   }
