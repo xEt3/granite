@@ -5,8 +5,8 @@
   </p>
   <div class="ui divider"></div>
   <div class="field">
-    <button type="button" class="ui right labeled icon secondary massive fluid button">
+    {{#form/integration-button service="slate" class="right labeled icon secondary massive fluid" onNotify=(action "onNotify")}}
       <span class="vertically centered">Connect To Slate Payroll</span> <span class="icon__slate"></span> <i class="random icon"></i>
-    </button>
+    {{/form/integration-button}}
   </div>
 </div>
