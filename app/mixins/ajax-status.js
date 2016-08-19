@@ -2,6 +2,13 @@ import Ember from 'ember';
 
 const { Mixin, Logger, run } = Ember;
 
+function searchError ( errors ) {
+  const detailKeys = Ember.A(['detail', 'message']),
+        key = detailKeys.find(k => errors[0][k]);
+
+  return errors.mapBy(key).join(', ');
+}
+
 export default Mixin.create({
   successMessageTimeout: 3,
   enableNotify: true,
@@ -10,7 +17,7 @@ export default Mixin.create({
     let errMsg = err && err.responseText ? err.responseText : err;
 
     if ( errMsg && errMsg.errors ) {
-      errMsg = (typeof errMsg.errors[0] === 'string' ? errMsg.errors : errMsg.errors.mapBy('detail')).join(', ');
+      errMsg = typeof errMsg.errors[0] === 'string' ? errMsg.errors : searchError(errMsg.errors);
     }
 
     if ( err && !user ) {
