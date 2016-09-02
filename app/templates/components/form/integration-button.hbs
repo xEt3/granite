@@ -1,11 +1,10 @@
-{{yield}}
+{{yield alreadyLinked}}
 
-{{#ui-modal name="intergation-modal" id=modalId}}
+{{#ui-modal name="integration-modal" id=modalId}}
   <div class="header">
     Log in to your account below to connect to {{service}}
   </div>
   <div class="content settings__integration-iframe-container">
-    <iframe src={{intent.authUri}} class="settings__integration-iframe">
-    </iframe>
+    <iframe src={{intent.authUri}} class="settings__integration-iframe"></iframe>
   </div>
 {{/ui-modal}}
