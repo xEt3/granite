@@ -5,8 +5,10 @@
   </p>
   <div class="ui divider"></div>
   <div class="field">
-    {{#form/integration-button service="slate" class="right labeled icon secondary massive fluid" onNotify=(action "onNotify")}}
-      <span class="vertically centered">Connect To Slate Payroll</span> <span class="icon__slate"></span> <i class="random icon"></i>
+    {{#form/integration-button service="slate" linkedServices=model.linkedServices class="right labeled icon secondary massive fluid" onNotify=(action "onNotify") ongrant=(action "grant") as |alreadyLinked|}}
+      <span class="vertically centered">
+        {{if alreadyLinked 'Connected To Slate Payroll' 'Connect To Slate Payroll'}}
+      </span> <span class="icon__slate"></span> <i class="random icon"></i>
     {{/form/integration-button}}
   </div>
 </div>

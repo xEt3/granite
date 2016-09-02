@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import ajaxStatus from '../../mixins/ajax-status';
 
-const { Component, inject, computed } = Ember;
+const { Component, A, inject, computed } = Ember;
 
 export default Component.extend(ajaxStatus, {
   ajax: inject.service(),
@@ -12,7 +12,8 @@ export default Component.extend(ajaxStatus, {
   disabled: computed.reads('working'),
   attributeBindings: [ 'type', 'disabled' ],
   classNames: [ 'ui', 'button' ],
-  classNameBindings: [ 'working:loading' ],
+  classNameBindings: [ 'working:loading', 'alreadyLinked:disabled' ],
+  linkedServices: A(),
 
   init () {
     this._super();
@@ -25,6 +26,11 @@ export default Component.extend(ajaxStatus, {
 
   click ( e ) {
     e.preventDefault();
+
+    if ( this.get('alreadyLinked') ) {
+      return;
+    }
+
     this.send('initiateIntegrationIntent');
   },
 
@@ -39,11 +45,31 @@ export default Component.extend(ajaxStatus, {
   },
 
   messageReceived ( e ) {
-    console.log(e);
+    let eventData = e.originalEvent.data;
+
+    if ( !eventData.name ) {
+      return;
+    }
+
+    let messageData = {
+      id: this.get('intent.id')
+    };
+
+    Ember.$('#' + this.get('modalId')).modal('hide');
+
+    let eventHook = this['on' + eventData.name];
+
+    if ( eventHook && typeof eventHook === 'function' ) {
+      eventHook(Ember.$.extend(messageData, eventData ? eventData.data : {}));
+    }
   },
 
   modalId: computed('elementId', function () {
     return this.get('elementId') + '-integration-modal';
+  }),
+
+  alreadyLinked: computed('linkedServices.[]', 'service', function () {
+    return this.get('linkedServices').contains(this.get('service'));
   }),
 
   actions: {

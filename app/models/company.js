@@ -1,6 +1,9 @@
+import Ember from 'ember';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import Validations from './validations/company';
+
+const { computed } = Ember;
 
 export default Model.extend(Validations, {
   name:  attr('string'),
@@ -18,5 +21,11 @@ export default Model.extend(Validations, {
   contactMiddleName: attr('string'),
   contactLastName:   attr('string'),
 
-  urlPrefix: attr('string')
+  linkedServices: attr('array'),
+
+  urlPrefix: attr('string'),
+
+  linkedToSlate: computed('linkedServices.[]', function () {
+    return this.get('linkedServices').contains('slate');
+  })
 });
