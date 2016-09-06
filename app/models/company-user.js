@@ -13,6 +13,8 @@ export default Model.extend({
   email:    attr('string'),
   password: attr('string'),
 
+  shownHints: attr('array'),
+
   company: belongsTo('company', { async: true, inverse: false }),
 
   created: attr('date', {
