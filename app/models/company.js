@@ -26,6 +26,7 @@ export default Model.extend(Validations, {
   urlPrefix: attr('string'),
 
   linkedToSlate: computed('linkedServices.[]', function () {
-    return this.get('linkedServices').contains('slate');
+    let services = this.get('linkedServices');
+    return services ? services.contains('slate') : false;
   })
 });
