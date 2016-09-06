@@ -1,0 +1,17 @@
+<div class="ui container">
+  <div class="ui pointing menu">
+    {{#link-to 'account.anatomy.index' class="item"}}
+      <i class="list icon"></i>Summary
+    {{/link-to}}
+    {{#link-to 'account.anatomy.departments' class="item"}}
+      <i class="users icon"></i>Departments
+    {{/link-to}}
+    {{#link-to 'account.anatomy.locations' class="item"}}
+      <i class="building icon"></i>Locations
+    {{/link-to}}
+  </div>
+
+  <div class="ui padded raised text segment clearfix">
+    {{outlet}}
+  </div>
+</div>

@@ -34,7 +34,6 @@ export default Component.extend({
       }
 
       hints.addObject(key);
-      console.log(user);
       user.save();
     }
   }
