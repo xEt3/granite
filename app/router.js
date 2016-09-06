@@ -72,6 +72,14 @@ Router.map(function() {
       this.route('settings');
       this.route('edit');
     });
+    this.route('anatomy', function() {
+      this.route('locations', function() {
+        this.route('add');
+      });
+      this.route('departments', function() {});
+      this.route('location');
+      this.route('department');
+    });
   });
 
   this.route('error');

@@ -31,6 +31,10 @@ export default Controller.extend({
     icon: 'doctor',
     title: 'Leave Management',
     link: 'index'
+  }, {
+    icon: 'sitemap',
+    title: 'Company Anatomy',
+    link: 'anatomy'
   }],
 
   navTransparent: computed.equal('currentPath', 'index'),

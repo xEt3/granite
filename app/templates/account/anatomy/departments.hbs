@@ -1,0 +1,33 @@
+<hgroup class="clearfix">
+  <h1 class="ui header left floated">
+    Departments
+  </h1>
+
+  <div class="right aligned text floated menu__actions">
+    <h3 class="ui right floated header">
+      {{#link-to 'account.anatomy.departments.index' class="item"}}<i class="plus icon"></i>{{/link-to}}
+    </h3>
+    {{#if auth.user.company.linkedToSlate}}
+      <h3 class="ui right floated header">
+        {{#ui-popup position="left center" content="Import from Slate Payroll..."}}
+          <a href="#">
+            <i class="sign in icon"></i>
+          </a>
+        {{/ui-popup}}
+      </h3>
+    {{/if}}
+  </div>
+</hgroup>
+<div class="ui divider"></div>
+
+<div class="ui divided link items">
+  {{#each model as |department|}}
+    {{#link-to 'account.anatomy.department' department class="item"}}
+      {{list-item/department-item department=department}}
+    {{/link-to}}
+  {{else}}
+    <h2 class="ui center aligned header">No departments available.</h2>
+  {{/each}}
+</div>
+
+{{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}
