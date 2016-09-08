@@ -1,5 +1,14 @@
-import DS from 'ember-data';
+import Model from 'ember-data/model';
+import attr from 'ember-data/attr';
+import { belongsTo } from 'ember-data/relationships';
 
-export default DS.Model.extend({
 
+export default Model.extend({
+
+  name: attr('string'),
+  code: attr('string'),
+
+  company: belongsTo('company'),
+
+  created: attr('date')
 });
