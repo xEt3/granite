@@ -9,7 +9,8 @@ export default Service.extend({
   create ( data = {} ) {
     let user = this.get('auth.user');
 
-    data.actor = { type: 'CompanyUser', doc: user };
+    data.actorType = 'CompanyUser';
+    data.actorId = user.get('id');
     data.company = user.get('company');
 
     let activity = this.get('store').createRecord('activity', data);
