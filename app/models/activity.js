@@ -5,6 +5,12 @@ import { belongsTo } from 'ember-data/relationships';
 
 const { computed } = Ember;
 
+const parsedName = s => {
+  return s.replace(/([A-Z])/g, function($1, p1, pos) {
+    return (pos > 0 ? '-' : '') + $1.toLowerCase();
+  });
+};
+
 export default Model.extend({
   description: attr('string'),
   action:  attr('string'),
@@ -24,20 +30,14 @@ export default Model.extend({
   }),
 
   actor: computed('actorType', 'actorId', function () {
-    const type = this.get('actorType'),
-          // TODO ^ type needs to be munged before we use it.
-          // Right now it will come in as 'Model' or 'ModelTest' camel casing
-          // we need lowercase dasherized to resolve it ('model' or 'model-test')
+    const type = parsedName(this.get('actorType')),
           id = this.get('actorId');
 
     return type && id ? this.store.find(type, id) : undefined;
   }),
 
   target: computed('targetType', 'targetId', function () {
-    const type = this.get('targetType'),
-          // TODO ^ type needs to be munged before we use it.
-          // Right now it will come in as 'Model' or 'ModelTest' camel casing
-          // we need lowercase dasherized to resolve it ('model' or 'model-test')
+    const type = parsedName(this.get('targetType')),
           id = this.get('targetId');
 
     return type && id ? this.store.find(type, id) : undefined;
