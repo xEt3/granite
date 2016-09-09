@@ -6,7 +6,7 @@ import { belongsTo } from 'ember-data/relationships';
 const { computed } = Ember;
 
 const parsedName = s => {
-  return s.replace(/([A-Z])/g, function($1, p1, pos) {
+  return s.replace(/([A-Z])/g, ($1, p1, pos) => {
     return (pos > 0 ? '-' : '') + $1.toLowerCase();
   });
 };
