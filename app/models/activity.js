@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 
 const { computed } = Ember;
 
@@ -12,21 +12,22 @@ const parsedName = s => {
 };
 
 export default Model.extend({
-  description: attr('string'),
-  action:  attr('string'),
-  icon:    attr('string'),
+  description:     attr('string'),
+  descriptionHtml: attr('string'),
+  action:          attr('string'),
+  icon:            attr('string'),
 
-  actorId: attr('string'),
-  actorType: attr('string'),
-  targetId: attr('string'),
-  targetType: attr('string'),
+  actorId:    attr('string-or-null'),
+  actorType:  attr('string-or-null'),
+  targetId:   attr('string-or-null'),
+  targetType: attr('string-or-null'),
 
-  company: belongsTo('company'),
+  company:  belongsTo('company'),
+  comments: hasMany('comment', { inverse: false }),
+  likes:    hasMany('like', { inverse: false }),
 
   created: attr('date', {
-    defaultValue () {
-      return new Date();
-    }
+    defaultValue: () => new Date()
   }),
 
   actor: computed('actorType', 'actorId', function () {
