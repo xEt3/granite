@@ -1,0 +1,27 @@
+{{#if activity.icon}}
+  <div class="label">
+    <i class="{{activity.icon}} icon"></i>
+  </div>
+{{/if}}
+
+<div class="content">
+  <div class="summary">
+    {{{activity.descriptionHtml}}}
+    <div class="date">
+      {{time-ago activity.created}}
+    </div>
+  </div>
+  <div class="meta">
+    {{!-- {{#ui-popup tagName="span" position="bottom center" title="View profile"}}
+      <a href="#">
+        <i class="user icon"></i>
+      </a>
+    {{/ui-popup}} --}}
+
+    {{!-- {{#ui-popup tagName="span" position="bottom center" title="Thumbs up"}}
+      <a href="#" class="like">
+        <i class="thumbs up icon"></i> 2
+      </a>
+    {{/ui-popup}} --}}
+  </div>
+</div>
