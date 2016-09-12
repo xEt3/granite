@@ -69,7 +69,7 @@ export default Component.extend(ajaxStatus, {
   }),
 
   alreadyLinked: computed('linkedServices.[]', 'service', function () {
-    return this.get('linkedServices').contains(this.get('service'));
+    return this.get('linkedServices').includes(this.get('service'));
   }),
 
   actions: {

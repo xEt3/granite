@@ -12,16 +12,16 @@
     </div>
   </div>
   <div class="meta">
-    {{!-- {{#ui-popup tagName="span" position="bottom center" title="View profile"}}
+    {{#ui-popup tagName="span" position="bottom center" title="View profile"}}
       <a href="#">
-        <i class="user icon"></i>
+        <i class="fitted comment icon"></i>
       </a>
-    {{/ui-popup}} --}}
+    {{/ui-popup}}
 
-    {{!-- {{#ui-popup tagName="span" position="bottom center" title="Thumbs up"}}
-      <a href="#" class="like">
-        <i class="thumbs up icon"></i> 2
+    {{#ui-popup tagName="span" position="bottom center" title="Thumbs up"}}
+      <a href="#" class="like {{if likeByCurrentUser 'text-red'}}" {{action "like"}}>
+        <i class="thumbs up icon"></i> {{if activity.likes.length activity.likes.length}}
       </a>
-    {{/ui-popup}} --}}
+    {{/ui-popup}}
   </div>
 </div>

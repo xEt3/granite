@@ -30,6 +30,6 @@ export default Model.extend(Validations, {
 
   linkedToSlate: computed('linkedServices.[]', function () {
     let services = this.get('linkedServices');
-    return services ? services.contains('slate') : false;
+    return services ? services.includes('slate') : false;
   })
 });
