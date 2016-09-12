@@ -12,13 +12,16 @@ export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
 
     let isNull = val => !val || val === '';
 
-
     if ( isNull(json.targetId) ) {
       delete json.targetId;
     }
 
     if ( isNull(json.actorId) ) {
       delete json.actorId;
+    }
+
+    if ( !json.likes.length ) {
+      json.likes = null;
     }
 
     return json;

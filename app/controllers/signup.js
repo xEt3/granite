@@ -30,7 +30,7 @@ export default Ember.Controller.extend({
 
     return steps.map(step => {
       set(step, 'active', get(step, 'path') === appPath);
-      set(step, 'completed', completedSteps.contains(get(step, 'path')));
+      set(step, 'completed', completedSteps.includes(get(step, 'path')));
       return step;
     });
   })
