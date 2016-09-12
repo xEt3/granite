@@ -11,7 +11,7 @@ export default Component.extend({
 
     assert('You must specify a hintKey to use stateful-intro-js', !!hintKey);
 
-    return shownHints ? !shownHints.contains(hintKey) : true;
+    return shownHints ? !shownHints.includes(hintKey) : true;
   }),
 
   actions: {
