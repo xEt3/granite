@@ -14,6 +14,7 @@ const parsedName = s => {
 export default Model.extend({
   description:     attr('string'),
   descriptionHtml: attr('string'),
+  context:         attr('string'),
   action:          attr('string'),
   icon:            attr('string'),
 
