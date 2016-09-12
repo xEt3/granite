@@ -1,6 +1,6 @@
 {{#if activity.icon}}
   <div class="label">
-    <i class="{{activity.icon}} icon"></i>
+    <i class="{{if contextColor contextColor}} {{activity.icon}} icon"></i>
   </div>
 {{/if}}
 
@@ -12,16 +12,47 @@
     </div>
   </div>
   <div class="meta">
-    {{#ui-popup tagName="span" position="bottom center" title="View profile"}}
-      <a href="#">
-        <i class="fitted comment icon"></i>
+    {{#ui-popup tagName="span" position="bottom center" title="Comments"}}
+      <a href="#" {{action "toggleComments"}}>
+        <i class="fitted comment icon"></i> {{if activity.comments.length activity.comments.length}}
       </a>
     {{/ui-popup}}
 
-    {{#ui-popup tagName="span" position="bottom center" title="Thumbs up"}}
-      <a href="#" class="like {{if likeByCurrentUser 'text-red'}}" {{action "like"}}>
-        <i class="thumbs up icon"></i> {{if activity.likes.length activity.likes.length}}
-      </a>
-    {{/ui-popup}}
+    {{#if enableLikes}}
+      {{#ui-popup tagName="span" position="bottom center" title="Thumbs up"}}
+        <a href="#" class="like {{if likeByCurrentUser 'text-red'}}" {{action "like"}}>
+          <i class="thumbs up icon"></i>
+          {{#if likeByCurrentUser}}
+            You
+            {{#if likesMinusOne}}
+              and {{likesMinusOne}} {{inflect-text 'other' likesMinusOne}}
+            {{/if}}
+            like this
+          {{else}}
+            {{if activity.likes.length activity.likes.length}}
+          {{/if}}
+        </a>
+      {{/ui-popup}}
+    {{/if}}
   </div>
+
+  {{#liquid-if showComments use="toUp"}}
+    <form class="ui form account__comments-section" {{action "saveComment" on="submit"}}>
+      <h6 class="ui horizontal divider header"><i class="fitted comments icon"></i> Comments</h6>
+      <div class="field">
+        <label for="comment-text" class="sr-only">Enter your comment</label>
+        {{textarea name="comment-text" value=comment.text rows=2 placeholder="Type your comment..."}}
+      </div>
+
+      {{#liquid-if comment.text}}
+        {{#form/action-button type="submit" class="ui large fluid green button" loading=working}}Save Comment{{/form/action-button}}
+      {{/liquid-if}}
+    </form>
+
+    <div class="ui feed limited-pane">
+      {{#each activity.comments as |comment|}}
+        {{list-item/comment-item comment=comment class="event"}}
+      {{/each}}
+    </div>
+  {{/liquid-if}}
 </div>
