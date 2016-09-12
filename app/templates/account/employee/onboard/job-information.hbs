@@ -41,13 +41,13 @@
   </div>
   <div class="field">
     <label for="job-location">Location</label>
-    {{#ui-dropdown class="selection" selected=model.location onChange=(action (mut model.location))}}
+    {{#ui-dropdown class="selection" selected=locations onChange=(action (mut location))}}
       <div class="default text">Location</div>
       <i class="dropdown icon"></i>
       <div class="menu">
         {{#each locations as |location|}}
           <div class="item" data-value="{{location}}">
-            {{location}}
+            {{location.name}}
           </div>
         {{/each}}
       </div>
@@ -55,13 +55,13 @@
   </div>
   <div class="field">
     <label for="job-department">Department</label>
-    {{#ui-dropdown class="selection" selected=model.department onChange=(action (mut model.department))}}
+    {{#ui-dropdown class="selection" selected=department onChange=(action (mut department))}}
       <div class="default text">Department</div>
       <i class="dropdown icon"></i>
       <div class="menu">
         {{#each departments as |department|}}
           <div class="item" data-value="{{department}}">
-            {{department}}
+            {{department.name}}
           </div>
         {{/each}}
       </div>
