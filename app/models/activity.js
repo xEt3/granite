@@ -17,6 +17,7 @@ export default Model.extend({
   context:         attr('string'),
   action:          attr('string'),
   icon:            attr('string'),
+  tag:             attr('string'),
 
   actorId:    attr('string-or-null'),
   actorType:  attr('string-or-null'),

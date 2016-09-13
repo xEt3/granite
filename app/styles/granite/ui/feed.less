@@ -1,5 +1,40 @@
+.feed .event .content {
+  > .right.ribbon {
+    position: absolute;
+    right: 0;
+    left: auto !important;
+    transform: none !important;
+  }
+
+  .summary {
+    position: relative;
+  }
+
+  .meta {
+    display: block !important;
+    width: 100% !important;
+
+    > .date {
+      font-size: 0.8em !important;
+      margin-top: 3px !important;
+    }
+  }
+}
+
 .account__comments-section {
   padding: 1em 0;
+
+  &.account__comments-muted .event {
+    .summary {
+      color: @gray-light !important;
+      font-weight: 100 !important;
+      font-size: 0.8em !important;
+    }
+
+    .meta {
+      font-size: 0.7em !important;
+    }
+  }
 }
 
 .comment {
