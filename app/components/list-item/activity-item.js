@@ -13,8 +13,10 @@ export default Component.extend(ajaxStatus, {
   auth: inject.service(),
   store: inject.service(),
   classNames: [ 'account__activity-item', 'event' ],
+  commentSort: [ 'created:desc' ],
 
   enableLikes: computed.equal('activity.context', 'positive'),
+  comments: computed.sort('activity.comments', 'commentSort'),
 
   contextColor: computed('activity.context', function () {
     let context = this.get('activity.context');

@@ -5,21 +5,21 @@
 {{/if}}
 
 <div class="content">
+  {{#if activity.tag}}
+    <span class="ui right ribbon label">{{activity.tag}}</span>
+  {{/if}}
   <div class="summary">
     {{{activity.descriptionHtml}}}
-    <div class="date">
-      {{time-ago activity.created}}
-    </div>
   </div>
   <div class="meta">
-    {{#ui-popup tagName="span" position="bottom center" title="Comments"}}
+    {{#ui-popup tagName="span" position="top center" title="Comments"}}
       <a href="#" {{action "toggleComments"}}>
         <i class="fitted comment icon"></i> {{if activity.comments.length activity.comments.length}}
       </a>
     {{/ui-popup}}
 
     {{#if enableLikes}}
-      {{#ui-popup tagName="span" position="bottom center" title="Thumbs up"}}
+      {{#ui-popup tagName="span" position="top center" title="Thumbs up"}}
         <a href="#" class="like {{if likeByCurrentUser 'text-red'}}" {{action "like"}}>
           <i class="thumbs up icon"></i>
           {{#if likeByCurrentUser}}
@@ -34,6 +34,10 @@
         </a>
       {{/ui-popup}}
     {{/if}}
+
+    <div class="right floated date">
+      {{time-ago activity.created}} on {{time activity.created 'M/D/YY'}}
+    </div>
   </div>
 
   {{#liquid-if showComments use="toUp"}}
@@ -50,9 +54,17 @@
     </form>
 
     <div class="ui feed limited-pane">
-      {{#each activity.comments as |comment|}}
+      {{#each comments as |comment|}}
         {{list-item/comment-item comment=comment class="event"}}
       {{/each}}
     </div>
+  {{else}}
+    {{#if comments.firstObject}}
+      <div class="account__comments-section account__comments-muted">
+        <div class="ui feed limited-pane">
+          {{list-item/comment-item comment=comments.firstObject class="event"}}
+        </div>
+      </div>
+    {{/if}}
   {{/liquid-if}}
 </div>
