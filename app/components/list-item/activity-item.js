@@ -29,6 +29,12 @@ export default Component.extend(ajaxStatus, {
     return this.get('activity.likes').findBy('liker.id', this.get('auth.user.id'));
   }),
 
+  newComment () {
+    this.set('comment', this.get('store').createRecord('comment', {
+      commenter: this.get('auth.user')
+    }));
+  },
+
   actions: {
     notify () {
       this.get('onNotify')(...arguments);
@@ -36,9 +42,7 @@ export default Component.extend(ajaxStatus, {
 
     toggleComments () {
       if ( !this.get('comment') ) {
-        this.set('comment', this.get('store').createRecord('comment', {
-          commenter: this.get('auth.user')
-        }));
+        this.newComment();
       }
 
       this.toggleProperty('showComments');
@@ -57,6 +61,7 @@ export default Component.extend(ajaxStatus, {
       .then(() => {
         comment.destroy();
         this.set('comment', null);
+        this.newComment();
         this.ajaxSuccess(null, true);
       })
       .catch(this.ajaxError.bind(this));
