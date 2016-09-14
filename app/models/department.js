@@ -9,6 +9,7 @@ export default Model.extend({
   code: attr('string'),
 
   company: belongsTo('company'),
+  creator: belongsTo('company-user', { async: true, inverse: false }),
 
   created: attr('date', {
     defaultValue () {
