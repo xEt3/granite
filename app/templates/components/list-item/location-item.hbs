@@ -1,36 +1,40 @@
-<div class="content">
-  <div class="header clearfix">{{location.name}}</div>
-    {{#liquid-if details}}
-      <div class="ui segment">
-          <div class="line-item-value">
-            <i>Created On</i>
-            <u>
-              {{time location.created}}
-            </u>
-          </div>
-          {{#if location.code}}
-            <div class="line-item-value">
-              <i>Location Code</i>
-              <u>
-                {{location.code}}
-              </u>
-            </div>
-          {{/if}}
-      </div>
-    {{/liquid-if}}
-  <div class="extra content">
-    <div class="right floated">
-      {{#confirm-modal as |confirm|}}
-        <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}>
-          <i class="trash icon"></i>
-        </a>
-      {{/confirm-modal}}
+<div class="ui container">
+  <h3 class="ui top attached header clearfix">
+    <div class="description right floated text small">
+      Created {{time-ago location.created}} by {{location.creator.fullName}}
     </div>
-    <div class="left floated">
-      {{#ui-popup tagName='span' content="View details"}}
-        <a href="#" {{action "toggleProperty" "details"}}><i class="{{if details 'up' 'down'}} angle icon"></i></a>
-      {{/ui-popup}}
+    <div class="content">
+      <i class="marker icon"></i>
+      {{location.name}}
+      <div class="ui blue basic label">
+        {{location.code}}
+      </div>
+    </div>
+  </h3>
+  <div class="ui attached segment no-margin">
+    <div class="clearfix description">
+      <div class="header">Address:</div>
+      <p>
+        {{location.addressLine1}} < br/>
+        {{#if location.addressLine2}}
+          {{location.addressLine2}} < br/>
+        {{/if}}
+        {{location.addressCity}} {{location.addressState}} {{location.addressZipcode}}
+      </p>
+      <div class="left floated text">
+        <div class="header">
+        Phone:
+        </div>
+         (999)-999-9898
+      </div>
+      <div class="right floated">
+        {{#confirm-modal confirmContent="Are you sure you want to delete this location?" as |confirm|}}
+          <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}>
+            <i class="large trash icon"></i>
+          </a>
+        {{/confirm-modal}}
+      </div>
     </div>
   </div>
 </div>
-{{!-- TODO: Add address to this template and the model --}}
+{{!-- TODO: Add phone number to this template and the account.anatomy.index.new template --}}
