@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('controller:account/anatomy/department/new', 'Unit | Controller | account/anatomy/department/new', {
+moduleFor('controller:account/anatomy/locations/index/new', 'Unit | Controller | account/anatomy/locations/index/new', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });

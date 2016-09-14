@@ -16,7 +16,7 @@ export default Route.extend(refreshable, {
         page = (params.page || 1) - 1,
         company = this.get('auth.user.company'),
         companyId = company.get('id'),
-        departments = this.store.query('department', { 'company': companyId }, { page, limit });
+        departments = this.store.query('department', { page, limit, 'company': companyId });
 
     return RSVP.hash({
       company,
