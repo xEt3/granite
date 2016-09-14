@@ -74,14 +74,15 @@ Router.map(function() {
     });
     this.route('anatomy', function() {
       this.route('locations', function() {
-        this.route('add');
+        this.route('index', function() {
+          this.route('new');
+        });
       });
-      this.route('departments');
-      this.route('location', function() {
-        this.route('new');
-      });
-      this.route('department', function() {
-        this.route('new');
+      this.route('location', function() {});
+      this.route('departments', function() {
+        this.route('index', function() {
+          this.route('new');
+        });
       });
     });
   });

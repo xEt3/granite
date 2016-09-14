@@ -7,7 +7,13 @@ export default function () {
   );
   this.transition(
     this.fromRoute('account.anatomy.departments'),
-    this.toRoute('account.anatomy.department/new'),
+    this.toRoute('account.anatomy.departments.new'),
+    this.use('toUp'),
+    this.reverse('toDown')
+  );
+  this.transition(
+    this.fromRoute('account.anatomy.departments'),
+    this.toRoute('account.anatomy.departments.new'),
     this.use('toUp'),
     this.reverse('toDown')
   );

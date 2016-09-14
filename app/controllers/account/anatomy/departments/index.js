@@ -2,12 +2,11 @@ import Ember from 'ember';
 import pagination from 'granite/mixins/controller-abstractions/pagination';
 import del from 'granite/mixins/controller-abstractions/delete';
 
-
 const { Controller, computed, inject } = Ember;
 
 export default Controller.extend(pagination, del, {
   application: inject.controller(),
-  addinglocation: computed.equal('application.currentPath', 'account.anatomy.location.new'),
+  addingDepartment: computed.equal('application.currentPath', 'account.anatomy.departments.index.new'),
   queryParams: [ 'page' ],
   limit: 20,
 

@@ -2,6 +2,6 @@ import Ember from 'ember';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default Ember.Controller.extend(addEdit, {
-  transitionAfterSave: 'account.anatomy.locations',
+  transitionAfterSave: 'account.anatomy.locations.index',
   transitionWithModel: false
 });

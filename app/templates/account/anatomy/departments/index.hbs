@@ -6,17 +6,15 @@
   <div class="right aligned text floated menu__actions">
     <h3 class="ui header">
       {{#liquid-if addingDepartment}}
-        {{#link-to 'account.anatomy.departments' class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
+        {{#link-to 'account.anatomy.departments.index' class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
       {{else}}
-        {{#link-to 'account.anatomy.department.new' class="right floated"}}
+        {{#link-to 'account.anatomy.departments.index.new' class="right floated"}}
           {{#ui-popup tagName='span' content="Add a department"}}
             <i class="plus icon"></i>
           {{/ui-popup}}
         {{/link-to}}
       {{/liquid-if}}
     </h3>
-    
-  {{liquid-outlet class="add-department"}}
 
     {{#if auth.user.company.linkedToSlate}}
       <h3 class="ui right floated header">
@@ -30,20 +28,15 @@
   </div>
 </hgroup>
 
-
 <div class="ui divider"></div>
 
+{{liquid-outlet class="add-department"}}
 
-
-<div class="ui very padded segment">
-  <div class="ui three column grid">
+<div class="ui relaxed divided list">
     {{#each model as |department|}}
-    <div class="column">
       {{list-item/department-item department=department onDelete=(action 'delete' )}}
-    </div>
     {{else}}
       <h2 class="ui center aligned header">No departments available.</h2>
     {{/each}}
-  </div>
 </div>
 {{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}
