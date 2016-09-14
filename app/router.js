@@ -76,9 +76,13 @@ Router.map(function() {
       this.route('locations', function() {
         this.route('add');
       });
-      this.route('departments', function() {});
-      this.route('location');
-      this.route('department');
+      this.route('departments');
+      this.route('location', function() {
+        this.route('new');
+      });
+      this.route('department', function() {
+        this.route('new');
+      });
     });
   });
 

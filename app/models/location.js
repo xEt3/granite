@@ -9,6 +9,9 @@ export default DS.Model.extend({
 
   company: belongsTo('company'),
 
-  created: attr('date')
-
+  created: attr('date', {
+    defaultValue () {
+      return new Date();
+    }
+  })
 });

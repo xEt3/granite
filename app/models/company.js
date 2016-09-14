@@ -2,7 +2,6 @@ import Ember from 'ember';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import Validations from './validations/company';
-import { hasMany } from 'ember-data/relationships';
 const { computed } = Ember;
 
 export default Model.extend(Validations, {
@@ -24,9 +23,6 @@ export default Model.extend(Validations, {
   linkedServices: attr('array'),
 
   urlPrefix: attr('string'),
-
-  locations: hasMany('location'),
-  departments: hasMany('departments'),
 
   linkedToSlate: computed('linkedServices.[]', function () {
     let services = this.get('linkedServices');

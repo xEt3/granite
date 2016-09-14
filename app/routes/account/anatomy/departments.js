@@ -1,19 +1,34 @@
 import Ember from 'ember';
+import refreshable from 'granite/mixins/refreshable';
 
-const { Route } = Ember;
 
-export default Route.extend({
+const { Route, inject, RSVP } = Ember;
+
+export default Route.extend(refreshable, {
   queryParams: {
     page: { refreshModel: true }
   },
 
+  auth: inject.service(),
+
   model ( params ) {
     let limit = this.get('controller.limit') || 20,
-        page = (params.page || 1) - 1;
+        page = (params.page || 1) - 1,
+        company = this.get('auth.user.company'),
+        companyId = company.get('id'),
+        departments = this.store.query('department', { 'company': companyId }, { page, limit });
 
-    return this.store.query('department', {
-      page,
-      limit
+    return RSVP.hash({
+      company,
+      departments
+    });
+  },
+
+  setupController ( controller, model ) {
+    this._super(controller, model);
+    controller.setProperties({
+      model: model.departments,
+      company: model.company
     });
   }
 });

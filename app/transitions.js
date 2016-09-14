@@ -5,4 +5,10 @@ export default function () {
     this.use('toUp'),
     this.reverse('toDown')
   );
+  this.transition(
+    this.fromRoute('account.anatomy.departments'),
+    this.toRoute('account.anatomy.department/new'),
+    this.use('toUp'),
+    this.reverse('toDown')
+  );
 }
