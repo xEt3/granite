@@ -4,9 +4,18 @@
   </h1>
 
   <div class="right aligned text floated menu__actions">
-    <h3 class="ui right floated header">
-      {{#link-to 'account.anatomy.locations.index' class="item"}}<i class="plus icon"></i>{{/link-to}}
+    <h3 class="ui header">
+      {{#liquid-if addingLocation}}
+        {{#link-to 'account.anatomy.locations' class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
+      {{else}}
+          {{#link-to 'account.anatomy.location.new' class="right floated"}}
+            {{#ui-popup tagName='span' content="Add a location"}}
+              <i class="plus icon"></i>
+            {{/ui-popup}}
+          {{/link-to}}
+      {{/liquid-if}}
     </h3>
+
     {{#if auth.user.company.linkedToSlate}}
       <h3 class="ui right floated header">
         {{#ui-popup position="left center" content="Import from Slate Payroll..."}}
@@ -20,14 +29,18 @@
 </hgroup>
 <div class="ui divider"></div>
 
-<div class="ui divided link items">
-  {{#each model as |location|}}
-    {{#link-to 'account.anatomy.location' location class="item"}}
-      {{list-item/location-item location=location}}
-    {{/link-to}}
-  {{else}}
-    <h2 class="ui center aligned header">No locations available.</h2>
-  {{/each}}
+{{liquid-outlet class="add-location"}}
+
+<div class="ui very padded segment">
+  <div class="ui three column grid">
+    {{#each model as |location|}}
+    <div class="column">
+      {{list-item/location-item location=location onDelete=(action 'delete' )}}
+    </div>
+    {{else}}
+      <h2 class="ui center aligned header">No locations available.</h2>
+    {{/each}}
+  </div>
 </div>
 
 {{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}

@@ -1,0 +1,16 @@
+<form class="ui form container" {{action "save" on="submit"}}>
+  <div class="field">
+    <label for="location-name">Location Name</label>
+    {{input type="text" value=model.name id="location-name" placeholder="Location Name"}}
+  </div>
+  <div class="field">
+    <label for="location-code">Location Code</label>
+    {{input type="text" value=model.code id="location-code" placeholder="Location Code"}}
+  </div>
+  <div class="ui divider"></div>
+
+
+
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Add Location{{/form/action-button}}
+</form>
+<div class="ui divider"></div>

@@ -1,1 +1,38 @@
-{{yield}}
+<div class="content">
+  <span class="header">
+    {{department.name}}
+  </span>
+  {{#liquid-if details}}
+    <div class="ui segment">
+        <div class="line-item-value">
+          <i>Created On</i>
+          <u>
+            {{time department.created}}
+          </u>
+        </div>
+        {{#if department.code}}
+          <div class="line-item-value">
+            <i>Department Code</i>
+            <u>
+              {{department.code}}
+            </u>
+          </div>
+        {{/if}}
+    </div>
+  {{/liquid-if}}
+  <div class="extra content">
+    <div class="right floated">
+      {{#confirm-modal as |confirm|}}
+        <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}>
+          <i class="trash icon"></i>
+        </a>
+      {{/confirm-modal}}
+    </div>
+    <div class="left floated">
+      {{#ui-popup tagName="span" content="View details" position="left"}}
+        <a href="#" {{action "toggleProperty" "details"}}><i class="{{if details 'up' 'down'}} angle icon"></i></a>
+      {{/ui-popup}}
+    </div>
+
+  </div>
+</div>

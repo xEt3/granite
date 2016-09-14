@@ -1,20 +1,35 @@
 import Ember from 'ember';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-const { inject } = Ember;
+const { RSVP, inject } = Ember;
 
 export default Ember.Route.extend(addEdit,{
-  queryParams: {
-    employee: {
-      refreshModel: false
-    }
-  },
 
   auth: inject.service(),
 
   model() {
-    return this.get('auth.user.company');
+    let employee = this.modelFor('account.employee.onboard.start'),
+        company = this.get('auth.user.company'),
+        companyId = company.get('id'),
+        departments = this.store.query('department', { 'company': companyId }),
+        locations = this.store.query('location', { 'company': companyId });
+
+    return RSVP.hash({
+      employee,
+      company,
+      departments,
+      locations
+
+    });
+  },
+
+  setupController ( controller, model ) {
+    this._super(controller, model);
+    controller.setProperties({
+      model: model.employee,
+      company: model.company,
+      departments: model.departments,
+      locations: model.locations
+    });
   }
-
-
 });
