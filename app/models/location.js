@@ -1,7 +1,9 @@
+import Ember from 'ember';
 import DS from 'ember-data';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 
+const { computed } = Ember;
 export default DS.Model.extend({
 
   name:  attr('string'),
@@ -17,10 +19,10 @@ export default DS.Model.extend({
   company: belongsTo('company'),
   creator: belongsTo('company-user', { async: true, inverse: false }),
 
-  phoneFormatted: function () {
+  phoneFormatted: computed('phone',function () {
     var phone = this.get('phone');
     return phone ? phone.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3') : phone;
-  }.property('phone'),
+  }),
 
   created: attr('date', {
     defaultValue () {
