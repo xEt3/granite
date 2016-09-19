@@ -51,8 +51,13 @@ export default Route.extend({
       this.transitionTo('/' + route);
     },
 
-    logout () {
-      this.get('auth').logout();
+    logout ( expired ) {
+      this.get('auth').logout()
+      .then(() => {
+        if ( expired ) {
+          this.transitionTo('login', { queryParams: { expired: true } });
+        }
+      });
     },
 
     loading ( transition ) {

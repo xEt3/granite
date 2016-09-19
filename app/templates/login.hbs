@@ -6,6 +6,12 @@
   </div>
 {{/if}}
 
+{{#if expired}}
+  <div class="ui red inverted text segment container">
+    <h3><i class="warning icon"></i> Your session has expired. Please log in again.</h3>
+  </div>
+{{/if}}
+
 <form class="ui very padded piled text segment container form" {{action "login" on="submit"}}>
   <hgroup class="ui center aligned header">
     <h1>Good {{relative-greeting-time}}!</h1>

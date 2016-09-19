@@ -39,6 +39,12 @@ export default Controller.extend({
 
   navTransparent: computed.equal('currentPath', 'index'),
 
+  authBecameExpired: observer('auth.isExpired', function () {
+    if ( this.get('auth.isExpired') && this.get('auth.user') ) {
+      this.send('logout', true);
+    }
+  }),
+
   topLevel: computed('currentPath', function () {
     const currentPath = this.get('currentPath');
     return currentPath.indexOf('account') < 0 && currentPath.indexOf('login') < 0;

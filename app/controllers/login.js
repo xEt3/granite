@@ -4,6 +4,9 @@ import ajaxStatus from 'granite/mixins/ajax-status';
 const { Controller } = Ember;
 
 export default Controller.extend(ajaxStatus, {
+  queryParams: [ 'expired' ],
+  expired: false,
+
   actions: {
     login () {
       const email = this.get('email'),
