@@ -41,7 +41,7 @@
   </div>
   <div class="field">
     <label for="job-location">Location</label>
-    {{#ui-dropdown class="selection" selected=locations onChange=(action (mut location))}}
+    {{#ui-dropdown class="selection" selected=model.location onChange=(action (mut model.location))}}
       <div class="default text">Location</div>
       <i class="dropdown icon"></i>
       <div class="menu">
@@ -55,7 +55,7 @@
   </div>
   <div class="field">
     <label for="job-department">Department</label>
-    {{#ui-dropdown class="selection" selected=department onChange=(action (mut department))}}
+    {{#ui-dropdown class="selection" selected=model.department onChange=(action (mut model.department))}}
       <div class="default text">Department</div>
       <i class="dropdown icon"></i>
       <div class="menu">

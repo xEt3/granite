@@ -1,23 +1,27 @@
-<div class="content">
-  <div class="header clearfix">{{department.name}}</div>
-  <div class="meta">
-    {{#if department.code}}
-      Department Code: <span>{{department.code}}</span>
-    {{/if}}
-    <div class="description right floated text">
-      Created on {{time department.created}}
-      {{#if department.creator}}
-        by {{department.creator.fullName}}
+<div class="ui segments">
+  <h3 class="ui segment">
+    <div class="description right floated text small">
+      Created {{time-ago department.created}} by {{department.creator.fullName}}
+    </div>
+    <div class="content">
+      <i class="marker icon"></i>
+      {{department.name}}
+      {{#if department.code}}
+        <div class="ui blue basic label">
+          {{department.code}}
+        </div>
       {{/if}}
     </div>
-    <div class="right floated">
-      {{#confirm-modal confirmContent="Do you want to delete this department?" as |confirm|}}
-        {{#ui-popup content="Delete this department"}}
+  </h3>
+  <div class="ui attached segment no-margin">
+    <div class="clearfix description">
+      <div class="right floated">
+        {{#confirm-modal confirmContent="Are you sure you want to delete this location?" as |confirm|}}
           <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}>
-            <i class="trash icon"></i>
+            <i class="large trash icon"></i>
           </a>
-        {{/ui-popup}}
-      {{/confirm-modal}}
+        {{/confirm-modal}}
+      </div>
     </div>
   </div>
 </div>

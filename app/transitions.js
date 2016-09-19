@@ -12,8 +12,8 @@ export default function () {
     this.reverse('toDown')
   );
   this.transition(
-    this.fromRoute('account.anatomy.departments'),
-    this.toRoute('account.anatomy.departments.new'),
+    this.fromRoute('account.anatomy.locations'),
+    this.toRoute('account.anatomy.locations.new'),
     this.use('toUp'),
     this.reverse('toDown')
   );
