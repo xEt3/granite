@@ -3,46 +3,20 @@
     <h2 class="left floated ui header">
       Recent Activity
     </h2>
-
     <div class="right floated">
-      {{#ui-dropdown class="floating labeled search icon tiny button" multiple="" action="nothing"}}
-        <i class="filter icon"></i>
-        <span>Filter</span>
+      {{#ui-dropdown class="fluid multiple selection" selected=tag onChange=(action (mut tag))}}
+        <i class="dropdown icon"></i>
+        <div class="default text">Select Filters</div>
         <div class="menu">
-          <div class="ui icon search input">
-            <i class="search icon"></i>
-            <input type="text" placeholder="Search types...">
-          </div>
-          <div class="divider"></div>
-          <div class="header">
-            <i class="tags icon"></i>
-            Show me events for
-          </div>
-          <label class="item">
-            {{ui-checkbox}}
-            <div class="ui teal empty circular label"></div>
-            Employee Updates
-          </label>
-          <label class="item">
-            {{ui-checkbox}}
-            <div class="ui green empty circular label"></div>
-            Recruiting
-          </label>
-          <label class="item">
-            {{ui-checkbox}}
-            <div class="ui red empty circular label"></div>
-            Corrective Actions
-          </label>
-          <label class="item">
-            {{ui-checkbox}}
-            <div class="ui blue empty circular label"></div>
-            Documents
-          </label>
+          {{#each tags as |tag|}}
+            <div class="item" data-value="{{tag}}">
+              {{tag}}
+            </div>
+          {{/each}}
         </div>
       {{/ui-dropdown}}
     </div>
   </hgroup>
-
   <div class="ui large feed">
     {{#each model as |activity|}}
       {{list-item/activity-item activity=activity onNotify=(action 'onNotify')}}
@@ -50,7 +24,6 @@
     <div class="ui divider"></div>
     <div class="fluid ui button">Load More...</div>
   </div>
-
   <div class="right aligned text">
     <span class="fields">
       {{#ui-radio id="user-radio" name="feed-source" class="radio__button" value="user" current=feedSource}}
