@@ -10,18 +10,19 @@ export default Route.extend({
   },
 
   model ( params ) {
-    let activities = this.store.query('activity', {
-          tag: params.tag,
-          limit: 10,
-          page: 0,
-          sort: {
-            created: -1
-          }
-        }),
-        tags = Ember.$.getJSON('/api/v1/activities', { _distinct: true, select: 'tag' });
+    let activityQuery = {
+      limit: 10,
+      page: 0,
+      sort: {
+        created: -1
+      }
+    };
+    if(!Ember.isEmpty(params.tag)) {
+      activityQuery.tag = params.tag;
+    }
     return RSVP.hash({
-      activities,
-      tags
+      activities: this.store.query('activity', activityQuery),
+      tags: Ember.$.getJSON('/api/v1/activities', { _distinct: true, select: 'tag' })
     });
   },
 
