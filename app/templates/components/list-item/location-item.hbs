@@ -1,1 +1,43 @@
-{{yield}}
+<div class="ui segments">
+  <h3 class="ui segment">
+    <div class="description right floated text small">
+      Created {{time-ago location.created}} by {{location.creator.fullName}}
+    </div>
+    <div class="content">
+      <i class="marker icon"></i>
+      {{location.name}}
+      {{#if location.code}}
+        <div class="ui blue basic label">
+          {{location.code}}
+        </div>
+      {{/if}}
+    </div>
+  </h3>
+  <div class="ui attached segment">
+    <div class="clearfix description">
+      <div class="header">Address:</div>
+      <p>
+        {{location.addressLine1}} <br />
+        {{#if location.addressLine2}}
+          {{location.addressLine2}} <br />
+        {{/if}}
+        {{location.addressCity}}, {{location.addressState}} {{location.addressZipcode}}
+      </p>
+      {{#if location.phoneFormatted}}
+        <div class="left floated text">
+          <div class="header">
+          Phone:
+          </div>
+           {{location.phoneFormatted}}
+        </div>
+      {{/if}}
+      <div class="right floated">
+        {{#confirm-modal confirmContent="Are you sure you want to delete this location?" as |confirm|}}
+          <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}>
+            <i class="large trash icon"></i>
+          </a>
+        {{/confirm-modal}}
+      </div>
+    </div>
+  </div>
+</div>

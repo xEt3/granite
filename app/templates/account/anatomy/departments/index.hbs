@@ -1,1 +1,42 @@
-{{outlet}}
+<hgroup class="clearfix">
+  <h1 class="ui header left floated">
+    Departments
+  </h1>
+
+  <div class="right aligned text floated menu__actions">
+    <h3 class="ui header">
+      {{#liquid-if addingDepartment}}
+        {{#link-to 'account.anatomy.departments.index' class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
+      {{else}}
+        {{#link-to 'account.anatomy.departments.index.new' class="right floated"}}
+          {{#ui-popup tagName='span' content="Add a department"}}
+            <i class="plus icon"></i>
+          {{/ui-popup}}
+        {{/link-to}}
+      {{/liquid-if}}
+    </h3>
+
+    {{#if auth.user.company.linkedToSlate}}
+      <h3 class="ui right floated header">
+        {{#ui-popup position="left center" content="Import from Slate Payroll..."}}
+          <a href="#">
+            <i class="sign in icon"></i>
+          </a>
+        {{/ui-popup}}
+      </h3>
+    {{/if}}
+  </div>
+</hgroup>
+
+<div class="ui divider"></div>
+
+{{liquid-outlet class="add-department"}}
+
+<div class="ui relaxed list">
+    {{#each model as |department|}}
+      {{list-item/department-item department=department onDelete=(action 'delete' )}}
+    {{else}}
+      <h2 class="ui center aligned header">No departments available.</h2>
+    {{/each}}
+</div>
+{{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}

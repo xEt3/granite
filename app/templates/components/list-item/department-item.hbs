@@ -1,1 +1,27 @@
-{{yield}}
+<div class="ui segments">
+  <h3 class="ui segment">
+    <div class="description right floated text small">
+      Created {{time-ago department.created}} by {{department.creator.fullName}}
+    </div>
+    <div class="content">
+      <i class="marker icon"></i>
+      {{department.name}}
+      {{#if department.code}}
+        <div class="ui blue basic label">
+          {{department.code}}
+        </div>
+      {{/if}}
+    </div>
+  </h3>
+  <div class="ui attached segment no-margin">
+    <div class="clearfix description">
+      <div class="right floated">
+        {{#confirm-modal confirmContent="Are you sure you want to delete this location?" as |confirm|}}
+          <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}>
+            <i class="large trash icon"></i>
+          </a>
+        {{/confirm-modal}}
+      </div>
+    </div>
+  </div>
+</div>
