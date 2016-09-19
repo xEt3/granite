@@ -32,7 +32,7 @@
 
 {{liquid-outlet class="add-department"}}
 
-<div class="ui relaxed divided list">
+<div class="ui relaxed list">
     {{#each model as |department|}}
       {{list-item/department-item department=department onDelete=(action 'delete' )}}
     {{else}}

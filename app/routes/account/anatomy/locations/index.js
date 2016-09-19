@@ -25,7 +25,7 @@ export default Route.extend(refreshable, {
   },
 
   setupController ( controller, model ) {
-    this._super(controller, model);
+    this._super(...arguments);
     controller.setProperties({
       model: model.locations,
       company: model.company

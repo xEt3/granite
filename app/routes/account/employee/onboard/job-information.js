@@ -19,12 +19,11 @@ export default Ember.Route.extend(addEdit,{
       company,
       departments,
       locations
-
     });
   },
 
   setupController ( controller, model ) {
-    this._super(controller, model);
+    this._super(...arguments);
     controller.setProperties({
       model: model.employee,
       company: model.company,

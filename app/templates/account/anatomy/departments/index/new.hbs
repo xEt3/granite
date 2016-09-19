@@ -1,16 +1,13 @@
 <form class="ui form container" {{action "save" on="submit"}}>
   <div class="field">
-    <label for="department-name">Department Name</label>
+    <label for="department-name">Name</label>
     {{input type="text" value=model.name id="department-name" placeholder="Department Name"}}
   </div>
   <div class="field">
-    <label for="department-code">Department Code</label>
+    <label for="department-code">Code</label>
     {{input type="text" value=model.code id="department-code" placeholder="Department Code"}}
   </div>
   <div class="ui divider"></div>
-
-
-
   {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Add Department{{/form/action-button}}
 </form>
 <div class="ui divider"></div>
