@@ -12,7 +12,7 @@ export default Route.extend({
     model.save().then(() => {
       run.scheduleOnce('afterRender', () => {
         run.later(() => {
-          this.transitionTo('account.employees.index');
+          this.transitionTo('account.employee', model);
         }, 3000);
       });
     });
