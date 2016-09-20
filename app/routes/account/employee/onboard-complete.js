@@ -9,10 +9,12 @@ export default Route.extend({
       onboardingStep: null,
       onboardingProgress: null
     });
-    run.scheduleOnce('afterRender', () => {
-      run.later(this, () => {
-        this.transitionTo('account.employees.index');
-      }, 3000);
+    model.save().then(() => {
+      run.scheduleOnce('afterRender', () => {
+        run.later(() => {
+          this.transitionTo('account.employees.index');
+        }, 3000);
+      });
     });
   }
 });
