@@ -25,5 +25,8 @@ module.exports = function(defaults) {
 
   includes.forEach(include => app.import(vendorDir + include));
 
+  app.import('vendor/semantic-ui-calendar/calendar.css');
+  app.import('vendor/semantic-ui-calendar/calendar.js');
+
   return app.toTree();
 };
