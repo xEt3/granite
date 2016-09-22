@@ -17,9 +17,11 @@ export default Route.extend({
         created: -1
       }
     };
-    if(!Ember.isEmpty(params.tag)) {
-      activityQuery.tag = params.tag;
+
+    if ( !Ember.isEmpty(params.tag) ) {
+      activityQuery.tag = { $in: params.tag.split(',') };
     }
+
     return RSVP.hash({
       activities: this.store.query('activity', activityQuery),
       tags: Ember.$.getJSON('/api/v1/activities', { _distinct: true, select: 'tag' })
