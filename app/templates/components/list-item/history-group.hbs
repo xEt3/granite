@@ -10,20 +10,24 @@
   </span>
 {{/if}}
 
-<span class="history__group-date animated rollIn">
-  <span class="group-date__month">{{time group.date 'MMM'}}</span>
-  <span class="group-date__day">{{time group.date 'Do'}}</span>
-</span>
+<div class="history-group__main">
+  <span class="history__group-date animated rollIn">
+    <span class="group-date__month">{{time group.date 'MMM'}}</span>
+    <span class="group-date__day">{{time group.date 'Do'}}</span>
+  </span>
 
-
-<div class="history-group__operation {{if oneOperationInDay 'history-group__operation-single'}}">
-  {{#if singleOperationInDay}}
-    Changes made to {{join-array shownKeys}}
-    {{#if hiddenKeys.length}}
-      {{#ui-popup content=(join-array hiddenKeys)}}
-        {{hiddenKeys.length}} {{inflect-text 'other' hiddenKeys.length}}
-      {{/ui-popup}}
-    {{/if}}
-  {{/if}}
+  <div class="history-group__operation {{if oneOperationInDay 'history-group__operation-single'}}">
+    <div class="operation__content">
+      {{#if singleOperationInDay}}
+      {{else}}
+        Changes made to {{join-array shownKeys}}
+        {{#if hiddenKeys.length}}
+          {{#ui-popup tagName='span' content=(join-array hiddenKeys)}}
+            and {{hiddenKeys.length}} {{inflect-text 'other' hiddenKeys.length}}
+          {{/ui-popup}}
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
 </div>
 {{!-- {{list-item/history-item history=history}} --}}
