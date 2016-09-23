@@ -1,4 +1,7 @@
+import Ember from 'ember';
 import titleCase from './title-case';
+
+const ES = Ember.String;
 
 let canned = {
   _id: 'Id',
@@ -14,5 +17,9 @@ export default function humanizeKeyName(key) {
     return canned[key];
   }
 
-  return titleCase(key.replace('.', ' '));
+  let transformedKey = key.split('.').map(p => ES.decamelize(p).replace(/([a-z])([0-9])/g, '$1 $2')).join(' ');
+
+  console.log(transformedKey);
+
+  return titleCase([transformedKey.replace('_', ' ')]);
 }
