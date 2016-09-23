@@ -1,0 +1,13 @@
+<h3 class="ui header">
+  {{#ui-popup content="Switch to report view"}}
+    {{#link-to 'account.employee.index.history-report'}}<i class="file icon"></i>{{/link-to}}
+  {{/ui-popup}}
+</h3>
+
+<div class="history__timeline">
+  {{#each model as |historyGroup|}}
+    {{list-item/history-group group=historyGroup}}
+  {{else}}
+    <h3 class="ui center aligned header">No history is available for this employee.</h3>
+  {{/each}}
+</div>

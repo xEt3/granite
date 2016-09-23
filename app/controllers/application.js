@@ -56,6 +56,14 @@ export default Controller.extend({
     });
   })),
 
+  // moveApplicationTag: on('init', function () {
+  //   run.scheduleOnce('afterRender', () => {
+  //     console.debug('doing it');
+  //     this.$().insertBefore('.ember-view:first');
+  //     this.$('body > .sidebar.ember-view').removeClass('ember-view');
+  //   });
+  // }),
+
   actions: {
     authResponse ( response ) {
       let auth = this.get('auth');
