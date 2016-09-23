@@ -3,9 +3,9 @@
 *******************************/
 
 /* Fonts */
-@fontName: 'Oxygen';
+@fontName: 'Open Sans';
 @fontNameMonospaced: 'Menlo', 'Lucida Console', Monaco, monospace;
-@googleFontRequest: 'Oxygen:400,300,700';
+@googleFontRequest: 'Open+Sans:300,400,600';
 
 /* Colors */
 @black: #2D2D2F;
