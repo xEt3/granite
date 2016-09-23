@@ -13,7 +13,7 @@ export default UiSidebar.extend({
     this.$().sidebar({
       context: $(context)
     })
-    .sidebar('attach events', `${context} .item`)
+    .sidebar('attach events', `${context} > .menu .item`)
     .sidebar('setting', 'transition', this.get('transition'));
   }
 });
