@@ -44,6 +44,8 @@ Router.map(function() {
         this.route('index', { path: '' });
         this.route('equipment');
         this.route('job');
+        this.route('history');
+        this.route('history-report');
       });
       this.route('onboard', function() {
         this.route('index', { path: '/start' });
