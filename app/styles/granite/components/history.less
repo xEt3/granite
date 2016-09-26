@@ -126,14 +126,22 @@
         position: absolute;
         top: 50%;
         width: 40%;
+        box-shadow: 0 1px 1px fade(@granite-grey, 30%);
+        transition: all ease-in-out 0.35s;
+        border: 1px solid @gray-lighter;
+        border-radius: 4px;
+
+        &:hover {
+          background-color: lighten(@gray-lighter, 5%);
+          box-shadow: 0 2px 2px fade(@granite-grey, 45%);
+        }
 
         .operation__content {
-          background-color: white;
-          border: 1px solid @gray-lighter;
-          border-radius: 3px;
+          position: relative;
           padding: 0.6em 0.5em;
           color: @gray;
           font-size: 0.8em;
+          z-index: 1;
         }
 
         &:before {
@@ -143,7 +151,6 @@
           width: 10px;
           height: 10px;
           background-color: white;
-          // box-shadow: 1px 0 0 @gray-lighter;
         }
       }
     }
