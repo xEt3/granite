@@ -10,7 +10,15 @@ export default ApplicationSerializer.extend({
   },
 
   serialize () {
-    let json = this._super(...arguments);
+    let json = this._super(...arguments),
+        keys = [ 'department', 'location', 'supervisor'],
+        isNull = val => !val || val === '';
+
+    keys.forEach( key => {
+      if ( isNull(json[key])){
+        delete json[key];
+      }
+    });
 
     json.name = {
       first:  json.firstName,

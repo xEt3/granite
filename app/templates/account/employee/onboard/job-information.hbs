@@ -9,14 +9,14 @@
       <div class="field">
         <label for="exemption-status">Exemption Status</label>
         Non-exempt
-        {{ui-checkbox class="toggle" label="Exempt" checked=pre_checked onChange=(action (mut pre_checked))}}
+        {{ui-checkbox class="toggle" label="Exempt" checked=model.exempt onChange=(action (mut model.exempt))}}
       </div>
       <div class="field">
         <label for="pay-rate">Pay Rate</label>
         <div class="ui left icon input pay-rate-number">
           <input type="number" id="pay-rate" value="Pay Rate">
           <i class="dollar icon"></i>
-          {{#ui-dropdown class="inline pay-rate-unit" selected="yearly" onChange=(action (mut gender))}}
+          {{#ui-dropdown class="inline pay-rate-unit" selected="yearly" onChange=(action (mut model.payRateType))}}
             <div class="default text">Unit</div>
             <i class="dropdown icon"></i>
             <div class="menu">
@@ -41,12 +41,12 @@
   </div>
   <div class="field">
     <label for="job-location">Location</label>
-    {{#ui-dropdown class="selection" selected=model.location onChange=(action (mut model.location))}}
+    {{#ui-dropdown class="selection" selected=model.location onChange=(action (mut model.location)) as |execute mapper|}}
       <div class="default text">Location</div>
       <i class="dropdown icon"></i>
       <div class="menu">
         {{#each locations as |location|}}
-          <div class="item" data-value="{{location}}">
+          <div class="item" data-value="{{map-value mapper location}}">
             {{location.name}}
           </div>
         {{/each}}
@@ -55,12 +55,12 @@
   </div>
   <div class="field">
     <label for="job-department">Department</label>
-    {{#ui-dropdown class="selection" selected=model.department onChange=(action (mut model.department))}}
+    {{#ui-dropdown class="selection" selected=model.department onChange=(action (mut model.department)) as |execute mapper|}}
       <div class="default text">Department</div>
       <i class="dropdown icon"></i>
       <div class="menu">
         {{#each departments as |department|}}
-          <div class="item" data-value="{{department}}">
+          <div class="item" data-value="{{map-value mapper department}}">
             {{department.name}}
           </div>
         {{/each}}
@@ -69,27 +69,13 @@
   </div>
   <div class="field">
     <label for="supervisor">Supervisor</label>
-    {{#ui-dropdown class="selection" selected=model.supervisor onChange=(action (mut model.supervisor))}}
+    {{#ui-dropdown class="selection" selected=model.supervisor onChange=(action (mut model.supervisor)) as |execute mapper|}}
       <div class="default text">Supervisor</div>
       <i class="dropdown icon"></i>
       <div class="menu">
-        {{#each supervisors as |supervisor|}}
-          <div class="item" data-value="{{supervisor}}">
-            {{supervisor}}
-          </div>
-        {{/each}}
-      </div>
-    {{/ui-dropdown}}
-  </div>
-  <div class="field">
-    <label for="supervisor">Supervises</label>
-    {{#ui-dropdown class="selection" selected=model.supervises onChange=(action (mut model.supervisor))}}
-      <div class="default text">Supervises</div>
-      <i class="dropdown icon"></i>
-      <div class="menu">
-        {{#each supervises as |supervisee|}}
-          <div class="item" data-value="{{supervisee}}">
-            {{supervisee}}
+        {{#each employees as |supervisor|}}
+          <div class="item" data-value="{{map-value mapper supervisor}}">
+            {{supervisor.fullName}}
           </div>
         {{/each}}
       </div>

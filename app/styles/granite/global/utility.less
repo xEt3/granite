@@ -45,3 +45,18 @@
   max-height: 300px;
   overflow-y: auto;
 }
+
+.shadow-hover {
+  box-shadow: 0 3px 6px fade(@granite-grey, 70%);
+  z-index: 1;
+  transition: all ease-in-out 0.35s;
+
+  &:hover {
+    background-color: lighten(@granite-green, 15%);
+    box-shadow: 0 3px 7px fade(@granite-grey, 65%);
+  }
+}
+
+.vertically-aligned {
+  transform: translateY(33%);
+}

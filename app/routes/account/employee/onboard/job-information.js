@@ -8,24 +8,24 @@ export default Ember.Route.extend(addEdit,{
   auth: inject.service(),
 
   model() {
-    let employee = this.modelFor('account.employee.onboard.start'),
-        company = this.get('auth.user.company'),
+    let company = this.get('auth.user.company'),
         companyId = company.get('id'),
-        departments = this.store.query('department', { 'company': companyId }),
-        locations = this.store.query('location', { 'company': companyId });
+        employee = this.modelFor('account.employee.onboard'),
+        employeeId = employee.get('id');
 
     return RSVP.hash({
       employee,
-      company,
-      departments,
-      locations
+      employees: this.store.query('employee', { 'company': companyId, _id: { $ne: employeeId } }),
+      departments: this.store.query('department', { 'company': companyId }),
+      locations: this.store.query('location', { 'company': companyId }),
+      company
     });
   },
 
   setupController ( controller, model ) {
-    this._super(...arguments);
     controller.setProperties({
       model: model.employee,
+      employees: model.employees,
       company: model.company,
       departments: model.departments,
       locations: model.locations
