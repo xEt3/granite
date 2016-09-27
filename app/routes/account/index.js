@@ -18,7 +18,7 @@ export default Route.extend({
       }
     };
 
-    if ( !Ember.isEmpty(params.tag) ) {
+    if(!Ember.isEmpty(params.tag)) {
       activityQuery.tag = { $in: params.tag.split(',') };
     }
 

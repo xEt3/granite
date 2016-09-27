@@ -1,4 +1,4 @@
-<div class="ui container">
+<div class="ui container basic segment">
   <div class="ui pointing menu">
     {{#link-to 'account.employee.index.index' class="item"}}
       <i class="list icon"></i>Summary
@@ -30,26 +30,70 @@
     </div>
   </div>
 
-  <div class="ui padded raised text segment">
-    <hgroup class="clearfix">
-      <h1 class="ui header">
-        <div class="ui tiny rounded left floated image">
-          {{display/employee-picture url=model.picture}}
+  <div class="ui basic blue unbordered container segment text-white">
+    <div class="ui equal width stackable grid container">
+      <hgroup class="eight column row">
+        <div class="column">
+          <h1 class="ui left floated center aligned header">
+            <div class="ui small circular image ">
+              {{display/employee-picture url=model.picture}}
+            </div>
+            <div class="inverted content text-white">
+              {{model.fullName}}
+              <div class="sub header text-white">
+                {{model.jobTitle}} <br />
+                {{#if model.hireDate}}
+                  Since {{time model.hireDate 'MMMM YYYY'}}
+                {{/if}}
+              </div>
+            </div>
+          </h1>
         </div>
-        <div class="content">
-          {{model.fullName}}
-          <div class="sub header">
-            {{model.jobTitle}}
-            {{#if model.hireDate}}
-              Since {{time model.hireDate 'MMMM YYYY'}}
-            {{/if}}
+        <div class="right aligned four wide column vertically-aligned">
+          <div class="ui center aligned basic blue container text-white">
+            <div class="left aligned phone-contact-icon">
+              <a href="tel:{{model.phone}}"><i class="big circular inverted green phone icon shadow-hover"></i></a>
+            </div>
+            <div class="right aligned item contact-icon">
+              <a href="mailto:{{model.email}}"><i class="big circular inverted grey mail icon shadow-hover"></i></a>
+            </div>
           </div>
         </div>
-      </h1>
-    </hgroup>
-
-    <div class="ui divider"></div>
-
-    {{outlet}}
+      </hgroup>
+    </div>
   </div>
+  <div class="ui very padded basic blue unbordered container segment text-white">
+    <div class="ui equal width stackable grid">
+      {{#if model.supervisor}}
+          <div class="center aligned column">
+            <i class="big user icon"></i>
+            <div class="inverted content">
+              <div class="header text-white">Supervisor</div>
+          {{#link-to 'account.employee' model.supervisor class="text-white"}}
+            {{model.supervisor.fullName}}
+          {{/link-to}}
+            </div>
+          </div>
+      {{/if}}
+      {{#if model.department}}
+        <div class="center aligned column">
+          <i class="big white sitemap icon"></i>
+          <div class="inverted content">
+            <div class="header text-white">Department</div>
+            {{model.department.name}}
+          </div>
+        </div>
+      {{/if}}
+      {{#if model.location}}
+        <div class="center aligned column">
+          <i class="white big marker icon"></i>
+          <div class="content">
+            <div class="header text-white">Location</div>
+            {{model.location.name}}
+          </div>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+  {{outlet}}
 </div>
