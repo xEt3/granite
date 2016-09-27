@@ -4,10 +4,14 @@
   {{/ui-popup}}
 </h3>
 
-<div class="history__timeline">
-  {{#each model as |historyGroup|}}
-    {{list-item/history-group group=historyGroup}}
-  {{else}}
-    <h3 class="ui center aligned header">No history is available for this employee.</h3>
-  {{/each}}
+<div class="history__timeline clearfix">
+  {{display/timeline-group-detail group=selectedGroup groupDisplayOffset=groupDisplayOffset class=(unless selectedGroup 'hidden') onDeselect=(action "deselectGroup")}}
+
+  <div class="history-timeline__events clearfix" style={{timelineStyle}}>
+    {{#each model as |historyGroup|}}
+      {{list-item/history-group group=historyGroup onSelect=(action "selectGroup")}}
+    {{else}}
+      <h3 class="ui center aligned header">No history is available for this employee.</h3>
+    {{/each}}
+  </div>
 </div>

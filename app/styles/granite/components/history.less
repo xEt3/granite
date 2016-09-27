@@ -2,6 +2,23 @@
   @history-border: 1px solid @gray-lighter;
 
   padding: 0.5em 2em;
+  overflow: hidden;
+
+  @media screen and (max-width:768px) {
+    padding: 0;
+  }
+
+  .history-timeline__events {
+    transform: translate(0, 0);
+    transition: all 0.8s ease-in-out;
+    width: 100%;
+    float: left;
+  }
+
+  .history__timeline-item {
+    padding: 1em 0.6em;
+    margin-top: 2em;
+  }
 
   .history__group-item {
     position: relative;
@@ -11,8 +28,19 @@
       padding: 2em 0.2em;
 
       .history-group__operation {
-        width: 50% !important;
+        width: 35% !important;
         font-size: 0.8em;
+      }
+
+      .history__year-start {
+        font-size: 0.9em !important;
+        display: block;
+        text-align: center;
+        position: static !important;
+      }
+
+      .history__month-start {
+        font-size: 0.75em !important;
       }
     }
 
@@ -58,11 +86,12 @@
 
     .history__year-start {
       position: absolute;
-      top: 0;
-      right: 0;
+      top: 8px;
+      right: 2px;
       opacity: 0.2;
       font-size: 4em;
       font-weight: 100;
+      transition: all 0.8s ease-in-out;
     }
 
     .history__month-start {
@@ -74,19 +103,13 @@
       position: relative;
       z-index: 1;
       margin: 2em 0;
+      padding: 0.5em;
+      background-color: white;
+      transition: all 0.8s ease-in-out;
 
       .group-date__month {
-        background-color: white;
-        padding: 0.5em;
+        word-wrap: break-word;
       }
-
-      // &:after {
-      //   content: '';
-      //   display: inline-block;
-      //   height: 2px;
-      //   width: 80px;
-      //   background-color: @gray-lighter;
-      // }
     }
 
     .history-group__main {
@@ -105,10 +128,10 @@
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        // border: 1px solid @gray-lighter;
         box-shadow: 0 1px 3px fade(@granite-grey, 70%);
         z-index: 1;
         transition: all ease-in-out 0.35s;
+        cursor: pointer;
 
         &:hover {
           background-color: lighten(@granite-green, 15%);
@@ -118,7 +141,6 @@
         .group-date__month, .group-date__day {
           display: block;
           user-select: none;
-          cursor: default;
         }
       }
 
@@ -130,10 +152,17 @@
         transition: all ease-in-out 0.35s;
         border: 1px solid @gray-lighter;
         border-radius: 4px;
+        cursor: pointer;
+        background-color: white;
+        max-height: 200px;
 
         &:hover {
           background-color: lighten(@gray-lighter, 5%);
           box-shadow: 0 2px 2px fade(@granite-grey, 45%);
+
+          .operation__content-helper {
+            max-height: 20px;
+          }
         }
 
         .operation__content {
@@ -142,6 +171,18 @@
           color: @gray;
           font-size: 0.8em;
           z-index: 1;
+          overflow: hidden;
+          opacity: 1;
+        }
+
+        .operation__content-helper {
+          max-height: 0px;
+          color: @gray-light;
+          font-size: 0.7em;
+          text-align: center;
+          text-transform: uppercase;
+          overflow: hidden;
+          transition: all 0.35s ease-in-out;
         }
 
         &:before {
@@ -151,6 +192,134 @@
           width: 10px;
           height: 10px;
           background-color: white;
+        }
+      }
+    }
+  }
+
+  .history-timeline__detail {
+    position: relative;
+    height: 100%;
+    width: 82%;
+    float: left;
+    transition: all 0.8s ease-in-out;
+    padding: 2px 15px 2px 2px;
+    overflow: hidden;
+
+    @media screen and (max-width:1000px) {
+      &:not(.hidden) {
+        width: 70% !important;
+
+        + .history-timeline__events {
+          width: 30% !important;
+        }
+
+        .timeline-detail__content {
+          padding: 1em !important;
+          font-size: 0.85em !important;
+          box-shadow: none !important;
+
+          .history__timeline-item {
+            margin-top: 0.8em;
+          }
+
+          .header {
+            font-size: 0.9em !important;
+            white-space: normal;
+            line-height: normal;
+          }
+
+          .list .item {
+            font-size: 0.8em !important;
+
+            .ui.label {
+              font-size: 0.75em !important;
+              word-wrap: break-word;
+            }
+          }
+        }
+      }
+    }
+
+    .timeline-detail__content {
+      overflow: hidden;
+    }
+
+    .timeline-detail__content {
+      position: relative;
+      background-color: white;
+      transition: all 0.8s ease-in-out;
+      padding: 2em 3em;
+      border-radius: 5px;
+      box-shadow: 0 2px 1px fade(@granite-grey, 70%);
+      min-height: 245px;
+      border: @history-border;
+      z-index: 1;
+    }
+
+    .timeline-detail__pointer {
+      position: absolute;
+      top: 215px;
+      right: 4px;
+      width: 20px;
+      height: 20px;
+      border-right: @history-border;
+      border-top: @history-border;
+      background-color: white;
+      transform: rotate(45deg);
+      box-shadow: 0 2px 1px fade(@granite-grey, 70%);
+    }
+
+    .history-timeline__deselect {
+      margin-top: 15px;
+    }
+
+    &.hidden {
+      padding: 0;
+      width: 0;
+
+      .timeline-detail__content {
+        padding: 0;
+        min-height: 0;
+      }
+
+      .timeline-detail__pointer {
+        display: none;
+        width: 0;
+      }
+    }
+
+    &:not(.hidden) {
+      + .history-timeline__events {
+        width: 18%;
+
+        .history__year-start {
+          font-size: 1em !important;
+          display: block;
+          text-align: center;
+          position: static !important;
+        }
+
+        .history__month-start {
+          font-size: 0.75em !important;
+        }
+
+        .history__group-item .history-group__operation {
+          display: none;
+          max-height: 0;
+          box-shadow: none;
+          border: none;
+          overflow: hidden;
+
+          .operation__content {
+            opacity: 0;
+          }
+
+          &:before {
+            max-height: 0;
+            box-shadow: none;
+            border: none;
+          }
         }
       }
     }

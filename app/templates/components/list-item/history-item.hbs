@@ -1,1 +1,14 @@
-{{history.creator.fullName}} made {{history.diff.length}} changes {{time-ago history.created}}
+<h4 class="ui light horizontal divider header">
+  {{history.creator.fullName}}
+  made
+  {{history.diff.length}}&nbsp;{{inflect-text 'changes' history.diff.length}}
+  at {{time history.created 'h:mma'}}
+</h4>
+<div class="ui divided list">
+  {{#each history.diff as |diff|}}
+    <div class="item">
+      <strong>{{humanize-key (join-array diff.path '.')}}</strong>
+      changed from <span class="ui label">{{diff.lhs}}</span> to <span class="ui green label">{{diff.rhs}}</span>
+    </div>
+  {{/each}}
+</div>
