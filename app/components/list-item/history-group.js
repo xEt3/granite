@@ -1,14 +1,14 @@
 import Ember from 'ember';
 
-const { Component, computed } = Ember;
+const { Component, A, computed } = Ember;
 
 export default Component.extend({
   classNames: [ 'history__group-item', 'clearfix' ],
 
-  oneOperationInDay: computed.equal('history.length', 1),
+  oneOperationInDay: computed.equal('group.history.length', 1),
 
   changedKeysList: computed('group.history.@each.changedKeys', function () {
-    return this.get('group.history').reduce((arr, hist) => arr.concat(hist.get('changedKeys')), Ember.A()).uniq();
+    return this.get('group.history').reduce((arr, hist) => arr.concat(hist.get('changedKeys')), A()).uniq();
   }),
 
   shownKeys: computed('changedKeysList.[]', function () {
@@ -18,5 +18,20 @@ export default Component.extend({
   hiddenKeys: computed('changedKeysList.[]', function () {
     let keys = this.get('changedKeysList');
     return keys.slice(2, keys.get('length'));
-  })
+  }),
+
+  actors: computed('group.history.@each.creator', function () {
+    return this.get('group.history').reduce((actors, history) => {
+      actors.addObject(history.get('creator'));
+      return actors;
+    }, A());
+  }),
+
+  actions: {
+    selectGroup () {
+      let groupOffset = this.$('.history__group-date').offset(),
+          timelineOffset = 0 - (groupOffset.top - Ember.$('.history__timeline .history-timeline__events').offset().top - 200);
+      this.get('onSelect')(this.get('group'), groupOffset, timelineOffset);
+    }
+  }
 });

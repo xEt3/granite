@@ -39,12 +39,6 @@ export default Controller.extend({
 
   navTransparent: computed.equal('currentPath', 'index'),
 
-  authBecameExpired: observer('auth.isExpired', function () {
-    if ( this.get('auth.isExpired') && this.get('auth.user') ) {
-      this.send('logout', true);
-    }
-  }),
-
   topLevel: computed('currentPath', function () {
     const currentPath = this.get('currentPath');
     return currentPath.indexOf('account') < 0 && currentPath.indexOf('login') < 0;
@@ -56,20 +50,15 @@ export default Controller.extend({
     });
   })),
 
-  // moveApplicationTag: on('init', function () {
-  //   run.scheduleOnce('afterRender', () => {
-  //     console.debug('doing it');
-  //     this.$().insertBefore('.ember-view:first');
-  //     this.$('body > .sidebar.ember-view').removeClass('ember-view');
-  //   });
-  // }),
-
   actions: {
     authResponse ( response ) {
       let auth = this.get('auth');
 
       if ( response ) {
-        auth.refreshSession();
+        auth.refreshSession()
+        .catch(() => {
+          this.send('logout', true);
+        });
       } else {
         this.send('logout');
       }
