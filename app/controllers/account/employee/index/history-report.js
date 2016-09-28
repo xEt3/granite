@@ -13,7 +13,7 @@ export default Controller.extend({
   isLoading: false,
   canLoadMore: true,
 
-  columns: computed(function () {
+  columns: computed(() => {
     return [{
       label: 'Field',
       valuePath: 'path',
@@ -28,7 +28,9 @@ export default Controller.extend({
   }),
 
   table: computed('model', function () {
-    return new Table(this.get('columns'), this.get('model'), { enableSync: true });
+    return new Table(this.get('columns'), this.get('model'), {
+      enableSync: true
+    });
   }),
 
   fetchRecords () {
@@ -60,5 +62,4 @@ export default Controller.extend({
       }
     }
   }
-
 });
