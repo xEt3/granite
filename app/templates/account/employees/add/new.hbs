@@ -35,32 +35,17 @@
         {{/ui-dropdown}}
       </div>
     </div>
-    <div class="field">
-      <label for="employee-phone">Phone Number</label>
-      {{input type="tel" value=model.phone placeholder="Employee Phone #" id="employee-phone"}}
-    </div>
-    <div class="field">
-      <label for="email">Email</label>
-      {{validated-input type="email" model=model valuePath="email" placeholder="Email" id="email"}}
-    </div>
-    <h3 class="ui horizontal header divider section">
-      <i class="red first aid icon"></i>
-      Emergency Contact Information
-    </h3>
-    <div class="three fields">
+    <div class="two fields">
       <div class="field">
-        <label for="emergency-contact-first" class="">Contact First Name</label>
-        {{input type="text" value=model.emergencyContactNameFirst placeholder="First Name" id="emergency-contact-first"}}
+        <label for="employee-phone">Phone Number</label>
+        {{input type="tel" value=model.phone placeholder="Employee Phone #" id="employee-phone"}}
       </div>
       <div class="field">
-        <label for="emergency-contact-last" class="">Contact Last Name</label>
-        {{input type="text" value=model.emergencyContactNameLast placeholder="Last Name" id="emergency-contact-last"}}
-      </div>
-      <div class="field">
-        <label for="emergency-contact-phone" class="">Contact Phone</label>
-        {{input type="tel" value=model.emergencyContactNamePhone placeholder="Emergency Phone #" id="emergency-contact-phone"}}
+        <label for="email">Email</label>
+        {{validated-input type="email" model=model valuePath="email" placeholder="Email" id="email"}}
       </div>
     </div>
+    
     <div class="ui divider"></div>
     {{#form/action-button type="submit" class="ui massive fluid green button" disabled=disabled loading=working}}Begin Onboarding{{/form/action-button}}
   </form>
