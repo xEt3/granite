@@ -8,3 +8,9 @@
 .ui.dropdown:not(.button) > .default.text, .ui.default.dropdown:not(.button) > .text {
   color: @granite-grey !important;
 }
+
+.ui.search.dropdown:focus > input.search {
+  background: none transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}

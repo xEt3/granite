@@ -1,0 +1,50 @@
+{{#if group.startOfYear}}
+  <span class="history__year-start">
+    {{time group.date 'YYYY'}}
+  </span>
+{{/if}}
+
+{{#if group.startOfMonth}}
+  <span class="history__month-start">
+    <span class="group-date__month">{{time group.date 'MMMM'}}</span>
+  </span>
+{{/if}}
+
+<div class="history-group__main">
+  <span class="history__group-date animated rollIn" {{action "selectGroup"}}>
+    <span class="group-date__month">{{time group.date 'MMM'}}</span>
+    <span class="group-date__day">{{time group.date 'Do'}}</span>
+  </span>
+
+  <div class="history-group__operation {{if oneOperationInDay 'history-group__operation-single'}}" {{action "selectGroup"}}>
+    <div class="operation__content">
+      {{#if oneOperationInDay}}
+        One change made to {{join-array shownKeys}}
+        {{#if hiddenKeys.length}}
+          {{#ui-popup tagName='span' content=(join-array hiddenKeys)}}
+            <strong>and {{hiddenKeys.length}} {{inflect-text 'other' hiddenKeys.length}}</strong>
+          {{/ui-popup}}
+        {{/if}}
+        {{#if group.history.firstObject.creator}}
+          by {{group.history.firstObject.creator.firstName}}
+        {{/if}}
+      {{else}}
+        Changes made to {{join-array shownKeys}}
+        {{#if hiddenKeys.length}}
+          {{#ui-popup tagName='span' content=(join-array hiddenKeys)}}
+            <strong>and {{hiddenKeys.length}} {{inflect-text 'other' hiddenKeys.length}}</strong>
+          {{/ui-popup}}
+        {{/if}}
+
+        {{#if group.history.firstObject.creator}}
+          by {{group.history.firstObject.creator.firstName}}
+        {{/if}}
+      {{/if}}
+
+      <div class="operation__content-helper">
+        <i class="fitted pointing up icon"></i> Click to see details
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- {{list-item/history-item history=history}} --}}
