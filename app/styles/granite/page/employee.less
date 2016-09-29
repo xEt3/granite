@@ -1,12 +1,59 @@
-.contact-icon {
-  display: inline-block;
-}
-
-.phone-contact-icon {
-  display: inline-block;
-  margin-right: 1em;
-}
-
 .unbordered {
   border: none !important;
+}
+
+.statistic-container {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.statistic-item {
+  margin: 40px 0 40px 0 !important;
+
+  .statistic-value {
+    text-transform: capitalize !important;
+    color: lighten(@granite-blue, 40%) !important;
+  }
+  @media screen and (max-width:768px) {
+    margin: 10px 0 10px 0 !important;
+  }
+}
+
+.employee-index-container {
+  border: none !important;
+
+  .employee-header-group {
+    @media screen and (max-width:768px) {
+      margin: 0 auto !important;
+      float: none !important;
+
+      .employee-image {
+          display: block;
+          margin: 0 auto;
+          text-align: center;
+        }
+      }
+
+    .employee-basic-meta {
+      text-align: left;
+      padding: 0 !important;
+
+      @media screen and (max-width:768px) {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+      }
+    }
+  }
+  .contact-column > .contact-container {
+      div.contact-icon {
+        display: inline-block;
+        margin-bottom: 1em;
+      }
+
+      div.phone-contact-icon {
+        display: inline-block;
+        margin: 0 1em 1em 0;
+      }
+  }
 }

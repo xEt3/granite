@@ -1,3 +1,45 @@
+<div class="ui basic blue unbordered container segment text-white statistic-container">
+  <div class="ui equal width stackable grid">
+    {{#if model.supervisor}}
+      <div class="center aligned column">
+          <div class="ui mini statistic statistic-item">
+            <div class="value">
+              {{#link-to 'account.employee' model.supervisor class="statistic-value"}}
+                {{model.supervisor.fullName}}
+              {{/link-to}}
+            </div>
+            <div class="label text-white">
+              Supervisor
+            </div>
+          </div>
+      </div>
+    {{/if}}
+    {{#if model.department}}
+    <div class="center aligned column">
+        <div class="ui mini statistic statistic-item">
+          <div class="value statistic-value">
+            {{model.department.name}}
+          </div>
+          <div class="label text-white">
+            Department
+          </div>
+        </div>
+    </div>
+    {{/if}}
+    {{#if model.location}}
+    <div class="center aligned column">
+        <div class="ui mini statistic statistic-item">
+          <div class="value statistic-value">
+            {{model.location.name}}
+          </div>
+          <div class="label text-white">
+            Location
+          </div>
+        </div>
+    </div>
+    {{/if}}
+  </div>
+</div>
 <div class="ui stackable two column grid">
   <div class="column">
     <div class="ui raised blue segment">
