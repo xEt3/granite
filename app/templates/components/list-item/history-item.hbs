@@ -8,7 +8,9 @@
   {{#each history.diff as |diff|}}
     <div class="item">
       <strong>{{humanize-key (join-array diff.path '.')}}</strong>
-      changed from <span class="ui label">{{diff.lhs}}</span> to <span class="ui green label">{{diff.rhs}}</span>
+      changed from
+      <span class="ui label">{{diff-value-translator key=diff.path value=diff.lhs}}</span> to
+      <span class="ui green label">{{diff-value-translator key=diff.path value=diff.rhs}}</span>
     </div>
   {{/each}}
 </div>
