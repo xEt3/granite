@@ -1,7 +1,10 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+
+export default Component.extend({
   tagName: 'button',
   classNameBindings: [ 'loading' ],
-  attributeBindings: [ 'type', 'loading:disabled' ]
+  attributeBindings: [ 'type', '_disabled:disabled' ],
+  _disabled: computed.or('loading', 'disabled')
 });
