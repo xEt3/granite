@@ -2,5 +2,5 @@
          Site Overrides
 *******************************/
 .ui.divider {
-line-height: normal !important;
+  line-height: normal !important;
 }
