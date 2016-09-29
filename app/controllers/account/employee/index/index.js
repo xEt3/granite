@@ -5,6 +5,6 @@ export default Controller.extend({
   hasEmergencyContact: computed.notEmpty(
     'model.emergencyContactPhone',
     'model.emergencyContactNameFirst',
-    'model.emergencyContactNameLast',
+    'model.emergencyContactNameLast'
   )
 });

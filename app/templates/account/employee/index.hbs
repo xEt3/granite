@@ -32,16 +32,15 @@
       {{/ui-dropdown}}
     </div>
   </div>
-  
-  <div class="ui basic blue unbordered container segment text-white">
+
+  <div class="ui basic blue container segment text-white employee-index-container">
     <div class="ui equal width stackable grid container">
-      <hgroup class="eight column row">
-        <div class="column">
-          <h1 class="ui left floated center aligned header">
-            <div class="ui small circular image ">
+      <div class="left floated twelve wide column">
+          <h1 class="ui left floated center aligned header employee-header-group">
+            <div class="ui small circular image employee-image">
               {{display/employee-picture url=model.picture}}
             </div>
-            <div class="inverted content text-white">
+            <div class="inverted content text-white employee-basic-meta">
               {{model.fullName}}
               <div class="sub header text-white">
                 {{model.jobTitle}} <br />
@@ -52,8 +51,8 @@
             </div>
           </h1>
         </div>
-        <div class="right aligned four wide column vertically-aligned">
-          <div class="ui center aligned basic blue container text-white">
+        <div class="right floated four wide column vertically-aligned contact-column">
+          <div class="ui center aligned basic blue container text-white contact-container">
             <div class="left aligned phone-contact-icon">
               <a href="tel:{{model.phone}}"><i class="big circular inverted green phone icon shadow-hover"></i></a>
             </div>
@@ -62,41 +61,8 @@
             </div>
           </div>
         </div>
-      </hgroup>
     </div>
   </div>
-  <div class="ui very padded basic blue unbordered container segment text-white">
-    <div class="ui equal width stackable grid">
-      {{#if model.supervisor}}
-          <div class="center aligned column">
-            <i class="big user icon"></i>
-            <div class="inverted content">
-              <div class="header text-white">Supervisor</div>
-          {{#link-to 'account.employee' model.supervisor class="text-white"}}
-            {{model.supervisor.fullName}}
-          {{/link-to}}
-            </div>
-          </div>
-      {{/if}}
-      {{#if model.department}}
-        <div class="center aligned column">
-          <i class="big white sitemap icon"></i>
-          <div class="inverted content">
-            <div class="header text-white">Department</div>
-            {{model.department.name}}
-          </div>
-        </div>
-      {{/if}}
-      {{#if model.location}}
-        <div class="center aligned column">
-          <i class="white big marker icon"></i>
-          <div class="content">
-            <div class="header text-white">Location</div>
-            {{model.location.name}}
-          </div>
-        </div>
-      {{/if}}
-    </div>
-  </div>
+  <div class="ui divider"></div>
   {{outlet}}
 </div>
