@@ -1,6 +1,6 @@
 {{#if model}}
   <div class="ui basic segment">
-    <div class="ui four cards">
+    <div class="ui cards">
       {{#each model as |asset|}}
         {{list-item/assigned-asset-item asset=asset employee=employee onUnassign=(action 'unassignAsset')}}
       {{/each}}
