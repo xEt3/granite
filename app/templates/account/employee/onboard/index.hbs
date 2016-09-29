@@ -1,5 +1,20 @@
 <form class="ui form" {{action "saveAndContinue" on="submit"}}>
   <h2 class="ui horizontal divider header">Employee Information</h2>
+  {{#auto-focus}}
+    {{#ui-calendar class="field" type="date" startMode="year" onChange=(action (mut model.dateOfBirth))}}
+      <label for="ui-calendar-date-only">Birth Date</label>
+      <div class="ui calendar" id="ui-calendar-date-only">
+        <div class="ui input left icon">
+          <i class="calendar icon"></i>
+          <input type="text" placeholder="Type In Or Select A Date">
+        </div>
+      </div>
+    {{/ui-calendar}}
+  {{/auto-focus}}
+  <h3 class="ui horizontal header divider section">
+    <i class="grey marker icon"></i>
+    Mailing Address
+  </h3>
   <div class="field">
     <label for="address-line-1">Address Line 1</label>
     {{validated-input type="text" model=model valuePath="addressLine1" placeholder="Address Line 1" id="address-line-1"}}
@@ -13,7 +28,6 @@
       <label for="address-city">City</label>
       {{input type="text" value=model.addressCity placeholder="City" id="address-city"}}
     </div>
-
     <div class="field">
       <label for="state-name">State</label>
       {{#ui-dropdown class="search selection" selected=model.addressState onChange=(action (mut model.addressState))}}
@@ -29,10 +43,27 @@
         </div>
       {{/ui-dropdown}}
     </div>
-
     <div class="field">
       <label for="address-zip">Zip</label>
       {{input type="text" value=model.addressZip placeholder="Zip" id="address-zip"}}
+    </div>
+  </div>
+  <h3 class="ui horizontal header divider section">
+    <i class="red first aid icon"></i>
+    Emergency Contact Information
+  </h3>
+  <div class="three fields">
+    <div class="field">
+      <label for="emergency-contact-first" class="">Contact First Name</label>
+      {{input type="text" value=model.emergencyContactNameFirst placeholder="First Name" id="emergency-contact-first"}}
+    </div>
+    <div class="field">
+      <label for="emergency-contact-last" class="">Contact Last Name</label>
+      {{input type="text" value=model.emergencyContactNameLast placeholder="Last Name" id="emergency-contact-last"}}
+    </div>
+    <div class="field">
+      <label for="emergency-contact-phone" class="">Contact Phone</label>
+      {{input type="tel" value=model.emergencyContactPhone placeholder="Emergency Phone #" id="emergency-contact-phone"}}
     </div>
   </div>
 
