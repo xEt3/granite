@@ -1,29 +1,52 @@
 import Ember from 'ember';
 import Table from 'ember-light-table';
+import moment from 'moment';
 import humanizeKey from 'granite/utils/humanize-key-name';
 
-const { Controller, computed, isEmpty } = Ember;
+const { Controller, computed } = Ember;
 
 export default Controller.extend({
+  queryParams: [ 'sort', 'field' ],
   page: 1,
-  limit: 10,
+  limit: 5,
   dir: 'asc',
   sort: null,
   model: null,
   isLoading: false,
-  canLoadMore: true,
+  field: [],
+  creator: [],
+
+  canLoadMore: computed('meta.totalRecords', 'limit', function () {
+    return this.get('page') < Math.ceil(this.get('meta.totalRecords') / this.get('limit'));
+  }),
 
   columns: computed(() => {
     return [{
       label: 'Field',
-      valuePath: 'path',
-      format: val => val ? humanizeKey(val.join('.')) : val
+      valuePath: 'diff.path',
+      format: val => val ? humanizeKey(val.join('.')) : val,
+      sortable: false
     }, {
       label: 'Previous Value',
-      valuePath: 'lhs'
+      valuePath: 'diff.lhs',
+      sortable: false,
+      cellComponent: 'tables/cells/diff-value'
     }, {
       label: 'New Value',
-      valuePath: 'rhs'
+      valuePath: 'diff.rhs',
+      sortable: false,
+      cellComponent: 'tables/cells/diff-value'
+    }, {
+      label: 'Changed On',
+      valuePath: 'history.created',
+      format: val => val ? moment(val).format('M/D/YY [at] h:mma') : val
+    }, {
+      label: 'Creator',
+      valuePath: 'history.creator.fullName'
+    }, {
+      label: 'Applied',
+      valuePath: 'history.applied',
+      cellComponent: 'tables/cells/boolean-check-value'
     }];
   }),
 
@@ -33,20 +56,11 @@ export default Controller.extend({
     });
   }),
 
-  fetchRecords () {
-    this.set('isLoading', true);
-    this.store.query('user', this.getProperties(['page', 'limit', 'sort', 'dir'])).then(records => {
-      this.get('model').pushObjects(records.toArray());
-      this.set('isLoading', false);
-      this.set('canLoadMore', !isEmpty(records));
-    });
-  },
-
   actions: {
     onScrolledToBottom () {
-      if(this.get('canLoadMore')) {
+      if ( this.get('canLoadMore') ) {
         this.incrementProperty('page');
-        this.fetchRecords();
+        this.send('refresh');
       }
     },
 
@@ -57,9 +71,17 @@ export default Controller.extend({
           sort: column.get('valuePath'),
           page: 1
         });
-        this.get('model').clear();
-        this.fetchRecords();
       }
+    },
+
+    setReset ( val ) {
+      this.setProperties({
+        resetModel: true,
+        page: 1
+      });
+
+      this.store.unloadAll('history');
+      return val;
     }
   }
 });

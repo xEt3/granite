@@ -8,16 +8,34 @@
   transition: all 0.35s ease-in-out !important;
   border-color: white !important;
   .placeholder(lighten(@granite-grey, 45%));
+}
 
+.ui.form input {
+  &:not(.inline):not(.search) {
+    box-shadow: 0px 1px 3px fade(@granite-grey, 60%) !important;
+  }
+
+  &:not(.transparent):focus, &:not(.transparent):active {
+    border-color: white !important;
+
+    &:not(.inline):not(.search) {
+      box-shadow: 0px 2px 5px fade(@granite-grey, 50%) !important;
+    }
+
+    .placeholder(lighten(@granite-grey, 50%));
+  }
+}
+
+.ui.form .ui.dropdown {
   &:not(.inline) {
-    box-shadow: 0px 2px 3px fade(@granite-grey, 50%) !important;
+    box-shadow: 0px 1px 3px fade(@granite-grey, 60%) !important;
   }
 
   &:not(.transparent):focus, &:not(.transparent):active {
     border-color: white !important;
 
     &:not(.inline) {
-      box-shadow: 0px 1px 1px fade(@granite-grey, 70%) !important;
+      box-shadow: 0px 2px 5px fade(@granite-grey, 50%) !important;
     }
 
     .placeholder(lighten(@granite-grey, 50%));
