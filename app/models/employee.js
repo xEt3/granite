@@ -2,7 +2,7 @@ import Ember from 'ember';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import Validations from './validations/employee';
-import { belongsTo, hasMany } from 'ember-data/relationships';
+import { belongsTo } from 'ember-data/relationships';
 
 const { computed } = Ember;
 
@@ -39,11 +39,11 @@ export default Model.extend(Validations, {
   ssn:                       attr('string'),
 
   // Company and Position Information
-  hireDate:       attr('date'),
-  jobTitle:       attr('string'),
-  payRate: attr('number'),
-  exempt:         attr('boolean', { defaultValue: false }),
-  payRateType:    attr('string', { defaultValue: 'Hourly' }),
+  hireDate:    attr('date'),
+  jobTitle:    attr('string'),
+  payRate:     attr('number'),
+  exempt:      attr('boolean', { defaultValue: false }),
+  payRateType: attr('string', { defaultValue: 'Hourly' }),
 
   onboarding:         attr('boolean'),
   onboardingStep:     attr('number'),
@@ -55,8 +55,9 @@ export default Model.extend(Validations, {
   department:    belongsTo('department', { async: true, inverse: false }),
   supervisor:    belongsTo('employee', { async: true, inverse: false}),
 
-  terminatedOn:  attr('date'),
-  dateOfBirth:   attr('date'),
+  terminatedOn: attr('date'),
+  dateOfBirth:  attr('date'),
+  effectiveOn:  attr('date'), // Placeholder for effective dated changes. This field is only here to pass along to the api
 
   created: attr('date', {
     defaultValue () {

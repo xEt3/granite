@@ -1,15 +1,14 @@
 import Ember from 'ember';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-const { RSVP, inject } = Ember;
+const { Route, RSVP, inject } = Ember;
 
-export default Ember.Route.extend(addEdit,{
+export default Route.extend({
   auth: inject.service(),
 
-  model() {
+  model () {
     let company = this.get('auth.user.company'),
         companyId = company.get('id'),
-        employee = this.modelFor('account.employee.onboard'),
+        employee = this.modelFor('account.employee.index.edit'),
         employeeId = employee.get('id');
 
     return RSVP.hash({
@@ -25,9 +24,9 @@ export default Ember.Route.extend(addEdit,{
     controller.setProperties({
       model: model.employee,
       employees: model.employees,
-      company: model.company,
       departments: model.departments,
-      locations: model.locations
+      locations: model.locations,
+      company: model.company
     });
   }
 });
