@@ -3,7 +3,7 @@ import Ember from 'ember';
 const { Component, computed } = Ember;
 
 export default Component.extend({
-  classNames: ['card'],
+  classNames: ['ui centered card'],
   didReceiveAttrs () {
     this.set('details', this.get('showAttributes'));
   },
