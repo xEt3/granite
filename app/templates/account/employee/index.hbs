@@ -1,5 +1,5 @@
 <div class="ui container basic segment">
-  <div class="ui pointing menu">
+  {{#ui-menu menuClass="pointing"}}
     {{#link-to 'account.employee.index.index' class="item"}}
       <i class="list icon"></i>Summary
     {{/link-to}}
@@ -31,7 +31,7 @@
         </div>
       {{/ui-dropdown}}
     </div>
-  </div>
+  {{/ui-menu}}
 
   <div class="ui basic blue container segment text-white employee-index-container">
     <div class="ui equal width stackable grid container">
