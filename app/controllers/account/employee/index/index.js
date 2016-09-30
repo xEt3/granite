@@ -2,7 +2,6 @@ import Ember from 'ember';
 const { computed, Controller } = Ember;
 export default Controller.extend({
 
-
   hasAnniversaries: computed.or(
     'model.hireDate',
     'model.dateOfBirth'
