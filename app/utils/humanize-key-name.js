@@ -18,5 +18,5 @@ export default function humanizeKeyName(key) {
   }
 
   let transformedKey = key.split('.').map(p => ES.decamelize(p).replace(/([a-z])([0-9])/g, '$1 $2')).join(' ');
-  return titleCase([transformedKey.replace('_', ' ')]);
+  return titleCase([transformedKey.replace(/_/g, ' ')]);
 }
