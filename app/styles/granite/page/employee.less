@@ -46,14 +46,41 @@
     }
   }
   .contact-column > .contact-container {
-      div.contact-icon {
-        display: inline-block;
-        margin-bottom: 1em;
-      }
 
-      div.phone-contact-icon {
-        display: inline-block;
-        margin: 0 1em 1em 0;
+    div.phone-contact-icon {
+      display: inline-block;
+      margin: 0 1em 1em 0;
+
+      .phone-contact-icon-hover {
+        box-shadow: 3px 6px 5px 0 fade(@granite-grey, 70%);
+        z-index: 1;
+        transition: all ease-in-out 0.35s;
+
+        &:hover {
+          background-color: lighten(@granite-green, 15%)!important;
+          box-shadow: 0 3px 7px fade(@granite-grey, 65%)!important;
+        }
       }
+    }
+
+    div.email-contact-icon {
+      display: inline-block;
+      margin-bottom: 1em;
+
+      .email-contact-icon-hover {
+        box-shadow: 3px 6px 5px 0 fade(@granite-grey, 70%);
+        z-index: 1;
+        transition: all ease-in-out 0.35s;
+
+        &:hover {
+          background-color: lighten(black, 35%)!important;
+          box-shadow: 0 3px 7px fade(@granite-grey, 65%)!important;
+        }
+      }
+    }
   }
+}
+
+.no-info-header {
+  transform: translateY(-70%);
 }

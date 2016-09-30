@@ -53,12 +53,16 @@
         </div>
         <div class="right floated four wide column vertically-aligned contact-column">
           <div class="ui center aligned basic blue container text-white contact-container">
-            <div class="left aligned phone-contact-icon">
-              <a href="tel:{{model.phone}}"><i class="big circular inverted green phone icon shadow-hover"></i></a>
-            </div>
-            <div class="right aligned item contact-icon">
-              <a href="mailto:{{model.email}}"><i class="big circular inverted grey mail icon shadow-hover"></i></a>
-            </div>
+            {{#if model.phone}}
+              <div class="left aligned phone-contact-icon">
+                <a href="tel:{{model.phone}}"><i class="big circular inverted green phone icon phone-contact-icon-hover"></i></a>
+              </div>
+            {{/if}}
+            {{#if model.email}}
+              <div class="right aligned item email-contact-icon">
+                <a href="mailto:{{model.email}}"><i class="big circular inverted grey mail icon email-contact-icon-hover"></i></a>
+              </div>
+            {{/if}}
           </div>
         </div>
     </div>
