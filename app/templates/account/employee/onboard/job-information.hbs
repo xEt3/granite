@@ -58,6 +58,7 @@
       <div class="default text">Location</div>
       <i class="dropdown icon"></i>
       <div class="menu">
+        <div class="item" data-value="">No Location</div>
         {{#each locations as |location|}}
           <div class="item" data-value="{{map-value mapper location}}">
             {{location.name}}
@@ -72,6 +73,7 @@
       <div class="default text">Department</div>
       <i class="dropdown icon"></i>
       <div class="menu">
+        <div class="item" data-value="">No Department</div>
         {{#each departments as |department|}}
           <div class="item" data-value="{{map-value mapper department}}">
             {{department.name}}
@@ -86,6 +88,7 @@
       <div class="default text">Supervisor</div>
       <i class="dropdown icon"></i>
       <div class="menu">
+        <div class="item" data-value="">No Supervisor</div>
         {{#each employees as |supervisor|}}
           <div class="item" data-value="{{map-value mapper supervisor}}">
             {{supervisor.fullName}}

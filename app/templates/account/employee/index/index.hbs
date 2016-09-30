@@ -45,26 +45,38 @@
     <div class="ui raised blue segment">
       <a class="ui blue ribbon label"><i class="announcement icon"></i>Direct Contact</a>
       <div class="ui basic segment">
-        <a href="mailto:{{model.email}}">
-          <i class="mail icon"></i>
-          {{model.email}}
-        </a> <br />
-        <a href="tel:{{model.phone}}">
-          <i class="phone icon"></i>
-          {{format-phone model.phone}}
-        </a>
+        {{#if hasDirectContact}}
+          {{#if model.email}}
+            <a href="mailto:{{model.email}}">
+              <i class="mail icon"></i>
+              {{model.email}}
+            </a> <br />
+          {{/if}}
+          {{#if model.phone}}
+            <a href="tel:{{model.phone}}">
+              <i class="phone icon"></i>
+              {{format-phone model.phone}}
+            </a>
+          {{/if}}
+        {{else}}
+          <h3 class="ui center aligned header no-info-header">No Direct Contact Available</h3>
+        {{/if}}
       </div>
     </div>
     <div class="ui raised teal segment">
       <a class="ui teal ribbon label"><i class="mail icon"></i>Mailing Address</a>
       <div class="ui basic segment">
-        {{model.addressLine1}}, <br />
-        {{#if model.addressLine2}}
-          {{model.addressLine2}}, <br />
+        {{#if model.addressLine1}}
+          {{model.addressLine1}}, <br />
+          {{#if model.addressLine2}}
+            {{model.addressLine2}}, <br />
+          {{/if}}
+          {{model.addressCity}},
+          {{model.addressState}}
+          {{model.addressZip}}
+        {{else}}
+          <h3 class="ui center aligned header no-info-header">No Address Available</h3>
         {{/if}}
-        {{model.addressCity}},
-        {{model.addressState}}
-        {{model.addressZip}}
       </div>
     </div>
   </div>
@@ -72,10 +84,18 @@
     <div class="ui raised grey segment">
       <a class="ui grey left ribbon label"><i class="birthday icon"></i>Anniversaries</a>
       <div class="ui basic segment">
-        <p class="text">
-          Date of Hire: {{time model.hireDate}} <br />
-          Birthday: {{time model.dateOfBirth}}
-        </p>
+        {{#if hasAnniversaries}}
+          <p class="text">
+            {{#if model.hireDate}}
+              Date of Hire: {{time model.hireDate}} <br />
+            {{/if}}
+            {{#if model.dateOfBirth}}
+              Birthday: {{time model.dateOfBirth}}
+            {{/if}}
+          </p>
+        {{else}}
+          <h3 class="ui center aligned header no-info-header">No DOB or Hire Date Available</h3>
+        {{/if}}
       </div>
     </div>
     <div class="ui raised red segment">
@@ -83,12 +103,16 @@
       <div class="ui basic segment">
         <p class="text">
           {{#if hasEmergencyContact}}
-            Emergency Contact:
-            {{model.emergencyContactNameFirst}} {{model.emergencyContactNameLast}} <br />
-            Contact Phone:
-            <a href="tel:{{model.emergencyContactPhone}}">{{format-phone model.emergencyContactPhone}}</a>
+            {{#if model.emergencyContactNameFirst}}
+              Emergency Contact:
+              {{model.emergencyContactNameFirst}} {{model.emergencyContactNameLast}} <br />
+            {{/if}}
+            {{#if model.emergencyContactPhone}}
+              Contact Phone:
+              <a href="tel:{{model.emergencyContactPhone}}">{{format-phone model.emergencyContactPhone}}</a>
+            {{/if}}
           {{else}}
-            No Emergency Contact Available
+          <h3 class="ui center aligned header no-info-header">No Emergency Contact Available</h3>
           {{/if}}
         </p>
       </div>
