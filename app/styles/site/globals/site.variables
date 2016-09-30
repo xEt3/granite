@@ -7,6 +7,8 @@
 @fontNameMonospaced: 'Menlo', 'Lucida Console', Monaco, monospace;
 @googleFontRequest: 'Open+Sans:300,400,600';
 
+@mobile-breakpoint: 768px;
+
 /* Colors */
 @black: #2D2D2F;
 @red            : @granite-red;
