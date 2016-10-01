@@ -1,4 +1,20 @@
-<div class="ui basic very padded text segment container">
+<div class="ui basic text segment container">
+  <div class="clearfix">
+    <span class="fields">
+      {{#ui-radio id="user-radio" name="feed-source" class="radio__button" value="user" current=feedSource}}
+        <label for="user-radio">
+          {{ui-popup tagName="i" position="left center" class="user icon" content="Your Cards"}}
+        </label>
+      {{/ui-radio}}
+      {{#ui-radio id="all-radio" name="feed-source" class="radio__button" value="all" current=feedSource}}
+        <label for="all-radio">
+          {{ui-popup tagName="i" position="left center" class="users icon" content="All Cards"}}
+        </label>
+      {{/ui-radio}}
+    </span>
+    <span class="right floated"><a href="#" class="text-white">Priority <i class="down caret icon"></i></a></span>
+  </div>
+  <div class="ui divider"></div>
   <div class="ui cards">
     <a href="#" class="ui link fluid raised card">
       <div class="content">
