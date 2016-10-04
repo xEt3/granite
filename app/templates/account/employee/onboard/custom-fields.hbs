@@ -1,0 +1,22 @@
+<div class="ui header clearfix">
+  <div class="right floated">
+    {{#ui-popup content=customFieldHelper}}
+      <a href="#" class="{{if addingCustomFieldName 'text-danger'}}" {{action "toggleProperty" "addingCustomFieldName"}}>
+        <i class="{{if addingCustomFieldName 'remove' 'plus'}} icon"></i>
+      </a>
+    {{/ui-popup}}
+  </div>
+</div>
+
+{{#liquid-if addingCustomFieldName}}
+  <form class="ui form container" {{action "saveCustomFieldName" on="submit"}}>
+    <div class="field">
+      <label for="custom-field-name">Custom Field Name</label>
+      {{input type="text" value=pendingCustomFieldName placeholder="ex. CPR Certification"}}
+    </div>
+    <div class="field">
+      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Add Custom Field Name{{/form/action-button}}
+    </div>
+  </form>
+  <div class="ui divider"></div>
+{{/liquid-if}}

@@ -55,6 +55,7 @@ Router.map(function() {
         this.route('index', { path: '/start' });
         this.route('job-information');
         this.route('equipment');
+        this.route('custom-fields');
       });
       this.route('onboard-complete');
     });

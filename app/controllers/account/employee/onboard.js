@@ -17,6 +17,10 @@ export default Controller.extend({
     icon: 'mobile',
     title: 'Assets',
     link: 'equipment'
+  }, {
+    icon: 'sticky note',
+    title: 'Custom Info',
+    link: 'custom-fields'
   }]),
 
   currentStep: computed('steps.@each.link', 'application.currentPath', function () {
