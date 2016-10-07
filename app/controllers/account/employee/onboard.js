@@ -18,7 +18,7 @@ export default Controller.extend({
     title: 'Assets',
     link: 'equipment'
   }, {
-    icon: 'sticky note',
+    icon: 'keyboard',
     title: 'Custom Info',
     link: 'custom-fields'
   }]),

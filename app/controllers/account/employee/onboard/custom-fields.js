@@ -1,9 +1,10 @@
 import Ember from 'ember';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import del from 'granite/mixins/controller-abstractions/delete';
 
 const { Controller, computed } = Ember;
 
-export default Controller.extend(addEdit, {
+export default Controller.extend(addEdit, del, {
   addingCustomFieldName: false,
 
   customFieldHelper: computed('addingCustomFieldName', function () {
@@ -22,13 +23,6 @@ export default Controller.extend(addEdit, {
       this.toggleProperty(prop);
     },
 
-    removeCustomFieldName ( attr ) {
-      let model = this.get('model');
-
-      model.get('customFields').removeObject(attr);
-      this.send('save', model);
-    },
-
     saveCustomFieldName () {
       let model = this.get('model'),
           attr = this.get('pendingCustomFieldName');
@@ -36,27 +30,15 @@ export default Controller.extend(addEdit, {
       this.ajaxStart();
 
       if ( !attr ) {
-        this.ajaxError('Field name is required.');
+        this.ajaxError('Custom Field name is required.');
         return;
       }
 
-      model.get('customFields').addObject(attr);
+      if ( !model.get('customFields') ) {
+        model.set('customFields', {});
+      }
+      model.set(`customFields.${attr}`, null);
       this.send('save', model);
     }
-
-    // saveCustomFieldName () {
-    //   let model = this.get('model'),
-    //       attr = this.get('pendingCustomFieldName');
-    //
-    //   this.ajaxStart();
-    //
-    //   if ( !attr ) {
-    //     this.ajaxError('Custom Field name is required.');
-    //     return;
-    //   }
-    //
-    //   model.get('customFields').addObject(attr);
-    //   this.send('save', model);
-    // }
   }
 });

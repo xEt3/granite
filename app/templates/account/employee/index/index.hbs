@@ -79,6 +79,23 @@
         {{/if}}
       </div>
     </div>
+    <div class="ui raised orange segment">
+      <a class="ui orange ribbon label"><i class="book icon"></i>Additional Information</a>
+      {{#if model.customFields}}
+        {{#each-in model.customFields as |key value|}}
+          <div class="ui basic segment clearfix">
+            <p class="left floated text">
+              {{key}}
+            </p>
+            <p class="right floated text">
+              {{value}}
+            </p>
+          </div>
+        {{/each-in}}
+      {{else}}
+        <h3 class="ui center aligned header no-info-header">No Additional Information</h3>
+      {{/if}}
+    </div>
   </div>
   <div class="column">
     <div class="ui raised grey segment">
