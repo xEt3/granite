@@ -21,6 +21,7 @@ export default Model.extend(Validations, {
   contactLastName:   attr('string'),
 
   linkedServices: attr('array'),
+  employeeCustomFields: attr('array'),
 
   urlPrefix: attr('string'),
 

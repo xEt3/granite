@@ -1,0 +1,37 @@
+<h2 class="ui horizontal divider header">
+  Custom Fields
+</h2>
+<form class="ui form" {{action "saveAndContinue" on="submit"}}>
+  <div class="ui header clearfix">
+    <div class="right floated">
+      {{#ui-popup content=customFieldHelper}}
+        <a href="#" class="{{if addingCustomFieldName 'text-danger'}}" {{action "toggleProperty" "addingCustomFieldName"}}>
+          <i class="{{if addingCustomFieldName 'remove' 'plus'}} icon"></i>
+        </a>
+      {{/ui-popup}}
+    </div>
+  </div>
+  {{#liquid-if addingCustomFieldName}}
+    <div class="ui container">
+      <div class="field">
+        {{#ui-popup content="Here we'll give it a name. After we save the name  we'll give it a value. "}} <i class="info circle icon"></i>
+          <label for="custom-field-name">Custom Field Name</label>
+        {{/ui-popup}}
+        {{input type="text" value=pendingCustomFieldName placeholder="ex. Allergies"}}
+      </div>
+      <div class="field">
+        <div class="ui positive button" {{action "saveCustomFieldName"}}>Save this field name</div>
+      </div>
+    </div>
+    {{#unless model.customFields}}
+      <div class="ui divider"></div>
+    {{/unless}}
+  {{/liquid-if}}
+  {{#if model.customFields}}
+    <div class="ui divider"></div>
+    {{input/employee-custom-fields model=model}}
+  {{/if}}
+  {{#unless addingCustomFieldName}}
+    {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Save Custom Fields{{/form/action-button}}
+  {{/unless}}
+</form>

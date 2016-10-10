@@ -58,6 +58,7 @@ export default Model.extend(Validations, {
   terminatedOn: attr('date'),
   dateOfBirth:  attr('date'),
   effectiveOn:  attr('date'), // Placeholder for effective dated changes. This field is only here to pass along to the api
+  customFields: attr({ defaultValue: () => {} }),
 
   created: attr('date', {
     defaultValue () {
