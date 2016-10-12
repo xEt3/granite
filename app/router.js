@@ -93,6 +93,9 @@ Router.map(function() {
         });
       });
     });
+    this.route('action-item', function() {
+      this.route('history');
+    });
   });
 
   this.route('error');

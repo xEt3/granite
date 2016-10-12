@@ -1,0 +1,39 @@
+<div class="ui container">
+  {{#ui-menu menuClass="pointing"}}
+    {{#link-to 'account.action-item.index' class="item"}}
+      <i class="checkmark box icon"></i>Todo
+      <label class="ui left pointing label">4</label>
+    {{/link-to}}
+    {{#link-to 'account.action-item.history' class="item"}}
+      <i class="history icon"></i>History
+    {{/link-to}}
+    {{#link-to 'account.action-item.history' class="item"}}
+      <i class="comments icon"></i>Discussion
+    {{/link-to}}
+    <div class="right menu">
+      {{#ui-dropdown class="item icon top right pointing"}}
+        <i class="wrench icon"></i><i class="dropdown icon"></i>
+        <div class="menu">
+          <div class="header">Actions</div>
+          {{#link-to 'account.action-item.history' class="text-green item"}}
+            <i class="check icon"></i>Mark Complete
+          {{/link-to}}
+          {{#link-to 'account.action-item.history' class="item"}}
+            <i class="random icon"></i>Transfer
+          {{/link-to}}
+          <div class="header">Settings</div>
+          {{#link-to 'account.employee.index.edit' class='item'}}<i class="edit icon"></i>Edit{{/link-to}}
+          <div class="item"><i class="settings icon"></i>Settings</div>
+          <div class="text-danger header">Danger Zone</div>
+          <div class="item">
+            {{#confirm-modal as |confirm|}}
+              <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}><i class="trash icon"></i>Delete Record</a>
+            {{/confirm-modal}}
+          </div>
+        </div>
+      {{/ui-dropdown}}
+    </div>
+  {{/ui-menu}}
+
+  {{outlet}}
+</div>
