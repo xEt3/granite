@@ -1,66 +1,52 @@
 <h2 class="ui horizontal divider header">
   Custom Fields
 </h2>
-<form class="ui form" {{action "saveAndContinue" on="submit"}}>
-  <div class="ui header clearfix">
-        <div class="">
-          <div class="ui fluid positive button" {{action "createCustomField"}}>
-            <i class="plus icon"></i>
-            Add A Custom Field
-          </div>
-        </div>
-  </div>
+<div class="ui form">
+  {{#liquid-if showTable}}
+    <table class="ui very basic celled table">
+      <thead>
+        <tr>
+          <th class="eight wide">Name</th>
+          <th class="eight wide">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each-in model.customFields as |key value|}}
+          {{tables/custom-field key=key value=value onValueChange=(action 'editValue') onDelete=(action 'deleteCustomField')}}
+        {{/each-in}}
 
-  <div class="ui horizontal divider">
-    Or
-  </div>
+        {{#if adding}}
+          <tr>
+            <td class="ui minimally padded">
+              {{#auto-focus}}
+                {{input type="text" value=pendingCustomFieldName placeholder="Allergies"}}
+              {{/auto-focus}}
+            </td>
+            <td class="ui minimally padded">{{input type="text" value=pendingCustomFieldValue placeholder="Peanuts, Gluten"}}</td>
+          </tr>
+          <tr>
+            <td class="center aligned text" colspan="2">
+              <a href="#" {{action "saveCustomField"}}><i class="save icon"></i> Save Field</a>
+            </td>
+          </tr>
+        {{/if}}
+      </tbody>
+    </table>
 
+  {{else}}
+    <h2 class="ui center aligned header">
+      No custom fields available.
+    </h2>
+  {{/liquid-if}}
 
-      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Finish Onboarding{{/form/action-button}}
-</form>
+  {{#liquid-unless adding class="ui header clearfix"}}
+      <div class="ui fluid button" {{action "beginAddingCustomField"}}>
+        <i class="plus icon"></i>
+        Add A Custom Field
+      </div>
+  {{/liquid-unless}}
 
-{{#ui-modal name="new-custom-field" detachable="true"  class="new-custom-field" onApprove=(action 'saveCustomField') onDeny=(action 'abortCustomField')}}
-  <i class="cancel close icon"></i>
-  <div class="header">
-    Creating a new custom field
-  </div>
-  <div class="content">
-      {{input/employee-custom-fields}}
-  </div>
-  <div class="actions">
-    <div class="ui negative deny button">
-      Cancel
-    </div>
-    <div class="ui positive right labeled icon button">
-      Create Custom Field
-      <i class="checkmark icon"></i>
-    </div>
-  </div>
-{{/ui-modal}}
-
-{{!-- {{#liquid-if addingCustomFieldValue}}
-  <div class="ui divider"></div>
-  {{input/employee-custom-fields model=model}}
-{{/liquid-if}}
-{{#liquid-unless adding}}
-  {{list-item/employee-custom-fields model=model}}
-{{/liquid-unless}} --}}
-
-{{!--
-{{#liquid-if addingCustomFieldName}}
-  <div class="ui container">
-    <div class="field">
-      {{#ui-popup content="Here we'll give it a name. After we save the name  we'll give it a value. "}} <i class="info circle icon"></i>
-        <label for="custom-field-name">Custom Field Name</label>
-      {{/ui-popup}}
-      {{input type="text" value=pendingCustomFieldName placeholder="ex. Allergies"}}
-    </div>
-    <div class="field">
-      <div class="ui positive button" {{action "saveCustomFieldName"}}>Save this field name</div>
-      <div class="ui warning button" {{action "toggleProperty" "addingCustomFieldName"}}>Cancel</div>
-    </div>
-  </div>
-  {{#unless model.customFields}}
-    <div class="ui divider"></div>
-  {{/unless}}
-{{/liquid-if}} --}}
+  <form {{action "saveAndContinue" on="submit"}}>
+    {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Finish Onboarding{{/form/action-button}}
+  </form>
+</div>
