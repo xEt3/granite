@@ -75,36 +75,3 @@ export default Controller.extend(addEdit, {
     }
   }
 });
-
-// actions: {
-//   createAsset ( category ) {
-//     let user = this.get('auth.user');
-//
-//     this.set('pendingAssetItem', this.store.createRecord('asset-item', {
-//       asset: category,
-//       identifier: this.get('model.firstName') + '\'s ' + singularize(category.get('name')),
-//       creator: user,
-//       company: user.get('company')
-//     }));
-//
-//     Ember.$('.new-asset').modal('show');
-//   },
-//
-//   saveAsset () {
-//     this.ajaxStart();
-//
-//     this.get('pendingAssetItem').save()
-//     .then(asset => {
-//       this.send('selectAsset', asset);
-//     })
-//     .catch(this.ajaxError.bind(this));
-//   },
-//
-//   abortAsset () {
-//     let asset = this.get('pendingAssetItem');
-//
-//     asset.destroyRecord()
-//     .then(() => {
-//       this.set('pendingAssetItem', null);
-//     });
-//   },
