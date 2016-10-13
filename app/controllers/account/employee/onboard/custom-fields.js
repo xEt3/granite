@@ -1,26 +1,26 @@
 import Ember from 'ember';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-import del from 'granite/mixins/controller-abstractions/delete';
 
 const { Controller, computed } = Ember;
 
-export default Controller.extend(addEdit, del, {
-  addingCustomFieldName: false,
-  addingCustomFieldValue: false,
-  adding: computed.or('addingCustomFieldName', 'addingCustomFieldValue'),
+export default Controller.extend(addEdit, {
+  adding: false,
+  showTable: computed.or('objectLength', 'adding'),
+
+  objectLength: computed('model.customFields', function () {
+    let cf = this.get('model.customFields');
+    return cf ? Object.keys(cf).length : 0;
+  }),
 
   customFieldHelper: computed('addingCustomFieldName', function () {
     return this.get('addingCustomFieldName') ? 'Cancel' : 'Add a new custom field';
   }),
 
-  afterSave () {
-    // this.setProperties({
-    //   pendingCustomFieldName: null,
-    //   addingCustomFieldName: false
-    // });
-  },
-
   actions: {
+    beginAddingCustomField () {
+      this.set( 'adding', true );
+    },
+
     toggleProperty ( prop ) {
       this.toggleProperty(prop);
     },
@@ -28,6 +28,7 @@ export default Controller.extend(addEdit, del, {
     createCustomField () {
       Ember.$('.new-custom-field').modal('show');
     },
+
     saveCustomField () {
       let model = this.get('model'),
           attr = this.get('pendingCustomFieldName'),
@@ -43,21 +44,35 @@ export default Controller.extend(addEdit, del, {
         return;
       }
 
-
       if ( !model.get('customFields') ) {
         model.set('customFields', {});
       }
       model.set(`customFields.${attr}`, value);
-      this.send('save', model);
-      this.setProperties({
-        addingCustomFieldValue: true
+
+      this.saveModel().then(() => {
+        this.setProperties({
+          pendingCustomFieldValue: null,
+          pendingCustomFieldName: null,
+          adding: false
+        });
       });
     },
 
-    abortCustomField() {
+    editValue ( key, newValue ) {
+      let model = this.get('model');
+      model.set(`customFields.${key}`, newValue);
+      this.saveModel();
+    },
 
+    deleteCustomField ( key ) {
+      let model = this.get('model'),
+          customFields = model.get('customFields');
+
+      delete customFields[key];
+
+      model.set('customFields', customFields);
+      this.saveModel();
     }
-
   }
 });
 

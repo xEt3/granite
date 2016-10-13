@@ -40,10 +40,14 @@
     {{/if}}
   </div>
 </div>
+
 <div class="ui stackable two column grid">
   <div class="column">
-    <div class="ui raised blue segment">
-      <a class="ui blue ribbon label"><i class="announcement icon"></i>Direct Contact</a>
+    <div class="ui raised segment">
+      <span class="ui blue ribbon label"><i class="announcement icon"></i>Direct Contact</span>
+      {{#link-to 'account.employee.index.edit.index' class='ui right corner blue label'}}
+        <i class="pencil icon"></i>
+      {{/link-to}}
       <div class="ui basic segment">
         {{#if hasDirectContact}}
           {{#if model.email}}
@@ -63,8 +67,11 @@
         {{/if}}
       </div>
     </div>
-    <div class="ui raised teal segment">
-      <a class="ui teal ribbon label"><i class="mail icon"></i>Mailing Address</a>
+    <div class="ui raised segment">
+      <span class="ui teal ribbon label"><i class="mail icon"></i>Mailing Address</span>
+      {{#link-to 'account.employee.index.edit.index' class='ui right corner teal label'}}
+        <i class="pencil icon"></i>
+      {{/link-to}}
       <div class="ui basic segment">
         {{#if model.addressLine1}}
           {{model.addressLine1}}, <br />
@@ -79,27 +86,37 @@
         {{/if}}
       </div>
     </div>
-    <div class="ui raised orange segment">
-      <a class="ui orange ribbon label"><i class="book icon"></i>Additional Information</a>
-      {{#if model.customFields}}
-        {{#each-in model.customFields as |key value|}}
-          <div class="ui basic segment clearfix">
-            <p class="left floated text">
-              {{key}}
-            </p>
-            <p class="right floated text">
-              {{value}}
-            </p>
+    <div class="ui raised segment">
+      <span class="ui orange ribbon label"><i class="book icon"></i>Additional Information</span>
+      {{#link-to 'account.employee.index.edit.custom-fields' class='ui right corner orange label'}}
+        <i class="pencil icon"></i>
+      {{/link-to}}
+      <div class="ui basic segment">
+        {{#if model.customFields}}
+          <div class="ui list">
+            {{#each-in model.customFields as |key value|}}
+              <div class="line-item-value">
+                <i>
+                  {{key}}
+                </i>
+                <u>
+                  {{value}}
+                </u>
+              </div>
+            {{/each-in}}
           </div>
-        {{/each-in}}
-      {{else}}
-        <h3 class="ui center aligned header no-info-header">No Additional Information</h3>
-      {{/if}}
+        {{else}}
+          <h3 class="ui center aligned header no-info-header">No Additional Information</h3>
+        {{/if}}
+      </div>
     </div>
   </div>
   <div class="column">
-    <div class="ui raised grey segment">
-      <a class="ui grey left ribbon label"><i class="birthday icon"></i>Anniversaries</a>
+    <div class="ui raised segment">
+      <span class="ui grey left ribbon label"><i class="birthday icon"></i>Anniversaries</span>
+      {{#link-to 'account.employee.index.edit.index' class='ui right corner grey label'}}
+        <i class="pencil icon"></i>
+      {{/link-to}}
       <div class="ui basic segment">
         {{#if hasAnniversaries}}
           <p class="text">
@@ -115,8 +132,11 @@
         {{/if}}
       </div>
     </div>
-    <div class="ui raised red segment">
-      <a class="ui red left ribbon label"><i class="emergency icon"></i>Emergency Contact</a>
+    <div class="ui raised segment">
+      <span class="ui red left ribbon label"><i class="emergency icon"></i>Emergency Contact</span>
+      {{#link-to 'account.employee.index.edit.index' class='ui right corner red label'}}
+        <i class="pencil icon"></i>
+      {{/link-to}}
       <div class="ui basic segment">
         <p class="text">
           {{#if hasEmergencyContact}}
