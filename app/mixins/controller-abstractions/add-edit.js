@@ -17,7 +17,7 @@
 import Ember from 'ember';
 import AjaxHooks from '../ajax-status';
 
-const { get } = Ember;
+const { get, RSVP: { Promise } } = Ember;
 
 export default Ember.Mixin.create(AjaxHooks, {
   enableNotify: true,
@@ -55,36 +55,40 @@ export default Ember.Mixin.create(AjaxHooks, {
     }
   },
 
+  saveModel ( model ) {
+    const _model = model || this.get('model');
+
+    if ( !_model ) {
+      return Promise.resolve();
+    }
+
+    this.ajaxStart();
+
+    let invalid = this._validateModel(_model);
+
+    if ( invalid ) {
+      let requireFieldDescriptors = get(this, 'requireFieldDescriptors'),
+          invalidMessage = 'You must specify these fields: ' + invalid.map(field => {
+            return requireFieldDescriptors ? requireFieldDescriptors[field] || field : field;
+          }).join(', ');
+
+      this.ajaxError(invalidMessage, true);
+      return Promise.resolve();
+    }
+
+    return _model.save().then(record => {
+      this.ajaxSuccess('Successfully saved.');
+      this._afterSave(record);
+
+      if ( this.afterSave && typeof this.afterSave === 'function' ) {
+        this.afterSave(record);
+      }
+    }).catch(this.ajaxError.bind(this));
+  },
+
   actions: {
     save ( model ) {
-      const _model = model || this.get('model');
-
-      if ( !_model ) {
-        return;
-      }
-
-      this.ajaxStart();
-
-      let invalid = this._validateModel(_model);
-
-      if ( invalid ) {
-        let requireFieldDescriptors = get(this, 'requireFieldDescriptors'),
-            invalidMessage = 'You must specify these fields: ' + invalid.map(field => {
-              return requireFieldDescriptors ? requireFieldDescriptors[field] || field : field;
-            }).join(', ');
-
-        this.ajaxError(invalidMessage, true);
-        return;
-      }
-
-      _model.save().then(record => {
-        this.ajaxSuccess('Successfully saved.');
-        this._afterSave(record);
-
-        if ( this.afterSave && typeof this.afterSave === 'function' ) {
-          this.afterSave(record);
-        }
-      }).catch(this.ajaxError.bind(this));
+      this.saveModel(model);
     }
   }
 });
