@@ -10,6 +10,7 @@ export default Ember.Component.extend({
 
       if ( employeeCustomField ) {
         delete employeeCustomField[attr];
+
         model.set('customFields', employeeCustomField);
         this.rerender();
       }

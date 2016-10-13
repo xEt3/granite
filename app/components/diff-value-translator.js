@@ -13,7 +13,8 @@ export default Component.extend({
     company: 'name',
     location: 'name',
     department: 'name',
-    employee: 'fullName'
+    employee: 'fullName',
+    'company-user': 'fullName'
   },
   store: inject.service(),
 

@@ -49,6 +49,7 @@ Router.map(function() {
         this.route('edit', function() {
           this.route('index', { path: '/personal' });
           this.route('job');
+          this.route('custom-fields');
         });
       });
       this.route('onboard', function() {

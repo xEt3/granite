@@ -1,9 +1,8 @@
 import Ember from 'ember';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-const { Controller, computed } = Ember;
+const { Controller, A, observer, computed, on } = Ember;
 
-export default Controller.extend(addEdit, {
+export default Controller.extend({
   adding: false,
   showTable: computed.or('objectLength', 'adding'),
 
@@ -15,6 +14,25 @@ export default Controller.extend(addEdit, {
   customFieldHelper: computed('addingCustomFieldName', function () {
     return this.get('addingCustomFieldName') ? 'Cancel' : 'Add a new custom field';
   }),
+
+  recreateCustomFields: on('init', observer('model', function () {
+    this.updateCustomFields();
+  })),
+
+  updateCustomFields () {
+    let customFields = this.get('model.customFields') || {},
+        fields = A();
+
+    for ( var key in customFields ) {
+      if ( !customFields.hasOwnProperty(key) ) {
+        continue;
+      }
+
+      fields.pushObject({ key, value: customFields[key] });
+    }
+
+    this.set('customFieldArray', fields);
+  },
 
   actions: {
     beginAddingCustomField () {
@@ -34,8 +52,6 @@ export default Controller.extend(addEdit, {
           attr = this.get('pendingCustomFieldName'),
           value = this.get('pendingCustomFieldValue');
 
-      this.ajaxStart();
-
       if ( !attr ) {
         this.ajaxError('Custom field name is required.');
         return;
@@ -47,21 +63,23 @@ export default Controller.extend(addEdit, {
       if ( !model.get('customFields') ) {
         model.set('customFields', {});
       }
-      model.set(`customFields.${attr}`, value);
 
-      this.saveModel().then(() => {
-        this.setProperties({
-          pendingCustomFieldValue: null,
-          pendingCustomFieldName: null,
-          adding: false
-        });
+      model.set(`customFields.${attr}`, value);
+      this.updateCustomFields();
+
+      this.setProperties({
+        pendingCustomFieldValue: null,
+        pendingCustomFieldName: null,
+        adding: false
       });
+      model.set('hasDirtyAttributes', true);
     },
 
     editValue ( key, newValue ) {
       let model = this.get('model');
       model.set(`customFields.${key}`, newValue);
-      this.saveModel();
+      this.updateCustomFields();
+      model.set('hasDirtyAttributes', true);
     },
 
     deleteCustomField ( key ) {
@@ -71,7 +89,8 @@ export default Controller.extend(addEdit, {
       delete customFields[key];
 
       model.set('customFields', customFields);
-      this.saveModel();
+      this.updateCustomFields();
+      model.set('hasDirtyAttributes', true);
     }
   }
 });

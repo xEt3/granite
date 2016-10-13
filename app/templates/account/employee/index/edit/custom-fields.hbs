@@ -1,6 +1,3 @@
-<h2 class="ui horizontal divider header">
-  Custom Fields
-</h2>
 <div class="ui form">
   {{#liquid-if showTable}}
     <table class="ui very basic celled table">
@@ -11,9 +8,9 @@
         </tr>
       </thead>
       <tbody>
-        {{#each-in model.customFields as |key value|}}
-          {{tables/custom-field key=key value=value onValueChange=(action 'editValue') onDelete=(action 'deleteCustomField')}}
-        {{/each-in}}
+        {{#each customFieldArray as |field|}}
+          {{tables/custom-field key=field.key value=field.value onValueChange=(action 'editValue') onDelete=(action 'deleteCustomField')}}
+        {{/each}}
 
         {{#if adding}}
           <tr>
@@ -26,7 +23,7 @@
           </tr>
           <tr>
             <td class="center aligned text" colspan="2">
-              <a href="#" {{action "saveCustomField"}}><i class="save icon"></i> Save Field</a>
+              <a href="#" {{action "saveCustomField"}}><i class="plus icon"></i> Add Field</a>
             </td>
           </tr>
         {{/if}}
@@ -45,8 +42,4 @@
         Add A Custom Field
       </div>
   {{/liquid-unless}}
-
-  <form {{action "saveAndContinue" on="submit"}}>
-    {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Finish Onboarding{{/form/action-button}}
-  </form>
 </div>
