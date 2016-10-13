@@ -1,1 +1,45 @@
-{{outlet}}
+<div class="ui form">
+  {{#liquid-if showTable}}
+    <table class="ui very basic celled table">
+      <thead>
+        <tr>
+          <th class="eight wide">Name</th>
+          <th class="eight wide">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each customFieldArray as |field|}}
+          {{tables/custom-field key=field.key value=field.value onValueChange=(action 'editValue') onDelete=(action 'deleteCustomField')}}
+        {{/each}}
+
+        {{#if adding}}
+          <tr>
+            <td class="ui minimally padded">
+              {{#auto-focus}}
+                {{input type="text" value=pendingCustomFieldName placeholder="Allergies"}}
+              {{/auto-focus}}
+            </td>
+            <td class="ui minimally padded">{{input type="text" value=pendingCustomFieldValue placeholder="Peanuts, Gluten"}}</td>
+          </tr>
+          <tr>
+            <td class="center aligned text" colspan="2">
+              <a href="#" {{action "saveCustomField"}}><i class="plus icon"></i> Add Field</a>
+            </td>
+          </tr>
+        {{/if}}
+      </tbody>
+    </table>
+
+  {{else}}
+    <h2 class="ui center aligned header">
+      No custom fields available.
+    </h2>
+  {{/liquid-if}}
+
+  {{#liquid-unless adding class="ui header clearfix"}}
+      <div class="ui fluid button" {{action "beginAddingCustomField"}}>
+        <i class="plus icon"></i>
+        Add A Custom Field
+      </div>
+  {{/liquid-unless}}
+</div>
