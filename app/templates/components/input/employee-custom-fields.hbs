@@ -1,7 +1,14 @@
-{{#each-in model.customFields as |attribute|}}
-   <div class="field">
-     {{#input/custom-field class="custom-field-input" object=model.customFields attribute=attribute}}
-       <a href="#" class="text-danger" {{action 'removeEmployeeCustomFieldName' attribute}}><i class="trash icon"></i>Remove</a>
-      {{/input/custom-field}}
-  </div>
-{{/each-in}}
+<div class="field">
+ <label for="custom-field-name">Field Name</label>
+ {{input type="text" value=pendingCustomFieldName id="custom-field-name" placeholder="Allergies, for example"}}
+</div>
+<div class="field">
+ <label for="custom-field-value">Field Value</label>
+ {{input type="text" value=pendingCustomFieldValue id="custom-field-value" placeholder="Gluten, Mondays, et cetera"}}
+</div>
+ <a href="#" class="text-danger pull-right" {{action 'removeEmployeeCustomFieldName' attribute}}><i class="trash icon"></i>Remove</a>
+{{/input/custom-field}}
+<div class="field">
+  <div class="ui positive button" {{action "toggleProperty" "addingCustomFieldValue"}}>Save this value</div>
+  <div class="ui warning button" {{action "toggleProperty" "addingCustomFieldValue"}}>Cancel</div>
+</div>
