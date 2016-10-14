@@ -10,4 +10,10 @@ export default [{
     segment: 'assets',
     link: 'account.assets'
   }
+}, {
+  when: 'action-item',
+  prepend: {
+    segment: 'action items',
+    link: 'account.action-items'
+  }
 }];
