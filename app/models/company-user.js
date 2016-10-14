@@ -16,6 +16,7 @@ export default Model.extend({
   shownHints: attr('array'),
 
   company: belongsTo('company', { async: true, inverse: false }),
+  employee: belongsTo('employee', { async: true, inverse: 'companyUser' }),
 
   created: attr('date', {
     defaultValue () {
