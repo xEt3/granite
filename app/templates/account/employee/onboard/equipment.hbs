@@ -40,7 +40,7 @@
   {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
 </form>
 
-{{#ui-modal name="new-asset" class="new-asset" onApprove=(action 'saveAsset') onDeny=(action 'abortAsset')}}
+{{#ui-modal name="new-asset" class="new-asset" detachable=true onApprove=(action 'saveAsset') onDeny=(action 'abortAsset')}}
   <i class="cancel close icon"></i>
   <div class="header">
     Creating a new item in "{{pendingAssetItem.asset.name}}" for {{model.firstName}}
