@@ -60,7 +60,9 @@ Router.map(function() {
       });
       this.route('onboard-complete');
     });
-    this.route('action-items');
+    this.route('action-items', function() {
+      this.route('new');
+    });
     this.route('documents');
     this.route('recruiting', function() {
       this.route('job-description', { path: '/job/:id' }, function() {
@@ -95,6 +97,8 @@ Router.map(function() {
     });
     this.route('action-item', function() {
       this.route('history');
+      this.route('todo');
+      this.route('discussion');
     });
   });
 
