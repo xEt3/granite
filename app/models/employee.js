@@ -50,10 +50,12 @@ export default Model.extend(Validations, {
   onboarder:          belongsTo('company-user', { async: true, inverse: false }),
   onboardingProgress: attr('number'),
 
-  company:       belongsTo('company', { async: true, inverse: false }),
-  location:      belongsTo('location', { async: true, inverse: false }),
-  department:    belongsTo('department', { async: true, inverse: false }),
-  supervisor:    belongsTo('employee', { async: true, inverse: false}),
+  company:     belongsTo('company', { async: true, inverse: false }),
+  location:    belongsTo('location', { async: true, inverse: false }),
+  department:  belongsTo('department', { async: true, inverse: false }),
+  supervisor:  belongsTo('employee', { async: true, inverse: false }),
+  companyUser: belongsTo('company-user', { async: true, inverse: 'employee' }),
+  creator:     belongsTo('company-user', { async: true, inverse: false }),
 
   terminatedOn: attr('date'),
   dateOfBirth:  attr('date'),
