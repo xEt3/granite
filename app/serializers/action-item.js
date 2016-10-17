@@ -2,7 +2,7 @@ import DS from 'ember-data';
 import ApplicationSerializer from './application';
 
 export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
-  attr: {
+  attrs: {
     checklistItem: { embedded: 'always' }
   }
 });
