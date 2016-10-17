@@ -1,0 +1,8 @@
+<label for={{inputId}}>
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{placeholder}}
+  {{/if}}
+</label>
+{{input type=type class=inputClass placeholder=placeholder value=value}}
