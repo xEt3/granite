@@ -56,7 +56,7 @@
     "less-plugin-glob": "^1.1.1",
     "liquid-fire": "0.25.0",
     "loader.js": "^4.0.1",
-    "semantic-ui-ember": "https://github.com/Semantic-Org/Semantic-UI-Ember.git"
+    "semantic-ui-ember": "2.0.0-beta.0"
   },
   "dependencies": {
     "ember-cli-animate-css": "0.0.1",
