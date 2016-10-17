@@ -1,10 +1,24 @@
-<div class="ui very padded raised segment animated fadeInUp">
-  <h2 class="ui dividing header"><i class="plus icon"></i>Create a new action item</h2>
+<div class="ui padded raised segment animated fadeInUp">
+  <h2 class="ui dividing header"><i class="asterisk icon"></i>Create a New Action Item</h2>
 
   <form class="ui form" {{action "save" on="submit"}}>
-    {{input/ui-input type='text' id='action-item-title' placeholder='Title'}}
+    {{input/ui-input type="text" inputId="action-item-title" placeholder="Title" value=model.title}}
+
     <div class="field">
-      <label for="action-item-title"></label>
+      <label for="action-item-description">Description</label>
+      {{textarea rows="5" placeholder="Description" value=model.description}}
     </div>
+
+    <div class="ui divider"></div>
+
+    {{#ui-calendar class="field" type="date" onChange=(action (mut model.dueOn))}}
+      <label for="action-item-due-date"><i class="clock icon"></i> Assign a Due Date</label>
+      <div class="ui calendar" id="action-item-due-date">
+        <div class="ui input left icon">
+          <i class="calendar icon"></i>
+          <input type="text" placeholder="Assign a date by selecting or typing">
+        </div>
+      </div>
+    {{/ui-calendar}}
   </form>
 </div>
