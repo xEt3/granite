@@ -92,7 +92,7 @@
         <i class="pencil icon"></i>
       {{/link-to}}
       <div class="ui basic segment">
-        {{#if model.customFields}}
+        {{#if customFieldsExist}}
           <div class="ui list">
             {{#each-in model.customFields as |key value|}}
               <div class="line-item-value">

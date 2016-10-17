@@ -5,6 +5,11 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 export default Controller.extend(addEdit, {
 
   editing: false,
+  
+  customFieldsExist: computed('model.customFields', function () {
+    let cf = this.get('model.customFields');
+    return cf ? Object.keys(cf).length : 0;
+  }),
 
   hasAnniversaries: computed.or(
     'model.hireDate',
