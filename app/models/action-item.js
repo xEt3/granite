@@ -20,7 +20,7 @@ export default Model.extend(Validations, {
   created:     attr('date'),
 
 // Relational
-  particpants:   hasMany('employee', { async: true }),
+  participants:  hasMany('employee', { async: true }),
   subscribers:   hasMany('employee', { async: true }),
   comments:      hasMany('comment', { inverse: false}),
   notifications: hasMany('notification', { async: true }),
