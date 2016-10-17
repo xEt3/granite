@@ -7,7 +7,7 @@
   {{input type="text" value=pendingCustomFieldValue id="custom-field-value" placeholder="Gluten, Mondays, et cetera"}}
 </div>
   <a href="#" class="text-danger pull-right" {{action 'removeEmployeeCustomFieldName' attribute}}><i class="trash icon"></i>Remove</a>
-{{/input/custom-field}}
+{{input/custom-field}}
 <div class="field">
   <div class="ui positive button" {{action "toggleProperty" "addingCustomFieldValue"}}>Save this value</div>
   <div class="ui warning button" {{action "toggleProperty" "addingCustomFieldValue"}}>Cancel</div>
