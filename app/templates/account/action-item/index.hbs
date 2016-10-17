@@ -1,18 +1,18 @@
 <div class="ui very padded raised segment animated fadeInUp">
   <div class="ui top attached green label">
-    {{!target}}This item pertains to <a href="#">Sam Harris</a>
+    This item pertains to <a href="#">{{model.target}}</a>
     <div class="right floated detail">
-      Started on 7/13/16
+      Started on {{model.createdOn}}
     </div>
   </div>
 
   <h2 class="ui header">
-    Developer Recruiting Project{{!title}}
+    {{model.title}}
     <span class="right floated sub header">
-      <i class="clock icon"></i>Due in 5 days on 10/19
+      <i class="clock icon"></i>Due in 5 days on {{model.dueOn}}
     </span>
   </h2>
-  <p>Project to find a UX designer for the Granite Project since Exxon has decided to adopt Granite HR exclusively Lolz : ) </p>
+  <p>{{model.description}} </p>
   {{!description}}
   <div class="ui divider"></div>
   <h3 class="ui header">
