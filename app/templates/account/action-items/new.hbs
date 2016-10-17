@@ -11,14 +11,21 @@
 
     <div class="ui divider"></div>
 
-    {{#ui-calendar class="field" type="date" onChange=(action (mut model.dueOn))}}
-      <label for="action-item-due-date"><i class="clock icon"></i> Assign a Due Date</label>
-      <div class="ui calendar" id="action-item-due-date">
-        <div class="ui input left icon">
-          <i class="calendar icon"></i>
-          <input type="text" placeholder="Assign a date by selecting or typing">
+    <div class="two fields">
+      {{#ui-calendar class="field" type="date" onChange=(action (mut model.dueOn))}}
+        <label for="action-item-due-date"><i class="clock icon"></i> Assign a Due Date</label>
+        <div class="ui calendar" id="action-item-due-date">
+          <div class="ui input left icon">
+            <i class="calendar icon"></i>
+            <input type="text" placeholder="Assign a date by selecting or typing">
+          </div>
         </div>
+      {{/ui-calendar}}
+
+      <div class="field">
+        {{x-range-input min=0 max=10 step=1 action=(mut model.priority)}}
       </div>
-    {{/ui-calendar}}
+    </div>
+
   </form>
 </div>

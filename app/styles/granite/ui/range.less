@@ -1,9 +1,9 @@
 @track-color: @granite-green;
 @thumb-color: white;
 
-@thumb-radius: 8px;
-@thumb-height: 30px;
-@thumb-width: 30px;
+@thumb-radius: 50%;
+@thumb-height: 1em;
+@thumb-width: 1em;
 @thumb-shadow-size: 1px;
 @thumb-shadow-blur: 1px;
 @thumb-shadow-color: @granite-grey;
@@ -11,14 +11,13 @@
 @thumb-border-color: white;
 
 @track-width: 100%;
-@track-height: 10px;
+@track-height: 0.5em;
 @track-shadow-size: 2px;
 @track-shadow-blur: 2px;
-@track-shadow-color: @granite-grey;
-@track-border-width: 1px;
-@track-border-color: @granite-grey;
+@track-border-width: 0;
+@track-border-color: @gray-lighter;
 
-@track-radius: 5px;
+@track-radius: 0.5em;
 @contrast: 5%;
 
 .shadow(@shadow-size,@shadow-blur,@shadow-color) {
@@ -33,8 +32,9 @@
 }
 
 .thumb() {
-  .shadow(@thumb-shadow-size,@thumb-shadow-blur,@thumb-shadow-color);
-  border: @thumb-border-width solid @thumb-border-color;
+  // .shadow(@thumb-shadow-size,@thumb-shadow-blur,@thumb-shadow-color);
+  box-shadow: 0 1px 2px fade(@granite-grey, 70%);
+  border: none;
   height: @thumb-height;
   width: @thumb-width;
   border-radius: @thumb-radius;
@@ -53,7 +53,7 @@ input[type=range] {
 
   &::-webkit-slider-runnable-track {
     .track();
-    .shadow(@track-shadow-size,@track-shadow-blur,@track-shadow-color);
+    // .shadow(@track-shadow-size,@track-shadow-blur,@track-shadow-color);
     background: @track-color;
     border-radius: @track-radius;
     border: @track-border-width solid @track-border-color;
@@ -71,7 +71,7 @@ input[type=range] {
 
   &::-moz-range-track {
     .track();
-    .shadow(@track-shadow-size,@track-shadow-blur,@track-shadow-color);
+    // .shadow(@track-shadow-size,@track-shadow-blur,@track-shadow-color);
     background: @track-color;
     border-radius: @track-radius;
      border: @track-border-width solid @track-border-color;
@@ -92,13 +92,13 @@ input[type=range] {
     background: darken(@track-color, @contrast);
     border: @track-border-width solid @track-border-color;
     border-radius: @track-radius*2;
-    .shadow(@track-shadow-size,@track-shadow-blur,@track-shadow-color);
+    // .shadow(@track-shadow-size,@track-shadow-blur,@track-shadow-color);
   }
   &::-ms-fill-upper {
     background: @track-color;
     border: @track-border-width solid @track-border-color;
     border-radius: @track-radius*2;
-    .shadow(@track-shadow-size,@track-shadow-blur,@track-shadow-color);
+    // .shadow(@track-shadow-size,@track-shadow-blur,@track-shadow-color);
   }
   &::-ms-thumb {
     .thumb();
