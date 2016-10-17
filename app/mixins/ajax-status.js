@@ -21,7 +21,7 @@ export default Mixin.create({
     }
 
     if ( err && !user ) {
-      Logger.error(err);
+      Logger.error(err.stack || err);
     }
 
     this.setProperties({
