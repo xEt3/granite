@@ -17,18 +17,14 @@ export default Model.extend(Validations, {
   title:       attr('string'),
   description: attr('string'),
   priority:    attr('number'),
-  created:     attr('date'),
 
 // Relational
   participants:  hasMany('employee', { async: true }),
   subscribers:   hasMany('employee', { async: true }),
-  comments:      hasMany('comment', { inverse: false}),
-  notifications: hasMany('notification', { async: true }),
-  prerequisites: hasMany('prerequisite', { async: true }),
-  tags:          hasMany('tag', { async: true }),
-  attachments:   hasMany('document', { async: true }),
-  milestones:    hasMany('milestone', { async: true }),
-  checklist:     hasMany('checklistItem', { inverse: false}),
+  comments:      hasMany('comment', { async: true, inverse: false }),
+  prerequisites: hasMany('action-item', { async: true }),
+  // attachments:   hasMany('document', { async: true }),
+  checklist:     hasMany('checklist-item', { inverse: false }),
   company:       belongsTo('company'),
   owner:         belongsTo('employee'),
 
@@ -38,9 +34,12 @@ export default Model.extend(Validations, {
 
   // Comments, non-inverse
 
-  completedOn:  Date,
-  cancelledOn:  Date,
-  dueOn:        Date,
-  delayedUntil: Date,
-  remindOn:     Date
+  completedOn:  attr('date'),
+  cancelledOn:  attr('date'),
+  dueOn:        attr('date'),
+  delayedUntil: attr('date'),
+  remindOn:     attr('date'),
+  created:      attr('date', {
+    defaultValue: () => new Date()
+  })
 });

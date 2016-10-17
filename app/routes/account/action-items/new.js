@@ -9,19 +9,27 @@ export default Route.extend(add, {
 
   getModelDefaults () {
     return {
-      owner: this.get('auth.user'),
+      owner: this.get('auth.user.employee'),
       company: this.get('auth.user.company')
     };
   },
 
   model () {
     return RSVP.hash({
-      actionItem: {},//this._super(...arguments),
+      actionItem: this._super(...arguments),
       actionItems: this.store.query('action-item', {
-        completedOn: { $ne: { $type: 9 } },
-        cancelledOn: { $ne: { $type: 9 } }
+        completedOn: { $not: { $type: 9 } },
+        cancelledOn: { $not: { $type: 9 } }
       }),
       users: this.store.findAll('company-user')
+    });
+  },
+
+  setupController ( controller, model ) {
+    controller.setProperties({
+      model: model.actionItem,
+      actionItems: model.actionItems,
+      user: model.users
     });
   }
 });

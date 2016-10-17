@@ -2,7 +2,7 @@
          Site Overrides
 *******************************/
 
-.ui.form input, .ui.form .ui.dropdown {
+.ui.form input, .ui.form textarea, .ui.form .ui.dropdown {
   border-radius: 3px !important;
   border-width: 0 !important;
   transition: all 0.35s ease-in-out !important;
@@ -10,7 +10,7 @@
   .placeholder(lighten(@granite-grey, 45%));
 }
 
-.ui.form input {
+.ui.form input, .ui.form textarea {
   &:not(.inline):not(.search):not(.transparent) {
     box-shadow: 0px 1px 3px fade(@granite-grey, 60%) !important;
   }

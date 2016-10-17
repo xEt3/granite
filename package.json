@@ -60,6 +60,7 @@
   },
   "dependencies": {
     "ember-cli-animate-css": "0.0.1",
-    "ember-inflector": "^1.9.6"
+    "ember-inflector": "^1.9.6",
+    "emberx-range-input": "^1.0.2"
   }
 }
