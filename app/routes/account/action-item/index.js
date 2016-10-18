@@ -5,7 +5,7 @@ const { Route } = Ember;
 export default Route.extend({
   model () {
     return {
-      owner: '',
+      cancelledOn: moment('2016/08/04'),
       title: 'Developer Recruiting Project',
       target: 'Sam Harris',
       created: moment('2016/09/10'),
@@ -34,7 +34,14 @@ export default Route.extend({
       ],
       participants: [
         { name: 'Sandra Villegas',
-          picture: '/assets/mock/avatars/small/1.png'
+          picture: '/assets/mock/avatars/small/1.png',
+          isOwner: true
+        },
+        { name: 'Bryan Edwards',
+          picture: '/assets/mock/avatars/small/2.png'
+        },
+        { name: 'Jackie Swiesz',
+          picture: '/assets/mock/avatars/small/3.png'
         }
       ]
     };
