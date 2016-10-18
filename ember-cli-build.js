@@ -22,8 +22,8 @@ module.exports = function(defaults) {
       fonts: true
     },
 
-    'ember-cli-ion-rangeslider': {
-      skin: 'modern'
+    'ember-cli-range-slider': {
+      skin: 'flat'
     }
   });
 
