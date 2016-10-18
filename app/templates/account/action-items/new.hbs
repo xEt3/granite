@@ -23,9 +23,8 @@
       {{/ui-calendar}}
 
       <div class="field">
-        {{x-range-input min=0 max=10 step=1 action=(mut model.priority)}}
+        {{ember-ion-rangeslider type="double" grid=true min=1 max=5 step=1 from=model.priority to=model.priority}}
       </div>
     </div>
-
   </form>
 </div>

@@ -12,6 +12,7 @@
     "froala-wysiwyg-editor": "~2.3.3",
     "ember-qunit-notifications": "0.1.0",
     "nprogress": "^0.2.0",
-    "ember": "~2.8.0"
+    "ember": "~2.8.0",
+    "ionrangeslider": "^2.1.4"
   }
 }

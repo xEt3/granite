@@ -20,6 +20,10 @@ module.exports = function(defaults) {
       css: false,
       javascript: true,
       fonts: true
+    },
+
+    'ember-cli-ion-rangeslider': {
+      skin: 'modern'
     }
   });
 
