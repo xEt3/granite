@@ -1,6 +1,8 @@
 <div class="ui very padded raised segment animated fadeInUp">
   <div class="ui top attached green label">
-    This item pertains to <a href="#">{{model.target}}</a>
+    {{#if model.target}}
+      This item pertains to <a href="#">{{model.target}}</a>
+    {{/if}}
     <div class="right floated detail">
       Started on {{time model.created}}
     </div>
@@ -9,7 +11,7 @@
   <h2 class="ui header">
     {{model.title}}
     <span class="right floated sub header">
-      <i class="clock icon"></i>Due in 5 days on {{time model.dueOn}}
+      <i class="clock icon"></i>Due {{time-ago model.dueOn}} on {{time model.dueOn}}
     </span>
   </h2>
   <p>{{model.description}} </p>
@@ -21,42 +23,43 @@
       <i class="edit icon"></i>
     </a>
   </h3>
-
-  {{!-- TODO: guard with if --}}
-  <div class="ui selection list action-item__prerequisites">
-      {{#each model.prerequisites as |prework|}}
-        <a href="#" class="item">
-          <div class="header">
-             {{prework.title}}
-          </div>
-          {{#each prework.checklist as |checklistItem|}}
-            <div class="ui list">
-              <div class="item">
-                <i class="square outline icon"></i>{{checklistItem.title}}
-              </div>
+  {{#if model.prerequisites}}
+    <div class="ui selection list action-item__prerequisites">
+        {{#each model.prerequisites as |prework|}}
+          {{#link-to "account.employee" class="item"}}
+            <div class="header">
+               {{prework.title}}
             </div>
-          {{/each}}
-        </a>
-      {{/each}}
-  </div>
-  <div class="ui divider"></div>
-  <h3 class="header">
-    Participants
-  </h3>
-  <a class="ui image label">
-    <img src="">
-    Sandra Villegas
-    <div class="detail">Owner</div>
-  </a>
-  <a class="ui image label">
-    <img src="/assets/mock/avatars/small/2.png">
-    Bryan Edwards
-  </a>
-  <a class="ui image label">
-    <img src="/assets/mock/avatars/small/3.png">
-    Jackie Swiesz
-  </a>
+            {{#if prework.checklist}}
+              <div class="ui list">
+                {{#each prework.checklist as |checklistItem|}}
+                  <div class="item">
+                    <i class="square outline icon"></i>{{checklistItem.title}}
+                  </div>
+                {{/each}}
+              </div>
+              {{/if}}
+          {{/link-to}}
+        {{/each}}
+    </div>
+  {{/if}}
+  {{#if model.participants}}
+    <div class="ui divider"></div>
+    <h3 class="header">
+      Participants
+    </h3>
+    {{#each model.participants as |participant|}}
+      <a class="ui image label">
+        {{display/employee-picture src=participant.picture}}
+        {{participant.name}}
+        {{#if participant.isOwner}}
+          <div class="detail">Owner</div>
+        {{/if}}
+      </a>
+    {{/each}}
+  {{/if}}
 </div>
+{{!-- TODO: partcipants, owner --}}
 
 {{!--
   !Title

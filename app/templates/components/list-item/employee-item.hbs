@@ -2,7 +2,7 @@
   {{yield employee.fullName employee.title}}
 {{else}}
   <div class="ui tiny rounded image">
-    <img src="{{if employee.picture employee.picture '/assets/images/default-avatar.png'}}">
+    {{display/employee-picture src=employee.picture}}
   </div>
   <div class="content">
     <div class="header">{{employee.fullName}}</div>
