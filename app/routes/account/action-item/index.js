@@ -5,6 +5,7 @@ const { Route } = Ember;
 export default Route.extend({
   model () {
     return {
+      owner: '',
       title: 'Developer Recruiting Project',
       target: 'Sam Harris',
       created: moment('2016/09/10'),
@@ -29,6 +30,11 @@ export default Route.extend({
           checklist: [
             {title: 'Talk'}
           ]
+        }
+      ],
+      participants: [
+        { name: 'Sandra Villegas',
+          picture: '/assets/mock/avatars/small/1.png'
         }
       ]
     };
