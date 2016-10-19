@@ -1,7 +1,7 @@
 <div class="ui padded raised segment animated fadeInUp">
   <h2 class="ui dividing header">Create a New Action Item</h2>
 
-  <form class="ui form" {{action "save" on="submit"}}>
+  <div class="ui form">
     {{input/ui-input type="text" inputId="action-item-title" placeholder="Title" value=model.title}}
 
     <div class="field">
@@ -24,7 +24,79 @@
     <div class="field">
       <label for="action-item-priority"><i class="exclamation icon"></i> Priority</label>
       <div class="range-label"><i>Low</i><i>High</i></div>
-      {{ember-range-slider id="action-item-priority" grid=true min=1 max=5 step=1 from=1 slideStop=(action (mut model.priority))}}
+      {{ember-range-slider id="action-item-priority" grid=true min=1 max=5 step=1 from=model.priority slideStop=(action 'updatePriority')}}
     </div>
-  </form>
+
+    <div class="field">
+      <label for="action-item-prerequisites">
+        {{#ui-popup tagName='span' content='Prerequisites indicate which action items need to be completed before this action item can be completed.'}}
+          Prerequisites
+          <i class="right floated info icon"></i>
+        {{/ui-popup}}
+      </label>
+      {{#if actionItems}}
+        {{#ui-dropdown class="fluid search multiple selection" id="action-item-prerequisites" selected=model.prerequisites onChange=(action (mut model.prerequisites)) as |execute mapper|}}
+          <i class="dropdown icon"></i>
+          <div class="default text">Type or select to assign prerequisites</div>
+          <div class="menu">
+            {{#each actionItems as |item|}}
+              <div class="item" data-value="{{map-value mapper item}}">
+                {{item.title}}
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      {{else}}
+        <p>No other action items are available.</p>
+      {{/if}}
+    </div>
+
+    <div class="ui divider"></div>
+
+    <h4><i class="checkmark box icon"></i>Build a todo</h4>
+    <div class="ui list">
+      {{#each model.checklist as |item|}}
+        <div class="item">
+          <i class="square outline icon"></i> {{item.name}}
+          <small class="right floated meta">
+            {{#if item.assignedTo}}
+              <strong>Assigned</strong> to {{item.assignedTo.firstName}} by {{item.assignedBy.firstName}}
+            {{else}}
+              No owner
+            {{/if}}
+          </small>
+        </div>
+      {{/each}}
+    </div>
+
+    <form class="ui segment" {{action "addTodo" on="submit"}}>
+      <div class="field">
+        <label for="new-todo-item" class="sr-only">Add a new todo item</label>
+        {{input type='text' value=pendingTodo placeholder="Type to add a new todo item"}}
+      </div>
+
+      {{#ui-dropdown class="fluid search selection" id="new-todo-assigned-to" onChange=(action (mut pendingTodoAssignee)) as |execute mapper|}}
+        <i class="dropdown icon"></i>
+        <div class="default text">Assign someone to this item</div>
+        <div class="menu">
+          <div class="item" data-value="">No Assignee</div>
+          {{#each employees as |employee|}}
+            <div class="item" data-value="{{map-value mapper employee}}">
+              {{employee.fullName}}
+            </div>
+          {{/each}}
+        </div>
+      {{/ui-dropdown}}
+
+      {{#liquid-if pendingTodo class="field"}}
+        <div class="ui divider"></div>
+        {{#form/action-button type="submit" class="ui fluid button"}}Add{{/form/action-button}}
+      {{/liquid-if}}
+    </form>
+
+    <div class="ui divider"></div>
+    <form {{action "save" on="submit"}}>
+      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Save action item{{/form/action-button}}
+    </form>
+  </div>
 </div>

@@ -21,77 +21,9 @@
 <div class="ui divider"></div>
 
 <div class="ui cards">
-  {{#link-to 'account.action-item' class="ui link fluid raised card"}}
-    <div class="content">
-      <h6 class="ui header clearfix">
-        <div class="meta">
-          Owner: James Collins
-          <span class="right floated">
-            <strong>Ongoing</strong> since June 6th, 2016
-          </span>
-        </div>
-      </h6>
-      <div class="header">
-        Developer Recruiting Project
-        {{#ui-popup tagName="span" class="right floated" content="Subscribe to notifications" position="top center"}}
-          <a href="#"><i class="eye fitted icon"></i></a>
-        {{/ui-popup}}
-      </div>
-    </div>
-    <div class="content">
-      <span class="ui red label">Priority: 1</span>
-    </div>
-    <div class="content">
-      <h4 class="ui sub header">
-        3 Items Left - 2 Participants
-      </h4>
-      <div class="ui list">
-        <div class="item"><i class="square outline icon"></i>Select candidate</div>
-        <div class="item"><i class="square outline icon"></i>Interview candidates</div>
-        <div class="item"><i class="square outline icon"></i>Review 20 applicants</div>
-        <div class="item"><s><i class="checkmark box icon"></i>Post to Craigslist</s></div>
-        <div class="item"><s><i class="checkmark box icon"></i>Start campaign</s></div>
-      </div>
-    </div>
-    <div class="extra content">
-      <button class="ui button">View Item</button>
-    </div>
-  {{/link-to}}
-
-  <a href="#" class="ui link fluid raised card">
-    <div class="content">
-      <h6 class="ui header clearfix">
-        <div class="meta">
-          Owner: Scott Chapman
-          <span class="right floated">
-            <strong>On hold</strong>
-          </span>
-        </div>
-      </h6>
-      <div class="header">
-        UI/UX Department Training
-        {{#ui-popup tagName="span" class="right floated" content="Subscribe to notifications" position="top center"}}
-          <a href="#"><i class="eye fitted icon"></i></a>
-        {{/ui-popup}}
-      </div>
-    </div>
-    <div class="content">
-      <span class="ui label">Priority: 2</span>
-      <span class="ui yellow label">Waiting On: TRAINING MATERIALS</span>
-    </div>
-    <div class="content">
-      <h4 class="ui sub header">
-        3 Items Left - No Participants
-      </h4>
-      <div class="ui list">
-        <div class="item"><i class="square outline icon"></i>Complete training</div>
-        <div class="item"><i class="square outline icon"></i>Set date</div>
-        <div class="item"><i class="square outline icon"></i>Gather materials</div>
-        <div class="item"><s><i class="checkmark box icon"></i>Budget approval</s></div>
-      </div>
-    </div>
-    <div class="extra content">
-      <button class="ui button">View Item</button>
-    </div>
-  </a>
+  {{#each model as |actionItem|}}
+    {{list-item/action-item actionItem=actionItem class="ui link fluid raised card"}}
+  {{else}}
+    <h4 class="text-white center aligned header">No action items available.</h4>
+  {{/each}}
 </div>

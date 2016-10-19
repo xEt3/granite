@@ -21,7 +21,7 @@ export default Route.extend(add, {
         completedOn: { $not: { $type: 9 } },
         cancelledOn: { $not: { $type: 9 } }
       }),
-      users: this.store.findAll('company-user')
+      employees: this.store.findAll('employee')
     });
   },
 
@@ -29,7 +29,7 @@ export default Route.extend(add, {
     controller.setProperties({
       model: model.actionItem,
       actionItems: model.actionItems,
-      user: model.users
+      employees: model.employees
     });
   }
 });

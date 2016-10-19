@@ -16,7 +16,7 @@ const Validations = buildValidations({
 export default Model.extend(Validations, {
   title:       attr('string'),
   description: attr('string'),
-  priority:    attr('number'),
+  priority:    attr('number', { defaultValue: 1 }),
 
 // Relational
   participants:  hasMany('employee', { async: true }),

@@ -95,7 +95,7 @@ Router.map(function() {
         });
       });
     });
-    this.route('action-item', function() {
+    this.route('action-item', { path: '/action-item/:id' }, function() {
       this.route('todo');
       this.route('discussion');
     });

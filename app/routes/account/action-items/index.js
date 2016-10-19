@@ -1,4 +1,11 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
+const { Route } = Ember;
+
+export default Route.extend({
+  model () {
+    return this.store.query('action-item', {
+      sort: { created: -1, priority: 1 }
+    });
+  }
 });
