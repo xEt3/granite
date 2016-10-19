@@ -27,7 +27,7 @@
 
     <div class="ui selection list action-item__prerequisites">
         {{#each model.prerequisites as |prework|}}
-          {{#link-to "account.employee" class="item"}}
+          {{#link-to "account.action-item.index" prework class="item"}}
             <div class="header">
                {{prework.title}}
             </div>
@@ -58,6 +58,20 @@
         {{/if}}
       </a>
     {{/each}}
+  {{/if}}
+  {{#if dependents}}
+  <h3 class="header">
+    {{dependents.length}} Projects Waiting on This Action Item
+  </h3>
+    <div class="ui selection list action-item__prerequisites">
+        {{#each dependents as |dependent|}}
+          {{#link-to "account.action-item.index" dependent class="item"}}
+            <div class="header">
+               {{dependent.title}}
+            </div>
+          {{/link-to}}
+        {{/each}}
+    </div>
   {{/if}}
 </div>
 {{!-- TODO: partcipants, owner --}}
