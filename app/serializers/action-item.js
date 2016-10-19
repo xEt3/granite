@@ -3,6 +3,6 @@ import ApplicationSerializer from './application';
 
 export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
   attrs: {
-    checklistItem: { embedded: 'always' }
+    checklist: { embedded: 'always' }
   }
 });

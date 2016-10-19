@@ -78,11 +78,12 @@ export default Ember.Mixin.create(AjaxHooks, {
 
     return _model.save().then(record => {
       this.ajaxSuccess('Successfully saved.');
-      this._afterSave(record);
 
       if ( this.afterSave && typeof this.afterSave === 'function' ) {
         this.afterSave(record);
       }
+
+      this._afterSave(record);
     }).catch(this.ajaxError.bind(this));
   },
 
