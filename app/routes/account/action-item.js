@@ -4,6 +4,6 @@ const { Route } = Ember;
 
 export default Route.extend({
   model ( params ) {
-    return this.store.find('action-item', params.id);
+    return this.store.queryRecord('action-item', { title: params.slug.replace(/-/g, ' ') });
   }
 });

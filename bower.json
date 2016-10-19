@@ -13,6 +13,7 @@
     "ember-qunit-notifications": "0.1.0",
     "nprogress": "^0.2.0",
     "ember": "~2.8.0",
-    "ionrangeslider": "^2.1.4"
+    "ionrangeslider": "^2.1.4",
+    "At.js": "^1.5.2"
   }
 }

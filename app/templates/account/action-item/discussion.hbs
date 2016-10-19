@@ -1,108 +1,82 @@
 <div class="ui very padded raised segment animated fadeInUp">
-  <div class="ui feed">
-    <div class="event">
-      <div class="label">
-        <img src="/assets/mock/avatars/small/1.png">
+  <div class="ui comments">
+    <form class="ui reply form">
+      <div class="field">
+        {{input/comment-box value=commentText}}
       </div>
+      <div class="ui blue labeled submit icon button">
+        <i class="icon edit"></i> Add Reply
+      </div>
+    </form>
+
+    <h3 class="ui dividing header">Comments</h3>
+    <div class="comment">
+      <a class="avatar">
+        <img src="/images/avatar/small/matt.jpg">
+      </a>
       <div class="content">
-        <div class="summary">
-          <a class="user">
-            Elliot Fu
-          </a> Do we really need another programmer?
-          <div class="date">
-            1 Hour Ago
-          </div>
+        <a class="author">Matt</a>
+        <div class="metadata">
+          <span class="date">Today at 5:42PM</span>
         </div>
-        <div class="meta">
-          <a class="like">
-            <i class="like icon"></i> 4 Likes
-          </a>
+        <div class="text">
+          How artistic!
+        </div>
+        <div class="actions">
+          <a class="reply">Reply</a>
         </div>
       </div>
     </div>
-    <div class="event">
-      <div class="label">
-        <img src="/assets/mock/avatars/small/2.png">
-      </div>
+    <div class="comment">
+      <a class="avatar">
+        <img src="/images/avatar/small/elliot.jpg">
+      </a>
       <div class="content">
-        <div class="summary">
-          <a>Helen Troy</a> added <a>3 new illustrations</a>
-          <div class="date">
-            4 days ago
-          </div>
+        <a class="author">Elliot Fu</a>
+        <div class="metadata">
+          <span class="date">Yesterday at 12:30AM</span>
         </div>
-        <div class="extra images">
-          <a><img src="/assets/mock/images/y.png"></a>
-          <a><img src="/assets/mock/images/e.png"></a>
-          <a><img src="/assets/mock/images/s.png"></a>
+        <div class="text">
+          <p>This has been very useful for my research. Thanks as well!</p>
         </div>
-        <div class="meta">
-          <a class="like">
-            <i class="like icon"></i> 1 Like
+        <div class="actions">
+          <a class="reply">Reply</a>
+        </div>
+      </div>
+      <div class="comments">
+        <div class="comment">
+          <a class="avatar">
+            <img src="/images/avatar/small/jenny.jpg">
           </a>
+          <div class="content">
+            <a class="author">Jenny Hess</a>
+            <div class="metadata">
+              <span class="date">Just now</span>
+            </div>
+            <div class="text">
+              Elliot you are always so right :)
+            </div>
+            <div class="actions">
+              <a class="reply">Reply</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="event">
-      <div class="label">
-        <img src="/assets/mock/avatars/small/3.png">
-      </div>
+    <div class="comment">
+      <a class="avatar">
+        <img src="/images/avatar/small/joe.jpg">
+      </a>
       <div class="content">
-        <div class="summary">
-          <a class="user">
-            Jenny Hess
-          </a> My schedule is gettin pretty freed up.  I can do some of these interviews.
-          <div class="date">
-            2 Days Ago
-          </div>
+        <a class="author">Joe Henderson</a>
+        <div class="metadata">
+          <span class="date">5 days ago</span>
         </div>
-        <div class="meta">
-          <a class="like">
-            <i class="like icon"></i> 8 Likes
-          </a>
+        <div class="text">
+          Dude, this is awesome. Thanks so much
         </div>
-      </div>
-    </div>
-    <div class="event">
-      <div class="label">
-        <img src="/assets/mock/avatars/small/4.png">
-      </div>
-      <div class="content">
-        <div class="summary">
-          <a>Joe Henderson</a> some thoughts:
-          <div class="date">
-            3 days ago
-          </div>
-        </div>
-        <div class="extra text">
-          Ours is a life of constant reruns. We're always circling back to where we'd we started, then starting all over again. Even if we don't run extra laps that day, we surely will come back for more of the same another day soon.
-        </div>
-        <div class="meta">
-          <a class="like">
-            <i class="like icon"></i> 5 Likes
-          </a>
-        </div>
-      </div>
-    </div>
-    <div class="event">
-      <div class="label">
-        <img src="/assets/mock/avatars/small/5.png">
-      </div>
-      <div class="content">
-        <div class="summary">
-          <a>Justen Kitsune</a> added <a>2 new photos</a> of what we're looking for:
-          <div class="date">
-            4 days ago
-          </div>
-        </div>
-        <div class="extra images">
-          <a><img src="/assets/mock/avatars/large/2.png"></a>
-          <a><img src="/assets/mock/avatars/large/3.png"></a>
-        </div>
-        <div class="meta">
-          <a class="like">
-            <i class="like icon"></i> 41 Likes
-          </a>
+        <div class="actions">
+          <a class="reply">Reply</a>
         </div>
       </div>
     </div>
