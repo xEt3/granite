@@ -12,7 +12,11 @@
     {{/link-to}}
     {{#link-to 'account.action-item.todo' class="item"}}
       <i class="checkmark box icon"></i>Todos
-      <label class="ui left pointing label">4</label>
+      {{#if model.checklist}}
+        <label class="ui left pointing label">
+          {{model.checklist.length}}
+        </label>
+      {{/if}}
     {{/link-to}}
     {{#link-to 'account.action-item.discussion' class="item"}}
       <i class="comments icon"></i>Discussion
