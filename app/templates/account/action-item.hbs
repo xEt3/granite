@@ -1,6 +1,12 @@
+
 <div class="ui container">
-  <h2 class="ui red header"><i class="close icon"></i>This item was cancelled on 7/4/16</h2>
-  {{!-- <h2 class="ui green header"><i class="check icon"></i>This item was completed on 7/4/16</h2> --}}
+  {{#if model.cancelledOn}}
+    <h2 class="ui red header"><i class="close icon"></i>This item was cancelled on {{time model.cancelledOn}}</h2>
+  {{/if}}
+  {{#if model.completedOn}}
+    <h2 class="ui green header"><i class="check icon"></i>This item was completed on 7/4/16</h2>
+  {{/if}}
+
   {{#ui-menu menuClass="pointing"}}
     {{#link-to 'account.action-item.index' class="item"}}
       <i class="square icon"></i>Index
