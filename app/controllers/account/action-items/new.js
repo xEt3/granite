@@ -9,7 +9,8 @@ export default Controller.extend(addEdit, {
   transitionWithModel: true,
 
   _afterSave () {
-    this.get('addedTodos').forEach(t => t.destroy()).empty();
+    this.get('addedTodos').forEach(t => t.destroy());
+    this.set('addedTodos', A());
     this._super(...arguments);
   },
 
@@ -19,10 +20,10 @@ export default Controller.extend(addEdit, {
     },
 
     addTodo () {
-      const name = this.get('pendingTodo'),
+      const title = this.get('pendingTodo'),
             assignee = this.get('pendingTodoAssignee');
 
-      let item = this.store.createRecord('checklist-item', { name });
+      let item = this.store.createRecord('checklist-item', { title });
 
       if ( assignee ) {
         item.setProperties({

@@ -4,7 +4,10 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app'),
 
 const includes = [
   'intro.js/intro.js',
-  'intro.js/introjs.css'
+  'intro.js/introjs.css',
+  'At.js/dist/js/jquery.atwho.js',
+  'Caret.js/dist/jquery.caret.js',
+  'At.js/dist/css/jquery.atwho.min.css'
 ];
 
 module.exports = function(defaults) {

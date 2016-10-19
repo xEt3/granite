@@ -1,9 +1,11 @@
+import Ember from 'ember';
 import Model from 'ember-data/model';
 import DS from 'ember-data';
 import resolveForTypeKey from '../utils/resolve-for-type-key';
 import { validator, buildValidations } from 'ember-cp-validations';
 
 const { attr, hasMany, belongsTo } = DS;
+const { computed } = Ember;
 const Validations = buildValidations({
   title: [
     validator('presence', true),
@@ -41,5 +43,10 @@ export default Model.extend(Validations, {
   remindOn:     attr('date'),
   created:      attr('date', {
     defaultValue: () => new Date()
+  }),
+
+  slug: computed('title', function () {
+    let title = this.get('title');
+    return title ? title.replace(/\s/g, '-') : title;
   })
 });
