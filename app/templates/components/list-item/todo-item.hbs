@@ -1,0 +1,17 @@
+{{#if hasBlock}}
+  {{yield todo}}
+{{else}}
+  <div class="content">
+    {{#ui-popup content=(if todo.completedOn 'Mark as incomplete' 'Mark as complete') tagName="span" position="top center"}}
+      <a href="#"><i class="{{if todo.completedOn 'checkmark box' 'square outline'}} icon"></i></a>
+    {{/ui-popup}}
+    {{todo.title}}
+    <small class="right floated meta">
+      {{#if todo.assignedTo}}
+        <strong>Assigned</strong> to {{todo.assignedTo.firstName}} by {{todo.assignedBy.firstName}} {{time-ago todo.assignedOn}}
+      {{else}}
+        No owner
+      {{/if}}
+    </small>
+  </div>
+{{/if}}
