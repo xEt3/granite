@@ -57,7 +57,7 @@
     <div class="ui list">
       {{#each model.checklist as |item|}}
         <div class="item">
-          <i class="square outline icon"></i> {{item.name}}
+          <span><i class="square outline icon"></i> {{item.name}}</span>
           <small class="right floated meta">
             {{#if item.assignedTo}}
               <strong>Assigned</strong> to {{item.assignedTo.firstName}} by {{item.assignedBy.firstName}}

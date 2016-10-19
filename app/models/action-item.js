@@ -21,10 +21,10 @@ export default Model.extend(Validations, {
 // Relational
   participants:  hasMany('employee', { async: true }),
   subscribers:   hasMany('employee', { async: true }),
-  comments:      hasMany('comment', { async: true, inverse: false }),
-  prerequisites: hasMany('action-item', { async: true }),
+  comments:      hasMany('comment', { async: true, inverse: null }),
+  prerequisites: hasMany('action-item', { async: true, inverse: null }),
   // attachments:   hasMany('document', { async: true }),
-  checklist:     hasMany('checklist-item', { inverse: false }),
+  checklist:     hasMany('checklist-item', { inverse: null }),
   company:       belongsTo('company'),
   owner:         belongsTo('employee'),
 

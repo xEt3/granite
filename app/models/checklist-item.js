@@ -7,7 +7,7 @@ export default Model.extend({
   completedOn: attr('date'),
   assignedOn:  attr('date'),
   priority:    attr('number'),
-  assignedTo:  belongsTo('company-user', { async: true }),
-  assignedBy:  belongsTo('company-user', { async: true }),
-  completedBy: belongsTo('company-user', { async: true })
+  assignedTo:  belongsTo('employee', { async: true }),
+  assignedBy:  belongsTo('employee', { async: true }),
+  completedBy: belongsTo('employee', { async: true })
 });
