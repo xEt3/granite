@@ -1,0 +1,36 @@
+{{#link-to 'account.action-item' actionItem.id class="ui link fluid raised card"}}
+  <div class="content">
+    <h6 class="ui header clearfix">
+      <div class="meta">
+        Owner: {{actionItem.owner.fullName}}
+        <span class="right floated">
+          <strong>Ongoing</strong> since {{time actionItem.created}}
+        </span>
+      </div>
+    </h6>
+    <div class="header">
+      {{actionItem.title}}
+      {{#ui-popup tagName="span" class="right floated" content="Subscribe to notifications" position="top center"}}
+        <a href="#"><i class="eye fitted icon"></i></a>
+      {{/ui-popup}}
+    </div>
+  </div>
+  <div class="content">
+    <span class="ui red label">Priority: {{actionItem.priority}}</span>
+  </div>
+  <div class="content">
+    <h4 class="ui sub header">
+      {{!TODO}}X Items Left - {{#if actionItem.participants}}{{actionItem.participants.length}}{{else}}No{{/if}} Participants
+    </h4>
+    <div class="ui list">
+      {{!-- <div class="item"><i class="square outline icon"></i>Select candidate</div>
+      <div class="item"><i class="square outline icon"></i>Interview candidates</div>
+      <div class="item"><i class="square outline icon"></i>Review 20 applicants</div>
+      <div class="item"><s><i class="checkmark box icon"></i>Post to Craigslist</s></div>
+      <div class="item"><s><i class="checkmark box icon"></i>Start campaign</s></div> --}}
+    </div>
+  </div>
+  <div class="extra content">
+    <button class="ui button">View Item</button>
+  </div>
+{{/link-to}}
