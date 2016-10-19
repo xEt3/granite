@@ -3,7 +3,7 @@
 {{else}}
   <div class="content">
     {{#ui-popup content=(if todo.completedOn 'Mark as incomplete' 'Mark as complete') tagName="span" position="top center"}}
-      <a href="#"><i class="{{if todo.completedOn 'checkmark box' 'square outline'}} icon"></i></a>
+      <a href="#"><i class="{{if todo.completedOn 'checkmark box' 'square outline'}} icon" {{action "changeStatus"}}></i></a>
     {{/ui-popup}}
     {{todo.title}}
     <small class="right floated meta">

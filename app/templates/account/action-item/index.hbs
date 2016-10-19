@@ -61,7 +61,7 @@
   {{/if}}
   {{#if dependents}}
   <h3 class="header">
-    {{dependents.length}} Projects Waiting on This Action Item
+    {{dependents.length}} {{inflect-text 'Project' dependents.length}} Waiting on This Action Item
   </h3>
     <div class="ui selection list action-item__prerequisites">
         {{#each dependents as |dependent|}}
