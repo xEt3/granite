@@ -7,6 +7,7 @@ export default Controller.extend(addEdit, {
   addedTodos: A(),
   transitionAfterSave: 'account.action-item',
   transitionWithModel: true,
+  modelIdentifier: 'slug',
 
   _afterSave () {
     this.get('addedTodos').forEach(t => t.destroy());

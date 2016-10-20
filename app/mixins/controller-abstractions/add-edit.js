@@ -48,7 +48,7 @@ export default Ember.Mixin.create(AjaxHooks, {
       let transitionArgs = [ transitionAfterSave ];
 
       if ( this.get('transitionWithModel') ) {
-        transitionArgs.push(record.get('id'));
+        transitionArgs.push(record.get(this.getWithDefault('modelIdentifier', 'id')));
       }
 
       this.transitionToRoute.apply(this, transitionArgs);
