@@ -1,0 +1,7 @@
+{{#link-to "account.employee" participant class="ui image label"}}
+  {{display/employee-picture url=participant.picture}}
+  {{participant.fullName}}
+  {{#if (eq participant.id actionItemOwner.id)}}
+    <div class="detail">Owner</div>
+  {{/if}}
+{{/link-to}}
