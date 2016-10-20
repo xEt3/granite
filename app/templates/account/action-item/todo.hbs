@@ -13,8 +13,31 @@
       </div>
     </div>
   {{/if}}
-
-  <h3 class="ui header"><i class="users icon"></i>All Todo Items</h3>
+  <h3 class="ui header"><i class="left floated users icon"></i>All Todo Items <i class="right floated {{if addingTodo 'remove orange' 'plus'}} icon" {{action 'toggleProperty' 'addingTodo'}}></i> </h3>
+  {{#if addingTodo}}
+    <form class="ui form basic segment animated fadeInUp" {{action "addTodo" on="submit"}}>
+      <div class="field">
+        <label for="new-todo-item" class="sr-only">Add a new todo item</label>
+        {{input type='text' value=pendingTodo placeholder="Type to add a new todo item"}}
+      </div>
+      {{#ui-dropdown class="fluid search selection" id="new-todo-assigned-to" onChange=(action (mut pendingTodoAssignee)) as |execute mapper|}}
+        <i class="dropdown icon"></i>
+        <div class="default text">Assign someone to this item</div>
+        <div class="menu">
+          <div class="item" data-value="">No Assignee</div>
+          {{#each employees as |employee|}}
+            <div class="item" data-value="{{map-value mapper employee}}">
+              {{employee.fullName}}
+            </div>
+          {{/each}}
+        </div>
+      {{/ui-dropdown}}
+      {{#liquid-if pendingTodo class="field"}}
+        <div class="ui divider"></div>
+        {{#form/action-button type="submit" class="ui fluid button"}}Add{{/form/action-button}}
+      {{/liquid-if}}
+    </form>
+  {{/if}}
   <div class="ui very relaxed divided list">
     {{#if model.checklist}}
       {{#each model.incompleteTodos as |todo|}}

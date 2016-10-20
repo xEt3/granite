@@ -5,12 +5,13 @@ const { Route, RSVP } = Ember;
 export default Route.extend({
   model() {
     let actionItem = this.modelFor('account.action-item');
+
     return RSVP.hash({
       actionItem,
       //dependents are other action-items that are
       //waiting on this action item
-      dependents: this.store.query('action-item',
-      { prerequisites: {$in: [actionItem.get('id')] }
+      dependents: this.store.query('action-item', {
+        prerequisites: { $in: [ actionItem.get('id') ] }
       })
     });
   },
