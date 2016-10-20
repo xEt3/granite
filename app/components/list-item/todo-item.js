@@ -18,9 +18,5 @@ TodoItemComponent.reopenClass({
 export default TodoItemComponent;
 
 /* Usage
-<<<<<<< Updated upstream
-  {{list-item/todo-item todo}}
-=======
   {{list-item/todo-item todo onStatusChange=}}
->>>>>>> Stashed changes
 */
