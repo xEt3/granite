@@ -3,17 +3,24 @@
 {{/ui-progress}}
 
 <div class="ui very padded raised segment animated fadeInUp">
-  {{#if userTodos}}
-    <div class="ui padded green segment">
-      <h2 class="ui header"><i class="user icon"></i>Your Todo Items</h2>
-      <div class="ui very relaxed divided list">
-        {{#each userTodos as |todo|}}
-          {{list-item/todo-item todo onStatusChange=(action "changeCompletedStatus")}}
-        {{/each}}
-      </div>
+  <div class="ui padded green segment">
+    <h2 class="ui header">Your Todo Items</h2>
+    <div class="ui very relaxed divided list">
+      {{#each userTodos as |todo|}}
+        {{list-item/todo-item todo onStatusChange=(action "changeCompletedStatus")}}
+      {{else}}
+        <h2 class="center aligned text">{{emoji-icon 'tada'}} <div class="content">All up to date!</div></h2>
+      {{/each}}
     </div>
-  {{/if}}
-  <h3 class="ui header"><i class="left floated users icon"></i>All Todo Items <i class="right floated {{if addingTodo 'remove orange' 'plus'}} icon" {{action 'toggleProperty' 'addingTodo'}}></i> </h3>
+  </div>
+
+  <hgroup class="clearfix">
+    <h3 class="ui right floated header"><a href="#" {{action (toggle 'addingTodo' this)}}><i class="{{if addingTodo 'remove orange' 'plus'}} icon"></i></a></h3>
+    <h3 class="ui left floated header">
+      <i class="checkmark box icon"></i>
+      <div class="content">All Todo Items</div>
+    </h3>
+  </hgroup>
   {{#if addingTodo}}
     <form class="ui form basic segment animated fadeInUp" {{action "addTodo" on="submit"}}>
       <div class="field">
@@ -39,15 +46,10 @@
     </form>
   {{/if}}
   <div class="ui very relaxed divided list">
-    {{#if model.checklist}}
-      {{#each model.incompleteTodos as |todo|}}
-        {{list-item/todo-item todo onStatusChange=(action "changeCompletedStatus")}}
-      {{/each}}
-      {{#each model.completeTodos as |todo|}}
-        {{list-item/todo-item todo onStatusChange=(action "changeCompletedStatus")}}
-      {{/each}}
+    {{#each (union model.incompleteTodos model.completeTodos) as |todo|}}
+      {{list-item/todo-item todo onStatusChange=(action "changeCompletedStatus")}}
     {{else}}
       <h4 class="center aligned header">No todos available.</h4>
-    {{/if}}
+    {{/each}}
   </div>
 </div>
