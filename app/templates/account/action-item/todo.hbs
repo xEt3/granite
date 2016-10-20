@@ -1,4 +1,8 @@
-<div class="ui very padded rasied segment animated fadeInUp">
+{{#ui-progress percent=model.percentComplete class="top thin indicating"}}
+  <div class="bar"></div>
+{{/ui-progress}}
+
+<div class="ui very padded raised segment animated fadeInUp">
   {{#if userTodos}}
     <div class="ui padded green segment">
       <h2 class="ui header"><i class="user icon"></i>Your Todo Items</h2>
@@ -12,10 +16,15 @@
 
   <h3 class="ui header"><i class="users icon"></i>All Todo Items</h3>
   <div class="ui very relaxed divided list">
-    {{#each model.checklist as |todo|}}
-      {{list-item/todo-item todo onStatusChange=(action "changeCompletedStatus")}}
+    {{#if model.checklist}}
+      {{#each model.incompleteTodos as |todo|}}
+        {{list-item/todo-item todo onStatusChange=(action "changeCompletedStatus")}}
+      {{/each}}
+      {{#each model.completeTodos as |todo|}}
+        {{list-item/todo-item todo onStatusChange=(action "changeCompletedStatus")}}
+      {{/each}}
     {{else}}
       <h4 class="center aligned header">No todos available.</h4>
-    {{/each}}
+    {{/if}}
   </div>
 </div>

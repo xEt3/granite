@@ -20,7 +20,7 @@ export default Model.extend(Validations, {
   description: attr('string'),
   priority:    attr('number', { defaultValue: 1 }),
 
-// Relational
+  // Relational
   participants:  hasMany('employee', { async: true }),
   subscribers:   hasMany('employee', { async: true }),
   comments:      hasMany('comment', { async: true, inverse: null }),
@@ -48,5 +48,15 @@ export default Model.extend(Validations, {
   slug: computed('title', function () {
     let title = this.get('title');
     return title ? title.replace(/\s/g, '-') : title;
+  }),
+
+  incompleteTodos: computed.filter('checklist', todo => !todo.get('completedOn')),
+  completeTodos: computed.filter('checklist', todo => todo.get('completedOn')),
+
+  percentComplete: computed('checklist.[]', 'completeTodos.[]', function () {
+    let total = this.get('completeTodos.length') || 0,
+        completed = this.get('checklist.length') || 0;
+
+    return total / completed * 100;
   })
 });

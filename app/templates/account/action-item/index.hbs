@@ -15,15 +15,15 @@
     </span>
   </h2>
   <p>{{model.description}} </p>
-  {{!description}}
-  <div class="ui divider"></div>
+
   {{#if model.prerequisites}}
-  <h3 class="ui header">
-    Prerequisites
-    <a href="#" class="right floated">
-      <i class="edit icon"></i>
-    </a>
-  </h3>
+    <div class="ui divider"></div>
+    <h3 class="ui header">
+      Prerequisites
+      <a href="#" class="right floated">
+        <i class="edit icon"></i>
+      </a>
+    </h3>
 
     <div class="ui selection list action-item__prerequisites">
         {{#each model.prerequisites as |prework|}}
@@ -44,37 +44,31 @@
         {{/each}}
     </div>
   {{/if}}
+
   {{#if model.participants}}
     <div class="ui divider"></div>
     <h3 class="header">
       Participants
     </h3>
     {{#each model.participants as |participant|}}
-      <a class="ui image label">
-        {{display/employee-picture src=participant.picture}}
-        {{participant.name}}
-        {{#if participant.isOwner}}
-          <div class="detail">Owner</div>
-        {{/if}}
-      </a>
+      {{list-item/action-item-participant participant model.owner}}
     {{/each}}
   {{/if}}
+
   {{#if dependents}}
-  <h3 class="header">
-    {{dependents.length}} {{inflect-text 'Project' dependents.length}} Waiting on This Action Item
-  </h3>
+    <div class="ui divider"></div>
+    <h3 class="header">
+      {{dependents.length}} {{inflect-text 'Project' dependents.length}} Waiting
+    </h3>
     <div class="ui selection list action-item__prerequisites">
-        {{#each dependents as |dependent|}}
-          {{#link-to "account.action-item.index" dependent class="item"}}
-            <div class="header">
-               {{dependent.title}}
-            </div>
-          {{/link-to}}
-        {{/each}}
+      {{#each dependents as |dependent|}}
+        {{#link-to "account.action-item.index" dependent class="item"}}
+          <div class="header">{{dependent.title}}</div>
+        {{/link-to}}
+      {{/each}}
     </div>
   {{/if}}
 </div>
-{{!-- TODO: partcipants, owner --}}
 
 {{!--
   !Title

@@ -14,7 +14,7 @@
       <i class="checkmark box icon"></i>Todos
       {{#if model.checklist}}
         <label class="ui left pointing label">
-          {{model.checklist.length}}
+          {{model.completeTodos.length}}/{{model.checklist.length}}
         </label>
       {{/if}}
     {{/link-to}}
@@ -26,12 +26,21 @@
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
           <div class="header">Actions</div>
-          {{#link-to 'account.action-item.index' class="text-green item"}}
+          <a href="#" id="action-item__action--mark-complete" class="item"
+          {{action
+            (pipe
+              (action 'confirmCompletion')
+              (action 'markComplete')
+              (action 'save')
+            )
+          }}>
             <i class="check icon"></i>Mark Complete
-          {{/link-to}}
-          {{#link-to 'account.action-item.index' class="item"}}
-            <i class="random icon"></i>Transfer
-          {{/link-to}}
+          </a>
+          {{#if (eq model.owner.id auth.user.employee.id)}}
+            <a href="#" id="action-item__action--transfer" class="item" {{action (pipe (action 'selectTransferTarget') (action 'transfer') (action 'save'))}}>
+              <i class="random icon"></i>Transfer
+            </a>
+          {{/if}}
           <div class="header">Settings</div>
           {{#link-to 'account.employee.index.edit' class='item'}}<i class="edit icon"></i>Edit{{/link-to}}
           <div class="item"><i class="settings icon"></i>Settings</div>
@@ -48,3 +57,63 @@
 
   {{outlet}}
 </div>
+
+{{#ui-modal name='modal__action-item--transfer' id='modal__action-item--transfer' class='small form'}}
+  <i class="close icon"></i>
+  <div class="header">
+    <i class="random icon"></i>Transfer action item
+  </div>
+  <div class="content">
+    <div class="field">
+      {{#if transferableTargets}}
+        {{#ui-dropdown class="fluid search selection" id="action-item-transfer-target" selected=transferTarget onChange=(action (mut transferTarget)) as |execute mapper|}}
+          <i class="dropdown icon"></i>
+          <div class="default text">Select a new owner</div>
+          <div class="menu">
+            {{#each transferableTargets as |item|}}
+              <div class="item" data-value="{{map-value mapper item.employee}}">
+                {{item.employee.fullName}}
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      {{else}}
+        <p>No other owners are available.</p>
+      {{/if}}
+    </div>
+  </div>
+  <div class="actions">
+    <button class="ui red button" {{action 'respondTransferModal' false}}>
+      Cancel
+    </button>
+    <button class="ui primary right labeled icon button" disabled={{if transferTarget false true}} {{action 'respondTransferModal' true}}>
+      Transfer
+      {{#if transferTarget}}
+        to {{transferTarget.fullName}}
+      {{/if}}
+      <i class="random icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}
+
+{{#ui-modal name='modal__action-item--confirm-complete' id='modal__action-item--confirm-complete' class='basic'}}
+  <i class="close icon"></i>
+  <div class="header">
+    Heads up!
+  </div>
+  <div class="content">
+    Are you sure want to do that?
+    {{#if model.incompleteTodos.length}}
+      <p><strong>There's still {{model.incompleteTodos.length}} {{inflect-text 'todos' model.incompleteTodos.length}} left to complete!</strong></p>
+    {{/if}}
+  </div>
+  <div class="actions">
+    <button class="ui red basic button" {{action 'respondConfirmCompleteModal' false}}>
+      Cancel
+    </button>
+    <button class="ui positive right labeled icon basic button" {{action 'respondConfirmCompleteModal' true}}>
+      Mark Complete
+      <i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}
