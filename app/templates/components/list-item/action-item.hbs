@@ -1,17 +1,23 @@
-{{#link-to 'account.action-item' actionItem.slug class="ui link fluid raised card"}}
+<div class="ui link fluid raised card">
   <div class="content">
     <h6 class="ui header clearfix">
       <div class="meta">
         Owner: {{actionItem.owner.fullName}}
         <span class="right floated">
-          <strong>Ongoing</strong> since {{time actionItem.created}}
+          {{#if actionItem.completedOn}}
+            <strong>Completed</strong> on {{time actionItem.completedOn}}
+          {{else if actionItem.cancelledOn}}
+            <strong>Cancelled</strong> on {{time actionItem.cancelledOn}}
+          {{else}}
+            <strong>Ongoing</strong> since {{time actionItem.created}}
+          {{/if}}
         </span>
       </div>
     </h6>
     <div class="header">
-      {{actionItem.title}}
-      {{#ui-popup tagName="span" class="right floated" content="Subscribe to notifications" position="top center"}}
-        <a href="#"><i class="eye fitted icon"></i></a>
+      {{#link-to 'account.action-item' actionItem.slug}}{{actionItem.title}}{{/link-to}}
+      {{#ui-popup tagName="span" class="right floated" content=(if subscribed 'Unsubscribe from notifications' 'Subscribe to notifications') position="top center"}}
+        <a href="#" {{action "toggleSubscription"}}><i class="{{if subscribed 'hide' 'unhide'}} fitted icon"></i></a>
       {{/ui-popup}}
     </div>
   </div>
@@ -49,6 +55,6 @@
     {{/if}}
   </div>
   <div class="extra content">
-    <button class="ui button">View Item</button>
+    {{#link-to 'account.action-item' actionItem.slug class="ui button"}}View Item{{/link-to}}
   </div>
-{{/link-to}}
+</div>

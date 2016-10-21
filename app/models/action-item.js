@@ -21,8 +21,8 @@ export default Model.extend(Validations, {
   priority:    attr('number', { defaultValue: 1 }),
 
   // Relational
-  participants:  hasMany('employee', { async: true }),
-  subscribers:   hasMany('employee', { async: true }),
+  participants:  hasMany('employee', { async: true, inverse: null }),
+  subscribers:   hasMany('employee', { async: true, inverse: null }),
   comments:      hasMany('comment', { async: true, inverse: null }),
   prerequisites: hasMany('action-item', { async: true, inverse: null }),
   // attachments:   hasMany('document', { async: true }),
