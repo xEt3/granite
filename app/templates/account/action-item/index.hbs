@@ -11,10 +11,15 @@
   <h2 class="ui header">
     {{model.title}}
     <span class="right floated sub header">
-      <i class="clock icon"></i>Due {{time-ago model.dueOn}} on {{time model.dueOn}}
+      <i class="clock icon"></i>
+      {{#if model.dueOn}}
+        Due {{time-ago model.dueOn}} on {{time model.dueOn}}
+      {{else}}
+        No due date
+      {{/if}}
     </span>
   </h2>
-  <p>{{model.description}} </p>
+  <p>{{model.description}}</p>
 
   {{#if model.prerequisites}}
     <div class="ui divider"></div>
@@ -26,22 +31,22 @@
     </h3>
 
     <div class="ui selection list action-item__prerequisites">
-        {{#each model.prerequisites as |prework|}}
-          {{#link-to "account.action-item.index" prework class="item"}}
-            <div class="header">
-               {{prework.title}}
+      {{#each model.prerequisites as |prework|}}
+        {{#link-to "account.action-item.index" prework class="item"}}
+          <div class="header">
+             {{prework.title}}
+          </div>
+          {{#if prework.checklist}}
+            <div class="ui list">
+              {{#each prework.checklist as |checklistItem|}}
+                <div class="item">
+                  <i class="square outline icon"></i>{{checklistItem.title}}
+                </div>
+              {{/each}}
             </div>
-            {{#if prework.checklist}}
-              <div class="ui list">
-                {{#each prework.checklist as |checklistItem|}}
-                  <div class="item">
-                    <i class="square outline icon"></i>{{checklistItem.title}}
-                  </div>
-                {{/each}}
-              </div>
-              {{/if}}
-          {{/link-to}}
-        {{/each}}
+            {{/if}}
+        {{/link-to}}
+      {{/each}}
     </div>
   {{/if}}
 
@@ -55,7 +60,7 @@
     {{/each}}
   {{/if}}
 
-  {{#if dependents}}
+  {{#if (and dependents (not model.completedOn))}}
     <div class="ui divider"></div>
     <h3 class="header">
       {{dependents.length}} {{inflect-text 'Project' dependents.length}} Waiting
@@ -69,17 +74,3 @@
     </div>
   {{/if}}
 </div>
-
-{{!--
-  !Title
-  !Description
-  !Target
-  !Due On
-  Priority
-  !Prerequisites
-  Delayed Until
-  !Completed On
-  !Cancelled On
-  !Participants
-  !Owner
---}}

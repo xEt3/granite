@@ -9,18 +9,19 @@ export default Controller.extend(del, addEdit, {
   transitionWithModel: false,
 
   actions: {
-    markComplete () {
-      console.log('called markComplete');
-      this.set('model.completedOn', new Date());
+    toggleComplete () {
+      if ( this.get('model.completedOn') ) {
+        this.set('model.completedOn', null);
+      } else {
+        this.set('model.completedOn', new Date());
+      }
     },
 
     transfer ( target ) {
-      console.log('called transfer');
       this.set('model.owner', target);
     },
 
     confirmCompletion () {
-      console.log('called confirmCompletion');
       this.set('respondedComplete', false);
 
       Ember.$('#modal__action-item--confirm-complete').modal({
@@ -36,7 +37,6 @@ export default Controller.extend(del, addEdit, {
     },
 
     selectTransferTarget () {
-      console.log('called selectTransferTarget');
       this.set('respondedTransfer', false);
 
       Ember.$('#modal__action-item--transfer').modal({
@@ -52,15 +52,13 @@ export default Controller.extend(del, addEdit, {
     },
 
     respondTransferModal ( response ) {
-      console.log('called respondTransferModal');
       this.get(response ? 'resolveTransfer' : 'rejectTransfer')(response ? this.get('transferTarget') : null);
       this.set('respondedTransfer', true);
       Ember.$('#modal__action-item--transfer').modal('hide');
     },
 
     respondConfirmCompleteModal ( response ) {
-      console.log('called respondConfirmCompleteModal');
-      this.get(response ? 'resolveComplete' : 'rejectComplete')(response ? this.get('transfComplete') : null);
+      this.get(response ? 'resolveComplete' : 'rejectComplete')(response);
       this.set('respondedComplete', true);
       Ember.$('#modal__action-item--confirm-complete').modal('hide');
     }

@@ -5,7 +5,7 @@ import resolveForTypeKey from '../utils/resolve-for-type-key';
 
 export default Model.extend({
   text:       attr('string'),
-  commenter:  belongsTo('company-user', { inverse: false }),
+  commenter:  belongsTo('employee', { async: true, inverse: false }),
   targetId:   attr('string-or-null'),
   targetType: attr('string-or-null'),
 
