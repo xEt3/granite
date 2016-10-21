@@ -68,6 +68,16 @@ export default Controller.extend(addEdit, {
         });
       }
       this.send('save');
+    },
+
+    changeAssignee ( todo, assignedTo ) {
+      todo.setProperties({
+        assignedTo,
+        assignedBy: assignedTo ? this.get('auth.user.employee') : null,
+        assignedOn: new Date()
+      });
+
+      this.send('save');
     }
   }
 });

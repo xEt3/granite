@@ -13,6 +13,7 @@ export default Route.extend({
       employees: this.store.findAll('employee')
     });
   },
+
   setupController( controller, model ) {
     controller.setProperties({
       model: model.actionItem,
