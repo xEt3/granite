@@ -22,7 +22,7 @@
 
 <div class="ui cards">
   {{#each model as |actionItem|}}
-    {{list-item/action-item actionItem=actionItem class="ui link fluid raised card"}}
+    {{list-item/action-item actionItem=actionItem class="ui link fluid raised card" onToggleSubscription=(action 'toggleSubscription')}}
   {{else}}
     <h4 class="text-white center aligned header">No action items available.</h4>
   {{/each}}

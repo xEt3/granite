@@ -103,7 +103,7 @@ export default Service.extend({
         this.set('session', existingSession);
       }
 
-      return existingSession ? this.get('user').then(() => existingSession) : false;
+      return existingSession ? this.get('user').then(user => user.get('employee')).then(() => existingSession) : false;
     });
   },
 
