@@ -9,6 +9,11 @@
   </div>
 
   <h2 class="ui header">
+    {{#if (eq model.owner.id auth.user.employee.id)}}
+      {{#link-to 'account.action-item.edit'}}
+        <i class="edit fitted icon"></i>
+      {{/link-to}}
+    {{/if}}
     {{model.title}}
     <span class="right floated sub header">
       <i class="clock icon"></i>
