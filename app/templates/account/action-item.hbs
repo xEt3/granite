@@ -8,7 +8,7 @@
 
   {{#ui-menu menuClass="pointing"}}
     {{#link-to 'account.action-item.index' class="item"}}
-      <i class="square icon"></i>Index
+      <i class="square icon"></i>Summary
     {{/link-to}}
     {{#link-to 'account.action-item.todo' class="item"}}
       <i class="checkmark box icon"></i>Todos
@@ -21,19 +21,18 @@
     {{#link-to 'account.action-item.discussion' class="item"}}
       <i class="comments icon"></i>Discussion
     {{/link-to}}
-    <div class="right menu">
-      {{#ui-dropdown class="item icon top right pointing"}}
-        <i class="wrench icon"></i><i class="dropdown icon"></i>
-        <div class="menu">
-          {{#if (eq model.owner.id auth.user.employee.id)}}
+    {{#if (eq model.owner.id auth.user.employee.id)}}
+      <div class="right menu">
+        {{#ui-dropdown class="item icon top right pointing"}}
+          <i class="wrench icon"></i><i class="dropdown icon"></i>
+          <div class="menu">
             <div class="header">Actions</div>
             <a href="#" id="action-item__action--mark-complete" class="item"
               {{action (pipe
                 (action 'confirmCompletion')
                 (action 'toggleComplete')
                 (action 'save')
-              )}}
-            >
+            )}}>
               <i class="check icon"></i>Mark as {{if model.completedOn 'Incomplete' 'Complete'}}
             </a>
             <a href="#" id="action-item__action--transfer" class="item"
@@ -41,24 +40,19 @@
                 (action 'selectTransferTarget')
                 (action 'transfer')
                 (action 'save')
-              )}}
-            >
+            )}}>
               <i class="random icon"></i>Transfer
             </a>
-          {{/if}}
-          <div class="header">Settings</div>
-          {{#link-to 'account.employee.index.edit' class='item'}}<i class="edit icon"></i>Edit{{/link-to}}
-          {{#if (eq model.owner.id auth.user.employee.id)}}
             <div class="text-danger header">Danger Zone</div>
             <div class="item">
               {{#confirm-modal as |confirm|}}
                 <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}><i class="trash icon"></i>Delete Record</a>
               {{/confirm-modal}}
             </div>
-          {{/if}}
         </div>
-      {{/ui-dropdown}}
-    </div>
+        {{/ui-dropdown}}
+      </div>
+    {{/if}}
   {{/ui-menu}}
 
   {{outlet}}

@@ -2,8 +2,11 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
   model ( params ) {
-    const modelName = this.get('modelName');
+    if ( this.get('bypassModelHook') ) {
+      return this._super(...arguments);
+    }
 
+    const modelName = this.get('modelName');
     Ember.assert('You must specify a modelName.', modelName);
 
     return this.store.find(modelName, params.id);

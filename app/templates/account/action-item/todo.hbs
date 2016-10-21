@@ -7,7 +7,11 @@
     <h2 class="ui header">Your Todo Items</h2>
     <div class="ui very relaxed divided list">
       {{#each userTodos as |todo|}}
-        {{list-item/todo-item todo onStatusChange=(action "changeCompletedStatus") onAssigneeChange=(action 'changeAssignee')}}
+        {{list-item/todo-item todo
+          onStatusChange=(action 'changeCompletedStatus')
+          onAssigneeChange=(action 'changeAssignee')
+          assignableTo=employees
+        }}
       {{else}}
         <h2 class="center aligned text">{{emoji-icon 'tada'}} <div class="content">All up to date!</div></h2>
       {{/each}}

@@ -7,7 +7,12 @@
     {{else}}
       <i class="{{if todo.completedOn 'checkmark box' 'square outline'}} icon"></i>
     {{/if}}
-    {{todo.title}}
+    {{#if todo.completedOn}}
+      <s>{{todo.title}}</s>
+      <small class="meta">Completed by {{todo.completedBy.firstName}} {{time-ago todo.completedOn}} on {{time todo.completedOn 'M/D/YY [at] h:mma'}}</small>
+    {{else}}
+      {{todo.title}}
+    {{/if}}
     <small class="right floated meta">
       {{#if todo.assignedTo}}
         <strong>Assigned</strong> to {{todo.assignedTo.firstName}} by {{todo.assignedBy.firstName}} {{time-ago todo.assignedOn}}
