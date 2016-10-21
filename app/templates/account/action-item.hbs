@@ -43,13 +43,27 @@
             )}}>
               <i class="random icon"></i>Transfer
             </a>
+            <a href="#" id="action-item__action--delay" class="item"
+              {{action (pipe
+                (action 'selectDelay')
+                (action 'save')
+            )}}>
+              <i class="ellipsis horizontal icon"></i>Delay
+            </a>
+
             <div class="text-danger header">Danger Zone</div>
-            <div class="item">
-              {{#confirm-modal as |confirm|}}
-                <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}><i class="trash icon"></i>Delete Record</a>
-              {{/confirm-modal}}
-            </div>
-        </div>
+            {{#confirm-modal class="item" as |confirm|}}
+              <a href="#" id="action-item__action--cancel" {{action (pipe confirm (action 'cancelActionItem'))}}>
+                <i class="close icon"></i>Cancel Action Item
+              </a>
+            {{/confirm-modal}}
+
+            {{#confirm-modal class="item" as |confirm|}}
+              <a href="#" id="action-item__action--delete" {{action (pipe confirm (action 'delete'))}}>
+                <i class="trash icon"></i>Delete Record
+              </a>
+            {{/confirm-modal}}
+          </div>
         {{/ui-dropdown}}
       </div>
     {{/if}}
@@ -114,6 +128,30 @@
     <button class="ui inverted green right labeled icon button" {{action 'respondConfirmCompleteModal' true}}>
       Mark {{if model.completedOn 'Incomplete' 'Complete'}}
       <i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}
+
+{{#ui-modal id='modal__action-item--delay' class='small form'}}
+  <i class="close icon"></i>
+  <div class="header">
+    When should "{{model.title}}" be due?
+  </div>
+  <div class="content">
+    {{#ui-calendar class="field" type="date" inline=true onChange=(action (mut model.delayedUntil))}}
+    {{/ui-calendar}}
+  </div>
+  <div class="actions">
+    <button class="ui red button" {{action 'respondDelayModal' false}}>
+      Cancel
+    </button>
+    <button class="ui green right labeled icon button" {{action 'respondDelayModal' true}}>
+      Delay
+      {{#if model.delayedUntil}}
+        until
+        {{time model.delayedUntil 'M/D/YY'}}
+      {{/if}}
+      <i class="ellipsis horizontal icon"></i>
     </button>
   </div>
 {{/ui-modal}}
