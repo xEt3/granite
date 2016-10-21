@@ -1,0 +1,15 @@
+<a class="avatar">
+  {{display/employee-picture url=comment.commenter.picture}}
+</a>
+<div class="content">
+  {{#link-to 'account.employee' comment.commenter.id class='author'}}{{comment.commenter.fullName}}{{/link-to}}
+  <div class="metadata">
+    <span class="date">{{time-ago comment.created}} on {{time comment.created 'M/D/YY [at] h:mma'}}</span>
+  </div>
+
+  <div class="text">{{comment.text}}</div>
+
+  <div class="actions">
+    <a class="text-red" {{action 'delete'}}>Remove</a>
+  </div>
+</div>

@@ -33,7 +33,7 @@ export default Component.extend(ajaxStatus, {
 
   newComment () {
     this.set('comment', this.get('store').createRecord('comment', {
-      commenter: this.get('auth.user')
+      commenter: this.get('auth.user.employee')
     }));
   },
 
