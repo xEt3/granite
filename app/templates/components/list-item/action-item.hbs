@@ -37,7 +37,7 @@
             <i class="check icon"></i>All todos complete
           </strong>
         {{else}}
-          {{actionItem.incompleteTodos.length}} {{inflect-text 'Todos' actionItem.incompleteTodos.length}} Left
+          {{#link-to 'account.action-item.todo' actionItem.slug}}{{actionItem.incompleteTodos.length}} {{inflect-text 'Todos' actionItem.incompleteTodos.length}} Left{{/link-to}}
         {{/if}}
       {{/if}}
       <span class="right floated meta">

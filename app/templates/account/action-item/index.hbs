@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <h2 class="ui header">
+  <h2 class="ui clearfix header">
     {{#if (eq model.owner.id auth.user.employee.id)}}
       {{#link-to 'account.action-item.edit'}}
         <i class="edit fitted icon"></i>
@@ -18,7 +18,12 @@
     <span class="right floated sub header">
       <i class="clock icon"></i>
       {{#if model.dueOn}}
-        Due {{time-ago model.dueOn}} on {{time model.dueOn}}
+        {{#if model.delayedUntil}}
+          <span class="text-yellow">Delayed until {{time model.dueOn}}</span> - originally due
+        {{else}}
+          Due {{time-ago model.dueOn}}
+        {{/if}}
+        on {{time model.dueOn}}
       {{else}}
         No due date
       {{/if}}

@@ -21,6 +21,11 @@ export default Controller.extend(del, addEdit, {
       this.set('model.owner', target);
     },
 
+    cancelActionItem () {
+      this.set('model.cancelledOn', new Date());
+      this.send('save');
+    },
+
     confirmCompletion () {
       this.set('respondedComplete', false);
 
@@ -51,6 +56,21 @@ export default Controller.extend(del, addEdit, {
       return new Promise((resolveTransfer, rejectTransfer) => this.setProperties({ resolveTransfer, rejectTransfer }));
     },
 
+    selectDelay () {
+      this.set('respondedDelay', false);
+
+      Ember.$('#modal__action-item--delay').modal({
+        detachable: true,
+        onHidden: () => {
+          if ( !this.get('respondedDelay') ) {
+            this.send('respondDelayModal', false);
+          }
+        }
+      }).modal('show');
+
+      return new Promise((resolveDelay, rejectDelay) => this.setProperties({ resolveDelay, rejectDelay }));
+    },
+
     respondTransferModal ( response ) {
       this.get(response ? 'resolveTransfer' : 'rejectTransfer')(response ? this.get('transferTarget') : null);
       this.set('respondedTransfer', true);
@@ -61,6 +81,17 @@ export default Controller.extend(del, addEdit, {
       this.get(response ? 'resolveComplete' : 'rejectComplete')(response);
       this.set('respondedComplete', true);
       Ember.$('#modal__action-item--confirm-complete').modal('hide');
+    },
+
+    respondDelayModal ( response ) {
+      this.get(response ? 'resolveDelay' : 'rejectDelay')();
+
+      if ( !response ) {
+        this.set('model.delayedUntil', null);
+      }
+
+      this.set('respondedDelay', true);
+      Ember.$('#modal__action-item--delay').modal('hide');
     }
   }
 });
