@@ -12,7 +12,7 @@ export default Route.extend({
       }),
       companyUsers: this.store.query('company-user', {
         _id: { $ne: this.get('auth.user._id') },
-        select: 'name'
+        select: 'name employee'
       })
     })
     .then(result => {

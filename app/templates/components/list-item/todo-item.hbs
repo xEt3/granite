@@ -14,6 +14,52 @@
       {{else}}
         No owner
       {{/if}}
+
+      {{#if onAssigneeChange}}
+        <a href="#" {{action (pipe (action 'selectAssignee') (action 'changeAssignee'))}}><i class="setting icon"></i></a>
+      {{/if}}
     </small>
   </div>
+
+  {{#ui-modal id=modalId class='small form'}}
+    <i class="close icon"></i>
+    <div class="header">
+      <i class="setting icon"></i>Edit todo's assignee
+    </div>
+    <div class="content">
+      <div class="field">
+        {{#if assignableTo}}
+          {{#ui-dropdown class="fluid search selection" selected=todo.assignedTo onChange=(action (mut newAssignee)) as |execute mapper|}}
+            <i class="dropdown icon"></i>
+            <div class="default text">Select a new assignee</div>
+            <div class="menu">
+              <div class="item" data-value="">
+                No Assignee
+              </div>
+              {{#each assignableTo as |item|}}
+                <div class="item" data-value="{{map-value mapper item}}">
+                  {{item.fullName}}
+                </div>
+              {{/each}}
+            </div>
+          {{/ui-dropdown}}
+        {{else}}
+          <p>No assignees available.</p>
+        {{/if}}
+      </div>
+    </div>
+    <div class="actions">
+      <button class="ui red button" {{action 'respondAssignee' false}}>
+        Cancel
+      </button>
+      <button class="ui primary right labeled icon button" {{action 'respondAssignee' newAssignee}}>
+        {{#if newAssignee}}
+        Assign to {{newAssignee.fullName}}
+        {{else}}
+          Unassign
+        {{/if}}
+        <i class="check icon"></i>
+      </button>
+    </div>
+  {{/ui-modal}}
 {{/if}}
