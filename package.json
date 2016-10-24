@@ -1,6 +1,6 @@
 {
   "name": "granite",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A solid solution for human resources",
   "private": true,
   "directories": {
@@ -20,11 +20,11 @@
   "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^6.0.4",
-    "ember-ajax": "^2.5.2",
+    "ember-ajax": "^2.4.1",
     "ember-braintree": "git+https://github.com/James1x0/ember-braintree.git#815446a21afd213e504777de36c4c7b9b18838ed",
     "ember-cli-active-link-wrapper": "0.2.0",
     "ember-cli-animate-css": "0.0.1",
-    "ember-cli-babel": "^5.1.6",
+    "ember-cli-babel": "^5.1.7",
     "ember-cli-emoji": "0.0.3",
     "ember-cli-less": "1.5.3",
     "ember-cli-maskedinput": "0.1.0",
@@ -33,10 +33,8 @@
     "ember-cli-nprogress": "0.0.2",
     "ember-cli-range-slider": "0.2.3",
     "broccoli-asset-rev": "^2.4.5",
-    "ember-ajax": "^2.4.1",
     "ember-cli": "2.10.0-beta.2",
     "ember-cli-app-version": "^2.0.0",
-    "ember-cli-babel": "^5.1.7",
     "ember-cli-dependency-checker": "^1.3.0",
     "ember-cli-htmlbars": "^1.0.10",
     "ember-cli-htmlbars-inline-precompile": "^0.3.3",
