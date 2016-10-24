@@ -20,9 +20,11 @@ module.exports = function(defaults) {
     },
 
     SemanticUI: {
-      css: false,
-      javascript: true,
-      fonts: true
+      import: {
+        css: false,
+        javascript: true,
+        fonts: true
+      }
     },
 
     'ember-cli-range-slider': {

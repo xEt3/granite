@@ -19,7 +19,7 @@
       <i class="clock icon"></i>
       {{#if model.dueOn}}
         {{#if model.delayedUntil}}
-          <span class="text-yellow">Delayed until {{time model.dueOn}}</span> - originally due
+          <span class="text-yellow">Delayed until {{time model.delayedUntil}}</span> - originally due
         {{else}}
           Due {{time-ago model.dueOn}}
         {{/if}}
