@@ -16,9 +16,7 @@
     </h6>
     <div class="header">
       {{#link-to 'account.action-item' actionItem.slug}}{{actionItem.title}}{{/link-to}}
-      {{#ui-popup tagName="span" class="right floated" content=(if subscribed 'Unsubscribe from notifications' 'Subscribe to notifications') position="top center"}}
-        <a href="#" {{action "toggleSubscription"}}><i class="{{if subscribed 'hide' 'unhide'}} fitted icon"></i></a>
-      {{/ui-popup}}
+      <a href="#" class="right floated" title="Toggle subscription" {{action "toggleSubscription"}}><i class="{{if (contains userId subscriberIds) 'hide' 'unhide'}} fitted icon"></i></a>
     </div>
   </div>
   <div class="content">

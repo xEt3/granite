@@ -15,7 +15,7 @@ export default Controller.extend(addEdit, {
     this._super(...arguments);
   },
 
-  userTodos: computed('auth.user.employee.id', 'model.incompleteTodos.@each.assignedTo.id', function () {
+  userTodos: computed('auth.user.employee.id', 'model.incompleteTodos.@each.assignedTo', function () {
     let checklist = this.get('model.incompleteTodos');
     return checklist ? checklist.filterBy('assignedTo.id', this.get('auth.user.employee.id')) : [];
   }),

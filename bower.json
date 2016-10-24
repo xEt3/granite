@@ -1,7 +1,6 @@
 {
   "name": "granite",
   "dependencies": {
-    "ember-cli-shims": "~0.1.1",
     "semantic-ui": "^2.1.8",
     "jquery.inputmask": "^3.3.1",
     "moment": "^2.13.0",
@@ -12,9 +11,10 @@
     "froala-wysiwyg-editor": "~2.3.3",
     "ember-qunit-notifications": "0.1.0",
     "nprogress": "^0.2.0",
-    "ember": "~2.8.0",
     "ionrangeslider": "^2.1.4",
     "At.js": "^1.5.2",
-    "emojify": "~1.1.0"
+    "emojify": "~1.1.0",
+    "ember": "~2.10.0-beta.1",
+    "ember-cli-shims": "0.1.3"
   }
 }
