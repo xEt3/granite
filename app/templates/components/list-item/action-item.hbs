@@ -21,6 +21,10 @@
   </div>
   <div class="content">
     {{display/priority-label actionItem.priority}}
+    <div class="right floated ui label">
+      <i class="calendar icon"></i>
+      Due on {{time actionItem.dueOn}}
+    </div>
   </div>
   <div class="content">
     {{#if actionItem.checklist.length}}
