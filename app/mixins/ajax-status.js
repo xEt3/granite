@@ -3,10 +3,10 @@ import Ember from 'ember';
 const { Mixin, Logger, run } = Ember;
 
 function searchError ( errors ) {
-  const detailKeys = Ember.A(['detail', 'message']),
+  const detailKeys = Ember.A(['detail', 'message', 'title', 'status']),
         key = detailKeys.find(k => errors[0][k]);
 
-  return errors.mapBy(key).join(', ');
+  return key ? errors.mapBy(key).join(', ') : errors[0];
 }
 
 export default Mixin.create({
