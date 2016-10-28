@@ -5,16 +5,17 @@ moduleForAcceptance('Acceptance | Main nav');
 
 test('should show on /', function(assert) {
   visit('/');
+  percySnapshot('index');
 
   andThen(function() {
     assert.ok(find('nav.nav__main')[0]);
   });
 });
-
-test('should hide on /account', function(assert) {
-  visit('/account');
-
-  andThen(function() {
-    assert.ok(find('nav.nav__main').length < 1);
-  });
-});
+//
+// test('should hide on /account', function(assert) {
+//   visit('/account');
+//
+//   andThen(function() {
+//     assert.ok(find('nav.nav__main').length < 1);
+//   });
+// });
