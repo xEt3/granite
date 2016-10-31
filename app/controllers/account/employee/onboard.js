@@ -18,6 +18,10 @@ export default Controller.extend({
     title: 'Assets',
     link: 'equipment'
   }, {
+    icon: 'photo',
+    title: 'picture',
+    link: 'picture'
+  }, {
     icon: 'keyboard',
     title: 'Custom Info',
     link: 'custom-fields'

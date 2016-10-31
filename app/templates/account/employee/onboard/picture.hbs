@@ -1,0 +1,30 @@
+<form class="ui form" {{action "saveAndContinue" on="submit"}}>
+  <div class="ui segment">
+    <h3 class="ui employee-photo-header header">
+      <i class="photo icon"></i>
+      <div class="content">
+        Upload {{model.firstName}}'s picture(optional)
+        <div class="sub header">Click to upload or drag and drop</div>
+      </div>
+    </h3>
+    <div class="employee-picture-dropzone">
+      {{drop-zone
+        id='employee-profile-image'
+        url=pictureEndpoint
+        uploadMultiple=false
+        acceptedFiles='image/*'
+        maxFiles=1
+        addRemoveLinks=true
+        dictDefaultMessage='Drop Files or Click Here to Replace/Add Picture'
+        headers=(hash X-API-Token=auth.token)
+
+        success=(action 'uploadedFile')
+        removedfile=(action 'removeFile')
+        capture='camera'}}
+
+        <button class="ui button" data-dz-remove{{action 'removeFile'}}>Remove the file</button>
+    </div>
+  </div>
+<div class="ui divider"></div>
+{{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
+</form>
