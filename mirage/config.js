@@ -1,11 +1,16 @@
+import moment from 'moment';
+import { Response } from 'ember-cli-mirage';
+
+const parseIncoming = req => {
+  return req.requestBody ? JSON.parse('{"' + decodeURIComponent(req.requestBody).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}') : {};
+};
+
 export default function() {
   this.namespace = 'api/v1';
   this.logging = true;
   // These comments are here to help you get started. Feel free to delete them.
-
   /*
     Config (with defaults).
-
     Note: these only affect routes defined *after* them!
   */
 
@@ -13,15 +18,22 @@ export default function() {
   // this.namespace = '';    // make this `api`, for example, if your API is namespaced
   // this.timing = 400;      // delay for each request, automatically set to 0 during testing
 
-  /*
-    Shorthand cheatsheet:
+  // Simulate login actions
+  this.post('/login/company-user', ({}, request) => {
+    const params = parseIncoming(request);
+    console.log(params);
 
-    this.get('/posts');
-    this.post('/posts');
-    this.get('/posts/:id');
-    this.put('/posts/:id'); // or this.patch
-    this.del('/posts/:id');
-
-    http://www.ember-cli-mirage.com/docs/v0.2.x/shorthands/
-  */
+    if ( params.email !== 'user@test.com' ) {
+      return new Response(401, {}, 'User not found.');
+    } else if ( params.password === '1234' ) {
+      return {
+        expires: moment().add(1, 'day').toDate(),
+        token: 123456789,
+        user: 1,
+        id: 1
+      };
+    } else {
+      return new Response(401, {}, 'Password does not match');
+    }
+  });
 }
