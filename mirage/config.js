@@ -1,6 +1,5 @@
 import moment from 'moment';
 import { Response, faker } from 'ember-cli-mirage';
-import ENV from 'granite/config/environment';
 
 const parseIncoming = req => {
   return req.requestBody ? JSON.parse('{"' + decodeURIComponent(req.requestBody).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}') : {};
