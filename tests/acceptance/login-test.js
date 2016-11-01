@@ -27,7 +27,7 @@ test('failed logins', function(assert) {
     setTimeout(() => {
       let $error = find('.c-notification__container > .c-notification--error > .c-notification__content');
       assert.ok($error[0], 'Error shows');
-      assert.ok($error.text().toLowerCase().indexOf('user not found') > -1, 'Contains "user not found"');
+      assert.ok($error.text().toLowerCase().indexOf('user not found') > -1, $error.text() + ' Contains "user not found"');
       done();
     }, 500);
   });

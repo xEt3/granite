@@ -1,13 +1,14 @@
 import moment from 'moment';
 import { Response, faker } from 'ember-cli-mirage';
+import ENV from 'granite/config/environment';
 
 const parseIncoming = req => {
   return req.requestBody ? JSON.parse('{"' + decodeURIComponent(req.requestBody).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}') : {};
 };
 
-export default function() {
-  this.namespace = 'api/v1';
+export default function testConfig() {
   this.logging = true;
+  this.namespace = '/api/v1';
   // These comments are here to help you get started. Feel free to delete them.
   /*
     Config (with defaults).
@@ -19,9 +20,9 @@ export default function() {
   // this.timing = 400;      // delay for each request, automatically set to 0 during testing
 
   // Simulate login actions
+
   this.post('/login/company-user', ({}, request) => {
     const params = parseIncoming(request);
-    console.log(params);
 
     if ( params.email !== 'user@test.com' ) {
       return new Response(401, {}, 'User not found.');
