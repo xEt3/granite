@@ -29,7 +29,7 @@ test('failed logins', function(assert) {
       assert.ok($error[0], 'Error shows');
       assert.ok($error.text().toLowerCase().indexOf('user not found') > -1, $error.text() + ' Contains "user not found"');
       done();
-    }, 500);
+    }, 1500);
   });
 
   andThen(() => {

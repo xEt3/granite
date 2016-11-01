@@ -65,4 +65,36 @@ export default function testConfig() {
 
     return { activity: activities };
   });
+
+  this.get('/company-users', ({}, request) => {
+    const params = parseIncoming(request);
+    console.log('reqbody', request.requestBody);
+    console.log('params', params);
+
+    let list = {
+      companyUser: [{
+        _id: 1,
+        name: {
+          first: 'Bob',
+          last: 'Ross'
+        },
+        email: 'happytree@bobross.xxx'
+      }, {
+        _id: 2,
+        name: {
+          first: 'Old',
+          last: 'Yeller'
+        },
+        email: 'gone@hotmail.net'
+      }]
+    };
+
+    if ( params._id && params._id.$ne ) {
+      list.companyUser = list.companyUser.filter(i => {
+        return '' + i._id !== params._id.$ne;
+      });
+    }
+
+    return list;
+  });
 }

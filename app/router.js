@@ -84,15 +84,18 @@ Router.map(function() {
     });
     this.route('anatomy', function() {
       this.route('locations', function() {
-        this.route('index', function() {
+        this.route('index', { path: '/' }, function() {
           this.route('new');
         });
       });
       this.route('location', function() {});
       this.route('departments', function() {
-        this.route('index', function() {
+        this.route('index', { path: '/' }, function() {
           this.route('new');
         });
+      });
+      this.route('company-users', function() {
+        this.route('new');
       });
     });
     this.route('action-item', { path: '/action-item/:slug' }, function() {
