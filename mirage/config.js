@@ -21,7 +21,6 @@ export default function() {
   // Simulate login actions
   this.post('/login/company-user', ({}, request) => {
     const params = parseIncoming(request);
-    console.log(params);
 
     if ( params.email !== 'user@test.com' ) {
       return new Response(401, {}, 'User not found.');
