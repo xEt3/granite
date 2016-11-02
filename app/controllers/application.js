@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from 'granite/config/environment';
 
 const { Controller, computed, observer, on, run, $ } = Ember;
 
@@ -45,9 +46,11 @@ export default Controller.extend({
   }),
 
   updateBodyClass: on('init', observer('topLevel', function () {
-    run.next(() => {
-      $('body')[this.get('topLevel') ? 'removeClass' : 'addClass']('application__in-account');
-    });
+    if ( ENV.environment !== 'test' ) {
+      run.scheduleOnce('afterRender', () => {
+        $('body')[this.get('topLevel') ? 'removeClass' : 'addClass']('application__in-account');
+      });
+    }
   })),
 
   actions: {

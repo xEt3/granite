@@ -1,0 +1,26 @@
+<div class="ui tiny rounded image">
+  {{display/employee-picture url=user.employee.picture}}
+</div>
+<div class="content">
+  <div class="header">
+    {{user.fullName}}
+  </div>
+  {{#if onDelete}}
+    <div class="right floated">
+      {{#ui-popup tagName='span' position="left center" content="Delete user"}}
+        <a href="#" class="text-danger" {{action "deleteUser"}}><i class="trash icon"></i></a>
+      {{/ui-popup}}
+    </div>
+  {{/if}}
+  <div class="meta">
+    <span>{{user.email}}</span>
+    <span class="ui small text right floated">Created {{time-ago user.created}} on {{time user.created}}</span>
+  </div>
+  <div class="extra">
+    {{#if user.activatedOn}}
+      <i class="check icon"></i>Activated {{time-ago user.activatedOn}}
+    {{else}}
+      <span class="text-green"><i class="mail outline icon"></i>Activation email sent {{time-ago user.created}}</span>
+    {{/if}}
+  </div>
+</div>

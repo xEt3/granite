@@ -1,0 +1,13 @@
+<form class="ui top-margin very padded piled text segment container form" {{action "activate" on="submit"}}>
+  <hgroup class="ui center aligned header">
+    <h1 class="header text-green">Good {{relative-greeting-time}}, {{model.name.first}} {{model.name.last}}!</h1>
+    <h2>We need to finish your account activation by setting your password.</h2>
+  </hgroup>
+  <div class="ui divider"></div>
+
+  {{input/ui-input type="password" inputId="user-password" placeholder="Enter a password" value=password}}
+  {{input/ui-input type="password" inputId="user-password-confirm" placeholder="Confirm your password" value=passwordConfirm}}
+
+  <div class="ui divider"></div>
+  {{#form/action-button type="submit" class="ui massive fluid green button" loading=working disabled=(not enableActivation)}}Activate Your Account{{/form/action-button}}
+</form>

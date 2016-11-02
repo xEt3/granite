@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component, computed } = Ember;
+const { Component, computed, set } = Ember;
 
 export default Component.extend({
   tagName: '',
@@ -8,7 +8,7 @@ export default Component.extend({
 
   _links: computed('links', function () {
     return this.get('links').map(link => {
-      link.fullLink = this.get('linkPrefix') + link.link;
+      set(link, 'fullLink', this.get('linkPrefix') + link.link);
       return link;
     });
   })

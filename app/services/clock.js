@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import moment from 'moment';
+import ENV from 'granite/config/environment';
 
 const { Service, computed, on, run } = Ember;
 
@@ -17,7 +18,9 @@ export default Service.extend({
       time:   m.toDate()
     });
 
-    run.later(this, this._tick, this.get('refreshResolution'));
+    if ( ENV.environment !== 'test' ) {
+      run.later(this, this._tick, this.get('refreshResolution'));
+    }
   })
 });
 

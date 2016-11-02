@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import moment from 'moment';
+import ENV from 'granite/config/environment';
 
 const { Component, on, run } = Ember;
 
@@ -26,7 +27,9 @@ const TimeAgo = Component.extend({
 
     this.set('computedTimeAgo', this.get('time') ? fromNowWithSeconds(moment(this.get('time'))) : 'N/A');
 
-    run.later(this, this._tick, 1000);
+    if ( ENV.environment !== 'test' ) {
+      run.later(this, this._tick, 1000);
+    }
   })
 });
 

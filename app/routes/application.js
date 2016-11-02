@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import progress from 'ember-cli-nprogress';
 import { notifyDefaults } from 'granite/config';
+import ENV from 'granite/config/environment';
 
-const { Route, $, Logger, inject } = Ember;
+const { Route, $, Logger, RSVP: { Promise }, inject } = Ember;
 
 const errorRouteMap = {
   401: 'unauthorized',
@@ -15,7 +16,7 @@ export default Route.extend({
   auth: inject.service(),
 
   beforeModel () {
-    return this.get('auth').initializeExistingSession();
+    return ENV.environment === 'test' ? Promise.resolve() : this.get('auth').initializeExistingSession();
   },
 
   actions: {

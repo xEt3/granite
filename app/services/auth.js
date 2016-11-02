@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import moment from 'moment';
+import ENV from 'granite/config/environment';
 
 const { Service, inject, computed, on, RSVP: { Promise }, Logger } = Ember;
 
@@ -36,7 +37,7 @@ export default Service.extend({
         id:      response.id
       });
 
-      return session.save();
+      return ENV.environment === 'test' ? Promise.resolve(session) : session.save();
     })
     .then(record => {
       Logger.debug('AS :: Saved session record in localforage');

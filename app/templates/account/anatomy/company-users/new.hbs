@@ -1,0 +1,35 @@
+<h2 class="ui dividing header">Create a New User</h2>
+
+<form class="ui form" {{action (pipe (action 'presetAttrs') (action 'save')) on="submit"}}>
+  {{input/ui-input type="email" inputId="user-email" placeholder="Email Address" value=model.email}}
+  <div class="ui divider"></div>
+
+  <div class="field">
+    <label for="action-item-prerequisites">
+      {{#ui-popup tagName='span' content='Users must have an employee record assigned.'}}
+        Employee
+        <i class="right floated info icon"></i>
+      {{/ui-popup}}
+    </label>
+    {{#if employees}}
+      {{#ui-dropdown class="fluid search selection" id="user-employee-link" selected=model.employee onChange=(action (mut model.employee)) as |execute mapper|}}
+        <i class="dropdown icon"></i>
+        <div class="default text">Select an employee for this user</div>
+        <div class="menu">
+          {{#each employees as |item|}}
+            <div class="item" data-value="{{map-value mapper item}}">
+              {{item.fullName}}
+            </div>
+          {{/each}}
+        </div>
+      {{/ui-dropdown}}
+    {{else}}
+      <p>No employees are available.</p>
+    {{/if}}
+  </div>
+
+  {{!TODO: Add permission assignments}}
+
+  <div class="ui divider"></div>
+  {{#form/action-button type="submit" class="ui huge fluid green button" disabled=disableForm loading=working}}Save User{{/form/action-button}}
+</form>
