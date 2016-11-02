@@ -6,6 +6,9 @@ let UserItemComponent = Component.extend({
   classNames: [ 'item', 'users__user--item' ],
 
   actions: {
+    deleteUser () {
+      this.get('onDelete')(this.get('user'));
+    }
   }
 });
 

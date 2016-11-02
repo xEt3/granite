@@ -110,6 +110,7 @@ Router.map(function() {
   this.route('unauthorized');
   this.route('catchall', {path: '/*wildcard'});
   this.route('login');
+  this.route('setup-account', { path: '/setup/account/:userId' });
 });
 
 export default Router;

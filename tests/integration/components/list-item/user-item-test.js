@@ -6,19 +6,14 @@ moduleForComponent('list-item/user-item', 'Integration | Component | list item/u
 });
 
 test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
-
-  this.render(hbs`{{list-item/user-item}}`);
-
-  assert.equal(this.$().text().trim(), '');
+  this.set('user', {
+    fullName: 'Bob Ross'
+  });
 
   // Template block usage:
   this.render(hbs`
-    {{#list-item/user-item}}
-      template block text
-    {{/list-item/user-item}}
+    {{list-item/user-item}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$().text().trim().indexOf('bob') > -1, '');
 });

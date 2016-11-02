@@ -16,7 +16,7 @@ export default Route.extend(refreshable, {
     return this.store.query('company-user', {
       page,
       limit,
-      _id: { $ne: this.get('auth.currentUser.id') }
+      _id: { $ne: this.get('auth.user.id') }
     });
   }
 });

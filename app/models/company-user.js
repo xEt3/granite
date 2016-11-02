@@ -18,6 +18,8 @@ export default Model.extend({
   company: belongsTo('company', { async: true, inverse: false }),
   employee: belongsTo('employee', { async: true, inverse: 'companyUser' }),
 
+  activatedOn: attr('date'),
+
   created: attr('date', {
     defaultValue () {
       return new Date();
