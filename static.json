@@ -1,0 +1,7 @@
+{
+  "proxies": {
+    "/api/v1/": {
+      "origin": "http://${API_APP_NAME}.herokuapp.com/api/v1/"
+    }
+  }
+}
