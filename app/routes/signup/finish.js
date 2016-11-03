@@ -3,9 +3,9 @@ import Ember from 'ember';
 const { Route, run } = Ember;
 
 export default Route.extend({
-  afterModel (model) {
+  afterModel () {
     run.scheduleOnce('afterRender', () => {
-      run.later(() => this.transitionTo('account.index'), 4500);
+      run.later(() => this.transitionTo('index'), 4500);
     });
   }
 });
