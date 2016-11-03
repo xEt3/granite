@@ -1,10 +1,37 @@
 .ui.nav__main {
+  .menu .item a {
+    text-transform: uppercase;
+    font-weight: 900;
+    color: @granite-offwhite !important;
+
+    &:not(.button) {
+      transition: all 0.4s ease-in-out;
+      text-shadow: 3px 2px 4px fade(@granite-grey, 40%);
+
+      &:hover {
+        text-shadow: 1px 2px 1px fade(@granite-grey, 80%);
+        color: @granite-blue !important;
+      }
+    }
+  }
+
   &:not(nav__main-transparent) {
     margin-bottom: 0;
+
+    .menu .item a:not(.button) {
+      color: @granite-blue !important;
+      text-shadow: 0px 0px 0px fade(@granite-grey, 40%);
+
+      &:hover {
+        text-shadow: 2px 1px 4px fade(@granite-grey, 30%);
+        color: @granite-green !important;
+      }
+    }
   }
 
   .nav__main-logo {
     padding: 0 10px;
+    overflow: hidden;
 
     a {
       display: block;
@@ -22,19 +49,22 @@
 
       &:hover {
         .logo-text {
-          display: block;
+          opacity: 1;
           max-height: 20px;
-          transition: max-height 0.5s ease-in-out;
+          transition: all 0.5s ease-in-out;
+          transform: translate(0, 0);
         }
       }
 
       .logo-text {
+        display: block;
         height: 20px;
-        max-height: 0;
         text-align: center;
-        overflow: hidden;
-        display: none;
-        transition: max-height 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
+        opacity: 0;
+        transform: translate(0, 100px);
+        font-weight: 100;
+        max-height: 0;
       }
     }
 
@@ -56,30 +86,8 @@
 
     .nav__main-logo a {
       color: white;
-
       transition: all 0.4s ease-in-out;
-      text-shadow: 3px 2px 5px fade(black, 40%);
-
-      &:hover {
-        text-shadow: 1px 2px 1px fade(black, 80%);
-        color: @granite-blue !important;
-      }
-    }
-
-    .menu .item a {
-      text-transform: uppercase;
-      font-weight: 900;
-      color: @granite-offwhite !important;
-
-      &:not(.button) {
-        transition: all 0.4s ease-in-out;
-        text-shadow: 3px 2px 5px fade(black, 40%);
-
-        &:hover {
-          text-shadow: 1px 2px 1px fade(black, 80%);
-          color: @granite-blue !important;
-        }
-      }
+      text-shadow: 2px 1px 4px fade(@granite-grey, 40%);
     }
   }
 }
