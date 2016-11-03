@@ -1,8 +1,10 @@
 import Ember from 'ember';
 
-const { Route, RSVP } = Ember;
+const { Route, RSVP, inject } = Ember;
 
 export default Route.extend({
+  ajax: inject.service(),
+
   queryParams: {
     tag: {
       refreshModel: true
@@ -13,9 +15,7 @@ export default Route.extend({
     let activityQuery = {
       limit: 10,
       page: 0,
-      sort: {
-        created: -1
-      }
+      sort: { created: -1 }
     };
 
     if (!Ember.isEmpty(params.tag)) {
@@ -24,7 +24,7 @@ export default Route.extend({
 
     return RSVP.hash({
       activities: this.store.query('activity', activityQuery),
-      tags: Ember.$.getJSON('/api/v1/activities', { _distinct: true, select: 'tag' })
+      tags: this.get('ajax').request('/api/v1/activities', { data: { _distinct: true, select: 'tag' } })
     });
   },
 
