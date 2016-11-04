@@ -1,0 +1,36 @@
+<div class="ui divider"></div>
+
+<div id="template" class="center aligned">
+  {{drop-zone
+    class="left floated"
+    id='employee-profile-image'
+    url=pictureEndpoint
+    uploadMultiple=false
+    acceptedFiles='image/*'
+    maxFiles=1
+
+    autoProcessQueue=false
+    dictDefaultMessage='Drop Files or Click Here to Replace/Add Picture'
+    headers=(hash X-API-Token=auth.token)
+    addedfile=(action 'addedFile')
+    success=(action 'uploadedFile')
+    removedfile=(action 'removeFile')
+    capture='camera'}}
+</div>
+
+<div class="right floated three center aligned ui buttons">
+  {{#if fileIsAdded}}
+    <button class="ui green button" {{action "processQueue"}}>
+        <i class="upload icon"></i>
+        <span>Upload And Save</span>
+    </button>
+    <button data-dz-remove class="ui negative button" {{action 'removeFile'}}>
+      <i class="undo icon"></i>
+      <span>Remove File</span>
+    </button>
+  {{/if}}
+  <button class="ui button" {{action "leaveUpload"}}>
+      <i class="ban icon"></i>
+      <span>Cancel</span>
+  </button>
+</div>

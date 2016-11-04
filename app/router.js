@@ -51,6 +51,7 @@ Router.map(function() {
           this.route('job');
           this.route('custom-fields');
         });
+        this.route('edit-picture');
       });
       this.route('onboard', function() {
         this.route('index', { path: '/start' });
