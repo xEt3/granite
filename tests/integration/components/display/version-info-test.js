@@ -11,14 +11,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{display/version-info}}`);
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#display/version-info}}
-      template block text
-    {{/display/version-info}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$().text().trim().toLowerCase(), 'show version info');
 });
