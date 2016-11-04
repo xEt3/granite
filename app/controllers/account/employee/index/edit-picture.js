@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import moment from 'moment';
 
-const { computed, Controller } = Ember;
+const { Controller, computed, run } = Ember;
 
 export default Controller.extend({
   pictureExts:    [ 'jpg', 'jpeg', 'png'],
@@ -21,8 +22,11 @@ export default Controller.extend({
 
     uploadedFile () {
       this.get('model').reload().then(model => {
-        model.rollbackAttributes();
-        this.transitionToRoute('account.employee.index');
+        model.set('picture', model.get('picture') + '?t=' + moment().unix());
+        run.later(() => {
+          model.rollbackAttributes();
+          this.transitionToRoute('account.employee.index');
+        }, 800);
       });
     },
 
