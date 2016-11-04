@@ -88,6 +88,27 @@
     transform: translateY(-30%);
   }
 }
+
 .hover-circular {
+  position: relative;
   border-radius: 50% !important;
+}
+
+.input__dropzone {
+  position: relative;
+  border: 2px dashed rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+
+  .dz-message {
+    color: @gray-light;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -55%);
+    width: 100%;
+    margin: 0;
+  }
+
+  @media all and (max-width: @screen-md) {
+    padding: 3px 5px;
+  }
 }

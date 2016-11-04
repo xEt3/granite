@@ -10,13 +10,13 @@ export default Controller.extend({
   fileIsAdded: false,
 
   actions: {
-
-    addedFile () {
+    addedFile (file) {
       this.set('dropzone', this);
-      this.set('fileIsAdded', true);
+      this.set('fileIsAdded', file);
     },
+
     processQueue () {
-      Dropzone.forElement('#employee-profile-image').processQueue();
+      Dropzone.forElement('#input__dropzone--employee-profile-image').processQueue();
     },
 
     uploadedFile () {
@@ -26,11 +26,13 @@ export default Controller.extend({
       });
     },
 
-    removeFile ( file ) {
-      Dropzone.forElement('#employee-profile-image').removeAllFiles( file );
+    removeFile (file) {
+      Dropzone.forElement('#input__dropzone--employee-profile-image').removeAllFiles(file);
       this.set('fileIsAdded', false);
     },
+
     leaveUpload () {
+      this.send('removeFile', this.get('fileIsAdded'));
       this.transitionToRoute('account.employee.index');
     }
   }

@@ -19,7 +19,7 @@ export default Controller.extend({
     link: 'equipment'
   }, {
     icon: 'photo',
-    title: 'picture',
+    title: 'Picture',
     link: 'picture'
   }, {
     icon: 'keyboard',
