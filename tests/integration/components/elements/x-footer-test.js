@@ -11,14 +11,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{elements/x-footer}}`);
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#elements/x-footer}}
-      template block text
-    {{/elements/x-footer}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.ok(this.$().text().trim().toLowerCase().indexOf('granite') > -1, 'Contains company name');
 });

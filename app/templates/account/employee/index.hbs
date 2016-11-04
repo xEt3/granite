@@ -37,9 +37,18 @@
     <div class="ui equal width stackable grid container">
       <div class="left floated twelve wide column">
           <h1 class="ui left floated center aligned header employee-header-group">
-            <div class="ui small circular image employee-image">
-              {{display/employee-picture url=model.picture}}
-            </div>
+            {{#ui-dimmer class="ui small circular image employee-image" onElement=".ui.segment" variation="inverted" duration=(hash show=1500) on="hover" as |execute|}}
+              {{#link-to 'account.employee.index.edit-picture' class="ui circular segment dimmer hover-circular"}}
+                <div class="content">
+                  <div class="center text-white">
+                    <div>Edit Picture</div>
+                  </div>
+                </div>
+              {{/link-to}}
+              <div class="ui small circular image employee-image">
+                {{display/employee-picture url=model.picture}}
+              </div>
+            {{/ui-dimmer}}
             <div class="inverted content text-white employee-basic-meta">
               {{model.fullName}}
               <div class="sub header text-white">
