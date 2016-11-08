@@ -51,12 +51,14 @@ Router.map(function() {
           this.route('job');
           this.route('custom-fields');
         });
+        this.route('edit-picture');
       });
       this.route('onboard', function() {
         this.route('index', { path: '/start' });
         this.route('job-information');
         this.route('equipment');
         this.route('custom-fields');
+        this.route('picture');
       });
       this.route('onboard-complete');
     });
@@ -84,15 +86,18 @@ Router.map(function() {
     });
     this.route('anatomy', function() {
       this.route('locations', function() {
-        this.route('index', function() {
+        this.route('index', { path: '/' }, function() {
           this.route('new');
         });
       });
       this.route('location', function() {});
       this.route('departments', function() {
-        this.route('index', function() {
+        this.route('index', { path: '/' }, function() {
           this.route('new');
         });
+      });
+      this.route('company-users', function() {
+        this.route('new');
       });
     });
     this.route('action-item', { path: '/action-item/:slug' }, function() {
@@ -107,6 +112,7 @@ Router.map(function() {
   this.route('unauthorized');
   this.route('catchall', {path: '/*wildcard'});
   this.route('login');
+  this.route('setup-account', { path: '/setup/account/:userId' });
 });
 
 export default Router;

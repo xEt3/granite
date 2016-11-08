@@ -1,6 +1,6 @@
 {
   "name": "granite",
-  "version": "0.2.0",
+  "version": "0.4.5",
   "description": "A solid solution for human resources",
   "private": true,
   "directories": {
@@ -26,9 +26,10 @@
     "ember-cli": "2.10.0-beta.2",
     "ember-cli-active-link-wrapper": "0.2.0",
     "ember-cli-animate-css": "0.0.1",
-    "ember-cli-app-version": "^2.0.0",
+    "ember-cli-app-version": "2.0.1",
     "ember-cli-babel": "^5.1.7",
     "ember-cli-dependency-checker": "^1.3.0",
+    "ember-cli-dropzonejs": "0.9.1",
     "ember-cli-emoji": "0.0.3",
     "ember-cli-htmlbars": "^1.0.10",
     "ember-cli-htmlbars-inline-precompile": "^0.3.3",

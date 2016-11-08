@@ -1,0 +1,36 @@
+<hgroup class="clearfix">
+  <h1 class="ui header left floated">
+    Users
+  </h1>
+
+  <div class="right aligned text floated menu__actions">
+    <h3 class="ui right floated header">
+      {{#if auth.user.company.linkedToSlate}}
+        <a href="#">
+          {{#ui-popup tagName='span' position="left center" content="Import from Slate Payroll..."}}
+            <i class="sign in icon"></i>
+          {{/ui-popup}}
+        </a>
+      {{/if}}
+
+      {{#link-to 'account.anatomy.company-users.new' class="right floated"}}
+        {{#ui-popup tagName='span' position="left center" content="Add a user"}}
+          <i class="plus icon"></i>
+        {{/ui-popup}}
+      {{/link-to}}
+    </h3>
+  </div>
+</hgroup>
+<div class="ui divider"></div>
+
+{{#confirm-modal as |confirm|}}
+  <div class="ui divided items">
+    {{#each model as |user|}}
+      {{list-item/user-item user onDelete=(pipe-action confirm (action 'delete'))}}
+    {{else}}
+      <h2 class="ui center aligned header">No users available.</h2>
+    {{/each}}
+  </div>
+{{/confirm-modal}}
+
+{{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}

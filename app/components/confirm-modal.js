@@ -16,7 +16,10 @@ export default Component.extend({
   },
 
   createConfirm () {
-    this.set('responded', false);
+    this.setProperties({
+      responded: false,
+      _originalArgs: arguments
+    });
 
     Ember.$('#' + this.get('modalId')).modal({
       detachable: true,
@@ -40,7 +43,8 @@ export default Component.extend({
 
   actions: {
     respond ( response ) {
-      this.get(response ? 'resolve' : 'reject')();
+      let fn = this.get(response ? 'resolve' : 'reject');
+      fn.apply(null, this.get('_originalArgs'));
       this.set('responded', true);
       this.closeModal();
 

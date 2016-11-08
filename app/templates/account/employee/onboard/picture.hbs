@@ -1,0 +1,23 @@
+<h2 class="ui horizontal divider header">
+  <i class="photo icon"></i>Upload {{model.firstName}}'s Picture
+</h2>
+
+<form class="ui form" {{action 'saveAndContinue' on='submit'}}>
+  {{drop-zone
+    id='input__dropzone--employee-profile-image'
+    class='input__dropzone'
+    url=pictureEndpoint
+    uploadMultiple=false
+    acceptedFiles='image/*'
+    maxFiles=1
+    addRemoveLinks=true
+    thumbnailWidth='175'
+    dictDefaultMessage='Drop Files or Click to Add a Picture'
+    headers=(hash X-API-Token=auth.token)
+    success=(action 'uploadedFile')
+    removedfile=(action 'removeFile')
+    capture='camera'}}
+
+  <div class="ui divider"></div>
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
+</form>
