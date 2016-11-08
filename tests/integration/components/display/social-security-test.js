@@ -1,4 +1,5 @@
 import { moduleForComponent, test } from 'ember-qunit';
+import wait from 'ember-test-helpers/wait';
 import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('display/social-security', 'Integration | Component | display/social security', {
@@ -6,19 +7,20 @@ moduleForComponent('display/social-security', 'Integration | Component | display
 });
 
 test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  assert.expect(4);
 
   this.render(hbs`{{display/social-security}}`);
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#display/social-security}}
-      template block text
-    {{/display/social-security}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.ok(this.$('input')[0], 'should contain input');
+  assert.equal(this.$('input').attr('type'), 'password', 'should default to password');
+  this.$('a').click();
+  return wait()
+  .then(() => {
+    assert.equal(this.$('input').attr('type'), 'text', 'should change to text after clicking once');
+    this.$('a').click();
+    return wait();
+  })
+  .then(() => {
+    assert.equal(this.$('input').attr('type'), 'password', 'should change to password after clicking again');
+  });
 });
