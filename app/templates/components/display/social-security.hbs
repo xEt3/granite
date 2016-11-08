@@ -1,0 +1,7 @@
+<label for="social-security">Social Security Number</label>
+<div class="right-input-icon" id="ssn">
+  {{masked-input type=ssnInputType value=model.ssn placeholder="XXX-XX-XXXX" id="social-security" mask="111-11-1111"}}
+  <a href="#" {{action (toggle "showSsn" this) }}>
+    <i class="{{if showSsn 'hide' 'unhide'}} icon"></i>
+  </a>
+</div>
