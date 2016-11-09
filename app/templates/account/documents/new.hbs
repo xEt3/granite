@@ -1,0 +1,40 @@
+<div class="ui padded raised text segment container animated fadeInUp">
+  <h2 class="ui dividing header">Create a New Document</h2>
+
+  <div class="ui form">
+    {{drop-zone
+      id='input__dropzone--document'
+      class='input__dropzone'
+      url='/api/v1/file'
+      uploadMultiple=false
+      maxFiles=1
+      autoProcessQueue=false
+      dictDefaultMessage='Drop or Click to Select a File'
+      thumbnailWidth='175'
+      headers=(hash X-API-Token=auth.token)
+      addedfile=(action 'addedFile')
+      success=(action 'uploadedFile')
+      capture='camera'}}
+    <div class="ui divider"></div>
+
+    {{input/ui-input type="text" inputId="file-title" placeholder="File Title" value=title}}
+
+    {{#if showDescription}}
+      <div class="field animated fadeInUp">
+        <label for="file-description">Description</label>
+        {{textarea id="file-description" rows='3' placeholder='Description' value=description}}
+      </div>
+    {{/if}}
+
+    <div class="field center aligned text">
+      <a href="#" {{action (toggle 'showDescription' this)}}>
+        <i class="angle {{if showDescription 'up' 'down'}} icon"></i>{{if showDescription 'Hide' 'Show'}} Description
+      </a>
+    </div>
+
+    <div class="ui divider"></div>
+    <form {{action "uploadFile" on="submit"}}>
+      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Save document{{/form/action-button}}
+    </form>
+  </div>
+</div>
