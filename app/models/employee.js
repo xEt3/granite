@@ -38,6 +38,16 @@ export default Model.extend(Validations, {
   phone:                     attr('string'),
   ssn:                       attr('string'),
 
+  ssnFormatted: computed('ssn', function () {
+    var ssn = this.get('ssn');
+    return ssn ? ssn.replace(/\D/g, '').replace(/(\d{3})(\d{2})(\d{4})/, '($1) $2-$3') : ssn;
+  }),
+
+  ssnMasked: computed('ssn', function () {
+    var ssn = this.get('ssn');
+    return ssn ? ssn.replace(/\D/g, '').replace(/(?:\d{5})(\d{4})/, '***-**-$1') : ssn;
+  }),
+
   // Company and Position Information
   hireDate:    attr('date'),
   jobTitle:    attr('string'),
