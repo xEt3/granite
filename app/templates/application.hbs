@@ -9,7 +9,10 @@
     {{#if topLevel}}
       {{elements/x-navigation transparent=navTransparent topLevel=topLevel}}
     {{/if}}
-    {{outlet}}
+
+    <div class="application__outlet-wrapper">
+      {{outlet}}
+    </div>
 
     {{elements/x-footer}}
   </div>

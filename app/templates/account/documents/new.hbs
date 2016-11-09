@@ -1,5 +1,5 @@
 <div class="ui padded raised text segment container animated fadeInUp">
-  <h2 class="ui dividing header">Create a New Document</h2>
+  <h2 class="ui dividing header">Add a New Document</h2>
 
   <div class="ui form">
     {{drop-zone
@@ -32,9 +32,30 @@
       </a>
     </div>
 
+    <div class="field animated fadeInUp">
+      <label for="file-tags">File Tags</label>
+      {{#ui-dropdown
+        class="fluid multiple search selection"
+        allowAdditions=true
+        hideAdditions=false
+        selected=tags
+        onChange=(action (mut tags))
+        as |execute mapper|}}
+        <i class="dropdown icon"></i>
+        <div class="default text">Type or Select Tags</div>
+        <div class="menu">
+          {{#each tagSuggestions as |item|}}
+            <div class="item" data-value="{{map-value mapper item}}">
+              {{item}}
+            </div>
+          {{/each}}
+        </div>
+      {{/ui-dropdown}}
+    </div>
+
     <div class="ui divider"></div>
     <form {{action "uploadFile" on="submit"}}>
-      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Save document{{/form/action-button}}
+      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=disableSubmit}}Save document{{/form/action-button}}
     </form>
   </div>
 </div>

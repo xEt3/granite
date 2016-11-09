@@ -14,6 +14,7 @@ export default Model.extend(Validations, {
   directory:      attr('string'),
   key:            attr('string'),
   associatedData: attr(),
+  tags:           attr('array'),
 
   creator: belongsTo('company-user', { async: true, inverse: null }),
   company: belongsTo('company', { async: true, inverse: null }),

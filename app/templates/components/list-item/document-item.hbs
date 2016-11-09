@@ -1,1 +1,14 @@
-{{yield}}
+{{#if imagePreview}}
+  <div class="ui tiny rounded image">
+    <img src="{{file.url}}">
+  </div>
+{{else}}
+  {{display/icon-for-file file class="huge"}}
+{{/if}}
+<div class="content">
+  <div class="header">{{file.title}}</div>
+  <div class="meta">
+    <span class="ui blue label">{{file.extension}}</span>
+    <span class="ui small text right floated">Created {{time file.created}}</span>
+  </div>
+</div>

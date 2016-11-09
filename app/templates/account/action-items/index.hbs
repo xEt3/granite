@@ -4,28 +4,29 @@
 <div class="ui divider"></div>
 
 <div class="clearfix">
-    <span class="right floated">
-      {{#ui-popup content="Sort according to due date"}}
-        <a href="#" class="text-white"><i class="sort large numeric {{if isDsc "ascending icon" "descending icon"}}" {{action (toggle "isDsc" this)}}></i></a>
-        {{/ui-popup}}
-    </span>
-    <span class="left floated">
-      {{#ui-popup content="Filter according to priority level"}}
-        <a href="#" class="text-white" {{action (toggle "expandFiltered" this)}}><i class="large filter icon"></i></a>
-      {{/ui-popup}}
-    </span>
+  <span class="right floated">
+    {{#ui-popup content="Sort according to due date"}}
+      <a href="#" class="text-white"><i class="sort large numeric {{if isDsc "ascending icon" "descending icon"}}" {{action (toggle "isDsc" this)}}></i></a>
+    {{/ui-popup}}
+  </span>
+  <span class="left floated">
+    {{#ui-popup content="Filter according to priority level"}}
+      <a href="#" class="text-white" {{action (toggle "expandFiltered" this)}}><i class="large filter icon"></i></a>
+    {{/ui-popup}}
+  </span>
 </div>
 <div class="ui divider"></div>
+
 {{#liquid-if expandFiltered}}
-    <div class="five ui buttons">
-      {{#each priorityFilters as |priorityFilter index|}}
-          <button class="ui labeled icon {{object-at index priorityColors}} button" {{action "changeFilter" index}}>
-            <i class="{{unless (contains (inc index) filter) "square outline" "checkmark box"}} icon"></i>
-            {{priorityFilter}}
-          </button>
-      {{/each}}
-    </div>
-    <div class="ui hidden divider"></div>
+  <div class="five ui buttons">
+    {{#each priorityFilters as |priorityFilter index|}}
+      <button class="ui labeled icon {{object-at index priorityColors}} button" {{action "changeFilter" index}}>
+        <i class="{{unless (contains (inc index) filter) "square outline" "checkmark box"}} icon"></i>
+        {{priorityFilter}}
+      </button>
+    {{/each}}
+  </div>
+  <div class="ui hidden divider"></div>
 {{/liquid-if}}
 
 {{#if model}}

@@ -1,4 +1,14 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component, computed } = Ember;
+
+const DocumentItemComponent = Component.extend({
+  tagName: '',
+  imagePreview: computed.match('file.extension', /je?pg|png|gif/i)
 });
+
+DocumentItemComponent.reopenClass({
+  positionalParams: [ 'file' ]
+});
+
+export default DocumentItemComponent;

@@ -5,8 +5,9 @@ const { Controller, RSVP: { Promise } } = Ember;
 
 export default Controller.extend(addEdit, {
   fileIsAdded: false,
-  transitionToRoute: 'account.documents.index',
+  transitionAfterSave: 'account.documents.index',
   transitionWithModel: false,
+  tagSuggestions: [ 'Reference', 'Employee Specific', 'Company Wide' ],
 
   actions: {
     addedFile (file) {
@@ -22,13 +23,9 @@ export default Controller.extend(addEdit, {
     },
 
     uploadedFile (file, res) {
-      console.log('_id', res.file._id);
       res.files = [ res.file ];
       delete res.file;
-      console.log(res);
-      console.log('push', this.get('store').pushPayload(res));
-      console.log('peek record', res.files[0].id);
-      console.log('peek result', this.get('store').peekRecord('file', res.files[0].id));
+      this.get('store').pushPayload(res);
       this.get('resolveUpload')(this.get('store').peekRecord('file', res.files[0].id));
     },
 
@@ -48,14 +45,16 @@ export default Controller.extend(addEdit, {
       this.send('processQueue');
 
       promise.then(file => {
-        console.log(file);
-        file.setProperties({
-          title: this.get('title'),
-          description: this.get('description')
+        let properties = [ 'title', 'description', 'tags' ];
+
+        properties.forEach(prop => {
+          file.set(prop, this.get(prop));
+          this.set(prop, null);
         });
+
         return file;
       })
-      .then(this.saveModel)
+      .then(this.saveModel.bind(this))
       .catch(this.ajaxError.bind(this));
     }
   }

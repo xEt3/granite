@@ -108,7 +108,7 @@ Router.map(function() {
       this.route('discussion');
       this.route('edit');
     });
-    this.route('document');
+    this.route('document', { path: '/document/:id' });
   });
 
   this.route('error');
