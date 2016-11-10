@@ -5,20 +5,18 @@ moduleForComponent('list-item/document-item', 'Integration | Component | list it
   integration: true
 });
 
-test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+test('it displays like it should', function(assert) {
+  this.render(hbs`{{list-item/document-item doc}}`);
+  this.set('doc', {
+    extension: 'pdf',
+    title: 'Some document',
+    tags: [ 'test', 'check' ]
+  });
 
-  this.render(hbs`{{list-item/document-item}}`);
+  let text = this.$().text().trim().toLowerCase();
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#list-item/document-item}}
-      template block text
-    {{/list-item/document-item}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.ok(text.indexOf('pdf') > -1, 'should show extension');
+  assert.ok(text.indexOf('some document') > -1, 'should show title');
+  assert.ok(text.indexOf('test') > -1, 'should first tag');
+  assert.ok(text.indexOf('check') > -1, 'should second tag');
 });

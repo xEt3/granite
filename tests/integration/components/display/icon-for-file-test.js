@@ -5,20 +5,29 @@ moduleForComponent('display/icon-for-file', 'Integration | Component | display/i
   integration: true
 });
 
+let testFiles = {
+  image: [ ['image/png', 'png'], ['image/jpg', 'jpg'] ],
+  excel: [ ['application/vnd.excel', 'xls'], ['application/vnd.openspreadsheet', 'xlsx'] ],
+  word: [ ['application/textmsword', 'doc'], ['application/something', 'docx'] ],
+  archive: [ ['application/archive', 'tar'], ['application/rar', 'rar'], ['application/zip', 'zip'] ],
+  code: [ ['application/javascript', 'js'] ],
+  video: [ ['video/mp4', 'mp4'] ],
+  text: [ ['text/plain', 'txt'] ],
+  pdf: [ ['application/pdf', 'pdf'] ]
+};
+
 test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  assert.expect(13);
+  this.render(hbs`{{display/icon-for-file file}}`);
 
-  this.render(hbs`{{display/icon-for-file}}`);
+  for ( let iconClass in testFiles ) {
+    if ( !testFiles.hasOwnProperty(iconClass) ) {
+      continue;
+    }
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#display/icon-for-file}}
-      template block text
-    {{/display/icon-for-file}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+    testFiles[iconClass].forEach(t => {
+      this.set('file', { mimeType: t[0], extension: t[1] });
+      assert.ok(this.$().html().indexOf(iconClass) > -1, `${t[1]} should have ${iconClass} in icon class`);
+    });
+  }
 });
