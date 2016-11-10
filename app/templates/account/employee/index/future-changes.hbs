@@ -1,0 +1,10 @@
+{{#if model}}
+  <div class="ui text container segment">
+    <h2 class="center aligned text ui justified header">Future Changes</h2>
+    {{#each model as |change|}}
+    {{list-item/unapplied-change history=change onApplyNow=(action 'notifyNewEffective')}}
+    {{/each}}
+  </div>
+{{else}}
+  <h2 class="center aligned text text-white">No Changes Available</h2>
+{{/if}}
