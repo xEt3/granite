@@ -65,7 +65,10 @@ Router.map(function() {
     this.route('action-items', function() {
       this.route('new');
     });
-    this.route('documents');
+    this.route('documents', function() {
+      this.route('intro');
+      this.route('new');
+    });
     this.route('recruiting', function() {
       this.route('job-description', { path: '/job/:id' }, function() {
         this.route('settings');
@@ -105,6 +108,7 @@ Router.map(function() {
       this.route('discussion');
       this.route('edit');
     });
+    this.route('document', { path: '/document/:id' });
   });
 
   this.route('error');

@@ -11,7 +11,7 @@ export default Route.extend({
       refreshModel: true
     }
   },
-  
+
   model ( params ) {
     let actionItemQuery = {
       $and: [
@@ -20,7 +20,7 @@ export default Route.extend({
       ],
       sort: { priority: -1, dueOn: params.isDsc ? 1 : -1 } };
 
-    if(!Ember.isEmpty(params.filter)) {
+    if ( !Ember.isEmpty(params.filter) ) {
       actionItemQuery.priority = { $in: params.filter };
     }
 

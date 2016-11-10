@@ -21,7 +21,7 @@ export default Ember.Mixin.create({
     willTransition ( transition ) {
       var model = this.controller.get('model');
 
-      if ( !model.get('isNew') ) {
+      if ( !model || !model.get('isNew') ) {
         return true;
       }
 

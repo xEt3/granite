@@ -1,0 +1,31 @@
+@keyframes docIntroFill {
+  from {
+    transform: translate(-50%, -50%) scale(0.0001);
+    background-color: @white;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(2);
+  }
+}
+
+@keyframes docIntroFillContainerFadeUp {
+  from {
+    opacity: 0;
+    transform: translate(0, 100%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes docIntroFillContainerAnimation {
+  from {
+    color: white !important;
+    background-color: @granite-blue;
+  }
+  to {
+    color: @granite-blue;
+    background-color: white;
+  }
+}

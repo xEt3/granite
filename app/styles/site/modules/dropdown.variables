@@ -5,3 +5,5 @@
 @selectionMinHeight: @lineHeight;
 @selectionMinWidth: inherit;
 @menuMargin: 0em;
+@pointingUpwardArrowBoxShadow: 1px 1px 1px fade(@gray-light, 10%);
+@pointingArrowBoxShadow: -1px -1px 1px fade(@gray-light, 10%);
