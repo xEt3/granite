@@ -16,11 +16,9 @@
   </hgroup>
   <div class="ui divider"></div>
 
-  <div class="ui divided link items">
+  <div class="ui divided items">
     {{#each model as |doc|}}
-      {{#link-to 'account.document' doc.id class="item"}}
-        {{list-item/document-item doc}}
-      {{/link-to}}
+      {{list-item/document-item doc}}
     {{else}}
       <h2 class="ui center aligned header">No documents available.</h2>
     {{/each}}

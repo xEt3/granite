@@ -1,7 +1,15 @@
 .list {
-  > .item .content .meta {
-    color: @gray-light;
-    font-weight: 100;
-    font-size: 0.6em;
+  > .item {
+    transition: all 0.2s ease-in-out;
+
+    &.negative {
+      background-color: fade(@granite-red, 80%);
+    }
+
+    .content .meta {
+      color: @gray-light;
+      font-weight: 100;
+      font-size: 0.6em;
+    }
   }
 }
