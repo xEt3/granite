@@ -5,7 +5,7 @@ import del from 'granite/mixins/controller-abstractions/delete';
 const { Component } = Ember;
 
 export default Component.extend(del, addEdit,{
-  classNames: [ 'history__timeline-item' ],
+  classNames: [ 'history__timeline-item', 'card' ],
   enableNotify: false,
 
   actions: {
