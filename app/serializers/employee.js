@@ -12,6 +12,7 @@ export default ApplicationSerializer.extend({
   serialize () {
     let json = this._super(...arguments),
         keys = [ 'department', 'location', 'supervisor', 'companyUser', 'creator' ],
+        deleteKeys = [ 'firstName', 'middleName', 'lastName', 'suffixName', 'emergencyContactPhone', 'emergencyContactNameLast', 'emergencyContactNameFirst' ],
         isNull = val => !val || val === '';
 
     keys.forEach( key => {
@@ -27,12 +28,18 @@ export default ApplicationSerializer.extend({
       suffix: json.suffixName
     };
 
-    delete json.firstName;
-    delete json.middleName;
-    delete json.lastName;
-    delete json.suffixName;
 
-    serializeKeys(json, 'address', 'emergencyContact');
+    json.emergencyContact = {
+      name: {
+        first: json.emergencyContactNameFirst,
+        last: json.emergencyContactNameLast
+      },
+      phone: json.emergencyContactPhone
+    };
+
+    deleteKeys.map(k => delete json[k]);
+
+    serializeKeys(json, 'address');
 
     return json;
   }

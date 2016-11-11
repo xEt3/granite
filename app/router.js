@@ -46,6 +46,7 @@ Router.map(function() {
         this.route('job');
         this.route('history');
         this.route('history-report');
+        this.route('future-changes');
         this.route('edit', function() {
           this.route('index', { path: '/personal' });
           this.route('job');

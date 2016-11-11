@@ -1,0 +1,40 @@
+<div class="content">
+  <div class="header">
+    {{history.diff.length}} {{inflect-text 'changes' history.diff.length}} for {{time history.effectiveOn}}
+  </div>
+  <div class="meta">
+    By {{history.creator.fullName}} at {{time history.created 'h:mma'}}
+  </div>
+  <div class="description">
+    <table class="ui very basic striped unstackable table">
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Previous</th>
+          <th>New</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each history.diff as |diff|}}
+          <tr>
+            <td><strong>{{humanize-key (join-array diff.path '.')}}</strong></td>
+            <td>{{diff-value-translator key=diff.path value=diff.lhs}}</td>
+            <td>{{diff-value-translator key=diff.path value=diff.rhs}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  {{#confirm-modal title="Are you sure?" confirmContent="This will change the effective date to today." class="item" as |confirmApply|}}
+    {{#confirm-modal title="Are you sure?" confirmContent="This will delete the changes." class="item" as |confirmDelete|}}
+      <div class="extra content">
+        <div class="ui divider"></div>
+        <div class="ui two buttons">
+          <button class='positive ui button' {{action (pipe confirmApply (action 'modifyEffectiveDate'))}}>Apply these changes now</button>
+          <button class="negative ui button" {{action (pipe confirmDelete (action 'delete' history))}}>Discard these changes</button>
+        </div>
+      </div>
+    {{/confirm-modal}}
+  {{/confirm-modal}}
+</div>
