@@ -55,6 +55,14 @@ export default Model.extend(Validations, {
   onboarder:          belongsTo('company-user', { async: true, inverse: false }),
   onboardingProgress: attr('number'),
 
+  offboarding:         attr('boolean'),
+  offboardingStep:     attr('number'),
+  offboarder:          belongsTo('company-user', { async: true, inverse: false }),
+  offboardingProgress: attr('number'),
+  terminationDate:     attr('date'),
+  terminationReason:   attr('string'),
+  eligibleForRehire:   attr('boolean'),
+
   company:     belongsTo('company', { async: true, inverse: false }),
   location:    belongsTo('location', { async: true, inverse: false }),
   department:  belongsTo('department', { async: true, inverse: false }),

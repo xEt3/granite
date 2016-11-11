@@ -1,0 +1,33 @@
+<form class="ui form" {{action "saveAndContinue" on="submit"}}>
+  <h2 class="ui horizontal divider header">Employee Details</h2>
+  <div class="content">
+
+    <label for="termination-date-calendar">What would you like for the termination date to be?</label>
+    {{#ui-calendar id="termination-date-calendar" class="field" type="date" inline=true onChange=(action (mut model.terminationDate))}}
+    {{/ui-calendar}}
+
+    <div class="two fields">
+      <div class="field">
+        <label for="termination-reason">Separation Category</label>
+        {{#ui-dropdown id="termination-reason" class="search selection" selected=model.terminationReason onChange=(action (mut model.terminationReason))}}
+          <div class="default text">Voluntary or Voluntary</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+              <div class="item" data-value="voluntary">
+                Voluntary
+              </div>
+              <div class="item" data-value="involuntary">
+                Involuntary
+              </div>
+          </div>
+        {{/ui-dropdown}}
+      </div>
+      <div class="field">
+        <label for="eligible-for-rehire">Eligible for Rehire</label>
+        {{ui-checkbox class="toggle" label=(if model.eligibleForRehire "Eligible" "Not Eligible") checked=model.eligibleForRehire onChange=(action (mut model.eligibleForRehire))}}
+      </div>
+    </div>
+  </div>
+  <div class="ui divider"></div>
+{{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
+</form>
