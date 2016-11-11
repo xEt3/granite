@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('route:account/employee/offboard', 'Unit | Route | account/employee/offboard', {
+moduleFor('route:account/employee/complete-offboarding', 'Unit | Route | account/employee/complete offboarding', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });

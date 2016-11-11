@@ -64,7 +64,12 @@ Router.map(function() {
       this.route('onboard-complete');
       this.route('offboard', function() {
         this.route('index', { path: '/start' });
+        this.route('details');
+        this.route('options');
+        this.route('assets');
+        this.route('reorganization');
       });
+      this.route('complete-offboarding');
     });
     this.route('action-items', function() {
       this.route('new');
