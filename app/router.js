@@ -62,6 +62,9 @@ Router.map(function() {
         this.route('picture');
       });
       this.route('onboard-complete');
+      this.route('offboard', function() {
+        this.route('index', { path: '/start' });
+      });
     });
     this.route('action-items', function() {
       this.route('new');

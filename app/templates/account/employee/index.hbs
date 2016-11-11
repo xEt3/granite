@@ -24,7 +24,7 @@
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
           {{#link-to 'account.employee.index.edit' class='item'}}<i class="edit icon"></i>Edit{{/link-to}}
-          <div class="item"><i class="settings icon"></i>Settings</div>
+          {{#link-to 'account.employee.offboard.index' class='item'}}<i class="cut icon"></i>Offboard Employee...{{/link-to}}
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
             {{#confirm-modal as |confirm|}}

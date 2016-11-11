@@ -28,7 +28,6 @@ export default ApplicationSerializer.extend({
       suffix: json.suffixName
     };
 
-
     json.emergencyContact = {
       name: {
         first: json.emergencyContactNameFirst,
