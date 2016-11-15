@@ -33,17 +33,21 @@ export default Route.extend(ajaxStatus, {
       })
       .catch(this.ajaxError.bind(this));
     },
-    cancelOffboard() {
+
+    cancelOffboard () {
       const controller = this.get('controller'),
             model = controller.get('model'),
-            offboardProps = [model.offboarding, model.offboardingStep, model.offboarder, model.offboardingProgress, model.terminationDate, model.terminationReason, model.eligibleForRehire, model.finalAddress, model.finalAddressSelfService],
-            setProp = function (prop) {
-              this.set('prop', undefined);
-            };
-      offboardProps.invoke(setProp);
+            offboardProps = [ 'offboarding', 'offboardingStep', 'offboarder', 'offboardingProgress', 'terminationDate', 'terminationReason', 'eligibleForRehire', 'finalAddress', 'finalAddressSelfService' ];
+
+      offboardProps.map(prop => model.set(prop, undefined));
 
       model.save()
       .then(() => this.transitionTo('account.employee.index.index'));
+    },
+
+    startOffboarding () {
+      this.get('controller').set('model.offboarding', true);
+      this.send('saveAndContinue');
     }
   }
 });

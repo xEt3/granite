@@ -1,10 +1,9 @@
 import Ember from 'ember';
 import wizard from 'granite/mixins/wizard-base';
 
-const { Controller, A, computed } = Ember;
+const { Controller, A } = Ember;
 
 export default Controller.extend(wizard, {
-  onStartRoute: computed.equal('application.currentPath', 'account.employee.offboard.index'),
   steps: A([{
     icon: 'info',
     title: 'Start',
@@ -25,12 +24,5 @@ export default Controller.extend(wizard, {
     icon: 'cubes',
     title: 'Reorganization',
     link: 'reorganization'
-  }]),
-  actions: {
-    startOffboarding () {
-      this.set('model.offboarding', true);
-      this.model.save()
-      .then(() => this.transitionToRoute('account.employee.offboard.details'));
-    }
-  }
+  }])
 });

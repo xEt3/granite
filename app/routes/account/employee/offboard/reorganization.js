@@ -4,12 +4,14 @@ const { Route, RSVP } = Ember;
 
 export default Route.extend({
   model () {
-    let employee = this.modelFor('account.employee.offboard');
+    let employee = this.modelFor('account.employee.offboard'),
+        select = 'name email';
 
     return RSVP.hash({
       employee,
-      supervised: this.store.query('employee', {
-        supervisor: employee.get('id'),
+      employees: this.store.query('employee', {
+        select,
+        _id: { $ne: employee.get('id') },
         $or: [{
           terminatedOn: { $exists: false }
         }, {
@@ -21,8 +23,8 @@ export default Route.extend({
 
   setupController (controller, model) {
     controller.setProperties({
-      model: model.supervised,
-      employee: model.employee
+      model: model.employee,
+      employees: model.employees
     });
   }
 });

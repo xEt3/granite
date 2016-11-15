@@ -5,7 +5,7 @@ import serializeKeys from '../utils/expand-serialized-object';
 export default ApplicationSerializer.extend({
   normalize ( modelClass, hash ) {
     normalizeKeys(hash, 'suffix', 'name');
-    normalizeKeys(hash, true, 'address', 'emergencyContact');
+    normalizeKeys(hash, true, 'address', 'emergencyContact', 'finalAddress');
     return this._super(...arguments);
   },
 
@@ -38,7 +38,7 @@ export default ApplicationSerializer.extend({
 
     deleteKeys.map(k => delete json[k]);
 
-    serializeKeys(json, 'address');
+    serializeKeys(json, 'address', 'finalAddress');
 
     return json;
   }
