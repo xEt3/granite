@@ -1,1 +1,21 @@
-{{outlet}}
+<h2 class="ui header">
+  <i class="legal icon"></i>
+  <div class="content">
+    This is permanent
+    <div class="sub header">
+      Once you have offboarded the employee it can not be undone.  You will have to recreate the employee if you change your mind after you've offboarded them.
+    </div>
+  </div>
+</h2>
+<div class="ui divider"></div>
+<h2 class="ui header">
+  <i class="credit card alternative icon"></i>
+  <div class="content">
+    Removed from billing
+    <div class="sub header">
+      This employee will be removed from your billing once you have completely offboarded the employee.
+    </div>
+  </div>
+</h2>
+<div class="ui divider"></div>
+<button class="ui huge positive fluid button" {{action "startOffboarding"}}>Let's get started</button>
