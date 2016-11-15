@@ -32,6 +32,19 @@ export default Route.extend(ajaxStatus, {
         this.transitionTo('account.employee.offboard.' + controller.get('nextStep.link'));
       })
       .catch(this.ajaxError.bind(this));
+    },
+    cancelOffboard() {
+      const controller = this.get('controller'),
+            model = controller.get('model'),
+            offboardProps = [model.offboarding, model.offboardingStep, model.offboarder, model.offboardingProgress, model.terminationDate, model.terminationReason, model.eligibleForRehire, model.finalAddress, model.finalAddressSelfService],
+            setProp = function (prop) {
+              this.set('prop', undefined);
+            };
+      offboardProps.invoke(setProp);
+
+      model.save()
+      .then(() => this.transitionTo('account.employee.index.index'));
     }
   }
 });
+// TODO: get rid of redundant key terminatedOn

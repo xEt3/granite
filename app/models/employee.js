@@ -55,13 +55,15 @@ export default Model.extend(Validations, {
   onboarder:          belongsTo('company-user', { async: true, inverse: false }),
   onboardingProgress: attr('number'),
 
-  offboarding:         attr('boolean'),
-  offboardingStep:     attr('number'),
-  offboarder:          belongsTo('company-user', { async: true, inverse: false }),
-  offboardingProgress: attr('number'),
-  terminationDate:     attr('date'),
-  terminationReason:   attr('string'),
-  eligibleForRehire:   attr('boolean'),
+  offboarding:             attr('boolean'),
+  offboardingStep:         attr('number'),
+  offboarder:              belongsTo('company-user', { async: true, inverse: false }),
+  offboardingProgress:     attr('number'),
+  terminationDate:         attr('date'),
+  terminationReason:       attr('string'),
+  eligibleForRehire:       attr('boolean'),
+  finalAddress:            attr('string'),
+  finalAddressSelfService: attr('boolean'),
 
   company:     belongsTo('company', { async: true, inverse: false }),
   location:    belongsTo('location', { async: true, inverse: false }),
@@ -70,7 +72,6 @@ export default Model.extend(Validations, {
   companyUser: belongsTo('company-user', { async: true, inverse: 'employee' }),
   creator:     belongsTo('company-user', { async: true, inverse: false }),
 
-  terminatedOn: attr('date'),
   dateOfBirth:  attr('date'),
   effectiveOn:  attr('date'), // Placeholder for effective dated changes. This field is only here to pass along to the api
   customFields: attr({ defaultValue: () => {} }),

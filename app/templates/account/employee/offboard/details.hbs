@@ -1,11 +1,11 @@
 <form class="ui form" {{action "saveAndContinue" on="submit"}}>
   <h2 class="ui horizontal divider header">Employee Details</h2>
   <div class="content">
-
-    <label for="termination-date-calendar">What would you like for the termination date to be?</label>
-    {{#ui-calendar id="termination-date-calendar" class="field" type="date" inline=true onChange=(action (mut model.terminationDate))}}
-    {{/ui-calendar}}
-
+    <div class="field">
+      <label for="termination-date-calendar">What would you like for the termination date to be?</label>
+      {{#ui-calendar id="termination-date-calendar" class="field" type="date" inline=true onChange=(action (mut model.terminationDate))}}
+      {{/ui-calendar}}
+    </div>
     <div class="two fields">
       <div class="field">
         <label for="termination-reason">Separation Category</label>
