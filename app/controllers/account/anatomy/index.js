@@ -3,14 +3,13 @@ import Ember from 'ember';
 const { Controller, computed } = Ember;
 
 export default Controller.extend({
-  baseNode: computed.or('replacementNode', 'originalNode'),
+  init () {
+    this._super(...arguments);
+    this.set('selectedNode', this.get('model.firstObject'));
+  },
 
-  originalNode: computed('model', function () {
-    return this.makeNode(this.get('model'), { deprecating: true });
-  }),
-
-  replacementNode: computed('replacement', function () {
-    return this.get('replacement') ? this.makeNode(this.get('replacement'), { simulate: true }) : false;
+  baseNode: computed('model', 'selectedNode.id', function () {
+    return this.makeNode(this.get('selectedNode') || this.get('model.firstObject'));
   }),
 
   makeNode (object, base = {}) {

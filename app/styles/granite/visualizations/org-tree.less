@@ -1,17 +1,32 @@
 svg.visualization__org-tree {
-  height: 100vh;
+  height: 70vh;
   width: 100%;
 
   .node circle {
-    fill: #999;
+    fill: @granite-blue;
   }
 
   .node text {
-    font: 10px sans-serif;
+    color: @granite-grey;
+    font-size: 10px;
+    font-weight: bolder;
   }
 
   .node--internal circle {
-    fill: #555;
+    fill: @granite-blue;
+  }
+
+  .node--internal.node--base {
+    circle {
+      fill: @granite-green;
+    }
+
+    &.node--deprecating {
+      circle {
+        fill: @granite-red;
+        animation: 1s blinkDeprecation ease-in-out alternate infinite;
+      }
+    }
   }
 
   .node--internal text {
@@ -20,8 +35,17 @@ svg.visualization__org-tree {
 
   .link {
     fill: none;
-    stroke: #555;
-    stroke-opacity: 0.4;
-    stroke-width: 1.5px;
+    stroke: @granite-blue;
+    stroke-opacity: 0.5;
+    stroke-width: 4px;
+  }
+}
+
+@keyframes blinkDeprecation {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.3;
   }
 }

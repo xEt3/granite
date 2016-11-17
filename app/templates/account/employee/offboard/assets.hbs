@@ -20,7 +20,10 @@
         </div>
       {{/each}}
     {{else}}
-      <h2 class="ui center aligned header">{{employee.firstName}} doesn't have any assets assigned to them.</h2>
+      <h2 class="center aligned light text header">
+        <i class="check icon"></i>
+        {{employee.firstName}} doesn't have any assets assigned to them.
+      </h2>
     {{/each-in}}
   </div>
 

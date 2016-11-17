@@ -3,14 +3,13 @@ import d3 from 'd3-selection';
 import { tree, hierarchy } from 'd3-hierarchy';
 
 const { Component, RSVP, inject, computed, get, set, on, run } = Ember,
-      select = 'name email supervisor';
+      select = 'name email jobTitle supervisor';
 
 export default Component.extend({
   tagName: 'svg',
   ajax: inject.service(),
-  classNames: [ 'visualization__org-tree' ],
+  classNames: [ 'visualization__org-tree', 'visualization__org-tree--full' ],
   attributeBindings: [ 'width', 'height' ],
-  removeOriginalNode: computed.reads('baseNode.simulate'),
 
   nodeRadius: 8,
   baseNodeRadius: 11,
@@ -23,8 +22,8 @@ export default Component.extend({
 
   populateChildNodes (node, base) {
     let ajax = this.get('ajax'),
-        baseNode = this.get('baseNode'),
-        removeOriginalNode = this.get('removeOriginalNode');
+        baseNode = this.get('baseNode');
+
     set(node, 'children', Ember.A());
 
     return ajax.request('/api/v1/employees', {
@@ -36,49 +35,26 @@ export default Component.extend({
     .then(res => {
       let children = res.employee;
 
-      return (removeOriginalNode && get(node, 'simulate') ?
-      this.populateChildNodes(Ember.Object.create(this.get('originalNode')))
-      .then(populated => {
-        populated.children.forEach(child => {
-          if ( get(child, '_id') !== get(node, '_id') ) {
-            get(node, 'children').addObject(child);
+      if ( children && children.length > 0 ) {
+        return RSVP.map(children, child => {
+          let _child = baseNode && get(baseNode, '_id') === get(child, '_id') ? Ember.Object.create(baseNode) : child;
+          if ( !base, get(_child, '_id') === get(baseNode, '_id') ) {
+            return;
           }
+          return this.populateChildNodes(_child)
+          .then(populated => get(node, 'children').push(populated));
         });
-      }) :
-      RSVP.Promise.resolve())
-      .then(() => {
-        if ( children && children.length > 0 ) {
-          return RSVP.map(children, child => {
-            let _child = baseNode && get(baseNode, '_id') === get(child, '_id') ? Ember.Object.create(baseNode) : child;
-            if ( !base, get(_child, '_id') === get(baseNode, '_id') ) {
-              return;
-            }
-            return this.populateChildNodes(_child)
-            .then(populated => {
-              let original = this.get('originalNode');
-              if ( removeOriginalNode && populated.children.length > 0 && original && get(original, '_id') === get(_child, '_id') ) {
-                populated.children.map(c => {
-                  if ( !Ember.A(get(node, 'children')).findBy('_id', get(c, '_id')) ) {
-                    get(node, 'children').push(c);
-                  }
-                });
-              } else {
-                get(node, 'children').push(populated);
-              }
-            });
-          });
-        } else {
-          return RSVP.Promise.resolve();
-        }
-      })
-      .then(() => {
-        set(node, 'children', get(node, 'children').toArray());
-        return node;
-      });
+      } else {
+        return RSVP.Promise.resolve();
+      }
+    })
+    .then(() => {
+      set(node, 'children', get(node, 'children').toArray());
+      return node;
     });
   },
 
-  _simulation: computed('baseNode._id', 'originalNode._id', function () {
+  _simulation: computed('baseNode._id', function () {
     let baseNode = this.get('baseNode');
     return this.populateChildNodes(Ember.Object.create(baseNode), true);
   }),

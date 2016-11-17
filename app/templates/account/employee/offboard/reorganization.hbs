@@ -1,6 +1,31 @@
 <form class="ui form" {{action "saveAndContinue" on="submit"}}>
   <h2 class="ui horizontal divider header">Reorganization</h2>
-  {{visualizations/reorganization-tree baseNode=baseNode}}
+  {{#if hasDirectReports}}
+    <p>{{model.fullName}} has direct reports that wouldn't have a supervisor if {{model.firstName}} left. Selecting a stand-in will reorganize those direct reports until you rehire for {{if model.jobTitle model.jobTitle 'their position'}}, if applicable. If you do not rehire for their position, these direct reports will remain in the structure you select below.</p>
+    <div class="ui divider"></div>
+    <div class="field">
+      <label for="replacement-selection">Who should stand-in as the supervisor for {{model.firstName}}'s employees?</label>
+      {{#ui-dropdown id='replacement-selection' class='search selection' selected=replacement onChange=(action (mut replacement)) as |execute mapper|}}
+        <div class="default text">Select an employee</div>
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          {{#each employees as |employee|}}
+            <div class="item" data-value="{{map-value mapper employee}}">
+              {{employee.fullName}}
+            </div>
+          {{/each}}
+        </div>
+      {{/ui-dropdown}}
+    </div>
+
+    {{visualizations/reorganization-tree baseNode=baseNode originalNode=originalNode}}
+  {{else}}
+    <h2 class="center aligned light text header">
+      <i class="check icon"></i>
+      {{model.firstName}} has no direct reports, so no reorganization is required.
+    </h2>
+  {{/if}}
+
   <div class="ui divider"></div>
   {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
 </form>
