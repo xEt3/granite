@@ -66,22 +66,24 @@ export default Component.extend({
     });
 
     return run.next(() => {
-      let margin = this.get('margin');
-      let svg = d3.select('#' + this.get('elementId')),
-          width = svg.attr('width') - margin.left - margin.right,
-          height = svg.attr('height') - margin.top - margin.bottom,
-          g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`),
-          t = tree().size([width, height]);
+      run.scheduleOnce('afterRender', () => {
+        let margin = this.get('margin');
+        let svg = d3.select('#' + this.get('elementId')),
+            width = svg.attr('width') - margin.left - margin.right,
+            height = svg.attr('height') - margin.top - margin.bottom,
+            g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`),
+            t = tree().size([width, height]);
 
-      this.setProperties({
-        svg,
-        tree: t,
-        g,
-        width,
-        height
+        this.setProperties({
+          svg,
+          tree: t,
+          g,
+          width,
+          height
+        });
+
+        return this.get('_dataUpdate');
       });
-
-      return this.get('_dataUpdate');
     });
   }),
 

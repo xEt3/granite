@@ -9,7 +9,8 @@ export default Route.extend({
         supervisor: { $type: 10 }
       }, {
         supervisor: { $exists: false }
-      }]
+      }],
+      sort: { created: 1 }
     });
   }
 });
