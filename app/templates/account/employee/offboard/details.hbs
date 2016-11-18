@@ -2,10 +2,17 @@
   <h2 class="ui horizontal divider header">Employee Details</h2>
   <div class="content">
     <div class="field">
-      <label for="termination-date-calendar">What would you like for the termination date to be?</label>
-      {{#ui-calendar id="termination-date-calendar" class="field" type="date" inline=true onChange=(action (mut model.terminationDate))}}
+      {{#ui-calendar class="field" type="date" initialDate=model.terminationDate onChange=(action (mut model.terminationDate))}}
+        <label for="termination-date-calendar">When will this employee be terminated?</label>
+        <div class="ui calendar" id="termination-date-calendar">
+          <div class="ui input left icon">
+            <i class="calendar icon"></i>
+            <input type="text" placeholder="Type In Or Select A Date">
+          </div>
+        </div>
       {{/ui-calendar}}
     </div>
+
     <div class="two fields">
       <div class="field">
         <label for="termination-reason">Separation Category</label>

@@ -1,0 +1,81 @@
+<button class="ui basic button" {{action 'selectDocuments'}}><i class="folder icon"></i> {{if buttonText buttonText 'Select Documents'}}</button>
+
+{{#ui-modal name='modal__document-selection' id='modal__document-selection' class='small form'}}
+  <h1 class="ui header">{{if title title 'Select Documents'}}</h1>
+  {{!-- {{#ui-dropdown class="fluid search selection"
+    allowAdditions=true
+    selected=searchText
+    minCharacters=3
+    fullTextSearch=true
+    message=message
+    value=value
+    onChange=(action (mut searchText)) as |execute mapper|}}
+    <div class="default text">Type or Select</div>
+    <i class="dropdown icon"></i>
+    <div class="menu">
+      {{!-- <div class="item" data-value="">{{term}}</div>
+      <div class="item" data-value="">Search tags for {{searchText}}</div>
+      {{#each tags as |tag|}}
+        <div class="item" data-value="{{map-value mapper tag}}">
+          {{tag}}
+        </div>
+      {{/each}}
+    </div>
+  {{/ui-dropdown}} --}}
+
+  <div class="content">
+    <div class="ui two column grid">
+      <div class="ui field column">
+        <label>Search by text</label>
+        <div class="ui icon input {{if _searchDebounce 'loading'}}">
+          {{input type='search' placeholder="Search documents" value=searchText}}
+          <i class="search icon"></i>
+        </div>
+      </div>
+      <div class="ui field column">
+        <label>Limit by tag</label>
+        {{#ui-dropdown class="search fluid selection"
+          selected=selectedTag
+          fullTextSearch=true
+          forceSelection=false
+          onChange=(action (mut selectedTag)) as |execute mapper|}}
+          <div class="default text">All Tags</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item" data-value="">All Tags</div>
+            {{#each tags as |tag|}}
+              <div class="item" data-value="{{map-value mapper tag}}">
+                {{tag}}
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      </div>
+    </div>
+
+    <div class="ui list raised segment document-selection__results">
+      <div class="ui inverted {{if (or model.isPending _searchDebounce) 'active animated fadeInUp'}} dimmer">
+        <div class="ui indeterminate text inverted loader">Loading Documents...</div>
+      </div>
+      {{log model.meta}}
+      {{#each model as |document|}}
+        <div class="item">{{document.title}}</div>
+      {{else}}
+        {{#unless}}
+          <h3 class="ui center aligned light text header">No documents found.</h3>
+        {{/unless}}
+      {{/each}}
+    </div>
+    <div class="clearfix">
+      {{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}
+    </div>
+    <div class="ui divider"></div>
+  </div>
+{{/ui-modal}}
+
+
+
+{{!-- Usage:  pass the component these three optional things:
+ title(the title of the modal),
+ selectText(the text you want on the dropdown),
+ buttonText(the text you want on the modal launch button). --}}
