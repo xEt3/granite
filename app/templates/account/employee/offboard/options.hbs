@@ -1,5 +1,6 @@
 <form class="ui form" {{action "saveAndContinue" on="submit"}}>
   <h2 class="ui horizontal divider header">Offboarding Options</h2>
+
   <div class="field">
     <label for="final-address-ss">Final Address</label>
     {{ui-checkbox id="final-address-ss" class="toggle" label=(if model.finalAddressSelfService "Collect final address from employee" "Enter final address") checked=model.finalAddressSelfService onChange=(action (mut model.finalAddressSelfService))}}

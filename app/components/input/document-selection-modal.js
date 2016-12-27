@@ -1,15 +1,18 @@
 import Ember from 'ember';
 import pagination from 'granite/mixins/controller-abstractions/pagination';
+import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-const { Component, inject, computed, observer, run } = Ember;
+const { A, Component, RSVP, inject, computed, observer, run } = Ember;
 
-export default Component.extend(pagination, {
+export default Component.extend(pagination, addEdit, {
   ajax: inject.service(),
   store: inject.service(),
   classNames: [ 'document__selector' ],
-  limit: 2,
-  page: 0,
+  limit: 10,
+  page: 1,
   debounceSearches: 800,
+  searchText: '',
+  selectedDocuments: A(),
 
   didReceiveAttrs() {
     this._super(...arguments);
@@ -36,10 +39,21 @@ export default Component.extend(pagination, {
         limit = this.get('limit'),
         search = this.get('_searchText'),
         tag = this.get('selectedTag'),
-        query = { limit, page };
+        query = { limit, page },
+        previousSearch = this.get('previousSearch'),
+        previousTag = this.get('previousTag');
+
+    this.setProperties({
+      previousTag: tag,
+      previousSearch: search
+    });
+
+    if ( tag !== previousTag || search !== previousSearch ) {
+      this.set('page', 1);
+      page = 0;
+    }
 
     if ( tag ) {
-      console.log('tag', tag);
       query.tags = { $in: [ tag ] };
     }
 
@@ -48,16 +62,31 @@ export default Component.extend(pagination, {
           title = description = { $regex: search, $options: 'i' };
       query.$or = [ { title }, { description } ];
     }
-    console.log(query);
-    return this.get('store').query('file', query)
-    .then(results => {
-      console.log(results.get('meta'));
-      console.log(results.toArray());
-      return results.toArray();
+
+    return new RSVP.Promise(resolve => {
+      this.get('store').query('file', query)
+      .then(results => {
+        this.set('results', results);
+        this.set('metadata', results.get('meta'));
+        resolve(results);
+      });
     });
   }),
 
   actions: {
+    addDocument (file) {
+      this.get('selectedDocuments').pushObject(file);
+    },
+
+    removeDocument (file) {
+      this.get('selectedDocuments').removeObject(file);
+    },
+
+    saveDocuments () {
+      this.set('model.offboardingDocuments', this.get('selectedDocuments'));
+      this.send('save');
+    },
+
     selectDocuments () {
       Ember.$('#modal__document-selection')
       .modal({
@@ -67,4 +96,3 @@ export default Component.extend(pagination, {
     }
   }
 });
-// find out if the thing is a tag, searchTerm, or nothing

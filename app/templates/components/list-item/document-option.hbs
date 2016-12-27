@@ -1,1 +1,18 @@
-{{yield}}
+<div class="item">
+  {{file.title}}
+
+  <div class="right floated content">
+    <a href="{{file.url}}" target="_blank">
+      <i class="download icon"></i>
+    </a>
+    {{#unless remove}}
+      <a href="#">
+        <i class="green plus square outline icon" {{action  "addDocument"}}></i>
+      </a>
+    {{else}}
+      <a href="#">
+        <i class="red minus square outline icon"  {{action "removeDocument"}}></i>
+      </a>
+    {{/unless}}
+  </div>
+</div>
