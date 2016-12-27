@@ -69,17 +69,31 @@ export default Component.extend(pagination, addEdit, {
         this.set('results', results);
         this.set('metadata', results.get('meta'));
         resolve(results);
+        this.refreshModal();
       });
     });
   }),
 
+  refreshModal () {
+    run.scheduleOnce('afterRender', () => {
+      Ember.$('#modal__document-selection').modal('refresh');
+    });
+  },
+
+  didRender () {
+    this._super(...arguments);
+    this.refreshModal();
+  },
+
   actions: {
     addDocument (file) {
       this.get('selectedDocuments').pushObject(file);
+      this.refreshModal();
     },
 
     removeDocument (file) {
       this.get('selectedDocuments').removeObject(file);
+      this.refreshModal();
     },
 
     saveDocuments () {
