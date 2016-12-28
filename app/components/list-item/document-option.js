@@ -9,6 +9,7 @@ export default Component.extend({
     addDocument () {
       this.get('onAddition')(this.get('file'));
     },
+
     removeDocument () {
       this.get('onRemove')(this.get('file'));
     }

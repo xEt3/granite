@@ -1,29 +1,9 @@
-<button class="ui basic button" {{action 'selectDocuments'}}><i class="folder icon"></i> {{if buttonText buttonText 'Select Documents'}}</button>
+{{yield (action 'selectDocuments')}}
 
 {{#ui-modal name='modal__document-selection' id='modal__document-selection' class='ui long modal'}}
   <h1 class="ui header">{{if title title 'Select Documents'}}</h1>
-  {{!-- {{#ui-dropdown class="fluid search selection"
-    allowAdditions=true
-    selected=searchText
-    minCharacters=3
-    fullTextSearch=true
-    message=message
-    value=value
-    onChange=(action (mut searchText)) as |execute mapper|}}
-    <div class="default text">Type or Select</div>
-    <i class="dropdown icon"></i>
-    <div class="menu">
-      {{!-- <div class="item" data-value="">{{term}}</div>
-      <div class="item" data-value="">Search tags for {{searchText}}</div>
-      {{#each tags as |tag|}}
-        <div class="item" data-value="{{map-value mapper tag}}">
-          {{tag}}
-        </div>
-      {{/each}}
-    </div>
-  {{/ui-dropdown}} --}}
 
-  <div class="content">
+  <div class="content ui form">
     <div class="ui two column grid">
       <div class="ui field column">
         <label>Search by text</label>
@@ -55,24 +35,23 @@
     </div>
 
     <div class="ui divided list raised segment document-selection__results">
-      <div class="ui inverted {{if (or model.isPending _searchDebounce) 'active animated fadeInUp'}} dimmer">
-        <div class="ui indeterminate text inverted loader">Searching Documents...</div>
-      </div>
-      {{log model.meta}}
       {{#each results as |document|}}
-        {{list-item/document-option file=document onAddition=(action "addDocument")}}
+        {{list-item/document-option file=document remove=(contains document selectedDocuments) onRemove=(action "removeDocument") onAddition=(action "addDocument")}}
       {{else}}
         {{#unless}}
           <h3 class="ui center aligned light text header">No documents found.</h3>
         {{/unless}}
       {{/each}}
+      <div class="ui inverted {{if (or model.isPending _searchDebounce) 'active animated fadeInUp'}} dimmer">
+        <div class="ui indeterminate text inverted loader">Searching Documents...</div>
+      </div>
     </div>
     <div class="clearfix">
       {{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}
     </div>
     <div class="ui divider"></div>
     {{#if selectedDocuments}}
-      <h3 class="ui header">Assigned Documents</h3>
+      <h3 class="ui header">Selected Documents</h3>
       <div class="ui divided list">
         {{#each selectedDocuments as |selectedDocument|}}
           <div class="item">
@@ -80,12 +59,10 @@
           </div>
         {{/each}}
       </div>
-      <button class="ui huge fluid positive button" {{action "saveDocuments"}}>Assign These Offboarding Documents</button>
+      <button class="ui huge fluid positive button" {{action "assign"}}>{{if assignText assignText 'Assign Documents'}}</button>
     {{/if}}
     </div>
 {{/ui-modal}}
-
-
 
 {{!-- Usage:  pass the component these three optional things:
  title(the title of the modal),

@@ -57,7 +57,19 @@
     {{!TODO Spec this}}
   </div>
   <div class="field">
-    {{input/document-selection-modal title="Select Offboarding Documents" buttonText="Assign Offboarding Documents"}}
+    {{#input/document-selection-modal
+      title="Select Offboarding Documents"
+      selected=model.offboardingDocuments
+      onSelected=(pipe (action (mut model.offboardingDocuments)) (action 'save' model))
+      as |execute|}}
+      <button class="ui basic button" {{action execute}}>
+        <i class="folder icon"></i>
+        Assign offboarding documents
+        {{#if model.offboardingDocuments.length}}
+          <span class="ui label">{{model.offboardingDocuments.length}} Assigned</span>
+        {{/if}}
+      </button>
+    {{/input/document-selection-modal}}
   </div>
 
   <div class="ui divider"></div>

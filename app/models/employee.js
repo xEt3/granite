@@ -60,7 +60,7 @@ export default Model.extend(Validations, {
   offboardingStep:         attr('number'),
   offboarder:              belongsTo('company-user', { async: true, inverse: null }),
   offboardingProgress:     attr('number'),
-  offboardingDocuments:    hasMany('documents', { defaultValue: [] }),
+  offboardingDocuments:    hasMany('file', { defaultValue: [] }),
   terminationDate:         attr('date'),
   terminationReason:       attr('string'),
   eligibleForRehire:       attr('boolean'),
@@ -72,7 +72,6 @@ export default Model.extend(Validations, {
   finalAddressZip:         attr('string'),
   finalEmail:              attr('string'),
   finalAddressCollected:   attr('date'),
-
 
   company:     belongsTo('company', { async: true, inverse: null }),
   location:    belongsTo('location', { async: true, inverse: null }),
