@@ -30,6 +30,7 @@ Router.map(function() {
     this.route('index', { path: '/dashboard' });
 
     this.route('settings', function() {
+      this.route('billing');
       this.route('integrations');
     });
 
