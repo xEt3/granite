@@ -23,5 +23,11 @@ export default Controller.extend({
       email: object.get('email'),
       supervisor: object.belongsTo('supervisor').id()
     });
+  },
+
+  actions: {
+    saveAndContinue () {
+      return this.get('target').send('saveAndContinue');
+    }
   }
 });

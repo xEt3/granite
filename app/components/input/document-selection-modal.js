@@ -1,10 +1,9 @@
 import Ember from 'ember';
 import pagination from 'granite/mixins/controller-abstractions/pagination';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 const { A, Component, RSVP, inject, computed, observer, run } = Ember;
 
-export default Component.extend(pagination, addEdit, {
+export default Component.extend(pagination, {
   ajax: inject.service(),
   store: inject.service(),
   classNames: [ 'document__selector' ],
@@ -16,11 +15,23 @@ export default Component.extend(pagination, addEdit, {
 
   didReceiveAttrs() {
     this._super(...arguments);
+    let selection = A();
+
+    if ( this.get('selected') ) {
+      selection.addObjects(this.get('selected'));
+    }
+
+    this.set('selectedDocuments', selection);
+
     this.get('ajax').request('/api/v1/files', {
       data: {
         _distinct: true, select: 'tags'
       }
-    }).then(tags => this.set('tags', tags));
+    }).then(tags => {
+      if ( !this.get('isDestroyed') && !this.get('isDestroying') ) {
+        this.set('tags', tags);
+      }
+    });
   },
 
   searchTermChanged: observer('searchText', function () {
@@ -87,7 +98,7 @@ export default Component.extend(pagination, addEdit, {
 
   actions: {
     addDocument (file) {
-      this.get('selectedDocuments').pushObject(file);
+      this.get('selectedDocuments').addObject(file);
       this.refreshModal();
     },
 
@@ -96,9 +107,9 @@ export default Component.extend(pagination, addEdit, {
       this.refreshModal();
     },
 
-    saveDocuments () {
-      this.set('model.offboardingDocuments', this.get('selectedDocuments'));
-      this.send('save');
+    assign () {
+      Ember.$('#modal__document-selection').modal('hide');
+      this.get('onSelected')(this.get('selectedDocuments'));
     },
 
     selectDocuments () {
