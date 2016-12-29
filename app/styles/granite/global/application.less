@@ -5,6 +5,14 @@ html {
 body {
   height: auto !important;
   min-height: 100%;
+
+  &.scrolling.undetached.dimmable.dimmed {
+    overflow: hidden !important;
+
+    > .modals {
+      overflow: auto !important;
+    }
+  }
 }
 
 body.application__in-account .pusher {

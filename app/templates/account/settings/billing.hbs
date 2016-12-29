@@ -1,0 +1,5 @@
+{{#if model}}
+  <h2 class="ui center aligned header {{if isPastDue 'text-danger'}}">Your subscription is {{if isPastDue 'past due' status}}</h2>
+{{else}}
+  <h2 class="ui center aligned header">Your account doesn't have a subscription. Add a payment method to get started.</h2>
+{{/if}}

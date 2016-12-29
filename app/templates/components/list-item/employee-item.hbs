@@ -24,6 +24,20 @@
           {{/if}}
         </div>
       {{/if}}
+
+      {{#if employee.offboarding}}
+        <div class="ui red label">
+          <i class="remove icon"></i>Offboarding
+          {{#if employee.offboardingProgress}}
+            {{employee.offboardingProgress}}% complete
+          {{else}}
+            in progress
+          {{/if}}
+          {{#if employee.offboarder}}
+            by {{employee.offboarder.fullName}}
+          {{/if}}
+        </div>
+      {{/if}}
     </div>
   </div>
 {{/if}}

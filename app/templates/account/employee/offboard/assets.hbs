@@ -1,0 +1,32 @@
+<form class="ui form" {{action "saveAndContinue" on="submit"}}>
+  <h2 class="ui horizontal divider header">Company Assets</h2>
+
+  <div class="ui relaxed divided list">
+    {{#each-in (group-by 'assetId' model) as |asset assets|}}
+      <h4 class="header">
+        {{#if assets.firstObject.asset.icon}}
+          <i class="{{assets.firstObject.asset.icon}} icon"></i>
+        {{/if}}
+        {{assets.firstObject.asset.name}}
+      </h4>
+      {{#each assets as |item|}}
+        <div class="item">
+          {{item.identifier}}
+          <span class="right floated">
+            {{#ui-popup content='Mark as collected & unassign asset from employee'}}
+              <a href="#" class="text-green" {{action "unassignAsset" item}}><i class="check icon"></i>Mark as Collected</a>
+            {{/ui-popup}}
+          </span>
+        </div>
+      {{/each}}
+    {{else}}
+      <h2 class="center aligned light text header">
+        <i class="check icon"></i>
+        {{employee.firstName}} doesn't have any assets assigned to them.
+      </h2>
+    {{/each-in}}
+  </div>
+
+  <div class="ui divider"></div>
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
+</form>

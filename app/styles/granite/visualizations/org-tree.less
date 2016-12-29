@@ -1,0 +1,51 @@
+svg.visualization__org-tree {
+  height: 70vh;
+  width: 100%;
+
+  .node circle {
+    fill: @granite-blue;
+  }
+
+  .node text {
+    color: @granite-grey;
+    font-size: 10px;
+    font-weight: bolder;
+  }
+
+  .node--internal circle {
+    fill: @granite-blue;
+  }
+
+  .node--internal.node--base {
+    circle {
+      fill: @granite-green;
+    }
+
+    &.node--deprecating {
+      circle {
+        fill: @granite-red;
+        animation: 1s blinkDeprecation ease-in-out alternate infinite;
+      }
+    }
+  }
+
+  .node--internal text {
+    text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
+  }
+
+  .link {
+    fill: none;
+    stroke: @granite-blue;
+    stroke-opacity: 0.5;
+    stroke-width: 4px;
+  }
+}
+
+@keyframes blinkDeprecation {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.3;
+  }
+}

@@ -1,30 +1,38 @@
 /*
- * # Semantic UI 2.1.4 - Calendar
+ * # Semantic UI 0.0.3 - Calendar
  * http://github.com/semantic-org/semantic-ui/
  *
  *
- * Copyright 2015 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  */
 
-
+;
 (function ($, window, document, undefined) {
+
+  "use strict";
+
+  window = (typeof window != 'undefined' && window.Math == Math)
+    ? window
+    : (typeof self != 'undefined' && self.Math == Math)
+    ? self
+    : Function('return this')()
+  ;
 
   $.fn.calendar = function (parameters) {
 
     var
-    $allModules = $(this),
+      $allModules = $(this),
 
-    moduleSelector = $allModules.selector || '',
+      moduleSelector = $allModules.selector || '',
 
-    time = new Date().getTime(),
-    performance = [],
+      time = new Date().getTime(),
+      performance = [],
 
-    query = arguments[0],
-    methodInvoked = (typeof query == 'string'),
-    queryArguments = [].slice.call(arguments, 1),
-    returnedValue
+      query = arguments[0],
+      methodInvoked = (typeof query == 'string'),
+      queryArguments = [].slice.call(arguments, 1),
+      returnedValue
       ;
 
     $allModules
@@ -262,8 +270,10 @@
                   cell = $('<td/>').addClass(className.cell).appendTo(row);
                   cell.text(cellText);
                   cell.data(metadata.date, cellDate);
-                  var disabled = (isDay && cellDate.getMonth() !== month) || !module.helper.isDateInRange(cellDate, mode);
+                  var adjacent = isDay && cellDate.getMonth() !== month;
+                  var disabled = adjacent || !module.helper.isDateInRange(cellDate, mode) || settings.isDisabled(cellDate, mode);
                   var active = module.helper.dateEqual(cellDate, date, mode);
+                  cell.toggleClass(className.adjacentCell, adjacent);
                   cell.toggleClass(className.disabledCell, disabled);
                   cell.toggleClass(className.activeCell, active);
                   if (!isHour && !isMinute) {
@@ -426,8 +436,9 @@
                   }
                 } else if (event.keyCode === 13) {
                   //enter
+                  var mode = module.get.mode();
                   var date = module.get.focusDate();
-                  if (date) {
+                  if (date && !settings.isDisabled(date, mode)) {
                     module.selectDate(date);
                   }
                 }
@@ -540,13 +551,19 @@
                 return false;
               }
 
+              module.set.focusDate(date);
+
+              var mode = module.get.mode();
+              if (settings.isDisabled(date, mode)) {
+                return false;
+              }
+
               var endDate = module.get.endDate();
               if (!!endDate && !!date && date > endDate) {
                 //selected date is greater than end date in range, so clear end date
                 module.set.endDate(undefined);
               }
               module.set.dataKeyValue(metadata.date, date);
-              module.set.focusDate(date);
 
               if (updateInput && $input.length) {
                 $input.val(text);
@@ -681,13 +698,13 @@
                 isTimeOnly ? 0 : isYear ? 0 : date1.getMonth(),
                 isTimeOnly ? 1 : isYearOrMonth ? 1 : date1.getDate(),
                 !isHourOrMinute ? 0 : date1.getHours(),
-                !isMinute ? 0 : Math.floor(date1.getMinutes() / 5));
+                !isMinute ? 0 : 5 * Math.floor(date1.getMinutes() / 5));
               date2 = new Date(
                 isTimeOnly ? 2000 : date2.getFullYear(),
                 isTimeOnly ? 0 : isYear ? 0 : date2.getMonth(),
                 isTimeOnly ? 1 : isYearOrMonth ? 1 : date2.getDate(),
                 !isHourOrMinute ? 0 : date2.getHours(),
-                !isMinute ? 0 : Math.floor(date2.getMinutes() / 5));
+                !isMinute ? 0 : 5 * Math.floor(date2.getMinutes() / 5));
               return date2.getTime() - date1.getTime();
             },
             dateEqual: function (date1, date2, mode) {
@@ -696,9 +713,10 @@
             isDateInRange: function (date, mode, minDate, maxDate) {
               if (!minDate && !maxDate) {
                 var startDate = module.get.startDate();
-                minDate = startDate && settings.minDate ? Math.max(startDate, settings.minDate) : startDate || settings.minDate;
+                minDate = startDate && settings.minDate ? new Date(Math.max(startDate, settings.minDate)) : startDate || settings.minDate;
                 maxDate = settings.maxDate;
               }
+              minDate = minDate && new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate(), minDate.getHours(), 5 * Math.ceil(minDate.getMinutes() / 5));
               return !(!date ||
               (minDate && module.helper.dateDiff(date, minDate, mode) > 0) ||
               (maxDate && module.helper.dateDiff(maxDate, date, mode) > 0));
@@ -706,9 +724,10 @@
             dateInRange: function (date, minDate, maxDate) {
               if (!minDate && !maxDate) {
                 var startDate = module.get.startDate();
-                minDate = startDate && settings.minDate ? Math.max(startDate, settings.minDate) : startDate || settings.minDate;
+                minDate = startDate && settings.minDate ? new Date(Math.max(startDate, settings.minDate)) : startDate || settings.minDate;
                 maxDate = settings.maxDate;
               }
+              minDate = minDate && new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate(), minDate.getHours(), 5 * Math.ceil(minDate.getMinutes() / 5));
               var isTimeOnly = settings.type === 'time';
               return !date ? date :
                 (minDate && module.helper.dateDiff(date, minDate, 'minute') > 0) ?
@@ -729,25 +748,33 @@
               $.extend(true, settings, name);
             }
             else if (value !== undefined) {
-              settings[name] = value;
+              if ($.isPlainObject(settings[name])) {
+                $.extend(true, settings[name], value);
+              }
+              else {
+                settings[name] = value;
+              }
             }
             else {
               return settings[name];
             }
           },
           internal: function (name, value) {
-            if ($.isPlainObject(name)) {
-              $.extend(true, module, name);
-            }
-            else if (value !== undefined) {
-              module[name] = value;
+            module.debug('Changing internal', name, value);
+            if (value !== undefined) {
+              if ($.isPlainObject(name)) {
+                $.extend(true, module, name);
+              }
+              else {
+                module[name] = value;
+              }
             }
             else {
               return module[name];
             }
           },
           debug: function () {
-            if (settings.debug) {
+            if (!settings.silent && settings.debug) {
               if (settings.performance) {
                 module.performance.log(arguments);
               }
@@ -758,7 +785,7 @@
             }
           },
           verbose: function () {
-            if (settings.verbose && settings.debug) {
+            if (!settings.silent && settings.verbose && settings.debug) {
               if (settings.performance) {
                 module.performance.log(arguments);
               }
@@ -769,8 +796,10 @@
             }
           },
           error: function () {
-            module.error = Function.prototype.bind.call(console.error, console, settings.name + ':');
-            module.error.apply(console, arguments);
+            if (!settings.silent) {
+              module.error = Function.prototype.bind.call(console.error, console, settings.name + ':');
+              module.error.apply(console, arguments);
+            }
           },
           performance: {
             log: function (message) {
@@ -904,6 +933,7 @@
     name: 'Calendar',
     namespace: 'calendar',
 
+    silent: false,
     debug: false,
     verbose: false,
     performance: false,
@@ -1234,6 +1264,11 @@
     onHidden: function () {
     },
 
+    // is the given date disabled?
+    isDisabled: function (date, mode) {
+      return false;
+    },
+
     selector: {
       popup: '.ui.popup',
       input: 'input',
@@ -1262,6 +1297,7 @@
       link: 'link',
       cell: 'link',
       disabledCell: 'disabled',
+      adjacentCell: 'adjacent',
       activeCell: 'active',
       rangeCell: 'range',
       focusCell: 'focus',

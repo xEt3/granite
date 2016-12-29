@@ -4,5 +4,22 @@
   </h1>
 </hgroup>
 <div class="ui divider"></div>
-<h2 class="ui center aligned header">Some useful stats here</h2>
-<h2 class="ui center aligned header">Some useful graphs here</h2>
+
+{{visualizations/organization-tree baseNode=baseNode}}
+
+<div class="ui form">
+  <div class="field">
+    <label for="basenode-selection">Select a supervisor</label>
+    {{#ui-dropdown id='basenode-selection' class='search selection' selected=selectedNode forceSelection=false onChange=(action (mut selectedNode)) as |execute mapper|}}
+      <div class="default text">Select an employee</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each model as |employee|}}
+          <div class="item" data-value="{{map-value mapper employee}}">
+            {{employee.fullName}} - <span class="light text">{{employee.jobTitle}}</span>
+          </div>
+        {{/each}}
+      </div>
+    {{/ui-dropdown}}
+  </div>
+</div>
