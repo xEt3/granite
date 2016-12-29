@@ -7,7 +7,9 @@ const includes = [
   'intro.js/introjs.css',
   'At.js/dist/js/jquery.atwho.js',
   'Caret.js/dist/jquery.caret.js',
-  'At.js/dist/css/jquery.atwho.min.css'
+  'At.js/dist/css/jquery.atwho.min.css',
+  'semantic-ui-calendar/dist/calendar.css',
+  'semantic-ui-calendar/dist/calendar.js'
 ];
 
 module.exports = function(defaults) {
@@ -33,9 +35,6 @@ module.exports = function(defaults) {
   });
 
   includes.forEach(include => app.import(vendorDir + include));
-
-  app.import('vendor/semantic-ui-calendar/calendar.css');
-  app.import('vendor/semantic-ui-calendar/calendar.js');
 
   return app.toTree();
 };
