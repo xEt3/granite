@@ -83,7 +83,15 @@ Router.map(function() {
       this.route('job-description', { path: '/job/:id' }, function() {
         this.route('settings');
       });
+      this.route('settings');
       this.route('new');
+      this.route('job-descriptions', function() {
+        this.route('new');
+      });
+
+      this.route('index', { path: 'campaign' }, function() {
+        this.route('new');
+      });
     });
     this.route('assets', function() {
       this.route('new');
