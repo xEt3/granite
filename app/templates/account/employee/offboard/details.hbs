@@ -2,7 +2,7 @@
   <h2 class="ui horizontal divider header">Employee Details</h2>
   <div class="content">
     <div class="field">
-      {{#ui-calendar class="field" type="date" initialDate=model.terminationDate onChange=(action (mut model.terminationDate))}}
+      {{#ui-calendar class="field" type="date" initialDate=model.terminatedOn onChange=(action (mut model.terminatedOn))}}
         <label for="termination-date-calendar">When will this employee be terminated?</label>
         <div class="ui calendar" id="termination-date-calendar">
           <div class="ui input left icon">

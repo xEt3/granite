@@ -61,7 +61,7 @@ export default Model.extend(Validations, {
   offboarder:              belongsTo('company-user', { async: true, inverse: null }),
   offboardingProgress:     attr('number'),
   offboardingDocuments:    hasMany('file', { defaultValue: [] }),
-  terminationDate:         attr('date'),
+  terminatedOn:            attr('date'),
   terminationReason:       attr('string'),
   eligibleForRehire:       attr('boolean'),
   finalAddressSelfService: attr('boolean', { defaultValue: true }),
