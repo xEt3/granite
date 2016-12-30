@@ -11,11 +11,16 @@
     <div class="event">
       <div class="content">
         <div class="summary">
-          {{#link-to 'account.employee' assignment.assigner}}
-            {{assignment.assigner.fullName}}
-          {{/link-to}}
-          assigned from
-          {{#link-to 'account.asset' asset.asset}}
+          {{#if assignment.assigner}}
+            {{#link-to 'account.employee' assignment.assigner.id}}
+              {{assignment.assigner.fullName}}
+            {{/link-to}}
+            assigned
+          {{else}}
+            Assigned
+          {{/if}}
+          from
+          {{#link-to 'account.asset' asset.asset.id}}
             {{asset.asset.name}}
           {{/link-to}}
           on {{time asset.created}}

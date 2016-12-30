@@ -1,1 +1,34 @@
-{{outlet}}
+{{stateful-intro-js
+  user=auth.user
+  steps=intros
+  start-if=true
+  hintKey='job-description-index'}}
+
+<div class="ui raised padded segment container clearfix animated fadeInUp">
+  <hgroup class="clearfix">
+    <h1 class="ui header left floated">
+      Job Descriptions
+    </h1>
+
+    <div class="right aligned text floated menu__actions">
+      <h3 class="ui inline header">
+        {{#link-to 'account.recruiting.job-descriptions.new'}}
+          <i id="add-job-description" class="plus icon"></i>
+        {{/link-to}}
+      </h3>
+    </div>
+  </hgroup>
+  <div class="ui divider"></div>
+
+  {{display/resource-list
+    model
+    "list-item/job-item"
+    linkTo="account.recruiting.job-description"
+    linkClass="item"
+    class="ui divided link items"}}
+
+  {{elements/x-pagination
+    page=(readonly page)
+    pages=(readonly pages)
+    onchange=(action (mut page))}}
+</div>

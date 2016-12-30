@@ -2,6 +2,12 @@ import Ember from 'ember';
 
 const { Component } = Ember;
 
-export default Component.extend({
+let EmployeeItemComponent = Component.extend({
   tagName: ''
 });
+
+EmployeeItemComponent.reopenClass({
+  positionalParams: [ 'employee' ]
+});
+
+export default EmployeeItemComponent;
