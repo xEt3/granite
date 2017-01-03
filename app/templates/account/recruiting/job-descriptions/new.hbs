@@ -1,1 +1,24 @@
-{{outlet}}
+{{stateful-intro-js
+  user=auth.user
+  steps=intros
+  start-if=true
+  hintKey='job-description-new'}}
+
+<div class="ui raised padded segment container clearfix animated fadeInUp">
+  <hgroup class="clearfix">
+    <h1 class="ui header left floated">
+      New Job Description
+    </h1>
+  </hgroup>
+  <div class="ui divider"></div>
+
+  {{#quick-form
+    form
+    model
+    this
+    working=working
+    submitClass="huge fluid green"
+    onsubmit=(action 'save' model)}}
+    Save Job
+  {{/quick-form}}
+</div>

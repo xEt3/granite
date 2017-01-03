@@ -1,0 +1,10 @@
+{{#each form as |field|}}
+  {{input/quick-form-input
+    field
+    model
+    controller
+    class=field.class}}
+{{/each}}
+
+<div class="ui divider"></div>
+{{#form/action-button type="submit" class=_submitClass loading=working}}{{yield}}{{/form/action-button}}

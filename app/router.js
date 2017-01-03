@@ -79,10 +79,10 @@ Router.map(function() {
       this.route('intro');
       this.route('new');
     });
+    this.route('job-description', { path: '/job/:id' }, function() {
+      this.route('settings');
+    });
     this.route('recruiting', function() {
-      this.route('job-description', { path: '/job/:id' }, function() {
-        this.route('settings');
-      });
       this.route('settings');
       this.route('new');
       this.route('job-descriptions', function() {
@@ -127,6 +127,11 @@ Router.map(function() {
       this.route('edit');
     });
     this.route('document', { path: '/document/:id' });
+
+    this.route('job-opening', { path: '/recruiting/job-opening/:id' }, function() {
+      this.route('campaign', function() {});
+      this.route('setup', function() {});
+    });
   });
 
   // Waiting for https://github.com/emberjs/ember.js/issues/14650 to be resolved

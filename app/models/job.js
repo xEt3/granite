@@ -1,14 +1,17 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import Validations from './validations/job';
-import { belongsTo } from 'ember-data/relationships';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 
 export default Model.extend(Validations, {
-  title: attr('string'),
+  title:       attr('string'),
   description: attr('string'),
+  category:    attr('string'),
 
-  company: belongsTo('company'),
-  creator: belongsTo('employee'),
+  company:    belongsTo('company'),
+  creator:    belongsTo('employee'),
+  department: belongsTo('department'),
+  assets:     hasMany('asset'),
 
   created: attr('date', {
     defaultValue: () => new Date()

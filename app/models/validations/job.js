@@ -6,5 +6,13 @@ export default buildValidations({
     validator('length', {
       min: 3
     })
+  ],
+
+  description: [
+    validator('presence', true)
+  ],
+
+  category: [
+    validator('presence', true)
   ]
 });

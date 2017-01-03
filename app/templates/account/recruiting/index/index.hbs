@@ -1,1 +1,34 @@
-{{outlet}}
+{{stateful-intro-js
+  user=auth.user
+  steps=intros
+  start-if=true
+  hintKey='recruiting-campaigns-index'}}
+
+<div class="ui raised padded segment container clearfix animated fadeInUp">
+  <hgroup class="clearfix">
+    <h1 class="ui header left floated">
+      Recruiting Campaign
+    </h1>
+
+    <div class="right aligned text floated menu__actions">
+      <h3 class="ui inline header">
+        {{#link-to 'account.recruiting.index.new'}}
+          <i id="add-job-opening" class="plus icon"></i>
+        {{/link-to}}
+      </h3>
+    </div>
+  </hgroup>
+  <div class="ui divider"></div>
+
+  {{display/resource-list
+    model
+    "list-item/job-opening-item"
+    linkTo="account.job-opening"
+    linkClass="item"
+    class="ui divided link items"}}
+
+  {{elements/x-pagination
+    page=(readonly page)
+    pages=(readonly pages)
+    onchange=(action (mut page))}}
+</div>
