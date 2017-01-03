@@ -1,0 +1,26 @@
+<div class="ui very padded raised segment animated fadeInUp">
+  <div class="ui top attached green label">
+    {{#if model.category}}
+      Category: {{model.category}}
+    {{/if}}
+    <div class="right floated detail">
+      {{#if model.department.name}}
+        Department: {{model.department.name}}
+      {{/if}}
+    </div>
+  </div>
+  <div class="clearfix">
+    {{#if model.assets}}
+      <p class="pull-left light text">
+        Usually uses:
+        {{join-array (map-by 'name' model.assets) ', '}}
+      </p>
+    {{/if}}
+    <p class="pull-right light text">Created on {{time model.created}}</p>
+  </div>
+
+  <h2 class="ui clearfix header">
+    {{model.title}}
+  </h2>
+  <p>{{{model.description}}}</p>
+</div>
