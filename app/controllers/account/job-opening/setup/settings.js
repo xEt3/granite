@@ -9,6 +9,6 @@ export default Controller.extend({
     type: 'select',
     path: 'title',
     contentPath: 'controller.users',
-    displayKey: ''
+    displayKey: 'fullName'
   }])
 });

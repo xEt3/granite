@@ -1,0 +1,17 @@
+<div class="ui container wizard">
+  {{#ui-progress percent=progress class="indicating wizard__progress"}}
+    <div class="bar"></div>
+  {{/ui-progress}}
+
+  <div class="ui padded segment wizard__segment">
+    <div class="ui basic segment">
+      <h1 class="ui header">Setup {{model.name}}</h1>
+    </div>
+
+    <div class="ui basic segment">
+      {{outlet}}
+    </div>
+  </div>
+
+  {{display/form-steps steps=steps basePath='account.job-opening.setup' class='wizard__steps'}}
+</div>
