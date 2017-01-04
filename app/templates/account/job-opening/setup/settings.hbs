@@ -13,13 +13,8 @@
     model
     this
     tagName="div"
-    class="content"}}
+    class="content ui grid"}}
 
-  <div class="content">
-    Location [select input]
-    Supervisory Requirements [checkbox input]
-    Type (Full time | part time | contract | internship | temporary | Commission) [select input]
-  </div>
   <div class="ui divider"></div>
   <form {{action "saveAndContinue" on="submit"}}>
     {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}

@@ -1,7 +1,11 @@
 import Ember from 'ember';
+import { jobTypes } from 'granite/config/statics';
+
 const { Controller, computed } = Ember;
 
 export default Controller.extend({
+  jobTypes,
+
   campaignSettingsForm: computed(() => [{
     label: 'Send notifications to',
     inputClass: 'search multiple',
@@ -79,19 +83,28 @@ export default Controller.extend({
     inputClass: 'toggle',
     path: 'allocateTalentPool',
     parentClass: 'sixteen wide column'
+  }]),
+
+  jobSettingsForm: computed(() => [{
+    label: 'Location',
+    inputClass: 'search',
+    type: 'select',
+    path: 'location',
+    contentPath: 'controller.locations',
+    displayKey: 'name',
+    parentClass: 'eight wide column'
+  }, {
+    label: 'Job type',
+    inputClass: 'search',
+    type: 'select',
+    path: 'jobType',
+    contentPath: 'controller.jobTypes',
+    parentClass: 'eight wide column'
+  }, {
+    label: 'This job has supervisory duties',
+    type: 'checkbox',
+    inputClass: 'toggle',
+    path: 'supervisoryRequirements',
+    parentClass: 'sixteen wide column'
   }])
 });
-//
-// X Send notifications to? [multi select input list of employees with emails/user]
-// Also send notifications to [multi select input (allow additions)]
-// Start Date (otherwise now) [date input]
-// End Date (otherwise until filled) [date input]
-// Due on date (otherwise indefinite) [date input]
-// Show internally [checkbox input]
-// Show internally first for x days [number input]
-// Positions to fill [number input]
-//
-// Applicants -
-// Send confirmation email [checkbox input]
-// Send close notice [checkbox input]
-// Add unrejected, but not hired, applicants to your talent pool [checkbox input]
