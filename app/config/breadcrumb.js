@@ -28,4 +28,7 @@ export default [{
     segment: 'job descriptions',
     link: 'account.recruiting.job-descriptions'
   }
+}, {
+  when: 'eeo',
+  overrideName: 'Equal Employment Opportunity'
 }];

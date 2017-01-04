@@ -1,1 +1,24 @@
-{{outlet}}
+<h3 class="ui header">Setup will take you through important steps to start hiring for {{model.job.title}}. Here are the things to watch for:</h3>
+<div class="ui divider"></div>
+
+<h2 class="ui header">
+  <i class="settings icon"></i>
+  <div class="content">
+    Settings
+    <div class="sub header">
+      Recruiting campaigns are configurable and can be set up how you prefer. Settings allow you to configure the way notifications, talent pools, and other aspects of the campaign function.
+    </div>
+  </div>
+</h2>
+<h2 class="ui header">
+  <i class="announcement icon"></i>
+  <div class="content">
+    Sources
+    <div class="sub header">
+      Sources manage where your compaign will be distributed. We offer several automated integrations with popular job boards, but you may also use manual sources that Granite cannot manage automatically. Utilizing manual and automated sources will allow you to keep track of where the job is posted throughout the hiring process. Automated sources will automatically post and take down postings when you start and end the campaign, respectively.
+    </div>
+  </div>
+</h2>
+<div class="ui divider"></div>
+
+<button class="ui huge positive fluid button" {{action "startSetup"}}>Let's get started</button>

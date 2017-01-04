@@ -1,10 +1,16 @@
 {{#if hasBlock}}
   {{yield model}}
 {{else}}
-  <div class="header">{{model.title}}</div>
+  <div class="header">
+    {{model.name}}
+  </div>
   <div class="meta">
+    Hiring for <strong>{{model.job.title}}</strong> position
     <span class="ui small text right floated">Created: {{time model.created}}{{#if model.creator}}by {{model.creator.fullName}}{{/if}}</span>
   </div>
   <div class="extra">
+    {{#unless model.setupCompleted}}
+      <span class="ui orange label">Needs Setup</span>
+    {{/unless}}
   </div>
 {{/if}}

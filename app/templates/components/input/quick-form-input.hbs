@@ -1,4 +1,6 @@
-<label for="{{computedClassName}}" class="{{field.labelClass}}">{{field.label}}</label>
+{{#unless (or (eq field.type 'checkbox') (eq field.type 'date'))}}
+  <label for="{{computedClassName}}" class="{{field.labelClass}}">{{field.label}}</label>
+{{/unless}}
 
 {{#if (eq field.type 'select')}}
   {{#ui-dropdown
@@ -28,14 +30,35 @@
     id=computedClassName
     rows=rows
     spellcheck="true"}}
+{{else if (eq field.type 'checkbox')}}
+  <label for={{computedClassName}} class={{field.labelClass}}>
+    {{input
+      type='checkbox'
+      id=computedClassName
+      checked=value}}
+    {{field.label}}
+  </label>
+{{else if (eq field.type 'date')}}
+  {{#ui-calendar
+    type='date'
+    class=inputClass
+    initialDate=value
+    onChange=(action (mut value))}}
+    <label for={{computedClassName}} class={{field.labelClass}}>{{field.label}}</label>
+    <div class="ui calendar" id={{computedClassName}}>
+      <div class="ui input left icon">
+        <i class="calendar icon"></i>
+        <input type="text" value={{value}} placeholder="Type In Or Select A Date">
+      </div>
+    </div>
+  {{/ui-calendar}}
 {{else}}
-  {{log field}}
-  {{log model}}
   {{validated-input
     type=field.type
     model=model
     valuePath=field.path
     placeholder=field.label
+    inputAttrs=field.attrs
     id=computedClassName
     inputClass=inputClass}}
 {{/if}}

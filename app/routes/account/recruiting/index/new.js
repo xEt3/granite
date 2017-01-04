@@ -1,9 +1,10 @@
 import Ember from 'ember';
 import add from 'granite/mixins/route-abstractions/add';
 
-const { Route, RSVP, computed } = Ember;
+const { Route, RSVP, computed, inject: { service } } = Ember;
 
 export default Route.extend(add, {
+  auth: service(),
   modelName: 'job-opening',
 
   model () {
@@ -17,7 +18,9 @@ export default Route.extend(add, {
     return this.store.findAll('department');
   }),
 
-  // TODO: Get defaults and set creator to user's employee
+  getModelDefaults () {
+    return { creator: this.get('auth.user.employee') };
+  },
 
   setupController (controller, model) {
     controller.setProperties({

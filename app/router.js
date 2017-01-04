@@ -79,7 +79,7 @@ Router.map(function() {
       this.route('intro');
       this.route('new');
     });
-    this.route('job-description', { path: '/job/:id' }, function() {
+    this.route('job-description', { path: '/recruiting/job/:id' }, function() {
       this.route('settings');
     });
     this.route('recruiting', function() {
@@ -89,7 +89,7 @@ Router.map(function() {
         this.route('new');
       });
 
-      this.route('index', { path: 'campaign' }, function() {
+      this.route('index', { path: 'campaigns' }, function() {
         this.route('new');
       });
     });
@@ -129,8 +129,14 @@ Router.map(function() {
     this.route('document', { path: '/document/:id' });
 
     this.route('job-opening', { path: '/recruiting/job-opening/:id' }, function() {
-      this.route('campaign', function() {});
-      this.route('setup', function() {});
+      this.route('campaign', { path: '/' }, function() {});
+      this.route('setup', function() {
+        this.route('settings');
+        this.route('screening');
+        this.route('sources');
+        this.route('eeo');
+        this.route('finish');
+      });
     });
   });
 

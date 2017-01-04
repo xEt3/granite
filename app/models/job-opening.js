@@ -5,7 +5,12 @@ import { belongsTo } from 'ember-data/relationships';
 export default Model.extend({
   name: attr('string'),
 
-  job: belongsTo('job'),
+  setup:          attr('boolean', { defaultValue: true }),
+  setupStep:      attr('number'),
+  setupProgress:  attr('number'),
+  completedSetup: attr('date'),
+
+  job:     belongsTo('job'),
   company: belongsTo('company'),
   creator: belongsTo('employee'),
 

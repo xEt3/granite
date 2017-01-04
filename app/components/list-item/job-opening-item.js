@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import BaseLiComponent from './base';
 
-export default Ember.Component.extend({
+export default BaseLiComponent.extend({
+  classNames: [ 'content' ]
 });

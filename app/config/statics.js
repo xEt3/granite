@@ -84,4 +84,14 @@ const jobCategories = [
   'Upper Management/Consulting'
 ];
 
-export { suffixes, states, jobCategories };
+const jobTypes = [
+  'Full Time',
+  'Part Time',
+  'Contract',
+  'Internship',
+  'Temporary',
+  'Seasonal',
+  'Commission'
+];
+
+export { suffixes, states, jobCategories, jobTypes };
