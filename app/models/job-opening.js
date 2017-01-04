@@ -1,18 +1,35 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 
 export default Model.extend({
   name: attr('string'),
+
+  availableInternally:       attr('boolean'),
+  internalDuration:          attr('number'), // number of days that this job is internally available before posting to outside sources
+  positions:                 attr('number', { defaultValue: 1 }), // number of positions to fill
+  sendApplicantConfirmation: attr('boolean'),
+  sendCloseNotice:           attr('boolean'), // send an email to unrejected talent when job closes
+  allocateTalentPool:        attr('boolean'), // allocate unrejected, not hired talent to the pool
+
+  jobType:                 attr('string'),
+  supervisoryRequirements: attr('boolean'),
 
   setup:          attr('boolean', { defaultValue: true }),
   setupStep:      attr('number'),
   setupProgress:  attr('number'),
   completedSetup: attr('date'),
 
-  job:     belongsTo('job'),
-  company: belongsTo('company'),
-  creator: belongsTo('employee'),
+  job:              belongsTo('job'),
+  company:          belongsTo('company'),
+  creator:          belongsTo('employee'),
+  location:         belongsTo('location'),
+  subscribers:      hasMany('employee'),
+  emailSubscribers: attr('array'),
+
+  startOn: attr('date'),
+  endOn:   attr('date'),
+  dueOn:   attr('date'),
 
   created: attr('date', {
     defaultValue: () => new Date()

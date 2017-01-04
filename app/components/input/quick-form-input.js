@@ -4,7 +4,7 @@ const { Component, computed, defineProperty } = Ember;
 
 const QuickFormInputComponent = Component.extend({
   classNames: [ 'field' ],
-  classNameBindings: [ 'computedClassName' ],
+  classNameBindings: [ 'computedClassName', 'field.parentClass' ],
 
   init () {
     this._super(...arguments);
@@ -12,11 +12,12 @@ const QuickFormInputComponent = Component.extend({
   },
 
   computedClassName: computed('field.label', function () {
-    return (this.get('field.label') || '').replace(/\s/g, '-').toLowerCase();
+    return (this.get('field.label') || '').replace(/[^\s\w]/g, '').replace(/\s/g, '-').toLowerCase();
   }),
 
   baseInputClass: computed('field.type', function () {
-    return this.get('field.type') === 'select' ? 'selection' : 'ui fluid input';
+    let t = this.get('field.type');
+    return t === 'select' ? 'selection' : t === 'date' ? 'ui field' : 'ui fluid input';
   }),
 
   inputClass: computed('field.inputClass', function () {

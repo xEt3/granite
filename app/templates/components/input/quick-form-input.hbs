@@ -8,9 +8,16 @@
     class=inputClass
     selected=(get model field.path)
     forceSelection=false
+    allowAdditions=inputAttrs.allowAdditions
     onChange=(action (mut value))
     as |execute mapper|}}
-    <div class="default text">Select {{field.label}}</div>
+    <div class="default text">
+      {{#if field.selectText}}
+        {{field.selectText}}
+      {{else}}
+        Select {{field.label}}
+      {{/if}}
+    </div>
     <i class="dropdown icon"></i>
     <div class="menu">
       {{#each (get this field.contentPath) as |item|}}
@@ -31,18 +38,16 @@
     rows=rows
     spellcheck="true"}}
 {{else if (eq field.type 'checkbox')}}
-  <label for={{computedClassName}} class={{field.labelClass}}>
-    {{input
-      type='checkbox'
-      id=computedClassName
-      checked=value}}
-    {{field.label}}
-  </label>
+  {{ui-checkbox
+    id=computedClassName
+    class=inputClass
+    label=field.label
+    checked=(readonly value)
+    onChange=(action (mut value))}}
 {{else if (eq field.type 'date')}}
   {{#ui-calendar
     type='date'
     class=inputClass
-    initialDate=value
     onChange=(action (mut value))}}
     <label for={{computedClassName}} class={{field.labelClass}}>{{field.label}}</label>
     <div class="ui calendar" id={{computedClassName}}>

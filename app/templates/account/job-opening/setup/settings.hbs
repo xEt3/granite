@@ -1,25 +1,11 @@
-<form class="ui form" {{action "saveAndContinue" on="submit"}}>
+<div class="ui form">
   <h2 class="ui horizontal divider header">Campaign Settings</h2>
   {{quick-form
     campaignSettingsForm
     model
     this
     tagName="div"
-    class="content"}}
-
-  Internal settings -
-  Send notifications to? [multi select input list of employees with emails/user]
-  Also send notifications to [multi select input (allow additions)]
-  Start Date (otherwise now) [date input]
-  End Date (otherwise until filled) [date input]
-  Due on date (otherwise indefinite) [date input]
-  Show internally [checkbox input]
-  Show internally first for x days [number input]
-  Positions to fill [number input]
-
-  Applicants -
-  Send confirmation email [checkbox input]
-  Add unrejected, but not hired, applicants to your talent pool [checkbox input]
+    class="content ui grid"}}
 
   <h2 class="ui horizontal divider header">Job Settings</h2>
   {{quick-form
@@ -35,5 +21,7 @@
     Type (Full time | part time | contract | internship | temporary | Commission) [select input]
   </div>
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
-</form>
+  <form {{action "saveAndContinue" on="submit"}}>
+    {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
+  </form>
+</div>
