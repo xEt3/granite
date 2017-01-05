@@ -94,4 +94,24 @@ const jobTypes = [
   'Commission'
 ];
 
-export { suffixes, states, jobCategories, jobTypes };
+const formTypes = [{
+  display: 'Freeform Input',
+  use: 'textarea'
+}, {
+  display: 'Dropdown Selection',
+  use: 'select'
+}, {
+  display: 'Radio Selection',
+  use: 'radio'
+}, {
+  display: 'Checkbox',
+  use: 'checkbox'
+}, {
+  display: 'Date',
+  use: 'date'
+}, {
+  display: 'Toggle',
+  use: 'toggle'
+}];
+
+export { suffixes, states, jobCategories, jobTypes, formTypes };

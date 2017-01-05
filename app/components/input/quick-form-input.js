@@ -8,7 +8,9 @@ const QuickFormInputComponent = Component.extend({
 
   init () {
     this._super(...arguments);
-    defineProperty(this, 'value', computed.alias(`model.${this.get('field.path')}`));
+    let path = `model.${this.get('field.path')}`;
+    defineProperty(this, 'value', computed.alias(path));
+    this.set('initialValue', this.get(path));
   },
 
   computedClassName: computed('field.label', function () {
