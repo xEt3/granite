@@ -1,0 +1,24 @@
+{{positionInForm}}
+<div class="two fields">
+  <div class="field">
+    {{#ui-dropdown
+      class='search selection'
+      selected=model.type
+      forceSelection=false
+      onChange=(action (mut model.type))
+      as |execute mapper|}}
+      <div class="default text">
+        Select an input type
+      </div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each formTypes as |formType|}}
+          <div class="item" data-value="{{formType.use}}">
+            {{formType.display}}
+          </div>
+        {{/each}}
+      </div>
+    {{/ui-dropdown}}
+  </div>
+  <div></div>
+</div>

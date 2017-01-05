@@ -1,1 +1,13 @@
-{{outlet}}
+<div class="ui form">
+  <h2 class="ui horizontal divider header">Screening Form</h2>
+  {{#sortable-group onChange="reorderElements" as |group|}}
+    {{#each form.elements as |element index|}}
+      {{form/form-element element group index=index}}
+    {{/each}}
+  {{/sortable-group}}
+  <button class="ui primary fluid button" type="button" {{action "addFormElement"}}><i class="plus icon"></i>Add a question</button>
+  <div class="ui divider"></div>
+  <form {{action "saveAndContinue" on="submit"}}>
+    {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
+  </form>
+</div>
