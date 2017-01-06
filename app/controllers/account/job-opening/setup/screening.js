@@ -9,8 +9,11 @@ export default Controller.extend({
       this.get('form.elements').pushObject(formElement);
     },
 
+    deleteFormElement (element) {
+      this.get('form.elements').removeObject(element);
+    },
+
     reorderElements (elements) {
-      console.log(elements);
       this.get('form').set('elements', elements);
     }
   }
