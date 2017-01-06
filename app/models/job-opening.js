@@ -11,6 +11,7 @@ export default Model.extend({
   sendApplicantConfirmation: attr('boolean'),
   sendCloseNotice:           attr('boolean'), // send an email to unrejected talent when job closes
   allocateTalentPool:        attr('boolean'), // allocate unrejected, not hired talent to the pool
+  applicantScoring:          attr('boolean'),
 
   jobType:                 attr('string'),
   supervisoryRequirements: attr('boolean'),

@@ -1,13 +1,40 @@
 <div class="ui form">
   <h2 class="ui horizontal divider header">Screening Form</h2>
-  {{#sortable-group onChange="reorderElements" as |group|}}
+
+  <div class="field center aligned text">
+    {{ui-checkbox
+      id='toggle-applicant-scoring'
+      class='toggle'
+      label=(if model.applicantScoring 'Applicant scoring enabled' 'Applicant scoring disabled')
+      checked=(readonly model.applicantScoring)
+      onChange=(action (mut model.applicantScoring))}}
+  </div>
+
+  {{#sortable-group
+    tagName="ol"
+    class="ui middle aligned divided list screening__form-elements"
+    onChange="reorderElements"
+    as |group|}}
     {{#each form.elements as |element index|}}
-      {{form/form-element element group index=index}}
+      {{form/form-element
+        element
+        group
+        index=index
+        tagName="li"
+        class="form-element__list-item"
+        onRemove=(action "deleteFormElement")}}
     {{/each}}
   {{/sortable-group}}
+
   <button class="ui primary fluid button" type="button" {{action "addFormElement"}}><i class="plus icon"></i>Add a question</button>
+
   <div class="ui divider"></div>
   <form {{action "saveAndContinue" on="submit"}}>
-    {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
+    {{#form/action-button
+      type="submit"
+      class="ui huge fluid green button"
+      loading=working}}
+      Next
+    {{/form/action-button}}
   </form>
 </div>

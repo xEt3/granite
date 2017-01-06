@@ -13,13 +13,33 @@ const QuickFormInputComponent = Component.extend({
     this.set('initialValue', this.get(path));
   },
 
-  computedClassName: computed('field.label', function () {
-    return (this.get('field.label') || '').replace(/[^\s\w]/g, '').replace(/\s/g, '-').toLowerCase();
+  computedClassName: computed('field.{label,class}', function () {
+    let label = this.get('field.label'),
+        classN = this.get('field.class');
+
+    return classN || (label || '').replace(/[^\s\w]/g, '').replace(/\s/g, '-').toLowerCase();
   }),
 
   baseInputClass: computed('field.type', function () {
-    let t = this.get('field.type');
-    return t === 'select' ? 'selection' : t === 'date' ? 'ui field' : 'ui fluid input';
+    let t = this.get('field.type'),
+        ic;
+
+    switch (t) {
+    case 'select':
+      ic = 'selection';
+      break;
+    case 'date':
+      ic = 'ui field';
+      break;
+    case 'toggle':
+      ic = 'toggle';
+      break;
+    default:
+      ic = 'ui fluid input';
+      break;
+    }
+
+    return ic;
   }),
 
   inputClass: computed('field.inputClass', function () {

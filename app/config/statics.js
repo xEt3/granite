@@ -96,21 +96,27 @@ const jobTypes = [
 
 const formTypes = [{
   display: 'Freeform Input',
+  icon: 'text cursor',
   use: 'textarea'
 }, {
   display: 'Dropdown Selection',
+  icon: 'caret down',
   use: 'select'
 }, {
   display: 'Radio Selection',
+  icon: 'radio',
   use: 'radio'
 }, {
   display: 'Checkbox',
+  icon: 'checkmark box',
   use: 'checkbox'
 }, {
   display: 'Date',
+  icon: 'calendar',
   use: 'date'
 }, {
   display: 'Toggle',
+  icon: 'toggle off',
   use: 'toggle'
 }];
 

@@ -1,4 +1,4 @@
-{{#unless (or (eq field.type 'checkbox') (eq field.type 'date'))}}
+{{#unless (and (not field.showLabel) (or (eq field.type 'checkbox') (eq field.type 'date') (eq field.type 'toggle')))}}
   <label for="{{computedClassName}}" class="{{field.labelClass}}">{{field.label}}</label>
 {{/unless}}
 
@@ -14,6 +14,8 @@
     <div class="default text">
       {{#if field.selectText}}
         {{field.selectText}}
+      {{else if field.placeholder}}
+        {{field.placeholder}}
       {{else}}
         Select {{field.label}}
       {{/if}}
@@ -37,11 +39,11 @@
     id=computedClassName
     rows=rows
     spellcheck="true"}}
-{{else if (eq field.type 'checkbox')}}
+{{else if (or (eq field.type 'checkbox') (eq field.type 'toggle'))}}
   {{ui-checkbox
     id=computedClassName
     class=inputClass
-    label=field.label
+    label=(or field.placeholder field.label)
     checked=(readonly value)
     onChange=(action (mut value))}}
 {{else if (eq field.type 'date')}}
@@ -57,12 +59,25 @@
       </div>
     </div>
   {{/ui-calendar}}
+{{else if (eq field.type 'radio')}}
+  <div class="grouped inline fields">
+    {{#each (get this field.contentPath) as |item|}}
+      <div class="field">
+        {{ui-radio
+          name=computedClassName
+          label=(if field.displayKey (get item field.displayKey) item)
+          value=item
+          current=value
+          onChange=(action (mut value))}}
+      </div>
+    {{/each}}
+  </div>
 {{else}}
   {{validated-input
     type=field.type
     model=model
     valuePath=field.path
-    placeholder=field.label
+    placeholder=(or field.placeholder field.label)
     inputAttrs=field.inputAttrs
     id=computedClassName
     inputClass=inputClass}}
