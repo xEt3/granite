@@ -15,6 +15,13 @@ const typesWithOptions = [
   'radio'
 ];
 
+const typesWithScore = [
+  'select',
+  'radio',
+  'checkbox',
+  'toggle'
+];
+
 const FormElementComponent = SortableItem.extend({
   formTypes,
   class: [ 'form-element__list-item' ],
@@ -30,6 +37,11 @@ const FormElementComponent = SortableItem.extend({
     return t ? typesWithOptions.indexOf(t) > -1 : false;
   }),
 
+  showScoring: computed('scoring', 'model.type', function () {
+    let t = this.get('model.type');
+    return t && this.get('scoring') ? typesWithScore.indexOf(t) > -1 : false;
+  }),
+
   positionInForm: computed('index', function () {
     return this.get('index') + 1;
   }),
@@ -38,9 +50,16 @@ const FormElementComponent = SortableItem.extend({
     `ex. ${labelSuggestions[Math.floor(Math.random() * labelSuggestions.length)]}`
   ),
 
-  label: computed('model.label', 'positionInForm', function () {
-    let l = this.get('model.label');
-    return l ? `${this.get('positionInForm')}) ${l}` : ' ';
+  label: computed('model.{required,label}', 'positionInForm', function () {
+    let l = this.get('model.label'),
+        r = this.get('model.required'),
+        label = l ? `${this.get('positionInForm')}) ${l}` : ' ';
+
+    if ( l && r ) {
+      label += '*';
+    }
+
+    return label;
   }),
 
   rerenderFormElement: observer('model.{allowAdditions,multiple}', function () {

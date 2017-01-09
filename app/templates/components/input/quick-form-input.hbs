@@ -1,4 +1,4 @@
-{{#unless (and (not field.showLabel) (or (eq field.type 'checkbox') (eq field.type 'date') (eq field.type 'toggle')))}}
+{{#unless (and (not field.showLabel) (or (eq field.type 'checkbox') (eq field.type 'toggle')))}}
   <label for="{{computedClassName}}" class="{{field.labelClass}}">{{field.label}}</label>
 {{/unless}}
 
@@ -50,7 +50,6 @@
     class=inputClass
     onChange=(action (mut value))}}
     <div class="ui calendar" id={{computedClassName}}>
-      <label>{{field.label}}</label>
       <div class="ui input left icon">
         <i class="calendar icon"></i>
         <input type="text" value={{initialValue}} placeholder="Type In Or Select A Date">
