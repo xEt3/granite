@@ -9,6 +9,13 @@
       checked=(readonly model.applicantScoring)
       onChange=(action (mut model.applicantScoring))}}
   </div>
+  <div class="field right aligned icon">
+    <button class="ui compact info button" {{action (toggle "showingPreview" this)}}>
+    <i class="{{unless showingPreview "unhide" "hide"}} icon">
+    </i>
+    {{unless showingPreview "Preview" "Hide Preview"}}
+    </button>
+  </div>
 
   {{#sortable-group
     tagName="ol"
@@ -22,6 +29,7 @@
         index=index
         tagName="li"
         class="form-element__list-item"
+        showingPreview=showingPreview
         onRemove=(action "deleteFormElement")}}
     {{/each}}
   {{/sortable-group}}
