@@ -84,6 +84,7 @@ export default Ember.Mixin.create(AjaxHooks, {
       }
 
       this._afterSave(record);
+      return record;
     }).catch(this.ajaxError.bind(this));
   },
 

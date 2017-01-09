@@ -23,6 +23,12 @@ export default [{
     link: 'account.recruiting'
   }
 }, {
+  when: 'job-opening',
+  prepend: {
+    segment: 'recruiting',
+    link: 'account.recruiting'
+  }
+}, {
   when: 'job-description',
   prepend: {
     segment: 'job descriptions',

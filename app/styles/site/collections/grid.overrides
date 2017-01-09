@@ -1,3 +1,15 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.grid.unpadded {
+  @padding: 0.2rem;
+  margin-left: -@padding;
+  margin-right: -@padding;
+
+  > .column,
+  > .row > .column {
+    padding-left: @padding;
+    padding-right: @padding;
+  }
+}

@@ -6,18 +6,16 @@
   {{#ui-dropdown
     id=computedClassName
     class=inputClass
-    selected=(get model field.path)
+    selected=(readonly (get model field.path))
     forceSelection=false
-    allowAdditions=inputAttrs.allowAdditions
+    allowAdditions=(if field.inputAttrs.allowAdditions true false)
     onChange=(action (mut value))
     as |execute mapper|}}
     <div class="default text">
       {{#if field.selectText}}
         {{field.selectText}}
-      {{else if field.placeholder}}
-        {{field.placeholder}}
       {{else}}
-        Select {{field.label}}
+        --Select--
       {{/if}}
     </div>
     <i class="dropdown icon"></i>
@@ -52,6 +50,7 @@
     class=inputClass
     onChange=(action (mut value))}}
     <div class="ui calendar" id={{computedClassName}}>
+      <label>{{field.label}}</label>
       <div class="ui input left icon">
         <i class="calendar icon"></i>
         <input type="text" value={{initialValue}} placeholder="Type In Or Select A Date">

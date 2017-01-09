@@ -5,8 +5,7 @@
     </a>
   </div>
 
-  {{#if (or model.label model.type)}}
-    <p>Preview</p>
+  {{#if (and model.label model.type)}}
     <div class="form-element__preview">
       {{input/quick-form-input
         (hash
@@ -17,6 +16,8 @@
           contentPath='controller.options'
           displayKey='text'
           class=positionInForm
+          inputClass=(if (and (eq model.type 'select') (or model.multiple model.allowAdditions)) 'search multiple')
+          inputAttrs=(hash allowAdditions=model.allowAdditions)
         )
         emptyObject
         model
@@ -70,11 +71,13 @@
             onChange=(action (mut model.multiple))}}
         </div>
         <div class="field">
-          {{ui-checkbox
-            class='toggle'
-            label='Allow multiple selections'
-            checked=(readonly model.allowAdditions)
-            onChange=(action (mut model.allowAdditions))}}
+          {{#ui-popup content="This option allows users to select from your list of options or add selection(s) of their own."}}
+            {{ui-checkbox
+              class='toggle'
+              label='Allow additions to options'
+              checked=(readonly model.allowAdditions)
+              onChange=(action (mut model.allowAdditions))}}
+          {{/ui-popup}}
         </div>
       </div>
     {{/if}}
@@ -84,20 +87,47 @@
         <label>Add options for the applicant to choose from</label>
       </div>
       {{#if model.options}}
-        <div class="ui vertically divided vertically padded grid form-element__options-grid">
+        <div class="ui vertically divided vertically padded unpadded grid form-element__options-grid">
           {{#each model.options as |option|}}
             <div class="row">
-              <div class="eight wide column">
-                {{input type="text" class="ui mini fluid input" placeholder="Enter option text" value=option.text}}
+              <div class="{{if scoring 'eight' 'sixteen'}} wide column">
+                <div class="ui field">
+                {{input
+                  type="text"
+                  class="ui mini fluid input"
+                  placeholder="Enter option text"
+                  value=option.text}}
+                </div>
+                <a href="#" class="text-danger" {{action "removeOption" option}}><i class="trash icon"></i> Remove</a>
               </div>
-              <div class="eight wide column options-grid__option-controls">
-                <a href="#" class="text-danger" {{action "removeOption" option}}><i class="trash icon"></i> Remove option</a>
-              </div>
+              {{#if scoring}}
+                <div class="eight wide column">
+                  <div class="ui field">
+                  {{input
+                    type="number"
+                    class="ui mini fluid input"
+                    min="-100"
+                    max="100"
+                    step="1"
+                    placeholder="Weight (+/-100)"
+                    disabled=option.disqualifier
+                    value=option.weight}}
+                  </div>
+                  {{ui-checkbox
+                    label='Automatically exclude applicant'
+                    checked=(readonly option.disqualifier)
+                    onChange=(action (mut option.disqualifier))}}
+                </div>
+              {{/if}}
+              {{!-- <div class="{{if scoring 'four' 'eight'}} wide column options-grid__option-controls">
+              </div> --}}
             </div>
           {{/each}}
         </div>
       {{/if}}
       <a href="#" {{action "addOption"}}><i class="plus icon"></i>Add option...</a>
+    {{else if scoring}}
+
     {{/if}}
   {{/unless}}
 </div>

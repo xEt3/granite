@@ -3,6 +3,10 @@ ol.ui.list.screening__form-elements {
 
   margin-left: @list-margin-left;
 
+  &.screening__form-elements--preview li.form-element__list-item .form-element__preview {
+    opacity: 1;
+  }
+
   li.form-element__list-item {
     padding: 1em;
     transition: background-color .4s, opacity .8s;
@@ -25,8 +29,37 @@ ol.ui.list.screening__form-elements {
       padding-bottom: 0;
     }
 
-    .grid.form-element__options-grid > .row > .column.options-grid__option-controls {
-      padding: 0.4em 0em;
+    .grid.form-element__options-grid > .row {
+      @fs: 0.8em;
+
+      .checkbox {
+        @chksize: 1em;
+
+        input {
+          height: @chksize;
+          width: @chksize;
+        }
+
+        label {
+          padding-left: @fs * 2.2;
+          font-size: @fs;
+
+          &:before {
+            height: @chksize;
+            width: @chksize;
+            top: 3px;
+            left: 3px;
+          }
+
+          &:after {
+            font-size: @fs;
+          }
+        }
+      }
+
+      > .column:first-child > a {
+        font-size: @fs;
+      }
     }
 
     .form-element__controls {

@@ -2,24 +2,22 @@
   <h2 class="ui horizontal divider header">Screening Form</h2>
 
   <div class="field center aligned text">
-    {{ui-checkbox
-      id='toggle-applicant-scoring'
-      class='toggle'
-      label=(if model.applicantScoring 'Applicant scoring enabled' 'Applicant scoring disabled')
-      checked=(readonly model.applicantScoring)
-      onChange=(action (mut model.applicantScoring))}}
   </div>
   <div class="field right aligned icon">
-    <button class="ui compact info button" {{action (toggle "showingPreview" this)}}>
-    <i class="{{unless showingPreview "unhide" "hide"}} icon">
-    </i>
-    {{unless showingPreview "Preview" "Hide Preview"}}
+    <button type="button" class="ui compact {{if showingPreview 'green'}} button" {{action (toggle "showingPreview" this)}}>
+      <i class="{{if showingPreview 'un'}}hide icon"></i>
+      {{if showingPreview 'Hide '}}Preview
+    </button>
+
+    <button type="button" id="toggle-applicant-scoring" class="ui compact {{if model.applicantScoring 'blue'}} button" {{action (toggle "applicantScoring" model)}}>
+      <i class="star icon"></i>
+      Applicant Scoring {{if model.applicantScoring 'On' 'Off'}}
     </button>
   </div>
 
   {{#sortable-group
     tagName="ol"
-    class="ui middle aligned divided list screening__form-elements"
+    class=sortGroupClass
     onChange="reorderElements"
     as |group|}}
     {{#each form.elements as |element index|}}
@@ -30,11 +28,13 @@
         tagName="li"
         class="form-element__list-item"
         showingPreview=showingPreview
+        scoring=model.applicantScoring
         onRemove=(action "deleteFormElement")}}
     {{/each}}
   {{/sortable-group}}
-
-  <button class="ui primary fluid button" type="button" {{action "addFormElement"}}><i class="plus icon"></i>Add a question</button>
+  {{#unless showingPreview}}
+    <button class="ui primary fluid button" type="button" {{action "addFormElement"}}><i class="plus icon"></i>Add a question</button>
+  {{/unless}}
 
   <div class="ui divider"></div>
   <form {{action "saveAndContinue" on="submit"}}>

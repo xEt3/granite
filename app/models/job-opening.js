@@ -25,6 +25,7 @@ export default Model.extend({
   company:          belongsTo('company'),
   creator:          belongsTo('employee'),
   location:         belongsTo('location'),
+  screening:        belongsTo('form'),
   subscribers:      hasMany('employee'),
   emailSubscribers: attr('array'),
 

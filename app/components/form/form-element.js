@@ -2,7 +2,7 @@ import Ember from 'ember';
 import SortableItem from 'ember-sortable/components/sortable-item';
 import { formTypes } from 'granite/config/statics';
 
-const { computed, run } = Ember;
+const { computed, run, observer } = Ember;
 
 const labelSuggestions = [
   'What is your highest level of education?',
@@ -41,6 +41,16 @@ const FormElementComponent = SortableItem.extend({
   label: computed('model.label', 'positionInForm', function () {
     let l = this.get('model.label');
     return l ? `${this.get('positionInForm')}) ${l}` : ' ';
+  }),
+
+  rerenderFormElement: observer('model.{allowAdditions,multiple}', function () {
+    if ( this.get('isDestroyed') || this.get('isDestroying') ) {
+      return;
+    }
+
+    let type = this.get('model.type');
+    this.set('model.type', '');
+    run.next(() => this.set('model.type', type));
   }),
 
   actions: {
