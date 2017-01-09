@@ -25,60 +25,81 @@
     </div>
   {{/if}}
 
-  <div class="two fields">
-    <div class="field">
-      <label>What would you like to ask for question #{{positionInForm}}?</label>
-      {{input
-        type="text"
-        value=model.label
-        placeholder=labelSuggestion}}
+  {{#unless showingPreview}}
+    <div class="two fields">
+      <div class="field">
+        <label>What would you like to ask for question #{{positionInForm}}?</label>
+        {{input
+          type="text"
+          value=model.label
+          placeholder=labelSuggestion}}
+      </div>
+
+      <div class="field">
+        <label>How should they answer?</label>
+        {{#ui-dropdown
+          class='selection'
+          selected=model.type
+          forceSelection=false
+          onChange=(action (mut model.type))}}
+          <div class="default text">
+            Select an input type
+          </div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            {{#each formTypes as |formType|}}
+              <div class="item" data-value="{{formType.use}}">
+                {{#if formType.icon}}
+                  <i class="{{formType.icon}} icon"></i>
+                {{/if}}
+                {{formType.display}}
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      </div>
     </div>
 
-    <div class="field">
-      <label>How should they answer?</label>
-      {{#ui-dropdown
-        class='selection'
-        selected=model.type
-        forceSelection=false
-        onChange=(action (mut model.type))}}
-        <div class="default text">
-          Select an input type
+    {{#if (eq model.type 'select')}}
+      <div class="two fields">
+        <div class="field">
+          {{ui-checkbox
+            class='toggle'
+            label='Allow multiple selections'
+            checked=(readonly model.multiple)
+            onChange=(action (mut model.multiple))}}
         </div>
-        <i class="dropdown icon"></i>
-        <div class="menu">
-          {{#each formTypes as |formType|}}
-            <div class="item" data-value="{{formType.use}}">
-              {{#if formType.icon}}
-                <i class="{{formType.icon}} icon"></i>
-              {{/if}}
-              {{formType.display}}
+        <div class="field">
+          {{ui-checkbox
+            class='toggle'
+            label='Allow multiple selections'
+            checked=(readonly model.allowAdditions)
+            onChange=(action (mut model.allowAdditions))}}
+        </div>
+      </div>
+    {{/if}}
+
+    {{#if requiresOptions}}
+      <div class="field">
+        <label>Add options for the applicant to choose from</label>
+      </div>
+      {{#if model.options}}
+        <div class="ui vertically divided vertically padded grid form-element__options-grid">
+          {{#each model.options as |option|}}
+            <div class="row">
+              <div class="eight wide column">
+                {{input type="text" class="ui mini fluid input" placeholder="Enter option text" value=option.text}}
+              </div>
+              <div class="eight wide column options-grid__option-controls">
+                <a href="#" class="text-danger" {{action "removeOption" option}}><i class="trash icon"></i> Remove option</a>
+              </div>
             </div>
           {{/each}}
         </div>
-      {{/ui-dropdown}}
-    </div>
-  </div>
-
-  {{#if requiresOptions}}
-    <div class="field">
-      <label>Add options for the applicant to choose from</label>
-    </div>
-    {{#if model.options}}
-      <div class="ui vertically divided vertically padded grid form-element__options-grid">
-        {{#each model.options as |option|}}
-          <div class="row">
-            <div class="eight wide column">
-              {{input type="text" class="ui mini fluid input" placeholder="Enter option text" value=option.text}}
-            </div>
-            <div class="eight wide column options-grid__option-controls">
-              <a href="#" class="text-danger" {{action "removeOption" option}}><i class="trash icon"></i> Remove option</a>
-            </div>
-          </div>
-        {{/each}}
-      </div>
+      {{/if}}
+      <a href="#" {{action "addOption"}}><i class="plus icon"></i>Add option...</a>
     {{/if}}
-    <a href="#" {{action "addOption"}}><i class="plus icon"></i>Add option...</a>
-  {{/if}}
+  {{/unless}}
 </div>
 
 <div class="form-element__handle">
