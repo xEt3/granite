@@ -1,1 +1,39 @@
-{{outlet}}
+<form {{action "saveAndContinue" on="submit"}}>
+  <h2 class="ui horizontal divider header">Review</h2>
+  <h3 class="ui center aligned lightly weighted header">
+    You are hiring <strong>{{model.positions}} {{inflect-text model.job.title model.positions}}</strong> for your <strong>{{model.location.name}}</strong> location.
+    {{#if model.applicantSources.length}}
+      After launching your campaign, Granite will post your job to
+      {{!#ui-popup content=sourcesList}}
+        <strong>{{model.applicantSources.length}} {{inflect-text 'source' model.applicantSources.length}}</strong>
+      {{!/ui-popup}}
+      beginning
+      <strong>
+        {{~#if model.startOn}}
+          {{time-ago model.startOn}} on {{time model.startOn}}
+        {{else}}
+          immediately
+        {{~/if}}
+      </strong>
+      until
+      <strong>
+        {{~#if model.endOn}}
+          {{time model.endOn}}
+        {{else}}
+          the position is filled
+        {{~/if}}.
+      </strong>
+    {{/if}}
+    You can edit this campaign at any time, but changes to the listing may take up to 24 hours to update.
+  </h3>
+
+  <div class="ui divider"></div>
+
+  {{#form/action-button
+    type="submit"
+    class="ui huge fluid green button"
+    loading=working}}
+      <i class="rocket icon"></i> Launch Campaign
+  {{/form/action-button}}
+</form>
+{{!-- {{inflect-text 'Employee' employees.length}}--}}
