@@ -1,9 +1,11 @@
 import Ember from 'ember';
 
-const { Mixin, computed, inject } = Ember;
+const { Mixin, computed, inject: { controller } } = Ember;
 
 export default Mixin.create({
-  application: inject.controller(),
+  application: controller(),
+  // steps: computed.reads('target.steps'),
+  // basePath: computed.reads('target.basePath'),
 
   currentStep: computed('steps.@each.link', 'application.currentPath', function () {
     const steps = this.get('steps'),

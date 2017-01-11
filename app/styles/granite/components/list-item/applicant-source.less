@@ -1,0 +1,41 @@
+.ui.items > div.applicant-source__list-item.item {
+  @imageSize: 45px;
+  @borderRadius: 7px;
+
+  cursor: pointer;
+  transition: color .35s ease-in-out, background-color .35s ease-in-out;
+  user-select: none;
+  padding: 1em;
+
+  &:first-child,
+  &:last-child {
+    padding-top: 1em !important;
+    padding-bottom: 1em !important;
+  }
+
+  &:first-child {
+    border-radius: @borderRadius @borderRadius 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 @borderRadius @borderRadius;
+  }
+
+  &.applicant-source__list-item--selected {
+    background-color: @granite-blue;
+    color: white;
+
+    > .content,
+    > .content .header,
+    > .content .meta,
+    > .content .extra,
+    > .content .header label {
+      color: white;
+    }
+  }
+
+  img.ui.image.applicant-source-item__image {
+    width: @imageSize;
+    height: @imageSize;
+  }
+}

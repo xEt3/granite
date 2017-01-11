@@ -1,1 +1,71 @@
-{{outlet}}
+<div class="ui form">
+  <h2 class="ui horizontal divider header">
+    Available Manual Sources
+    <a href="#" {{action
+      (pipe
+        (action "addManualSource")
+        (action 'save')
+        (action 'addToSelection')
+      )
+    }}>
+      <i class="plus icon"></i>
+    </a>
+  </h2>
+  <div class="ui divided link items">
+    {{#each sources.manual as |manualSource|}}
+      {{list-item/applicant-source-select
+        manualSource
+        selected=(contains manualSource model.manualApplicantSources)
+        onUpdate=(action "mutManualSelection")}}
+    {{else}}
+      <h2 class="center aligned light text header">
+        <i class="exclamation triangle icon"></i>
+        You don't have any available manual sources.
+      </h2>
+    {{/each}}
+  </div>
+
+  <h2 class="ui horizontal divider header">Available Automatic Sources</h2>
+  <div class="ui divided link items">
+    {{#each sources.automatic as |source|}}
+      {{list-item/applicant-source-select
+        source
+        selected=(contains source model.applicantSources)
+        onUpdate=(action "mutSelection")}}
+    {{/each}}
+  </div>
+
+  <div class="ui divider"></div>
+
+  <form {{action "saveAndContinue" on="submit"}}>
+    {{#form/action-button
+      type="submit"
+      class="ui huge fluid green button"
+      loading=working}}
+        Next
+    {{/form/action-button}}
+  </form>
+</div>
+
+{{#ui-modal id='modal__add--manual-source' class='small form'}}
+  <i class="close icon"></i>
+  <div class="header">
+    Create a new manual source
+  </div>
+  <div class="content">
+    {{#input/ui-input
+      value=manualSource.name
+      placeholder="ex. Post to Craigslist"}}
+      Manual Source Name
+    {{/input/ui-input}}
+  </div>
+  <div class="actions">
+    <button type="button" class="ui red button" {{action 'respondManualSource' false}}>
+      Cancel
+    </button>
+    <button type="button" class="ui green right labeled icon button" disabled={{not manualSource.name}} {{action 'respondManualSource' true}}>
+      Save Manual Source
+      <i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}

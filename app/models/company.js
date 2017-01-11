@@ -24,6 +24,7 @@ export default Model.extend(Validations, {
   employeeCustomFields: attr('array'),
 
   urlPrefix: attr('string'),
+  collectEEO: attr('boolean'),
 
   linkedToSlate: computed('linkedServices.[]', function () {
     let services = this.get('linkedServices');

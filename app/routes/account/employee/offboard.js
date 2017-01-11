@@ -1,43 +1,50 @@
 import Ember from 'ember';
-import ajaxStatus from 'granite/mixins/ajax-status';
+import wizard from 'granite/mixins/wizard/route';
 
-const { Route, inject } = Ember;
+const { Route, A } = Ember;
+const offboardProps = [
+  'offboarding',
+  'offboardingStep',
+  'offboarder',
+  'offboardingProgress',
+  'terminationDate',
+  'terminationReason',
+  'eligibleForRehire',
+  'finalAddress',
+  'finalAddressSelfService'
+];
 
-export default Route.extend(ajaxStatus, {
-  auth: inject.service(),
+export default Route.extend(wizard, {
+  key: 'offboarding',
+  basePath: 'account.employee.offboard',
+  returnPath: 'account.employee.complete-offboarding',
+  setUserOn: 'offboarder',
+
+  steps: A([{
+    icon: 'info',
+    title: 'Start',
+    link: 'index'
+  }, {
+    icon: 'list',
+    title: 'Details',
+    link: 'details'
+  }, {
+    icon: 'options',
+    title: 'Options',
+    link: 'options'
+  }, {
+    icon: 'mobile',
+    title: 'Assets',
+    link: 'assets'
+  }, {
+    icon: 'cubes',
+    title: 'Reorganization',
+    link: 'reorganization'
+  }]),
 
   actions: {
-    saveAndContinue () {
-      const controller = this.get('controller'),
-            model = controller.get('model');
-
-      this.ajaxStart();
-
-      model.setProperties({
-        offboardingStep: controller.get('currentStepIndex'),
-        offboarder: this.get('auth.user'),
-        offboarding: true,
-        offboardingProgress: parseInt(controller.get('progress'), 0)
-      });
-
-      model.save()
-      .then(() => {
-        this.ajaxSuccess('Successfully saved progress.');
-
-        if ( !controller.get('nextStep') ) {
-          this.transitionTo('account.employee.complete-offboarding');
-          return;
-        }
-
-        this.transitionTo('account.employee.offboard.' + controller.get('nextStep.link'));
-      })
-      .catch(this.ajaxError.bind(this));
-    },
-
     cancelOffboard () {
-      const controller = this.get('controller'),
-            model = controller.get('model'),
-            offboardProps = [ 'offboarding', 'offboardingStep', 'offboarder', 'offboardingProgress', 'terminationDate', 'terminationReason', 'eligibleForRehire', 'finalAddress', 'finalAddressSelfService' ];
+      const model = this.get('model');
 
       offboardProps.map(prop => model.set(prop, undefined));
 
@@ -51,4 +58,3 @@ export default Route.extend(ajaxStatus, {
     }
   }
 });
-// TODO: get rid of redundant key terminatedOn
