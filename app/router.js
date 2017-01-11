@@ -137,6 +137,7 @@ Router.map(function() {
         this.route('eeo');
         this.route('finish');
       });
+      this.route('setup-complete');
     });
   });
 

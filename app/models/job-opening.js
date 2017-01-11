@@ -27,6 +27,8 @@ export default Model.extend({
   location:         belongsTo('location'),
   screening:        belongsTo('form'),
   subscribers:      hasMany('employee'),
+  applicantSources: hasMany('applicant-source'),
+  manualApplicantSources: hasMany('manual-applicant-source'),
   emailSubscribers: attr('array'),
 
   startOn: attr('date'),

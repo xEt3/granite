@@ -11,6 +11,11 @@ export default Model.extend({
     defaultValue: () => A()
   }),
 
+  trueWeight: attr('number'),
+  falseWeight: attr('number'),
+
+  trueDisqualifies: attr('boolean'),
+  falseDisqualifies: attr('boolean'),
   allowAdditions: attr('boolean'),
   multiple: attr('boolean'),
 

@@ -1,38 +1,40 @@
 import Ember from 'ember';
-import ajaxStatus from 'granite/mixins/ajax-status';
+import wizard from 'granite/mixins/wizard/route';
 
-const { Route, inject } = Ember;
+const { Route, A } = Ember;
 
-export default Route.extend(ajaxStatus, {
-  auth: inject.service(),
+export default Route.extend(wizard, {
+  key: 'setup',
+  basePath: 'account.job-opening.setup',
+  returnPath: 'account.job-opening.setup-complete',
+
+  steps: A([{
+    icon: 'home',
+    title: 'Start',
+    link: 'index'
+  }, {
+    icon: 'settings',
+    title: 'Settings',
+    link: 'settings'
+  }, {
+    icon: 'help',
+    title: 'Screening',
+    link: 'screening'
+  }, {
+    icon: 'announcement',
+    title: 'Sources',
+    link: 'sources'
+  }, {
+    icon: 'pie chart',
+    title: 'EEO',
+    link: 'eeo'
+  }, {
+    icon: 'flag checkered',
+    title: 'Finish',
+    link: 'finish'
+  }]),
 
   actions: {
-    saveAndContinue () {
-      const controller = this.get('controller'),
-            model = controller.get('model');
-
-      this.ajaxStart();
-
-      model.setProperties({
-        setup: true,
-        setupStep: controller.get('currentStepIndex'),
-        setupProgress: parseInt(controller.get('progress'), 0)
-      });
-
-      model.save()
-      .then(() => {
-        this.ajaxSuccess('Successfully saved progress.');
-
-        if ( !controller.get('nextStep') ) {
-          this.transitionTo('account.job-opening.campaign');
-          return;
-        }
-
-        this.transitionTo('account.job-opening.setup.' + controller.get('nextStep.link'));
-      })
-      .catch(this.ajaxError.bind(this));
-    },
-
     startSetup () {
       this.get('controller').set('model.offboarding', true);
       this.send('saveAndContinue');
