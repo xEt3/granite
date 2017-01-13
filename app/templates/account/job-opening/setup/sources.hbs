@@ -1,5 +1,21 @@
 <div class="ui form">
   <h2 class="ui horizontal divider header">
+    Display
+  </h2>
+  <p>Edit the title and description of your job listing</p>
+
+  {{#input/ui-input value=model.title placeholder='What shows as the job name on the listing?'}}
+    Title
+  {{/input/ui-input}}
+
+  <div class="field">
+    <label>Description (How your job description displays on the listing)</label>
+    {{input/rich-text
+      value=model.description
+      onChange=(action (mut model.description))}}
+  </div>
+
+  <h2 class="ui horizontal divider header">
     Available Manual Sources
     <a href="#" {{action
       (pipe
