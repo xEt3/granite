@@ -3,7 +3,9 @@ import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 
 export default Model.extend({
-  name: attr('string'),
+  name:        attr('string'),
+  title:       attr('string'),
+  description: attr('string'),
 
   availableInternally:       attr('boolean'),
   internalDuration:          attr('number'), // number of days that this job is internally available before posting to outside sources
