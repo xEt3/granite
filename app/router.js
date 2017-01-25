@@ -44,10 +44,17 @@ Router.map(function() {
       this.route('index', { path: '/' }, function() {
         this.route('index', { path: '' });
         this.route('equipment');
-        this.route('job');
         this.route('history');
         this.route('history-report');
         this.route('future-changes');
+        this.route('counseling', function() {
+          this.route('new');
+          this.route('corrective-action');
+          this.route('issue', function() {
+            this.route('new');
+          });
+        });
+
         this.route('edit', function() {
           this.route('index', { path: '/personal' });
           this.route('job');
