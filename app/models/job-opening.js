@@ -1,6 +1,10 @@
+import Ember from 'ember';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
+import moment from 'moment';
+
+const { computed } = Ember;
 
 export default Model.extend({
   name:        attr('string'),
@@ -22,6 +26,7 @@ export default Model.extend({
   setupStep:      attr('number'),
   setupProgress:  attr('number'),
   completedSetup: attr('date'),
+  completedOn:    attr('date'), //when the campaign was completed
 
   job:              belongsTo('job'),
   company:          belongsTo('company'),
@@ -39,5 +44,12 @@ export default Model.extend({
 
   created: attr('date', {
     defaultValue: () => new Date()
+  }),
+
+  hiring: computed('completedSetup', 'completedOn', 'startOn', 'endOn', function () {
+    let now = moment(),
+        props = this.getProperties('completedSetup', 'completedOn', 'startOn', 'endOn');
+
+    return !!(props.completedSetup && !props.completedOn && (!props.endOn || now.isBefore(props.endOn)) && now.isAfter(props.startOn));
   })
 });
