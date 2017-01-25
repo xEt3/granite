@@ -9,8 +9,15 @@
     <span class="ui small text right floated">Created: {{time model.created}}{{#if model.creator}}by {{model.creator.fullName}}{{/if}}</span>
   </div>
   <div class="extra">
-    {{#unless model.setupCompleted}}
+    {{#if model.completedSetup}}
+      {{#if hiring}}
+        <span class="ui green label"></span>
+      {{else}}
+
+      {{/if}}
+      <span class="ui blue label"><i class="check icon"></i>Completed setup {{time-ago model.completedSetup}}</span>
+    {{else}}
       <span class="ui orange label">Needs Setup</span>
-    {{/unless}}
+    {{/if}}
   </div>
 {{/if}}
