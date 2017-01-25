@@ -44,7 +44,11 @@ export default Route.extend(wizard, {
 
   actions: {
     cancelOffboard () {
-      const model = this.get('model');
+      const model = this.get('controller.model');
+
+      if ( !model ) {
+        return;
+      }
 
       offboardProps.map(prop => model.set(prop, undefined));
 

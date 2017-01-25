@@ -5,3 +5,8 @@
 .ui.opaque.segment {
   background-color: fade(white, 80%);
 }
+
+.ui.segment,
+.ui.raised.segment {
+  border: none;
+}

@@ -1,8 +1,13 @@
+import DS from 'ember-data';
 import ApplicationSerializer from './application';
 import serializeObject from '../utils/serialize-object';
 import expandObject from '../utils/expand-serialized-object';
 
-export default ApplicationSerializer.extend({
+export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
+  attrs: {
+    correctiveActionSeverities: { embedded: 'always' }
+  },
+
   normalize ( modelClass, hash ) {
     if ( modelClass.modelName === 'company' ) {
       serializeObject(hash, true, 'address');
