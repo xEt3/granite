@@ -4,6 +4,7 @@ const { Component, computed, Inflector } = Ember,
       inflect = new Inflector(Inflector.defaultRules);
 
 let ResourceListComponent = Component.extend({
+  modelIdentifier: 'id',
   // resourceName works off of an AdapterPopulatedRecordArray
   // and the type property that returns the query's model
   resourceName: computed('model.type', function () {

@@ -1,5 +1,8 @@
 {{#unless (and (not field.showLabel) (or (eq field.type 'checkbox') (eq field.type 'toggle')))}}
   <label for="{{computedClassName}}" class="{{field.labelClass}}">{{field.label}}</label>
+  {{#if field.helpText}}
+    <p>{{field.helpText}}</p>
+  {{/if}}
 {{/unless}}
 
 {{#if (eq field.type 'select')}}
@@ -21,7 +24,7 @@
     <i class="dropdown icon"></i>
     <div class="menu">
       {{#each (get this field.contentPath) as |item|}}
-        <div class="item" data-value="{{map-value mapper item}}">
+        <div class="item" data-value="{{if field.valuePath (get item field.valuePath) (map-value mapper item)}}">
           {{#if field.displayKey}}
             {{get item field.displayKey}}
           {{else}}

@@ -11,6 +11,16 @@ export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
   normalize ( modelClass, hash ) {
     if ( modelClass.modelName === 'company' ) {
       serializeObject(hash, true, 'address');
+      if ( hash.contact ) {
+        if ( hash.contact.name ) {
+          hash.contactLastName = hash.contact.name.last;
+          hash.contactFirstName = hash.contact.name.first;
+          hash.contactMiddleName = hash.contact.name.middle;
+        }
+        hash.contactPhone = hash.contact.phone;
+        hash.contactExtension = hash.contact.ext;
+        delete hash.contact;
+      }
     }
 
     return this._super(...arguments);

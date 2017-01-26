@@ -1,0 +1,59 @@
+<div class="ui form">
+  <h3 class="ui header">Corrective Action Severities</h3>
+  <p>
+    Severities are levels of actions issued during counseling when using the employee counseling module. An example of a series of severities is: "Verbal Warning", "Written Warning", "Final Written Warning" with orders of 1 through 3 respectively. Please review your handbook to make sure your process is communicated to your employees.
+  </p>
+  <div class="ui divider"></div>
+  <button type="button" class="ui primary fluid button" {{action "openSeverityModal"}}>
+    <i class="plus icon"></i>Add Severity
+  </button>
+  <div class="ui list">
+    {{#each model.correctiveActionSeverities as |severity|}}
+      <div class="item">
+        {{severity.name}} ({{severity.order}})
+        <a href="#" {{action "beginSeverityEdit" severity}}>
+          <i class="edit icon"></i>
+        </a>
+        {{#confirm-modal class="item" as |confirm|}}
+            <a href="#" class="right floated text-danger" {{action (pipe confirm (action "removeSeverity" severity))}}>Remove</a>
+        {{/confirm-modal}}
+      </div>
+    {{else}}
+      <p class="center aligned text">You haven't configured severities, yet. Use the "Add Severity" button to do so.</p>
+    {{/each}}
+  </div>
+
+  <div class="ui divider"></div>
+  <form {{action "save" on="submit"}}>
+    {{#form/action-button
+      type="submit"
+      class='ui positive fluid huge button'
+      loading=working}}
+      Save Changes
+    {{/form/action-button}}
+  </form>
+</div>
+
+{{#ui-modal name='modal__add-cas' id='modal__add-cas' class='small form'}}
+  <div class="header">
+    <i class="plus icon"></i>{{if editingCas 'Edit' 'Add'}} corrective action severity
+  </div>
+  <div class="content">
+  {{quick-form
+    severityForm
+    currentSeverity
+    this
+    tagName='div'}}
+  </div>
+  <div class="actions">
+    {{#unless editingCas}}
+      <button class="ui red button" {{action 'respondSeverityAddition' false}}>
+        Cancel
+      </button>
+    {{/unless}}
+    <button class="ui primary right labeled icon button" {{action 'respondSeverityAddition' true}}>
+      Done
+      <i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}

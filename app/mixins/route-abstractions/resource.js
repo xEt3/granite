@@ -31,11 +31,11 @@ export default Mixin.create({
         sorter = this.sortQuery;
 
     if ( mutate && typeof mutate === 'function' ) {
-      mutate(query);
+      mutate.call(this, query);
     }
 
     if ( sorter && typeof sorter === 'function' ) {
-      sorter(query);
+      sorter.call(this, query);
     }
 
     return this.store.query(this.get('modelName'), query);

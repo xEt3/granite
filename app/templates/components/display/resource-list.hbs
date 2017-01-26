@@ -1,6 +1,6 @@
 {{#each model as |item|}}
   {{#if linkTo}}
-    {{#link-to linkTo item.id class=linkClass}}
+    {{#link-to linkTo (get item modelIdentifier) class=linkClass}}
       {{component itemComponent item class=componentClass}}
     {{/link-to}}
   {{else}}
