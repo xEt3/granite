@@ -49,13 +49,15 @@ export default Route.extend(add, {
   },
 
   employees: computed(function () {
+    let $nin = [this.modelFor('account.employee').get('id')],
+        user = this.get('auth.user');
+
+    if (user.get('employee.id')) {
+      $nin.push(user.get('employee.id'));
+    }
+
     return this.store.query('employee', {
-      _id: {
-        $nin: [
-          this.get('auth.user.employee.id'),
-          this.modelFor('account.employee').get('id')
-        ]
-      }
+      _id: { $nin }
     });
   })
 });

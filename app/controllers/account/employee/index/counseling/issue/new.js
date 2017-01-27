@@ -13,9 +13,25 @@ export default Controller.extend(addEdit, {
   sortedSeverities: computed.sort('severities', 'severitySorting'),
 
   form: computed(() => [{
+    label: 'Date to Issue',
+    type: 'date',
+    path: 'issuedOn',
+    helpText: 'This is the date that you presented the corrective action to the employee. This date is editable, has no effect on operations, and is only for your records.'
+  }, {
+    label: 'Should you follow up?',
+    type: 'date',
+    path: 'followUpOn',
+    helpText: 'If not, leave blank'
+  }, {
     label: 'Description',
     type: 'textarea',
-    path: 'description'
+    path: 'description',
+    rows: '9'
+  }, {
+    label: 'Your notes',
+    type: 'textarea',
+    path: 'notes',
+    rows: '6'
   }, {
     label: 'Type',
     type: 'select',
@@ -27,7 +43,7 @@ export default Controller.extend(addEdit, {
       allowAdditions: true
     }
   }, {
-    label: 'Starting Severity',
+    label: 'Severity',
     type: 'select',
     inputClass: 'search',
     path: 'severity',
@@ -35,14 +51,5 @@ export default Controller.extend(addEdit, {
     displayKey: 'title',
     valuePath: 'id',
     selectText: 'Select severity'
-  }, {
-    label: 'Exclude Employees From Issue',
-    helpText: 'Excluding employees will block employees selected from seeing the issue.',
-    type: 'select',
-    inputClass: 'multiple search',
-    path: 'excludedEmployees',
-    contentPath: 'controller.employees',
-    displayKey: 'fullName',
-    selectText: 'Select one or multiple'
   }])
 });

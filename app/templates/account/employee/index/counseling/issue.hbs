@@ -2,7 +2,10 @@
   {{#confirm-modal as |confirmDelete|}}
     <hgroup class="clearfix">
       <h2 class="ui left floated header">
-        {{model.title}}
+        {{#link-to 'account.employee.index.counseling.issue'}}
+          {{model.title}}
+        {{/link-to}}
+
         <div class="sub header">
           <strong>{{model.type}}</strong>
         </div>
@@ -13,15 +16,17 @@
         </div>
       </h2>
 
-      {{#ui-dropdown class="item icon top right pointing right floated"}}
-        <i class="wrench icon"></i><i class="dropdown icon"></i>
-        <div class="menu">
-          <div class="text-danger header">Danger Zone</div>
-            <a href="#" class="text-danger item" {{action (pipe confirmDelete (action 'delete'))}}>
-              <i class="trash icon"></i>Delete Record
-            </a>
-        </div>
-      {{/ui-dropdown}}
+      {{#unless onCorrectiveActionSubroute}}
+        {{#ui-dropdown class="item icon top right pointing right floated"}}
+          <i class="wrench icon"></i><i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="text-danger header">Danger Zone</div>
+              <a href="#" class="text-danger item" {{action (pipe confirmDelete (action 'delete'))}}>
+                <i class="trash icon"></i>Delete Record
+              </a>
+          </div>
+        {{/ui-dropdown}}
+      {{/unless}}
     </hgroup>
   {{/confirm-modal}}
 

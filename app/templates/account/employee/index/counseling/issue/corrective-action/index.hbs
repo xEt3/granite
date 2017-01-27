@@ -1,1 +1,46 @@
-{{outlet}}
+{{#confirm-modal as |confirmDelete|}}
+  <hgroup>
+    <span class="ui header">
+      {{#if (await model.actionSeverity)}}
+        {{get (await model.actionSeverity) 'name'}} on
+      {{/if}}
+      {{time
+        (if model.issuedOn model.issuedOn model.created)
+        'MMMM Do YYYY'}}
+    </span>
+    {{#ui-dropdown class="item icon top right pointing right floated"}}
+      <i class="wrench icon"></i><i class="dropdown icon"></i>
+      <div class="menu">
+        <div class="header">Actions</div>
+        {{#if (and model.followUpOn (not model.resolutionStatusOn))}}
+          <a href="#" class="item">
+            <i class="repeat icon"></i>Follow Up
+          </a>
+        {{/if}}
+        {{#link-to
+          'account.employee.index.counseling.issue.corrective-action.edit'
+          class="item"}}
+          <i class="edit icon"></i>Edit
+        {{/link-to}}
+        <div class="text-danger header">Danger Zone</div>
+          <a href="#" class="text-danger item" {{action (pipe confirmDelete (action 'delete'))}}>
+            <i class="trash icon"></i>Delete Record
+          </a>
+      </div>
+    {{/ui-dropdown}}
+  </hgroup>
+{{/confirm-modal}}
+
+<div class="ui divider"></div>
+
+<h4 class="ui header">Action Description</h4>
+<div class="ui stacked text segment">
+  <p>{{long-text model.description}}</p>
+</div>
+
+{{#if model.notes}}
+  <h4 class="ui header">Notes</h4>
+  <div class="ui stacked text segment">
+    <p>{{model.notes}}</p>
+  </div>
+{{/if}}
