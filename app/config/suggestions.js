@@ -1,10 +1,12 @@
 const correctiveActionDescription =
-`
-  Time:
-  Place:
-  Date of Occurrence:
-  Persons Present:
-  Organizational Impact:
-`;
+`Time:
+
+Place:
+
+Date of Occurrence:
+
+Persons Present:
+
+Organizational Impact:`;
 
 export { correctiveActionDescription };

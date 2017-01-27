@@ -11,16 +11,21 @@ export default Model.extend({
   type:        attr('string'),
 
   company:           belongsTo('company'),
-  creator:           belongsTo('company-user'),
+  creator:           belongsTo('employee'),
   employee:          belongsTo('employee'),
   employeeIssue:     belongsTo('employee-issue'),
   excludedEmployees: hasMany('employee'),
+  severity:          attr('string'),
 
-  issuedOn:      attr('date'),
-  followUpOn:    attr('date'),
-  notes:         attr('string'),
-  followUpNotes: attr('string'),
-  didResolve:    attr('boolean'),
+  notes:              attr('string'),
+  followUpNotes:      attr('string'),
+  didResolve:         attr('boolean'),
+  followUpOn:         attr('date'),
+  resolutionStatusOn: attr('date'),
+
+  issuedOn: attr('date', {
+    defaultValue: () => new Date()
+  }),
 
   created: attr('date', {
     defaultValue: () => new Date()

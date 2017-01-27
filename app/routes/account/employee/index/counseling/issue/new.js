@@ -1,12 +1,13 @@
 import Ember from 'ember';
 import { correctiveActionDescription } from 'granite/config/suggestions';
 import add from 'granite/mixins/route-abstractions/add';
+import { issueTypes } from 'granite/config/statics';
 
 const {
   Route,
   RSVP,
-  inject: { service }//,
-  // computed
+  A,
+  inject: { service }
 } = Ember;
 
 export default Route.extend(add, {
@@ -16,35 +17,64 @@ export default Route.extend(add, {
 
   model () {
     return RSVP.hash({
-      correctiveAction: this._super(...arguments)//,
-      // employees:        this.get('employees')
+      correctiveAction: this._super(...arguments),
+      issueTypes: this.getIssueTypes()
     });
   },
 
   getModelDefaults () {
-    return {
-      creator: this.get('auth.user.employee'),
-      description: correctiveActionDescription,
-      employee: this.modelFor('account.employee'),
-      employeeIssue: this.modelFor('account.employee.index.counseling.issue').issue
-    };
+    let employeeIssue = this.modelFor('account.employee.index.counseling.issue');
+
+    return this.getLastSeverity()
+    .then(severity => {
+      return {
+        severity,
+        employeeIssue,
+        type: employeeIssue.get('type'),
+        creator: this.get('auth.user.employee'),
+        description: correctiveActionDescription,
+        employee: this.modelFor('account.employee')
+      };
+    });
   },
 
   setupController (controller, model) {
     controller.setProperties({
-      model:      model.correctiveAction//,
-      // employees:  model.employees
+      model:      model.correctiveAction,
+      issueTypes: model.issueTypes
     });
-  }//,
+  },
 
-  // employees: computed(function () {
-  //   return this.store.query('employee', {
-  //     _id: {
-  //       $nin: [
-  //         this.get('auth.user.employee.id'),
-  //         this.modelFor('account.employee').get('id')
-  //       ]
-  //     }
-  //   });
-  // })
+  getIssueTypes () {
+    return this.get('ajax').request('/api/v1/employee-issues', {
+      data: {
+        _distinct: true,
+        select: 'type'
+      }
+    })
+    .then(res => A(issueTypes.concat(res)).uniq());
+  },
+
+  getLastSeverity () {
+    let employeeIssue = this.modelFor('account.employee.index.counseling.issue');
+    // Query for corrective actions using this issue and get
+    // the first, newest action
+    return this.store.query('corrective-action', {
+      employeeIssue: employeeIssue.get('id'),
+      limit: 1,
+      sort: { created : -1 }
+    })
+    .then(result => {
+      console.log(result);
+      // Get the first correctiveAction in the APRA or the employeeIssue
+      let targetObject = result.get('firstObject') || employeeIssue;
+      console.log(targetObject);
+      return targetObject.get('severity');
+    });
+    // theArray.get('firstObject')
+    // AdapterPopulatedRecordArray
+    // if none found, use severity on issue
+    // SCOTT: GO
+
+  }
 });

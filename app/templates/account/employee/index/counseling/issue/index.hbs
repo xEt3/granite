@@ -1,3 +1,17 @@
-{{#link-to 'account.employee.index.counseling.issue.new' class="ui orange fluid huge button"}}
+{{#link-to 'account.employee.index.counseling.issue.new' class="ui orange fluid button"}}
   <i class="bullseye icon"></i>Issue a new corrective action
 {{/link-to}}
+
+<div class="ui divider"></div>
+
+{{display/resource-list
+  model
+  "list-item/employee-corrective-action-item"
+  linkTo="account.employee.index.counseling.issue.corrective-action"
+  linkClass="item"
+  class="ui divided link items"}}
+
+{{elements/x-pagination
+  page=(readonly page)
+  pages=(readonly pages)
+  onchange=(action (mut page))}}
