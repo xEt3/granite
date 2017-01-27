@@ -30,6 +30,9 @@ Router.map(function() {
     this.route('index', { path: '/dashboard' });
 
     this.route('settings', function() {
+      this.route('index', { path: '/general' }, function() {
+        this.route('processes');
+      });
       this.route('billing');
       this.route('integrations');
     });
@@ -49,9 +52,11 @@ Router.map(function() {
         this.route('future-changes');
         this.route('counseling', function() {
           this.route('new');
-          this.route('corrective-action');
-          this.route('issue', function() {
+          this.route('issue', { path: '/:issue_slug' }, function() {
             this.route('new');
+            this.route('corrective-action', { path: '/:action_id' }, function() {
+              this.route('edit');
+            });
           });
         });
 

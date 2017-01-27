@@ -120,4 +120,6 @@ const formTypes = [{
   use: 'toggle'
 }];
 
-export { suffixes, states, jobCategories, jobTypes, formTypes };
+const issueTypes = [ 'Absence/Tardiness', 'Performance', 'Policy Violations' ];
+
+export { issueTypes, suffixes, states, jobCategories, jobTypes, formTypes };
