@@ -1,0 +1,191 @@
+<div class="content">
+  <div class="form-element__controls">
+    <a href="#" class="text-danger" {{action "removeElement"}}>
+      <i class="trash icon"></i>
+    </a>
+  </div>
+
+  {{#if (and model.label model.type)}}
+    <div class="form-element__preview">
+      {{input/quick-form-input
+        (hash
+          label=label
+          type=model.type
+          placeholder=(or model.label ' ')
+          showLabel=true
+          contentPath='controller.options'
+          displayKey='text'
+          class=positionInForm
+          inputClass=(if (and (eq model.type 'select') (or model.multiple model.allowAdditions)) 'search multiple')
+          inputAttrs=(hash allowAdditions=model.allowAdditions)
+        )
+        emptyObject
+        model
+      }}
+      <div class="ui divider"></div>
+    </div>
+  {{/if}}
+
+  {{#unless showingPreview}}
+    <div class="two fields">
+      <div class="field">
+        <label>What would you like to ask for question #{{positionInForm}}?</label>
+        {{input
+          type="text"
+          value=model.label
+          placeholder=labelSuggestion}}
+      </div>
+
+      <div class="field">
+        <label>How should they answer?</label>
+        {{#ui-dropdown
+          class='selection'
+          selected=model.type
+          forceSelection=false
+          onChange=(action (mut model.type))}}
+          <div class="default text">
+            Select an input type
+          </div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            {{#each formTypes as |formType|}}
+              <div class="item" data-value="{{formType.use}}">
+                {{#if formType.icon}}
+                  <i class="{{formType.icon}} icon"></i>
+                {{/if}}
+                {{formType.display}}
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      </div>
+    </div>
+
+    {{#if (eq model.type 'select')}}
+      <div class="two fields">
+        <div class="field">
+          {{ui-checkbox
+            class='toggle'
+            label='Allow multiple selections'
+            checked=(readonly model.multiple)
+            onChange=(action (mut model.multiple))}}
+        </div>
+        <div class="field">
+          {{#ui-popup content="This option allows users to select from your list of options or add selection(s) of their own."}}
+            {{ui-checkbox
+              class='toggle'
+              label='Allow additions to options'
+              checked=(readonly model.allowAdditions)
+              onChange=(action (mut model.allowAdditions))}}
+          {{/ui-popup}}
+        </div>
+      </div>
+    {{/if}}
+
+    <div class="field">
+      {{#liquid-if (and (or (eq model.type 'checkbox') (eq model.type 'toggle')) model.required)}}
+        <p class="center aligned text text-danger">Note: Requiring this field requires the applicant to select "Yes" to proceed.</p>
+      {{/liquid-if}}
+
+      {{ui-checkbox
+        label='This question is required'
+        checked=(readonly model.required)
+        onChange=(action (mut model.required))}}
+    </div>
+
+    {{#if requiresOptions}}
+      <div class="field">
+        <label>Add options for the applicant to choose from</label>
+      </div>
+      {{#if model.options}}
+        <div class="ui vertically divided vertically padded unpadded grid form-element__options-grid">
+          {{#each model.options as |option|}}
+            <div class="row">
+              <div class="{{if scoring 'eight' 'sixteen'}} wide column">
+                <div class="ui field">
+                  {{input
+                    type="text"
+                    class="ui mini fluid input"
+                    placeholder="Enter option text"
+                    value=option.text}}
+                </div>
+                <a href="#" class="text-danger" {{action "removeOption" option}}><i class="trash icon"></i> Remove</a>
+              </div>
+              {{#if scoring}}
+                <div class="eight wide column">
+                  <div class="ui field">
+                    {{input
+                      type="number"
+                      class="ui mini fluid input"
+                      min="-100"
+                      max="100"
+                      step="1"
+                      placeholder="Weight (+/-100)"
+                      disabled=option.disqualifier
+                      value=option.weight}}
+                  </div>
+                  {{ui-checkbox
+                    label='Exclude applicants with this answer'
+                    checked=(readonly option.disqualifier)
+                    onChange=(action (mut option.disqualifier))}}
+                </div>
+              {{/if}}
+              {{!-- <div class="{{if scoring 'four' 'eight'}} wide column options-grid__option-controls">
+              </div> --}}
+            </div>
+          {{/each}}
+        </div>
+      {{/if}}
+      <a href="#" {{action "addOption"}}><i class="plus icon"></i>Add option...</a>
+    {{else if (and showScoring (not model.required))}}
+      <div class="two fields">
+        <div class="field">
+          <div class="ui field">
+            <label>How should "Yes" be weighted?</label>
+            {{input
+              type="number"
+              class="ui mini fluid input"
+              min="-100"
+              max="100"
+              step="1"
+              placeholder="Weight (+/-100)"
+              disabled=model.trueDisqualifies
+              value=model.trueWeight}}
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui field">
+            <label>How should "No" be weighted?</label>
+            {{input
+              type="number"
+              class="ui mini fluid input"
+              min="-100"
+              max="100"
+              step="1"
+              placeholder="Weight (+/-100)"
+              disabled=model.falseDisqualifies
+              value=model.falseWeight}}
+          </div>
+        </div>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          {{ui-checkbox
+            label='Exclude applicants with "Yes" answer'
+            checked=(readonly model.trueDisqualifies)
+            onChange=(action (mut model.trueDisqualifies))}}
+        </div>
+        <div class="field">
+          {{ui-checkbox
+            label='Exclude applicants with "No" answer'
+            checked=(readonly model.falseDisqualifies)
+            onChange=(action (mut model.falseDisqualifies))}}
+        </div>
+      </div>
+    {{/if}}
+  {{/unless}}
+</div>
+
+<div class="form-element__handle">
+  <i class="resize vertical fitted icon"></i>
+</div>

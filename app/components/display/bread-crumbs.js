@@ -27,8 +27,10 @@ export default Component.extend({
         segments.pushObject({ divider: true });
       }
 
+      let segmentOverride = overrides.findBy('when', segment);
+
       segments.pushObject({
-        title: mutTitle(segment),
+        title: segmentOverride && segmentOverride.overrideName ? segmentOverride.overrideName : mutTitle(segment),
         segmentName: segment,
         link: linkUntil ? linkUntil + segment : segment,
         last: i + 1 === pathLength
@@ -41,7 +43,7 @@ export default Component.extend({
       overrides.forEach(override => {
         let segment = segments.findBy('segmentName', override.when);
 
-        if ( segment ) {
+        if ( segment && override.prepend ) {
           let i = segments.indexOf(segment);
 
           segments.insertAt(i, {

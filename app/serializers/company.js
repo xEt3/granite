@@ -1,11 +1,26 @@
+import DS from 'ember-data';
 import ApplicationSerializer from './application';
 import serializeObject from '../utils/serialize-object';
 import expandObject from '../utils/expand-serialized-object';
 
-export default ApplicationSerializer.extend({
+export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
+  attrs: {
+    correctiveActionSeverities: { embedded: 'always' }
+  },
+
   normalize ( modelClass, hash ) {
     if ( modelClass.modelName === 'company' ) {
       serializeObject(hash, true, 'address');
+      if ( hash.contact ) {
+        if ( hash.contact.name ) {
+          hash.contactLastName = hash.contact.name.last;
+          hash.contactFirstName = hash.contact.name.first;
+          hash.contactMiddleName = hash.contact.name.middle;
+        }
+        hash.contactPhone = hash.contact.phone;
+        hash.contactExtension = hash.contact.ext;
+        delete hash.contact;
+      }
     }
 
     return this._super(...arguments);

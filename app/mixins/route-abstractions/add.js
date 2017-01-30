@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
-export default Ember.Mixin.create({
+const { Mixin, RSVP: { Promise } } = Ember;
+
+export default Mixin.create({
   modelDefaults: {},
 
   model () {
@@ -8,13 +10,19 @@ export default Ember.Mixin.create({
           defaults = this.get('modelDefaults'),
           getDefaults = this.getModelDefaults;
 
+    let defaultPromise;
+
     if ( getDefaults && typeof getDefaults === 'function' ) {
-      Ember.$.extend(defaults, this.getModelDefaults());
+      defaultPromise = this.getModelDefaults();
     }
 
     Ember.assert('You must specify a modelName.', modelName);
 
-    return this.store.createRecord(modelName, defaults);
+    return Promise.resolve(defaultPromise)
+    .then(resolvedDefaults => {
+      Ember.$.extend(defaults, resolvedDefaults);
+      return this.store.createRecord(modelName, defaults);
+    });
   },
 
   actions: {

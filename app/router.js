@@ -30,6 +30,9 @@ Router.map(function() {
     this.route('index', { path: '/dashboard' });
 
     this.route('settings', function() {
+      this.route('index', { path: '/general' }, function() {
+        this.route('processes');
+      });
       this.route('billing');
       this.route('integrations');
     });
@@ -44,10 +47,19 @@ Router.map(function() {
       this.route('index', { path: '/' }, function() {
         this.route('index', { path: '' });
         this.route('equipment');
-        this.route('job');
         this.route('history');
         this.route('history-report');
         this.route('future-changes');
+        this.route('counseling', function() {
+          this.route('new');
+          this.route('issue', { path: '/issue/:issue_slug' }, function() {
+            this.route('new');
+            this.route('corrective-action', { path: '/corrective-action/:action_id' }, function() {
+              this.route('edit');
+            });
+          });
+        });
+
         this.route('edit', function() {
           this.route('index', { path: '/personal' });
           this.route('job');
@@ -79,11 +91,19 @@ Router.map(function() {
       this.route('intro');
       this.route('new');
     });
+    this.route('job-description', { path: '/recruiting/job/:id' }, function() {
+      this.route('settings');
+    });
     this.route('recruiting', function() {
-      this.route('job-description', { path: '/job/:id' }, function() {
-        this.route('settings');
-      });
+      this.route('settings');
       this.route('new');
+      this.route('job-descriptions', function() {
+        this.route('new');
+      });
+
+      this.route('index', { path: 'campaigns' }, function() {
+        this.route('new');
+      });
     });
     this.route('assets', function() {
       this.route('new');
@@ -119,9 +139,22 @@ Router.map(function() {
       this.route('edit');
     });
     this.route('document', { path: '/document/:id' });
+
+    this.route('job-opening', { path: '/recruiting/job-opening/:id' }, function() {
+      this.route('campaign', { path: '/' }, function() {});
+      this.route('setup', function() {
+        this.route('settings');
+        this.route('screening');
+        this.route('sources');
+        this.route('eeo');
+        this.route('finish');
+      });
+      this.route('setup-complete');
+    });
   });
 
-  this.route('error');
+  // Waiting for https://github.com/emberjs/ember.js/issues/14650 to be resolved
+  // this.route('error');
   this.route('not-found');
   this.route('unauthorized');
   this.route('catchall', {path: '/*wildcard'});

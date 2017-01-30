@@ -2,12 +2,12 @@
   <h2 class="ui horizontal divider header">Employee Details</h2>
   <div class="content">
     <div class="field">
-      {{#ui-calendar class="field" type="date" initialDate=model.terminatedOn onChange=(action (mut model.terminatedOn))}}
+      {{#ui-calendar class="field" type="date" onChange=(action (mut model.terminatedOn))}}
         <label for="termination-date-calendar">When will this employee be terminated?</label>
         <div class="ui calendar" id="termination-date-calendar">
           <div class="ui input left icon">
             <i class="calendar icon"></i>
-            <input type="text" placeholder="Type In Or Select A Date">
+            <input type="text" value={{model.terminatedOn}} placeholder="Type In Or Select A Date">
           </div>
         </div>
       {{/ui-calendar}}
@@ -17,7 +17,7 @@
       <div class="field">
         <label for="termination-reason">Separation Category</label>
         {{#ui-dropdown id="termination-reason" class="search selection" selected=model.terminationReason onChange=(action (mut model.terminationReason))}}
-          <div class="default text">Voluntary or Voluntary</div>
+          <div class="default text">Voluntary or Involuntary</div>
           <i class="dropdown icon"></i>
           <div class="menu">
               <div class="item" data-value="voluntary">

@@ -1,0 +1,11 @@
+{{#each model as |item|}}
+  {{#if linkTo}}
+    {{#link-to linkTo (get item modelIdentifier) class=linkClass}}
+      {{component itemComponent item class=componentClass}}
+    {{/link-to}}
+  {{else}}
+    {{component itemComponent item class=componentClass}}
+  {{/if}}
+{{else}}
+  <h2 class="ui center aligned header">No {{resourceName}} available.</h2>
+{{/each}}

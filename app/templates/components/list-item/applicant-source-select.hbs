@@ -1,0 +1,21 @@
+{{#if model.logo}}
+  <img src={{model.logo}} class="ui mini image applicant-source-item__image" />
+{{/if}}
+<div class="content">
+  <div class="header">
+  {{ui-checkbox
+    class="checkbox"
+    checked=(readonly selected)
+    label=model.name}}
+  </div>
+  <div class="meta">
+    <span>{{model.description}}</span>
+    {{#if model.costPerDay}}
+      <div class="ui orange right floated horizontal label">${{model.costPerDay}}/Day</div>
+    {{/if}}
+  </div>
+
+  <div class="extra">
+
+  </div>
+</div>

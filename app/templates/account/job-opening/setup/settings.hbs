@@ -1,0 +1,22 @@
+<div class="ui form">
+  <h2 class="ui horizontal divider header">Campaign Settings</h2>
+  {{quick-form
+    campaignSettingsForm
+    model
+    this
+    tagName="div"
+    class="content ui grid"}}
+
+  <h2 class="ui horizontal divider header">Job Settings</h2>
+  {{quick-form
+    jobSettingsForm
+    model
+    this
+    tagName="div"
+    class="content ui grid"}}
+
+  <div class="ui divider"></div>
+  <form {{action "saveAndContinue" on="submit"}}>
+    {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
+  </form>
+</div>

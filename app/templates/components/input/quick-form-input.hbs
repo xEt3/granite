@@ -1,0 +1,84 @@
+{{#unless (and (not field.showLabel) (or (eq field.type 'checkbox') (eq field.type 'toggle')))}}
+  <label for="{{computedClassName}}" class="{{field.labelClass}}">{{field.label}}</label>
+  {{#if field.helpText}}
+    <p>{{field.helpText}}</p>
+  {{/if}}
+{{/unless}}
+
+{{#if (eq field.type 'select')}}
+  {{#ui-dropdown
+    id=computedClassName
+    class=inputClass
+    selected=(readonly (get model field.path))
+    forceSelection=false
+    allowAdditions=(if field.inputAttrs.allowAdditions true false)
+    onChange=(action (mut value))
+    as |execute mapper|}}
+    <div class="default text">
+      {{#if field.selectText}}
+        {{field.selectText}}
+      {{else}}
+        --Select--
+      {{/if}}
+    </div>
+    <i class="dropdown icon"></i>
+    <div class="menu">
+      {{#each (get this field.contentPath) as |item|}}
+        <div class="item" data-value="{{map-value mapper (if field.valuePath (get item field.valuePath) item)}}">
+          {{#if field.displayKey}}
+            {{get item field.displayKey}}
+          {{else}}
+            {{item}}
+          {{/if}}
+        </div>
+      {{/each}}
+    </div>
+  {{/ui-dropdown}}
+{{else if (eq field.type 'textarea')}}
+  {{textarea
+    value=value
+    id=computedClassName
+    rows=rows
+    spellcheck="true"}}
+{{else if (or (eq field.type 'checkbox') (eq field.type 'toggle'))}}
+  {{ui-checkbox
+    id=computedClassName
+    class=inputClass
+    label=(or field.placeholder field.label)
+    checked=(readonly value)
+    onChange=(action (mut value))}}
+{{else if (eq field.type 'date')}}
+  {{#ui-calendar
+    type='date'
+    class=inputClass
+    onChange=(action (mut value))}}
+    <div class="ui calendar" id={{computedClassName}}>
+      <div class="ui input left icon">
+        <i class="calendar icon"></i>
+        <input type="text" value={{initialValue}} placeholder="Type In Or Select A Date">
+      </div>
+    </div>
+  {{/ui-calendar}}
+{{else if (eq field.type 'radio')}}
+  <div class="grouped inline fields">
+    {{#each (get this field.contentPath) as |item|}}
+      <div class="field">
+        {{ui-radio
+          name=computedClassName
+          label=(if field.displayKey (get item field.displayKey) item)
+          value=item
+          current=value
+          onChange=(action (mut value))}}
+      </div>
+    {{/each}}
+  </div>
+{{else}}
+  {{validated-input
+    type=field.type
+    model=model
+    valuePath=field.path
+    placeholder=(or field.placeholder field.label)
+    inputAttrs=field.inputAttrs
+    id=computedClassName
+    inputClass=inputClass}}
+{{/if}}

@@ -1,0 +1,25 @@
+{{#if hasBlock}}
+  {{yield model}}
+{{else}}
+  <div class="header">
+    {{model.name}}
+  </div>
+  <div class="meta">
+    Hiring for <strong>{{model.job.title}}</strong> position
+    <span class="ui small text right floated">Created: {{time model.created}}{{#if model.creator}}by {{model.creator.fullName}}{{/if}}</span>
+  </div>
+  <div class="extra">
+    {{#if model.completedSetup}}
+      {{#if model.completedOn}}
+        <span class="ui label"><i class="check icon"></i>Completed on {{model.completedOn}}</span>
+      {{else if model.hiring}}
+        <span class="ui green label"><i class="add user icon"></i>Hiring</span>
+        <span class="ui blue label"><i class="check icon"></i>Completed setup {{time-ago model.completedSetup}}</span>
+      {{else}}
+        <span class="ui label"><i class="hourglass empty icon"></i>Ended</span>
+      {{/if}}
+    {{else}}
+      <span class="ui orange label">Needs Setup</span>
+    {{/if}}
+  </div>
+{{/if}}

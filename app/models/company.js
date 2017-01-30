@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
+import { hasMany } from 'ember-data/relationships';
 import Validations from './validations/company';
 const { computed } = Ember;
 
@@ -22,8 +23,10 @@ export default Model.extend(Validations, {
 
   linkedServices: attr('array'),
   employeeCustomFields: attr('array'),
+  correctiveActionSeverities: hasMany('corrective-action-severity'),
 
   urlPrefix: attr('string'),
+  collectEEO: attr('boolean'),
 
   linkedToSlate: computed('linkedServices.[]', function () {
     let services = this.get('linkedServices');

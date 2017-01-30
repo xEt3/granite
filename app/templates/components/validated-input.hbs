@@ -2,7 +2,16 @@
   {{#if hasBlock}}
     {{yield}}
   {{else}}
-    {{input type=type tabindex=tabindex value=value placeholder=placeholder name=valuePath class=inputClass}}
+    {{input
+      type=type
+      tabindex=tabindex
+      value=value
+      placeholder=placeholder
+      name=valuePath
+      class=inputClass
+      min=inputAttrs.min
+      max=inputAttrs.max
+      step=inputAttrs.step}}
   {{/if}}
 
   {{#if isValid}}

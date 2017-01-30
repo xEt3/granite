@@ -1,1 +1,18 @@
-{{outlet}}
+<div class="ui container">
+  <div class="ui pointing menu">
+    {{#link-to 'account.recruiting.index' class="item"}}
+      <i class="user plus icon"></i>Campaigns
+    {{/link-to}}
+    {{#link-to 'account.recruiting.job-descriptions.index' class="item"}}
+      <i class="list icon"></i>Descriptions
+    {{/link-to}}
+
+    <div class="right menu">
+      {{#link-to 'account.recruiting.settings' class="item"}}
+        <i class="settings icon"></i>Settings
+      {{/link-to}}
+    </div>
+  </div>
+
+  {{outlet}}
+</div>

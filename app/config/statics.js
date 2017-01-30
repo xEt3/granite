@@ -54,4 +54,72 @@ const states = [
   { value: 'WY', label: 'Wyoming' }
 ];
 
-export { suffixes, states };
+const jobCategories = [
+  'Accounting/Finance',
+  'Healthcare',
+  'Non-Profit/Volunteering',
+  'Administrative',
+  'Computer/Internet',
+  'Pharmaceutical/Bio-tech',
+  'Arts/Entertainment/Publishing',
+  'Hospitality/Travel',
+  'Real Estate',
+  'Banking/Loans',
+  'Human Resources',
+  'Restaurant/Food Service',
+  'Construction/Facilities',
+  'Insurance',
+  'Retail',
+  'Customer Service',
+  'Law Enforcement/Security',
+  'Sales',
+  'Education/Training',
+  'Legal',
+  'Telecommunications',
+  'Engineering/Architecture',
+  'Manufacturing/Mechanical',
+  'Transportation/Logistics',
+  'Government/Military',
+  'Marketing/Advertising/PR',
+  'Upper Management/Consulting'
+];
+
+const jobTypes = [
+  'Full Time',
+  'Part Time',
+  'Contract',
+  'Internship',
+  'Temporary',
+  'Seasonal',
+  'Commission'
+];
+
+const formTypes = [{
+  display: 'Freeform Input',
+  icon: 'text cursor',
+  use: 'textarea'
+}, {
+  display: 'Dropdown Selection',
+  icon: 'caret down',
+  use: 'select'
+}, {
+  display: 'Radio Selection',
+  icon: 'radio',
+  use: 'radio'
+}, {
+  display: 'Checkbox',
+  icon: 'checkmark box',
+  use: 'checkbox'
+}, {
+  display: 'Date',
+  icon: 'calendar',
+  use: 'date'
+}, {
+  display: 'Toggle',
+  icon: 'toggle off',
+  use: 'toggle'
+}];
+
+const issueTypes = [ 'Absence/Tardiness', 'Performance', 'Policy Violations' ];
+
+export { issueTypes, suffixes, states, jobCategories, jobTypes, formTypes };

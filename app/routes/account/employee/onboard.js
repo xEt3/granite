@@ -1,37 +1,33 @@
 import Ember from 'ember';
-import ajaxStatus from 'granite/mixins/ajax-status';
+import wizard from 'granite/mixins/wizard/route';
 
-const { Route, inject } = Ember;
+const { Route, A } = Ember;
 
-export default Route.extend(ajaxStatus, {
-  auth: inject.service(),
+export default Route.extend(wizard, {
+  key: 'onboarding',
+  basePath: 'account.employee.onboard',
+  returnPath: 'account.employee.onboard-complete',
+  setUserOn: 'onboarder',
 
-  actions: {
-    saveAndContinue () {
-      const controller = this.get('controller'),
-            model = controller.get('model');
-
-      this.ajaxStart();
-
-      model.setProperties({
-        onboardingStep: controller.get('currentStepIndex'),
-        onboarder: this.get('auth.user'),
-        onboarding: true,
-        onboardingProgress: parseInt(controller.get('progress'), 0)
-      });
-
-      model.save()
-      .then(() => {
-        this.ajaxSuccess('Successfully saved progress.');
-
-        if ( !controller.get('nextStep') ) {
-          this.transitionTo('account.employee.onboard-complete');
-          return;
-        }
-
-        this.transitionTo('account.employee.onboard.' + controller.get('nextStep.link'));
-      })
-      .catch(this.ajaxError.bind(this));
-    }
-  }
+  steps: A([{
+    icon: 'home',
+    title: 'Personal',
+    link: 'index'
+  }, {
+    icon: 'travel',
+    title: 'Job',
+    link: 'job-information'
+  }, {
+    icon: 'mobile',
+    title: 'Assets',
+    link: 'equipment'
+  }, {
+    icon: 'photo',
+    title: 'Picture',
+    link: 'picture'
+  }, {
+    icon: 'keyboard',
+    title: 'Custom Info',
+    link: 'custom-fields'
+  }])
 });
