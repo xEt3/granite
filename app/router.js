@@ -56,6 +56,7 @@ Router.map(function() {
             this.route('new');
             this.route('corrective-action', { path: '/corrective-action/:action_id' }, function() {
               this.route('edit');
+              this.route('print');
             });
           });
         });
@@ -154,7 +155,7 @@ Router.map(function() {
   });
 
   // Waiting for https://github.com/emberjs/ember.js/issues/14650 to be resolved
-  // this.route('error');
+  this.route('error-page', { path: '/whoops' });
   this.route('not-found');
   this.route('unauthorized');
   this.route('catchall', {path: '/*wildcard'});

@@ -6,10 +6,11 @@ export default Ember.Mixin.create({
       return this._super(...arguments);
     }
 
-    const modelName = this.get('modelName');
+    const modelName = this.get('modelName'),
+          segmentKey = this.get('segmentKey');
     Ember.assert('You must specify a modelName.', modelName);
 
-    return this.store.find(modelName, params.id);
+    return this.store.find(modelName, params[segmentKey || 'id']);
   },
 
   actions: {

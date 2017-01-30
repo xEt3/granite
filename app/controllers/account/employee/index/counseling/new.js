@@ -19,7 +19,7 @@ export default Controller.extend(addEdit, {
     path: 'title',
     placeholder: 'ex. Jenna is consistently late'
   }, {
-    label: 'Type',
+    label: 'Category',
     type: 'select',
     inputClass: 'search',
     path: 'type',
@@ -29,14 +29,14 @@ export default Controller.extend(addEdit, {
       allowAdditions: true
     }
   }, {
-    label: 'Starting Severity',
+    label: 'Starting Option',
     type: 'select',
     inputClass: 'search',
     path: 'severity',
     contentPath: 'controller.sortedSeverities',
     displayKey: 'title',
     valuePath: 'id',
-    selectText: 'Select severity'
+    selectText: 'Select Option'
   }, {
     label: 'Exclude Employees From Issue',
     helpText: 'Excluding employees will block employees selected from seeing the issue.',

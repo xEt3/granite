@@ -11,7 +11,7 @@
         </div>
         <div class="sub header">
           {{#if (await model.actionSeverity)}}
-            Original Severity Level: <strong>{{get (await model.actionSeverity) 'title'}}</strong>
+            This issue started at <strong>{{get (await model.actionSeverity) 'title'}}</strong>
           {{/if}}
         </div>
       </h2>

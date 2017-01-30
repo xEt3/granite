@@ -1,11 +1,11 @@
 <div class="ui form">
-  <h3 class="ui header">Corrective Action Severities</h3>
+  <h3 class="ui header">Corrective Action Options</h3>
   <p>
-    Severities are levels of actions issued during counseling when using the employee counseling module. An example of a series of severities is: "Verbal Warning", "Written Warning", "Final Written Warning" with orders of 1 through 3 respectively. Please review your handbook to make sure your process is communicated to your employees.
+    Options are severities of actions issued during counseling when using the employee counseling module. An example of a series of options is: "Counseling", "Written Warning", "Final Written Warning" with orders of 1 through 3 respectively. Please review your handbook to make sure your process is communicated to your employees. Consult us if you have questions about this setup.
   </p>
   <div class="ui divider"></div>
   <button type="button" class="ui primary fluid button" {{action "openSeverityModal"}}>
-    <i class="plus icon"></i>Add Severity
+    <i class="plus icon"></i>Add Option
   </button>
   <div class="ui list">
     {{#each model.correctiveActionSeverities as |severity|}}
@@ -15,11 +15,11 @@
           <i class="edit icon"></i>
         </a>
         {{#confirm-modal class="item" as |confirm|}}
-            <a href="#" class="right floated text-danger" {{action (pipe confirm (action "removeSeverity" severity))}}>Remove</a>
+          <a href="#" class="right floated text-danger" {{action (pipe confirm (action "removeSeverity" severity))}}>Remove</a>
         {{/confirm-modal}}
       </div>
     {{else}}
-      <p class="center aligned text">You haven't configured severities, yet. Use the "Add Severity" button to do so.</p>
+      <p class="center aligned text">You haven't configured options, yet. Use the "Add Option" button to do so.</p>
     {{/each}}
   </div>
 
@@ -36,7 +36,7 @@
 
 {{#ui-modal name='modal__add-cas' id='modal__add-cas' class='small form'}}
   <div class="header">
-    <i class="plus icon"></i>{{if editingCas 'Edit' 'Add'}} corrective action severity
+    <i class="plus icon"></i>{{if editingCas 'Edit' 'Add'}} corrective action option
   </div>
   <div class="content">
   {{quick-form

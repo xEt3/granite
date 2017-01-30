@@ -8,8 +8,8 @@ const { Route, $, Logger, RSVP: { Promise }, inject } = Ember;
 const errorRouteMap = {
   401: 'unauthorized',
   404: 'not-found',
-  500: 'error',
-  400: 'error'
+  500: 'error-page',
+  400: 'error-page'
 };
 
 export default Route.extend({
@@ -31,7 +31,7 @@ export default Route.extend({
     error ( error ) {
       Logger.error(error);
 
-      var route = 'error',
+      var route = 'error-page',
           err = error.errors ? error.errors[0] : error;
 
       if ( err && err.status ) {
