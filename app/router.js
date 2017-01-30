@@ -52,9 +52,9 @@ Router.map(function() {
         this.route('future-changes');
         this.route('counseling', function() {
           this.route('new');
-          this.route('issue', { path: '/:issue_slug' }, function() {
+          this.route('issue', { path: '/issue/:issue_slug' }, function() {
             this.route('new');
-            this.route('corrective-action', { path: '/:action_id' }, function() {
+            this.route('corrective-action', { path: '/corrective-action/:action_id' }, function() {
               this.route('edit');
             });
           });
