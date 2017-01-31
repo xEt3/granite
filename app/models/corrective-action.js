@@ -3,12 +3,18 @@ import computed from 'ember-computed';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
+import { formalActionSuggestions } from 'granite/config/suggestions';
 
 const { RSVP: { Promise } } = Ember;
 
 export default Model.extend({
-  description: attr('string'),
-  type:        attr('string'),
+  type: attr('string'),
+
+  descriptionIssues:       attr('string'),
+  descriptionExpectations: attr('string'),
+  descriptionConsequences: attr('string', {
+    defaultValue: formalActionSuggestions.consequences
+  }),
 
   company:           belongsTo('company'),
   creator:           belongsTo('employee'),

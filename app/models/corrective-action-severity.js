@@ -5,6 +5,7 @@ import attr from 'ember-data/attr';
 export default Model.extend({
   name:  attr('string'),
   order: attr('number'),
+  formal: attr('boolean'),
 
   created: attr('date', {
     defaultValue: () => new Date()

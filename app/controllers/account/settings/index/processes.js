@@ -24,6 +24,10 @@ export default Controller.extend(addEdit, {
     inputAttrs: {
       min: '1'
     }
+  }, {
+    label: 'Is this option formal/written?',
+    type: 'checkbox',
+    path: 'formal'
   }]),
 
   afterSave (model) {
