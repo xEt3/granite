@@ -2,7 +2,7 @@ import Ember from 'ember';
 import AjaxHooks from '../ajax-status';
 
 export default Ember.Mixin.create(AjaxHooks, {
-  _afterSave ( record ) {
+  _afterDelete ( record ) {
     const transitionAfterSave = this.get('transitionAfterDelete') || this.get('transitionAfterSave');
 
     if ( transitionAfterSave ) {
@@ -28,7 +28,7 @@ export default Ember.Mixin.create(AjaxHooks, {
 
       _model.destroyRecord().then(record => {
         this.ajaxSuccess('Successfully deleted.');
-        this._afterSave(record);
+        this._afterDelete(record);
 
         if ( this.afterSave && typeof this.afterSave === 'function' ) {
           this.afterSave(record);

@@ -38,9 +38,9 @@
     </div>
   {{/ui-menu}}
 
-  <div class="ui basic blue container segment text-white employee-index-container">
+  <div class="ui basic blue container segment text-white employee-index-container {{unless onSummary 'employee__index-container--minimal'}}">
     <div class="ui equal width stackable grid container">
-      <div class="left floated twelve wide column">
+      <div class="twelve wide column">
           <h1 class="ui left floated center aligned header employee-header-group">
             {{#ui-dimmer class="ui small circular image employee-image" onElement=".ui.segment" variation="inverted" duration=(hash show=1500) on="hover" as |execute|}}
               {{#link-to 'account.employee.index.edit-picture' class="ui circular segment dimmer hover-circular"}}
@@ -65,15 +65,15 @@
             </div>
           </h1>
         </div>
-        <div class="right floated four wide column vertically-aligned contact-column">
+        <div class="right aligned four wide column vertically-aligned contact-column">
           <div class="ui center aligned basic blue container text-white contact-container">
             {{#if model.phone}}
-              <div class="left aligned phone-contact-icon">
+              <div class="phone-contact-icon">
                 <a href="tel:{{model.phone}}"><i class="big circular inverted green phone icon phone-contact-icon-hover"></i></a>
               </div>
             {{/if}}
             {{#if model.email}}
-              <div class="right aligned item email-contact-icon">
+              <div class="item email-contact-icon">
                 <a href="mailto:{{model.email}}"><i class="big circular inverted grey mail icon email-contact-icon-hover"></i></a>
               </div>
             {{/if}}

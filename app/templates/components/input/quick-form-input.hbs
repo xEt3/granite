@@ -1,7 +1,15 @@
 {{#unless (and (not field.showLabel) (or (eq field.type 'checkbox') (eq field.type 'toggle')))}}
-  <label for="{{computedClassName}}" class="{{field.labelClass}}">{{field.label}}</label>
-  {{#if field.helpText}}
-    <p>{{field.helpText}}</p>
+  <label for="{{computedClassName}}" class="{{field.labelClass}}">
+    {{field.label}}
+    {{#if (and field.helpText field.indirectHelp)}}
+      {{#ui-popup content=field.helpText class="right floated"}}
+        <i class="help circle icon"></i>
+      {{/ui-popup}}
+    {{/if}}
+  </label>
+
+  {{#if (and field.helpText (not field.indirectHelp))}}
+    <p class="quick-form__help-text">{{field.helpText}}</p>
   {{/if}}
 {{/unless}}
 
@@ -48,17 +56,23 @@
     checked=(readonly value)
     onChange=(action (mut value))}}
 {{else if (eq field.type 'date')}}
-  {{#ui-calendar
-    type='date'
-    class=inputClass
-    onChange=(action (mut value))}}
-    <div class="ui calendar" id={{computedClassName}}>
-      <div class="ui input left icon">
-        <i class="calendar icon"></i>
-        <input type="text" value={{initialValue}} placeholder="Type In Or Select A Date">
+  {{#if field.inputAttrs.inline}}
+    {{#ui-calendar
+      class=inputClass type='date' inline=true onChange=(action (mut value))}}
+    {{/ui-calendar}}
+  {{else}}
+    {{#ui-calendar
+      type='date'
+      class=inputClass
+      onChange=(action (mut value))}}
+      <div class="ui calendar" id={{computedClassName}}>
+        <div class="ui input left icon">
+          <i class="calendar icon"></i>
+          <input type="text" value={{initialValue}} placeholder="Type In Or Select A Date">
+        </div>
       </div>
-    </div>
-  {{/ui-calendar}}
+    {{/ui-calendar}}
+  {{/if}}
 {{else if (eq field.type 'radio')}}
   <div class="grouped inline fields">
     {{#each (get this field.contentPath) as |item|}}

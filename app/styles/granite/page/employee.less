@@ -22,6 +22,33 @@
 .employee-index-container {
   border: none !important;
 
+  &.employee__index-container--minimal {
+    .ui.image {
+      width: 60px;
+
+      .ui.circular.segment {
+        padding: 0;
+      }
+
+      .dimmer .content {
+        font-size: 0.4em;
+      }
+    }
+
+    .employee-basic-meta {
+      font-size: 0.8em;
+
+      .sub.header {
+        font-size: 0.6em;
+      }
+    }
+
+    .email-contact-icon-hover,
+    .phone-contact-icon-hover {
+      font-size: 1.6em;
+    }
+  }
+
   .employee-header-group {
     @media screen and (max-width:768px) {
       margin: 0 auto !important;
@@ -45,6 +72,7 @@
       }
     }
   }
+
   .contact-column > .contact-container {
 
     div.phone-contact-icon {

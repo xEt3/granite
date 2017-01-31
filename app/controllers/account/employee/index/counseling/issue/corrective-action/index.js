@@ -1,6 +1,8 @@
 import Ember from 'ember';
-import del from 'granite/mixins/controller-abstractions/delete';
 
-export default Ember.Controller.extend(del, {
-  transitionAfterDelete: 'account.employee.index.counseling.issue'
+const { Controller, computed } = Ember;
+
+export default Controller.extend({
+  followUpSort: [ 'created' ],
+  sortedFollowUps: computed.sort('model.followUps', 'followUpSort')
 });

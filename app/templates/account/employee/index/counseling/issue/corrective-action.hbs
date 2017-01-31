@@ -1,1 +1,65 @@
+{{#confirm-modal as |confirmDelete|}}
+  <hgroup>
+    <span class="ui header">
+      {{#link-to 'account.employee.index.counseling.issue.corrective-action'}}
+        {{#if (await model.actionSeverity)}}
+          {{get (await model.actionSeverity) 'name'}} on
+        {{/if}}
+        {{time
+          (if model.issuedOn model.issuedOn model.created)
+          'MMMM Do YYYY'}}
+      {{/link-to}}
+    </span>
+    {{#ui-dropdown class="item icon top right pointing right floated"}}
+      <i class="wrench icon"></i><i class="dropdown icon"></i>
+      <div class="menu">
+        <div class="header">Actions</div>
+        {{#if (and model.followUpOn (not model.resolutionStatusOn))}}
+          <a href="#" class="item" {{action (pipe (action 'openFollowupModal') (action 'saveFollowup'))}}>
+            <i class="repeat icon"></i>Follow Up
+          </a>
+        {{/if}}
+        {{#link-to
+          'account.employee.index.counseling.issue.corrective-action.edit'
+          class="item"}}
+          <i class="edit icon"></i>Edit
+        {{/link-to}}
+        <div class="text-danger header">Danger Zone</div>
+          <a href="#" class="text-danger item" {{action (pipe confirmDelete (action 'delete'))}}>
+            <i class="trash icon"></i>Delete Record
+          </a>
+      </div>
+    {{/ui-dropdown}}
+  </hgroup>
+{{/confirm-modal}}
+
+<div class="ui divider"></div>
 {{outlet}}
+
+{{#ui-modal name='modal__corrective-action--followup' id='modal__corrective-action--followup' class='small form'}}
+  <div class="header">
+    Following up to
+    {{#if (await model.actionSeverity)}}
+      {{get (await model.actionSeverity) 'name'}} on
+    {{/if}}
+    {{time
+      (if model.issuedOn model.issuedOn model.created)
+      'MMMM Do YYYY'}}
+  </div>
+  <div class="content">
+  {{quick-form
+    followupForm
+    followup
+    this
+    tagName='div'}}
+  </div>
+  <div class="actions">
+    <button class="ui red button" {{action 'respondFollowup' false}}>
+      Cancel
+    </button>
+    <button class="ui primary right labeled icon button" {{action 'respondFollowup' true}}>
+      Done
+      <i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}

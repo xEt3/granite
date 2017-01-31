@@ -1,0 +1,29 @@
+/*
+  Hide global page background, hide navs, hide breadcrumbs,
+ */
+
+@media print {
+  * {
+    background: none !important;
+    background-color: white !important;
+  }
+
+  .container {
+    box-shadow: none !important;
+  }
+
+  .divider,
+  #nprogress,
+  hgroup,
+  .breadcrumb,
+  .employee-index-container,
+  .dropdown,
+  .menu {
+    display: none !important;
+  }
+
+  body.application__in-account .in__application.pusher {
+    background-color: white;
+    background: none;
+  }
+}

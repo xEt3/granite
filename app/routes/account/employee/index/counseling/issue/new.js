@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import { correctiveActionDescription } from 'granite/config/suggestions';
 import add from 'granite/mixins/route-abstractions/add';
 import { issueTypes } from 'granite/config/statics';
 
@@ -32,7 +31,6 @@ export default Route.extend(add, {
         employeeIssue,
         type: employeeIssue.get('type'),
         creator: this.get('auth.user.employee'),
-        description: correctiveActionDescription,
         employee: this.modelFor('account.employee')
       };
     });
@@ -52,7 +50,7 @@ export default Route.extend(add, {
         select: 'type'
       }
     })
-    .then(res => A(issueTypes.concat(res)).uniq());
+    .then(res => A([ ...issueTypes, ...res ]).uniq());
   },
 
   getLastSeverity () {
@@ -65,16 +63,9 @@ export default Route.extend(add, {
       sort: { created : -1 }
     })
     .then(result => {
-      console.log(result);
       // Get the first correctiveAction in the APRA or the employeeIssue
       let targetObject = result.get('firstObject') || employeeIssue;
-      console.log(targetObject);
       return targetObject.get('severity');
     });
-    // theArray.get('firstObject')
-    // AdapterPopulatedRecordArray
-    // if none found, use severity on issue
-    // SCOTT: GO
-
   }
 });
