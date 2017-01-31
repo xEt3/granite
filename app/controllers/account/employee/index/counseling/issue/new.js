@@ -68,7 +68,7 @@ export default Controller.extend(addEdit, {
         indirectHelp: true,
         rows: '6'
       }, {
-        label: 'Consequences',
+        label: 'Consequences if expectations are not met',
         type: 'textarea',
         path: 'descriptionConsequences',
         rows: '6'

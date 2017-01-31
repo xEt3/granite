@@ -1,8 +1,46 @@
 <div class="print-media__corrective-action">
+  <h3 class="ui center aligned header">
+    {{#if (await model.actionSeverity)}}
+      {{get (await model.actionSeverity) 'name'}}
+    {{/if}}
+  </h3>
+  <div class="item clearfix">
+    <div class="left floated content">
+      <div class="header">
+        Employee: {{model.employee.fullName}}
+      </div>
+      <div class="meta">
+        {{#if model.employee.jobTitle}}
+          {{model.employee.jobTitle}}
+        {{/if}}
+      </div>
+    </div>
+    <div class="right floated content">
+      <div class="header">
+        Date: {{time model.issuedOn}}
+      </div>
+      <div class="meta">
+        {{#if model.employee.department.name}}
+            Department: {{model.employee.department.name}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
   <h3 class="ui header">Issue(s)</h3>
   <p>{{long-text model.descriptionIssues}}</p>
   <h3 class="ui header">Expectations going forward</h3>
   <p>{{long-text model.descriptionExpectations}}</p>
   <h3 class="ui header">Consequences if expectations are not met</h3>
   <p>{{long-text model.descriptionConsequences}}</p>
+
+  <div class="signature ui equal width grid">
+    <div class="ui column">
+      <div class="signature__line"></div>
+      (Employee Signature)
+    </div>
+    <div class="ui column">
+      <div class="signature__line"></div>
+      (Manager/Supervisor/HR Signature)
+    </div>
+  </div>
 </div>
