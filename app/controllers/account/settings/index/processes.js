@@ -80,7 +80,7 @@ export default Controller.extend(addEdit, {
     },
 
     respondSeverityAddition (response) {
-      this.get(response ? 'resolveSeverity' : 'rejectSeverity')(response ? this.get('transferTarget') : null);
+      this.get(response ? 'resolveSeverity' : 'rejectSeverity')(response);
       this.set('respondedSeverityAddition', true);
       Ember.$('#modal__add-cas').modal('hide');
 

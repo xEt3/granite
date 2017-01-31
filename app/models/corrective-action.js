@@ -21,6 +21,7 @@ export default Model.extend({
   employee:          belongsTo('employee'),
   employeeIssue:     belongsTo('employee-issue'),
   excludedEmployees: hasMany('employee'),
+  followUps:         hasMany('corrective-action-followup'),
   severity:          attr('string'),
 
   notes:              attr('string'),

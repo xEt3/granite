@@ -1,5 +1,5 @@
-<div class="ui stacked very padded text segment">
-  {{#if (get (await model.actionSeverity) 'formal')}}
+{{#if (get (await model.actionSeverity) 'formal')}}
+  <div class="ui stacked very padded text segment">
     <div class="ui top attached label">
       Action content
       <div class="right floated detail">
@@ -15,14 +15,23 @@
     <p>{{long-text model.descriptionExpectations}}</p>
     <h3 class="ui header">Consequences if expectations are not met</h3>
     <p>{{long-text model.descriptionConsequences}}</p>
-  {{else}}
-    {{long-text model.notes}}
-  {{/if}}
-</div>
+  </div>
+{{/if}}
 
 {{#if model.notes}}
-  <h4 class="ui header">Notes</h4>
-  <div class="ui stacked text segment">
+  <div class="ui stacked very padded text segment">
+    <div class="ui top attached label">
+      Your notes
+    </div>
     <p>{{model.notes}}</p>
   </div>
 {{/if}}
+
+{{#liquid-if model.followUps.length}}
+  <div class="ui divider"></div>
+  <h2><i class="repeat icon"></i>Follow ups</h2>
+  {{display/resource-list
+    sortedFollowUps
+    "list-item/corrective-action-followup"
+    class="ui divided items"}}
+{{/liquid-if}}
