@@ -50,6 +50,6 @@ export default Model.extend({
     let now = moment(),
         props = this.getProperties('completedSetup', 'completedOn', 'startOn', 'endOn');
 
-    return !!(props.completedSetup && !props.completedOn && (!props.endOn || now.isBefore(props.endOn)) && now.isAfter(props.startOn));
+    return !!(props.completedSetup && !props.completedOn && (!props.endOn || now.isBefore(props.endOn)) && (!props.startOn || now.isAfter(props.startOn)));
   })
 });
