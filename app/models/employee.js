@@ -44,6 +44,7 @@ export default Model.extend(Validations, {
   }),
 
   // Company and Position Information
+  activatedOn: attr('date'),
   hireDate:    attr('date'),
   jobTitle:    attr('string'),
   payRate:     attr('number'),
