@@ -26,7 +26,9 @@ let formInputs = [{
   label: 'Your notes',
   type: 'textarea',
   path: 'notes',
-  rows: '6'
+  rows: '6',
+  helpText: 'These are internal notes and the employee will not see them.',
+  indirectHelp: true
 }, {
   label: 'Type',
   type: 'select',
