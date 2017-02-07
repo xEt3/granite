@@ -17,7 +17,7 @@ export default Model.extend({
   }),
 
   company:           belongsTo('company'),
-  creator:           belongsTo('employee'),
+  creator:           belongsTo('employee', { async: true, inverse: null }),
   employee:          belongsTo('employee'),
   employeeIssue:     belongsTo('employee-issue'),
   excludedEmployees: hasMany('employee'),

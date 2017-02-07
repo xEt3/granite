@@ -24,10 +24,10 @@ export default Route.extend(add, {
   },
 
   getModelDefaults () {
-    return {
+    return RSVP.hash({
       creator: this.get('auth.user.employee'),
       employee: this.modelFor('account.employee')
-    };
+    });
   },
 
   setupController (controller, model) {

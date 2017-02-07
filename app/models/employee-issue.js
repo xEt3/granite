@@ -10,7 +10,7 @@ export default Model.extend({
   title:             attr('string'),
 
   company:           belongsTo('company', { inverse: null }),
-  creator:           belongsTo('employee', { inverse: null }),
+  creator:           belongsTo('employee', { async: false, inverse: null }),
   employee:          belongsTo('employee', { inverse: null }),
   excludedEmployees: hasMany('employee', { inverse: null }),
   severity:          attr('string'),
