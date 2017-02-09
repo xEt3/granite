@@ -8,6 +8,7 @@ export default Model.extend(Validations, {
   description: attr('string'),
 
   objectPath:     attr('string'),
+  previewPath:    attr('string'),
   extension:      attr('string'),
   mimeType:       attr('string'),
   url:            attr('string'),
