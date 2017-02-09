@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Route, inject } = Ember;
+const { Route, inject, RSVP } = Ember;
 
 export default Route.extend({
   auth: inject.service(),
@@ -19,7 +19,7 @@ export default Route.extend({
     }
   },
 
-  model ( params ) {
+  model (params) {
     let limit = this.get('controller.limit') || 20,
         page = (params.page || 1) - 1;
 
@@ -32,6 +32,16 @@ export default Route.extend({
 
     documentsQuery.sort[params.sortProp] = params.asc ? -1 : 1;
 
-    return this.store.query('file', documentsQuery);
+    return RSVP.hash({
+      documents: this.store.query('file', documentsQuery),
+      employees: this.store.findAll('employee')
+    });
+  },
+
+  setupController (controller, model) {
+    controller.setProperties({
+      model: model.documents,
+      employees: model.employees
+    });
   }
 });

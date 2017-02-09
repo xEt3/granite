@@ -17,7 +17,8 @@
 import Ember from 'ember';
 import AjaxHooks from '../ajax-status';
 
-const { get, RSVP: { Promise } } = Ember;
+const { get, RSVP } = Ember,
+      Promise = RSVP.Promise;
 
 export default Ember.Mixin.create(AjaxHooks, {
   enableNotify: true,
@@ -41,7 +42,7 @@ export default Ember.Mixin.create(AjaxHooks, {
     return invalidFields.length > 0 ? invalidFields : false;
   },
 
-  _afterSave ( record ) {
+  _afterSave (record) {
     const transitionAfterSave = this.get('transitionAfterSave');
 
     if ( transitionAfterSave ) {
@@ -55,11 +56,15 @@ export default Ember.Mixin.create(AjaxHooks, {
     }
   },
 
-  saveModel ( model ) {
+  saveModel (model) {
     const _model = model || this.get('model');
 
     if ( !_model ) {
       return Promise.resolve();
+    }
+
+    if (get(_model, 'length')) {
+      return RSVP.map(_model, this.saveModel.bind(this));
     }
 
     this.ajaxStart();
