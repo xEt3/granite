@@ -66,7 +66,7 @@ export default Controller.extend(ajaxStatus, pagination, addEdit, {
 
     assignment.set('employee', employees.get('firstObject'));
 
-    let assignmentPojo = assignment.getProperties('file', 'creator', 'company');
+    let assignmentPojo = assignment.getProperties('file', 'creator', 'company', 'signatureRequired', 'message');
 
     return [ assignment, ...(employees.slice(1).map(employee => {
       return this.store.createRecord('file-assignment', Ember.$.extend({ employee }, assignmentPojo));
