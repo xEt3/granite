@@ -101,6 +101,7 @@ export default Controller.extend(ajaxStatus, pagination, addEdit, {
     respondAssignment (response) {
       this.get(response ? 'resolveAssignment' : 'rejectAssignment')(response ? this.get('fileAssignment') : null);
       this.set('respondedAssignment', true);
+      this.send('closeAssignmentModal');
     },
 
     closeAssignmentModal () {
