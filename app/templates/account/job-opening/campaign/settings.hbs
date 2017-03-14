@@ -1,0 +1,32 @@
+<div class="ui very padded raised segment animated fadeInUp">
+  <h2 class="ui clearfix header">
+    Settings for {{model.name}}
+  </h2>
+  <div class="ui form">
+    <h2 class="ui horizontal divider header">Campaign Settings</h2>
+    {{quick-form
+      campaignSettingsForm
+      model
+      this
+      tagName="div"
+      class="content ui grid"}}
+
+    <h2 class="ui horizontal divider header">Job Settings</h2>
+    {{quick-form
+      jobSettingsForm
+      model
+      this
+      tagName="div"
+      class="content ui grid"}}
+
+    <div class="ui divider"></div>
+
+    <form {{action "save" on="submit"}}>
+      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Save{{/form/action-button}}
+    </form>
+
+    <p class="center aligned text">
+      {{#link-to 'account.job-opening.campaign' class="text-red"}}Cancel{{/link-to}}
+    </p>
+  </div>
+</div>

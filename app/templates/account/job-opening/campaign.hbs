@@ -11,7 +11,7 @@
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
           <div class="header">Actions</div>
-          {{!-- <a href="#" class="item" {{action "createCampaign"}}><i class="wizard icon"></i>Hire for this job</a> --}}
+          {{#link-to 'account.job-opening.campaign.settings' class="item"}}<i class="settings icon"></i> Settings{{/link-to}}
           <div class="text-danger header">Danger Zone</div>
           {{#confirm-modal class="item" as |confirm|}}
             <a href="#" id="job__action--delete" class="text-danger" {{action (pipe confirm (action 'delete'))}}>
