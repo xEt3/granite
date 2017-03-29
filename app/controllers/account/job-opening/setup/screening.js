@@ -38,7 +38,7 @@ export default Controller.extend(addEdit, {
           }
         });
 
-        this.set('screening', form);
+        this.set('model.screening', form);
         this.get('target').send('saveAndContinue');
       });
     }
