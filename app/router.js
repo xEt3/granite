@@ -144,6 +144,7 @@ Router.map(function() {
     this.route('job-opening', { path: '/recruiting/job-opening/:id' }, function() {
       this.route('campaign', { path: '/' }, function() {
         this.route('settings');
+        this.route('applicant-tracking');
       });
       this.route('setup', function() {
         this.route('settings');

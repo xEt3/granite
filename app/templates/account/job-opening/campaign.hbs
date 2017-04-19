@@ -1,7 +1,10 @@
 <div class="ui container">
   {{#ui-menu menuClass="pointing"}}
-    {{#link-to 'account.job-opening.campaign' class="item"}}
+    {{#link-to 'account.job-opening.campaign.index' class="item"}}
       <i class="square icon"></i>Summary
+    {{/link-to}}
+    {{#link-to 'account.job-opening.campaign.applicant-tracking' class="item"}}
+      <i class="users icon"></i>Applicants
     {{/link-to}}
     <div class="right menu">
       {{#unless model.completedSetup}}
