@@ -1,4 +1,10 @@
-<div class="content">
+<div class="content content__flex">
+  <div class="field">
+    {{ui-checkbox
+      checked=isSelected
+      value=isSelected
+    }}
+  </div>
   <div class="header">
     {{model.person.firstName}} {{model.person.lastName}}
   </div>

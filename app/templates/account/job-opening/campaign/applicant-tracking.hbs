@@ -4,7 +4,18 @@
       Applicants Awaiting Review
     </h2>
 
-    <div class="ui divided items">
+    {{#if showingAllPending}}
+      <div class="right aligned text">
+        <a href="#" {{action "selectAllApplications"}}>
+          Select All
+        </a>
+        <a href="#" {{action "deselectAllApplications"}}>
+          Deselect All
+        </a>
+      </div>
+    {{/if}}
+
+    <div class="ui selectable divided items {{unless showingAllPending 'fade-unless-hovered'}}">
       {{#each
         (if (not showingAllPending)
           (take 3 model.pendingApplications)
@@ -14,6 +25,8 @@
       }}
         {{list-item/pending-applicant
           application
+          selected=selectedApplications
+          onSelectChange=(action 'selectApplication')
         }}
       {{/each}}
     </div>
