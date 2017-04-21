@@ -1,5 +1,40 @@
 <div class="ui very padded raised segment animated fadeInUp">
+  {{#if model.pendingApplications}}
+    <h2 class="ui clearfix header">
+      Applicants Awaiting Review
+    </h2>
+
+    <div class="ui divided items">
+      {{#each
+        (if (not showingAllPending)
+          (take 3 model.pendingApplications)
+          model.pendingApplications
+        )
+        as |application|
+      }}
+        {{list-item/pending-applicant
+          application
+        }}
+      {{/each}}
+    </div>
+
+    {{#if (gt model.pendingApplications.length 3)}}
+      <h4 class="center aligned text">
+        <a href="#" class="" {{action "toggleProperty" "showingAllPending"}}>
+          {{#if showingAllPending}}
+            Show Less <i class="angle up icon"></i>
+          {{else}}
+            Show More <i class="angle down icon"></i>
+          {{/if}}
+        </a>
+      </h4>
+    {{/if}}
+
+    <div class="ui divider"></div>
+  {{/if}}
+
   <h2 class="ui clearfix header">
-    
+    Your Recruiting Pipeline
   </h2>
+
 </div>
