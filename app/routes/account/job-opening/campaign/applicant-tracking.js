@@ -8,7 +8,7 @@ export default Route.extend({
 
     return hash({
       jobOpening,
-      pendingApplications: this.store.query('job-application', {
+      applications: this.store.query('job-application', {
         jobOpening: jobOpening.get('id'),
         sort: { created: 1 }
       })

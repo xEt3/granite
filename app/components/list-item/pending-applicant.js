@@ -7,7 +7,7 @@ export default BaseLiComponent.extend({
   classNameBindings: [ 'isSelected:is-selected' ],
 
   isSelected: computed('selected.[]', 'model', function () {
-    return (this.get('selected') || A()).contains(this.get('model'));
+    return (this.get('selected') || A()).includes(this.get('model'));
   }),
 
   click (e) {
