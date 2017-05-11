@@ -4,16 +4,21 @@
       Applicants Awaiting Review
     </h2>
 
-    {{#if showingAllPending}}
-      <div class="right aligned text">
+    <div class="right aligned text">
+      {{#if selectedApplications}}
+        <a href="#" class="ui small green button" {{action "moveSelectedToPipeline"}}>
+          Move Selected To Pipeline
+        </a>
+      {{/if}}
+      {{#if showingAllPending}}
         <a href="#" class="ui small button" {{action "selectAllApplications"}}>
           Select All
         </a>
         <a href="#" class="ui small negative button" {{action "deselectAllApplications"}}>
           Deselect All
         </a>
-      </div>
-    {{/if}}
+      {{/if}}
+    </div>
 
     <div class="ui selectable divided items {{unless showingAllPending 'fade-unless-hovered'}}">
       {{#each
@@ -49,6 +54,9 @@
   <h2 class="ui clearfix header">
     Your Recruiting Pipeline
   </h2>
-  {{card-pipeline activeCandidates}}
 
+  {{card-pipeline activeCandidates}}
+  {{modals/ats-confirm-inject
+    applicants=selectedApplications
+    onResponse=(action 'confirmInjectResponse')}}
 </div>
