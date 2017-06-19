@@ -1,14 +1,16 @@
 import Ember from 'ember';
+import ajaxStatus from 'granite/mixins/ajax-status';
 
 const {
   Controller,
+  Logger: { error },
   A,
-  RSVP: { Promise },
+  RSVP,
   computed,
   get
 } = Ember;
 
-export default Controller.extend({
+export default Controller.extend(ajaxStatus, {
   selectedApplications: A(),
   confirmInjectModalId: 'modal__ats-confirm-inject',
 
@@ -17,22 +19,24 @@ export default Controller.extend({
   }),
 
   activeCandidates: computed.filter('model.applications', function(app) {
-    return !get(app, 'reviewedOn');
+    return !!get(app, 'stage');
   }),
 
-  progressApplications (applications = [], stageNumber = 0) {
+  progressApplications (applications = []) {
     this.ajaxStart();
+    const stages = this.get('model.pipeline.stages') || [];
 
-    return this.getStage(stageNumber)
-    .then(stage => {
+    return RSVP.map(applications, (application) => {
+      const appStage = application.get('stage'),
+            stage = appStage ? stages.indexOf(stages.findBy('_id', appStage)) : stages.get('firstObject._id');
 
-      return Promise.reduce(applications, (successful, application) => {
-        application.setProperties({
-          stage,
-          candidate: true,
-          reviewedOn: new Date()
-        });
-      }, []);
+      application.setProperties({
+        stage,
+        candidate: true,
+        reviewedOn: new Date()
+      });
+
+      return application.save();
     })
     .then(result => {
       this.ajaxSuccess();
@@ -73,14 +77,16 @@ export default Controller.extend({
       })
       .modal('show');
 
-      const promise = new Promise((resolve, reject) => this.set('injectPromise', { resolve, reject }));
+      const promise = new RSVP.Promise((resolve, reject) => this.set('injectPromise', { resolve, reject }));
 
       promise
-      .then(() => this.progressApplications(applications, 0))
+      .then(() => this.progressApplications(applications))
       .then(() => {
         this.send('deselectAllApplications');
       })
-      .catch(() => {}); // Noop
+      .catch(err => {
+        error(err);
+      }); // Noop
     },
 
     confirmInjectResponse (response) {

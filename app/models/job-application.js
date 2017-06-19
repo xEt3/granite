@@ -6,6 +6,7 @@ import { belongsTo } from 'ember-data/relationships';
 export default Model.extend({
   coverLetter: attr('string'),
   responses:   attr('array'),
+  stage:       attr('string'),
 
   resume:     belongsTo('file', { async: true, inverse: null }),
   jobOpening: belongsTo('job-opening'),

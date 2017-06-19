@@ -55,8 +55,12 @@
     Your Recruiting Pipeline
   </h2>
 
-  {{card-pipeline activeCandidates}}
+  {{card-pipeline
+    activeCandidates
+    pipeline=model.pipeline}}
+
   {{modals/ats-confirm-inject
     applicants=selectedApplications
     onResponse=(action 'confirmInjectResponse')}}
+
 </div>

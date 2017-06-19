@@ -1,4 +1,13 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component } = Ember;
+
+const CardPipelineComponent = Component.extend({
+  classNames: [ 'pipeline' ]
 });
+
+CardPipelineComponent.reopenClass({
+  positionalParams: [ 'candidates' ]
+});
+
+export default CardPipelineComponent;

@@ -1,0 +1,13 @@
+<h2 class="pipeline-stage__title">
+  {{stage.name}}
+  {{#ui-dropdown class="item icon top left stage-title__settings"}}
+    <i class="setting icon"></i>
+    <div class="menu">
+      {{#link-to 'account.job-opening.campaign.settings' class="item"}}Some item{{/link-to}}
+    </div>
+  {{/ui-dropdown}}
+</h2>
+
+{{#each candidates as |application|}}
+  {{application.person.fullName}}
+{{/each}}
