@@ -1,3 +1,8 @@
 {{#each pipeline.stages as |stage|}}
-  {{card-pipeline/stage-column stage activeCandidates=candidates}}
+  {{card-pipeline/stage-column
+    stage
+    pipeline.stages
+    activeCandidates=candidates
+    dispatchReorder=(action "setOrder")
+    moveAppToStage=(action "moveAppToStage")}}
 {{/each}}

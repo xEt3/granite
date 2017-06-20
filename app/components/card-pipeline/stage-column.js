@@ -5,14 +5,20 @@ const { Component, computed } = Ember;
 const PipelineStageComponent = Component.extend({
   classNames: [ 'pipeline__stage' ],
 
-  candidates: computed('activeCandidates.@each.stage', 'stage._id', function () {
+  candidates: computed('activeCandidates.@each.{stage,stageOrder}', 'stage._id', function () {
     const stageId = this.get('stage._id');
-    return (this.get('activeCandidates') || []).filter(candidate => stageId === candidate.get('stage'));
-  })
+    return (this.get('activeCandidates') || []).filter(candidate => stageId === candidate.get('stage')).sortBy('stageOrder');
+  }),
+
+  actions: {
+    reorderItems (items = [], reordered) {
+      this.get('dispatchReorder')(items, reordered, items.indexOf(reordered));
+    }
+  }
 });
 
 PipelineStageComponent.reopenClass({
-  positionalParams: [ 'stage' ]
+  positionalParams: [ 'stage', 'stages' ]
 });
 
 export default PipelineStageComponent;

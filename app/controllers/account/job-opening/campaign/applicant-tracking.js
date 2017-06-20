@@ -33,6 +33,7 @@ export default Controller.extend(ajaxStatus, {
       application.setProperties({
         stage,
         candidate: true,
+        stageOrder: 0,
         reviewedOn: new Date()
       });
 
@@ -83,6 +84,7 @@ export default Controller.extend(ajaxStatus, {
       .then(() => this.progressApplications(applications))
       .then(() => {
         this.send('deselectAllApplications');
+        this.send('refresh');
       })
       .catch(err => {
         error(err);

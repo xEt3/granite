@@ -1,4 +1,5 @@
 @trim-color: lighten(@gray-light, 20%);
+@trim-border-rad: .3rem;
 
 .pipeline {
   width: 100%;
@@ -6,7 +7,7 @@
   flex-direction: row;
   flex-wrap: nowrap;
   background: @gray-lighter;
-  border-radius: .3rem;
+  border-radius: @trim-border-rad;
   height: 80vh;
   box-shadow: 0 2px 4px fade(@gray-dark, 50%);
 
@@ -14,6 +15,7 @@
     width: 100%;
     padding: 1.2em .8em;
     border-right: 1px solid @trim-color;
+    overflow-y: auto;
 
     &:last-child {
       border-right: none;
@@ -27,6 +29,61 @@
       .stage-title__settings {
         float: right;
         color: @trim-color;
+      }
+    }
+
+    .pipeline-stage__cards {
+      padding: 0;
+      list-style: none;
+
+      .stage-cards__card {
+        background-color: white;
+        box-shadow: 0 2px 4px fade(@gray-dark, 50%);
+        margin-bottom: 1em;
+        padding: .8em 1em;
+        border-radius: @trim-border-rad;
+        transition: all .1s ease-in-out;
+        cursor: move;
+        font-size: .9em;
+
+        .card-content__title-bar {
+          .card-content__applicant-name {
+            font-weight: 600;
+            font-size: 1.1em;
+          }
+
+          .card-title-bar__controls {
+            float: right;
+
+            .title-bar__control {
+              color: darken(@trim-color, 15%);
+              > i {
+                margin: 0;
+              }
+            }
+          }
+        }
+
+        .card-content__score {
+          float: right;
+        }
+
+        .card-content__bottom-bar {
+          display: none;
+          background-color: @gray-dark;
+          box-shadow: 0 -1px 3px fade(@gray-dark, 40%);
+          color: white;
+        }
+
+        &.is-dragging {
+          position: relative;
+          z-index: 100;
+          box-shadow: 0 4px 12px fade(@gray-dark, 30%);
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
     }
   }

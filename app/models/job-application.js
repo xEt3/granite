@@ -7,6 +7,7 @@ export default Model.extend({
   coverLetter: attr('string'),
   responses:   attr('array'),
   stage:       attr('string'),
+  stageOrder:  attr('number'),
 
   resume:     belongsTo('file', { async: true, inverse: null }),
   jobOpening: belongsTo('job-opening'),

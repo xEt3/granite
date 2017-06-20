@@ -1,8 +1,9 @@
 import Ember from 'ember';
+import refreshable from 'granite/mixins/refreshable';
 
 const { Route, RSVP: { hash } } = Ember;
 
-export default Route.extend({
+export default Route.extend(refreshable, {
   model () {
     const jobOpening = this.modelFor('account.job-opening');
 

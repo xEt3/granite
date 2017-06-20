@@ -8,6 +8,13 @@
   {{/ui-dropdown}}
 </h2>
 
-{{#each candidates as |application|}}
-  {{application.person.fullName}}
-{{/each}}
+{{#sortable-group tagName="ul" classNames="pipeline-stage__cards" onChange="reorderItems" as |group|}}
+  {{#each candidates as |application|}}
+    {{#sortable-item tagName="li" classNames="stage-cards__card" model=application group=group}}
+      {{card-pipeline/stage-card
+        application
+        stages
+        moveAppToStage=moveAppToStage}}
+    {{/sortable-item}}
+  {{/each}}
+{{/sortable-group}}
