@@ -31,17 +31,8 @@
 </div>
 
 <div class="card-content__application-link">
-  <a href="#">View Application</a>
+  {{#link-to 'account.job-opening.campaign.job-application' application.id}}Open Application{{/link-to}}
   {{#if application.scoreRelative}}
     <span class="card-content__score">{{application.scoreRelative}}%</span>
-  {{/if}}
-</div>
-
-<div class="card-content__bottom-bar">
-  <a href="#" {{action "toggleProperty" "toggleDetails"}}>More details...</a>
-  {{#if toggleDetails}}
-    <div class="animated fadeInUp">
-      Some more details... {{! TODO: content}}
-    </div>
   {{/if}}
 </div>
