@@ -64,11 +64,15 @@
     activeCandidates
     pipeline=model.pipeline
     onDisqualify=(action (pipe
-      (action initDisqualifyConfirm)
+      (action set 'appInDisqualifyConfirm')
       (action openModal confirmDisqualifyModalId 'disqualify')
       (action "disqualifyCandidate")
     ))
-    onSchedule=(action openModal schedulerModalId 'scheduler')}}
+    onSchedule=(action (pipe
+      (action set 'appInScheduler')
+      (action openModal schedulerModalId 'scheduler')
+    ))
+  }}
 
   {{modals/ats-confirm-inject
     applicants=selectedApplications
