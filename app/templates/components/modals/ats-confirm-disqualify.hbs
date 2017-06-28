@@ -4,7 +4,7 @@
     Are you sure?
   </div>
   <div class="content">
-    Are you sure you want to move {{applicants.length}} {{inflect-text 'applicant' applicants.length}} into your recruiting pipeline?
+    Are you sure you want to disqualify {{model.person.firstName}} for this position?
   </div>
   <div class="actions">
     <button class="ui inverted red button" {{action 'respond' false}}>
@@ -12,7 +12,7 @@
     </button>
     <button class="ui inverted green right labeled icon button" {{action 'respond' true}}>
       Yes
-      <i class="check icon"></i>
+      <i class="remove icon"></i>
     </button>
   </div>
 {{/ui-modal}}
