@@ -6,7 +6,12 @@
 
     <div class="right aligned text">
       {{#if selectedApplications}}
-        <a href="#" class="ui small green button" {{action "moveSelectedToPipeline"}}>
+        <a href="#" class="ui small green button"
+          {{action (pipe
+            (action openModal confirmInjectModalId "inject")
+            (action injectConfirmed selectedApplications)
+          )}}
+        >
           Move Selected To Pipeline
         </a>
       {{/if}}
@@ -57,17 +62,26 @@
 
   {{card-pipeline
     activeCandidates
-    pipeline=model.pipeline}}
+    pipeline=model.pipeline
+    onDisqualify=(action (pipe
+      (action initDisqualifyConfirm)
+      (action openModal confirmDisqualifyModalId 'disqualify')
+      (action "disqualifyCandidate")
+    ))
+    onSchedule=(action openModal schedulerModalId 'scheduler')}}
 
   {{modals/ats-confirm-inject
     applicants=selectedApplications
-    onResponse=(action 'confirmInjectResponse')}}
+    modalId=confirmInjectModalId
+    onResponse=(action 'modalResponse' 'inject')}}
 
   {{modals/ats-confirm-disqualify
-    appInDisaqualifyConfirm
-    onResponse=(action 'confirmDisqualifyResponse')}}
+    appInDisqualifyConfirm
+    modalId=confirmDisqualifyModalId
+    onResponse=(action 'modalResponse' 'disqualify')}}
 
   {{modals/ats-scheduler
     appInScheduler
-    onResponse=(action 'confirmSchedulerResponse')}}
+    modalId=schedulerModalId
+    onResponse=(action 'modalResponse' 'scheduler')}}
 </div>

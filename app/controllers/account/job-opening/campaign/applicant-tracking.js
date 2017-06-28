@@ -3,7 +3,6 @@ import ajaxStatus from 'granite/mixins/ajax-status';
 
 const {
   Controller,
-  Logger: { error },
   A,
   RSVP,
   computed,
@@ -13,14 +12,21 @@ const {
 export default Controller.extend(ajaxStatus, {
   selectedApplications: A(),
   confirmInjectModalId: 'modal__ats-confirm-inject',
+  confirmDisqualifyModalId: 'modal__ats-confirm-disqualify',
+  schedulerModalId: 'modal__ats-scheduler',
 
   pendingApplications: computed.filter('model.applications', function(app) {
     return !get(app, 'reviewedOn');
   }),
 
   activeCandidates: computed.filter('model.applications', function(app) {
-    return !!get(app, 'stage');
+    return !!get(app, 'stage') && get(app, 'disqualified') !== true;
   }),
+
+  initDisqualifyConfirm (candidate) {
+    this.set('appInDisqualifyConfirm', candidate);
+    return candidate;
+  },
 
   progressApplications (applications = []) {
     this.ajaxStart();
@@ -46,6 +52,30 @@ export default Controller.extend(ajaxStatus, {
     .catch(this.ajaxError.bind(this));
   },
 
+  injectConfirmed (applications) {
+    this.progressApplications(applications)
+    .then(() => {
+      this.send('deselectAllApplications');
+      this.send('refresh');
+    });
+  },
+
+  openModal (id, key, arg) {
+    Ember.$(`#${id}`)
+    .modal({
+      detachable: true,
+      onHidden: () => {
+        if ( !this.get(`${key}Responded`) ) {
+          this.get(`${key}Promise.reject`)();
+        }
+      }
+    })
+    .modal('show');
+
+    return new RSVP.Promise((resolve, reject) => this.set(`${key}Promise`, { resolve, reject }))
+    .then(() => arg);
+  },
+
   actions: {
     toggleProperty (prop) {
       this.toggleProperty(prop);
@@ -63,38 +93,22 @@ export default Controller.extend(ajaxStatus, {
       this.set('selectedApplications', A());
     },
 
-    moveSelectedToPipeline () {
-      const applications = this.get('selectedApplications'),
-            modalId = this.get('confirmInjectModalId');
-
-      Ember.$(`#${modalId}`)
-      .modal({
-        detachable: true,
-        onHidden: () => {
-          if ( !this.get('injectResponded') ) {
-            this.get('injectPromise.reject')();
-          }
-        }
-      })
-      .modal('show');
-
-      const promise = new RSVP.Promise((resolve, reject) => this.set('injectPromise', { resolve, reject }));
-
-      promise
-      .then(() => this.progressApplications(applications))
-      .then(() => {
-        this.send('deselectAllApplications');
-        this.send('refresh');
-      })
-      .catch(err => {
-        error(err);
-      }); // Noop
+    modalResponse (prefix, response) {
+      const promise = this.get(`${prefix}Promise`);
+      this.set(`${prefix}Responded`, true);
+      promise[response ? 'resolve' : 'reject']();
     },
 
-    confirmInjectResponse (response) {
-      const promise = this.get('injectPromise');
-      this.set('injectResponded', true);
-      promise[response ? 'resolve' : 'reject']();
+    disqualifyCandidate (jobApp) {
+      jobApp.set('disqualified', true);
+      this.ajaxStart();
+      jobApp.save()
+      .then(() => {
+        this.ajaxSuccess();
+        this.set('appInDisqualifyConfirm', null);
+        this.send('refresh');
+      })
+      .catch(this.ajaxError.bind(this));
     }
   }
 });
