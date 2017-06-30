@@ -1,1 +1,30 @@
-{{yield}}
+{{#ui-modal id=modalId observeChanges=true}}
+  <i class="close icon"></i>
+  <div class="header">
+    Are you sure?
+  </div>
+  <div class="content">
+    {{#ui-calendar
+      class="field"
+      type="date"
+      startMode="year"
+      onChange=(action (mut scheduleDate))}}
+      <label for="ui-calendar-date-only">Date Of Event</label>
+      <div class="ui calendar" id="ui-calendar-date-only">
+        <div class="ui input left icon">
+          <i class="calendar icon"></i>
+          <input type="text" value={{scheduleDate}} placeholder="Select or type a date">
+        </div>
+      </div>
+    {{/ui-calendar}}
+  </div>
+  <div class="actions">
+    <button class="ui inverted red button" {{action 'respond' false}}>
+      Cancel
+    </button>
+    <button class="ui inverted green right labeled icon button" {{action makeEvent}}>
+      Schedule
+      <i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}
