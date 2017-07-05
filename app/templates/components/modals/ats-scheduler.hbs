@@ -3,20 +3,14 @@
   <div class="header">
     Are you sure?
   </div>
-  <div class="content">
-    {{#ui-calendar
-      class="field"
-      type="date"
-      startMode="year"
-      onChange=(action (mut scheduleDate))}}
-      <label for="ui-calendar-date-only">Date Of Event</label>
-      <div class="ui calendar" id="ui-calendar-date-only">
-        <div class="ui input left icon">
-          <i class="calendar icon"></i>
-          <input type="text" value={{scheduleDate}} placeholder="Select or type a date">
-        </div>
-      </div>
-    {{/ui-calendar}}
+  <div class="content ui form">
+    {{input/date-range}}
+    <div class="ui divider"></div>
+    {{input/ui-input
+      type="text"
+      inputId="event-title"
+      placeholder="Event Title"
+      value=title}}
   </div>
   <div class="actions">
     <button class="ui inverted red button" {{action 'respond' false}}>
