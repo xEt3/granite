@@ -70,7 +70,9 @@
     ))
     onSchedule=(action (pipe
       (action set 'appInScheduler')
+      (action resetMeeting)
       (action openModal schedulerModalId 'scheduler')
+      (action saveMeeting)
     ))
   }}
 
@@ -86,6 +88,7 @@
 
   {{modals/ats-scheduler
     appInScheduler
+    currentMeeting
     modalId=schedulerModalId
     onResponse=(action 'modalResponse' 'scheduler')}}
 </div>

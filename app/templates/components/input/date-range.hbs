@@ -10,7 +10,7 @@
       class="field"
       startMode="month"
       inline=true
-      onChange=(action (mut start))}}
+      onChange=(action (pipe (action (mut start)) (action onStartChange start)))}}
     {{/ui-calendar}}
   </div>
 
@@ -24,8 +24,8 @@
           </label>
         </p>
         {{#ui-dropdown
-          class="fluid search selection"
-          onChange=(action (mut pendingTodoAssignee)) as |execute mapper|}}
+          class="fluid selection"
+          onChange=(action onEndChange) as |execute mapper|}}
           <i class="dropdown icon"></i>
           <div class="default text">How long?</div>
           <div class="menu">

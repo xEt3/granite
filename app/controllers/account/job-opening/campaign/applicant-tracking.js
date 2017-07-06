@@ -28,6 +28,14 @@ export default Controller.extend(ajaxStatus, {
     return candidate;
   },
 
+  resetMeeting () {
+    if (this.get('currentMeeting')) {
+      this.get('currentMeeting').destroy();
+    }
+
+    this.set('currentMeeting', this.store.createRecord('event'));
+  },
+
   progressApplications (applications = []) {
     this.ajaxStart();
     const stages = this.get('model.pipeline.stages') || [];
@@ -60,7 +68,19 @@ export default Controller.extend(ajaxStatus, {
     });
   },
 
-  openModal (id, key, arg) {
+  saveMeeting (event) {
+    this.ajaxStart();
+
+    event.save()
+    .then(meeting => {
+      const title = meeting.get('title') ? `"${meeting.get('title')}"` : 'meeting',
+            start = moment(meeting.get('start'));
+
+      this.ajaxSuccess(`Scheduled ${title} at ${start.format('h:mma [on] M/D/YY')}`);
+    });
+  },
+
+  openModal (id, key) {
     Ember.$(`#${id}`)
     .modal({
       detachable: true,
@@ -72,8 +92,7 @@ export default Controller.extend(ajaxStatus, {
     })
     .modal('show');
 
-    return new RSVP.Promise((resolve, reject) => this.set(`${key}Promise`, { resolve, reject }))
-    .then(() => arg);
+    return new RSVP.Promise((resolve, reject) => this.set(`${key}Promise`, { resolve, reject }));
   },
 
   actions: {
@@ -95,8 +114,9 @@ export default Controller.extend(ajaxStatus, {
 
     modalResponse (prefix, response) {
       const promise = this.get(`${prefix}Promise`);
+
       this.set(`${prefix}Responded`, true);
-      promise[response ? 'resolve' : 'reject']();
+      promise[response ? 'resolve' : 'reject'](response);
     },
 
     disqualifyCandidate (jobApp) {
