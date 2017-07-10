@@ -1,0 +1,94 @@
+<div class="ui very padded raised segment animated fadeInUp">
+  {{#if pendingApplications}}
+    <h2 class="ui clearfix header">
+      Applicants Awaiting Review
+    </h2>
+
+    <div class="right aligned text">
+      {{#if selectedApplications}}
+        <a href="#" class="ui small green button"
+          {{action (pipe
+            (action openModal confirmInjectModalId "inject")
+            (action injectConfirmed selectedApplications)
+          )}}
+        >
+          Move Selected To Pipeline
+        </a>
+      {{/if}}
+      {{#if showingAllPending}}
+        <a href="#" class="ui small button" {{action "selectAllApplications"}}>
+          Select All
+        </a>
+        <a href="#" class="ui small negative button" {{action "deselectAllApplications"}}>
+          Deselect All
+        </a>
+      {{/if}}
+    </div>
+
+    <div class="ui selectable divided items {{unless showingAllPending 'fade-unless-hovered'}}">
+      {{#each
+        (if (not showingAllPending)
+          (take 3 pendingApplications)
+          pendingApplications
+        )
+        as |application|
+      }}
+        {{list-item/pending-applicant
+          application
+          selected=selectedApplications
+          onSelectChange=(action 'selectApplication')
+        }}
+      {{/each}}
+    </div>
+
+    {{#if (gt pendingApplications.length 3)}}
+      <h4 class="center aligned text">
+        <a href="#" class="" {{action "toggleProperty" "showingAllPending"}}>
+          {{#if showingAllPending}}
+            Show Less <i class="angle up icon"></i>
+          {{else}}
+            Show More <i class="angle down icon"></i>
+          {{/if}}
+        </a>
+      </h4>
+    {{/if}}
+
+    <div class="ui divider"></div>
+  {{/if}}
+
+  <h2 class="ui clearfix header">
+    Your Recruiting Pipeline
+  </h2>
+
+  {{card-pipeline
+    activeCandidates
+    pipeline=model.pipeline
+    onDisqualify=(action (pipe
+      (action set 'appInDisqualifyConfirm')
+      (action openModal confirmDisqualifyModalId 'disqualify')
+      (action "disqualifyCandidate")
+    ))
+    onSchedule=(action (pipe
+      (action set 'appInScheduler')
+      (action resetMeeting)
+      (action openModal schedulerModalId 'scheduler')
+      (action saveMeeting)
+    ))
+  }}
+
+  {{modals/ats-confirm-inject
+    applicants=selectedApplications
+    modalId=confirmInjectModalId
+    onResponse=(action 'modalResponse' 'inject')}}
+
+  {{modals/ats-confirm-disqualify
+    appInDisqualifyConfirm
+    modalId=confirmDisqualifyModalId
+    onResponse=(action 'modalResponse' 'disqualify')}}
+
+  {{modals/ats-scheduler
+    appInScheduler
+    currentMeeting
+    modalId=schedulerModalId
+    onResponse=(action 'modalResponse' 'scheduler')}}
+</div>

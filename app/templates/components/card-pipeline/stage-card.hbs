@@ -1,0 +1,38 @@
+<div class="card-content__title-bar">
+  <span class="card-content__applicant-name">
+    {{application.person.firstName}} {{application.person.lastName}}
+  </span>
+  <div class="card-title-bar__controls">
+    {{#ui-popup tagName='span' position="top center" content="Change candidate stage..."}}
+      {{#ui-dropdown class="title-bar__control item icon top right pointing"}}
+      <i class="exchange icon"></i>
+        <div class="menu">
+          <div class="header">Move to...</div>
+          {{#each allExceptCurrentStage as |stage|}}
+            <a href="#" class="item" {{action "moveTo" stage}}>{{stage.name}}</a>
+          {{/each}}
+        </div>
+    {{/ui-dropdown}}
+    {{/ui-popup}}
+
+    {{#ui-dropdown class="title-bar__control item icon top right pointing"}}
+      <i class="setting icon"></i>
+      <div class="menu">
+        <a href="#" class="item" {{action onSchedule application}}><i class="calendar icon"></i> Schedule...</a>
+        <a href="#" class="item"><i class="dollar icon"></i> Make offer...</a>
+        <a href="#" class="item" {{action onDisqualify application}}><i class="remove circle icon"></i> Disqualify candidate...</a>
+      </div>
+    {{/ui-dropdown}}
+  </div>
+</div>
+
+<div class="card-content__next-schedule">
+  Nothing scheduled
+</div>
+
+<div class="card-content__application-link">
+  {{#link-to 'account.job-opening.campaign.job-application' application.id}}Open Application{{/link-to}}
+  {{#if application.scoreRelative}}
+    <span class="card-content__score">{{application.scoreRelative}}%</span>
+  {{/if}}
+</div>
