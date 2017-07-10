@@ -14,6 +14,8 @@ export default Model.extend({
   creator:       belongsTo('employee', { inverse: null }),
   attendantType: attr('string'),
   attendantId:   attr('string'),
+  contextType:   attr('string'),
+  contextId:     attr('string'),
 
   created: {
     type: Date,
@@ -21,5 +23,6 @@ export default Model.extend({
     index: true
   },
 
-  attendant: resolveForTypeKey('attendant')
+  attendant: resolveForTypeKey('attendant'),
+  context: resolveForTypeKey('context')
 });

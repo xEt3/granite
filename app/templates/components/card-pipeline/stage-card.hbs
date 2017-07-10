@@ -5,14 +5,14 @@
   <div class="card-title-bar__controls">
     {{#ui-popup tagName='span' position="top center" content="Change candidate stage..."}}
       {{#ui-dropdown class="title-bar__control item icon top right pointing"}}
-      <i class="exchange icon"></i>
+        <i class="exchange icon"></i>
         <div class="menu">
           <div class="header">Move to...</div>
           {{#each allExceptCurrentStage as |stage|}}
             <a href="#" class="item" {{action "moveTo" stage}}>{{stage.name}}</a>
           {{/each}}
         </div>
-    {{/ui-dropdown}}
+      {{/ui-dropdown}}
     {{/ui-popup}}
 
     {{#ui-dropdown class="title-bar__control item icon top right pointing"}}
@@ -27,7 +27,11 @@
 </div>
 
 <div class="card-content__next-schedule">
-  Nothing scheduled
+  {{#if (await nextMeeting)}}
+    Next meeting is {{time-ago (get (await nextMeeting) 'start')}}
+  {{else}}
+    Nothing scheduled
+  {{/if}}
 </div>
 
 <div class="card-content__application-link">

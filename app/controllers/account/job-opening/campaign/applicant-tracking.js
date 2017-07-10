@@ -71,6 +71,16 @@ export default Controller.extend(ajaxStatus, {
   saveMeeting (event) {
     this.ajaxStart();
 
+    const app = this.get('appInScheduler'),
+          isEmployeeApplicant = app.get('employee');
+
+    event.setProperties({
+      contextId: app.get('id'),
+      contextType: 'JobApplication',
+      attendantId: get(isEmployeeApplicant || app.get('applicant') || {}, 'id'),
+      attendantType: isEmployeeApplicant ? 'Employee' : 'Applicant'
+    });
+
     event.save()
     .then(meeting => {
       const title = meeting.get('title') ? `"${meeting.get('title')}"` : 'meeting',
