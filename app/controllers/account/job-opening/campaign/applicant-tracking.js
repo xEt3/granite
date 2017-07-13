@@ -10,23 +10,20 @@ const {
 } = Ember;
 
 export default Controller.extend(ajaxStatus, {
+  queryParams: [ 'showDisqualified' ],
   selectedApplications: A(),
   confirmInjectModalId: 'modal__ats-confirm-inject',
   confirmDisqualifyModalId: 'modal__ats-confirm-disqualify',
   schedulerModalId: 'modal__ats-scheduler',
+  showDisqualified: false,
 
   pendingApplications: computed.filter('model.applications', function(app) {
-    return !get(app, 'reviewedOn');
+    return !get(app, 'reviewedOn') && !get(app, 'disqualified');
   }),
 
   activeCandidates: computed.filter('model.applications', function(app) {
     return !!get(app, 'stage') && get(app, 'disqualified') !== true;
   }),
-
-  initDisqualifyConfirm (candidate) {
-    this.set('appInDisqualifyConfirm', candidate);
-    return candidate;
-  },
 
   resetMeeting () {
     if (this.get('currentMeeting')) {
@@ -130,9 +127,18 @@ export default Controller.extend(ajaxStatus, {
     },
 
     disqualifyCandidate (jobApp) {
-      jobApp.set('disqualified', true);
+      if (!jobApp) {
+        return;
+      }
+
+      const jobApps = get(jobApp, 'length') && jobApp.toArray ? jobApp.toArray() : [ jobApp ];
+
       this.ajaxStart();
-      jobApp.save()
+
+      RSVP.map(jobApps, app => {
+        app.set('disqualified', true);
+        return app.save();
+      })
       .then(() => {
         this.ajaxSuccess();
         this.set('appInDisqualifyConfirm', null);

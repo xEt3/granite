@@ -14,7 +14,18 @@
         >
           Move Selected To Pipeline
         </a>
+
+        <a href="#" class="ui small orange button"
+          {{action (pipe
+            (action openModal confirmDisqualifyModalId 'disqualify')
+            (action "disqualifyCandidate" selectedApplications)
+            (action "deselectAllApplications")
+          )}}
+        >
+          Disqualify Selected
+        </a>
       {{/if}}
+
       {{#if showingAllPending}}
         <a href="#" class="ui small button" {{action "selectAllApplications"}}>
           Select All
@@ -58,6 +69,11 @@
 
   <h2 class="ui clearfix header">
     Your Recruiting Pipeline
+    <small class="right floated small text">
+      <a href="#" {{action toggleProperty "showDisqualified"}}>
+        {{if showDisqualified 'Hide' 'Show'}} Disqualified Applicants
+      </a>
+    </small>
   </h2>
 
   {{card-pipeline
