@@ -3,4 +3,28 @@
     Job Application for {{model.person.firstName}}
   </h2>
   <p class="light text">Created {{time-ago model.created}} on {{time model.created 'M/D/YY'}}</p>
+
+  <div class="ui grid">
+    <div class="ui ten wide column"></div>
+    <div class="ui six wide column">
+      {{#if upcomingEvents}}
+        <h4>Upcoming Events</h4>
+        {{timeline/event-timeline upcomingEvents}}
+      {{/if}}
+
+      {{#if pastEvents}}
+        <h4 class="{{unless showingPastEvents 'ui light text'}}">
+          Past Events
+          <small class="right floated">
+            <a href="#" {{action "toggleProperty" "showingPastEvents"}}>
+              {{if showingPastEvents 'Hide' 'Show'}}
+            </a>
+          </small>
+        </h4>
+        {{#liquid-if showingPastEvents}}
+          {{timeline/event-timeline pastEvents}}
+        {{/liquid-if}}
+      {{/if}}
+    </div>
+  </div>
 </div>
