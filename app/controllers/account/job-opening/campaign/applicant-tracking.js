@@ -22,7 +22,7 @@ export default Controller.extend(ajaxStatus, {
   }),
 
   activeCandidates: computed.filter('model.applications', function(app) {
-    return !!get(app, 'stage') && get(app, 'disqualified') !== true;
+    return !!get(app, 'stage');
   }),
 
   resetMeeting () {

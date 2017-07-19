@@ -148,7 +148,9 @@ Router.map(function() {
         this.route('job-application', { path: '/application/:application_id/view' });
       });
       this.route('setup', function() {
-        this.route('settings');
+        this.route('settings', function() {
+          this.route('index', function() {});
+        });
         this.route('screening');
         this.route('sources');
         this.route('eeo');
