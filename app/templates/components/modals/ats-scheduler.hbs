@@ -16,6 +16,54 @@
       inputId="meeting-title"
       placeholder="Meeting Title"
       value=meeting.title}}
+
+    <div class="ui divider"></div>
+
+    <div class="ui two column grid">
+      <div class="ui field column">
+        <label for="meeting-organizer">Organizer</label>
+        {{#ui-dropdown class="fluid search selection" id="meeting-organizer" onChange=(action (mut meeting.organizer)) as |execute mapper|}}
+          <i class="dropdown icon"></i>
+          <div class="default text">Meeting Organizer</div>
+          <div class="menu">
+            {{#each availableOrganizers as |organizer|}}
+              <div class="item" data-value="{{map-value mapper organizer}}">
+                {{organizer.fullName}}
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      </div>
+      <div class="ui field column">
+        <label for="meeting-facilitator">Facilitator</label>
+        {{#ui-dropdown class="fluid search selection" id="meeting-facilitator" onChange=(action (mut meeting.facilitator)) as |execute mapper|}}
+          <i class="dropdown icon"></i>
+          <div class="default text">Meeting Facilitator</div>
+          <div class="menu">
+            {{#each availableOrganizers as |facilitator|}}
+              <div class="item" data-value="{{map-value mapper facilitator}}">
+                {{facilitator.fullName}}
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="meeting-attendees">Additional Attendees</label>
+      {{#ui-dropdown class="fluid multiple search selection" id="meeting-attendees" forceSelection=false onChange=(action (mut meeting.attendees)) as |execute mapper|}}
+        <i class="dropdown icon"></i>
+        <div class="default text">Additional Attendees</div>
+        <div class="menu">
+          {{#each availableOrganizers as |attendee|}}
+            <div class="item" data-value="{{map-value mapper attendee.id}}">
+              {{attendee.fullName}}
+            </div>
+          {{/each}}
+        </div>
+      {{/ui-dropdown}}
+    </div>
   </div>
   <div class="actions">
     <button class="ui inverted red button" {{action 'respond' false}}>

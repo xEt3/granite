@@ -26,6 +26,7 @@ export default Route.extend(refreshable, {
       jobOpening,
       // Applications for this pipeline
       applications: this.store.query('job-application', applicationsQuery),
+      employees: this.store.query('employee', { sort: { lastName: -1 } }),
       // Recruiting pipeline
       pipeline: this.store.query('recruiting-pipeline', {
         $or: [{
