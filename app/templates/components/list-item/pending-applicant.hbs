@@ -7,6 +7,20 @@
   </div>
   <div class="header">
     {{model.person.firstName}} {{model.person.lastName}}
-    {{! score}}
+  </div>
+  <div class="ui meta content__flex--pull-right">
+    {{#if model.coverLetter}}
+      <span class="ui green label">
+        <i class="check icon"></i>Has Cover Letter
+      </span>
+    {{/if}}
+    {{#if model.isScored}}
+      {{#display/calc-color model.scoreAbs as |red green|}}
+        <span class="ui label" style="color: rgb({{red}}, {{green}}, 0)" class="card-content__score">
+          <i class="exchange icon"></i>{{model.scoreAbs}}%
+          Match
+        </span>
+      {{/display/calc-color}}
+    {{/if}}
   </div>
 </div>
