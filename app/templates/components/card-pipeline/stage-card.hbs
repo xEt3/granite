@@ -34,9 +34,13 @@
   {{/if}}
 </div>
 
-<div class="card-content__application-link">
+<div class="card-content__application-link card-content__score-container">
   {{#link-to 'account.job-opening.campaign.job-application' application.id}}Open Application{{/link-to}}
-  {{#if application.scoreRelative}}
-    <span class="card-content__score">{{application.scoreRelative}}%</span>
+  {{#if application.isScored}}
+    {{#display/calc-color application.scoreAbs as |red green|}}
+      <span style="color: rgb({{red}}, {{green}}, 0)" class="card-content__score">
+        {{application.scoreAbs}}%
+      </span>
+    {{/display/calc-color}}
   {{/if}}
 </div>

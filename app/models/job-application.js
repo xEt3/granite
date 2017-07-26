@@ -4,11 +4,13 @@ import computed from 'ember-computed';
 import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
-  coverLetter:  attr('string'),
-  responses:    attr('array'),
-  stage:        attr('string'),
-  stageOrder:   attr('number'),
-  disqualified: attr('boolean'),
+  coverLetter:   attr('string'),
+  responses:     attr('array'),
+  stage:         attr('string'),
+  stageOrder:    attr('number'),
+  disqualified:  attr('boolean'),
+  scoreAdditive: attr('number'),
+  scoreRelative: attr('number'),
 
   resume:     belongsTo('file', { async: true, inverse: null }),
   jobOpening: belongsTo('job-opening'),
@@ -22,5 +24,14 @@ export default Model.extend({
   reviewedOn: attr('date'),
   created: attr('date', {
     defaultValue: () => new Date()
+  }),
+
+  isScored: computed('scoreAdditive', 'scoreRelative', 'responses', function () {
+    return !isNaN(this.get('scoreAdditive')) && !isNaN(this.get('scoreRelative')) && !!this.get('responses.firstObject');
+  }),
+
+  scoreAbs: computed('scoreRelative', function () {
+    const v = this.get('scoreRelative');
+    return v ? v > 100 ? 100 : v < 0 ? 0 : v : v;
   })
 });
