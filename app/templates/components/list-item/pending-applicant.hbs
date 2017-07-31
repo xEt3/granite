@@ -6,7 +6,7 @@
     }}
   </div>
   <div class="header">
-    {{model.person.firstName}} {{model.person.lastName}}
+    <strong>{{model.person.firstName}} {{model.person.lastName}}</strong>
   </div>
   <div class="ui meta content__flex--pull-right">
     {{#if model.coverLetter}}
@@ -23,4 +23,13 @@
       {{/display/calc-color}}
     {{/if}}
   </div>
+  {{#link-to
+    'account.job-opening.campaign.job-application'
+    model.id
+    class='ui blue button list-item__button content__link'
+  }}
+    {{#ui-popup content="Open Application" position="top left"}}
+      <i class="fitted external square icon content__link"></i>
+    {{/ui-popup}}
+  {{/link-to}}
 </div>
