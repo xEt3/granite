@@ -8,19 +8,19 @@
     <div class="ui ten wide column"></div>
     <div class="ui six wide column">
       {{#if upcomingEvents}}
-        <h4>Upcoming Events</h4>
+        <h3>Upcoming Events</h3>
         {{timeline/event-timeline upcomingEvents}}
       {{/if}}
 
       {{#if pastEvents}}
-        <h4 class="{{unless showingPastEvents 'ui light text'}}">
+        <h3 class="{{unless showingPastEvents 'ui light text'}}">
           Past Events
           <small class="right floated">
             <a href="#" {{action "toggleProperty" "showingPastEvents"}}>
               {{if showingPastEvents 'Hide' 'Show'}}
             </a>
           </small>
-        </h4>
+        </h3>
         {{#liquid-if showingPastEvents}}
           {{timeline/event-timeline pastEvents}}
         {{/liquid-if}}
