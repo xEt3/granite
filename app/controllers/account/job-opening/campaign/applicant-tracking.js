@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import ajaxStatus from 'granite/mixins/ajax-status';
+import modalSupport from 'granite/mixins/modal-support';
 
 const {
   Controller,
@@ -9,7 +10,7 @@ const {
   get
 } = Ember;
 
-export default Controller.extend(ajaxStatus, {
+export default Controller.extend(ajaxStatus, modalSupport, {
   queryParams: [ 'showDisqualified' ],
   selectedApplications: A(),
   confirmInjectModalId: 'modal__ats-confirm-inject',
@@ -87,21 +88,6 @@ export default Controller.extend(ajaxStatus, {
     });
   },
 
-  openModal (id, key) {
-    Ember.$(`#${id}`)
-    .modal({
-      detachable: true,
-      onHidden: () => {
-        if ( !this.get(`${key}Responded`) ) {
-          this.get(`${key}Promise.reject`)();
-        }
-      }
-    })
-    .modal('show');
-
-    return new RSVP.Promise((resolve, reject) => this.set(`${key}Promise`, { resolve, reject }));
-  },
-
   actions: {
     toggleProperty (prop) {
       this.toggleProperty(prop);
@@ -117,13 +103,6 @@ export default Controller.extend(ajaxStatus, {
 
     deselectAllApplications () {
       this.set('selectedApplications', A());
-    },
-
-    modalResponse (prefix, response) {
-      const promise = this.get(`${prefix}Promise`);
-
-      this.set(`${prefix}Responded`, true);
-      promise[response ? 'resolve' : 'reject'](response);
     },
 
     disqualifyCandidate (jobApp) {

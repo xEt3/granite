@@ -1,11 +1,46 @@
 <div class="ui very padded raised segment animated fadeInUp">
+  <div class="ui top attached green label">
+    <i class="info circle icon"></i>
+    This application is currently
+    {{~#if stage}}
+      in the <strong>{{stage.name}}</strong> stage
+    {{~else}}
+      not in a stage
+    {{~/if}}.
+    <div class="right floated detail">
+      Submitted {{time-ago model.created}} on {{time model.created}}
+    </div>
+  </div>
+
   <h2 class="ui clearfix header">
-    Job Application for {{model.person.firstName}}
+    Job Application for {{model.person.firstName}} {{model.person.lastName}}
   </h2>
-  <p class="light text">Created {{time-ago model.created}} on {{time model.created 'M/D/YY'}}</p>
 
   <div class="ui grid">
-    <div class="ui ten wide column"></div>
+    <div class="ui ten wide column">
+      <h3>Documents</h3>
+      <div class="ui horizontal list">
+        <div class="item">
+          <a href="#">
+            <i class="external link icon"></i>Resume/CV
+          </a>
+        </div>
+        <div class="item">
+          <a href="#">
+            <i class="file icon"></i>Cover Letter
+          </a>
+        </div>
+      </div>
+      <div class="ui divider"></div>
+
+      {{#if (and opening.screening model.scoreRelative)}}
+        <h3>Screening</h3>
+        <p>
+          This applicant is a {{model.scoreRelative}}% match based on their responses to your screening. <a href="#">View responses</a>
+        </p>
+      {{/if}}
+
+    </div>
     <div class="ui six wide column">
       {{#if upcomingEvents}}
         <h3>Upcoming Events</h3>
@@ -28,3 +63,7 @@
     </div>
   </div>
 </div>
+
+{{modals/screening-responses
+  modalId=responsesModalId
+  onResponse=(action 'modalResponse' 'responses')}}

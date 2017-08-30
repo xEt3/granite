@@ -1,10 +1,5 @@
 <ul class="events">
   {{#each events as |event|}}
-    <li class="event">
-      <div class="event_times clearfix">
-        <span class="event__date">{{time event.start 'M/D'}}</span>
-        <span class="event__time">{{time event.start 'h:mma'}} - {{time event.end 'h:mma'}}</span>
-      </div>
-    </li>
+    {{list-item/event-item event}}
   {{/each}}
 </ul>
