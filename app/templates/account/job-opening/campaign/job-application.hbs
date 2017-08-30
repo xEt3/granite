@@ -20,23 +20,28 @@
     <div class="ui ten wide column">
       <h3>Documents</h3>
       <div class="ui horizontal list">
-        <div class="item">
-          <a href="#">
-            <i class="external link icon"></i>Resume/CV
-          </a>
-        </div>
-        <div class="item">
-          <a href="#">
-            <i class="file icon"></i>Cover Letter
-          </a>
-        </div>
+        {{#if model.resume}}
+          <div class="item">
+            <a href="{{model.resume.url}}" target="_blank">
+              <i class="external link icon"></i>Resume/CV
+            </a>
+          </div>
+        {{/if}}
+        {{#if model.coverLetter}}
+          <div class="item" {{action openModal coverLetterModalId 'coverLetter'}}>
+            <a href="#">
+              <i class="file icon"></i>Cover Letter
+            </a>
+          </div>
+        {{/if}}
       </div>
       <div class="ui divider"></div>
 
       {{#if (and opening.screening model.scoreRelative)}}
         <h3>Screening</h3>
         <p>
-          This applicant is a {{model.scoreRelative}}% match based on their responses to your screening. <a href="#">View responses</a>
+          This applicant is a {{model.scoreRelative}}% match based on their responses to your screening.
+          <a href="#" {{action openModal responsesModalId 'responses'}}>View responses</a>
         </p>
       {{/if}}
 
@@ -64,6 +69,27 @@
   </div>
 </div>
 
-{{modals/screening-responses
+{{#modals/static-content
   modalId=responsesModalId
-  onResponse=(action 'modalResponse' 'responses')}}
+  onResponse=(action 'modalResponse' 'responses')
+  title="Screening responses"
+  hideActions=true
+}}
+  <div class="ui very relaxed list">
+    {{#each responses as |group|}}
+      <div class="item content">
+        <h4>{{group.step.label}}</h4>
+        <p>{{group.response.value.text}}</p>
+      </div>
+    {{/each}}
+  </div>
+{{/modals/static-content}}
+
+{{#modals/static-content
+  modalId=coverLetterModalId
+  onResponse=(action 'modalResponse' 'coverLetter')
+  title=coverLetterTitle
+  hideActions=true
+}}
+  {{model.coverLetter}}
+{{/modals/static-content}}

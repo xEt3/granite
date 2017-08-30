@@ -4,7 +4,7 @@ const { RSVP: { Promise } } = Ember;
 
 export default Ember.Mixin.create({
   openModal (id, key) {
-    this.$(`#${id}`)
+    Ember.$(`#${id}`)
     .modal({
       detachable: true,
       onHidden: () => {

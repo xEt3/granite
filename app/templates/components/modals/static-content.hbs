@@ -1,0 +1,16 @@
+{{#ui-modal id=modalId observeChanges=true}}
+  <i class="close icon"></i>
+  <div class="header">
+    {{title}}
+  </div>
+  <div class="content">
+    {{yield}}
+  </div>
+  {{#unless hideActions}}
+    <div class="actions">
+      <button class="ui button" {{action 'respond' false}}>
+        Ok
+      </button>
+    </div>
+  {{/unless}}
+{{/ui-modal}}

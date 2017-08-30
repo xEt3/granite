@@ -5,10 +5,12 @@ const {
   RSVP: { hash, Promise }
 } = Ember;
 
+const modelKeys = [ 'model', 'events', 'stage', 'opening', 'screening' ];
+
 export default Route.extend({
   model (params) {
     return hash({
-      app: this.store.find('job-application', params.application_id),
+      model: this.store.find('job-application', params.application_id),
       events: this.store.query('event', {
         contextType: 'JobApplication',
         contextId: params.application_id,
@@ -17,10 +19,11 @@ export default Route.extend({
           start: -1
         }
       }),
-      opening: this.modelFor('account.job-opening')
+      opening: this.modelFor('account.job-opening'),
     })
     .then(hashResults => hash(Object.assign({}, hashResults, {
-      stage: hashResults.app.get('stage') ? this.getStage(hashResults.app.get('stage')) : Promise.resolve()
+      stage: hashResults.model.get('stage') ? this.getStage(hashResults.model.get('stage')) : Promise.resolve(),
+      screening: hashResults.opening.get('screening')
     })));
   },
 
@@ -33,11 +36,6 @@ export default Route.extend({
   },
 
   setupController (controller, response) {
-    controller.setProperties({
-      model: response.app,
-      events: response.events,
-      stage: response.stage,
-      opening: response.opening
-    });
+    modelKeys.forEach(k => controller.set(k, response[k]));
   }
 });
