@@ -40,7 +40,7 @@
       {{#if (and opening.screening model.scoreRelative)}}
         <h3>Screening</h3>
         <p>
-          This applicant is a {{model.scoreRelative}}% match based on their responses to your screening.
+          This applicant is a <strong>{{model.scoreRelative}}% match</strong> based on their responses to your screening.
           <a href="#" {{action openModal responsesModalId 'responses'}}>View responses</a>
         </p>
       {{/if}}
@@ -79,7 +79,12 @@
     {{#each responses as |group|}}
       <div class="item content">
         <h4>{{group.step.label}}</h4>
-        <p>{{group.response.value.text}}</p>
+        <p>
+          {{#if group.response.value.weight}}
+            <span class="ui label">{{group.response.value.weight}}</span>
+          {{/if}}
+          {{group.response.value.text}}
+        </p>
       </div>
     {{/each}}
   </div>
