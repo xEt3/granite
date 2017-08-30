@@ -2,4 +2,10 @@
   <h2 class="ui clearfix header">
     {{model.name}}
   </h2>
+
+  {{ember-chart
+    type='bar'
+    data=summaryData
+    options=summaryOpts
+  }}
 </div>
