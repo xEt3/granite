@@ -56,13 +56,15 @@
         <h3 class="{{unless showingPastEvents 'ui light text'}}">
           Past Events
           <small class="right floated">
-            <a href="#" {{action "toggleProperty" "showingPastEvents"}}>
+            <a href="#" {{action (toggle "showingPastEvents" this)}}>
               {{if showingPastEvents 'Hide' 'Show'}}
             </a>
           </small>
         </h3>
         {{#liquid-if showingPastEvents}}
-          {{timeline/event-timeline pastEvents}}
+          {{timeline/event-timeline
+            pastEvents
+          }}
         {{/liquid-if}}
       {{/if}}
     </div>

@@ -1,5 +1,8 @@
 <ul class="events">
   {{#each events as |event|}}
-    {{list-item/event-item event}}
+    {{list-item/event-item
+      event
+      linkTo=linkItemsTo
+    }}
   {{/each}}
 </ul>
