@@ -57,7 +57,7 @@
         <div class="default text">Additional Attendees</div>
         <div class="menu">
           {{#each availableOrganizers as |attendee|}}
-            <div class="item" data-value="{{map-value mapper attendee.id}}">
+            <div class="item" data-value="{{map-value mapper attendee}}">
               {{attendee.fullName}}
             </div>
           {{/each}}

@@ -149,7 +149,7 @@ Router.map(function() {
           'job-application',
           { path: '/application/:application_id/view' },
           function() {
-            this.route('event');
+            this.route('event', { path: '/event/:event_id' });
           }
         );
       });

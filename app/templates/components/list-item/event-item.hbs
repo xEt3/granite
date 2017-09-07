@@ -5,7 +5,13 @@
   </span>
 </div>
 <div class="event_details">
-  <span class="event__title">{{model.title}}</span>
+  {{#if linkTo}}
+    {{#link-to linkTo model.id class="event__title"}}
+      {{model.title}}
+    {{/link-to}}
+  {{else}}
+    <span class="event__title">{{model.title}}</span>
+  {{/if}}
   <span class="event__participants event__meta--right">
     <i class="users icon"></i>{{attendeeCount}}
   </span>
