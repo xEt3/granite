@@ -88,6 +88,11 @@ export default Controller.extend(ajaxStatus, modalSupport, {
     });
   },
 
+  beginOnboarding (jobApplication) {
+    // TODO do something with the job application
+    // This still needs to be thought through.
+  },
+
   actions: {
     toggleProperty (prop) {
       this.toggleProperty(prop);
