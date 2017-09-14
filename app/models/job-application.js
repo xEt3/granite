@@ -21,6 +21,10 @@ export default Model.extend({
     return this.get('employee') || this.get('applicant');
   }),
 
+  hired:      attr('boolean'),
+  hiredSetOn: attr('date'),
+  hiredSetBy: belongsTo('employee', { async: true, inverse: null }),
+
   reviewedOn: attr('date'),
   created: attr('date', {
     defaultValue: () => new Date()

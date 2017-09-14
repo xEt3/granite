@@ -7,10 +7,20 @@ const {
   A,
   RSVP,
   computed,
-  get
+  get,
+  inject: { service }
 } = Ember;
 
+const employeeProps = [
+  'firstName',
+  'middleName',
+  'lastName',
+  'suffixName',
+  'email'
+];
+
 export default Controller.extend(ajaxStatus, modalSupport, {
+  auth: service(),
   queryParams: [ 'showDisqualified' ],
   selectedApplications: A(),
   confirmInjectModalId: 'modal__ats-confirm-inject',
@@ -89,8 +99,37 @@ export default Controller.extend(ajaxStatus, modalSupport, {
   },
 
   beginOnboarding (jobApplication) {
-    // TODO do something with the job application
-    // This still needs to be thought through.
+    const job = this.get('model.job'),
+          applicant = jobApplication.get('applicant');
+
+    let employee = jobApplication.get('employee');
+
+    jobApplication.setProperties({
+      hired: true,
+      hiredSetOn: new Date(),
+      hiredSetBy: this.get('auth.user.employee')
+    });
+
+    // Check for existing employee record,
+    // if nothing exists, create one
+    if (!employee && applicant) {
+      let employeeData = Object.assign({}, applicant.getProperties(employeeProps), {
+        onboarding: true
+      });
+      employee = this.get('store').createRecord('employee', employeeData);
+    }
+
+    let wasNew = employee.get('isNew');
+
+    employee.set('jobTitle', job.get('title'));
+
+    return jobApplication.save()
+    .then(() => employee.save())
+    .then(employeeRecord => {
+      if (wasNew) {
+        this.transitionToRoute('account.employee.onboard', employeeRecord.get('id'));
+      }
+    });
   },
 
   actions: {

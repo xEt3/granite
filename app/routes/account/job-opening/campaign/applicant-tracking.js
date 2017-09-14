@@ -24,6 +24,7 @@ export default Route.extend(refreshable, {
     return hash({
       // Job opening
       jobOpening,
+      job: jobOpening.get('job'),
       // Applications for this pipeline
       applications: this.store.query('job-application', applicationsQuery),
       employees: this.store.query('employee', { sort: { lastName: -1 } }),

@@ -48,3 +48,20 @@
     {{/display/calc-color}}
   {{/if}}
 </div>
+
+{{#if application.hired}}
+  <div class="ui bottom attached green label">
+    <i class="fitted check icon"></i>
+    Marked as hired on {{time application.hiredSetOn 'M/D/YY'}}
+    {{#if application.hiredSetBy.firstName}}
+      by {{application.hiredSetBy.firstName}}
+    {{/if}}
+  </div>
+{{/if}}
+
+{{#if application.disqualified}}
+  <div class="ui bottom attached red label">
+    <i class="fitted remove icon"></i>
+    Candidate is disqualified
+  </div>
+{{/if}}

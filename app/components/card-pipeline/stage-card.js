@@ -13,6 +13,10 @@ const {
 const PipelineCardComponent = Component.extend({
   store: service(),
   classNames: [ 'pipeline-card__content' ],
+  classNameBindings: [
+    'application.hired:pipeline-card__content--hired',
+    'application.disqualified:pipeline-card__content--disqualified'
+  ],
 
   allExceptCurrentStage: computed('stages.[]', 'application.stage', function () {
     const stageId = this.get('application.stage');
