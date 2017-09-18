@@ -87,6 +87,7 @@
         (action openModal confirmDisqualifyModalId 'disqualify')
         (action "disqualifyCandidate" appInDisqualifyConfirm)
       ))
+      onUnDisqualify=(action "unDisqualifyCandidate")
       onSchedule=(action (pipe
         (action set 'appInScheduler')
         (action resetMeeting)

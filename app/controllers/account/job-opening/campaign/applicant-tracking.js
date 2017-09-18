@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import ajaxStatus from 'granite/mixins/ajax-status';
 import modalSupport from 'granite/mixins/modal-support';
-
+import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 const {
   Controller,
   A,
@@ -19,7 +19,7 @@ const employeeProps = [
   'email'
 ];
 
-export default Controller.extend(ajaxStatus, modalSupport, {
+export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
   auth: service(),
   queryParams: [ 'showDisqualified' ],
   selectedApplications: A(),
@@ -168,6 +168,11 @@ export default Controller.extend(ajaxStatus, modalSupport, {
         this.send('refresh');
       })
       .catch(this.ajaxError.bind(this));
+    },
+
+    unDisqualifyCandidate (jobApp) {
+      jobApp.set('disqualified', false);
+      jobApp.save();
     }
   }
 });

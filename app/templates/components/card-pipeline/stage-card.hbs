@@ -14,19 +14,22 @@
         </div>
       {{/ui-dropdown}}
     {{/ui-popup}}
+    {{#unless application.disqualified}}
+      {{#ui-dropdown class="title-bar__control item icon top right pointing"}}
+        <i class="setting icon"></i>
+        <div class="menu">
+          <a href="#" class="item" {{action onSchedule application}}><i class="calendar icon"></i> Schedule...</a>
 
-    {{#ui-dropdown class="title-bar__control item icon top right pointing"}}
-      <i class="setting icon"></i>
-      <div class="menu">
-        <a href="#" class="item" {{action onSchedule application}}><i class="calendar icon"></i> Schedule...</a>
-        <a href="#" class="item" {{action onDisqualify application}}><i class="remove circle icon"></i> Disqualify candidate...</a>
-        {{#if onOnboardCandidate}}
-          <a href="#" class="item" {{action onOnboardCandidate application}}>
-            <i class="user plus icon"></i> Hire candidate...
-          </a>
-        {{/if}}
-      </div>
-    {{/ui-dropdown}}
+            <a href="#" class="item" {{action onDisqualify application}}><i class="remove circle icon"></i> Disqualify candidate...</a>
+
+          {{#if onOnboardCandidate}}
+            <a href="#" class="item" {{action onOnboardCandidate application}}>
+              <i class="user plus icon"></i> Hire candidate...
+            </a>
+          {{/if}}
+        </div>
+      {{/ui-dropdown}}
+    {{/unless}}
   </div>
 </div>
 
@@ -63,5 +66,9 @@
   <div class="ui bottom attached red label">
     <i class="fitted remove icon"></i>
     Candidate is disqualified
+    <a class="ui right floated"{{action onUnDisqualify application}}>
+      <i class="history icon"></i>
+      Undo
+    </a>
   </div>
 {{/if}}
