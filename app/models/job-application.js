@@ -17,8 +17,8 @@ export default Model.extend({
   applicant:  belongsTo('applicant', { async: true, inverse: null }),
   employee:   belongsTo('employee', { async: true, inverse: null }),
 
-  person: computed('applicant', 'employee', function () {
-    return this.get('employee') || this.get('applicant');
+  person: computed('applicant', 'employee.id', function () {
+    return this.get('employee.id') ? this.get('employee') : this.get('applicant');
   }),
 
   hired:      attr('boolean'),

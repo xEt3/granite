@@ -40,7 +40,6 @@
         background-color: white;
         box-shadow: 0 2px 4px fade(@gray-dark, 50%);
         margin-bottom: 1em;
-        padding: .8em 1em;
         border-radius: @trim-border-rad;
         transition: all .1s ease-in-out;
         cursor: move;
@@ -48,8 +47,13 @@
         position: relative;
 
         .ui.bottom.label {
-          bottom: 0;
-          transform: translateY(100%);
+          border-radius: 0;
+          position: static;
+          width: 100%;
+        }
+
+        .card-content__wrapper {
+          padding: .8em 1em;
         }
 
         .card-content__title-bar {

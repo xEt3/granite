@@ -11,7 +11,7 @@
   <div class="extra">
     {{#if model.completedSetup}}
       {{#if model.completedOn}}
-        <span class="ui label"><i class="check icon"></i>Completed on {{model.completedOn}}</span>
+        <span class="ui label"><i class="check icon"></i>Completed on {{time model.completedOn}}</span>
       {{else if model.hiring}}
         <span class="ui green label"><i class="add user icon"></i>Hiring</span>
         <span class="ui blue label"><i class="check icon"></i>Completed setup {{time-ago model.completedSetup}}</span>
