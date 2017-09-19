@@ -37,5 +37,7 @@ export default Model.extend({
   scoreAbs: computed('scoreRelative', function () {
     const v = this.get('scoreRelative');
     return v ? v > 100 ? 100 : v < 0 ? 0 : v : v;
-  })
+  }),
+
+  isEmployee: computed.bool('employee.id')
 });

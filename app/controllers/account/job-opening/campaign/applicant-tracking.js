@@ -80,12 +80,12 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     this.ajaxStart();
 
     const app = this.get('appInScheduler'),
-          isEmployeeApplicant = app.get('employee');
+          isEmployeeApplicant = app.get('isEmployee');
 
     event.setProperties({
       contextId: app.get('id'),
       contextType: 'JobApplication',
-      attendantId: get(isEmployeeApplicant || app.get('applicant') || {}, 'id'),
+      attendantId: get(isEmployeeApplicant ? app.get('employee') : app.get('applicant'), 'id'),
       attendantType: isEmployeeApplicant ? 'Employee' : 'Applicant'
     });
 
@@ -99,6 +99,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
   },
 
   beginOnboarding (jobApplication) {
+    debugger;
     const job = this.get('model.job'),
           applicant = jobApplication.get('applicant');
 
@@ -112,7 +113,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
 
     // Check for existing employee record,
     // if nothing exists, create one
-    if (!employee && applicant) {
+    if (!jobApplication.get('isEmployee') && applicant) {
       let employeeData = Object.assign({}, applicant.getProperties(employeeProps), {
         onboarding: true
       });
@@ -129,7 +130,8 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
       if (wasNew) {
         this.transitionToRoute('account.employee.onboard', employeeRecord.get('id'));
       }
-    });
+    })
+    .catch(this.ajaxError.bind(this));
   },
 
   actions: {
@@ -172,7 +174,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
 
     unDisqualifyCandidate (jobApp) {
       jobApp.set('disqualified', false);
-      jobApp.save();
+      this.saveModel(jobApp);
     }
   }
 });
