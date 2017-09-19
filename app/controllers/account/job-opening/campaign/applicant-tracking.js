@@ -99,7 +99,6 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
   },
 
   beginOnboarding (jobApplication) {
-    debugger;
     const job = this.get('model.job'),
           applicant = jobApplication.get('applicant');
 
