@@ -27,6 +27,10 @@ const PipelineCardComponent = Component.extend({
     return this.get('getNextMeeting').perform();
   }),
 
+  controlsDisabled: computed('application.hired', 'application.disqualified', function () {
+    return this.get('application.hired') || this.get('application.disqualified');
+  }),
+
   getNextMeeting: task(function*() {
     try {
       let results = yield this.get('store').query('event', {
