@@ -27,7 +27,7 @@ const PipelineCardComponent = Component.extend({
     return this.get('getNextMeeting').perform();
   }),
 
-  controlsDisabled: computed('application.hired', 'application.disqualified', function () {
+  controlsDisabled: computed('application.{hired,disqualified}', function () {
     return this.get('application.hired') || this.get('application.disqualified');
   }),
 
