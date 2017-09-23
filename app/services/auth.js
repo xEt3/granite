@@ -104,7 +104,16 @@ export default Service.extend({
         this.set('session', existingSession);
       }
 
-      return existingSession ? this.get('user').then(user => user.get('employee')).then(() => existingSession) : false;
+      return existingSession ?
+        this.get('user').then(user => user.get('employee')).then(() => existingSession)
+        .catch(err => {
+          if (((err || {}).errors || []).filter(e => e.status === '401').length > 0) {
+            return this.logout();
+          } else {
+            throw err;
+          }
+        })
+        : false;
     });
   },
 

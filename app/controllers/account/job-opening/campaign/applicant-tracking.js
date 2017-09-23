@@ -124,7 +124,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     employee.set('jobTitle', job.get('title'));
 
     return jobApplication.save()
-    .then(() => employee.save())
+    .then(() => employee.get('content').save())
     .then(employeeRecord => {
       if (wasNew) {
         this.transitionToRoute('account.employee.onboard', employeeRecord.get('id'));
