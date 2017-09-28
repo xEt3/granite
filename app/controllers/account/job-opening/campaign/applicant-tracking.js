@@ -174,11 +174,6 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     unDisqualifyCandidate (jobApp) {
       jobApp.set('disqualified', false);
       this.saveModel(jobApp);
-    },
-
-    unSetHire (jobApp) {
-      jobApp.setProperties({hired: null, hiredSetBy: null, hiredSetOn: null});
-      this.saveModel(jobApp);
     }
   }
 });
