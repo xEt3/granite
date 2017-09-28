@@ -1,24 +1,24 @@
 import Ember from 'ember';
 
-const { Mixin, RSVP: { Promise } } = Ember;
+const { Mixin, RSVP: { resolve }, assert } = Ember;
 
 export default Mixin.create({
   modelDefaults: {},
 
-  model () {
+  model (params) {
     const modelName = this.get('modelName'),
           defaults = this.get('modelDefaults'),
           getDefaults = this.getModelDefaults;
 
     let defaultPromise;
 
-    if ( getDefaults && typeof getDefaults === 'function' ) {
-      defaultPromise = this.getModelDefaults();
+    if (getDefaults && typeof getDefaults === 'function') {
+      defaultPromise = this.getModelDefaults(params);
     }
 
-    Ember.assert('You must specify a modelName.', modelName);
+    assert('You must specify a modelName.', modelName);
 
-    return Promise.resolve(defaultPromise)
+    return resolve(defaultPromise)
     .then(resolvedDefaults => {
       Ember.$.extend(defaults, resolvedDefaults);
       return this.store.createRecord(modelName, defaults);

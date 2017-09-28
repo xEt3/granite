@@ -37,7 +37,7 @@ Router.map(function() {
       this.route('integrations');
       this.route('templates', function() {
         this.route('edit', { path: '/:template_id/edit' });
-        this.route('add');
+        this.route('add', { path: '/:template_key' });
       });
     });
 

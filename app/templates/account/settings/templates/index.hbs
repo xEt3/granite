@@ -11,21 +11,24 @@
   (group-by "category" model.definitionsGrouped)
   as |category groups|
 }}
-  <h3>{{category}}</h3>
+  <h2>{{category}}</h2>
   {{#each groups as |group|}}
-    {{group.definition.title}}
-    <div>
-      {{#if group.template}}
-        {{#ui-popup content="Edit current template..."}}
-          {{#link-to 'account.settings.templates.edit' group.template.id}}
-            <i class="edit icon"></i>Edit
+    <h3>
+      {{group.definition.title}}
+      <div class="ui small text right floated">
+        {{#if group.template}}
+          {{#ui-popup content="Edit current template..."}}
+            {{#link-to 'account.settings.templates.edit' group.template.id}}
+              <i class="edit icon"></i>Edit
+            {{/link-to}}
+          {{/ui-popup}}
+        {{else}}
+          {{#link-to 'account.settings.templates.add' group.definition.key}}
+            <i class="asterisk icon"></i>New Customized Template
           {{/link-to}}
-        {{/ui-popup}}
-      {{else}}
-        {{#link-to 'account.settings.templates.add'}}
-          <i class="asterisk icon"></i>New Customized Template
-        {{/link-to}}
-      {{/if}}
-    </div>
+        {{/if}}
+      </div>
+    </h3>
+    <p>{{group.definition.description}}</p>
   {{/each}}
 {{/each-in}}
