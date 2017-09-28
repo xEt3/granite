@@ -15,7 +15,7 @@
           </div>
         {{/ui-dropdown}}
       {{/ui-popup}}
-      {{#unless application.disqualified}}
+      {{#unless controlsDisabled}}
         {{#ui-dropdown class="title-bar__control item icon top right pointing"}}
           <i class="setting icon"></i>
           <div class="menu">
@@ -68,6 +68,10 @@
     {{#if application.hiredSetBy.firstName}}
       by {{application.hiredSetBy.firstName}}
     {{/if}}
+    <a class="ui right floated"{{action onUnHire application}}>
+      <i class="history icon"></i>
+      Undo
+    </a>
   </div>
 {{/if}}
 

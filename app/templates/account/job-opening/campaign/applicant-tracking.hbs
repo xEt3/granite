@@ -88,6 +88,7 @@
         (action "disqualifyCandidate" appInDisqualifyConfirm)
       ))
       onUnDisqualify=(action "unDisqualifyCandidate")
+      onUnHire=(action "unSetHire")
       onSchedule=(action (pipe
         (action set 'appInScheduler')
         (action resetMeeting)
