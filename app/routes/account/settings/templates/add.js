@@ -14,19 +14,26 @@ export default Route.extend(add, {
   getModelDefaults (params) {
     return this.get('ajax').request(`/api/v1/template/${params.template_key}/default`)
     .then(({ template }) => {
-      const content = template.content;
+      const { content } = template,
+            { isRenderable } = this.get('definition');
 
       return {
         key: params.template_key,
+        isRenderable,
         content
       };
     });
   },
 
   model (params) {
-    return hash({
-      template: this._super(...arguments),
-      definition: this.store.query('template-definition', { key: params.template_key })
+    return this.store.query('template-definition', { key: params.template_key })
+    .then(definition => {
+      this.set('definition', definition);
+
+      return hash({
+        definition,
+        template: this._super(...arguments)
+      });
     });
   },
 
