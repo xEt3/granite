@@ -4,7 +4,7 @@
     Are you sure?
   </div>
   <div class="content">
-    Are you sure you want to disqualify {{model.person.firstName}} for this position?
+    Are you sure you want to {{#if model}}disqualify {{model.person.firstName}} for this position{{else}}do that{{/if}}?
   </div>
   <div class="actions">
     <button class="ui inverted red button" {{action 'respond' false}}>

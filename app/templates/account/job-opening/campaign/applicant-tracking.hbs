@@ -14,7 +14,18 @@
         >
           Move Selected To Pipeline
         </a>
+
+        <a href="#" class="ui small orange button"
+          {{action (pipe
+            (action openModal confirmDisqualifyModalId 'disqualify')
+            (action "disqualifyCandidate" selectedApplications)
+            (action "deselectAllApplications")
+          )}}
+        >
+          Disqualify Selected
+        </a>
       {{/if}}
+
       {{#if showingAllPending}}
         <a href="#" class="ui small button" {{action "selectAllApplications"}}>
           Select All
@@ -25,7 +36,7 @@
       {{/if}}
     </div>
 
-    <div class="ui selectable divided items {{unless showingAllPending 'fade-unless-hovered'}}">
+    <div class="ui selectable divided items {{unless (or showingAllPending (lt pendingApplications.length 4)) 'fade-unless-hovered'}}">
       {{#each
         (if (not showingAllPending)
           (take 3 pendingApplications)
@@ -58,23 +69,38 @@
 
   <h2 class="ui clearfix header">
     Your Recruiting Pipeline
+    <small class="right floated small text">
+      <a href="#" {{action toggleProperty "showDisqualified"}}>
+        {{if showDisqualified 'Hide' 'Show'}} Disqualified Applicants
+      </a>
+    </small>
   </h2>
 
-  {{card-pipeline
-    activeCandidates
-    pipeline=model.pipeline
-    onDisqualify=(action (pipe
-      (action set 'appInDisqualifyConfirm')
-      (action openModal confirmDisqualifyModalId 'disqualify')
-      (action "disqualifyCandidate")
-    ))
-    onSchedule=(action (pipe
-      (action set 'appInScheduler')
-      (action resetMeeting)
-      (action openModal schedulerModalId 'scheduler')
-      (action saveMeeting)
-    ))
-  }}
+  {{#confirm-modal
+    confirmContent='Are you sure you want to hire and onboard this candidate?'
+    as |confirm|}}
+    {{card-pipeline
+      activeCandidates
+      pipeline=model.pipeline
+      onDisqualify=(action (pipe
+        (action set 'appInDisqualifyConfirm')
+        (action openModal confirmDisqualifyModalId 'disqualify')
+        (action "disqualifyCandidate" appInDisqualifyConfirm)
+      ))
+      onUnDisqualify=(action "unDisqualifyCandidate")
+      onUnHire=(action "unSetHire")
+      onSchedule=(action (pipe
+        (action set 'appInScheduler')
+        (action resetMeeting)
+        (action openModal schedulerModalId 'scheduler')
+        (action saveMeeting)
+      ))
+      onOnboardCandidate=(action (pipe
+        (action confirm)
+        (action beginOnboarding)
+      ))
+    }}
+  {{/confirm-modal}}
 
   {{modals/ats-confirm-inject
     applicants=selectedApplications
@@ -90,5 +116,6 @@
     appInScheduler
     currentMeeting
     modalId=schedulerModalId
+    availableOrganizers=model.employees
     onResponse=(action 'modalResponse' 'scheduler')}}
 </div>

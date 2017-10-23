@@ -1,0 +1,45 @@
+<h4>New Template for {{definition.title}}</h4>
+<div class="ui divider"></div>
+
+<form class="ui form" {{action "save" on="submit"}}>
+  {{#if definition.isRenderable}}
+    <p>
+      Templates support the "Mustache" language. See <a href="http://mustache.github.io/mustache.5.html" target="_blank">the mustache manual</a> for more information.
+    </p>
+  {{/if}}
+  {{#each definition.contentKeys as |contentKey|}}
+    <div class="ui field">
+      <label>
+        {{contentKey.title}}
+        {{#ui-popup
+          content=contentKey.description
+          class="ui right floated"
+        }}
+            <i class="info circle icon"></i>
+        {{/ui-popup}}
+      </label>
+      {{textarea
+        value=(mut (get model.content contentKey.key))
+        rows="4"
+        spellcheck="true"}}
+    </div>
+  {{/each}}
+
+  <div class="ui divider"></div>
+  {{#form/action-button
+    type="submit"
+    loading=working
+    class="ui large green fluid button"
+  }}
+    Save Template
+  {{/form/action-button}}
+
+  <h5>Available form data</h5>
+  {{#each definition.availableData as |data|}}
+    <div class="ui light text">
+      <div><strong>{{data.title}}</strong></div>
+      <div>{{data.description}}</div>
+      <div>Usage: &#123;&#123;{{data.key}}&#125;&#125;</div>
+    </div>
+  {{/each}}
+</form>

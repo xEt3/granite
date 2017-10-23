@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import moment from 'moment';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { hasMany } from 'ember-data/relationships';
@@ -24,6 +25,9 @@ export default Model.extend(Validations, {
   linkedServices: attr('array'),
   employeeCustomFields: attr('array'),
   correctiveActionSeverities: hasMany('corrective-action-severity'),
+  tz: attr('string', {
+    defaultValue: () => moment.tz.guess()
+  }),
 
   urlPrefix: attr('string'),
   collectEEO: attr('boolean'),

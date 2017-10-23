@@ -122,4 +122,11 @@ const formTypes = [{
 
 const issueTypes = [ 'Performance', 'Behavior', 'Performance & Behavior' ];
 
-export { issueTypes, suffixes, states, jobCategories, jobTypes, formTypes };
+const closeMessageMap = {
+  prefix: 'Based on your settings',
+  default: 'Are you sure you want to close this job opening?',
+  sendCloseNotice: 'an email will be sent to those who were not hired',
+  allocateTalentPool: 'non-disqualified candidates will be added to your talent pool'
+};
+
+export { issueTypes, suffixes, states, jobCategories, jobTypes, formTypes, closeMessageMap };

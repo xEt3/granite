@@ -1,38 +1,87 @@
-<div class="card-content__title-bar">
-  <span class="card-content__applicant-name">
-    {{application.person.firstName}} {{application.person.lastName}}
-  </span>
-  <div class="card-title-bar__controls">
-    {{#ui-popup tagName='span' position="top center" content="Change candidate stage..."}}
-      {{#ui-dropdown class="title-bar__control item icon top right pointing"}}
-      <i class="exchange icon"></i>
-        <div class="menu">
-          <div class="header">Move to...</div>
-          {{#each allExceptCurrentStage as |stage|}}
-            <a href="#" class="item" {{action "moveTo" stage}}>{{stage.name}}</a>
-          {{/each}}
-        </div>
-    {{/ui-dropdown}}
-    {{/ui-popup}}
+<div class="card-content__wrapper">
+  <div class="card-content__title-bar">
+    <span class="card-content__applicant-name">
+      {{application.person.firstName}} {{application.person.lastName}}
+    </span>
+    <div class="card-title-bar__controls">
+      {{#ui-popup tagName='span' position="top center" content="Change candidate stage..."}}
+        {{#ui-dropdown class="title-bar__control item icon top right pointing"}}
+          <i class="exchange icon"></i>
+          <div class="menu">
+            <div class="header">Move to...</div>
+            {{#each allExceptCurrentStage as |stage|}}
+              <a href="#" class="item" {{action "moveTo" stage}}>{{stage.name}}</a>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      {{/ui-popup}}
+      {{#unless controlsDisabled}}
+        {{#ui-dropdown class="title-bar__control item icon top right pointing"}}
+          <i class="setting icon"></i>
+          <div class="menu">
+            <a href="#" class="item" {{action onSchedule application}}><i class="calendar icon"></i> Schedule...</a>
 
-    {{#ui-dropdown class="title-bar__control item icon top right pointing"}}
-      <i class="setting icon"></i>
-      <div class="menu">
-        <a href="#" class="item" {{action onSchedule application}}><i class="calendar icon"></i> Schedule...</a>
-        <a href="#" class="item"><i class="dollar icon"></i> Make offer...</a>
-        <a href="#" class="item" {{action onDisqualify application}}><i class="remove circle icon"></i> Disqualify candidate...</a>
-      </div>
-    {{/ui-dropdown}}
+              <a href="#" class="item" {{action onDisqualify application}}><i class="remove circle icon"></i> Disqualify candidate...</a>
+
+            {{#if onOnboardCandidate}}
+              <a href="#" class="item" {{action onOnboardCandidate application}}>
+                <i class="user plus icon"></i> Hire candidate...
+              </a>
+            {{/if}}
+          </div>
+        {{/ui-dropdown}}
+      {{/unless}}
+    </div>
+  </div>
+
+  <div class="card-content__next-schedule">
+    {{#if (await nextMeeting)}}
+      Next meeting is {{time-ago (get (await nextMeeting) 'start')}}
+    {{else}}
+      Nothing scheduled
+    {{/if}}
+  </div>
+
+  <div class="card-content__application-link card-content__score-container">
+    {{#link-to 'account.job-opening.campaign.job-application' application.id}}Open Application{{/link-to}}
+    {{#if application.isScored}}
+      {{#display/calc-color application.scoreAbs as |red green|}}
+        <span style="color: rgb({{red}}, {{green}}, 0)" class="card-content__score">
+          {{application.scoreAbs}}%
+        </span>
+      {{/display/calc-color}}
+    {{/if}}
   </div>
 </div>
 
-<div class="card-content__next-schedule">
-  Nothing scheduled
-</div>
+{{#if application.employee.id}}
+  <span class="ui bottom attached blue label">
+    <i class="fitted user icon"></i>
+    Internal applicant
+  </span>
+{{/if}}
 
-<div class="card-content__application-link">
-  {{#link-to 'account.job-opening.campaign.job-application' application.id}}Open Application{{/link-to}}
-  {{#if application.scoreRelative}}
-    <span class="card-content__score">{{application.scoreRelative}}%</span>
-  {{/if}}
-</div>
+{{#if application.hired}}
+  <div class="ui bottom attached green label">
+    <i class="fitted check icon"></i>
+    Marked as hired on {{time application.hiredSetOn 'M/D/YY'}}
+    {{#if application.hiredSetBy.firstName}}
+      by {{application.hiredSetBy.firstName}}
+    {{/if}}
+    <a class="ui right floated"{{action onUnHire application}}>
+      <i class="history icon"></i>
+      Undo
+    </a>
+  </div>
+{{/if}}
+
+{{#if application.disqualified}}
+  <div class="ui bottom attached red label">
+    <i class="fitted remove icon"></i>
+    Candidate is disqualified
+    <a class="ui right floated"{{action onUnDisqualify application}}>
+      <i class="history icon"></i>
+      Undo
+    </a>
+  </div>
+{{/if}}

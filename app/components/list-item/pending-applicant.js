@@ -11,8 +11,10 @@ export default BaseLiComponent.extend({
   }),
 
   click (e) {
-    e.preventDefault();
-    this.send('select');
+    if (e.target.className.indexOf('content__link') < 0) {
+      e.preventDefault();
+      this.send('select');
+    }
   },
 
   actions: {

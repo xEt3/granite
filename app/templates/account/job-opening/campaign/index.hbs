@@ -1,5 +1,11 @@
 <div class="ui very padded raised segment animated fadeInUp">
-  <h2 class="ui clearfix header">
-    {{model.name}}
+  <h2 class="ui header">
+    Recent Activity
   </h2>
+
+  {{ember-chart
+    type='line'
+    data=model
+    options=summaryOpts
+  }}
 </div>

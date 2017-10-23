@@ -18,6 +18,7 @@ export default Model.extend({
   sendCloseNotice:           attr('boolean'), // send an email to unrejected talent when job closes
   allocateTalentPool:        attr('boolean'), // allocate unrejected, not hired talent to the pool
   applicantScoring:          attr('boolean'),
+  closed:                    attr('boolean'),
 
   jobType:                 attr('string'),
   supervisoryRequirements: attr('boolean'),
@@ -26,7 +27,6 @@ export default Model.extend({
   setupStep:      attr('number'),
   setupProgress:  attr('number'),
   completedSetup: attr('date'),
-  completedOn:    attr('date'), //when the campaign was completed
 
   job:              belongsTo('job'),
   company:          belongsTo('company'),
@@ -38,9 +38,10 @@ export default Model.extend({
   manualApplicantSources: hasMany('manual-applicant-source'),
   emailSubscribers: attr('array'),
 
-  startOn: attr('date'),
-  endOn:   attr('date'),
-  dueOn:   attr('date'),
+  startOn:     attr('date'),
+  endOn:       attr('date'),
+  dueOn:       attr('date'),
+  completedOn: attr('date'),
 
   created: attr('date', {
     defaultValue: () => new Date()

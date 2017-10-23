@@ -1,11 +1,14 @@
 <h2 class="pipeline-stage__title">
   {{stage.name}}
+  {{!--
+  Saving this for a future release
   {{#ui-dropdown class="item icon top left stage-title__settings"}}
     <i class="setting icon"></i>
     <div class="menu">
       {{#link-to 'account.job-opening.campaign.settings' class="item"}}Some item{{/link-to}}
     </div>
   {{/ui-dropdown}}
+  --}}
 </h2>
 
 {{#sortable-group tagName="ul" classNames="pipeline-stage__cards" onChange="reorderItems" as |group|}}
@@ -15,7 +18,10 @@
         application
         stages
         moveAppToStage=moveAppToStage
+        onUnDisqualify=onUnDisqualify
         onDisqualify=onDisqualify
+        onUnHire=onUnHire
+        onOnboardCandidate=onOnboardCandidate
         onSchedule=onSchedule}}
     {{/sortable-item}}
   {{/each}}

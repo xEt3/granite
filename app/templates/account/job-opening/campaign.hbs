@@ -7,6 +7,19 @@
       <i class="users icon"></i>Applicants
     {{/link-to}}
     <div class="right menu">
+      {{#if (and model.completedOn (not model.closed))}}
+        {{#confirm-modal class="item" confirmContent=confirmCloseMessage as |confirm|}}
+          {{#ui-popup
+            content="This job opening meets your requirements for closure. The appropriate number of candidates were hired and you can now close this opening."
+            position="bottom center"
+          }}
+            <a href="#" class="text-green" {{action (pipe confirm (action 'close'))}}>
+              <i class="check icon"></i>Close Job Opening...
+            </a>
+          {{/ui-popup}}
+        {{/confirm-modal}}
+      {{/if}}
+
       {{#unless model.completedSetup}}
         {{#link-to 'account.job-opening.setup' class="item text-blue"}}<i class="wizard icon"></i>Continue Setup{{/link-to}}
       {{/unless}}
