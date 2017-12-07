@@ -6,7 +6,30 @@
     }}
   </div>
   <div class="header">
-    {{model.person.firstName}} {{model.person.lastName}}
-    {{! score}}
+    <strong>{{model.person.firstName}} {{model.person.lastName}}</strong>
   </div>
+  <div class="ui meta content__flex--pull-right">
+    {{#if model.coverLetter}}
+      <span class="ui green label">
+        <i class="check icon"></i>Has Cover Letter
+      </span>
+    {{/if}}
+    {{#if model.isScored}}
+      {{#display/calc-color model.scoreAbs as |red green|}}
+        <span class="ui label" style="color: rgb({{red}}, {{green}}, 0)" class="card-content__score">
+          <i class="exchange icon"></i>{{model.scoreAbs}}%
+          Match
+        </span>
+      {{/display/calc-color}}
+    {{/if}}
+  </div>
+  {{#link-to
+    'account.job-opening.campaign.job-application'
+    model.id
+    class='ui blue button list-item__button content__link'
+  }}
+    {{#ui-popup content="Open Application" position="top left"}}
+      <i class="fitted external square icon content__link"></i>
+    {{/ui-popup}}
+  {{/link-to}}
 </div>

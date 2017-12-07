@@ -1,13 +1,3 @@
-import Ember from 'ember';
+import ParticipantComponent from './participant';
 
-const { Component } = Ember;
-
-let ActionItemParticipantComponent = Component.extend({
-  tagName: ''
-});
-
-ActionItemParticipantComponent.reopenClass({
-  positionalParams: [ 'participant', 'actionItemOwner']
-});
-
-export default ActionItemParticipantComponent;
+export default ParticipantComponent.extend();

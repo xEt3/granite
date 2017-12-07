@@ -40,11 +40,21 @@
         background-color: white;
         box-shadow: 0 2px 4px fade(@gray-dark, 50%);
         margin-bottom: 1em;
-        padding: .8em 1em;
         border-radius: @trim-border-rad;
         transition: all .1s ease-in-out;
         cursor: move;
         font-size: .9em;
+        position: relative;
+
+        .ui.bottom.label {
+          border-radius: 0;
+          position: static;
+          width: 100%;
+        }
+
+        .card-content__wrapper {
+          padding: .8em 1em;
+        }
 
         .card-content__title-bar {
           .card-content__applicant-name {
@@ -66,6 +76,12 @@
 
         .card-content__score {
           float: right;
+        }
+
+        .card-content__application-link {
+          > a {
+            display: inline-block;
+          }
         }
 
         .card-content__bottom-bar {

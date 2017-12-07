@@ -1,0 +1,16 @@
+<h3>{{if model.title model.title 'Meeting'}} on {{time model.start 'M/D/YY'}}</h3>
+<div class="ui divider"></div>
+
+<h4>Participants</h4>
+{{#each attendees as |attendee|}}
+  {{list-item/participant
+    attendee.person
+    detail=attendee.type
+  }}
+{{else}}
+  <h5 class="ui light header">
+    No participants are listed for this event.
+  </h5>
+{{/each}}
+
+<h4>Notes</h4>

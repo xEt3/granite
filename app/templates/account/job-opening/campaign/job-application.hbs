@@ -1,6 +1,20 @@
 <div class="ui very padded raised segment animated fadeInUp">
+  <div class="ui top attached green label">
+    <i class="info circle icon"></i>
+    This application is currently
+    {{~#if stage}}
+      in the <strong>{{stage.name}}</strong> stage
+    {{~else}}
+      not in a stage
+    {{~/if}}.
+    <div class="right floated detail">
+      Submitted {{time-ago model.created}} on {{time model.created}}
+    </div>
+  </div>
+
   <h2 class="ui clearfix header">
-    Job Application for {{model.person.firstName}}
+    Job Application for {{model.person.firstName}} {{model.person.lastName}}
   </h2>
-  <p class="light text">Created {{time-ago model.created}} on {{time model.created 'M/D/YY'}}</p>
+
+  {{outlet}}
 </div>

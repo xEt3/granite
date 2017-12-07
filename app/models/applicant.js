@@ -22,7 +22,7 @@ export default Model.extend({
   lastName:   attr('string'),
   suffixName: attr('string'),
 
-  email: String,
+  email: attr('string'),
 
   created: {
     type: Date,

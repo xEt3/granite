@@ -35,6 +35,10 @@ Router.map(function() {
       });
       this.route('billing');
       this.route('integrations');
+      this.route('templates', function() {
+        this.route('edit', { path: '/:template_id/edit' });
+        this.route('add', { path: '/:template_key' });
+      });
     });
 
     this.route('employees', function() {
@@ -145,10 +149,18 @@ Router.map(function() {
       this.route('campaign', { path: '/' }, function() {
         this.route('settings');
         this.route('applicant-tracking');
-        this.route('job-application', { path: '/application/:application_id/view' });
+        this.route(
+          'job-application',
+          { path: '/application/:application_id/view' },
+          function() {
+            this.route('event', { path: '/event/:event_id' });
+          }
+        );
       });
       this.route('setup', function() {
-        this.route('settings');
+        this.route('settings', function() {
+          this.route('index', function() {});
+        });
         this.route('screening');
         this.route('sources');
         this.route('eeo');
