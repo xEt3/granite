@@ -10,6 +10,7 @@
   "scripts": {
     "build": "ember build",
     "start": "ember server --proxy http://localhost:4000",
+    "dock": "ember server --proxy http://$DOCKER_IP:$DOCKER_LB_PORT",
     "test": "ember test"
   },
   "repository": "https://github.com/associatedemployers/granite",
