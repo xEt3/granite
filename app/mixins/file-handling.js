@@ -4,7 +4,7 @@
 
 import Ember from 'ember';
 
-const { Mixin, computed, run } = Ember;
+const { Mixin, computed, run, RSVP } = Ember;
 
 export default Mixin.create({
   /* Make a preflight request to create a file before upload. Use this if you are
@@ -21,8 +21,7 @@ export default Mixin.create({
   fileEndpoint: computed('fileBaseEndpoint', 'filePreflightIdentifier', function () {
     const fileBaseEndpoint = this.get('fileBaseEndpoint'),
           preflightId = this.get('filePreflightIdentifier');
-    console.log('recalc file endpoint', fileBaseEndpoint, preflightId);
-    console.log(fileBaseEndpoint.replace(':id', preflightId));
+
     return fileBaseEndpoint.replace(':id', preflightId);
   }),
 
@@ -33,12 +32,20 @@ export default Mixin.create({
   },
 
   __ajaxSuccess () {
+    if (this.get('_resolveProcess')) {
+      this.get('_resolveProcess')(this.get('__fileModel'));
+    }
+
     if (this.ajaxSuccess) {
       this.ajaxSuccess(...arguments);
     }
   },
 
   __ajaxError () {
+    if (this.get('_rejectProcess')) {
+      this.get('_rejectProcess')(...arguments);
+    }
+
     if (this.ajaxError) {
       this.ajaxError(...arguments);
     }
@@ -46,14 +53,12 @@ export default Mixin.create({
 
   __doPreflight () {
     const fileData = this.get('fileData');
-    console.log(Dropzone.options);
-    return;
 
     return this.store.createRecord('file', fileData)
     .save()
     .then((file = {}) => {
-      console.log('file?', file, file.get('id'));
       if (file && file.get('id')) {
+        this.set('__fileModel', file);
         this.set('filePreflightIdentifier', file.get('id'));
       }
 
@@ -62,24 +67,34 @@ export default Mixin.create({
   },
 
   processQueue () {
-    return Dropzone.forElement(`#${this.get('dropzoneId')}`).processQueue();
+    const DZ = Dropzone.forElement(`#${this.get('dropzoneId')}`),
+          calculatedUrl = this.get('fileEndpoint');
+
+    DZ.options.url = calculatedUrl;
+
+    return DZ.processQueue();
   },
 
   upload () {
     this.__ajaxStart();
 
-    // do a preflight request
-    if (this.get('filePreflight')) {
-      return this.__doPreflight()
-      .then(() =>
-        run.later(() => {
-          console.log('processing');
-          this.processQueue();
-        }, 5000))
-      .catch(this.__ajaxError.bind(this));
-    }
+    this.set('_processingPromise', new RSVP.Promise((resolve, reject) => {
+      this.set('_resolveProcess', resolve);
+      this.set('_rejectProcess', reject);
 
-    return this.processQueue();
+      // do a preflight request
+      if (this.get('filePreflight')) {
+        return this.__doPreflight()
+        .then(() => run.next(() => {
+          this.processQueue();
+        }))
+        .catch(this.__ajaxError.bind(this));
+      }
+
+      return this.processQueue();
+    }));
+
+    return this.get('_processingPromise');
   },
 
   actions: {
@@ -95,8 +110,12 @@ export default Mixin.create({
       this.upload();
     },
 
-    uploadedFile () {
+    uploadedFile (dzfile, response) {
+      this.get('__fileModel').setProperties(response.file);
+      Dropzone.forElement(`#${this.get('dropzoneId')}`).removeAllFiles(dzfile);
+
       this.__ajaxSuccess(null, true);
+
       if (this.uploadComplete) {
         this.uploadComplete();
       }

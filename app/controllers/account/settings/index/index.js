@@ -33,7 +33,16 @@ export default Controller.extend(addEdit, fileSupport, {
       const file = this.get('fileIsAdded');
 
       Promise.resolve(file ? this.upload() : null)
-      .then(() => this.saveModel())
+      .then(uploaded => {
+        if (uploaded) {
+          this.get('model').setProperties({
+            logo: uploaded,
+            logoUrl: uploaded.get('url')
+          });
+        }
+
+        return this.saveModel();
+      })
       .catch(this.ajaxError.bind(this));
     }
   }
