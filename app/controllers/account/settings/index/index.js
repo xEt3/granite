@@ -1,12 +1,13 @@
 import Ember from 'ember';
 import moment from 'moment';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import fileSupport from 'granite/mixins/file-handling';
 
 const timezones = moment.tz.names();
 
-const  { Controller, computed } = Ember;
+const  { Controller, computed, RSVP: { Promise } } = Ember;
 
-export default Controller.extend(addEdit, {
+export default Controller.extend(addEdit, fileSupport, {
   timezones,
 
   settingsForm: computed(() => [{
@@ -16,5 +17,33 @@ export default Controller.extend(addEdit, {
     path: 'tz',
     contentPath: 'controller.timezones',
     selectText: 'Select a Time Zone'
-  }])
+  }]),
+
+  /* File settings */
+  dropzoneId: 'input__dropzone--company-image',
+  fileData: {
+    systemUse: true,
+    associatedData: {
+      type: 'companyProfileImage'
+    }
+  },
+
+  actions: {
+    saveSettings () {
+      const file = this.get('fileIsAdded');
+
+      Promise.resolve(file ? this.upload() : null)
+      .then(uploaded => {
+        if (uploaded) {
+          this.get('model').setProperties({
+            logo: uploaded,
+            logoUrl: uploaded.get('url')
+          });
+        }
+
+        return this.saveModel();
+      })
+      .catch(this.ajaxError.bind(this));
+    }
+  }
 });

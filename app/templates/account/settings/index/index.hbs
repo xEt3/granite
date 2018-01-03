@@ -2,6 +2,24 @@
   <h3 class="ui header">General Account Settings</h3>
   <div class="ui divider"></div>
 
+  <div id="template" class="center aligned">
+    {{drop-zone
+      url=fileEndpoint
+      id=dropzoneId
+      class='input__dropzone'
+      method='put'
+      uploadMultiple=false
+      acceptedFiles='image/*'
+      maxFiles=1
+      autoProcessQueue=false
+      dictDefaultMessage='Drop Files or Click to Replace/Add Picture'
+      thumbnailWidth='175'
+      headers=(hash X-API-Token=auth.token)
+      addedfile=(action 'addedFile')
+      success=(action 'uploadedFile')
+      capture='camera'}}
+  </div>
+
   {{quick-form
     settingsForm
     model
@@ -9,7 +27,8 @@
     tagName='div'}}
 
   <div class="ui divider"></div>
-  <form {{action "save" on="submit"}}>
+
+  <form {{action "saveSettings" on="submit"}}>
     {{#form/action-button
       type="submit"
       class='ui positive fluid huge button'
