@@ -14,6 +14,7 @@ const errorRouteMap = {
 
 export default Route.extend({
   auth: inject.service(),
+  notifications: inject.service('notification-messages'),
 
   beforeModel () {
     return ENV.environment === 'test' ? Promise.resolve() : this.get('auth').initializeExistingSession();
@@ -21,7 +22,7 @@ export default Route.extend({
 
   actions: {
     notify (type) {
-      const notifications = this.get('controller.notifications'),
+      const notifications = this.get('notifications'),
             args = Array.prototype.slice.call(arguments, 1);
 
       args[1] = args[1] ? $.extend(notifyDefaults, args[1]) : notifyDefaults;
