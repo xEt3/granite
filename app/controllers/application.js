@@ -4,6 +4,8 @@ import ENV from 'granite/config/environment';
 const { Controller, computed, observer, on, run, $ } = Ember;
 
 export default Controller.extend({
+  notifications: Ember.inject.service('notification-messages'),
+
   accountNavigationItems: [{
     icon: 'dashboard',
     title: 'Dashboard',
