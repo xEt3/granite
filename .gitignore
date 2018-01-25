@@ -23,3 +23,8 @@ TRUMP
 .node_modules.ember-try/
 bower.json.ember-try
 package.json.ember-try
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
