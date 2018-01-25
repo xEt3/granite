@@ -7,6 +7,9 @@ COPY . /app
 # Change working directory
 WORKDIR /app
 
+RUN apk update
+RUN apk add yarn
+
 # Install dependencies
 RUN yarn install
 
