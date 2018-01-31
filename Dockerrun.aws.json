@@ -1,5 +1,6 @@
 {
   "AWSEBDockerrunVersion": "1",
+  "Logging": "/tmp/granite",
   "Image": {
   	"Update": "false"
   }
