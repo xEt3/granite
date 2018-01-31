@@ -38,6 +38,6 @@ RUN yarn global add ember-cli
 # Build application
 RUN node_modules/ember-cli/bin/ember build --environment=production
 # Move app
-RUN cp dist/* /usr/html/
+RUN mv dist/* /usr/html/
 
 EXPOSE 80
