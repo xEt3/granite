@@ -19,6 +19,7 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/v3.2/main" >> /etc/apk/repositories
 
 # Copy source code
 COPY . /app
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Change working directory
 WORKDIR /app

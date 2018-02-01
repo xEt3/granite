@@ -15,7 +15,7 @@
     "test": "ember test",
     "push-image": "docker build -t james1x0/granite . && docker push james1x0/granite",
     "make-deployment": "bash scripts/deploy-eb.sh",
-    "deploy": "npm run make-deployment && eb deploy --staged"
+    "deploy": "npm run push-image && npm run make-deployment && eb deploy --staged"
   },
   "repository": "https://github.com/associatedemployers/granite",
   "author": "Associated Employers",

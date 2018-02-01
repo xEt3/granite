@@ -12,5 +12,5 @@ cp -R .ebextensions tmp_ebdeployment/.ebextensions
 cp {.bowerrc,.ember-cli,.eslintrc.json,.jshintrc,bower.json,Dockerrun.aws.json,ember-cli-build.js,package-lock.json,package.json,static.json,theme.config,yarn.lock} tmp_ebdeployment
 
 echo "Zipping contents..."
-zip -vr dist/eb_deployment.zip tmp_ebdeployment -x "*.DS_Store"
-rm -rf tmp_ebdeployment
+cd tmp_ebdeployment && zip -vr ../dist/eb_deployment.zip * -x "*.DS_Store"
+cd ../ && rm -rf tmp_ebdeployment
