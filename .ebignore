@@ -1,25 +1,24 @@
-Dockerfile
+# this will hopefully speed eb up
+*
 
-# compiled output
-/dist
-/tmp
+# Except
+!.ebextensions/
+!app/
+!config/
+!Dockerrun.aws.json
+!package.json
+!public/
+!vendor/
+!.ember-cli
+!.eslintrc.json
+!.jshintrc
+!bower.json
+!ember-cli-build.js
+!package-lock.json
+!static.json
+!theme.config
+!yarn.lock
 
-# dependencies
-/node_modules
-/bower_components
-
-# misc
-/.sass-cache
-/connect.lock
-/coverage/*
-/libpeerconnection.log
-npm-debug.log*
-yarn-error.log
-testem.log
-.DS_Store
-TRUMP
-
-# ember-try
-.node_modules.ember-try/
-bower.json.ember-try
-package.json.ember-try
+# Ignore node_modules
+node_modules
+tmp

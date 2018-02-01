@@ -22,8 +22,6 @@ COPY . /app
 
 # Change working directory
 WORKDIR /app
-RUN npm --version
-RUN node --version
 
 # Using your ex-girlfriend to hook you up with this hot mama
 RUN npm install -g yarn bower

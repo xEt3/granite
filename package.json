@@ -12,7 +12,8 @@
     "start": "ember server --proxy http://localhost:4000",
     "dock": "ember server --proxy http://$DOCKER_IP:$DOCKER_LB_PORT",
     "lint:js": "eslint ./*.js app config lib server tests",
-    "test": "ember test"
+    "test": "ember test",
+    "push-image": "docker build -t james1x0/granite . && docker push james1x0/granite"
   },
   "repository": "https://github.com/associatedemployers/granite",
   "author": "Associated Employers",
