@@ -13,7 +13,9 @@
     "dock": "ember server --proxy http://$DOCKER_IP:$DOCKER_LB_PORT",
     "lint:js": "eslint ./*.js app config lib server tests",
     "test": "ember test",
-    "push-image": "docker build -t james1x0/granite . && docker push james1x0/granite"
+    "push-image": "docker build -t james1x0/granite . && docker push james1x0/granite",
+    "make-deployment": "bash scripts/deploy-eb.sh",
+    "deploy": "npm run make-deployment && eb deploy --staged"
   },
   "repository": "https://github.com/associatedemployers/granite",
   "author": "Associated Employers",
