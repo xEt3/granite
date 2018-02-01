@@ -20,7 +20,8 @@
 !yarn.lock
 
 # Ignore node_modules
-/node_modules
+./node_modules
+./bower_components
 tmp/
 /tmp
 tmp/*
