@@ -2,6 +2,7 @@
 FROM smebberson/alpine-nginx:3.0.0
 
 ENV NODE_VERSION=v8.9.4 NPM_VERSION=5.6
+ENV API_URL=http://igneous-dev3-multc.5ip3yaprd7.us-west-2.elasticbeanstalk.com/
 
 RUN echo "http://dl-4.alpinelinux.org/alpine/v3.2/main" >> /etc/apk/repositories && \
     apk add --update git curl alpine-sdk make python linux-headers && \
