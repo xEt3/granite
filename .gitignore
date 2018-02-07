@@ -16,7 +16,6 @@
 npm-debug.log*
 yarn-error.log
 testem.log
-.DS_Store
 TRUMP
 
 # ember-try
@@ -28,3 +27,4 @@ package.json.ember-try
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+.DS_Store
