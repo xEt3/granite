@@ -24,7 +24,7 @@ bower.json.ember-try
 package.json.ember-try
 
 # Elastic Beanstalk Files
-.elasticbeanstalk/*
+# .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 .DS_Store
