@@ -1,6 +1,6 @@
 branch-defaults:
   aws_eb:
-    environment: granite-stage-test2
+    environment: granite-staging
 deploy:
   artifact: dist/eb_deployment.zip
 global:
