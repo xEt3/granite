@@ -6,11 +6,6 @@
     "amd": false,
     "jquery": true
   },
-  "ecmaFeatures": {
-    "blockBindings": true,
-    "modules": true,
-    "module": true
-  },
   "globals": {
     "SignaturePad": true,
     "Modernizr": true,
