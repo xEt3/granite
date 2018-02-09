@@ -21,7 +21,7 @@
   "author": "Associated Employers",
   "license": "MIT",
   "dependencies": {
-    "babel-eslint": "7.1.0",
+    "babel-eslint": "8.1.0",
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^3.0.0",
     "ember-braintree": "git+https://github.com/James1x0/ember-braintree.git#815446a21afd213e504777de36c4c7b9b18838ed",
@@ -67,6 +67,7 @@
     "ember-sortable": "1.9.1",
     "ember-source": "~2.18.0",
     "ember-truth-helpers": "1.2.0",
+    "eslint": "^4.17.0",
     "eslint-plugin-ember": "^5.0.0",
     "less-plugin-glob": "^1.1.1",
     "liquid-fire": "0.29.1",
