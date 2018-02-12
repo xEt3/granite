@@ -1,6 +1,8 @@
 branch-defaults:
   aws_eb:
     environment: granite-staging
+  master:
+    environment: granite-prod-master
 deploy:
   artifact: dist/eb_deployment.zip
 global:

@@ -19,7 +19,7 @@ RUN curl -sSL https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}.tar.g
     /usr/share/man /tmp/* /var/cache/apk/* /root/.npm /root/.node-gyp \
     /usr/lib/node_modules/npm/man /usr/lib/node_modules/npm/doc /usr/lib/node_modules/npm/html
 
-ENV API_UPSTREAM=http://igneous-prod-master.5ip3yaprd7.us-west-2.elasticbeanstalk.com/
+ENV API_UPSTREAM=igneous-prod-master.5ip3yaprd7.us-west-2.elasticbeanstalk.com
 
 # Copy source code
 COPY . /app
