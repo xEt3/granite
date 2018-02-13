@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
 import fileTypes from 'granite/config/mime-types';
-
-const { Component, A, computed } = Ember;
 
 const IconForFileComponent = Component.extend({
   tagName: 'i',

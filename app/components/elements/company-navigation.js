@@ -1,9 +1,9 @@
-import Ember from 'ember';
-
-const { Component, $, inject } = Ember;
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+import $ from 'jquery';
 
 export default Component.extend({
-  auth: inject.service(),
+  auth: service(),
   tagName: 'nav',
   classNames: [ 'ui menu account__navigation' ],
 

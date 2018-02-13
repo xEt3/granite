@@ -5,7 +5,9 @@
 </hgroup>
 <div class="ui divider"></div>
 
-{{visualizations/organization-tree baseNode=baseNode}}
+{{#if baseNode}}
+  {{visualizations/organization-tree baseNode=baseNode}}
+{{/if}}
 
 <div class="ui form">
   <div class="field">

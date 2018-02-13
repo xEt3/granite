@@ -1,9 +1,12 @@
 import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { A } from '@ember/array';
+import { run } from '@ember/runloop';
 
-const { Mixin, Logger, run } = Ember;
+const { Logger } = Ember;
 
 function searchError ( errors ) {
-  const detailKeys = Ember.A(['detail', 'message', 'title', 'status']),
+  const detailKeys = A(['detail', 'message', 'title', 'status']),
         key = detailKeys.find(k => errors[0][k]);
 
   return key ? errors.mapBy(key).join(', ') : errors[0];
@@ -14,13 +17,13 @@ export default Mixin.create({
   enableNotify: true,
 
   ajaxError ( err, user ) {
-    let errMsg = err && err.responseText ? err.responseText : err;
+    let errMsg = err ? err.payload || err.responseText || err.message : err;
 
-    if ( errMsg && errMsg.errors ) {
+    if (errMsg && errMsg.errors) {
       errMsg = typeof errMsg.errors[0] === 'string' ? errMsg.errors : searchError(errMsg.errors);
     }
 
-    if ( err && !user ) {
+    if (err && !user) {
       Logger.error(err.stack || err);
     }
 
@@ -29,12 +32,12 @@ export default Mixin.create({
       errorMessage: errMsg
     });
 
-    if ( this.get('enableNotify') ) {
+    if (this.get('enableNotify')) {
       this.send('notify', 'error', 'Whoops! ' + errMsg);
     }
   },
 
-  ajaxSuccess ( success, silent ) {
+  ajaxSuccess (success, silent) {
     this.setProperties({
       working:        false,
       errorMessage:   null,
@@ -42,12 +45,12 @@ export default Mixin.create({
     });
 
     run.later(() => {
-      if ( !this.get('isDestroyed') && !this.get('isDestroying') ) {
+      if (!this.get('isDestroyed') && !this.get('isDestroying')) {
         this.set('successMessage', null);
       }
     }, this.get('successMessageTimeout') * 1000);
 
-    if ( !silent && this.get('enableNotify') ) {
+    if (!silent && this.get('enableNotify')) {
       this.send('notify', 'success', success || 'Successfully saved.');
     }
   },

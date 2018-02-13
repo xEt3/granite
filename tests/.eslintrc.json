@@ -132,6 +132,7 @@
     "wrap-iife": 0,
     "wrap-regex": 0,
     "vars-on-top": 0,
-    "key-spacing": 0
+    "key-spacing": 0,
+    "ember/avoid-leaking-state-in-ember-objects": 0
   }
 }

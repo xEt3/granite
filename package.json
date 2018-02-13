@@ -60,7 +60,7 @@
     "ember-light-table": "1.12.2",
     "ember-load-initializers": "^1.0.0",
     "ember-localforage-adapter": "2.2.1",
-    "ember-percy": "1.2.4",
+    "ember-percy": "1.2.22",
     "ember-promise-helpers": "1.0.3",
     "ember-quill": "0.0.4",
     "ember-resolver": "^4.0.0",

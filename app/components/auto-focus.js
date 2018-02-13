@@ -1,8 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
 
-const { run } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
     run.scheduleOnce('afterRender', () => this.$('input').focus());

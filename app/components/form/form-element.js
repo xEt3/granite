@@ -1,8 +1,8 @@
-import Ember from 'ember';
 import SortableItem from 'ember-sortable/components/sortable-item';
 import { formTypes } from 'granite/config/statics';
-
-const { computed, run, observer } = Ember;
+import Object from '@ember/object';
+import { computed, observer } from '@ember/object';
+import { run } from '@ember/runloop';
 
 const labelSuggestions = [
   'What is your highest level of education?',
@@ -29,7 +29,7 @@ const FormElementComponent = SortableItem.extend({
   handle: '.form-element__handle',
 
   emptyObject: computed('model.type', function () {
-    return Ember.Object.create();
+    return Object.create();
   }),
 
   requiresOptions: computed('model.type', function () {
@@ -82,7 +82,7 @@ const FormElementComponent = SortableItem.extend({
     },
 
     addOption () {
-      this.get('model.options').pushObject(Ember.Object.create());
+      this.get('model.options').pushObject(Object.create());
     },
 
     removeOption (option) {
