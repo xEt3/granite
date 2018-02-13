@@ -1,10 +1,12 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { A } from '@ember/array';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import $ from 'jquery';
 import ajaxStatus from '../../mixins/ajax-status';
 
-const { Component, A, inject, computed } = Ember;
-
 export default Component.extend(ajaxStatus, {
-  ajax: inject.service(),
+  ajax: service(),
   tagName: 'button',
   type: 'button',
   apiUri: '/api/v1/integrations/intent/:service',
@@ -36,12 +38,12 @@ export default Component.extend(ajaxStatus, {
 
   setupListener () {
     let messageHandler = this.messageReceived.bind(this);
-    Ember.$(window).on('message', messageHandler);
+    $(window).on('message', messageHandler);
   },
 
   teardownListener () {
     let messageHandler = this.messageReceived.bind(this);
-    Ember.$(window).off('message', messageHandler);
+    $(window).off('message', messageHandler);
   },
 
   messageReceived ( e ) {
@@ -55,12 +57,12 @@ export default Component.extend(ajaxStatus, {
       id: this.get('intent.id')
     };
 
-    Ember.$('#' + this.get('modalId')).modal('hide');
+    $('#' + this.get('modalId')).modal('hide');
 
     let eventHook = this['on' + eventData.name];
 
     if ( eventHook && typeof eventHook === 'function' ) {
-      eventHook(Ember.$.extend(messageData, eventData ? eventData.data : {}));
+      eventHook(Object.assign({}, messageData, eventData ? eventData.data : {}));
     }
   },
 
@@ -83,7 +85,7 @@ export default Component.extend(ajaxStatus, {
       .then(response => {
         this.ajaxSuccess(null, true);
         this.set('intent', response);
-        Ember.$('#' + this.get('modalId')).modal('show');
+        $('#' + this.get('modalId')).modal('show');
       })
       .catch(this.ajaxError.bind(this));
     },
