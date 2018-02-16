@@ -1,10 +1,14 @@
 import Ember from 'ember';
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { merge } from '@ember/polyfills';
 
-const { Component, Logger: { debug }, inject, computed, run, merge } = Ember;
+const { Logger: { debug } } = Ember;
 
 export default Component.extend({
-  store: inject.service(),
-
+  store: service(),
   atOptions: {},
 
   _atOptions: computed(function () {

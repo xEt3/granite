@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { Component } = Ember;
+import Component from '@ember/component';
+import $ from 'jquery';
 
 export default Component.extend({
   modalId: '',
@@ -11,7 +10,7 @@ export default Component.extend({
       // Bubble response
       this.get('onResponse')(response);
       // Either way close the modal
-      Ember.$(`#${modalId}`).modal('hide');
+      $(`#${modalId}`).modal('hide');
     }
   }
 });

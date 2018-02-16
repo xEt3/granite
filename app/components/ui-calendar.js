@@ -1,7 +1,5 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import Base from 'semantic-ui-ember/mixins/base';
-
-const { Component } = Ember;
 
 export default Component.extend(Base, {
   module: 'calendar',

@@ -1,8 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 
-const { computed } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: [ 'sg__color', 'col-md-2' ],
   classNameBindings: [ 'computedClassName' ],
 

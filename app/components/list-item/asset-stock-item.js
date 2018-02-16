@@ -1,6 +1,6 @@
-import Ember from 'ember';
-
-const { Component, computed } = Ember;
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
 
 export default Component.extend({
   classNames: [ 'item' ],
@@ -10,7 +10,7 @@ export default Component.extend({
 
   attributes: computed('asset.customFields', function () {
     let fields = this.get('asset.customFields'),
-        attributes = Ember.A();
+        attributes = A();
 
     for ( let key in fields ) {
       if ( !fields.hasOwnProperty(key) ) {

@@ -1,9 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 
-const { Component } = Ember;
-
-const EventTimelineComponent = Component.extend({
-});
+const EventTimelineComponent = Component.extend({});
 
 EventTimelineComponent.reopenClass({
   positionalParams: [ 'events' ]

@@ -1,7 +1,6 @@
-import Ember from 'ember';
 import BaseLiComponent from './base';
-
-const { A, computed } = Ember;
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
 
 export default BaseLiComponent.extend({
   classNameBindings: [ 'isSelected:is-selected' ],

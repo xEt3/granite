@@ -1,8 +1,9 @@
-import Ember from 'ember';
+/* eslint-disable ember/no-on-calls-in-components*/
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
+import { on } from '@ember/object/evented';
 import moment from 'moment';
 import ENV from 'granite/config/environment';
-
-const { Component, on, run } = Ember;
 
 function fromNowWithSeconds ( momentObject, m ) {
   const secDiff = Math.round(Math.abs(moment().diff(momentObject)) / 1000);

@@ -1,8 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed, defineProperty } from '@ember/object';
 
-const { computed, defineProperty } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: [ 'validated-input' ],
   classNameBindings: [ 'showErrorClass:has-error', 'isValid:has-success' ],
   model: null,

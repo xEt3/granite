@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import ajaxStatus from '../../mixins/ajax-status';
-
-const { Component, inject, computed } = Ember;
 
 const contextColorMap = {
   positive: 'text-green',
@@ -10,8 +10,8 @@ const contextColorMap = {
 };
 
 export default Component.extend(ajaxStatus, {
-  auth: inject.service(),
-  store: inject.service(),
+  auth: service(),
+  store: service(),
   classNames: [ 'account__activity-item', 'event' ],
   commentSort: [ 'created:desc' ],
 

@@ -1,6 +1,7 @@
-import Ember from 'ember';
-
-const { Component, A, computed } = Ember;
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
+import $ from 'jquery';
 
 export default Component.extend({
   classNames: [ 'history__group-item', 'clearfix' ],
@@ -30,7 +31,7 @@ export default Component.extend({
   actions: {
     selectGroup () {
       let groupOffset = this.$('.history__group-date').offset(),
-          timelineOffset = 0 - (groupOffset.top - Ember.$('.history__timeline .history-timeline__events').offset().top - 200);
+          timelineOffset = 0 - (groupOffset.top - $('.history__timeline .history-timeline__events').offset().top - 200);
       this.get('onSelect')(this.get('group'), groupOffset, timelineOffset);
     }
   }

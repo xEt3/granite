@@ -1,12 +1,11 @@
-import Ember from 'ember';
+import { computed, get } from '@ember/object';
+import { A } from '@ember/array';
 import BaseLiComponent from './base';
-
-const { A, computed, get } = Ember;
 
 export default BaseLiComponent.extend({
   classNames: [ 'event' ],
 
-  attendeeCount: computed('model.attendees.[]', 'model.facilitator', function () {
+  attendeeCount: computed('model.{facilitator, attendees.[]}', function () {
     const {
       attendees,
       facilitator,
