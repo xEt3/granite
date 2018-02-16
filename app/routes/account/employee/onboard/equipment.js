@@ -1,6 +1,6 @@
-import Ember from 'ember';
-
-const { Route, RSVP } = Ember;
+import Route from '@ember/routing/route';
+import RSVP from 'rsvp';
+import Object from '@ember/object';
 
 export default Route.extend({
   model () {
@@ -17,7 +17,7 @@ export default Route.extend({
           }
 
           return this.store.query('asset-item', itemQuery)
-          .then(stock => Ember.Object.create({ asset, stock }));
+          .then(stock => Object.create({ asset, stock }));
         });
       }),
 

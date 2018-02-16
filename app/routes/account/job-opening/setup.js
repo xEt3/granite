@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { A } from '@ember/array';
 import wizard from 'granite/mixins/wizard/route';
-
-const { Route, A } = Ember;
 
 export default Route.extend(wizard, {
   key: 'setup',

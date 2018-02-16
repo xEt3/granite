@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import Service from '@ember/service';
+import { computed } from '@ember/object';
+import { run } from '@ember/runloop';
+import { on } from '@ember/object/evented';
 import moment from 'moment';
 import ENV from 'granite/config/environment';
-
-const { Service, computed, on, run } = Ember;
 
 export default Service.extend({
   refreshResolution: 1000,

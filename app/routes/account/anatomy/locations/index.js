@@ -1,15 +1,14 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import RSVP from 'rsvp';
+import { inject as service } from '@ember/service';
 import refreshable from 'granite/mixins/refreshable';
-
-
-const { Route, inject, RSVP } = Ember;
 
 export default Route.extend(refreshable, {
   queryParams: {
     page: { refreshModel: true }
   },
 
-  auth: inject.service(),
+  auth: service(),
 
   model ( params ) {
     let limit = this.get('controller.limit') || 20,

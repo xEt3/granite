@@ -1,10 +1,12 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { inject as controller } from '@ember/controller';
 import moment from 'moment';
 
-export default Ember.Controller.extend({
-  loginController: Ember.inject.controller('login'),
+export default Controller.extend({
+  loginController: controller('login'),
 
-  unauthorizedReason: Ember.computed('fromError', function () {
+  unauthorizedReason: computed('fromError', function () {
     var error = this.get('fromError');
 
     if ( !error ) {

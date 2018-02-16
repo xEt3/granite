@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-
-const { Controller, computed } = Ember;
 
 export default Controller.extend(addEdit, {
   sortGroupClass: computed('showingPreview', function () {

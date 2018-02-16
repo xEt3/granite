@@ -1,13 +1,14 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject as controller } from '@ember/controller';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 import breadcrumbOverrides from '../config/breadcrumb';
-
-const { Controller, inject, computed } = Ember;
 
 export default Controller.extend({
   breadcrumbOverrides,
 
-  auth: inject.service(),
-  application: inject.controller(),
+  auth: service(),
+  application: controller(),
   currentPath: computed.reads('application.currentPath'),
 
   actions: {

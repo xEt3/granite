@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
 
-const Router = Ember.Router.extend({
+const Router = EmberRouter.extend({
   location: config.locationType,
   rootURL: config.rootURL
 });
@@ -176,7 +176,7 @@ Router.map(function() {
   this.route('unauthorized');
   this.route('catchall', {path: '/*wildcard'});
   this.route('login');
-  this.route('setup-account', { path: '/setup/account/:userId' });
+  this.route('setup-account', { path: '/setup/account/:user_id' });
 });
 
 export default Router;

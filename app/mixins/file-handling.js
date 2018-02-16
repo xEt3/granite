@@ -2,9 +2,10 @@
   This mixin adds file handling capabilities, for use on a controller
  */
 
-import Ember from 'ember';
-
-const { Mixin, computed, run, RSVP } = Ember;
+import Mixin from '@ember/object/mixin';
+import { computed } from '@ember/object';
+import { run } from '@ember/runloop';
+import RSVP from 'rsvp';
 
 export default Mixin.create({
   /* Make a preflight request to create a file before upload. Use this if you are

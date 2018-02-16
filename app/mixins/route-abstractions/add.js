@@ -1,6 +1,7 @@
-import Ember from 'ember';
-
-const { Mixin, RSVP: { resolve }, assert } = Ember;
+import Mixin from '@ember/object/mixin';
+import { assert } from '@ember/debug';
+import { resolve } from 'rsvp';
+import $ from 'jquery';
 
 export default Mixin.create({
   modelDefaults: {},
@@ -20,7 +21,7 @@ export default Mixin.create({
 
     return resolve(defaultPromise)
     .then(resolvedDefaults => {
-      Ember.$.extend(defaults, resolvedDefaults);
+      $.extend(defaults, resolvedDefaults);
       return this.store.createRecord(modelName, defaults);
     });
   },

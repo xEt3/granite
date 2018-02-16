@@ -1,10 +1,13 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed, observer } from '@ember/object';
+import { run } from '@ember/runloop';
+import { on } from '@ember/object/evented';
+import { inject as service } from '@ember/service';
+import $ from 'jquery';
 import ENV from 'granite/config/environment';
 
-const { Controller, computed, observer, on, run, $ } = Ember;
-
 export default Controller.extend({
-  notifications: Ember.inject.service('notification-messages'),
+  notifications: service('notification-messages'),
 
   accountNavigationItems: [{
     icon: 'dashboard',

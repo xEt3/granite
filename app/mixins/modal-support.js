@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { Promise } from 'rsvp';
+import $ from 'jquery';
 
-const { RSVP: { Promise } } = Ember;
-
-export default Ember.Mixin.create({
+export default Mixin.create({
   openModal (id, key) {
-    Ember.$(`#${id}`)
+    $(`#${id}`)
     .modal({
       detachable: true,
       onHidden: () => {

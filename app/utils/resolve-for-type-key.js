@@ -1,6 +1,4 @@
-import Ember from 'ember';
-
-const { computed } = Ember;
+import { computed } from '@ember/object';
 
 const parsedName = s => {
   return s ? s.replace(/([A-Z])/g, ($1, p1, pos) => {

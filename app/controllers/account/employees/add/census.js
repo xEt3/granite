@@ -1,8 +1,10 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed, get } from '@ember/object';
+import { A } from '@ember/array';
+import { run } from '@ember/runloop';
+import { inject as service } from '@ember/service';
 import Employee from 'granite/models/employee';
 import ajaxStatus from 'granite/mixins/ajax-status';
-
-const { Controller, A, inject, get, computed, run } = Ember;
 
 const apiFieldMap = {
   firstName: 'name.first',
@@ -12,7 +14,7 @@ const apiFieldMap = {
 };
 
 export default Controller.extend(ajaxStatus, {
-  ajax: inject.service(),
+  ajax: service(),
 
   intros: computed(function () {
     return [{

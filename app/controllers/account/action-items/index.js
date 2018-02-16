@@ -1,17 +1,18 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { Promise } from 'rsvp';
+import { inject as service } from '@ember/service';
+import { A } from '@ember/array';
 import ajaxStatus from 'granite/mixins/ajax-status';
-
-const { Controller, RSVP: { Promise }, inject } = Ember;
 
 export default Controller.extend(ajaxStatus, {
   queryParams: ['filter', 'isDsc'],
   priorityFilters: ['lowest', 'low', 'medium', 'high', 'highest'],
   priorityColors: [ '', 'grey', 'teal', 'red', 'orange' ],
-  filter: Ember.A(),
+  filter: A(),
   expandFiltered: false,
   index: null,
   isDsc: false,
-  auth: inject.service(),
+  auth: service(),
   enableNotify: true,
 
   actions: {
@@ -31,7 +32,7 @@ export default Controller.extend(ajaxStatus, {
       })
       .catch(this.ajaxError.bind(this));
     },
-    
+
     changeFilter(index) {
       let indexPlusOne = index + 1,
           filter = this.get('filter');

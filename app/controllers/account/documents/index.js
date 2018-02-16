@@ -1,14 +1,11 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { Promise } from 'rsvp';
+import { inject as service } from '@ember/service';
+import $ from 'jquery';
 import ajaxStatus from 'granite/mixins/ajax-status';
 import pagination from 'granite/mixins/controller-abstractions/pagination';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-
-const {
-  Controller,
-  computed,
-  inject: { service },
-  RSVP: { Promise }
-} = Ember;
 
 export default Controller.extend(ajaxStatus, pagination, addEdit, {
   auth: service(),
@@ -69,7 +66,7 @@ export default Controller.extend(ajaxStatus, pagination, addEdit, {
     let assignmentPojo = assignment.getProperties('file', 'creator', 'company', 'signatureRequired', 'message');
 
     return [ assignment, ...(employees.slice(1).map(employee => {
-      return this.store.createRecord('file-assignment', Ember.$.extend({ employee }, assignmentPojo));
+      return this.store.createRecord('file-assignment', $.extend({ employee }, assignmentPojo));
     }))];
   },
 
@@ -82,7 +79,7 @@ export default Controller.extend(ajaxStatus, pagination, addEdit, {
 
       this.createFileAssignment();
 
-      Ember.$('#modal__file-assignment').modal({
+      $('#modal__file-assignment').modal({
         detachable: true,
         onHidden: () => {
           if ( !this.get('respondedAssignment') ) {
@@ -105,7 +102,7 @@ export default Controller.extend(ajaxStatus, pagination, addEdit, {
     },
 
     closeAssignmentModal () {
-      Ember.$('#modal__file-assignment').modal('hide');
+      $('#modal__file-assignment').modal('hide');
     }
   }
 });

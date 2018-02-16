@@ -1,8 +1,7 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import RSVP from 'rsvp';
 
-const { RSVP } = Ember;
-
-export default Ember.Route.extend({
+export default Route.extend({
   model () {
     let employee = this.modelFor('account.employee');
     return RSVP.hash({

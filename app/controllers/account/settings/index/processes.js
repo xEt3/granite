@@ -1,12 +1,9 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { Promise } from 'rsvp';
+import $ from 'jquery';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-
-const {
-  Controller,
-  inject: { service },
-  computed,
-  RSVP: { Promise }
-} = Ember;
 
 export default Controller.extend(addEdit, {
   auth: service(),
@@ -46,7 +43,7 @@ export default Controller.extend(addEdit, {
         this.send('addSeverity');
       }
 
-      Ember.$('#modal__add-cas').modal({
+      $('#modal__add-cas').modal({
         detachable: true,
         onHidden: () => {
           if ( !this.get('respondedSeverityAddition') ) {
@@ -82,7 +79,7 @@ export default Controller.extend(addEdit, {
     respondSeverityAddition (response) {
       this.get(response ? 'resolveSeverity' : 'rejectSeverity')(response);
       this.set('respondedSeverityAddition', true);
-      Ember.$('#modal__add-cas').modal('hide');
+      $('#modal__add-cas').modal('hide');
 
       let currentSeverity = this.get('currentSeverity');
 

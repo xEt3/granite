@@ -1,14 +1,19 @@
 import Ember from 'ember';
+import Service from '@ember/service';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { Promise } from 'rsvp';
+import { on } from '@ember/object/evented';
 import moment from 'moment';
 import ENV from 'granite/config/environment';
 
-const { Service, inject, computed, on, RSVP: { Promise }, Logger } = Ember;
+const { Logger } = Ember;
 
 export default Service.extend({
   authUrl: '/api/v1/login/company-user',
-  clock: inject.service(),
-  store: inject.service(),
-  ajax:  inject.service(),
+  clock: service(),
+  store: service(),
+  ajax:  service(),
 
   authenticated: computed.bool('token'),
   token: computed.reads('session.token'),
@@ -121,7 +126,7 @@ export default Service.extend({
     const userId = this.get('userId');
 
     if ( !userId || !this.get('authenticated') ) {
-      return Ember.RSVP.Promise.resolve();
+      return Promise.resolve();
     }
 
     return this.get('store').find('company-user', userId);

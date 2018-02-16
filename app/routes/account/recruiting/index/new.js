@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import RSVP from 'rsvp';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 import add from 'granite/mixins/route-abstractions/add';
-
-const { Route, RSVP, computed, inject: { service } } = Ember;
 
 export default Route.extend(add, {
   auth: service(),

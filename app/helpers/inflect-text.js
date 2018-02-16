@@ -1,12 +1,11 @@
-import Ember from 'ember';
-
-const inflector = new Ember.Inflector(Ember.Inflector.defaultRules);
+import { helper } from '@ember/component/helper';
+import { singularize, pluralize } from 'ember-inflector';
 
 export function inflectText([text, length]) {
-  return length && length === 1 ? inflector.singularize(text) : inflector.pluralize(text);
+  return length && length === 1 ? singularize(text) : pluralize(text);
 }
 
-export default Ember.Helper.helper(inflectText);
+export default helper(inflectText);
 /*
   Usage
   ---

@@ -1,9 +1,9 @@
-import Ember from 'ember';
-
-const { Route, RSVP, inject } = Ember;
+import Route from '@ember/routing/route';
+import RSVP from 'rsvp';
+import { inject as service } from '@ember/service';
 
 export default Route.extend({
-  ajax: inject.service(),
+  ajax: service(),
 
   model () {
     return RSVP.hash({

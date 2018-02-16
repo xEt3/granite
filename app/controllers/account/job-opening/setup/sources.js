@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { Promise } from 'rsvp';
+import $ from 'jquery';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-
-const { Controller, RSVP: { Promise } } = Ember;
 
 export default Controller.extend(addEdit, {
   mutSelect (type, source) {
@@ -33,7 +33,7 @@ export default Controller.extend(addEdit, {
         respondedManualSource: false
       });
 
-      Ember.$('#modal__add--manual-source').modal({
+      $('#modal__add--manual-source').modal({
         detachable: true,
         onHidden: () => {
           if ( !this.get('respondedManualSource') ) {
@@ -52,7 +52,7 @@ export default Controller.extend(addEdit, {
 
       this.get(response ? 'resolveMs' : 'rejectMs')(response ? this.get('manualSource') : null);
       this.set('respondedManualSource', true);
-      Ember.$('#modal__add--manual-source').modal('hide');
+      $('#modal__add--manual-source').modal('hide');
     }
   }
 });

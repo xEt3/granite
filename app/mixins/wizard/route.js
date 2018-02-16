@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { get } from '@ember/object';
+import { run } from '@ember/runloop';
+import { inject as service } from '@ember/service';
 import ajaxStatus from '../ajax-status';
-
-const { Mixin, inject: { service }, get, run } = Ember;
 
 export default Mixin.create(ajaxStatus, {
   auth: service(),

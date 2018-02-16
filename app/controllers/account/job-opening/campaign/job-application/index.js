@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
 import moment from 'moment';
 import modalSupport from 'granite/mixins/modal-support';
-
-const { Controller, A, computed } = Ember;
 
 export default Controller.extend(modalSupport, {
   responsesModalId: 'modal__ja-responses',

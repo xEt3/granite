@@ -1,10 +1,9 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-const { Controller, inject } = Ember;
-
 export default Controller.extend(addEdit, {
-  auth: inject.service(),
+  auth: service(),
   transitionAfterSave: false,
 
   actions: {

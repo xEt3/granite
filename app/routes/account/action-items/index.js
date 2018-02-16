@@ -1,6 +1,6 @@
-import Ember from 'ember';
-
-const { RSVP, Route } = Ember;
+import Route from '@ember/routing/route';
+import { isEmpty } from '@ember/utils';
+import RSVP from 'rsvp';
 
 export default Route.extend({
   queryParams: {
@@ -20,7 +20,7 @@ export default Route.extend({
       ],
       sort: { priority: -1, dueOn: params.isDsc ? 1 : -1 } };
 
-    if ( !Ember.isEmpty(params.filter) ) {
+    if ( !isEmpty(params.filter) ) {
       actionItemQuery.priority = { $in: params.filter };
     }
 

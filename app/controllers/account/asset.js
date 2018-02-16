@@ -1,7 +1,5 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import del from 'granite/mixins/controller-abstractions/delete';
-
-const { Controller } = Ember;
 
 export default Controller.extend(del, {
   transitionAfterSave: 'account.assets'

@@ -1,10 +1,9 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 import add from 'granite/mixins/route-abstractions/add';
 
-const { Route, inject } = Ember;
-
 export default Route.extend(add, {
-  auth: inject.service(),
+  auth: service(),
   modelName: 'asset',
 
   getModelDefaults () {

@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import resource from 'granite/mixins/controller-abstractions/resource';
-
-const { Controller, computed, inject: { service } } = Ember;
 
 export default Controller.extend(resource, {
   auth: service(),

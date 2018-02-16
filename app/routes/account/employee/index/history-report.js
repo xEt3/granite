@@ -1,11 +1,13 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import RSVP from 'rsvp';
+import { inject as service } from '@ember/service';
+import { A } from '@ember/array';
+import Object from '@ember/object';
 import refreshable from 'granite/mixins/refreshable';
 import humanizeKey from 'granite/utils/humanize-key-name';
 
-const { Route, A, RSVP, inject } = Ember;
-
 export default Route.extend(refreshable, {
-  ajax: inject.service(),
+  ajax: service(),
   limit: 5,
   queryParams: {
     field: { refreshModel: true },
@@ -87,7 +89,7 @@ export default Route.extend(refreshable, {
             return;
           }
 
-          diffs.pushObject(Ember.Object.create({
+          diffs.pushObject(Object.create({
             diff,
             history: item
           }));

@@ -1,10 +1,9 @@
-import Ember from 'ember';
-
-const { Route, inject } = Ember;
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 
 export default Route.extend({
-  ajax: inject.service(),
-  auth: inject.service(),
+  ajax: service(),
+  auth: service(),
 
   beforeModel () {
     if ( this.get('auth.authenticated') ) {
@@ -14,7 +13,7 @@ export default Route.extend({
 
   model ( params ) {
     return this.get('ajax')
-    .request(`/api/v1/company-user/activation-status/${params.userId}/${params.a}`)
+    .request(`/api/v1/company-user/activation-status/${params.user_id}/${params.a}`)
     .then(res => res.companyUser);
   }
 });

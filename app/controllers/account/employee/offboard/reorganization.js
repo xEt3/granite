@@ -1,6 +1,6 @@
-import Ember from 'ember';
-
-const { Controller, computed } = Ember;
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import $ from 'jquery';
 
 export default Controller.extend({
   baseNode: computed.or('replacementNode', 'originalNode'),
@@ -14,7 +14,7 @@ export default Controller.extend({
   }),
 
   makeNode (object, base = {}) {
-    return Ember.$.extend(base, {
+    return $.extend(base, {
       _id: object.get('id'),
       name: {
         first: object.get('firstName'),

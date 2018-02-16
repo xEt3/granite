@@ -1,6 +1,4 @@
-import Ember from 'ember';
-
-const { Mixin, $: { extend } } = Ember;
+import Mixin from '@ember/object/mixin';
 
 export default Mixin.create({
   queryParams: {
@@ -24,7 +22,7 @@ export default Mixin.create({
     }
 
     if ( this.get('query') ) {
-      extend(query, this.get('query'));
+      Object.assign({}, query, this.get('query'));
     }
 
     let mutate = this.mutateQuery,

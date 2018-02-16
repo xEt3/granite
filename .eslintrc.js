@@ -17,6 +17,9 @@ module.exports = {
   rules: {
     "ember/avoid-leaking-state-in-ember-objects": 0
   },
+  globals: {
+    "Dropzone": true
+  },
   overrides: [
     // node files
     {

@@ -1,10 +1,8 @@
-import Ember from 'ember';
-import computed from 'ember-computed';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
-
-const { RSVP: { Promise } } = Ember;
+import { computed } from '@ember/object';
+import { Promise } from 'rsvp';
 
 export default Model.extend({
   title:             attr('string'),

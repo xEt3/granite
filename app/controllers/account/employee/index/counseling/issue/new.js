@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import { formalActionSuggestions } from 'granite/config/suggestions';
-
-const { Controller, computed, inject: { service } } = Ember;
 
 let formInputs = [{
   label: 'Option',

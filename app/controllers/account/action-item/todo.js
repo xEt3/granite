@@ -1,10 +1,12 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
+import { inject as service } from '@ember/service';
+import moment from 'moment';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-const { A, Controller, computed, inject } = Ember;
-
 export default Controller.extend(addEdit, {
-  auth: inject.service(),
+  auth: service(),
   enableNotify: false,
   addingTodo: false,
   addedTodos: A(),

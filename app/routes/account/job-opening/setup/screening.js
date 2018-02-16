@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { Promise } from 'rsvp';
 import add from 'granite/mixins/route-abstractions/add';
-
-const { Route, RSVP: { Promise } } = Ember;
 
 export default Route.extend(add, {
   modelName: 'form',

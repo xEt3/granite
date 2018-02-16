@@ -1,6 +1,7 @@
-import Ember from 'ember';
-
-const { computed, set, get } = Ember;
+import Controller from '@ember/controller';
+import { computed, get, set } from '@ember/object';
+import { inject as controller } from '@ember/controller';
+import { A } from '@ember/array';
 
 const steps = [{
   title: 'Company Information',
@@ -19,10 +20,10 @@ const steps = [{
   path: 'signup.finish'
 }];
 
-export default Ember.Controller.extend({
-  application: Ember.inject.controller(),
+export default Controller.extend({
+  application: controller(),
 
-  completedSteps: Ember.A(),
+  completedSteps: A(),
 
   steps: computed('application.currentPath', function () {
     const appPath = this.get('application.currentPath'),

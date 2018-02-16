@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
 const ipsum = 'Bacon ipsum dolor amet pig id ut ea velit chicken incididunt brisket. Mollit deserunt tri-tip ut commodo. Commodo culpa brisket pork belly. Mollit voluptate ribeye, in in dolor est aliqua sunt t-bone quis salami pancetta ham hock.';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   ipsum,
   queryParams: [ 'focus' ],
   focus: null,

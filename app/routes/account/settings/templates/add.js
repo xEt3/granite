@@ -1,11 +1,7 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { hash } from 'rsvp';
+import { inject as service } from '@ember/service';
 import add from 'granite/mixins/route-abstractions/add';
-
-const {
-  Route,
-  RSVP: { hash },
-  inject: { service }
-} = Ember;
 
 export default Route.extend(add, {
   ajax: service(),

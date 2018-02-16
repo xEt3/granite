@@ -1,11 +1,9 @@
-import Ember from 'ember';
 import DS from 'ember-data';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
+import { computed } from '@ember/object';
 
-const { computed } = Ember;
 export default DS.Model.extend({
-
   name:  attr('string'),
   code:  attr('string'),
   phone: attr('string'),
