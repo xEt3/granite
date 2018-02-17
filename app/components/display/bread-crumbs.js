@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
 import titleCase from 'granite/utils/title-case';
-
-const { Component, computed, A } = Ember;
 
 export default Component.extend({
   classNames: [ 'ui', 'breadcrumb' ],

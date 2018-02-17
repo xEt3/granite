@@ -1,11 +1,11 @@
 /*
   Ported from slate-payroll with a big shoutout to the notorious J.S.C.
 */
-import Ember from 'ember';
 import moment from 'moment';
+import Component from '@ember/component';
+import { computed, get } from '@ember/object';
+import { inject as service } from '@ember/service';
 import Employee from '../models/employee';
-
-const { Component, computed, inject, get } = Ember;
 
 export default Component.extend({
   tagName: 'span',
@@ -16,7 +16,7 @@ export default Component.extend({
     employee: 'fullName',
     'company-user': 'fullName'
   },
-  store: inject.service(),
+  store: service(),
 
   isRelationship: computed.bool('coercionType.model'),
 

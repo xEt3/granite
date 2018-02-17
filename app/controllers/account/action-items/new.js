@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { A } from '@ember/array';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-
-const { Controller, A } = Ember;
 
 export default Controller.extend(addEdit, {
   addedTodos: A(),

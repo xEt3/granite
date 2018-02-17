@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { A } from '@ember/array';
 import moment from 'moment';
-
-const { Route, A } = Ember;
 
 export default Route.extend({
   model ( params ) {

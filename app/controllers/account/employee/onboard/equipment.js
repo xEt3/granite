@@ -1,11 +1,14 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import Object from '@ember/object';
+import { computed, get } from '@ember/object';
+import { A } from '@ember/array';
+import { inject as service } from '@ember/service';
 import { singularize } from 'ember-inflector';
+import $ from 'jquery';
 import ajaxStatus from 'granite/mixins/ajax-status';
 
-const { Controller, A, inject, computed, get } = Ember;
-
 export default Controller.extend(ajaxStatus, {
-  auth: inject.service(),
+  auth: service(),
 
   groupedAssignedAssets: computed('assignedAssets.[]', function () {
     let assignedAssets = this.get('assignedAssets'),
@@ -18,7 +21,7 @@ export default Controller.extend(ajaxStatus, {
           existingGroup = findGroup(asset);
 
       if ( !existingGroup ) {
-        groups.addObject(Ember.Object.create({
+        groups.addObject(Object.create({
           asset,
           assets: A()
         }));
@@ -43,7 +46,7 @@ export default Controller.extend(ajaxStatus, {
         company: user.get('company')
       }));
 
-      Ember.$('.new-asset').modal('show');
+      $('.new-asset').modal('show');
     },
 
     saveAsset () {

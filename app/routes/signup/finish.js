@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { Route, run } = Ember;
+import Route from '@ember/routing/route';
+import { run } from '@ember/runloop';
 
 export default Route.extend({
   afterModel () {

@@ -1,7 +1,7 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-import computed from 'ember-computed';
 import { belongsTo } from 'ember-data/relationships';
+import { computed } from '@ember/object';
 
 export default Model.extend({
   coverLetter:   attr('string'),

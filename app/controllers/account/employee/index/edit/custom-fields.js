@@ -1,6 +1,8 @@
-import Ember from 'ember';
-
-const { Controller, A, observer, computed, on } = Ember;
+import Controller from '@ember/controller';
+import { computed, observer } from '@ember/object';
+import { on } from '@ember/object/evented';
+import { A } from '@ember/array';
+import $ from 'jquery';
 
 export default Controller.extend({
   adding: false,
@@ -44,7 +46,7 @@ export default Controller.extend({
     },
 
     createCustomField () {
-      Ember.$('.new-custom-field').modal('show');
+      $('.new-custom-field').modal('show');
     },
 
     saveCustomField () {

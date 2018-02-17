@@ -1,7 +1,13 @@
+/* eslint-disable ember/closure-actions,ember/no-on-calls-in-components */
 // From https://github.com/thefrontside/ember-introjs since CLI install is broken
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed, observer } from '@ember/object';
+import { run, bind } from '@ember/runloop';
+import { camelize, underscore } from '@ember/string';
+import { on } from '@ember/object/evented';
+import { A } from '@ember/array';
 
-var introJS = window.introJs;
+const introJS = window.introJs;
 
 var INTRO_JS_OPTIONS = [
   'next-label',
@@ -24,10 +30,9 @@ var INTRO_JS_OPTIONS = [
   'disable-interaction'
 ];
 
-var IntroJSComponent = Ember.Component.extend({
-
-  setupIntroJS: Ember.observer('start-if', function(){
-    Ember.run.scheduleOnce('afterRender', this, this.startIntroJS);
+var IntroJSComponent = Component.extend({
+  setupIntroJS: observer('start-if', function(){
+    run.scheduleOnce('afterRender', this, this.startIntroJS);
   }).on('didInsertElement'),
 
   /**
@@ -63,7 +68,7 @@ var IntroJSComponent = Ember.Component.extend({
    *
    * @property
   */
-  introJSOptions: Ember.computed(
+  introJSOptions: computed(
     'next-label',
     'prev-label',
     'skip-label',
@@ -74,7 +79,6 @@ var IntroJSComponent = Ember.Component.extend({
     'exit-on-esc',
     'exit-on-overlay-click',
     'show-step-numbers',
-    'show-step-numbers',
     'keyboard-navigation',
     'show-buttons',
     'show-bullets',
@@ -84,9 +88,6 @@ var IntroJSComponent = Ember.Component.extend({
     'disable-interaction',
     'steps',
     function(){
-      var camelize = Ember.String.camelize;
-      var underscore = Ember.String.underscore;
-
       var option, normalizedName, value, options = {};
 
       for(var i = 0; i < INTRO_JS_OPTIONS.length; i++){
@@ -100,15 +101,13 @@ var IntroJSComponent = Ember.Component.extend({
       }
 
       options.steps = this.get('steps');
-      console.log(options.steps);
-
       return options;
     }
   ),
 
   startIntroJS: function(){
-    var intro;
-    var options = this.get('introJSOptions');
+    var intro,
+        options = this.get('introJSOptions');
 
     if (!this.get('introJS')) {
       this._setIntroJS(introJS());
@@ -131,7 +130,7 @@ var IntroJSComponent = Ember.Component.extend({
   registerCallbacksWithIntroJS: function(){
     var intro = this.get('introJS');
 
-    intro.onbeforechange(Ember.run.bind(this, function(elementOfNewStep){
+    intro.onbeforechange(bind(this, function(elementOfNewStep){
       var prevStep = this.get('currentStep');
       this._setCurrentStep(this.get('introJS._currentStep'));
       var nextStep = this.get('currentStep');
@@ -139,17 +138,17 @@ var IntroJSComponent = Ember.Component.extend({
       this.sendAction('on-before-change', prevStep, nextStep, this, elementOfNewStep);
     }));
 
-    intro.onchange(Ember.run.bind(this, function(targetElement){
+    intro.onchange(bind(this, function(targetElement){
       this.sendAction('on-change', this.get('currentStep'), this, targetElement);
     }));
 
-    intro.onafterchange(Ember.run.bind(this, this._onAfterChange));
+    intro.onafterchange(bind(this, this._onAfterChange));
 
-    intro.oncomplete(Ember.run.bind(this, function(){
+    intro.oncomplete(bind(this, function(){
       this.sendAction('on-complete', this.get('currentStep'));
     }));
 
-    intro.onexit(Ember.run.bind(this, this._onExit));
+    intro.onexit(bind(this, this._onExit));
   },
 
   _setIntroJS: function(intJS){
@@ -164,7 +163,7 @@ var IntroJSComponent = Ember.Component.extend({
     this.sendAction('on-exit', this.get('currentStep'), this);
   },
 
-  exitIntroJS: Ember.on('willDestroyElement', function(){
+  exitIntroJS: on('willDestroyElement', function(){
     var intro = this.get('introJS');
     if (intro) {
       intro.exit();
@@ -172,7 +171,7 @@ var IntroJSComponent = Ember.Component.extend({
   }),
 
   _setCurrentStep: function(step){
-    var stepObject = Ember.A(this.get('steps')).objectAt(step);
+    var stepObject = A(this.get('steps')).objectAt(step);
     this.set('currentStep', stepObject);
   }
 });

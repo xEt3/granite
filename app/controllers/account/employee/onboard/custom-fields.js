@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import $ from 'jquery';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-
-const { Controller, computed } = Ember;
 
 export default Controller.extend(addEdit, {
   adding: false,
@@ -26,7 +26,7 @@ export default Controller.extend(addEdit, {
     },
 
     createCustomField () {
-      Ember.$('.new-custom-field').modal('show');
+      $('.new-custom-field').modal('show');
     },
 
     saveCustomField () {

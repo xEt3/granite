@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 import Table from 'ember-light-table';
 import moment from 'moment';
 import humanizeKey from 'granite/utils/humanize-key-name';
-
-const { Controller, computed } = Ember;
 
 export default Controller.extend({
   queryParams: [ 'sort', 'field' ],

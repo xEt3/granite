@@ -1,13 +1,20 @@
-import Ember from 'ember';
+/* eslint-disable ember/no-on-calls-in-components */
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import { A } from '@ember/array';
+import { inject as service } from '@ember/service';
+import { run } from '@ember/runloop';
+import { computed, get, set } from '@ember/object';
+import Object from '@ember/object';
+import { on } from '@ember/object/evented';
 import d3 from 'd3-selection';
 import { tree, hierarchy } from 'd3-hierarchy';
 
-const { Component, RSVP, inject, computed, get, set, on, run } = Ember,
-      select = 'name email jobTitle supervisor';
+const select = 'name email jobTitle supervisor';
 
 export default Component.extend({
   tagName: 'svg',
-  ajax: inject.service(),
+  ajax: service(),
   classNames: [ 'visualization__org-tree', 'visualization__org-tree--full' ],
   attributeBindings: [ 'width', 'height' ],
 
@@ -24,7 +31,7 @@ export default Component.extend({
     let ajax = this.get('ajax'),
         baseNode = this.get('baseNode');
 
-    set(node, 'children', Ember.A());
+    set(node, 'children', A());
 
     return ajax.request('/api/v1/employees', {
       data: {
@@ -37,7 +44,7 @@ export default Component.extend({
 
       if ( children && children.length > 0 ) {
         return RSVP.map(children, child => {
-          let _child = baseNode && get(baseNode, '_id') === get(child, '_id') ? Ember.Object.create(baseNode) : child;
+          let _child = baseNode && get(baseNode, '_id') === get(child, '_id') ? Object.create(baseNode) : child;
           if ( !base, get(_child, '_id') === get(baseNode, '_id') ) {
             return;
           }
@@ -56,7 +63,7 @@ export default Component.extend({
 
   _simulation: computed('baseNode._id', function () {
     let baseNode = this.get('baseNode');
-    return this.populateChildNodes(Ember.Object.create(baseNode), true);
+    return this.populateChildNodes(Object.create(baseNode), true);
   }),
 
   _baseRender: on('didInsertElement', function () {

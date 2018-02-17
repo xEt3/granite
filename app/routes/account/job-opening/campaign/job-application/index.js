@@ -1,9 +1,4 @@
-import Ember from 'ember';
-
-const {
-  Route,
-  RSVP: { hash, Promise }
-} = Ember;
+import Route from '@ember/routing/route';
 
 const modelKeys = [ 'model', 'events', 'stage', 'opening', 'screening' ];
 

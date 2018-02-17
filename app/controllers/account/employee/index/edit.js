@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { Promise } from 'rsvp';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-
-const { Controller, RSVP: { Promise }, computed } = Ember;
+import $ from 'jquery';
 
 export default Controller.extend(addEdit, {
   transitionAfterSave: 'account.employee.index',
@@ -13,7 +14,7 @@ export default Controller.extend(addEdit, {
     selectEffectiveDate () {
       this.set('responded', false);
 
-      Ember.$('#effective-date-modal').modal({
+      $('#effective-date-modal').modal({
         detachable: true,
         onHidden: () => {
           if ( !this.get('responded') ) {
@@ -28,7 +29,7 @@ export default Controller.extend(addEdit, {
     respondEffectiveDateModal ( response ) {
       this.get(response ? 'resolve' : 'reject')();
       this.set('responded', true);
-      Ember.$('#effective-date-modal').modal('hide');
+      $('#effective-date-modal').modal('hide');
     }
   }
 });

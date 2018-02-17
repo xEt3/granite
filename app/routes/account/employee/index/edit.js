@@ -1,7 +1,5 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 import edit from 'granite/mixins/route-abstractions/edit';
-
-const { Route } = Ember;
 
 export default Route.extend(edit, {
   model () {

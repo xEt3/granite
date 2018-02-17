@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { get } from '@ember/object';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-
-const { Component, get } = Ember;
 
 const CardPipelineComponent = Component.extend(addEdit, {
   classNames: [ 'pipeline' ],

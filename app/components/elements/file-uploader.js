@@ -1,10 +1,17 @@
 import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
+import { Promise } from 'rsvp';
+import $ from 'jquery';
 import ajaxStatus from 'granite/mixins/ajax-status';
 
-export default Ember.Component.extend(ajaxStatus, {
+const { Logger } = Ember;
+
+export default Component.extend(ajaxStatus, {
   classNameBindings: [ 'dragging' ],
-  files: Ember.A(),
-  doesNotHaveFiles: Ember.computed.not('hasFiles'),
+  files: A(),
+  doesNotHaveFiles: computed.not('hasFiles'),
   allowedExtensions: [ 'xls', 'xlsx', 'csv', 'numbers', 'txt'],
   allowMulti: true,
   url: '',
@@ -41,8 +48,8 @@ export default Ember.Component.extend(ajaxStatus, {
   uploadFile ( file ) {
     let formData = new FormData();
     formData.append('file', file);
-    return new Ember.RSVP.Promise((resolve, reject) => {
-      Ember.$.ajax({
+    return new Promise((resolve, reject) => {
+      $.ajax({
         type: 'POST',
         data: formData,
         url: this.get('url'),
@@ -118,7 +125,7 @@ export default Ember.Component.extend(ajaxStatus, {
   },
 
   _clearFiles () {
-    this.set('files', Ember.A());
+    this.set('files', A());
   },
 
   _resetFileInput () {
@@ -135,7 +142,7 @@ export default Ember.Component.extend(ajaxStatus, {
     }
 
     if ( err ) {
-      Ember.Logger.error(err);
+      Logger.error(err);
     }
 
     this.setProperties({
@@ -144,11 +151,12 @@ export default Ember.Component.extend(ajaxStatus, {
     });
   },
 
-  inputId: Ember.computed('elementId', function (){
+  inputId: computed('elementId', function (){
     return this.get('elementId') + '-input';
   }),
 
-  shouldSetHasFiles: Ember.computed('files.[]', function() {
+  shouldSetHasFiles: computed('files.[]', function() {
+    // eslint-disable-next-line ember/no-side-effects
     this.set('hasFiles', this.get('files') && this.get('files.length') > 0);
   }),
 

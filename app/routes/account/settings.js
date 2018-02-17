@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-
-const { Route, inject: { service } } = Ember;
 
 export default Route.extend(addEdit, {
   auth: service(),

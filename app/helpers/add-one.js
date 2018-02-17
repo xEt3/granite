@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 export function addOne([num]) {
   return parseFloat(num) + 1;
 }
 
-export default Ember.Helper.helper(addOne);
+export default helper(addOne);

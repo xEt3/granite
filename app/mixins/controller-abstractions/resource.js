@@ -1,7 +1,5 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 import pagination from 'granite/mixins/controller-abstractions/pagination';
-
-const { Mixin } = Ember;
 
 export default Mixin.create(pagination, {
   queryParams: [ 'page', 'limit' ],

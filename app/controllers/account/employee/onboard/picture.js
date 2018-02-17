@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { computed, Controller } = Ember;
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 
 export default Controller.extend({
   pictureExts:    [ 'jpg', 'jpeg', 'png', 'gif', 'tif' ],

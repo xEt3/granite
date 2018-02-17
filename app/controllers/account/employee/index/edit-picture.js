@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { run } from '@ember/runloop';
 import moment from 'moment';
-
-const { Controller, computed, run } = Ember;
 
 export default Controller.extend({
   pictureExts: [ 'jpg', 'jpeg', 'png'],

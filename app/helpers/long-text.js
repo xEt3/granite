@@ -1,9 +1,11 @@
 import Ember from 'ember';
+import { helper } from '@ember/component/helper';
+import { htmlSafe } from '@ember/string';
 
 export function longText([text]/*, hash*/) {
   let body = Ember.Handlebars.Utils.escapeExpression(text);
   body = body.replace(/\n\r?/g, '<br>');
-  return new Ember.String.htmlSafe(body);
+  return new htmlSafe(body);
 }
 
-export default Ember.Helper.helper(longText);
+export default helper(longText);

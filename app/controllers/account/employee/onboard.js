@@ -1,6 +1,4 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import wizard from 'granite/mixins/wizard/controller';
-
-const { Controller } = Ember;
 
 export default Controller.extend(wizard, {});

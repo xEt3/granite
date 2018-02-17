@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { Promise } from 'rsvp';
+import $ from 'jquery';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import del from 'granite/mixins/controller-abstractions/delete';
-
-const { Controller, RSVP: { Promise } } = Ember;
 
 export default Controller.extend(del, addEdit, {
   transitionAfterDelete: 'account.action-items',
@@ -29,7 +29,7 @@ export default Controller.extend(del, addEdit, {
     confirmCompletion () {
       this.set('respondedComplete', false);
 
-      Ember.$('#modal__action-item--confirm-complete').modal({
+      $('#modal__action-item--confirm-complete').modal({
         detachable: true,
         onHidden: () => {
           if ( !this.get('respondedComplete') ) {
@@ -44,7 +44,7 @@ export default Controller.extend(del, addEdit, {
     selectTransferTarget () {
       this.set('respondedTransfer', false);
 
-      Ember.$('#modal__action-item--transfer').modal({
+      $('#modal__action-item--transfer').modal({
         detachable: true,
         onHidden: () => {
           if ( !this.get('respondedTransfer') ) {
@@ -59,7 +59,7 @@ export default Controller.extend(del, addEdit, {
     selectDelay () {
       this.set('respondedDelay', false);
 
-      Ember.$('#modal__action-item--delay').modal({
+      $('#modal__action-item--delay').modal({
         detachable: true,
         onHidden: () => {
           if ( !this.get('respondedDelay') ) {
@@ -74,13 +74,13 @@ export default Controller.extend(del, addEdit, {
     respondTransferModal ( response ) {
       this.get(response ? 'resolveTransfer' : 'rejectTransfer')(response ? this.get('transferTarget') : null);
       this.set('respondedTransfer', true);
-      Ember.$('#modal__action-item--transfer').modal('hide');
+      $('#modal__action-item--transfer').modal('hide');
     },
 
     respondConfirmCompleteModal ( response ) {
       this.get(response ? 'resolveComplete' : 'rejectComplete')(response);
       this.set('respondedComplete', true);
-      Ember.$('#modal__action-item--confirm-complete').modal('hide');
+      $('#modal__action-item--confirm-complete').modal('hide');
     },
 
     respondDelayModal ( response ) {
@@ -91,7 +91,7 @@ export default Controller.extend(del, addEdit, {
       }
 
       this.set('respondedDelay', true);
-      Ember.$('#modal__action-item--delay').modal('hide');
+      $('#modal__action-item--delay').modal('hide');
     }
   }
 });

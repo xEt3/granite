@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed, observer } from '@ember/object';
+import { run } from '@ember/runloop';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-
-const { Controller, computed, observer, run } = Ember;
 
 export default Controller.extend(addEdit, {
   transitionWithModel: true,

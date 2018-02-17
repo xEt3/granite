@@ -1,6 +1,7 @@
-import Ember from 'ember';
-
-const { Component, RSVP: { Promise }, computed } = Ember;
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { Promise } from 'rsvp';
+import $ from 'jquery';
 
 let TodoItemComponent = Component.extend({
   classNames: [ 'item', 'action-item__checklist--item' ],
@@ -10,7 +11,7 @@ let TodoItemComponent = Component.extend({
   }),
 
   willDestroy () {
-    Ember.$(`#${this.get('modalId')}`).remove();
+    $(`#${this.get('modalId')}`).remove();
     this._super(...arguments);
   },
 
@@ -21,7 +22,7 @@ let TodoItemComponent = Component.extend({
 
     selectAssignee () {
       this.set('respondedAssignee', false);
-      Ember.$(`#${this.get('modalId')}`).modal({
+      $(`#${this.get('modalId')}`).modal({
         detachable: true,
         onHidden: () => {
           if ( !this.get('respondedAssignee') ) {
@@ -41,7 +42,7 @@ let TodoItemComponent = Component.extend({
     respondAssignee ( assignee ) {
       this.get(assignee !== false ? 'resolve' : 'reject')(assignee || null);
       this.set('respondedAssignee', true);
-      Ember.$(`#${this.get('modalId')}`).modal('hide');
+      $(`#${this.get('modalId')}`).modal('hide');
     }
   }
 });

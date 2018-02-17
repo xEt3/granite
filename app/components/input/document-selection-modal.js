@@ -1,11 +1,15 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed, observer } from '@ember/object';
+import { A } from '@ember/array';
+import { run } from '@ember/runloop';
+import { inject as service } from '@ember/service';
+import { Promise } from 'rsvp';
+import $ from 'jquery';
 import pagination from 'granite/mixins/controller-abstractions/pagination';
 
-const { A, Component, RSVP, inject, computed, observer, run } = Ember;
-
 export default Component.extend(pagination, {
-  ajax: inject.service(),
-  store: inject.service(),
+  ajax: service(),
+  store: service(),
   classNames: [ 'document__selector' ],
   limit: 10,
   page: 1,
@@ -74,7 +78,7 @@ export default Component.extend(pagination, {
       query.$or = [ { title }, { description } ];
     }
 
-    return new RSVP.Promise(resolve => {
+    return new Promise(resolve => {
       this.get('store').query('file', query)
       .then(results => {
         this.set('results', results);
@@ -87,7 +91,7 @@ export default Component.extend(pagination, {
 
   refreshModal () {
     run.scheduleOnce('afterRender', () => {
-      Ember.$('#modal__document-selection').modal('refresh');
+      $('#modal__document-selection').modal('refresh');
     });
   },
 
@@ -108,12 +112,12 @@ export default Component.extend(pagination, {
     },
 
     assign () {
-      Ember.$('#modal__document-selection').modal('hide');
+      $('#modal__document-selection').modal('hide');
       this.get('onSelected')(this.get('selectedDocuments'));
     },
 
     selectDocuments () {
-      Ember.$('#modal__document-selection')
+      $('#modal__document-selection')
       .modal({
         detachable: true
       })

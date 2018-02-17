@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { inject as controller } from '@ember/controller';
 import del from 'granite/mixins/controller-abstractions/delete';
 
-const { Controller, computed, inject } = Ember;
-
 export default Controller.extend(del, {
-  application: inject.controller(),
+  application: controller(),
   addingAsset: computed.equal('application.currentPath', 'account.asset.index.new'),
 
   actions: {

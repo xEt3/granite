@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { Controller, computed } = Ember;
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 
 export default Controller.extend({
   init () {
@@ -13,7 +12,11 @@ export default Controller.extend({
   }),
 
   makeNode (object, base = {}) {
-    return Ember.$.extend(base, {
+    if (!object) {
+      return;
+    }
+
+    return Object.assign({}, base, {
       _id: object.get('id'),
       name: {
         first: object.get('firstName'),

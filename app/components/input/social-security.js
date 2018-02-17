@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { run } from '@ember/runloop';
 
-const { run, computed } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: '',
   showSsn: true,
 

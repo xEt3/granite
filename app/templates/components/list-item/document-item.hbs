@@ -18,9 +18,11 @@
       <i class="right aligned text ellipsis vertical icon"></i>
       <div class="menu">
         <div class="header">Actions</div>
-        <a href="#" class="item" {{action assign file}}>
-          <i class="add user icon"></i> Assign (send) to
-        </a>
+        {{#if assign}}
+          <a href="#" class="item" {{action assign file}}>
+            <i class="add user icon"></i> Assign (send) to
+          </a>
+        {{/if}}
         <div class="text-danger header">Danger Zone</div>
         <div class="item">
           {{#confirm-modal as |confirm|}}

@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { Route, run: { scheduleOnce, later, next } } = Ember;
+import Route from '@ember/routing/route';
+import { scheduleOnce, later, next } from '@ember/runloop';
 
 let followThroughPath = 'account.employee.index.counseling.issue.corrective-action';
 

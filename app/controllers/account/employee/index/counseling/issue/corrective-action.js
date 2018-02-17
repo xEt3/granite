@@ -1,8 +1,10 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { Promise } from 'rsvp';
+import $ from 'jquery';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import del from 'granite/mixins/controller-abstractions/delete';
-
-const { Controller, computed, RSVP: { Promise }, inject: { service } } = Ember;
 
 export default Controller.extend(addEdit, del, {
   auth: service(),
@@ -82,7 +84,7 @@ export default Controller.extend(addEdit, del, {
       this.set('respondedFollowup', false);
       this.createFollowup();
 
-      Ember.$('#modal__corrective-action--followup').modal({
+      $('#modal__corrective-action--followup').modal({
         detachable: true,
         onHidden: () => {
           if ( !this.get('respondedFollowup') ) {
@@ -101,7 +103,7 @@ export default Controller.extend(addEdit, del, {
     respondFollowup (response) {
       this.get(response ? 'resolveFollowup' : 'rejectFollowup')(response ? this.get('followup') : null);
       this.set('respondedFollowup', true);
-      Ember.$('#modal__corrective-action--followup').modal('hide');
+      $('#modal__corrective-action--followup').modal('hide');
     }
   }
 });

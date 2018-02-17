@@ -1,11 +1,11 @@
-import Ember from 'ember';
 import Model from 'ember-data/model';
+import { computed } from '@ember/object';
 import DS from 'ember-data';
 import resolveForTypeKey from '../utils/resolve-for-type-key';
 import { validator, buildValidations } from 'ember-cp-validations';
 
 const { attr, hasMany, belongsTo } = DS;
-const { computed } = Ember;
+
 const Validations = buildValidations({
   title: [
     validator('presence', true),

@@ -1,11 +1,10 @@
-import Ember from 'ember';
-
-const { set } = Ember;
+import { helper } from '@ember/component/helper';
+import { set } from '@ember/object';
 
 export function mutSelect([obj, path]) {
-  return ( component, id, value ) => {
+  return (component, id, value) => {
     set(obj, path, value);
   };
 }
 
-export default Ember.Helper.helper(mutSelect);
+export default helper(mutSelect);

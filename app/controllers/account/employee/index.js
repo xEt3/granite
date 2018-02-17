@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { inject as controller } from '@ember/controller';
 import del from 'granite/mixins/controller-abstractions/delete';
-
-const { Controller, computed, inject: { controller } } = Ember;
 
 export default Controller.extend(del, {
   application: controller(),

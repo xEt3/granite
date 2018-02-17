@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { Component, computed, defineProperty } = Ember;
+import Component from '@ember/component';
+import { computed, defineProperty } from '@ember/object';
 
 const QuickFormInputComponent = Component.extend({
   classNames: [ 'field' ],

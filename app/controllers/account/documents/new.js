@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { Promise } from 'rsvp';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-
-const { Controller, RSVP: { Promise } } = Ember;
 
 export default Controller.extend(addEdit, {
   fileIsAdded: false,

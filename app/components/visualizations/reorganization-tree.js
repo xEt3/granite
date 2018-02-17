@@ -1,13 +1,20 @@
-import Ember from 'ember';
+/* eslint-disable ember/no-on-calls-in-components */
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import { A } from '@ember/array';
+import Object from '@ember/object';
+import { computed, get, set } from '@ember/object';
+import { run } from '@ember/runloop';
+import { on } from '@ember/object/evented';
+import { inject as service } from '@ember/service';
 import d3 from 'd3-selection';
 import { tree, hierarchy } from 'd3-hierarchy';
 
-const { Component, RSVP, inject, computed, get, set, on, run } = Ember,
-      select = 'name email supervisor';
+const select = 'name email supervisor';
 
 export default Component.extend({
   tagName: 'svg',
-  ajax: inject.service(),
+  ajax: service(),
   classNames: [ 'visualization__org-tree' ],
   attributeBindings: [ 'width', 'height' ],
   removeOriginalNode: computed.reads('baseNode.simulate'),
@@ -25,7 +32,7 @@ export default Component.extend({
     let ajax = this.get('ajax'),
         baseNode = this.get('baseNode'),
         removeOriginalNode = this.get('removeOriginalNode');
-    set(node, 'children', Ember.A());
+    set(node, 'children', A());
 
     return ajax.request('/api/v1/employees', {
       data: {
@@ -37,7 +44,7 @@ export default Component.extend({
       let children = res.employee;
 
       return (removeOriginalNode && get(node, 'simulate') ?
-      this.populateChildNodes(Ember.Object.create(this.get('originalNode')))
+      this.populateChildNodes(Object.create(this.get('originalNode')))
       .then(populated => {
         populated.children.forEach(child => {
           if ( get(child, '_id') !== get(node, '_id') ) {
@@ -49,7 +56,7 @@ export default Component.extend({
       .then(() => {
         if ( children && children.length > 0 ) {
           return RSVP.map(children, child => {
-            let _child = baseNode && get(baseNode, '_id') === get(child, '_id') ? Ember.Object.create(baseNode) : child;
+            let _child = baseNode && get(baseNode, '_id') === get(child, '_id') ? Object.create(baseNode) : child;
             if ( !base, get(_child, '_id') === get(baseNode, '_id') ) {
               return;
             }
@@ -58,7 +65,7 @@ export default Component.extend({
               let original = this.get('originalNode');
               if ( removeOriginalNode && populated.children.length > 0 && original && get(original, '_id') === get(_child, '_id') ) {
                 populated.children.map(c => {
-                  if ( !Ember.A(get(node, 'children')).findBy('_id', get(c, '_id')) ) {
+                  if ( !A(get(node, 'children')).findBy('_id', get(c, '_id')) ) {
                     get(node, 'children').push(c);
                   }
                 });
@@ -80,7 +87,7 @@ export default Component.extend({
 
   _simulation: computed('baseNode._id', 'originalNode._id', function () {
     let baseNode = this.get('baseNode');
-    return this.populateChildNodes(Ember.Object.create(baseNode), true);
+    return this.populateChildNodes(Object.create(baseNode), true);
   }),
 
   _baseRender: on('didInsertElement', function () {

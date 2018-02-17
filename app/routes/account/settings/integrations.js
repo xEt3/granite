@@ -1,9 +1,8 @@
-import Ember from 'ember';
-
-const { Route, inject } = Ember;
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 
 export default Route.extend({
-  auth: inject.service(),
+  auth: service(),
 
   model () {
     return this.store.findRecord('company', this.get('auth.user').get('content').belongsTo('company').id(), { reload: true });

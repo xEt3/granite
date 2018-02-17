@@ -1,9 +1,9 @@
-import Ember from 'ember';
-
-const { Component, inject, computed } = Ember;
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 let DiscussionCommentItemComponent = Component.extend({
-  auth: inject.service(),
+  auth: service(),
   classNames: [ 'ui', 'comment' ],
 
   isOwner: computed('auth.user.employee.id', 'comment.commenter.id', function () {

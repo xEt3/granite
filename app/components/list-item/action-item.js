@@ -1,13 +1,13 @@
-import Ember from 'ember';
-
-const { Component, inject, computed } = Ember;
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  auth: inject.service(),
+  auth: service(),
   userId: computed.reads('auth.user.employee.id'),
   subscriberIds: computed.mapBy('actionItem.subscribers', 'id'),
 
-  todosComplete: computed('actionItem.checklist.length', 'actionItem.incompleteTodos.length', function () {
+  todosComplete: computed('actionItem.{checklist.length,incompleteTodos.length}', function () {
     let item = this.get('actionItem');
     return item.get('checklist.length') > 0 && item.get('incompleteTodos.length') === 0;
   }),

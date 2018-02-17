@@ -1,8 +1,6 @@
-import Ember from 'ember';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-
-const { A } = Ember;
+import { A } from '@ember/array';
 
 export default Model.extend({
   label: attr('string'),

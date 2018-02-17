@@ -1,6 +1,6 @@
-import Ember from 'ember';
-
-const { Component, computed, assert } = Ember;
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { assert } from '@ember/debug';
 
 export default Component.extend({
   markAsShownOnExit: true,

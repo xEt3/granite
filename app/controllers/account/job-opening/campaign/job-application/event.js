@@ -1,6 +1,6 @@
-import Ember from 'ember';
-
-const { Controller, A, computed, get } = Ember;
+import Controller from '@ember/controller';
+import { computed, get } from '@ember/object';
+import { A } from '@ember/array';
 
 const attendeeKeys = [ 'facilitator', 'organizer', 'attendees', 'attendant' ];
 

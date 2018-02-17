@@ -1,7 +1,5 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import ajaxStatus from 'granite/mixins/ajax-status';
-
-const { Controller } = Ember;
 
 export default Controller.extend(ajaxStatus, {
   actions: {

@@ -15,12 +15,12 @@ test('it renders', function(assert) {
   assert.equal(this.$('input').attr('type'), 'text', 'should default to text');
   this.$('a').click();
   return wait()
-  .then(() => {
-    assert.equal(this.$('input').attr('type'), 'password', 'should change to password after clicking once');
-    this.$('a').click();
-    return wait();
-  })
-  .then(() => {
-    assert.equal(this.$('input').attr('type'), 'text', 'should change to text after clicking again');
-  });
+    .then(() => {
+      assert.equal(this.$('input').attr('type'), 'password', 'should change to password after clicking once');
+      this.$('a').click();
+      return wait();
+    })
+    .then(() => {
+      assert.equal(this.$('input').attr('type'), 'text', 'should change to text after clicking again');
+    });
 });

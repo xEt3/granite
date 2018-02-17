@@ -1,12 +1,11 @@
-import Ember from 'ember';
 import AjaxService from 'ember-ajax/services/ajax';
-
-const { inject, computed } = Ember;
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 
 export default AjaxService.extend({
-  auth: inject.service(),
+  auth: service(),
 
-  headers: computed('auth.token', 'auth.authenticated', {
+  headers: computed('auth.{authenticated,token}', {
     get() {
       let headers = {};
       const token = this.get('auth.token');

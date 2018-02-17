@@ -1,8 +1,6 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import { states as stateOptions } from 'granite/config';
-
-const { Controller } = Ember;
 
 export default Controller.extend(addEdit, {
   stateOptions,

@@ -1,7 +1,5 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import bubbleTo from 'granite/utils/bubble-action';
-
-const { Component } = Ember;
 
 export default Component.extend({
   actions: {

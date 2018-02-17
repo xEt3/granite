@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 import { jobTypes } from 'granite/config/statics';
-
-const { Controller, computed } = Ember;
 
 export default Controller.extend({
   jobTypes,

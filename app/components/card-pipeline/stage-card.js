@@ -1,14 +1,12 @@
 import Ember from 'ember';
+import Component from '@ember/component';
+import { A } from '@ember/array';
+import { computed } from '@ember/object';
+import { get } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
-const {
-  Component,
-  A,
-  Logger: { error },
-  computed,
-  get,
-  inject: { service }
-} = Ember;
+const { Logger: { error } } = Ember;
 
 const PipelineCardComponent = Component.extend({
   store: service(),

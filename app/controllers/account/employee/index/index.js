@@ -1,30 +1,19 @@
-import Ember from 'ember';
-const { computed, Controller } = Ember;
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default Controller.extend(addEdit, {
-
   editing: false,
-  
+
   customFieldsExist: computed('model.customFields', function () {
     let cf = this.get('model.customFields');
     return cf ? Object.keys(cf).length : 0;
   }),
 
-  hasAnniversaries: computed.or(
-    'model.hireDate',
-    'model.dateOfBirth'
-  ),
-
-  hasDirectContact: computed.or(
-    'model.phone',
-    'model.email'
-  ),
-
+  hasAnniversaries: computed.or('model.{hireDate,dateOfBirth}'),
+  hasDirectContact: computed.or('model.{phone,email}'),
   hasEmergencyContact: computed.or(
-    'model.emergencyContactPhone',
-    'model.emergencyContactNameFirst',
-    'model.emergencyContactNameLast'
+    'model.{emergencyContactPhone,emergencyContactNameFirst,emergencyContactNameLast}'
   ),
 
   actions: {

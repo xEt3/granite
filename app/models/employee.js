@@ -1,10 +1,8 @@
-import Ember from 'ember';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import Validations from './validations/employee';
 import { belongsTo, hasMany } from 'ember-data/relationships';
-
-const { computed } = Ember;
+import { computed } from '@ember/object';
 
 export default Model.extend(Validations, {
   // Personal Information

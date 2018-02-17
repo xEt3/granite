@@ -1,11 +1,11 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { Promise } from 'rsvp';
 import moment from 'moment';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import fileSupport from 'granite/mixins/file-handling';
 
 const timezones = moment.tz.names();
-
-const  { Controller, computed, RSVP: { Promise } } = Ember;
 
 export default Controller.extend(addEdit, fileSupport, {
   timezones,

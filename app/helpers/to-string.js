@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 export function toString( [value] ) {
   return JSON.stringify(value);
 }
 
-export default Ember.Helper.helper(toString);
+export default helper(toString);

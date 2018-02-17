@@ -1,10 +1,9 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 import refreshable from 'granite/mixins/refreshable';
 
-const { Route, inject } = Ember;
-
 export default Route.extend(refreshable, {
-  auth: inject.service(),
+  auth: service(),
   queryParams: {
     page: { refreshModel: true }
   },

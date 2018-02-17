@@ -1,10 +1,9 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
 import ajaxStatus from 'granite/mixins/ajax-status';
 
-const { Controller, inject } = Ember;
-
 export default Controller.extend(ajaxStatus, {
-  ajax: inject.service(),
+  ajax: service(),
 
   actions: {
     onNotify () {

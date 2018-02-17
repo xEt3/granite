@@ -1,7 +1,5 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import pagination from 'granite/mixins/controller-abstractions/pagination';
-
-const { Controller } = Ember;
 
 export default Controller.extend(pagination, {
   queryParams: [ 'page' ],

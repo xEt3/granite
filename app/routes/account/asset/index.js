@@ -1,7 +1,5 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 import refreshable from 'granite/mixins/refreshable';
-
-const { Route } = Ember;
 
 export default Route.extend(refreshable, {
   model () {

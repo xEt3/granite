@@ -1,6 +1,8 @@
 import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 
-const { Component, K, computed } = Ember;
+const { K } = Ember;
 
 const DocumentItemComponent = Component.extend({
   classNames: [ 'item' ],

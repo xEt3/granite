@@ -1,9 +1,12 @@
 import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 import progress from 'ember-cli-nprogress';
 import { notifyDefaults } from 'granite/config';
 import ENV from 'granite/config/environment';
+import $ from 'jquery';
 
-const { Route, $, Logger, RSVP: { Promise }, inject } = Ember;
+const { Logger } = Ember;
 
 const errorRouteMap = {
   401: 'unauthorized',
@@ -13,8 +16,8 @@ const errorRouteMap = {
 };
 
 export default Route.extend({
-  auth: inject.service(),
-  notifications: inject.service('notification-messages'),
+  auth: service(),
+  notifications: service('notification-messages'),
 
   beforeModel () {
     return ENV.environment === 'test' ? Promise.resolve() : this.get('auth').initializeExistingSession();

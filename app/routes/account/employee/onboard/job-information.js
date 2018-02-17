@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import RSVP from 'rsvp';
+import { inject as service } from '@ember/service';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-const { RSVP, inject } = Ember;
-
-export default Ember.Route.extend(addEdit,{
-  auth: inject.service(),
+export default Route.extend(addEdit,{
+  auth: service(),
 
   model() {
     let company = this.get('auth.user.company'),

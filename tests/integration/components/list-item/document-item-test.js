@@ -6,12 +6,13 @@ moduleForComponent('list-item/document-item', 'Integration | Component | list it
 });
 
 test('it displays like it should', function(assert) {
-  this.render(hbs`{{list-item/document-item doc}}`);
+  this.render(hbs`{{list-item/document-item doc assign=assign}}`);
   this.set('doc', {
     extension: 'pdf',
     title: 'Some document',
     tags: [ 'test', 'check' ]
   });
+  this.set('assign', () => {});
 
   let text = this.$().text().trim().toLowerCase();
 

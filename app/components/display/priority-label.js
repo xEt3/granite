@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 
-const { Component, computed } = Ember,
-      priorityMap = [ 'Lowest', 'Low', 'Medium', 'High', 'Highest' ],
+const priorityMap = [ 'Lowest', 'Low', 'Medium', 'High', 'Highest' ],
       priorityColorMap = [ '', 'grey', 'teal', 'red', 'orange' ];
 
 let PriorityLabelComponent = Component.extend({

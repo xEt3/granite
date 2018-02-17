@@ -20,7 +20,7 @@ export default function testConfig() {
 
   // Simulate login actions
 
-  this.post('/login/company-user', ({}, request) => {
+  this.post('/login/company-user', (n, request) => {
     const params = parseIncoming(request);
 
     if ( params.email !== 'user@test.com' ) {
@@ -37,7 +37,7 @@ export default function testConfig() {
     }
   });
 
-  this.get('/company-users/:id', ({}, request) => {
+  this.get('/company-users/:id', (n, request) => {
     return {
       companyUser: {
         _id: request.params.id,
@@ -50,7 +50,7 @@ export default function testConfig() {
     };
   });
 
-  this.get('/activities', ({}, request) => {
+  this.get('/activities', (n, request) => {
     const params = parseIncoming(request),
           limit = params.limit || 10;
 
@@ -66,10 +66,8 @@ export default function testConfig() {
     return { activity: activities };
   });
 
-  this.get('/company-users', ({}, request) => {
+  this.get('/company-users', (n, request) => {
     const params = parseIncoming(request);
-    console.log('reqbody', request.requestBody);
-    console.log('params', params);
 
     let list = {
       companyUser: [{
@@ -97,4 +95,8 @@ export default function testConfig() {
 
     return list;
   });
+
+  this.get('/employees', () => {
+    return { employees: [] };
+  })
 }

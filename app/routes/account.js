@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 import authenticated from '../mixins/authenticated';
-
-const { Route, $ } = Ember;
+import $ from 'jquery';
 
 export default Route.extend(authenticated, {
   actions: {

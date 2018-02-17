@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: [ 'step' ],
   classNameBindings: [ 'step.completed:completed', 'step.active:active' ]
 });

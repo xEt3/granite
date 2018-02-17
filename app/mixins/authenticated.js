@@ -1,9 +1,8 @@
-import Ember from 'ember';
-
-const { Mixin, inject } = Ember;
+import Mixin from '@ember/object/mixin';
+import { inject as service } from '@ember/service';
 
 export default Mixin.create({
-  auth: inject.service(),
+  auth: service(),
   authenticationChangeUrl: 'index',
 
   beforeModel ( transition ) {

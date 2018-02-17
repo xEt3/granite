@@ -1,6 +1,8 @@
-import Ember from 'ember';
-
-const { Component, RSVP: { Promise }, computed, run } = Ember;
+import Component from '@ember/component';
+import { Promise } from 'rsvp';
+import { computed } from '@ember/object';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
 
 export default Component.extend({
   responded: false,
@@ -21,7 +23,7 @@ export default Component.extend({
       _originalArgs: arguments
     });
 
-    Ember.$('#' + this.get('modalId')).modal({
+    $('#' + this.get('modalId')).modal({
       detachable: true,
       onHidden: () => {
         if ( !this.get('responded') ) {
@@ -38,7 +40,7 @@ export default Component.extend({
   }),
 
   closeModal () {
-    Ember.$('#' + this.get('modalId')).modal('hide');
+    $('#' + this.get('modalId')).modal('hide');
   },
 
   actions: {

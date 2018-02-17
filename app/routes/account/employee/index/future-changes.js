@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import RSVP from 'rsvp';
 import refreshable from 'granite/mixins/refreshable';
+import moment from 'moment';
 
-const { RSVP } = Ember;
-export default Ember.Route.extend(refreshable, {
+export default Route.extend(refreshable, {
   model() {
     let employee = this.modelFor('account.employee');
     return RSVP.hash({
