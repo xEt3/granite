@@ -158,9 +158,7 @@ Router.map(function() {
         );
       });
       this.route('setup', function() {
-        this.route('settings', function() {
-          this.route('index', function() {});
-        });
+        this.route('settings');
         this.route('screening');
         this.route('sources');
         this.route('eeo');

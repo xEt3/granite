@@ -26,6 +26,7 @@ export default Route.extend({
     let documentsQuery = {
       limit,
       page,
+      systemUse: { $ne: true },
       url: { $exists: true },
       sort: {}
     };

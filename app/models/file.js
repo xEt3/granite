@@ -16,6 +16,7 @@ export default Model.extend(Validations, {
   key:            attr('string'),
   associatedData: attr(),
   tags:           attr('array'),
+  systemUse:      attr('boolean'),
 
   creator: belongsTo('company-user', { async: true, inverse: null }),
   company: belongsTo('company', { async: true, inverse: null }),
