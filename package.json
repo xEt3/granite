@@ -80,6 +80,7 @@
   "devDependencies": {
     "ember-cli-emojii": "^1.0.2",
     "ember-cp-validations": "^3.5.1",
+    "ember-rollbar-client": "^0.7.0",
     "emojify.js": "~1.1.0"
   }
 }
