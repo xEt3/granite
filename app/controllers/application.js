@@ -47,7 +47,7 @@ export default Controller.extend({
 
   topLevel: computed('currentPath', function () {
     const currentPath = this.get('currentPath');
-    return currentPath.indexOf('account') < 0 && currentPath.indexOf('login') < 0;
+    return currentPath && currentPath.indexOf('account') < 0 && currentPath.indexOf('login') < 0;
   }),
 
   updateBodyClass: on('init', observer('topLevel', function () {
