@@ -20,6 +20,10 @@
       capture='camera'}}
   </div>
 
+  {{#each model.logoPalette as |color|}}
+    <div style="display: inline-block; width: 50px; height: 20px; background-color: {{color}}; border-radius: .8rem; border: 1px solid #CCC;"></div>
+  {{/each}}
+
   {{quick-form
     settingsForm
     model

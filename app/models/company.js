@@ -30,6 +30,8 @@ export default Model.extend(Validations, {
 
   logo: belongsTo('file', { async: true, inverse: null }),
   logoUrl: attr('string'),
+  logoDominantColor: attr('string'),
+  logoPalette: attr('array'),
 
   urlPrefix: attr('string'),
   collectEEO: attr('boolean'),
