@@ -70,7 +70,7 @@
     "eslint": "^4.17.0",
     "eslint-plugin-ember": "^5.0.0",
     "less-plugin-glob": "^1.1.1",
-    "liquid-fire": "0.29.1",
+    "liquid-fire": "^0.29.2",
     "loader.js": "^4.2.3",
     "semantic-ui-ember": "Semantic-Org/Semantic-UI-Ember#master"
   },

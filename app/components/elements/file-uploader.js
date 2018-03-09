@@ -2,6 +2,7 @@ import Ember from 'ember';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { A } from '@ember/array';
+import { inject as service } from '@ember/service';
 import { Promise } from 'rsvp';
 import $ from 'jquery';
 import ajaxStatus from 'granite/mixins/ajax-status';
@@ -9,6 +10,7 @@ import ajaxStatus from 'granite/mixins/ajax-status';
 const { Logger } = Ember;
 
 export default Component.extend(ajaxStatus, {
+  auth: service(),
   classNameBindings: [ 'dragging' ],
   files: A(),
   doesNotHaveFiles: computed.not('hasFiles'),
@@ -45,9 +47,10 @@ export default Component.extend(ajaxStatus, {
     }
   },
 
-  uploadFile ( file ) {
+  uploadFile (file) {
     let formData = new FormData();
     formData.append('file', file);
+
     return new Promise((resolve, reject) => {
       $.ajax({
         type: 'POST',
@@ -56,6 +59,9 @@ export default Component.extend(ajaxStatus, {
         processData: false,
         contentType: false,
         cache: false,
+        headers: {
+          'X-API-Token': this.get('auth.token')
+        },
         xhr: () => {
           let xhr = new window.XMLHttpRequest();
 
