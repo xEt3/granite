@@ -97,6 +97,10 @@ export default Controller.extend(ajaxStatus, {
         this.transitionToRoute('account.employees');
       })
       .catch(this.ajaxError.bind(this));
+    },
+
+    mutateGuess (i, val) {
+      this.set(`data.0.${i}`, val);
     }
   }
 });

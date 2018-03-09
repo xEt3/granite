@@ -22,7 +22,7 @@
                   {{/ui-popup}}
                 </div>
               </th>
-              {{#each data.[0] as |guesses|}}
+              {{#each data.[0] as |guesses i|}}
                 <th>
                   <div class="field">
                     {{#ui-dropdown
@@ -30,7 +30,7 @@
                       direction="downward"
                       name="guess-column"
                       selected=guesses
-                      onChange=(action (mut guesses))}}
+                      onChange=(action 'mutateGuess' i)}}
                       <div class="default text">Select field for column</div>
                       <i class="dropdown icon"></i>
                       <div class="menu">

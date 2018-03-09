@@ -1,13 +1,13 @@
 <a href="#" class="item" {{action "toggle"}}><i class="large sidebar icon"></i></a>
 <div class="right menu">
-  {{! TODO: Hook this up to actual notifications ;) }}
+  {{!-- {{! TODO: Hook this up to actual notifications ;) }}
   <a href="#" class="item">
     <i class="fitted bell icon"></i>
     <div class="ui red left pointing label">2</div>
-  </a>
+  </a> --}}
 
   {{#ui-dropdown class="item company-logo-dropdown"}}
-    <div class="company-logo" style="background-image: url('{{auth.user.company.logoUrl}}')">
+    <div class="company-logo" style="background-image: url('{{logoUrl}}')">
     </div>
     <i class="dropdown icon"></i>
     <div class="menu">
