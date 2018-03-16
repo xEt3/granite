@@ -1,23 +1,23 @@
 <div class="header item nav__main-logo">
   {{#link-to 'index'}}
     <div class="logo"></div>
-    <div class="logo-text">Granite HR</div>
+    <div class="logo-text logo-link">Granite HR</div>
   {{/link-to}}
 </div>
 
 {{#if topLevel}}
   <div class="right menu">
-    <div class="item">
-      {{#link-to 'about'}}About{{/link-to}}
+    <div class="item ">
+      {{#link-to 'about' class='about-link'}}About{{/link-to}}
     </div>
     <div class="item">
-      {{#link-to 'pricing'}}Pricing{{/link-to}}
+      {{#link-to 'pricing' class='pricing-link'}}Pricing{{/link-to}}
     </div>
     <div class="item">
-      {{#link-to 'features'}}Features{{/link-to}}
+      {{#link-to 'features' class='features-link'}}Features{{/link-to}}
     </div>
     <div class="item">
-      {{#link-to 'contact'}}Contact{{/link-to}}
+      {{#link-to 'contact' class='contact-link'}}Contact{{/link-to}}
     </div>
     {{#if auth.authenticated}}
       <div class="item">
@@ -26,9 +26,9 @@
     {{else}}
       <div class="item">
         <div class="ui buttons">
-          {{#link-to 'login' class="ui blue button"}}Log in{{/link-to}}
+          {{#link-to 'login' class="ui blue button login-link"}}Log in{{/link-to}}
           <div class="or"></div>
-          {{#link-to 'signup' class="ui green button"}}Sign Up{{/link-to}}
+          {{#link-to 'signup' class="ui green button signup-link"}}Sign Up{{/link-to}}
         </div>
       </div>
     {{/if}}
