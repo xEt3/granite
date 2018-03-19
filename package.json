@@ -56,6 +56,7 @@
     "ember-d3": "^0.4.3",
     "ember-data": "~3.0.0",
     "ember-export-application-global": "^2.0.0",
+    "ember-faker": "^1.2.1",
     "ember-font-awesome": "^2.2.0",
     "ember-inflector": "^1.9.6",
     "ember-introjs": "1.0.0",
