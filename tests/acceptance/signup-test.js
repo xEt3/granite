@@ -29,33 +29,41 @@ module('Acceptance | signup', function(hooks) {
   const zip=faker.address.zipCode();
   await fillIn('#company-name input', company);
   await fillIn('#first-name input', firstName);
-  //await fillIn('#middle-name input', firstName);
+  await fillIn('input[placeholder="Middle(Optional)"]', middleName);
   await fillIn('#last-name input', lastName);
   await fillIn('#company-email input', email);
-  //await fillIn('el input', phone);
-  //await fillIn('#phone-extension input', extension;
+  await fillIn('input[placeholder="Phone Number"]', phone);
+  await fillIn('input[placeholder="Extension"]', extension);
   await fillIn('#street-address input', street);
   await fillIn('#suite-number input', suite);
   await fillIn('#city input', city);
-  //await fillIn('#address-state input', state);
+  //await fillIn('dropdown[class="search selection"]', state);
   await fillIn('#zipcode input', zip);
 
-
+//assert.ok(find('input[data-id="{{state}}"]'));
 
 
   assert.equal(find('#company-name input').value,company,"the company is "+ company);
   assert.equal(find('#first-name input').value,firstName,"First name is "+ firstName);
-  //assert.equal(find('#middle-name input').value,firstName,"First name is "+ firstName);
+  assert.equal(find('input[placeholder="Middle(Optional)"]').value,middleName,"Middle name is "+ middleName);
   assert.equal(find('#last-name input').value,lastName,"Last name is "+ lastName);
 
+
+  assert.equal(find("input[placeholder='Phone Number']").value,phone,'the phone number is '+phone);
+  assert.equal(find("input[placeholder='Extension']").value,extension,'the phone number extention is '+ extension);
   assert.equal(find('#company-email input').value,email,"the Email is "+ email);
   assert.equal(find('#street-address input').value,street,"the Address is "+ street);
   assert.equal(find('#suite-number input').value,suite,"the Suite is "+ suite);
   assert.equal(find('#city input').value,city,"the city is "+ city);
   assert.equal(find('#zipcode input').value,zip,"the zip is "+ zip);
 
-assert.ok(find(el), "hell yeah"+el.value)
+
+
 
   });
+  test('test', async function(assert) {
+    await visit('/signup');
 
+    assert.equal(currentURL(), '/signup');
+  });
 });
