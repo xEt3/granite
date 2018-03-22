@@ -57,12 +57,12 @@
       </div>
       <div class="field">
         {{#validated-input model=model valuePath="addressState"}}
-          {{#ui-dropdown class="search selection" name="address-state" onChange=(action (mut-select model 'addressState'))}}
-            <div class="default text">Select a State</div>
+          {{#ui-dropdown class="search selection"  name="address-state" onChange=(action (mut-select model 'addressState'))}}
+            <div  class="default-text">Select a State</div>
             <i class="dropdown icon"></i>
             <div class="menu">
               {{#each stateOptions as |state|}}
-                <div class="item" data-id="{{state}}" value=model.addressState>
+                <div class="item" id="test" data-id="{{state}}" value=model.addressState>
                   {{state}}
                 </div>
               {{/each}}

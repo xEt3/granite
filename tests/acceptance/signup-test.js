@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { visit, currentURL, find, fillIn } from '@ember/test-helpers';
+import { visit, currentURL, find, fillIn, triggerKeyEvent, click, triggerEvent, pauseTest } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import Mirage, { faker } from 'ember-cli-mirage';
 
@@ -41,6 +41,9 @@ module('Acceptance | signup', function(hooks) {
   await fillIn('#zipcode input', zip);
 
 //assert.ok(find('input[data-id="{{state}}"]'));
+//assert.ok(find("div[class='default text']"),"Monatana");
+
+
 
 
   assert.equal(find('#company-name input').value,company,"the company is "+ company);
@@ -61,9 +64,20 @@ module('Acceptance | signup', function(hooks) {
 
 
   });
-  test('test', async function(assert) {
+  test('state dropdown works with click', async function(assert) {
     await visit('/signup');
 
-    assert.equal(currentURL(), '/signup');
-  });
+
+    //await click('#test');
+
+triggerEvent('#test','click');
+await pauseTest();
+          assert.equal(find("#test"),find("div[data-id='Alabama']"), "states are shown ");
+      });
+
+
+
+
+
+
 });
