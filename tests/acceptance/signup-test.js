@@ -75,9 +75,10 @@ module('Acceptance | signup', function(hooks) {
     await new Promise(resolve => setTimeout(resolve, 500));
 
     assert.ok(find('.select__address-state .menu.visible'), 'Menu gets the visible class');
-    await click('.select__address-state .select-address-state__item[data-id="Montana"]');
+    await click(`.select__address-state .select-address-state__item[data-id="${fakeData.state}"]`);
     await settled();
-    assert.equal(controller.get('model.addressState'), 'Montana');
+    const stateSel = [controller.get('model.addressState')[0].innerHTML.trim()];
+    assert.equal(stateSel,fakeData.state, `the state dropdown is ${fakeData.state}`);
 
 
 
