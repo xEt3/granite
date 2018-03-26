@@ -33,7 +33,11 @@
           <label for="new-todo-item" class="sr-only">Add a new todo item</label>
           {{input type='text' value=pendingTodo placeholder="Type to add a new todo item"}}
         </div>
-        {{#ui-dropdown class="fluid search selection" id="new-todo-assigned-to" onChange=(action (mut pendingTodoAssignee)) as |execute mapper|}}
+        {{#ui-dropdown
+          class="fluid search selection"
+          id="new-todo-assigned-to"
+          selected=pendingTodoAssignee
+          onChange=(action (mut pendingTodoAssignee)) as |execute mapper|}}
           <i class="dropdown icon"></i>
           <div class="default text">Assign someone to this item</div>
           <div class="menu">
