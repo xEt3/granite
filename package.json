@@ -77,7 +77,7 @@
     "less-plugin-glob": "^1.1.1",
     "liquid-fire": "^0.29.2",
     "loader.js": "^4.2.3",
-    "semantic-ui-ember": "Semantic-Org/Semantic-UI-Ember#master"
+    "semantic-ui-ember": "^3.0.0"
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"
