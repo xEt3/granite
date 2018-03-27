@@ -38,9 +38,7 @@
       {{#each results as |document|}}
         {{list-item/document-option file=document remove=(contains document selectedDocuments) onRemove=(action "removeDocument") onAddition=(action "addDocument")}}
       {{else}}
-        {{#unless results}}
-          <h3 class="ui center aligned light text header">No documents found.</h3>
-        {{/unless}}
+        <h3 class="ui center aligned light text header">No documents found.</h3>
       {{/each}}
       <div class="ui inverted {{if (or model.isPending _searchDebounce) 'active animated fadeInUp'}} dimmer">
         <div class="ui indeterminate text inverted loader">Searching Documents...</div>
