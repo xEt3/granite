@@ -10,7 +10,7 @@ export default Controller.extend({
   notifications: service('notification-messages'),
 
   accountNavigationItems: [{
-    icon: 'dashboard',
+    icon: 'tachometer alternate',
     title: 'Dashboard',
     link: 'index'
   }, {

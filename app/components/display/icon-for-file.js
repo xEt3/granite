@@ -10,7 +10,7 @@ const IconForFileComponent = Component.extend({
 
   icon: computed('file.{mimeType,extension}', function () {
     let m = A(fileTypes).find(f => f.match.test(this.get(`file.${f.strategy}`)));
-    return m ? m.icon : 'file outline';
+    return m ? m.icon : 'file';
   })
 });
 
