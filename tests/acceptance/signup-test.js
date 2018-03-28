@@ -30,7 +30,7 @@ module('Acceptance | signup', function(hooks) {
       suite:faker.random.number(),
       city:faker.address.city(),
       state:faker.address.state(),
-      zip:faker.address.zipCode()
+      zip:faker.random.number({min:11111, max:99999})
     };
 
     assert.ok(!controller.get('model.name'),'Company name on model is undefined before fillIn');
@@ -82,20 +82,13 @@ module('Acceptance | signup', function(hooks) {
     const stateSel = [controller.get('model.addressState')[0].innerHTML.trim()];
     assert.equal(stateSel,fakeData.state, `the state dropdown is ${fakeData.state}`);
 
+    assert.ok(find('button[type="submit"]'), 'found');
+    await click('button[type="submit"]');
+  
 
     await pauseTest();
 
 
   });
 
-test('filling in signup form', async function(assert) {
-    server.create('company');
-    server.create('company.id');
-
-
-    await visit('/signup');
-
-
-
-  });
 });
