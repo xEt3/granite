@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { visit, currentURL, click, find, findAll } from '@ember/test-helpers';
+import { visit, currentURL, click, find} from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 
 module('Acceptance | Main page', function(hooks) {
@@ -43,10 +43,10 @@ module('Acceptance | Main page', function(hooks) {
     assert.equal(currentURL(), '/signup', 'Sign Up page loaded');
   });
 
-   test('page not found', async function(assert) {
-      await visit('/not_found');
-      assert.ok(find('a[href="/"]'), 'back to link shown on page');
-      assert.equal(currentURL(), '/not_found', 'page not found');
-    });
+  test('page not found', async function(assert) {
+    await visit('/not_found');
+    assert.ok(find('a[href="/"]'), 'back to link shown on page');
+    assert.equal(currentURL(), '/not_found', 'page not found');
+  });
 
 });

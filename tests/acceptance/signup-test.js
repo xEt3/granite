@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { visit, currentURL, click, find, fillIn, settled} from '@ember/test-helpers';
-import Mirage, { faker } from 'ember-cli-mirage';
+import { faker } from 'ember-cli-mirage';
 
 
 module('Acceptance | signup', function(hooks) {
@@ -83,11 +83,6 @@ module('Acceptance | signup', function(hooks) {
 
 
   });
-
-
-
-
-
 
 
 });
