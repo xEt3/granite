@@ -99,4 +99,10 @@ export default function testConfig() {
   this.get('/employees', () => {
     return { employees: [] };
   })
+  this.get('/companies', () => {
+    return { company: [] };
+  })
+
+
+
 }

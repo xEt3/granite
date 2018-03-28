@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { visit, currentURL, click, find, fillIn, settled} from '@ember/test-helpers';
+import { visit, currentURL, click, find, fillIn, settled, pauseTest} from '@ember/test-helpers';
 import { faker } from 'ember-cli-mirage';
 
 
@@ -15,6 +15,7 @@ module('Acceptance | signup', function(hooks) {
 
   test('filling in signup form', async function(assert) {
     await visit('/signup');
+    const company = server.create('company');
     const controller = this.owner.lookup('controller:signup/index');
     const fakeData = {
       company:faker.company.companyName(),
@@ -81,8 +82,16 @@ module('Acceptance | signup', function(hooks) {
     assert.equal(stateSel,fakeData.state, `the state dropdown is ${fakeData.state}`);
 
 
+  await pauseTest();
+
 
   });
 
+test('filling in signup form', async function(assert) {
+    const company = server.create('company');
+    await visit('/signup');
 
+
+
+  });
 });
