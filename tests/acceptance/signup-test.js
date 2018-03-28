@@ -15,10 +15,11 @@ module('Acceptance | signup', function(hooks) {
 
   test('filling in signup form', async function(assert) {
     await visit('/signup');
-    const company = server.create('company');
+    server.create('company');
+    //server.create('company.id');
     const controller = this.owner.lookup('controller:signup/index');
     const fakeData = {
-      company:faker.company.companyName(),
+      company:faker.name.firstName(),
       firstName:faker.name.firstName(),
       middleName:faker.name.firstName(),
       lastName:faker.name.lastName(),
@@ -82,13 +83,16 @@ module('Acceptance | signup', function(hooks) {
     assert.equal(stateSel,fakeData.state, `the state dropdown is ${fakeData.state}`);
 
 
-  await pauseTest();
+    await pauseTest();
 
 
   });
 
 test('filling in signup form', async function(assert) {
-    const company = server.create('company');
+    server.create('company');
+    server.create('company.id');
+
+
     await visit('/signup');
 
 

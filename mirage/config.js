@@ -99,9 +99,9 @@ export default function testConfig() {
   this.get('/employees', () => {
     return { employees: [] };
   })
-  this.get('/companies', () => {
-    return { company: [] };
-  })
+  this.post('/companies');
+  this.put('/companies.id');
+
 
 
 

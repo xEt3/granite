@@ -1,7 +1,7 @@
 import { Factory } from 'ember-cli-mirage';
 
 export default Factory.extend({
-  id: 2,
+  id: 1,
 
   name:"testComp",
 
