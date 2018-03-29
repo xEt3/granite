@@ -62,7 +62,7 @@
       selected=model.offboardingDocuments
       onSelected=(pipe (action (mut model.offboardingDocuments)) (action 'save' model))
       as |execute|}}
-      <button class="ui basic button" {{action execute}}>
+      <button class="ui basic button" {{action execute 'selectDocuments'}}>
         <i class="folder icon"></i>
         Assign offboarding documents
         {{#if model.offboardingDocuments.length}}
