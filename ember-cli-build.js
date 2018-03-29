@@ -1,3 +1,4 @@
+/* eslint-env node */
 const EmberApp  = require('ember-cli/lib/broccoli/ember-app'),
       globSync  = require('glob').sync,
       fs        = require('fs'),
@@ -23,14 +24,6 @@ module.exports = function(defaults) {
         'node_modules/semantic-ui-less'
       ],
       plugins: [ require('less-plugin-glob') ]
-    },
-
-    SemanticUI: {
-      import: {
-        css: false,
-        javascript: true,
-        fonts: false
-      }
     },
 
     'ember-cli-range-slider': {
