@@ -16,7 +16,6 @@ module('Acceptance | signup', function(hooks) {
   test('filling in signup form', async function(assert) {
     await visit('/signup');
     server.create('company');
-    //server.create('company.id');
     const controller = this.owner.lookup('controller:signup/index');
     const fakeData = {
       company:faker.name.firstName(),
@@ -84,7 +83,9 @@ module('Acceptance | signup', function(hooks) {
 
     assert.ok(find('button[type="submit"]'), 'found');
     await click('button[type="submit"]');
-  
+    assert.ok(1,currentURL());
+
+
 
     await pauseTest();
 

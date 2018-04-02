@@ -99,8 +99,12 @@ export default function testConfig() {
   this.get('/employees', () => {
     return { employees: [] };
   })
+
   this.post('/companies');
-  this.put('/companies.id');
+
+  //this.put('/companies/.id');
+
+  this.get('/bt/token');
 
 
 
