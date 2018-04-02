@@ -7,16 +7,12 @@ import { faker } from 'ember-cli-mirage';
 module('Acceptance | signup', function(hooks) {
   setupApplicationTest(hooks);
 
-  test('visiting /signup', async function(assert) {
-    await visit('/signup');
-
-    assert.equal(currentURL(), '/signup');
-  });
-
   test('filling in signup form', async function(assert) {
     await visit('/signup');
-    server.create('company');
+    assert.equal(currentURL(), '/signup');
+
     const controller = this.owner.lookup('controller:signup/index');
+
     const fakeData = {
       company:faker.name.firstName(),
       firstName:faker.name.firstName(),
@@ -83,6 +79,7 @@ module('Acceptance | signup', function(hooks) {
 
     assert.ok(find('button[type="submit"]'), 'found');
     await click('button[type="submit"]');
+    await settled();
     assert.ok(1,currentURL());
 
 
