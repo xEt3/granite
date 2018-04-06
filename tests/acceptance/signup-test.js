@@ -71,22 +71,31 @@ module('Acceptance | signup', function(hooks) {
     await click('.select__address-state');
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    assert.ok(find('.select__address-state .menu.visible'), 'Menu gets the visible class');
     await click(`.select__address-state .select-address-state__item[data-id="${fakeData.state}"]`);
     await settled();
     const stateSel = [controller.get('model.addressState')[0].innerHTML.trim()];
     assert.equal(stateSel,fakeData.state, `the state dropdown is ${fakeData.state}`);
 
-    assert.ok(find('button[type="submit"]'), 'found');
     await click('button[type="submit"]');
     await settled();
-    assert.ok(1,currentURL());
+    assert.equal(currentURL(), '/signup/billing');
 
+    const billingController = this.owner.lookup('controller:signup/billing');
 
-
+    assert.ok(find('button[type="submit"]').disabled, 'Submit is disabled');
+    billingController.set('nonce', 'fake-valid-nonce');
+    await settled();
     await pauseTest();
+    assert.ok(!find('button[type="submit"]').disabled, 'Submit is enabled');
 
-
+    await click('button[type="submit"]');
+    await settled();
+    /*
+      TODO
+      - Test for payment method hit on mirage
+      - Test url is finished
+      - Test transition to index after "finished" animation
+    */
   });
 
 });
