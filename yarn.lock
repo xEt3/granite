@@ -3212,7 +3212,7 @@ ember-cli-maskedinput@0.1.0:
     ember-cli-babel "^5.1.5"
     inputmask-core "^2.1.1"
 
-ember-cli-mirage@^0.4.0:
+ember-cli-mirage@^0.4.3:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/ember-cli-mirage/-/ember-cli-mirage-0.4.3.tgz#81470c2b9cdb2b88661c56be6aacb928945a9b3b"
   dependencies:

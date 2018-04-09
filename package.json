@@ -15,7 +15,8 @@
     "test": "ember test",
     "push-image": "docker build -t james1x0/granite . && docker push james1x0/granite",
     "make-deployment": "bash scripts/deploy-eb.sh",
-    "deploy": "npm run push-image && npm run make-deployment && eb deploy --staged"
+    "deploy": "npm run push-image && npm run make-deployment && eb deploy --staged",
+    "postinstall": "bower install"
   },
   "repository": "https://github.com/associatedemployers/granite",
   "author": "Associated Employers",
@@ -25,11 +26,11 @@
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^3.0.0",
     "ember-cli": "~3.0.0",
-    "ember-cli-braintree": "^1.0.0",
     "ember-cli-active-link-wrapper": "0.2.0",
     "ember-cli-animate-css": "0.0.1",
     "ember-cli-app-version": "^3.0.0",
     "ember-cli-babel": "^6.6.0",
+    "ember-cli-braintree": "^1.0.0",
     "ember-cli-chart": "3.3.2",
     "ember-cli-dependency-checker": "^2.0.0",
     "ember-cli-dropzonejs": "1.0.1",
