@@ -85,7 +85,6 @@ module('Acceptance | signup', function(hooks) {
     assert.ok(find('button[type="submit"]').disabled, 'Submit is disabled');
     billingController.set('nonce', 'fake-valid-nonce');
     await settled();
-    await pauseTest();
     assert.ok(!find('button[type="submit"]').disabled, 'Submit is enabled');
 
     await click('button[type="submit"]');
