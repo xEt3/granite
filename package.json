@@ -15,8 +15,8 @@
     "test": "ember test",
     "push-image": "docker build -t james1x0/granite . && docker push james1x0/granite",
     "make-deployment": "bash scripts/deploy-eb.sh",
-    "deploy": "npm run push-image && npm run make-deployment && eb deploy --staged",
-    "postinstall": "bower install"
+    "deploy": "yarn run push-image && yarn run make-deployment && eb deploy --staged",
+    "postinstall": "bower install --allow-root"
   },
   "repository": "https://github.com/associatedemployers/granite",
   "author": "Associated Employers",
