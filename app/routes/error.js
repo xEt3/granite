@@ -10,7 +10,7 @@ export default Route.extend({
 
       if ( !controller.get('fromError') ) {
         return lf.getItem('graniteRoutePreviousToError').then(previousRoute => {
-          return this.transitionTo(previousRoute || 'index');
+          return this.transitionTo(previousRoute && previousRoute !== 'error' ? previousRoute : 'index');
         });
       }
 
