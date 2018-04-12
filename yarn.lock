@@ -8303,20 +8303,30 @@ sane@^2.2.0, sane@^2.4.1:
   optionalDependencies:
     fsevents "^1.1.1"
 
+semantic-ui-calendar@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/semantic-ui-calendar/-/semantic-ui-calendar-0.0.8.tgz#ae16504e4d8016cac5ba9a00ad8ccd4a430de3ef"
+
 semantic-ui-css@^2.2.14:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/semantic-ui-css/-/semantic-ui-css-2.3.0.tgz#e96d0d4069499eafff9ba0c84274bc23d2b084e7"
   dependencies:
     jquery x.*
 
-semantic-ui-ember@Semantic-Org/Semantic-UI-Ember#master:
-  version "3.0.0-beta4"
-  resolved "https://codeload.github.com/Semantic-Org/Semantic-UI-Ember/tar.gz/c559495e7f79d2c6fcb05902304c95d46a6745d2"
+semantic-ui-ember@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/semantic-ui-ember/-/semantic-ui-ember-3.0.0.tgz#1c0cd1da83a0630dcce47e14e0ab25fcd9e454d9"
   dependencies:
     ember-cli-babel "^6.11.0"
     ember-promise-utils "^0.1.1"
     ember-runtime-enumerable-includes-polyfill "2.0.0"
     semantic-ui-css "^2.2.14"
+
+semantic-ui-less@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/semantic-ui-less/-/semantic-ui-less-2.3.1.tgz#64cc7f1d1e3b5a831cfcf7655d2e2ddedb5aad8a"
+  dependencies:
+    jquery x.*
 
 "semver@2 || 3 || 4 || 5", semver@^5.1.0, semver@^5.1.1, semver@^5.3.0, semver@^5.4.1, semver@^5.5.0:
   version "5.5.0"

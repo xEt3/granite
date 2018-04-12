@@ -108,7 +108,7 @@ const formTypes = [{
   use: 'radio'
 }, {
   display: 'Checkbox',
-  icon: 'checkmark box',
+  icon: 'check square',
   use: 'checkbox'
 }, {
   display: 'Date',

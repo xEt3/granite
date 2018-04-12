@@ -35,7 +35,11 @@
         {{/ui-popup}}
       </label>
       {{#if actionItems}}
-        {{#ui-dropdown class="fluid search multiple selection" id="action-item-prerequisites" selected=model.prerequisites onChange=(action (mut model.prerequisites)) as |execute mapper|}}
+        {{#ui-dropdown
+          class="fluid search multiple selection"
+          id="action-item-prerequisites"
+          selected=model.prerequisites
+          onChange=(action (mut model.prerequisites)) as |execute mapper|}}
           <i class="dropdown icon"></i>
           <div class="default text">Type or select to assign prerequisites</div>
           <div class="menu">
@@ -53,7 +57,7 @@
 
     <div class="ui divider"></div>
 
-    <h4><i class="checkmark box icon"></i>Build a todo</h4>
+    <h4><i class="check square icon"></i>Build a todo</h4>
     <div class="ui list">
       {{#each model.checklist as |item|}}
         <div class="item">
@@ -76,7 +80,11 @@
         {{input type='text' value=pendingTodo placeholder="Type to add a new todo item"}}
       </div>
 
-      {{#ui-dropdown class="fluid search selection" id="new-todo-assigned-to" onChange=(action (mut pendingTodoAssignee)) as |execute mapper|}}
+      {{#ui-dropdown
+        class="fluid search selection"
+        id="new-todo-assigned-to"
+        selected=pendingTodoAssignee
+        onChange=(action (mut pendingTodoAssignee)) as |execute mapper|}}
         <i class="dropdown icon"></i>
         <div class="default text">Assign someone to this item</div>
         <div class="menu">

@@ -29,6 +29,13 @@ module.exports = function(environment) {
     emberRollbarClient: {
       enabled: environment === 'production',
       accessToken: '6f016ff3c5ef495b9c894871857aefd4'
+    },
+    SemanticUI: {
+      import: {
+        css: false,
+        javascript: true,
+        fonts: false
+      }
     }
   };
 

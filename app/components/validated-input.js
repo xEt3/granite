@@ -20,7 +20,7 @@ export default Component.extend({
   },
 
   notValidating: computed.not('validation.isValidating'),
-  didValidate: computed.oneWay('targetObject.didValidate'),
+  didValidate: computed.oneWay('target.didValidate'),
   hasContent: computed.notEmpty('value'),
   isValid: computed.and('hasContent', 'validation.isValid', 'notValidating'),
   isInvalid: computed.oneWay('validation.isInvalid'),

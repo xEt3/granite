@@ -22,7 +22,7 @@
     <hgroup class="clearfix">
       <h3 class="ui right floated header"><a href="#" {{action (toggle 'addingTodo' this)}}><i class="{{if addingTodo 'remove orange' 'plus'}} icon"></i></a></h3>
       <h3 class="ui left floated header">
-        <i class="checkmark box icon"></i>
+        <i class="check square icon"></i>
         <div class="content">All Todo Items</div>
       </h3>
     </hgroup>
@@ -33,7 +33,11 @@
           <label for="new-todo-item" class="sr-only">Add a new todo item</label>
           {{input type='text' value=pendingTodo placeholder="Type to add a new todo item"}}
         </div>
-        {{#ui-dropdown class="fluid search selection" id="new-todo-assigned-to" onChange=(action (mut pendingTodoAssignee)) as |execute mapper|}}
+        {{#ui-dropdown
+          class="fluid search selection"
+          id="new-todo-assigned-to"
+          selected=pendingTodoAssignee
+          onChange=(action (mut pendingTodoAssignee)) as |execute mapper|}}
           <i class="dropdown icon"></i>
           <div class="default text">Assign someone to this item</div>
           <div class="menu">

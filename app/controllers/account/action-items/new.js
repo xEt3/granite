@@ -9,7 +9,10 @@ export default Controller.extend(addEdit, {
   modelIdentifier: 'slug',
 
   _afterSave () {
-    this.get('addedTodos').forEach(t => t.destroy());
+    this.get('addedTodos').forEach(t => {
+      t.destroy();
+      this.get('model.checklist').removeObject(t);
+    });
     this.set('addedTodos', A());
     this._super(...arguments);
   },
