@@ -10,6 +10,12 @@
       <span>{{employee.jobTitle}}</span>
       <span class="ui small text right floated">{{time employee.created}}</span>
     </div>
+
+    {{#if employee.terminatedOn}}
+      <span class="right floated">TERMINATED CUZ U A HOE</span>
+    {{/if}}
+
+
     <div class="extra">
       {{#if employee.onboarding}}
         <div class="ui green label">
