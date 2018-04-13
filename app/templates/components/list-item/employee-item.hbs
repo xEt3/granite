@@ -11,11 +11,6 @@
       <span class="ui small text right floated">{{time employee.created}}</span>
     </div>
 
-    {{#if employee.terminatedOn}}
-      <span class="right floated">TERMINATED CUZ U A HOE</span>
-    {{/if}}
-
-
     <div class="extra">
       {{#if employee.onboarding}}
         <div class="ui green label">
@@ -42,6 +37,12 @@
           {{#if employee.offboarder}}
             by {{employee.offboarder.fullName}}
           {{/if}}
+        </div>
+      {{/if}}
+
+      {{#if employee.terminatedOn}}
+        <div class="ui red label">
+          <i class="user times icon"></i>Terminated on {{time employee.terminatedOn}}
         </div>
       {{/if}}
     </div>
