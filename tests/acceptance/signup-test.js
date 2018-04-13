@@ -86,11 +86,15 @@ module('Acceptance | signup', function(hooks) {
     billingController.set('nonce', 'fake-valid-nonce');
     await settled();
     assert.ok(!find('button[type="submit"]').disabled, 'Submit is enabled');
-
     await click('button[type="submit"]');
-    await settled();
+    await new Promise(resolve => setTimeout(resolve, 700));
+    assert.equal(currentURL(), '/signup/finish');
+
+
+
     /*
       TODO
+
       - Test for payment method hit on mirage
       - Test url is finished
       - Test transition to index after "finished" animation
