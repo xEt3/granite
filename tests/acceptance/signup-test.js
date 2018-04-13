@@ -39,7 +39,7 @@ module('Acceptance | signup', function(hooks) {
       addressLine2:      faker.random.number(),
       addressCity:       faker.address.city(),
       state:             faker.address.state(),
-      addressZipCode:    faker.random.number({min:11111, max:99999}),
+      addressZipCode:    faker.random.number({ min:11111, max:99999 }),
       urlPrefix:         'abc'
     };
 
