@@ -1,7 +1,4 @@
 module.exports = {
-  globals: {
-    server: true,
-  },
   root: true,
   parserOptions: {
     ecmaVersion: 2017,
@@ -21,7 +18,7 @@ module.exports = {
     "ember/avoid-leaking-state-in-ember-objects": 0
   },
   globals: {
-    server: true,
+     sserver: true,
     "Dropzone": true
   },
   overrides: [
