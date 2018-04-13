@@ -11,5 +11,5 @@ export default Factory.extend({
   addressCity: 'Billings',
   addressState: 'Montana',
   addressZipCode: 59101,
-  urlPrefix: 'gogo',
+  urlPrefix: 'gogo'
 });
