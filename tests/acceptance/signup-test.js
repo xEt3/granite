@@ -86,9 +86,12 @@ module('Acceptance | signup', function(hooks) {
     billingController.set('nonce', 'fake-valid-nonce');
     await settled();
     assert.ok(!find('button[type="submit"]').disabled, 'Submit is enabled');
-    await click('button[type="submit"]');
+    click('button[type="submit"]');
     await new Promise(resolve => setTimeout(resolve, 700));
-    assert.equal(currentURL(), '/signup/finish');
+    assert.equal(currentURL(), '/signup/finish', 'signup/finish is loaded');
+    await settled();
+    assert.equal(currentURL(), '/', 'brought you back to the index page');
+
 
 
 
@@ -96,8 +99,8 @@ module('Acceptance | signup', function(hooks) {
       TODO
 
       - Test for payment method hit on mirage
-      - Test url is finished
-      - Test transition to index after "finished" animation
+      x Test url is finished
+      x Test transition to index after "finished" animation
     */
   });
 
