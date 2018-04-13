@@ -85,23 +85,22 @@ module('Acceptance | signup', function(hooks) {
     assert.ok(find('button[type="submit"]').disabled, 'Submit is disabled');
     billingController.set('nonce', 'fake-valid-nonce');
     await settled();
+
+    let company = server.db.companies.where({ name: fakeData.company })[0];
+    assert.ok(company, 'Company exists');
     assert.ok(!find('button[type="submit"]').disabled, 'Submit is enabled');
+
     click('button[type="submit"]');
     await new Promise(resolve => setTimeout(resolve, 700));
+
+    let paymentMethod = server.db.paymentMethods.where({ company: company.id })[0];
+
+    assert.ok(paymentMethod, 'Payment method exists');
+    assert.equal(paymentMethod.nonce, 'fake-valid-nonce', 'Nonce is equal to the one set in billing controller');
+
     assert.equal(currentURL(), '/signup/finish', 'signup/finish is loaded');
     await settled();
     assert.equal(currentURL(), '/', 'brought you back to the index page');
-
-
-
-
-    /*
-      TODO
-
-      - Test for payment method hit on mirage
-      x Test url is finished
-      x Test transition to index after "finished" animation
-    */
   });
 
 });
