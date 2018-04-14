@@ -18,7 +18,7 @@ module.exports = {
     "ember/avoid-leaking-state-in-ember-objects": 0
   },
   globals: {
-     sserver: true,
+     server: true,
     "Dropzone": true
   },
   overrides: [

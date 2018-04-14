@@ -7,8 +7,6 @@ module('Acceptance | features page', function(hooks) {
 
   test('visiting /features-page', async function(assert) {
     await visit('/features');
-
     assert.equal(currentURL(), '/features');
   });
-
 });

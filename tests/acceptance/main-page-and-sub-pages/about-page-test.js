@@ -7,11 +7,6 @@ module('Acceptance | about page', function(hooks) {
 
   test('visiting about', async function(assert) {
     await visit('/about');
-
     assert.equal(currentURL(), '/about');
   });
-
-
-
-
 });

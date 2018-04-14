@@ -7,7 +7,6 @@ module('Acceptance | contact page', function(hooks) {
 
   test('visiting /features-page', async function(assert) {
     await visit('/contact');
-
     assert.equal(currentURL(), '/contact');
   });
 
@@ -28,30 +27,13 @@ module('Acceptance | contact page', function(hooks) {
 
   test('Contact Email is there and link works', async function(assert) {
     await visit('/contact');
-
     assert.ok(find('a[href="mailto:hello@granitehr.com"]'), 'Email link shown on page');
-    //await click('.signup-link');
-    //assert.equal(currentURL(), '/signup', 'Sign Up page loaded');
   });
 
   test('Contact Social media is there and link works', async function(assert) {
     await visit('/contact');
-
     assert.ok(find('a[href="http://twitter.com/user/granitehr"]'), 'Twitter link shown on page');
-    //await click('.twitter-link');
-    //assert.equal(currentURL(), 'https://twitter.com/user/lists/granitehr','Loads Twitter page' );
-    //assert.ok(find('.facebook-link'), 'Facebook link is there');
-    //await click('.facebook-link');
     assert.ok(find('a[href="http://facebook.com/granitehr"]'), 'Facebook link shown on page');
-    //assert.ok(find('.linkedin-link'), 'linkedin link is there');
-    //await click('.linkedin-link');
     assert.ok(find('a[href="http://linkedin.com/granitehr"]'), 'Linkedin link shown on page');
-
-    //await click('.signup-link');
-    //assert.equal(currentURL(), '/signup', 'Sign Up page loaded');
   });
-
-
-
-
 });
