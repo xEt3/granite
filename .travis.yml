@@ -23,7 +23,6 @@ before_install:
   - yarn global add bower
 
 install:
-  - bower install
   - yarn install --non-interactive
 
 script:
