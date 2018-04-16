@@ -168,8 +168,7 @@ Router.map(function() {
     });
   });
 
-  // Waiting for https://github.com/emberjs/ember.js/issues/14650 to be resolved
-  this.route('error-page', { path: '/whoops' });
+  this.route('error');
   this.route('not-found');
   this.route('unauthorized');
   this.route('catchall', {path: '/*wildcard'});

@@ -11,8 +11,8 @@ const { Logger } = Ember;
 const errorRouteMap = {
   401: 'unauthorized',
   404: 'not-found',
-  500: 'error-page',
-  400: 'error-page'
+  500: 'error',
+  400: 'error'
 };
 
 export default Route.extend({
@@ -35,7 +35,7 @@ export default Route.extend({
     error ( error ) {
       Logger.error(error);
 
-      var route = 'error-page',
+      var route = 'error',
           err = error.errors ? error.errors[0] : error;
 
       if ( err && err.status ) {
