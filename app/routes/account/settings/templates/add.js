@@ -22,13 +22,14 @@ export default Route.extend(add, {
   },
 
   model (params) {
+    const mixin = this._super.bind(this);
+
     return this.store.query('template-definition', { key: params.template_key })
     .then(definition => {
       this.set('definition', definition);
-
       return hash({
         definition,
-        template: this._super(...arguments)
+        template: mixin(params)
       });
     });
   },
