@@ -4,6 +4,8 @@ import pagination from 'granite/mixins/controller-abstractions/pagination';
 
 export default Controller.extend(pagination, {
   queryParams: [ 'page' ],
+  onboardingToggled: false,
+  filterCategories: ['hireDate', 'onboarding', 'supervisor', 'department', 'location'],
   limit: 20,
 
   intros: computed(function () {

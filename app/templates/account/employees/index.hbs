@@ -11,6 +11,7 @@
     </h1>
 
     <div class="right aligned text floated menu__actions">
+      <a href="#" {{action (toggle "expandFiltered" this)}}><i class="large filter icon"></i></a>
       {{#ui-dropdown class="right floated top pointing inline"}}
         <h3 class="ui inline header"><a href="#"><i id="add-employee-trigger" class="plus icon"></i></a></h3>
         <div class="menu">
@@ -29,6 +30,27 @@
       {{/if}}
     </div>
   </hgroup>
+
+
+  {{#liquid-if expandFiltered}}
+    <div class="five ui labels">
+      <button class="ui right labeled icon {{if onboardingToggled 'blue' 'white'}} button" {{action (toggle "onboardingToggled" this)}}>
+          Onboarding
+          <i class="{{if onboardingToggled 'minus' 'plus'}} icon"></i>
+      </button>
+      <!-- REST OF BUTTONS AFTER -->
+
+
+
+
+
+    </div>
+    {{#liquid-if onboardingToggled}}
+      hi
+    {{/liquid-if}}
+  {{/liquid-if}}
+
+
   <div class="ui divider"></div>
 
   {{display/resource-list
