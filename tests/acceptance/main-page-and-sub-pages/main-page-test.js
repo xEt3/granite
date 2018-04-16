@@ -19,7 +19,6 @@ module('Acceptance | Main page', function(hooks) {
     assert.ok(find('a[href="/login"]'), 'Log In link shown on page');
     assert.ok(find('a[href="/signup"]'), 'Sign Up link shown on page');
     assert.ok(find('.logo-text'), 'Logo link shown on page');
-
   });
 
   test('Explore Granite button is visable and link works', async function(assert) {

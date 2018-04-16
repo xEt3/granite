@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { visit, currentURL} from '@ember/test-helpers';
+import { visit, currentURL } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 
 module('Acceptance | pricing page', function(hooks) {
@@ -10,6 +10,4 @@ module('Acceptance | pricing page', function(hooks) {
 
     assert.equal(currentURL(), '/pricing');
   });
-
-
 });
