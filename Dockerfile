@@ -35,7 +35,6 @@ RUN npm install -g yarn bower
 
 # Install dependencies
 RUN yarn install
-RUN bower install --allow-root
 RUN yarn global add ember-cli
 
 # Build application

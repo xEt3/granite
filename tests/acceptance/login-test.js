@@ -39,7 +39,6 @@ test('failed logins', function(assert) {
 
 test('correct login', function(assert) {
   visit('/login');
-  percySnapshot('login');
 
   andThen(() => {
     assert.equal(currentURL(), '/login', 'Current url is login');

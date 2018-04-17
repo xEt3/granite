@@ -22,8 +22,7 @@
     "currentURL",
     "currentPath",
     "currentRouteName",
-    "server",
-    "percySnapshot"
+    "server"
   ],
   "node": false,
   "browser": false,
