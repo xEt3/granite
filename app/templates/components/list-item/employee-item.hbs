@@ -38,6 +38,12 @@
           {{/if}}
         </div>
       {{/if}}
+
+      {{#if employee.terminatedOn}}
+        <div class="ui red label">
+          <i class="user times icon"></i>Terminated on {{time employee.terminatedOn}}
+        </div>
+      {{/if}}
     </div>
   </div>
 {{/if}}
