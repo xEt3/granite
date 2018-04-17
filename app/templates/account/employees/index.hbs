@@ -11,7 +11,7 @@
     </h1>
 
     <div class="right aligned text floated menu__actions">
-      <a href="#" {{action (toggle "expandFiltered" this)}}><i class="large filter icon"></i></a>
+      <a href="#" {{action 'toggleProperty' 'expandFiltered'}}><i class="large filter icon"></i></a>
       {{#ui-dropdown class="right floated top pointing inline"}}
         <h3 class="ui inline header"><a href="#"><i id="add-employee-trigger" class="plus icon"></i></a></h3>
         <div class="menu">
@@ -32,24 +32,66 @@
   </hgroup>
 
 
-  {{#liquid-if expandFiltered}}
+  {{#if expandFiltered}}
     <div class="five ui labels">
-      <button class="ui right labeled icon {{if onboardingToggled 'blue' 'white'}} button" {{action (toggle "onboardingToggled" this)}}>
+      <button class="ui right labeled icon {{if onboarding 'blue' 'white'}} button" {{action 'toggleProperty' 'onboarding'}}>
           Onboarding
-          <i class="{{if onboardingToggled 'minus' 'plus'}} icon"></i>
+          <i class="{{if onboarding 'minus' 'plus'}} icon"></i>
+      </button>
+      <button class="ui right labeled icon {{if supervisorToggle 'blue' 'white'}} button" {{action 'toggleProperty' 'supervisorToggle'}}>
+          Supervisor
+          <i class="{{if supervisor 'minus' 'plus'}} icon"></i>
+      </button>
+      <button class="ui right labeled icon {{if departmentToggle 'blue' 'white'}} button" {{action 'toggleProperty' 'departmentToggle'}}>
+          Department
+          <i class="{{if department 'minus' 'plus'}} icon"></i>
       </button>
       <!-- REST OF BUTTONS AFTER -->
-
-
-
-
-
     </div>
-    {{#liquid-if onboardingToggled}}
-      hi
-    {{/liquid-if}}
-  {{/liquid-if}}
 
+
+    {{#if supervisorToggle}}
+      <div class="ui form">
+        <div class="field">
+          <label for="supervisor">Select a supervisor</label>
+          {{#ui-dropdown class="selection" selected=supervisedBy onChange=(action (mut supervisedBy)) as |execute mapper|}}
+            <div class="default text">Select a Supervisor</div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              {{#each allEmployees as |employee|}}
+                <div class="item" data-value="{{map-value mapper employee.id}}">
+                  {{employee.fullName}} - <span class="light text">{{employee.jobTitle}}</span>
+                </div>
+              {{/each}}
+            </div>
+          {{/ui-dropdown}}
+        </div>
+      </div>
+    {{/if}}
+
+    {{#if departmentToggle}}
+      <div class="ui form">
+        <div class="field">
+          <label for="supervisor">Select a department</label>
+          {{#ui-dropdown class="selection" selected=department onChange=(action (mut department)) as |execute mapper|}}
+            <div class="default text">Select a Department</div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              {{#each allDepartments as |department|}}
+                <div class="item" data-value="{{map-value mapper department.id}}">
+                  {{department.name}}
+                </div>
+              {{/each}}
+            </div>
+          {{/ui-dropdown}}
+        </div>
+      </div>
+    {{/if}}
+
+
+
+
+  {{/if}}
 
   <div class="ui divider"></div>
 
@@ -64,4 +106,5 @@
     page=(readonly page)
     pages=(readonly pages)
     onchange=(action (mut page))}}
+
 </div>
