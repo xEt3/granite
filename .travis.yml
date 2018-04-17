@@ -1,30 +1,32 @@
----
 language: node_js
 node_js:
-  - "node"
-
+- node
 sudo: false
 dist: trusty
-
 addons:
   chrome: stable
-
 cache:
   yarn: true
-
 env:
   global:
-    # See https://git.io/vdao3 for details.
-    - JOBS=1
+  - JOBS=1
+  - secure: i6aMa5ovD28hR5glWbzZ2zTv89ZY4NVd9j+HGOyOys83kJ5BkqIuGJ9ILuZ/yaCTFSK+Ovfv5XC+IldOytWBS6/eY5B4Heey3qzX8rmv1bD0Ejh+nF01FRemukDLo2EzH23dw0Ni2YOR4FRVLihfl6qbf2bTKm/6HTPt/XgiHJJSG51wHZjF51VECwT/2Q83t+T+CRnLlO7bN5kZxdMJBSK+RxYAji0/QQ8JXWgl3gmIwDfuo4a3InMN/xv5+1Qx/1ywXhWuOEeT0yGqxn+n5PlG9RW8mvYSAv7hye1j+eBEZThycpmt5qXN840+3okttLMJgKN6pj9rCO5p6m8Oa4IrAPXF3J34/cUsjKzkWtcZKCcXFGvbDan4vZDWenfIpLtxt5WiOIGksYKWhogoEb7R485pB5yPj2qzuoiZWnuyz8b0VeEi0Ee+ve0VHMZmJRxqe8U01xOkRBF+55ZCl5iYB9+yBdMGw82vwdM6fRh5ybhMm7rvKhSjCDhoqIJ+gMcOz/1kLnP/rQEx3tPBiVMcBN4jUmHkJlJ2JGmZAHk1Ucrdk3KSPY8Bx/XV38j+CEFzpmx6+UterExIsSiEAWqlpbEpjI2OraxmXFuhhZJ95HA9a99z5uNP3V22wTjPS34Fur5UfC07/QxQvtC0Wz1tGi5/MdyoDYKo4uP8afw=
+  - secure: qqIiIrWu/QlyK3msu+Jozc9KV22OVT91arJHFxsHA4FPU1oTREU3++oIl09Larrw/rQvO726xjRNtamCcfZZVuyTMayHbVQ6qyaPpqR2WKmCtQs3yVFB3xjDiaVoORVAf8JT03djHk+qZl6AW1egLbx3BEVORpPSyaQ65hOKPSw+gnkhD0zG9yM+t0uY68hnLQDP98xo56qYWLF7LSRCPCTgKs3LnVSuoBtYryxlswJ2LnmQSnNYnIRVvsPUCJaTJ0BcjrEpWbKrorqWGqolUSc0Faj0CAOZ+438UrdCQ4gKg/14H9ikujL7ktiwrvmOQiRLobOmVRmTOhIjQYUpuLRFQOliAubQmqr8dlNQ82uJix9so2mvmExXw5dpYcUlo5XxM3OK6OcMbNYTJW5ABZDg5wQr9ds64jS3jlTy3q2ZWewRHJDPZGztYMXeJVjGbt8nz/FUnPcwMCtxJA3mLbYcjmwcxn5/aItos/Ocmpu3ea6kY7m5EbsEOFcWZW5HDY6HYJ23YneUiNsa2JFJ4MeIlgcasHcx3tAl+g92zOwhTCOE0B3tcv62aF4OGwHCakB1MGQQPqkbuI3qUyutzNRGeL2yDXAeJscnwWwP+9KDwr/HtqfJgFJi4nOrRHOnuRoKI5XyKUcN1sW3xZ8hnr3sWxlEDWXvyA+Y7h2CYH8=
 
 before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH=$HOME/.yarn/bin:$PATH
-  - yarn global add bower
+- curl -o- -L https://yarnpkg.com/install.sh | bash
+- export PATH=$HOME/.yarn/bin:$PATH
+- yarn global add bower
 
 install:
-  - yarn install --non-interactive
+- yarn install --non-interactive
+
+before_script:
+- ember sauce:connect
 
 script:
-  - yarn lint:js
-  - yarn test
+- yarn lint:js
+- yarn test
+
+after_script:
+- ember sauce:disconnect

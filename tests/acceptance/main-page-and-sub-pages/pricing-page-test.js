@@ -7,7 +7,6 @@ module('Acceptance | pricing page', function(hooks) {
 
   test('visiting /pricing-page', async function(assert) {
     await visit('/pricing');
-
     assert.equal(currentURL(), '/pricing');
   });
 });
