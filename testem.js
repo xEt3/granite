@@ -2,6 +2,7 @@
 module.exports = {
   test_page: 'tests/index.html?hidepassed',
   disable_watching: true,
+  browser_disconnect_timeout: 60,
 
   launch_in_ci: [
     // 'SL_MicrosoftEdge_public_16_16299_Windows_10',
@@ -22,7 +23,6 @@ module.exports = {
       args: [
         // --no-sandbox is needed when running Chrome inside a container
         process.env.TRAVIS ? '--no-sandbox' : null,
-
         '--disable-gpu',
         '--headless',
         '--remote-debugging-port=0',
@@ -32,24 +32,24 @@ module.exports = {
   },
 
   launchers: {
-    // SL_MicrosoftEdge_public_16_16299_Windows_10: {
-    //   "exe": "ember",
-    //   "args": [
-    //     "sauce:launch",
-    //     "-b",
-    //     "MicrosoftEdge",
-    //     "-v",
-    //     "16.16299",
-    //     "--visibility",
-    //     "public",
-    //     "-p",
-    //     "Windows 10",
-    //     "--attach",
-    //     "--no-connect",
-    //     "--url"
-    //   ],
-    //   "protocol": "browser"
-    // },
+    SL_MicrosoftEdge_public_16_16299_Windows_10: {
+      "exe": "ember",
+      "args": [
+        "sauce:launch",
+        "-b",
+        "MicrosoftEdge",
+        "-v",
+        "16.16299",
+        "--visibility",
+        "public",
+        "-p",
+        "Windows 10",
+        "--attach",
+        "--no-connect",
+        "--url"
+      ],
+      "protocol": "browser"
+    },
 
     SL_chrome_public_56_0_Windows_10: {
       "exe": "ember",
