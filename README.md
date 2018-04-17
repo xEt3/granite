@@ -1,4 +1,4 @@
-# Granite
+# Granite ![Status](https://travis-ci.org/associatedemployers/granite.svg?branch=master)
 
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
