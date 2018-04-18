@@ -31,7 +31,7 @@
     </div>
   </hgroup>
 
-
+  <!-- SHOWS ALL BUTTONS -->
   {{#if expandFiltered}}
     <div class="five ui labels">
       <button class="ui right labeled icon {{if onboarding 'blue' 'white'}} button" {{action 'toggleProperty' 'onboarding'}}>
@@ -46,10 +46,18 @@
           Department
           <i class="{{if department 'minus' 'plus'}} icon"></i>
       </button>
+      <button class="ui right labeled icon {{if locationToggle 'blue' 'white'}} button" {{action 'toggleProperty' 'locationToggle'}}>
+          Location
+          <i class="{{if locationToggle 'minus' 'plus'}} icon"></i>
+      </button>
+      <button class="ui right labeled icon {{if hireDateToggle 'blue' 'white'}} button" {{action 'toggleProperty' 'hireDateToggle'}}>
+          Hire Date
+          <i class="{{if hireDateToggle 'minus' 'plus'}} icon"></i>
+      </button>
       <!-- REST OF BUTTONS AFTER -->
     </div>
 
-
+    <!-- SUPERVISOR SELECTION -->
     {{#if supervisorToggle}}
       <div class="ui form">
         <div class="field">
@@ -69,10 +77,11 @@
       </div>
     {{/if}}
 
+    <!-- DEPARTMENT SELECTION -->
     {{#if departmentToggle}}
       <div class="ui form">
         <div class="field">
-          <label for="supervisor">Select a department</label>
+          <label for="department">Select a Department</label>
           {{#ui-dropdown class="selection" selected=department onChange=(action (mut department)) as |execute mapper|}}
             <div class="default text">Select a Department</div>
             <i class="dropdown icon"></i>
@@ -84,6 +93,64 @@
               {{/each}}
             </div>
           {{/ui-dropdown}}
+        </div>
+      </div>
+    {{/if}}
+
+    <!-- LOCATION SELECTION -->
+    {{#if locationToggle}}
+      <div class="ui form">
+        <div class="field">
+          <label for="location">Select a Location</label>
+          {{#ui-dropdown class="selection" selected=location onChange=(action (mut location)) as |execute mapper|}}
+            <div class="default text">Select a Location</div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              {{#each allLocations as |location|}}
+                <div class="item" data-value="{{map-value mapper location.id}}">
+                  {{location.name}}
+                </div>
+              {{/each}}
+            </div>
+          {{/ui-dropdown}}
+        </div>
+      </div>
+    {{/if}}
+
+
+    <!-- HIRE DATE SELECTION -->
+    {{#if hireDateToggle}}
+      <div class="ui form">
+        <div class="field">
+
+
+          {{#ui-calendar class="field" type="date" startMode="year" onChange=(action (mut startDate))}}
+            <label for="ui-calendar-date-only">Start Date</label>
+            <div class="ui calendar" id="ui-calendar-date-only">
+              <div class="ui input left icon">
+                <i class="calendar icon"></i>
+                <input type="text" value={{startDate}} placeholder="Select or type a date">
+              </div>
+            </div>
+          {{/ui-calendar}}
+
+          {{#ui-calendar class="field" type="date" startMode="year" onChange=(action (mut testDate))}}
+            <label for="ui-calendar-date-only">Start Date</label>
+            <div class="ui calendar" id="ui-calendar-date-only">
+              <div class="ui input left icon">
+                <i class="calendar icon"></i>
+                <input type="text" value={{testDate}} placeholder="Select or type a date">
+              </div>
+            </div>
+          {{/ui-calendar}}
+
+          <button class="ui button" {{action 'test'}}>
+              Test
+          </button>
+
+
+
+
         </div>
       </div>
     {{/if}}
