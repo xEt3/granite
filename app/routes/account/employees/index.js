@@ -9,9 +9,9 @@ export default Route.extend({
     supervisedBy: { refreshModel: true },
     department: { refreshModel: true },
     location: { refreshModel: true },
-    startDate: { refreshModel: true},
-    endDate: { refreshModel: true},
-    page: { refreshModel: true }
+    startDate: { refreshModel: true },
+    endDate: { refreshModel: true },
+    page: { refreshModel: true },
   },
 
   model ( params ) {
@@ -40,18 +40,12 @@ export default Route.extend({
       employeeQuery.location = params.location;
     }
 
-    if ( params.startDate && moment(params.startDate).isValid() ) {
-      console.log(params.startDate);
+    if ( params.startDate && params.endDate ) {
         employeeQuery.hireDate = {
-          $gte: params.startDate
+          $gte: params.startDate,
+          $lte: params.endDate
         };
       }
-
-    if ( params.endDate && moment(params.endDate).isValid() ) {
-        employeeQuery.hireDate = {
-        $lte: params.endDate
-      };
-    }
 
     return hash({
       allEmployees: this.store.query('employee', {}),
@@ -64,23 +58,23 @@ export default Route.extend({
 
   setupController ( controller, model ) {
     this._super(...arguments);
+    const params = model.params;
     controller.setProperties({
       model: model.employees,
       allEmployees: model.allEmployees,
       allDepartments: model.allDepartments,
       allLocations: model.allLocations,
-      expandFiltered: model.params.expandFiltered,
-      onboarding: model.params.onboarding,
-      supervisorToggle: !!model.params.supervisedBy,
-      supervisedBy: model.params.supervisedBy,
-      departmentToggle: !!model.params.department,
-      department: model.params.department,
-      locationToggle: !!model.params.location,
-      location: model.params.location,
-      hireDateToggle: !!model.params.startDate || !!model.params.endDate,
-      startDate: model.params.startDate,
-
-      endDate: model.params.endDate
+      expandFiltered: params.expandFiltered,
+      onboarding: params.onboarding,
+      supervisorToggle: !!params.supervisedBy,
+      supervisedBy: params.supervisedBy,
+      departmentToggle: !!params.department,
+      department: params.department,
+      locationToggle: !!params.location,
+      location: params.location,
+      hireDateToggle: !!params.startDate || !!params.endDate,
+      startDateEntered: params.startDate ? moment(new Date(params.startDate).toISOString()).format('MMMM D, YYYY') : null,
+      endDateEntered: params.endDate ? moment(new Date(params.endDate).toISOString()).format('MMMM D, YYYY') : null
     });
   }
 });

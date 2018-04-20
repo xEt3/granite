@@ -31,7 +31,6 @@
     </div>
   </hgroup>
 
-  <!-- SHOWS ALL BUTTONS -->
   {{#if expandFiltered}}
     <div class="five ui labels">
       <button class="ui right labeled icon {{if onboarding 'blue' 'white'}} button" {{action 'toggleProperty' 'onboarding'}}>
@@ -40,11 +39,11 @@
       </button>
       <button class="ui right labeled icon {{if supervisorToggle 'blue' 'white'}} button" {{action 'toggleProperty' 'supervisorToggle'}}>
           Supervisor
-          <i class="{{if supervisor 'minus' 'plus'}} icon"></i>
+          <i class="{{if supervisorToggle 'minus' 'plus'}} icon"></i>
       </button>
       <button class="ui right labeled icon {{if departmentToggle 'blue' 'white'}} button" {{action 'toggleProperty' 'departmentToggle'}}>
           Department
-          <i class="{{if department 'minus' 'plus'}} icon"></i>
+          <i class="{{if departmentToggle 'minus' 'plus'}} icon"></i>
       </button>
       <button class="ui right labeled icon {{if locationToggle 'blue' 'white'}} button" {{action 'toggleProperty' 'locationToggle'}}>
           Location
@@ -54,9 +53,7 @@
           Hire Date
           <i class="{{if hireDateToggle 'minus' 'plus'}} icon"></i>
       </button>
-      <!-- REST OF BUTTONS AFTER -->
     </div>
-
     <!-- SUPERVISOR SELECTION -->
     {{#if supervisorToggle}}
       <div class="ui form">
@@ -76,7 +73,6 @@
         </div>
       </div>
     {{/if}}
-
     <!-- DEPARTMENT SELECTION -->
     {{#if departmentToggle}}
       <div class="ui form">
@@ -96,7 +92,6 @@
         </div>
       </div>
     {{/if}}
-
     <!-- LOCATION SELECTION -->
     {{#if locationToggle}}
       <div class="ui form">
@@ -116,48 +111,41 @@
         </div>
       </div>
     {{/if}}
-
-
     <!-- HIRE DATE SELECTION -->
     {{#if hireDateToggle}}
-      <div class="ui form">
+      <div class="two fields">
         <div class="field">
-
-
-          {{#ui-calendar class="field" type="date" startMode="year" onChange=(action (mut startDate))}}
+          {{#ui-calendar class="field" type="date" startMode="year" onChange=(action (mut startDateEntered))}}
             <label for="ui-calendar-date-only">Start Date</label>
             <div class="ui calendar" id="ui-calendar-date-only">
               <div class="ui input left icon">
                 <i class="calendar icon"></i>
-                <input type="text" value={{startDate}} placeholder="Select or type a date">
+                <input type="text" value={{startDateEntered}} placeholder="Select or type a date">
               </div>
             </div>
           {{/ui-calendar}}
-
-          {{#ui-calendar class="field" type="date" startMode="year" onChange=(action (mut testDate))}}
-            <label for="ui-calendar-date-only">Start Date</label>
-            <div class="ui calendar" id="ui-calendar-date-only">
-              <div class="ui input left icon">
-                <i class="calendar icon"></i>
-                <input type="text" value={{testDate}} placeholder="Select or type a date">
-              </div>
-            </div>
-          {{/ui-calendar}}
-
-          <button class="ui button" {{action 'test'}}>
-              Test
-          </button>
-
-
-
-
         </div>
       </div>
+      <div class="field">
+        {{#ui-calendar class="field" type="date" startMode="year" onChange=(action (mut endDateEntered))}}
+          <label for="ui-calendar-date-only">End Date</label>
+          <div class="ui calendar" id="ui-calendar-date-only">
+            <div class="ui input left icon">
+              <i class="calendar icon"></i>
+              <input type="text" value={{endDateEntered}} placeholder="Select or type a date">
+            </div>
+          </div>
+        {{/ui-calendar}}
+      </div>
+      <button class="ui button" {{action 'setSearchDates'}}>
+          Apply Dates
+      </button>
+      {{#if errorMessage}}
+        <div class="ui red label">
+          <i class="times circle outline icon"></i>{{errorMessage}}
+        </div>
+      {{/if}}
     {{/if}}
-
-
-
-
   {{/if}}
 
   <div class="ui divider"></div>
