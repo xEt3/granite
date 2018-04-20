@@ -3,9 +3,7 @@ import { computed } from '@ember/object';
 import pagination from 'granite/mixins/controller-abstractions/pagination';
 
 export default Controller.extend(pagination, {
-  queryParams: ['expandFiltered', 'onboarding', 'supervisedBy','location', 'hireDate', 'page'],
-
-  filterCategories: ['onboarding', 'hireDate', 'supervisor', 'department', 'location'],
+  queryParams: ['expandFiltered', 'onboarding', 'supervisedBy','location', 'startDate', 'endDate', 'page'],
   limit: 20,
   expandFiltered: false,
   onboarding: false,
@@ -16,9 +14,11 @@ export default Controller.extend(pagination, {
   locationToggle: false,
   location: null,
   hireDateToggle: false,
+  startDateEntered: null,
+  endDateEntered: null,
   startDate: null,
   endDate: null,
-  testDate: null,
+  errorMessage: null,
 
   intros: computed(function () {
     return [{
@@ -41,8 +41,18 @@ export default Controller.extend(pagination, {
   }),
 
   actions : {
-    test () {
-        console.log(this.get('testDate'));
+    setSearchDates () {
+      const startDateEntered = this.get('startDateEntered');
+      const endDateEntered = this.get('endDateEntered');
+      if( startDateEntered && endDateEntered ) {
+        this.setProperties({
+          startDate: startDateEntered,
+          endDate: endDateEntered,
+          errorMessage: null
+        });
+      } else {
+        this.set('errorMessage', 'Both date fields need to be filled.');
+      }
     },
 
     toggleProperty (toToggle) {
@@ -55,7 +65,9 @@ export default Controller.extend(pagination, {
         this.set('location', null);
       } else if (toToggle==='hireDateToggle') {
         this.set('startDate', null);
+        this.set('startDateEntered', null);
         this.set('endDate', null);
+        this.set('errorMessage', null);
       }
     }
   }

@@ -1,9 +1,8 @@
-import Ember from 'ember';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import Inflector from 'ember-inflector';
 
-const { Inflector } = Ember,
-      inflect = new Inflector(Inflector.defaultRules);
+let inflect = new Inflector(Inflector.defaultRules);
 
 let ResourceListComponent = Component.extend({
   modelIdentifier: 'id',
