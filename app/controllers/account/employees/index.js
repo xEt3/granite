@@ -3,22 +3,18 @@ import { computed } from '@ember/object';
 import pagination from 'granite/mixins/controller-abstractions/pagination';
 
 export default Controller.extend(pagination, {
-  queryParams: ['expandFiltered', 'onboarding', 'supervisedBy','location', 'startDate', 'endDate', 'page'],
+  queryParams: [ 'showFilters', 'onboarding', 'supervisedBy', 'location', 'hireDateStart', 'hireDateEnd', 'page' ],
   limit: 20,
-  expandFiltered: false,
+
+  hdStart: null,
+  hdEnd: null,
+  showFilters: false,
   onboarding: false,
-  supervisorToggle: false,
   supervisedBy: null,
-  departmentToggle: false,
   department: null,
-  locationToggle: false,
   location: null,
-  hireDateToggle: false,
-  startDateEntered: null,
-  endDateEntered: null,
-  startDate: null,
-  endDate: null,
-  errorMessage: null,
+  hireDateStart: null,
+  hireDateEnd: null,
 
   intros: computed(function () {
     return [{
@@ -53,6 +49,11 @@ export default Controller.extend(pagination, {
       } else {
         this.set('errorMessage', 'Both date fields need to be filled.');
       }
+    },
+
+    updateFilter (filter, value) {
+      console.log('updateFilter', filter, value);
+      this.set(filter, value);
     },
 
     toggleProperty (toToggle) {
