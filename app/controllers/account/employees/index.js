@@ -3,13 +3,24 @@ import { computed } from '@ember/object';
 import pagination from 'granite/mixins/controller-abstractions/pagination';
 
 export default Controller.extend(pagination, {
-  queryParams: [ 'showFilters', 'onboarding', 'supervisor', 'location', 'hireDateStart', 'hireDateEnd', 'page' ],
-  limit: 20,
+  queryParams: [
+    'showFilters',
+    'onboarding',
+    'offboarding',
+    'terminated',
+    'supervisor',
+    'location',
+    'hireDateStart',
+    'hireDateEnd',
+    'page',
+    'limit'
+  ],
 
-  hdStart: null,
-  hdEnd: null,
+  limit: 20,
   showFilters: false,
   onboarding: false,
+  offboarding: false,
+  terminated: false,
   supervisor: null,
   department: null,
   location: null,
@@ -37,32 +48,20 @@ export default Controller.extend(pagination, {
   }),
 
   actions : {
-    setSearchDates () {
-      const startDateEntered = this.get('startDateEntered');
-      const endDateEntered = this.get('endDateEntered');
-      if( startDateEntered && endDateEntered ) {
-        this.setProperties({
-          startDate: startDateEntered,
-          endDate: endDateEntered,
-          errorMessage: null
-        });
-      } else {
-        this.set('errorMessage', 'Both date fields need to be filled.');
-      }
-    },
-
     updateFilter (filter, value) {
       this.set(filter, value);
     },
 
     resetFilters () {
       this.setProperties({
-        onboarding: false,
-        supervisor: null,
-        department: null,
-        location: null,
+        onboarding:    false,
+        offboarding:   false,
+        terminated:    false,
+        supervisor:    null,
+        department:    null,
+        location:      null,
         hireDateStart: null,
-        hireDateEnd: null
+        hireDateEnd:   null
       });
     }
   }

@@ -8,18 +8,25 @@ export default Route.extend(resource, {
 
   queryParams: {
     onboarding:    { refreshModel: true },
-    supervisor:  { refreshModel: true },
+    offboarding:   { refreshModel: true },
+    terminated:    { refreshModel: true },
+    supervisor:    { refreshModel: true },
     department:    { refreshModel: true },
     location:      { refreshModel: true },
     hireDateStart: { refreshModel: true },
     hireDateEnd:   { refreshModel: true },
-    page: { refreshModel: true },
-    limit: { refreshModel: true },
-    sortBy: { refreshModel: true }
+    page:          { refreshModel: true },
+    limit:         { refreshModel: true },
+    sortBy:        { refreshModel: true }
   },
 
   sort: { created: -1 },
-  filters: [ 'onboarding', 'supervisor', 'department', 'location' ],
+
+  filters: [
+    'supervisor',
+    'department',
+    'location'
+  ],
 
   mutateQuery (query, params) {
     if (params.hireDateStart) {
@@ -33,6 +40,18 @@ export default Route.extend(resource, {
         $lte: params.hireDateEnd
       });
     }
+
+    if (params.terminated === true) {
+      query.terminatedOn = {
+        $type: 9
+      };
+    }
+
+    [ 'onboarding', 'offboarding' ].forEach(v => {
+      if (params[v]) {
+        query[v] = true;
+      }
+    });
   },
 
   model () {

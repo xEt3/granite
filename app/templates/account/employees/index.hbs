@@ -50,7 +50,7 @@
           <div class="ui calendar" id="ui-calendar-date-only">
             <div class="ui input left icon">
               <i class="calendar icon"></i>
-              <input type="text" value={{hireDateStart}} placeholder="Select or type a date">
+              <input type="text" value={{if hireDateStart (time hireDateStart 'MMMM D, YYYY') hireDateStart}} placeholder="Select or type a date">
             </div>
           </div>
         {{/ui-calendar}}
@@ -59,11 +59,33 @@
           <div class="ui calendar" id="ui-calendar-date-only">
             <div class="ui input left icon">
               <i class="calendar icon"></i>
-              <input type="text" value={{hireDateEnd}} placeholder="Select or type a date">
+              <input type="text" value={{if hireDateEnd (time hireDateEnd 'MMMM D, YYYY') hireDateEnd}} placeholder="Select or type a date">
             </div>
           </div>
         {{/ui-calendar}}
       {{/filter.control}}
+    {{/filter.section}}
+
+    {{#filter.section 'Additional Filters'}}
+      <div class="ui three fields">
+        {{filter.toggleControl
+          'onboarding'
+          onboarding
+          label='Is Onboarding'
+          class='center aligned text field'}}
+
+        {{filter.toggleControl
+          'offboarding'
+          offboarding
+          label='Is Offboarding'
+          class='center aligned text field'}}
+
+        {{filter.toggleControl
+          'terminated'
+          terminated
+          label='Is Terminated'
+          class='center aligned text field'}}
+      </div>
     {{/filter.section}}
   {{/display/filter-pane}}
 {{/if}}

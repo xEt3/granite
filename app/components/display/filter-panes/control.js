@@ -5,8 +5,6 @@ const ControlComponent = Component.extend({
   classNames: [ 'ui', 'field' ],
   hasNull: true,
 
-  isSelect: computed.equal('type', 'select'),
-
   didInsertElement () {
     this._super(...arguments);
 
@@ -15,8 +13,8 @@ const ControlComponent = Component.extend({
     }
   },
 
-  selectionClass: computed('isSelect', 'searchable', function () {
-    if (!this.get('isSelect')) {
+  selectionClass: computed('type', 'searchable', function () {
+    if (this.get('type') !== 'select') {
       return;
     }
 
