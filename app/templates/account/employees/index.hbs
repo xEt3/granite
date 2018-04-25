@@ -4,6 +4,70 @@
   start-if=true
   hintKey='employees-index'}}
 
+{{#if showFilters}}
+  {{#display/filter-pane
+    class="ui content form padded segment container"
+    onChange=(action "updateFilter") as |filter|
+  }}
+    <h2>
+      <i class="filter icon"></i> Filters
+      <a href="#" class="ui small text right floated text-red" {{action "resetFilters"}}>Reset All</a>
+    </h2>
+
+    {{#filter.section 'Supervisor'}}
+      {{#filter.selectControl
+        'supervisor'
+        supervisor
+        searchable=true
+        model=filterModels.employees as |item|
+      }}
+        {{item.fullName}}{{#if item.jobTitle}} - <span class="light text">{{item.jobTitle}}</span>{{/if}}
+      {{/filter.selectControl}}
+    {{/filter.section}}
+
+    {{#filter.section 'Department'}}
+      {{filter.selectControl
+        'department'
+        department
+        searchable=true
+        model=filterModels.departments
+        itemTextPath='name'}}
+    {{/filter.section}}
+
+    {{#filter.section 'Location'}}
+      {{filter.selectControl
+        'location'
+        location
+        searchable=true
+        model=filterModels.locations
+        itemTextPath='name'}}
+    {{/filter.section}}
+
+    {{#filter.section 'Hire Date' resets=(array 'hireDateStart' 'hireDateEnd')}}
+      {{#filter.control 'hireDate' (or hireDateStart hireDateEnd) class="two fields"}}
+        {{#ui-calendar class="ui field" type="date" container="body" startMode="year" onChange=(action (mut hireDateStart))}}
+          <label for="ui-calendar-date-only">Start Date</label>
+          <div class="ui calendar" id="ui-calendar-date-only">
+            <div class="ui input left icon">
+              <i class="calendar icon"></i>
+              <input type="text" value={{hireDateStart}} placeholder="Select or type a date">
+            </div>
+          </div>
+        {{/ui-calendar}}
+        {{#ui-calendar class="ui field" type="date" container="body" startMode="year" onChange=(action (mut hireDateEnd))}}
+          <label for="ui-calendar-date-only">End Date</label>
+          <div class="ui calendar" id="ui-calendar-date-only">
+            <div class="ui input left icon">
+              <i class="calendar icon"></i>
+              <input type="text" value={{hireDateEnd}} placeholder="Select or type a date">
+            </div>
+          </div>
+        {{/ui-calendar}}
+      {{/filter.control}}
+    {{/filter.section}}
+  {{/display/filter-pane}}
+{{/if}}
+
 <div class="ui raised padded segment container clearfix">
   <hgroup class="clearfix">
     <h1 class="ui header left floated">
@@ -38,89 +102,6 @@
   </hgroup>
 
   <div class="ui divider"></div>
-
-  {{#if showFilters}}
-    {{#display/filter-pane
-      class="ui content form animated fadeInUp raised segment grid"
-      onChange=(action "updateFilter") as |filter|
-    }}
-      {{#filter.section 'Supervisor' class="ui sixteen wide column"}}
-        {{#filter.control 'supervisedBy' as |update|}}
-          {{#ui-dropdown class="selection" selected=supervisedBy onChange=update as |execute mapper|}}
-            <div class="default text">Select a Supervisor</div>
-            <i class="dropdown icon"></i>
-            <div class="menu">
-              {{#each allEmployees as |employee|}}
-                <div class="item" data-value="{{map-value mapper employee.id}}">
-                  {{employee.fullName}}{{#if employee.jobTitle}} - <span class="light text">{{employee.jobTitle}}</span>{{/if}}
-                </div>
-              {{/each}}
-            </div>
-          {{/ui-dropdown}}
-        {{/filter.control}}
-      {{/filter.section}}
-
-      {{#filter.section 'Department' class="ui sixteen wide column"}}
-        {{#filter.control 'department' as |update|}}
-          {{#ui-dropdown class="selection" selected=department onChange=update as |execute mapper|}}
-            <div class="default text">Select a Department</div>
-            <i class="dropdown icon"></i>
-            <div class="menu">
-              {{#each allDepartments as |department|}}
-                <div class="item" data-value="{{map-value mapper department.id}}">
-                  {{department.name}}
-                </div>
-              {{/each}}
-            </div>
-          {{/ui-dropdown}}
-        {{/filter.control}}
-      {{/filter.section}}
-
-      {{#filter.section 'Location' class="ui sixteen wide column"}}
-        {{#filter.control 'location' as |update|}}
-          {{#ui-dropdown class="selection" selected=location onChange=update as |execute mapper|}}
-            <div class="default text">Select a Location</div>
-            <i class="dropdown icon"></i>
-            <div class="menu">
-              {{#each allLocations as |location|}}
-                <div class="item" data-value="{{map-value mapper location.id}}">
-                  {{location.name}}
-                </div>
-              {{/each}}
-            </div>
-          {{/ui-dropdown}}
-        {{/filter.control}}
-      {{/filter.section}}
-
-      {{#filter.section 'Hire Date' class="ui sixteen wide column"}}
-        {{#filter.control 'hireDate' class="ui grid" as |update|}}
-          {{#ui-calendar class="ui six wide field column" type="date" startMode="year" onChange=(action (mut hdStart))}}
-            <label for="ui-calendar-date-only">Start Date</label>
-            <div class="ui calendar" id="ui-calendar-date-only">
-              <div class="ui input left icon">
-                <i class="calendar icon"></i>
-                <input type="text" value={{hdStart}} placeholder="Select or type a date">
-              </div>
-            </div>
-          {{/ui-calendar}}
-          {{#ui-calendar class="ui six wide field column" type="date" startMode="year" onChange=(action (mut hdEnd))}}
-            <label for="ui-calendar-date-only">End Date</label>
-            <div class="ui calendar" id="ui-calendar-date-only">
-              <div class="ui input left icon">
-                <i class="calendar icon"></i>
-                <input type="text" value={{hdEnd}} placeholder="Select or type a date">
-              </div>
-            </div>
-          {{/ui-calendar}}
-          <div class="ui four wide column">
-          <button class="ui fluid green button" {{action update "hireDate" (hash start=hdStart end=hdEnd)}}>
-            Apply
-          </button>
-        </div>
-        {{/filter.control}}
-      {{/filter.section}}
-    {{/display/filter-pane}}
-  {{/if}}
 
   {{display/resource-list
     model

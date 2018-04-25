@@ -1,80 +1,55 @@
 import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
-import moment from 'moment';
+import resource from 'granite/mixins/route-abstractions/resource';
+// import moment from 'moment';
 
-export default Route.extend({
+export default Route.extend(resource, {
+  modelName: 'employee',
+
   queryParams: {
-    expandFiltered: { refreshModel: false },
-    onboarding: { refreshModel: true },
-    supervisedBy: { refreshModel: true },
-    department: { refreshModel: true },
-    location: { refreshModel: true },
-    startDate: { refreshModel: true },
-    endDate: { refreshModel: true },
+    onboarding:    { refreshModel: true },
+    supervisor:  { refreshModel: true },
+    department:    { refreshModel: true },
+    location:      { refreshModel: true },
+    hireDateStart: { refreshModel: true },
+    hireDateEnd:   { refreshModel: true },
     page: { refreshModel: true },
+    limit: { refreshModel: true },
+    sortBy: { refreshModel: true }
   },
 
-  model ( params ) {
-    let limit = this.get('controller.limit') || 20,
-        page = (params.page || 1) - 1;
+  sort: { created: -1 },
+  filters: [ 'onboarding', 'supervisor', 'department', 'location' ],
 
-    let employeeQuery = {
-      limit,
-      page,
-      sort: { created: -1 }
-    };
-
-    if (params.onboarding) {
-      employeeQuery.onboarding = true;
+  mutateQuery (query, params) {
+    if (params.hireDateStart) {
+      query.hireDate = {
+        $gte: params.hireDateStart
+      };
     }
 
-    if (params.supervisedBy) {
-      employeeQuery.supervisor = params.supervisedBy;
+    if (params.hireDateEnd) {
+      query.hireDate = Object.assign(query.hireDate || {}, {
+        $lte: params.hireDateEnd
+      });
     }
+  },
 
-    if (params.department) {
-      employeeQuery.department = params.department;
-    }
-
-    if (params.location) {
-      employeeQuery.location = params.location;
-    }
-
-    if ( params.startDate && params.endDate ) {
-        employeeQuery.hireDate = {
-          $gte: params.startDate,
-          $lte: params.endDate
-        };
-      }
-
+  model () {
     return hash({
-      allEmployees: this.store.query('employee', {}),
-      allDepartments: this.store.query('department', {}),
-      allLocations: this.store.query('location', {}),
-      employees: this.store.query('employee', employeeQuery),
-      params
+      employees: this._super(...arguments),
+      filterModels: hash({
+        employees:   this.store.query('employee', { select: '_id name jobTitle', sort: { 'name.last': 1 } }),
+        departments: this.store.query('department', { select: '_id name', sort: { name: 1 } }),
+        locations:   this.store.query('location', { select: '_id name', sort: { name: 1 } })
+      })
     });
   },
 
-  setupController ( controller, model ) {
-    this._super(...arguments);
-    const params = model.params;
+  setupController (controller, model) {
     controller.setProperties({
       model: model.employees,
-      allEmployees: model.allEmployees,
-      allDepartments: model.allDepartments,
-      allLocations: model.allLocations,
-      expandFiltered: params.expandFiltered,
-      onboarding: params.onboarding,
-      supervisorToggle: !!params.supervisedBy,
-      supervisedBy: params.supervisedBy,
-      departmentToggle: !!params.department,
-      department: params.department,
-      locationToggle: !!params.location,
-      location: params.location,
-      hireDateToggle: !!params.startDate || !!params.endDate,
-      startDateEntered: params.startDate ? moment(new Date(params.startDate).toISOString()).format('MMMM D, YYYY') : null,
-      endDateEntered: params.endDate ? moment(new Date(params.endDate).toISOString()).format('MMMM D, YYYY') : null
+      filterModels: model.filterModels
     });
   }
 });

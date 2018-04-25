@@ -3,14 +3,14 @@ import { computed } from '@ember/object';
 import pagination from 'granite/mixins/controller-abstractions/pagination';
 
 export default Controller.extend(pagination, {
-  queryParams: [ 'showFilters', 'onboarding', 'supervisedBy', 'location', 'hireDateStart', 'hireDateEnd', 'page' ],
+  queryParams: [ 'showFilters', 'onboarding', 'supervisor', 'location', 'hireDateStart', 'hireDateEnd', 'page' ],
   limit: 20,
 
   hdStart: null,
   hdEnd: null,
   showFilters: false,
   onboarding: false,
-  supervisedBy: null,
+  supervisor: null,
   department: null,
   location: null,
   hireDateStart: null,
@@ -52,24 +52,18 @@ export default Controller.extend(pagination, {
     },
 
     updateFilter (filter, value) {
-      console.log('updateFilter', filter, value);
       this.set(filter, value);
     },
 
-    toggleProperty (toToggle) {
-      this.toggleProperty(toToggle);
-      if (toToggle==='supervisorToggle') {
-        this.set('supervisedBy', null);
-      } else if (toToggle==='departmentToggle') {
-        this.set('department', null);
-      } else if (toToggle==='locationToggle') {
-        this.set('location', null);
-      } else if (toToggle==='hireDateToggle') {
-        this.set('startDate', null);
-        this.set('startDateEntered', null);
-        this.set('endDate', null);
-        this.set('errorMessage', null);
-      }
+    resetFilters () {
+      this.setProperties({
+        onboarding: false,
+        supervisor: null,
+        department: null,
+        location: null,
+        hireDateStart: null,
+        hireDateEnd: null
+      });
     }
   }
 });

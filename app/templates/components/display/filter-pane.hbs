@@ -2,10 +2,16 @@
   (hash
     section=(component
       'display/filter-panes/section'
+      resetFilter=(action resetFilter)
     )
     control=(component
       'display/filter-panes/control'
-      update=sendComponentUpdate
+      update=(action sendComponentUpdate)
+    )
+    selectControl=(component
+      'display/filter-panes/control'
+      type='select'
+      update=(action sendComponentUpdate)
     )
   )
 }}

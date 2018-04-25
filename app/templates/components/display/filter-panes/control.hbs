@@ -1,3 +1,32 @@
-{{yield
-  (action __update this)
-}}
+{{#if isSelect}}
+  {{#ui-dropdown class=selectionClass selected=state onChange=(action __update) as |execute mapper|}}
+    <div class="default text">
+      {{#if selectText}}
+        {{selectText}}
+      {{else}}
+        Select a {{parentView.sectionName}}
+      {{/if}}
+    </div>
+    <i class="dropdown icon"></i>
+    <div class="menu">
+      {{#if hasNull}}
+        <div class="item" data-value="{{map-value mapper 'none'}}">
+          No {{parentView.sectionName}}
+        </div>
+      {{/if}}
+      {{#each model as |item|}}
+        <div class="item" data-value="{{map-value mapper item.id}}">
+          {{#if hasBlock}}
+            {{yield item}}
+          {{else}}
+            {{if itemTextPath (get item itemTextPath) item}}
+          {{/if}}
+        </div>
+      {{/each}}
+    </div>
+  {{/ui-dropdown}}
+{{else}}
+  {{yield
+    (action __update)
+  }}
+{{/if}}
