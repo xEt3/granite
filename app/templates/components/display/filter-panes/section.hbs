@@ -1,14 +1,10 @@
-<h4 class="ui {{unless active 'no margin'}} header">
-  <span class="clickable" {{action toggleActive}}>
-    {{#if active}}
-      <i class="caret up icon"></i>
-    {{else}}
-      <i class="caret down icon"></i>
-    {{/if}}
-    {{sectionName}}
-  </span>
-  <span class="right floated">
-  </span>
+<h4 class="ui {{unless active 'no margin'}} clickable header" {{action toggleActive}}>
+  {{#if active}}
+    <i class="caret up icon"></i>
+  {{else}}
+    <i class="caret down icon"></i>
+  {{/if}}
+  {{sectionName}}
 </h4>
 <div class="{{unless active 'hidden'}}">
   {{yield (action resetFilter)}}
