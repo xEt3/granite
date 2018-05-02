@@ -6,6 +6,12 @@ import { inject as service } from '@ember/service';
 import $ from 'jquery';
 import ENV from 'granite/config/environment';
 
+const nonTopLevelRoutes = [
+  'account',
+  'login',
+  'recover'
+];
+
 export default Controller.extend({
   notifications: service('notification-messages'),
 
@@ -47,7 +53,7 @@ export default Controller.extend({
 
   topLevel: computed('currentPath', function () {
     const currentPath = this.get('currentPath');
-    return currentPath && currentPath.indexOf('account') < 0 && currentPath.indexOf('login') < 0;
+    return currentPath && !nonTopLevelRoutes.find(r => currentPath.indexOf(r) > -1);
   }),
 
   updateBodyClass: on('init', observer('topLevel', function () {
