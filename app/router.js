@@ -174,6 +174,7 @@ Router.map(function() {
   this.route('catchall', {path: '/*wildcard'});
   this.route('login');
   this.route('setup-account', { path: '/setup/account/:user_id' });
+  this.route('recover', { path: '/recover/:recovery_id' });
 });
 
 export default Router;

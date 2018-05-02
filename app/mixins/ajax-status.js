@@ -17,7 +17,7 @@ export default Mixin.create({
   enableNotify: true,
 
   ajaxError ( err, user ) {
-    let errMsg = err ? err.payload || err.responseText || err.message : err;
+    let errMsg = err ? err.payload || err.responseText || err.message || err : err;
 
     if (errMsg && errMsg.errors) {
       errMsg = typeof errMsg.errors[0] === 'string' ? errMsg.errors : searchError(errMsg.errors);

@@ -12,26 +12,53 @@
   </div>
 {{/if}}
 
-<form class="ui very padded piled text segment container form" {{action "login" on="submit"}}>
-  <hgroup class="ui center aligned header">
-    <h1>Good {{relative-greeting-time}}!</h1>
-    <h2>Please enter your login information.</h2>
-  </hgroup>
-  <div class="ui divider"></div>
+{{#liquid-if recovery use="toLeft"}}
+  <form class="ui very padded raised text segment container form" {{action "recover" on="submit"}}>
+    <hgroup class="ui center aligned header">
+      <h2>It happens.</h2>
+      <p class="lightly weighted light text header">Don't worry, we'll send you an email with instructions to reset your password. Enter your email below and we can get started.</p>
+    </hgroup>
+    <div class="ui divider"></div>
 
-  <div class="field">
-    <label for="email">Email Address</label>
-    {{input type="email" id="email" class="ui large fluid input" tabindex="1" placeholder="Your Account Email" value=email}}
-  </div>
-  <div class="field">
-    <label for="password">
-      Password
-      {{#ui-popup tagName="span" class="right floated" position="left center" content="Rescue your account from a forgotten password"}}
-        <a href="#"><i class="life ring fitted icon"></i></a>
-      {{/ui-popup}}
-    </label>
-    {{input type="password" id="password" class="ui large fluid input" tabindex="2" placeholder="Your Account Password" value=password}}
-  </div>
+    <div class="field">
+      <label for="recovery_email">Email Address</label>
+      {{input type="email" id="recovery_email" class="ui large fluid input" tabindex="1" placeholder="Your Account Email" value=recoveryEmail}}
+    </div>
 
-  {{#form/action-button type="submit" class="ui massive fluid green button" loading=working}}Log In{{/form/action-button}}
-</form>
+    {{#form/action-button
+      type="submit"
+      class="ui massive fluid orange button"
+      loading=working
+      disabled=(not recoveryEmail)
+    }}
+      Recover my account
+    {{/form/action-button}}
+
+    <div class="ui divider"></div>
+    <a href="#" {{action toggleProperty "recovery"}}><i class="fitted left angle icon"></i> Nevermind, I'll log in.</a>
+  </form>
+{{else}}
+  <form class="ui very padded raised text segment container form" {{action "login" on="submit"}}>
+    <hgroup class="ui center aligned header">
+      <h1>Good {{relative-greeting-time}}!</h1>
+      <h2>Please enter your login information.</h2>
+    </hgroup>
+    <div class="ui divider"></div>
+
+    <div class="field">
+      <label for="email">Email Address</label>
+      {{input type="email" id="email" class="ui large fluid input" tabindex="1" placeholder="Your Account Email" value=email}}
+    </div>
+    <div class="field">
+      <label for="password">
+        Password
+        {{#ui-popup tagName="span" class="right floated" position="left center" content="Rescue your account from a forgotten password"}}
+          <a href="#" {{action toggleProperty "recovery"}}><i class="life ring fitted icon"></i></a>
+        {{/ui-popup}}
+      </label>
+      {{input type="password" id="password" class="ui large fluid input" tabindex="2" placeholder="Your Account Password" value=password}}
+    </div>
+
+    {{#form/action-button type="submit" class="ui massive fluid green button" loading=working}}Log In{{/form/action-button}}
+  </form>
+{{/liquid-if}}
