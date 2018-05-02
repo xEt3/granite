@@ -1,9 +1,13 @@
 import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
 import ajaxStatus from 'granite/mixins/ajax-status';
 
 export default Controller.extend(ajaxStatus, {
-  queryParams: [ 'expired' ],
+  ajax: service(),
+
+  queryParams: [ 'expired', 'recovery' ],
   expired: false,
+  recovery: false,
 
   actions: {
     login () {
@@ -28,6 +32,32 @@ export default Controller.extend(ajaxStatus, {
         }
       })
       .catch(this.ajaxError.bind(this));
+    },
+
+    recover () {
+      const email = this.get('recoveryEmail');
+      let wasFatal;
+
+      this.ajaxStart();
+      this.set('recoveryEmail', null);
+
+      this.get('ajax').request('/api/v1/recovery/company-user/', {
+        data: { email }
+      })
+        .catch((err = {}) => {
+          if (err.status === 500) {
+            wasFatal = true;
+            this.ajaxError(err);
+          }
+        })
+        .finally(() => {
+          if (wasFatal) {
+            return;
+          }
+
+          this.ajaxSuccess('If your email belongs to a GraniteHR account, you\'ll get an email soon.');
+          this.set('recovery', false);
+        });
     }
   }
 });
