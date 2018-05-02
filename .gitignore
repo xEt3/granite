@@ -28,3 +28,5 @@ package.json.ember-try
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 .DS_Store
+# We are using yarn.lock, remove this non-essential file
+package-lock.json

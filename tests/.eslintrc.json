@@ -19,7 +19,6 @@
     "waitForPromise": true,
     "md5": true,
     "server": true,
-    "percySnapshot": true,
     "Dropzone": true
   },
   "rules": {

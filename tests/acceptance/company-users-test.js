@@ -25,7 +25,6 @@ test('getting to company-users', function(assert) {
   });
 
   andThen(() => {
-    percySnapshot('company users');
     assert.equal(currentURL(), '/account/anatomy/company-users');
     assert.equal(find('.account__breadcrumb').text().replace(/\s\s+|\n/g, ''), 'Account/Anatomy/Company Users');
     assert.ok(find('a[href="/account/anatomy/company-users/new"]')[0], 'Add link exists');
