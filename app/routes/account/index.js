@@ -9,12 +9,13 @@ export default Route.extend({
   queryParams: {
     tag: {
       refreshModel: true
-    }
+    },
+    limit: { refreshModel: true }
   },
 
   model ( params ) {
     let activityQuery = {
-      limit: 10,
+      limit: params.limit,
       page: 0,
       sort: { created: -1 }
     };
