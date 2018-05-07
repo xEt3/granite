@@ -1,0 +1,22 @@
+{{yield
+  (hash
+    section=(component
+      'display/filter-panes/section'
+      resetFilter=(action resetFilter)
+    )
+    control=(component
+      'display/filter-panes/control'
+      update=(action sendComponentUpdate)
+    )
+    selectControl=(component
+      'display/filter-panes/control'
+      type='select'
+      update=(action sendComponentUpdate)
+    )
+    toggleControl=(component
+      'display/filter-panes/control'
+      type='toggle'
+      update=(action sendComponentUpdate)
+    )
+  )
+}}

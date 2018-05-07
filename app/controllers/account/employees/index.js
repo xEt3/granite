@@ -3,8 +3,29 @@ import { computed } from '@ember/object';
 import pagination from 'granite/mixins/controller-abstractions/pagination';
 
 export default Controller.extend(pagination, {
-  queryParams: [ 'page' ],
+  queryParams: [
+    'showFilters',
+    'onboarding',
+    'offboarding',
+    'terminated',
+    'supervisor',
+    'location',
+    'hireDateStart',
+    'hireDateEnd',
+    'page',
+    'limit'
+  ],
+
   limit: 20,
+  showFilters: false,
+  onboarding: false,
+  offboarding: false,
+  terminated: false,
+  supervisor: null,
+  department: null,
+  location: null,
+  hireDateStart: null,
+  hireDateEnd: null,
 
   intros: computed(function () {
     return [{
@@ -24,5 +45,24 @@ export default Controller.extend(pagination, {
       intro: 'When you need to add an employee, click the add button and pick from a single employee or multiple (via CSV or Excel)',
       position: 'left'
     }];
-  })
+  }),
+
+  actions : {
+    updateFilter (filter, value) {
+      this.set(filter, value);
+    },
+
+    resetFilters () {
+      this.setProperties({
+        onboarding:    false,
+        offboarding:   false,
+        terminated:    false,
+        supervisor:    null,
+        department:    null,
+        location:      null,
+        hireDateStart: null,
+        hireDateEnd:   null
+      });
+    }
+  }
 });
