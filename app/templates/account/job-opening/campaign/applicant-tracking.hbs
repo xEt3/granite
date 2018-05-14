@@ -73,8 +73,66 @@
       <a href="#" {{action toggleProperty "showDisqualified"}}>
         {{if showDisqualified 'Hide' 'Show'}} Disqualified Applicants
       </a>
+      <a href="#" {{action toggleProperty "addingApplicant"}}>
+        <i class="ui plus icon"></i>
+      </a>
     </small>
   </h2>
+
+  {{#liquid-if addingApplicant}}
+    <h3>Add Applicant</h3>
+
+  <form class="ui form"  {{action "save" on="submit"}}>
+    <div class="fields">
+      <div class="five wide field">
+        <label for="first-name">First Name</label>
+        {{#auto-focus}}
+          {{validated-input type="text" model=newApplicant valuePath="firstName" placeholder="First Name" id="first-name"}}
+        {{/auto-focus}}
+      </div>
+      <div class="three wide field">
+        <label for="middle-name">Middle Name</label>
+        {{input type="text" value=newApplicant.middleName placeholder="Middle" id="middle-name"}}
+      </div>
+      <div class="five wide field">
+        <label for="last-name">Last Name</label>
+        {{validated-input type="text" model=newApplicant valuePath="lastName" placeholder="Last Name" id="last-name"}}
+      </div>
+      <div class="three wide field">
+        <label for="suffix-name">Suffix</label>
+        {{#ui-dropdown class="selection" onChange=(action (mut newApplicant.suffixName))}}
+          <div class="default text">Suffix</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            {{#each suffixes as |suffix|}}
+              <div class="item" data-value="{{suffix}}">
+                {{suffix}}
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      </div>
+    </div>
+    <div class="two fields">
+      <div class="field">
+        <label for="employee-phone">Phone Number</label>
+        {{masked-input type="tel" placeholder="Employee Phone #" id="employee-phone" mask="(111) 111-1111" on-change=(action (mut newApplicant.phone) value='target.value')}}
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        {{validated-input type="email" model=newApplicant valuePath="email" placeholder="Email" id="email"}}
+      </div>
+    </div>
+    <div class="field">
+      <label for="cover-letter">Cover Letter</label>
+      {{textarea rows="5" placeholder="Cover Letter" value=newApplication.coverLetter}}
+    </div>
+
+    <div class="ui divider"></div>
+    {{#form/action-button type="submit" class="ui massive fluid green button" disabled=disabled loading=working}}Create Applicant{{/form/action-button}}
+  </form>
+  {{/liquid-if}}
+
 
   {{#confirm-modal
     confirmContent='Are you sure you want to hire and onboard this candidate?'
