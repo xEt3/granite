@@ -14,10 +14,9 @@ export default Route.extend({
   },
 
   model ( params ) {
-    const that = this;
     let activityQuery = {
-      limit: that.get('cachedActivities') ? params.limit : params.limit * (params.page+1),
-      page: that.get('cachedActivities') ? params.page : 0,
+      limit: this.get('cachedActivities') ? params.limit : params.limit * (params.page+1),
+      page: this.get('cachedActivities') ? params.page : 0,
       sort: { created: -1 }
     };
 
@@ -39,14 +38,10 @@ export default Route.extend({
       this.set('cachedActivities', model.activities.toArray());
     }
 
-    if ( model.activities.meta.totalRecords <= this.get('cachedActivities').length ) {
-      this.set('disabled', true);
-    }
-
     controller.setProperties({
       model: this.get('cachedActivities'),
       tags: model.tags,
-      disabled: this.get('disabled')
+      totalRecords: model.activities.meta.totalRecords
     });
   }
 });
