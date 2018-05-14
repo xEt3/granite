@@ -1,0 +1,24 @@
+<div class="content">
+  <div class="header">
+    <span class="light text">({{time model.created 'M/D'}})</span> {{model.changes.length}} {{inflect-text 'change' model.changes.length}} requested by {{model.employee.fullName}}
+  </div>
+
+  <div class="right floated content">
+    <button type="button" class="ui positive labeled icon tiny button">
+      <i class="ui check icon"></i>
+      Approve
+    </button>
+    <button type="button" class="ui negative labeled icon tiny button">
+      <i class="ui times icon"></i>
+      Reject
+    </button>
+  </div>
+
+  <div class="extra">
+    <ol class="ui ordered list">
+      {{#each model.changes as |change|}}
+        <li class="item">{{humanize-key change.path}}: <strong>{{change.value}}</strong></li>
+      {{/each}}
+    </ol>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="ui raised padded segment container clearfix">
+  <hgroup class="clearfix">
+    <h1 class="ui left floated header">
+      Changes
+    </h1>
+    <h2 class="ui right floated header">
+      {{model.length}} in queue
+    </h2>
+  </hgroup>
+
+  <div class="ui divider"></div>
+
+  {{display/resource-list
+    model
+    "list-item/change-item"
+    class="ui divided items"}}
+</div>

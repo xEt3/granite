@@ -4,3 +4,7 @@
 .ui.items > .item .meta * {
   margin-right: 0 !important;
 }
+
+.ui.items > .item .extra .ordered.list {
+  padding-left: 1em;
+}
