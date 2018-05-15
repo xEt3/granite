@@ -7,13 +7,11 @@ export default Route.extend({
   ajax: service(),
 
   queryParams: {
-    tag: {
-      refreshModel: true
-    },
+    tag: { refreshModel: true },
     page: { refreshModel: true }
   },
 
-  model ( params ) {
+  model (params) {
     let activityQuery = {
       limit: this.get('cachedActivities') ? params.limit : params.limit * (params.page+1),
       page: this.get('cachedActivities') ? params.page : 0,
@@ -29,19 +27,19 @@ export default Route.extend({
     });
   },
 
-  setupController ( controller, model ) {
+  setupController (controller, model) {
     this._super(...arguments);
 
-    if( this.get('cachedActivities') ) {
+    if (this.get('cachedActivities')) {
       this.set('cachedActivities', this.get('cachedActivities').concat(model.activities.toArray()));
     } else {
       this.set('cachedActivities', model.activities.toArray());
     }
 
     controller.setProperties({
-      model: this.get('cachedActivities'),
-      tags: model.tags,
-      totalRecords: model.activities.meta.totalRecords
+      model:        this.get('cachedActivities'),
+      tags:         model.tags,
+      totalRecords: model.activities.get('meta.totalRecords')
     });
   }
 });
