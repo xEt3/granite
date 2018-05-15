@@ -1,10 +1,17 @@
 {{#each model as |item|}}
-  {{#if linkTo}}
-    {{#link-to linkTo (get item modelIdentifier) class=linkClass}}
-      {{component itemComponent item class=componentClass}}
-    {{/link-to}}
+  {{#if hasBlock}}
+    {{yield (hash
+      listItem=(component itemComponent item class=componentClass)
+      item=item
+    )}}
   {{else}}
-    {{component itemComponent item class=componentClass}}
+    {{#if linkTo}}
+      {{#link-to linkTo (get item modelIdentifier) class=linkClass}}
+        {{component itemComponent item class=componentClass}}
+      {{/link-to}}
+    {{else}}
+      {{component itemComponent item class=componentClass}}
+    {{/if}}
   {{/if}}
 {{else}}
   <h2 class="ui center aligned header">No {{resourceName}} available.</h2>

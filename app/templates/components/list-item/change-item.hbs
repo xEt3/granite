@@ -4,11 +4,11 @@
   </div>
 
   <div class="right floated content">
-    <button type="button" class="ui positive labeled icon tiny button">
+    <button type="button" class="ui positive labeled icon tiny button" {{action onApprove model}}>
       <i class="ui check icon"></i>
       Approve
     </button>
-    <button type="button" class="ui negative labeled icon tiny button">
+    <button type="button" class="ui negative labeled icon tiny button" {{action onReject model}}>
       <i class="ui times icon"></i>
       Reject
     </button>

@@ -1,6 +1,7 @@
 import Route from '@ember/routing/route';
+import refreshable from 'granite/mixins/refreshable';
 
-export default Route.extend({
+export default Route.extend(refreshable, {
   model () {
     return this.get('store').query('change', {
       reviewedOn: { $not: { $type: 9 } },
