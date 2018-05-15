@@ -22,7 +22,7 @@
       {{list-item/activity-item activity=activity onNotify=(action 'onNotify')}}
     {{/each}}
     <div class="ui divider"></div>
-    <div class="fluid ui button">Load More...</div>
+    <button class="fluid ui button" disabled={{disabled}} {{action 'loadMoreActivities'}}>Load More...</button>
   </div>
   <div class="right aligned text">
     <span class="fields">
