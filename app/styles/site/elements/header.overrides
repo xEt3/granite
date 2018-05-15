@@ -1,3 +1,8 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.header > .image.dimmable {
+  width: inherit;
+  height: inherit;
+}
