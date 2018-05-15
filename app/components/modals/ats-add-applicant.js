@@ -54,14 +54,18 @@ export default Component.extend(ajaxStatus, {
         application.save().then(() => {
           //REFRESH PAGE SOMEHOW
           this.ajaxSuccess('Saved applicant successfully');
+          this.setProperties({
+            newApplicant: {},
+            newApplication: {}
+          });
+          this.closeModal();
         });
       });
 
-      this.setProperties({
-        newApplicant: {},
-        newApplication: {}
-      });
-      this.closeModal();
-    }
+    },
+
+    notify (type, msg) {
+      this.get('onNotify')(type, msg);
+    },
   }
 });

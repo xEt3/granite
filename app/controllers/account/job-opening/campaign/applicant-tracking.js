@@ -176,6 +176,10 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     unSetHire () {
       // noop for now
       return;
-    }
+    },
+
+    onNotify (type, msg) {
+      this.send('notify', type, msg);
+    },
   }
 });
