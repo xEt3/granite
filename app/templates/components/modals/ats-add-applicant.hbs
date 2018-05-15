@@ -39,6 +39,42 @@
         <label for="cover-letter">Cover Letter</label>
         {{textarea rows="5" placeholder="Cover Letter" value=newApplication.coverLetter}}
       </div>
+
+
+      <div class="field">
+        <label>
+          {{#if fileIsAdded}}
+            <div class="ui large header text-green clearfix">
+              <span><i class="check icon"></i>Resume/CV Added.</span>
+              <a href="#" class="text-red right floated" {{action "removeFile"}}>Remove</a>
+            </div>
+          {{else}}
+            <i class="attach icon"></i>
+            Upload your Resume/CV*
+          {{/if}}
+        </label>
+        {{drop-zone
+          class='input__dropzone'
+          url=resumeEndpoint
+          uploadMultiple=false
+          acceptedFiles='.doc,.docx,.pdf,.rtf,.txt'
+          maxFiles=1
+          autoProcessQueue=false
+          dictDefaultMessage='Drop or Click to Add Resume/CV'
+          thumbnailWidth='175'
+          headers=(hash X-API-Token=auth.token)
+          addedfile=(action 'addedFile')
+          error=(action 'uploadError')
+          uploadprogress=(action 'uploadProgressUpdate')
+          success=(action 'uploadedFile')
+          capture='camera'}}
+      </div>
+
+
+
+
+
+
     </form>
   </div>
   <div class="actions">

@@ -181,5 +181,9 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     onNotify (type, msg) {
       this.send('notify', type, msg);
     },
+
+    refreshModel () {
+      this.send('refresh');
+    }
   }
 });

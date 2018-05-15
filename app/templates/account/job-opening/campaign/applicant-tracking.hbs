@@ -73,7 +73,7 @@
       <a href="#" {{action toggleProperty "showDisqualified"}}>
         {{if showDisqualified 'Hide' 'Show'}} Disqualified Applicants
       </a>
-      {{#modals/ats-add-applicant model=model onNotify=(action "onNotify") as |application|}}
+      {{#modals/ats-add-applicant model=model onNotify=(action "onNotify") refresh=(action "refreshModel") as |application|}}
         <a href="#" {{action application}}>
           <i class="ui plus icon"></i>
         </a>
