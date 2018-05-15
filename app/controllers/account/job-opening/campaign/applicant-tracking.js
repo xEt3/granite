@@ -7,7 +7,6 @@ import moment from 'moment';
 import ajaxStatus from 'granite/mixins/ajax-status';
 import modalSupport from 'granite/mixins/modal-support';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-import { suffixes } from 'granite/config/statics';
 
 const employeeProps = [
   'firstName',
@@ -25,9 +24,6 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
   confirmDisqualifyModalId: 'modal__ats-confirm-disqualify',
   schedulerModalId: 'modal__ats-scheduler',
   showDisqualified: false,
-  suffixes,
-  newApplicant: {},
-  newApplication: {},
 
   pendingApplications: computed.filter('model.applications', function(app) {
     return !get(app, 'reviewedOn') && !get(app, 'disqualified');
@@ -180,21 +176,6 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     unSetHire () {
       // noop for now
       return;
-    },
-
-    save () {
-      let applicant = this.get('store').createRecord('applicant', this.get('newApplicant'));
-
-      let application = this.get('store').createRecord('jobApplication', Object.assign({}, this.get('newApplication'), {
-        jobOpening: this.get('model').jobOpening,
-        applicant
-      }));
-
-      applicant.save().then(() => {
-        application.save();
-        this.toggleProperty('addingApplicant');
-        //REFRESH PAGE SOMEHOW
-      })
     }
   }
 });

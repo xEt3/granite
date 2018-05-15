@@ -13,7 +13,7 @@ export default Model.extend({
   scoreRelative: attr('number'),
 
   resume:     belongsTo('file', { async: true, inverse: null }),
-  jobOpening: belongsTo('job-opening'),
+  jobOpening: belongsTo('job-opening', { async: true, inverse: null }),
   applicant:  belongsTo('applicant', { async: true, inverse: null }),
   employee:   belongsTo('employee', { async: true, inverse: null }),
 

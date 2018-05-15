@@ -1,0 +1,52 @@
+{{#if hasBlock}}
+  {{yield startApplication}}
+{{/if}}
+
+{{#ui-modal name="application" id=modalId}}
+  <i class="close icon"></i>
+  <div class="header">
+    Add Application
+  </div>
+  <div class="content">
+    <form class="ui form"  {{action "save" on="submit"}}>
+      <div class="fields">
+        <div class="five wide field">
+          <label for="first-name">First Name</label>
+          {{#auto-focus}}
+            {{validated-input type="text" model=newApplicant valuePath="firstName" placeholder="First Name" id="first-name"}}
+          {{/auto-focus}}
+        </div>
+        <div class="three wide field">
+          <label for="middle-name">Middle Name</label>
+          {{input type="text" value=newApplicant.middleName placeholder="Middle" id="middle-name"}}
+        </div>
+        <div class="five wide field">
+          <label for="last-name">Last Name</label>
+          {{validated-input type="text" model=newApplicant valuePath="lastName" placeholder="Last Name" id="last-name"}}
+        </div>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label for="employee-phone">Phone Number</label>
+          {{masked-input type="tel" placeholder="Employee Phone #" id="employee-phone" mask="(111) 111-1111" on-change=(action (mut newApplicant.phone) value='target.value')}}
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          {{validated-input type="email" model=newApplicant valuePath="email" placeholder="Email" id="email"}}
+        </div>
+      </div>
+      <div class="field">
+        <label for="cover-letter">Cover Letter</label>
+        {{textarea rows="5" placeholder="Cover Letter" value=newApplication.coverLetter}}
+      </div>
+    </form>
+  </div>
+  <div class="actions">
+    <button class="ui inverted red button" {{action 'cancel'}}>
+      Cancel
+    </button>
+    <button class="ui inverted green right labeled icon button" {{action 'save'}}>
+      Add Application
+    </button>
+  </div>
+{{/ui-modal}}
