@@ -46,6 +46,7 @@ Router.map(function() {
         this.route('census');
         this.route('new');
       });
+      this.route('changes');
     });
     this.route('employee', { path: '/employee/:id' }, function() {
       this.route('index', { path: '/' }, function() {
