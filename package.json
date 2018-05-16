@@ -16,8 +16,7 @@
     "test-ci": "ember test --query=nolint",
     "push-image": "docker build -t james1x0/granite . && docker push james1x0/granite",
     "make-deployment": "bash scripts/deploy-eb.sh",
-    "deploy": "yarn run push-image && yarn run make-deployment && eb deploy --staged",
-    "postinstall": "yarn global add bower && bower install --allow-root"
+    "deploy": "yarn run push-image && yarn run make-deployment && eb deploy --staged"
   },
   "repository": "https://github.com/associatedemployers/granite",
   "author": "Associated Employers",
@@ -90,6 +89,6 @@
     "semantic-ui-less": "^2.3.1"
   },
   "engines": {
-    "node": "^4.5 || 6.* || >= 7.*"
+    "node": "8.*"
   }
 }
