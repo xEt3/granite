@@ -7,8 +7,11 @@ import $ from 'jquery';
 
 export default Component.extend(ajaxStatus, {
   store: service(),
+  applicantRequiredFields: [ 'firstName', 'lastName', 'phone', 'email' ],
+  applicationRequiredFields: [ 'coverLetter' ],
   newApplicant: {},
   newApplication: {},
+  employee: null,
 
   resumeEndpoint: computed('model.jobOpening.id', function() {
     return `/api/v1/upload/resume/${this.get('model.jobOpening.id')}`;
@@ -42,7 +45,36 @@ export default Component.extend(ajaxStatus, {
     $('#' + this.get('modalId')).modal('hide');
   },
 
+  requiredFieldsFilled () {
+    let applicantRequiredFields = this.get('applicantRequiredFields');
+    let applicationRequiredFields = this.get('applicationRequiredFields');
+    let newApplicant = this.get('newApplicant');
+    let newApplication = this.get('newApplication');
+    for (let field in applicantRequiredFields) {
+      if (field !== '_super') {
+        let value = newApplicant[applicantRequiredFields[field]];
+        if (value === "" || value === undefined) {
+          return false;
+        }
+      }
+    }
+
+    for (let field in applicationRequiredFields) {
+      if (field !== '_super') {
+        let value = newApplication[applicationRequiredFields[field]];
+        if (value === "" || value === undefined) {
+          return false;
+        }
+      }
+    }
+    return true;
+  },
+
   actions: {
+    toggleInternalEmployee () {
+      this.toggleProperty('internalEmployee');
+      this.set('employee', null);
+    },
 
     addedFile (file) {
       this.set('fileIsAdded', file);
@@ -73,8 +105,6 @@ export default Component.extend(ajaxStatus, {
       this.set('uploadProgress', prog);
     },
 
-
-
     cancel () {
       this.setProperties({
         newApplicant: null,
@@ -83,37 +113,58 @@ export default Component.extend(ajaxStatus, {
       this.closeModal();
     },
 
+    setInternalApplicant () {
+      let employee = this.get('employee');
+
+      this.set('newApplicant', {
+        firstName: employee.firstName,
+        middleName: employee.middleName,
+        lastName: employee.lastName,
+        phone: employee.phone,
+        email: employee.email
+      });
+    },
 
     save () {
       this.ajaxStart();
-      console.log('saving resume:', this.get('fileIsAdded'));
+
+      if (!this.requiredFieldsFilled()) {
+        this.ajaxError('Must fill required fields');
+        return;
+      }
 
       let applicant = this.get('store').createRecord('applicant', this.get('newApplicant'));
 
       let application = this.get('store').createRecord('jobApplication', Object.assign({}, this.get('newApplication'), {
         jobOpening: this.get('model.jobOpening'),
         applicant,
-        // resume: this.get('fileIsAdded')
+        employee: this.get('employee') ? this.get('employee') : null
       }));
 
-      applicant.save().then(this.uploadResume.bind(this))
-      //BREAKS IF YOU DON'T INSERT A RESUME
+      applicant.save().then(() => {
+        //uploading resume if it exists
+        if (this.get('fileIsAdded')) {
+          return this.uploadResume();
+        }
+      })
+      //then setting resume on app and saving app
         .then((response) => {
-          console.log('response:', response);
-          application.set('resume', response.file._id);
-          console.log('application about to be saved:', application.resume);
+          if (response) {
+            application.set('resume', response.file._id);
+          }
           return application.save();
         })
-        .then((app) => {
-          console.log('finished application after save:', app);
+        .then(() => {
           this.ajaxSuccess('Saved application successfully');
           this.setProperties({
-            newApplicant: null,
-            newApplication: null
+            newApplicant: {},
+            newApplication: {},
+            employee: null
           });
           this.closeModal();
           this.refresh();
         });
+
     },
 
     notify (type, msg) {
