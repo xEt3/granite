@@ -126,6 +126,7 @@ export default Component.extend(ajaxStatus, {
     },
 
     save () {
+      const store = this.get('store');
       this.ajaxStart();
 
       if (!this.requiredFieldsFilled()) {
@@ -133,25 +134,30 @@ export default Component.extend(ajaxStatus, {
         return;
       }
 
-      let applicant = this.get('store').createRecord('applicant', this.get('newApplicant'));
+      let applicant = store.createRecord('applicant', this.get('newApplicant'));
 
-      let application = this.get('store').createRecord('jobApplication', Object.assign({}, this.get('newApplication'), {
+      let application = store.createRecord('jobApplication', Object.assign({}, this.get('newApplication'), {
         jobOpening: this.get('model.jobOpening'),
         applicant,
         employee: this.get('employee') ? this.get('employee') : null
       }));
 
-      applicant.save().then(() => {
-        //uploading resume if it exists
-        if (this.get('fileIsAdded')) {
-          return this.uploadResume();
-        }
-      })
-      //then setting resume on app and saving app
-        .then((response) => {
-          if (response) {
-            application.set('resume', response.file._id);
+      applicant.save()
+        .then(() => {
+          //uploading resume if it exists
+          if (this.get('fileIsAdded')) {
+            return this.uploadResume();
           }
+        })
+        //then setting resume on app and saving app
+        .then((response) => {
+          if (!response) {
+            return Promise.resolve();
+          }
+
+          store.pushPayload('file', response);
+          let fileRecord = store.peekRecord('file', response.file.id);
+          application.set('resume', fileRecord);
           return application.save();
         })
         .then(() => {
@@ -164,7 +170,6 @@ export default Component.extend(ajaxStatus, {
           this.closeModal();
           this.refresh();
         });
-
     },
 
     notify (type, msg) {
