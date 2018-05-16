@@ -21,6 +21,7 @@ export default Model.extend({
   suffixName: attr('string'),
 
   email: attr('string'),
+  phone: attr('string'),
 
   created: {
     type: Date,

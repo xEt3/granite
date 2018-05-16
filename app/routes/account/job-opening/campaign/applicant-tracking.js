@@ -37,8 +37,7 @@ export default Route.extend(refreshable, {
         limit: 1,
         sort: { jobOpenings: -1 } // Prefer to get back a jobOpening-tagged pipeline
       })
-      .then(results => results ? results.get('firstObject') : results),
-      allEmployees: this.store.findAll('employee')
+      .then(results => results ? results.get('firstObject') : results)
     });
   }
 });

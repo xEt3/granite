@@ -8,17 +8,15 @@ import $ from 'jquery';
 export default Component.extend(ajaxStatus, {
   store: service(),
   applicantRequiredFields: [ 'firstName', 'lastName', 'phone', 'email' ],
-  applicationRequiredFields: [ 'coverLetter' ],
+  applicationRequiredFields: [],
   newApplicant: {},
   newApplication: {},
-  employee: null,
 
   resumeEndpoint: computed('model.jobOpening.id', function() {
     return `/api/v1/upload/resume/${this.get('model.jobOpening.id')}`;
   }),
 
   uploadResume () {
-    console.log('inside of uploadResume');
     return new Promise((resolveUpload, rejectUpload) => {
       this.setProperties({ resolveUpload, rejectUpload });
       Dropzone.forElement('.input__dropzone').processQueue();
@@ -71,14 +69,8 @@ export default Component.extend(ajaxStatus, {
   },
 
   actions: {
-    toggleInternalEmployee () {
-      this.toggleProperty('internalEmployee');
-      this.set('employee', null);
-    },
-
     addedFile (file) {
       this.set('fileIsAdded', file);
-      console.log('just set the file:', this.get('fileIsAdded'));
     },
 
     removeFile () {
@@ -107,22 +99,12 @@ export default Component.extend(ajaxStatus, {
 
     cancel () {
       this.setProperties({
-        newApplicant: null,
-        newApplication: null
+        newApplicant: {},
+        newApplication: {}
       });
+      this.send('removeFile');
+
       this.closeModal();
-    },
-
-    setInternalApplicant () {
-      let employee = this.get('employee');
-
-      this.set('newApplicant', {
-        firstName: employee.firstName,
-        middleName: employee.middleName,
-        lastName: employee.lastName,
-        phone: employee.phone,
-        email: employee.email
-      });
     },
 
     save () {
@@ -144,20 +126,17 @@ export default Component.extend(ajaxStatus, {
 
       applicant.save()
         .then(() => {
-          //uploading resume if it exists
           if (this.get('fileIsAdded')) {
             return this.uploadResume();
           }
         })
-        //then setting resume on app and saving app
         .then((response) => {
-          if (!response) {
-            return Promise.resolve();
+          if (response) {
+            store.pushPayload('file', response);
+            let fileRecord = store.peekRecord('file', response.file.id);
+            application.set('resume', fileRecord);
           }
 
-          store.pushPayload('file', response);
-          let fileRecord = store.peekRecord('file', response.file.id);
-          application.set('resume', fileRecord);
           return application.save();
         })
         .then(() => {
@@ -165,8 +144,8 @@ export default Component.extend(ajaxStatus, {
           this.setProperties({
             newApplicant: {},
             newApplication: {},
-            employee: null
           });
+          this.send('removeFile');
           this.closeModal();
           this.refresh();
         });

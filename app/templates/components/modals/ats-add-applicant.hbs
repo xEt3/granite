@@ -8,94 +8,67 @@
     Add Application
   </div>
   <div class="content">
-
     <form class="ui form"  {{action "save" on="submit"}}>
-      {{display/filter-panes/control type='toggle' label='Internal Employee' update=(action 'toggleInternalEmployee')}}
-
-      {{#if internalEmployee}}
+      <div class="fields">
+        <div class="five wide field">
+          <label for="first-name">First Name*</label>
+          {{#auto-focus}}
+            {{validated-input type="text" model=newApplicant valuePath="firstName" placeholder="First Name" id="first-name"}}
+          {{/auto-focus}}
+        </div>
+        <div class="three wide field">
+          <label for="middle-name">Middle Name</label>
+          {{input type="text" value=newApplicant.middleName placeholder="Middle" id="middle-name"}}
+        </div>
+        <div class="five wide field">
+          <label for="last-name">Last Name*</label>
+          {{validated-input type="text" model=newApplicant valuePath="lastName" placeholder="Last Name" id="last-name"}}
+        </div>
+      </div>
+      <div class="two fields">
         <div class="field">
-          <label for="employee">Employee</label>
-          {{#ui-dropdown class="selection" selected=employee onChange=(action (pipe (action (mut employee)) (action 'setInternalApplicant'))) as |execute mapper|}}
-            <div class="default text">Employee</div>
-            <i class="dropdown icon"></i>
-            <div class="menu">
-              {{#each model.allEmployees as |employee|}}
-                <div class="item" data-value="{{map-value mapper employee}}">
-                  {{employee.fullName}}
-                </div>
-              {{/each}}
-            </div>
-          {{/ui-dropdown}}
+          <label for="employee-phone">Phone Number*</label>
+          {{masked-input type="tel" placeholder="Employee Phone #" id="employee-phone" mask="(111) 111-1111" value=newApplicant.phone on-change=(action (mut newApplicant.phone) value='target.value')}}
         </div>
-
-      {{/if}}
-
-        <div class="fields">
-          <div class="five wide field">
-            <label for="first-name">First Name*</label>
-            {{#auto-focus}}
-              {{validated-input type="text" model=newApplicant valuePath="firstName" placeholder="First Name" id="first-name"}}
-            {{/auto-focus}}
-          </div>
-          <div class="three wide field">
-            <label for="middle-name">Middle Name</label>
-            {{input type="text" value=newApplicant.middleName placeholder="Middle" id="middle-name"}}
-          </div>
-          <div class="five wide field">
-            <label for="last-name">Last Name*</label>
-            {{validated-input type="text" model=newApplicant valuePath="lastName" placeholder="Last Name" id="last-name"}}
-          </div>
+        <div class="field">
+          <label for="email">Email*</label>
+          {{validated-input type="email" model=newApplicant valuePath="email" placeholder="Email" id="email"}}
         </div>
-        <div class="two fields">
-          <div class="field">
-            <label for="employee-phone">Phone Number*</label>
-            {{masked-input type="tel" placeholder="Employee Phone #" id="employee-phone" mask="(111) 111-1111" on-change=(action (mut newApplicant.phone) value='target.value')}}
-          </div>
-          <div class="field">
-            <label for="email">Email*</label>
-            {{validated-input type="email" model=newApplicant valuePath="email" placeholder="Email" id="email"}}
-          </div>
-        </div>
-    
-      <div class="field">
-        <label for="cover-letter">Cover Letter*</label>
-        {{textarea rows="5" placeholder="Cover Letter" value=newApplication.coverLetter}}
       </div>
 
-      <div class="field">
-        <label>
-          {{#if fileIsAdded}}
-            <div class="ui large header text-green clearfix">
-              <span><i class="check icon"></i>Resume/CV Added.</span>
-              <a href="#" class="text-red right floated" {{action "removeFile"}}>Remove</a>
-            </div>
-          {{else}}
-            <i class="attach icon"></i>
-            Resume*
-          {{/if}}
-        </label>
-        {{drop-zone
-          class='input__dropzone'
-          url=resumeEndpoint
-          uploadMultiple=false
-          acceptedFiles='.doc,.docx,.pdf,.rtf,.txt'
-          maxFiles=1
-          autoProcessQueue=false
-          dictDefaultMessage='Drop or Click to Add Resume'
-          thumbnailWidth='175'
-          headers=(hash X-API-Token=auth.token)
-          addedfile=(action 'addedFile')
-          error=(action 'uploadError')
-          uploadprogress=(action 'uploadProgressUpdate')
-          success=(action 'uploadedFile')
-          capture='camera'}}
-      </div>
+    <div class="field">
+      <label for="cover-letter">Cover Letter</label>
+      {{textarea rows="5" placeholder="Cover Letter" value=newApplication.coverLetter}}
+    </div>
 
-
-
-
-
-
+    <div class="field">
+      <label>
+        {{#if fileIsAdded}}
+          <div class="ui large header text-green clearfix">
+            <span><i class="check icon"></i>Resume/CV Added.</span>
+            <a href="#" class="text-red right floated" {{action "removeFile"}}>Remove</a>
+          </div>
+        {{else}}
+          <i class="attach icon"></i>
+          Resume
+        {{/if}}
+      </label>
+      {{drop-zone
+        class='input__dropzone'
+        url=resumeEndpoint
+        uploadMultiple=false
+        acceptedFiles='.doc,.docx,.pdf,.rtf,.txt'
+        maxFiles=1
+        autoProcessQueue=false
+        dictDefaultMessage='Drop or Click to Add Resume'
+        thumbnailWidth='175'
+        headers=(hash X-API-Token=auth.token)
+        addedfile=(action 'addedFile')
+        error=(action 'uploadError')
+        uploadprogress=(action 'uploadProgressUpdate')
+        success=(action 'uploadedFile')
+        capture='camera'}}
+    </div>
     </form>
   </div>
   <div class="actions">
