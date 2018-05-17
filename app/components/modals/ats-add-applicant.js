@@ -8,7 +8,7 @@ import $ from 'jquery';
 export default Component.extend(ajaxStatus, {
   store: service(),
   applicantRequiredFields: [ 'firstName', 'lastName', 'phone', 'email' ],
-  applicationRequiredFields: [],
+  fileIsAdded: false,
   newApplicant: {},
   newApplication: {},
 
@@ -29,7 +29,8 @@ export default Component.extend(ajaxStatus, {
 
   createConfirm () {
     $('#' + this.get('modalId')).modal({
-      detachable: true
+      detachable: true,
+      context: 'body.ember-application'
     }).modal('show');
 
     return new Promise((resolve, reject) => this.setProperties({ resolve, reject }));
@@ -45,21 +46,10 @@ export default Component.extend(ajaxStatus, {
 
   requiredFieldsFilled () {
     let applicantRequiredFields = this.get('applicantRequiredFields');
-    let applicationRequiredFields = this.get('applicationRequiredFields');
     let newApplicant = this.get('newApplicant');
-    let newApplication = this.get('newApplication');
     for (let field in applicantRequiredFields) {
       if (field !== '_super') {
         let value = newApplicant[applicantRequiredFields[field]];
-        if (value === "" || value === undefined) {
-          return false;
-        }
-      }
-    }
-
-    for (let field in applicationRequiredFields) {
-      if (field !== '_super') {
-        let value = newApplication[applicationRequiredFields[field]];
         if (value === "" || value === undefined) {
           return false;
         }
@@ -92,7 +82,6 @@ export default Component.extend(ajaxStatus, {
       this.get('resolveUpload')(response);
     },
 
-    // TODO: use uploadProgress
     uploadProgressUpdate (prog) {
       this.set('uploadProgress', prog);
     },
@@ -103,7 +92,6 @@ export default Component.extend(ajaxStatus, {
         newApplication: {}
       });
       this.send('removeFile');
-
       this.closeModal();
     },
 
@@ -121,7 +109,7 @@ export default Component.extend(ajaxStatus, {
       let application = store.createRecord('jobApplication', Object.assign({}, this.get('newApplication'), {
         jobOpening: this.get('model.jobOpening'),
         applicant,
-        employee: this.get('employee') ? this.get('employee') : null
+        reviewedOn: this.get('newApplication').stage ? new Date() : null
       }));
 
       applicant.save()
