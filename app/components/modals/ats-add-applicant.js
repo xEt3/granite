@@ -100,7 +100,7 @@ export default Component.extend(ajaxStatus, {
       this.ajaxStart();
 
       if (!this.requiredFieldsFilled()) {
-        this.ajaxError('Must fill required fields');
+        this.ajaxError('Must fill required fields', true);
         return;
       }
 
