@@ -9,8 +9,17 @@ export default Component.extend(ajaxStatus, {
   store: service(),
   applicantRequiredFields: [ 'firstName', 'lastName', 'phone', 'email' ],
   fileIsAdded: false,
-  newApplicant: {},
-  newApplication: {},
+
+  init () {
+    this._super(...arguments);
+
+    const store = this.get('store');
+
+    this.setProperties({
+      newApplicant: store.createRecord('applicant', {}),
+      newApplication: store.createRecord('jobApplication', {})
+    });
+  },
 
   resumeEndpoint: computed('model.jobOpening.id', function() {
     return `/api/v1/upload/resume/${this.get('model.jobOpening.id')}`;
@@ -87,10 +96,9 @@ export default Component.extend(ajaxStatus, {
     },
 
     cancel () {
-      this.setProperties({
-        newApplicant: {},
-        newApplication: {}
-      });
+      this.get('newApplicant').destroyRecord();
+      this.get('newApplication').destroyRecord();
+
       this.send('removeFile');
       this.closeModal();
     },
@@ -104,13 +112,14 @@ export default Component.extend(ajaxStatus, {
         return;
       }
 
-      let applicant = store.createRecord('applicant', this.get('newApplicant'));
+      let applicant = this.get('newApplicant'),
+          application = this.get('newApplication');
 
-      let application = store.createRecord('jobApplication', Object.assign({}, this.get('newApplication'), {
-        jobOpening: this.get('model.jobOpening'),
+      application.setProperties({
         applicant,
+        jobOpening: this.get('model.jobOpening'),
         reviewedOn: this.get('newApplication').stage ? new Date() : null
-      }));
+      });
 
       applicant.save()
         .then(() => {
@@ -130,8 +139,8 @@ export default Component.extend(ajaxStatus, {
         .then(() => {
           this.ajaxSuccess('Saved application successfully');
           this.setProperties({
-            newApplicant: {},
-            newApplication: {},
+            newApplicant: null,
+            newApplication: null,
           });
           this.send('removeFile');
           this.closeModal();
