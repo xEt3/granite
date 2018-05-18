@@ -26,15 +26,6 @@ export default Component.extend(ajaxStatus, {
   }),
 
   createConfirm () {
-    $('#' + this.get('modalId')).modal({
-      detachable: true,
-      context: 'body.ember-application'
-    }).modal('show');
-
-    return new Promise((resolve, reject) => this.setProperties({ resolve, reject }));
-  },
-
-  startApplication: computed('modalId', function () {
     const store = this.get('store');
 
     this.setProperties({
@@ -42,6 +33,16 @@ export default Component.extend(ajaxStatus, {
       newApplication: store.createRecord('jobApplication', {})
     });
 
+    $('#' + this.get('modalId')).modal({
+      detachable: true,
+      closable: false,
+      context: 'body.ember-application'
+    }).modal('show');
+
+    return new Promise((resolve, reject) => this.setProperties({ resolve, reject }));
+  },
+
+  startApplication: computed('modalId', function () {
     return this.createConfirm.bind(this);
   }),
 
