@@ -82,7 +82,7 @@
     "liquid-fire": "^0.29.2",
     "loader.js": "^4.2.3",
     "semantic-ui-calendar": "^0.0.8",
-    "semantic-ui-ember": "^3.0.0",
+    "semantic-ui-ember": "^3.0.3",
     "semantic-ui-less": "^2.3.1"
   },
   "engines": {
