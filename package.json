@@ -14,9 +14,8 @@
     "lint:js": "eslint ./*.js app config lib server tests",
     "test": "ember test",
     "test-ci": "ember test --query=nolint",
-    "push-image": "docker build -t james1x0/granite . && docker push james1x0/granite",
-    "make-deployment": "bash scripts/deploy-eb.sh",
-    "deploy": "yarn run push-image && yarn run make-deployment && eb deploy --staged"
+    "deploy": "git push heroku master",
+    "postinstall": "bower install --allow-root"
   },
   "repository": "https://github.com/associatedemployers/granite",
   "author": "Associated Employers",
