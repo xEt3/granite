@@ -121,7 +121,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     employee.set('jobTitle', job.get('title'));
 
     return jobApplication.save()
-    .then(() => employee.get('content').save())
+    .then(() => employee.save())
     .then(employeeRecord => {
       if (wasNew) {
         this.transitionToRoute('account.employee.onboard', employeeRecord.get('id'));
@@ -176,6 +176,14 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     unSetHire () {
       // noop for now
       return;
+    },
+
+    onNotify (type, msg) {
+      this.send('notify', type, msg);
+    },
+
+    refreshModel () {
+      this.send('refresh');
     }
   }
 });

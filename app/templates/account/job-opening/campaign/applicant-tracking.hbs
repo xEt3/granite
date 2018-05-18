@@ -69,11 +69,26 @@
 
   <h2 class="ui clearfix header">
     Your Recruiting Pipeline
+
     <small class="right floated small text">
       <a href="#" {{action toggleProperty "showDisqualified"}}>
         {{if showDisqualified 'Hide' 'Show'}} Disqualified Applicants
       </a>
     </small>
+
+    {{#modals/ats-add-applicant
+      class="ui center aligned text"
+      model=model
+      pipelines=model.pipeline
+      onNotify=(action "onNotify")
+      refresh=(action "refreshModel") as |openAddModal|
+    }}
+      {{#ui-popup position="bottom center" content="Manually add applicant"}}
+        <a href="#" class="smaller text" {{action openAddModal}}>
+          <i class="ui plus icon"></i> Add Applicant
+        </a>
+      {{/ui-popup}}
+    {{/modals/ats-add-applicant}}
   </h2>
 
   {{#confirm-modal
