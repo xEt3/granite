@@ -69,7 +69,13 @@ export default Component.extend(ajaxStatus, {
     },
 
     removeFile () {
-      const $dropzone = Dropzone.forElement('.input__dropzone');
+      let $dropzone;
+
+      try {
+        $dropzone = Dropzone.forElement('.input__dropzone');
+      } catch (error) {
+        return;
+      }
 
       if (!$dropzone) {
         return;
