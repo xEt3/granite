@@ -1,1 +1,15 @@
-{{outlet}}
+<div class="ui container">
+  <div class="ui pointing menu">
+    {{#link-to 'account.employees.index' class="item"}}
+      <i class="users icon"></i>Employees
+    {{/link-to}}
+    {{#link-to 'account.employees.changes' class="item"}}
+      <i class="history icon"></i>Changes
+      {{#if model.changeQueue}}
+        <div class="ui left pointing orange tiny label">{{model.changeQueue}}</div>
+      {{/if}}
+    {{/link-to}}
+  </div>
+
+  {{outlet}}
+</div>
