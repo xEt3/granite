@@ -1,3 +1,7 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.scrolling.undetached.dimmable .ui.scrolling.modal {
+  left: auto;
+}
