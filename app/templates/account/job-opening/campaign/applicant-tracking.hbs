@@ -74,9 +74,9 @@
         {{if showDisqualified 'Hide' 'Show'}} Disqualified Applicants
       </a>
     </small>
-    {{#modals/ats-add-applicant model=model pipelines=model.pipeline onNotify=(action "onNotify") refresh=(action "refreshModel") as |application|}}
+    {{#modals/ats-add-applicant model=model pipelines=model.pipeline onNotify=(action "onNotify") refresh=(action "refreshModel") as |openAddModal|}}
       {{#ui-popup target=".plus.icon" position="bottom center" content="Manually add applicant"}}
-        <a href="#" {{action application}}>
+        <a href="#" {{action openAddModal}}>
           <i class="ui right floated small plus icon"></i>
         </a>
       {{/ui-popup}}

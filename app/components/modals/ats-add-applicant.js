@@ -10,17 +10,6 @@ export default Component.extend(ajaxStatus, {
   applicantRequiredFields: [ 'firstName', 'lastName', 'phone', 'email' ],
   fileIsAdded: false,
 
-  init () {
-    this._super(...arguments);
-
-    const store = this.get('store');
-
-    this.setProperties({
-      newApplicant: store.createRecord('applicant', {}),
-      newApplication: store.createRecord('jobApplication', {})
-    });
-  },
-
   resumeEndpoint: computed('model.jobOpening.id', function() {
     return `/api/v1/upload/resume/${this.get('model.jobOpening.id')}`;
   }),
@@ -46,6 +35,13 @@ export default Component.extend(ajaxStatus, {
   },
 
   startApplication: computed('modalId', function () {
+    const store = this.get('store');
+
+    this.setProperties({
+      newApplicant: store.createRecord('applicant', {}),
+      newApplication: store.createRecord('jobApplication', {})
+    });
+
     return this.createConfirm.bind(this);
   }),
 
