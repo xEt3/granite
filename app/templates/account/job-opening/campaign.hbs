@@ -8,7 +8,7 @@
     {{/link-to}}
     <div class="right menu">
       {{#if (and model.completedOn (not model.closed))}}
-        {{#confirm-modal class="item" confirmContent=confirmCloseMessage as |confirm|}}
+        {{#confirm-modal class="item" sourcesToClose=model.manualApplicantSources confirmContent=confirmCloseMessage as |confirm|}}
           {{#ui-popup
             content="This job opening meets your requirements for closure. The appropriate number of candidates were hired and you can now close this opening."
             position="bottom center"

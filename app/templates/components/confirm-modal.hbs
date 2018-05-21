@@ -8,6 +8,15 @@
     {{if title title 'Heads up!'}}
   </div>
   <div class="content">
+    {{#if sourcesToClose}}
+      Make sure to close your manual applicant sources!
+      <ul class="ui list">
+        {{#each sourcesToClose as |source|}}
+          <li>{{source.name}}</li>
+        {{/each}}
+      </ul>
+    {{/if}}
+    <br><br>
     {{if confirmContent confirmContent 'Are you sure you want to do that?'}}
   </div>
   <div class="actions">
