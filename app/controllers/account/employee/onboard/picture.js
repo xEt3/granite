@@ -12,8 +12,8 @@ export default Controller.extend({
       this.get('model').set('picture', res.employee.picture);
     },
 
-    removeFile ( file ) {
-      this.get('model').set('picture', undefined);
+    removeFile (file) {
+      // this.get('model').set('picture', undefined);
       file.previewElement.remove();
     }
   }
