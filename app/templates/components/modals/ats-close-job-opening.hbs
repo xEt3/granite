@@ -2,7 +2,7 @@
   {{yield startConfirmation}}
 {{/if}}
 
-{{#ui-modal name="profile" id=modalId class="confirm-modal basic small"}}
+{{#ui-modal name="profile" id=modalId}}
   <i class="close icon"></i>
   <div class="header">
     Make sure to close your manual applicant sources!
@@ -13,7 +13,6 @@
         <li>{{source.name}}</li>
       {{/each}}
     </ul>
-    <br><br>
   </div>
   <div class="actions">
     <button class="ui inverted red button" {{action 'respond' false}}>
@@ -25,9 +24,3 @@
     </button>
   </div>
 {{/ui-modal}}
-
-{{!--
-{{#confirm-modal confirmContent='that' as |confirm|}}
-  <a href="" {{action confirm}}></a>
-{{/confirm-modal}}
---}}
