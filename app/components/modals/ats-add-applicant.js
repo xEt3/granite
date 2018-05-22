@@ -120,6 +120,7 @@ export default Component.extend(ajaxStatus, {
 
       application.setProperties({
         applicant,
+        manualEntry: true,
         jobOpening: this.get('model.jobOpening'),
         reviewedOn: this.get('newApplication').stage ? new Date() : null
       });
