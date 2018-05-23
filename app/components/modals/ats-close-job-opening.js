@@ -25,6 +25,7 @@ export default Component.extend({
 
     $('#' + this.get('modalId')).modal({
       detachable: true,
+      closable: false,
       onHidden: () => {
         if ( !this.get('responded') ) {
           this.send('respond', false);
