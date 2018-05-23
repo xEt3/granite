@@ -42,7 +42,7 @@
     {{/if}}
   </div>
 
-  <div class="card-content__application-link card-content__score-container card-content__entry-method-container">
+  <div class="card-content__application-link card-content__score-container">
     {{#link-to 'account.job-opening.campaign.job-application' application.id}}Open Application{{/link-to}}
     {{#if application.isScored}}
       {{#display/calc-color application.scoreAbs as |red green|}}
@@ -51,7 +51,7 @@
         </span>
       {{/display/calc-color}}
     {{/if}}
-    <span class="card-content__entry-method right floated light text">
+    <span class="card-content__entry-method">
       {{if application.manualEntry 'Manual Entry' 'From Quartz'}}
     </span>
   </div>
