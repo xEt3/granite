@@ -8,6 +8,7 @@ export default Model.extend({
   responses:     attr('array'),
   stage:         attr('string'),
   stageOrder:    attr('number'),
+  manualEntry:   attr('boolean'),
   disqualified:  attr('boolean'),
   scoreAdditive: attr('number'),
   scoreRelative: attr('number'),
