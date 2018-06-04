@@ -10,5 +10,5 @@
 
 {{#if onsubmit}}
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class=_submitClass loading=working}}{{yield}}{{/form/action-button}}
+  {{#form/action-button type="submit" class=_submitClass disabled=disabled loading=working}}{{yield}}{{/form/action-button}}
 {{/if}}

@@ -18,7 +18,9 @@
     this
     working=working
     submitClass="huge fluid green"
-    onsubmit=(action 'save' model)}}
+    onsubmit=(action 'save' model)
+    disabled=(or (not model.category) (not model.title))
+  }}
     Save Job
   {{/quick-form}}
 </div>

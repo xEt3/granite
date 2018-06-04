@@ -21,6 +21,14 @@
       <label for="secondary-description">Testing Description</label>
       {{textarea value=model.description id="secondary-description" cols="80" rows="6" spellcheck="true"}}
     </div>
-    <button class="ui positive button" onSubmit="{{action 'save'}}">Save</button>
+
+    {{#form/action-button
+      type="submit"
+      class="ui positive button"
+      disabled=(or (not model.title) (not model.description))
+      loading=working
+    }}
+      Save
+    {{/form/action-button}}
   </form>
 </div>
