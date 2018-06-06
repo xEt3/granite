@@ -1,5 +1,5 @@
 <a class="avatar">
-  {{display/employee-picture url=comment.commenter.picture id=model.id}}
+  {{display/employee-picture url=comment.commenter.picture id=comment.commenter.id}}
 </a>
 <div class="content">
   {{#link-to 'account.employee' comment.commenter.id class='author'}}{{comment.commenter.fullName}}{{/link-to}}
