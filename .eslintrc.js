@@ -18,6 +18,8 @@ module.exports = {
     'semi': ['error', 'always'],
     'semi-spacing': [2, {'before': false, 'after': true}],
     'no-trailing-spaces': ['error', { 'ignoreComments': true }],
+    'space-after-keywords': ['error', 'never'],
+    'space-before-blocks': ['error'],
     'indent': [2, 2, {'VariableDeclarator': { 'var': 2, 'let': 2, 'const': 3}}],
     'no-alert': 0,
     'no-array-constructor': 2,
