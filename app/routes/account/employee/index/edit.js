@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import edit from 'granite/mixins/route-abstractions/edit';
+const employeeBelongsTo = [ 'location', 'department', 'supervisor' ];
 
 export default Route.extend(edit, {
   model () {
@@ -8,7 +9,14 @@ export default Route.extend(edit, {
 
   setupController (controller, model) {
     controller.setProperties({
-      currentDepartment: model.department
+      model: model,
+      currentDepartment: model.department,
+      initialRelationships: employeeBelongsTo.map(relationshipPath => {
+        return {
+          id: model.get(`${relationshipPath}.id`),
+          relationshipPath
+        }
+      })
     });
   }
 });

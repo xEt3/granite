@@ -10,21 +10,24 @@ const employeeBelongsTo = [ 'location', 'department', 'supervisor' ];
 export default Controller.extend(addEdit, {
   transitionAfterSave: 'account.employee.index',
   transitionWithModel: true,
-  // noDirtyModelAttributes: computed.not('model.hasDirtyAttributes'),
-  noDirtyModelAttributes: computed('model.hasDirtyAttributes', function () {
-    console.log('dirty? :', this.get('model.hasDirtyAttributes'));
-    return !this.get('model.hasDirtyAttributes');
+  noDirtyModelAttributes: computed('model.hasDirtyAttributes', 'relationshipsChanged', function () {
+    if (this.get('model.hasDirtyAttributes') || this.get('relationshipsChanged')) {
+      return false;
+    }
+    return true;
   }),
-  disabled: computed.or('loading', 'noDirtyModelAttributes'),
-  // test: computed(`model.{${employeeBelongsTo.join(',')}}`, function () {
-  //   console.log('in here');
-  // }),
 
-  test: computed(`model.[]`, function () {
-    console.log('something changed');
-    console.log('models department was:', this.get('currentDepartment'));
-    console.log('model now is:', this.get('model.department'));
+  relationshipsChanged: computed(`model.{${employeeBelongsTo.join(',')}}`, 'initialRelationships.[]', function () {
+    const initialRelationships = this.get('initialRelationships');
+    for (let i = 0; i < initialRelationships.length; i++) {
+      if (this.get(`model.${initialRelationships[i].relationshipPath}.id`) !== initialRelationships[i].id) {
+        return true;
+      }
+    }
+    return false;
   }),
+  
+  disabled: computed.or('loading', 'noDirtyModelAttributes'),
 
   actions: {
     selectEffectiveDate () {
