@@ -24,8 +24,6 @@ export default Controller.extend(addEdit, {
     return false;
   }),
 
-  disabled: computed.or('loading', 'noDirtyModelAttributes'),
-
   actions: {
     selectEffectiveDate () {
       this.set('responded', false);

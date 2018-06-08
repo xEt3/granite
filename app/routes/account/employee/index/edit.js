@@ -9,13 +9,13 @@ export default Route.extend(edit, {
 
   setupController (controller, model) {
     controller.setProperties({
-      model: model,
+      model,
       currentDepartment: model.department,
       initialRelationships: employeeBelongsTo.map(relationshipPath => {
         return {
-          id: model.get(`${relationshipPath}.id`),
-          relationshipPath
-        }
+          relationshipPath,
+          id: model.get(`${relationshipPath}.id`)
+        };
       })
     });
   }
