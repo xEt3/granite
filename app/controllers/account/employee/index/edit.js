@@ -1,11 +1,8 @@
 import Controller from '@ember/controller';
-import { computed, get } from '@ember/object';
+import { computed } from '@ember/object';
 import { Promise } from 'rsvp';
-import Employee from 'granite/models/employee';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import $ from 'jquery';
-
-const employeeBelongsTo = [ 'location', 'department', 'supervisor' ];
 
 export default Controller.extend(addEdit, {
   transitionAfterSave: 'account.employee.index',
@@ -17,7 +14,7 @@ export default Controller.extend(addEdit, {
     return true;
   }),
 
-  relationshipsChanged: computed(`model.{${employeeBelongsTo.join(',')}}`, 'initialRelationships.[]', function () {
+  relationshipsChanged: computed(`model.{location,department,supervisor}`, 'initialRelationships.[]', function () {
     const initialRelationships = this.get('initialRelationships');
     for (let i = 0; i < initialRelationships.length; i++) {
       if (this.get(`model.${initialRelationships[i].relationshipPath}.id`) !== initialRelationships[i].id) {
@@ -26,7 +23,7 @@ export default Controller.extend(addEdit, {
     }
     return false;
   }),
-  
+
   disabled: computed.or('loading', 'noDirtyModelAttributes'),
 
   actions: {
