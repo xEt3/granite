@@ -1,0 +1,53 @@
+{{#if hasBlock}}
+  {{yield startApplication}}
+{{/if}}
+
+{{#ui-modal name="application" id=modalId}}
+  <div class="header">
+    Add Asset Category
+  </div>
+  <div class="scrolling content">
+    <form class="ui form" {{action "save" on="submit"}}>
+
+      <div class="field">
+        <label for="asset-name">Asset Name</label>
+        <div class="ui left select-addon input pay-rate-number">
+          {{#ui-dropdown class="inline scrolling" selected=newAsset.icon onChange=(action (mut newAsset.icon))}}
+            <div class="default text">Icon</div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              {{#each icons as |icon|}}
+                <div class="item" data-value="{{icon}}">
+                  <i class="{{icon}} icon"></i>
+                </div>
+              {{/each}}
+            </div>
+          {{/ui-dropdown}}
+
+          {{input type="text" value=newAsset.name id="asset-name" placeholder="Keycards"}}
+        </div>
+      </div>
+      <div class="field">
+        <label for="asset-description">Description</label>
+        {{input type="text" value=newAsset.description id="asset-description" placeholder="All the keycards for our employees"}}
+      </div>
+      <div class="field center aligned text">
+        <div class="ui toggle checkbox">
+          <input type="checkbox">
+          <label>Can {{if newAsset.name newAsset.name 'these assets'}} be shared by employees?</label>
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+  <div class="actions">
+    <button class="ui inverted red button" {{action 'cancel'}}>
+      Cancel
+    </button>
+    <button class="ui green right labeled icon button" {{action 'save'}}>
+      Add Asset Category
+      <i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}
