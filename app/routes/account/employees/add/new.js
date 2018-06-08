@@ -7,7 +7,10 @@ export default Route.extend(add, {
   getModelDefaults () {
     return {
       company: this.get('auth.user.company'),
-      onboarder: this.get('auth.user')
+      onboarder: this.get('auth.user'),
+      onboarding: true,
+      onboardingStep: 0,
+      onboardingProgress: 0
     };
   }
 });
