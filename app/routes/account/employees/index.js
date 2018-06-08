@@ -45,6 +45,10 @@ export default Route.extend(resource, {
       query.terminatedOn = {
         $type: 9
       };
+    } else {
+      query.terminatedOn = {
+        $not: {$type:9}
+      };
     }
 
     [ 'onboarding', 'offboarding' ].forEach(v => {
