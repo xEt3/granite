@@ -7,12 +7,6 @@ import $ from 'jquery';
 export default Controller.extend(addEdit, {
   transitionAfterSave: 'account.employee.index',
   transitionWithModel: true,
-  noDirtyModelAttributes: computed('model.hasDirtyAttributes', 'relationshipsChanged', function () {
-    if (this.get('model.hasDirtyAttributes') || this.get('relationshipsChanged')) {
-      return false;
-    }
-    return true;
-  }),
 
   relationshipsChanged: computed(`model.{location,department,supervisor}`, 'initialRelationships.[]', function () {
     const initialRelationships = this.get('initialRelationships');
