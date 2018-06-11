@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import { resolve } from 'rsvp';
 import add from 'granite/mixins/route-abstractions/add';
-import {resolve} from 'rsvp';
 
 export default Route.extend(add, {
   modelName: 'location',
@@ -12,7 +12,7 @@ export default Route.extend(add, {
       .then(company => {
         return {
           company,
-          addressState: company.addressState,
+          addressState: company.get('addressState'),
           creator: this.get('auth.user')
         };
       });
