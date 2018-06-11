@@ -34,6 +34,10 @@
     </div>
   </div>
 
+  <div class="card-content__email">
+    <a href="mailto:{{application.person.email}}?subject=Regarding the {{application.jobOpening.job.title}} position">{{application.person.email}}</a>
+  </div>
+
   <div class="card-content__next-schedule">
     {{#if (await nextMeeting)}}
       Next meeting is {{time-ago (get (await nextMeeting) 'start')}}
