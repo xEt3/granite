@@ -1,7 +1,13 @@
-{{#if model}}
+<div class="right aligned text">
+  {{#input/equipment-picker assignableAssets=assignableAssets onSelect=(action 'selectAsset') onCreate=(action 'createAsset') newAssetCategory=(action 'newAssetCategory')}}
+    <h3 class="ui header"><a href="#"><i class="plus icon text-white "></i></a></h3>
+  {{/input/equipment-picker}}
+</div>
+
+{{#if assignedAssets}}
   <div class="ui basic segment">
     <div class="ui cards">
-      {{#each model as |asset|}}
+      {{#each assignedAssets as |asset|}}
         {{list-item/assigned-asset-item asset=asset employee=employee onUnassign=(action 'unassignAsset')}}
       {{/each}}
     </div>
@@ -12,9 +18,38 @@
     {{/if}}
   </div>
 {{else}}
-  <div class="ui grey segment">
-    <h2 class="header">No Items Assigned, Yet!</h2>
-    <h2 class="header">Assign some now<i class="big plus icon"></i></h2>
-  </div>
+  <h2 class="ui center aligned header text-white">
+    No assets assigned. Click "+" to assign some! <i class="right floated clockwise rotated reply icon"></i>
+  </h2>
 {{/if}}
-{{!-- TODO: Add the ability for the plus button to initiate adding assets items. --}}
+
+{{#ui-modal name="new-asset" class="new-asset" detachable=true onApprove=(action 'saveAsset') onDeny=(action 'abortAsset')}}
+  <i class="cancel close icon"></i>
+  <div class="header">
+    Creating a new item in "{{pendingAssetItem.asset.name}}" for {{model.firstName}}
+  </div>
+  <div class="content">
+    <form class="ui form container">
+      <div class="field">
+        <label for="asset-identifier">Asset Identifier</label>
+        {{input type="text" value=pendingAssetItem.identifier id="asset-identifier" placeholder="Unique identifier (VIN, Stock #, RFID)"}}
+      </div>
+
+      {{#if pendingAssetItem.asset.attributes}}
+        <div class="ui divider"></div>
+        {{#each pendingAssetItem.asset.attributes as |attribute|}}
+          {{input/custom-field object=pendingAssetItem.customFields attribute=attribute}}
+        {{/each}}
+      {{/if}}
+    </form>
+  </div>
+  <div class="actions">
+    <div class="ui negative deny button">
+      Cancel
+    </div>
+    <div class="ui positive right labeled icon button">
+      Create &amp; Assign Asset
+      <i class="check icon"></i>
+    </div>
+  </div>
+{{/ui-modal}}

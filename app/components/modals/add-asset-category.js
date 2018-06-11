@@ -32,25 +32,22 @@ export default Component.extend({
   }),
 
   closeModal () {
-    console.log('inside closeModal');
     $('#' + this.get('modalId')).modal('hide');
   },
 
   actions: {
     save () {
-      console.log('saving newAsset:', this.get('newAsset'));
-      this.get('newAsset').save().then(record => {
-        console.log('saved:', record);
+      this.get('newAsset').save().then(() => {
         this.setProperties({
           newAsset: null
         });
         this.closeModal();
+        this.get('newAssetCategory')();
       });
     },
 
     cancel () {
-      console.log('cancel button hit');
-      // this.get('newAsset').destroyRecord();
+      this.get('newAsset').destroyRecord();
       this.closeModal();
     }
   }

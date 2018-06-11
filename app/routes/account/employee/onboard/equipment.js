@@ -17,7 +17,7 @@ export default Route.extend({
           }
 
           return this.store.query('asset-item', itemQuery)
-          .then(stock => Object.create({ asset, stock }));
+            .then(stock => Object.create({ asset, stock }));
         });
       }),
 
@@ -33,5 +33,11 @@ export default Route.extend({
       assignableAssets: model.assignableAssets,
       assignedAssets: model.assignedAssets
     });
+  },
+
+  actions : {
+    refreshModel () {
+      this.refresh();
+    }
   }
 });
