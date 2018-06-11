@@ -27,7 +27,7 @@ export default Component.extend({
     return new Promise((resolve, reject) => this.setProperties({ resolve, reject }));
   },
 
-  startApplication: computed('modalId', function () {
+  startAddingAsset: computed('modalId', function () {
     return this.createConfirm.bind(this);
   }),
 

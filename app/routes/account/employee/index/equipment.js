@@ -7,7 +7,6 @@ export default Route.extend({
     let employee = this.modelFor('account.employee');
     return RSVP.hash({
       employee,
-      // assetItems: this.store.query('asset-item', { 'assignments.employee': employee.get('id') }),
       assignableAssets: this.store.query('asset', {}).then(assets => {
         return RSVP.map(assets.toArray(), asset => {
           let itemQuery = { asset: asset.get('id') };
