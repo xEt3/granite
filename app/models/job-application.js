@@ -10,6 +10,7 @@ export default Model.extend({
   stageOrder:    attr('number'),
   manualEntry:   attr('boolean'),
   disqualified:  attr('boolean'),
+  disqualifiedEmail: attr('boolean'),
   scoreAdditive: attr('number'),
   scoreRelative: attr('number'),
 
