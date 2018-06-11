@@ -31,6 +31,7 @@ export default Controller.extend(addEdit, {
     model.get('correctiveActionSeverities').forEach(s => {
       if (!s.get('id')) {
         s.destroy();
+        model.get('correctiveActionSeverities').removeObject(s);
       }
     });
   },
