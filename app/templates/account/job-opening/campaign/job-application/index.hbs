@@ -19,10 +19,10 @@
     </div>
     <div class="ui divider"></div>
 
-    {{#if (and opening.screening model.scoreRelative)}}
+    {{#if opening.screening}}
       <h3>Screening</h3>
       <p>
-        This applicant is a <strong>{{model.scoreRelative}}% match</strong> based on their responses to your screening.
+        {{#if model.scoreRelative}}This applicant is a <strong>{{model.scoreRelative}}% match</strong> based on their responses to your screening.{{/if}}
         <a href="#" {{action openModal responsesModalId 'responses'}}>View responses</a>
       </p>
     {{/if}}
