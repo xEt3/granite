@@ -28,12 +28,15 @@ export default Controller.extend(addEdit, {
   }]),
 
   afterSave (model) {
-    model.get('correctiveActionSeverities').forEach(s => {
+    let correctiveActionSeverities = model.get('correctiveActionSeverities'),
+        removeDuplicates = [];
+    correctiveActionSeverities.forEach(s => {
       if (!s.get('id')) {
         s.destroy();
-        model.get('correctiveActionSeverities').removeObject(s);
+        removeDuplicates.push(s);
       }
     });
+    correctiveActionSeverities.removeObjects(removeDuplicates);
   },
 
   actions: {
