@@ -1,4 +1,5 @@
-/* eslint-env node */
+'use strict';
+
 const EmberApp  = require('ember-cli/lib/broccoli/ember-app'),
       globSync  = require('glob').sync,
       fs        = require('fs'),
@@ -9,7 +10,7 @@ const includes = [
   'intro.js/introjs.css',
   'At.js/dist/js/jquery.atwho.js',
   'Caret.js/dist/jquery.caret.js',
-  'At.js/dist/css/jquery.atwho.min.css',
+  'At.js/dist/css/jquery.atwho.min.css'
 ];
 
 const nodeIncludes = [

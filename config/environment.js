@@ -26,6 +26,7 @@ module.exports = function(environment) {
     moment: {
       includeTimezone: 'all'
     },
+
     emberRollbarClient: {
       enabled: environment === 'production',
       accessToken: '6f016ff3c5ef495b9c894871857aefd4'
