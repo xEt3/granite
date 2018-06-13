@@ -7,6 +7,19 @@ export default Controller.extend(addEdit, {
     return `ui middle aligned divided list screening__form-elements ${this.get('showingPreview') ? 'screening__form-elements--preview' : ''}`;
   }),
 
+  afterSave () {
+    let form = this.get('form'),
+        removeDuplicates = [];
+
+    form.get('elements').forEach(e => {
+      if (!e.get('id')) {
+        e.destroy();
+        removeDuplicates.push(e);
+      }
+    });
+    form.get('elements').removeObjects(removeDuplicates);
+  },
+
   actions: {
     addFormElement () {
       let formElement = this.store.createRecord('form-element', {});
@@ -30,16 +43,10 @@ export default Controller.extend(addEdit, {
       });
 
       this.saveModel(f)
-      .then(form => {
-        form.get('elements').forEach(e => {
-          if (!e.get('id')) {
-            e.destroy();
-          }
+        .then(form => {
+          this.set('model.screening', form);
+          this.get('target').send('saveAndContinue');
         });
-
-        this.set('model.screening', form);
-        this.get('target').send('saveAndContinue');
-      });
     }
   }
 });
