@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import { resolve } from 'rsvp';
 import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
@@ -7,9 +8,13 @@ export default Route.extend(add, {
   auth: service(),
 
   getModelDefaults () {
-    return {
-      company: this.get('auth.user.company'),
-      creator: this.get('auth.user')
-    };
+    return resolve(this.get('auth.user.company'))
+      .then(company => {
+        return {
+          company,
+          addressState: company.get('addressState'),
+          creator: this.get('auth.user')
+        };
+      });
   }
 });

@@ -40,10 +40,10 @@ export default Controller.extend({
     title: 'Company Assets',
     link: 'assets'
   }, {
-    icon: 'doctor',
-    title: 'Leave Management',
-    link: 'index'
-  }, {
+  //   icon: 'doctor',
+  //   title: 'Leave Management',
+  //   link: 'index'
+  // }, {
     icon: 'sitemap',
     title: 'Company Anatomy',
     link: 'anatomy'
