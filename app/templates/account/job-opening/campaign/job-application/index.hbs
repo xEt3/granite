@@ -67,7 +67,7 @@
           {{#if group.response.value.weight}}
             <span class="ui label">{{group.response.value.weight}}</span>
           {{/if}}
-          {{if group.response.value.text group.response.value.text group.response.value}}
+          {{or group.response.value.text group.response.value}}
         </p>
       </div>
     {{/each}}
