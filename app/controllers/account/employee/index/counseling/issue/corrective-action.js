@@ -38,11 +38,16 @@ export default Controller.extend(addEdit, del, {
   }]),
 
   afterSave (model) {
-    model.get('followUps').forEach(f => {
+    let followUps = model.get('followUps'),
+        removeDuplicates = [];
+
+    followUps.forEach(f => {
       if (!f.get('id')) {
         f.destroy();
+        removeDuplicates.push(f);
       }
     });
+    followUps.removeObjects(removeDuplicates);
   },
 
   createFollowup () {
@@ -77,7 +82,7 @@ export default Controller.extend(addEdit, del, {
 
       action.get('followUps').addObject(followup);
       this.saveModel()
-      .then(() => this.set('followup', null));
+        .then(() => this.set('followup', null));
     },
 
     openFollowupModal () {
