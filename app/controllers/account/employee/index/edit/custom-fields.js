@@ -72,7 +72,7 @@ export default Controller.extend({
       this.setProperties({
         pendingCustomFieldValue: null,
         pendingCustomFieldName: null,
-        adding: false
+        adding: true
       });
       model.set('hasDirtyAttributes', true);
     },
