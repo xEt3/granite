@@ -30,6 +30,7 @@ export default Controller.extend(addEdit, {
   afterSave (model) {
     let correctiveActionSeverities = model.get('correctiveActionSeverities'),
         removeDuplicates = [];
+
     correctiveActionSeverities.forEach(s => {
       if (!s.get('id')) {
         s.destroy();
