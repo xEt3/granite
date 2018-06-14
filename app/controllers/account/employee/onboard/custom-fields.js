@@ -53,7 +53,7 @@ export default Controller.extend(addEdit, {
         this.setProperties({
           pendingCustomFieldValue: null,
           pendingCustomFieldName: null,
-          adding: false
+          adding: true
         });
       });
     },
