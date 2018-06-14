@@ -36,6 +36,8 @@ export default Model.extend(Validations, {
   urlPrefix: attr('string'),
   collectEEO: attr('boolean'),
 
+  visitedFirstSteps: attr('array'),
+
   linkedToSlate: computed('linkedServices.[]', function () {
     let services = this.get('linkedServices');
     return services ? services.includes('slate') : false;
