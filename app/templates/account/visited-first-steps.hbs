@@ -1,50 +1,79 @@
 <div class="ui center aligned container first-steps">
   <div id=title>
-  <h1>First Steps with Granite</h1>
+  <h1 class="ui text-white header">First Steps with Granite</h1>
 </div>
+
 <div class="ui stackable grid">
   <div class="five wide column">
-    <div class="ui segment">
-      {{log this.target.currentURL}}
-      {{log model}}
-      {{log $Employees}}
+    {{#link-to 'account.anatomy' class="ui segment raised link card"}}
 
+
+
+
+      {{log model.departmentCount}}
+      {{#if (and (gte model.locationCount 1) (gte model.departmentCount 1))}}
       <div class="done__icon overlay">
         <i class="massive check icon"></i>
       </div>
+      {{/if}}
       <h3>Anatomy</h3>
       <p class="spacing">Anatomy is where you will find "Departments", "Locations", and "Users".  </p>
-      <div class="ui bottom attached orange label">
-        <p>add a location</p>
-        <p>add a department</p>
+
+      <div class="ui bottom attached gray label first-steps__steps">
+        <p>add a location{{#if (gte model.locationCount 1)}}
+
+        <i class="check icon"></i>
+
+        {{/if}}</p>
+
+        <p>add a department{{#if (gte model.departmentCount 1)}}
+        <div class="done__icon__department">
+
+         <i class="check icon"></i>
+
+        </div>
+
+        {{/if}}</p>
+
+
+
+
       </div>
-    </div>
+
+
+{{/link-to}}
   </div>
 
   <div class="five wide column">
-    <div class="ui segment">
+    {{#link-to 'account.employees' class="ui segment raised link card"}}
+      {{#if (gte model.employeeCount 2)}}
       <div class="done__icon overlay">
         <i class="massive check icon"></i>
       </div>
+      {{/if}}
       <h3>Employees</h3>
       <p class="spacing">Employees is where you can add/remove or make changes to your current empolyees.</p>
-      <div class="ui bottom attached orange label">
+      <div class="ui bottom attached gray label">
         <p>add an Employee</p>
       </div>
-    </div>
+    {{/link-to}}
   </div>
 
   <div class="five wide column">
-    <div class="ui segment">
+
+    {{#link-to 'account.settings' class="ui segment raised link card"}}
+      {{#if (gte model.changeQueue 2)}}
       <div class="done__icon overlay">
         <i class="massive check icon"></i>
       </div>
+      {{/if}}
       <h3>Settings</h3>
       <p class="spacing">Settings is where you can find "Billing", "Intergrations" and "Templates" you make your life eaiser.</p>
-      <div class="ui bottom attached orange label">
+      <div class="ui bottom attached gray label">
         <p>visit settings (top right corner)</p>
       </div>
-    </div>
+    {{/link-to}}
+
   </div>
 </div>
 </div>
