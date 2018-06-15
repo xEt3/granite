@@ -33,6 +33,9 @@ export default Model.extend(Validations, {
   logoDominantColor: attr('string'),
   logoPalette: attr('array'),
 
+  firstStepsCompletedOn: attr('date'),
+  firstStepsCompleted: attr('array'),
+
   urlPrefix: attr('string'),
   collectEEO: attr('boolean'),
 

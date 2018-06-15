@@ -3,10 +3,12 @@ import { inject as service } from '@ember/service';
 import { hash } from 'rsvp';
 
 export default Route.extend({
+  auth: service(),
   ajax: service(),
 
   model () {
     return hash({
+      company: this.get('auth.user.company'),
       employeeCount: this.get('ajax').request('/api/v1/employees', {
         data: {
           _count: true,
@@ -28,5 +30,25 @@ export default Route.extend({
         }
       }).then(response => response && response.count)
     });
+  },
+
+  afterModel (model) {
+    const firstStepsCompleted = model.company.get('firstStepsCompleted');
+
+    if (model.employeeCount && !firstStepsCompleted.includes('employees')) {
+      firstStepsCompleted.addObject('employees');
+    }
+
+    if (model.locationCount && model.departmentCount && !firstStepsCompleted.includes('anatomy')) {
+      firstStepsCompleted.addObject('anatomy');
+    }
+
+    if (firstStepsCompleted.length === 3) {
+      model.set('firstStepsCompletedOn', new Date());
+    }
+
+    if (model.get('hasDirtyAttributes')) {
+      return model.save();
+    }
   }
 });
