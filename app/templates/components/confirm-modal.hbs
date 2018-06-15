@@ -9,7 +9,7 @@
   </div>
   <div class="content">
     {{if confirmContent confirmContent 'Are you sure you want to remove'}}
-    <strong>"{{this.parentView._targetObject.content.name}}"</strong> and all of its assets?
+    <strong>"{{deleteContext}}"</strong> and all of its assets?
   </div>
   <div class="actions">
     <button class="ui inverted red button" {{action 'respond' false}}>
