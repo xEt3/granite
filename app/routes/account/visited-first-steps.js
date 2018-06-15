@@ -44,11 +44,11 @@ export default Route.extend({
     }
 
     if (firstStepsCompleted.length === 3) {
-      model.set('firstStepsCompletedOn', new Date());
+      model.company.set('firstStepsCompletedOn', new Date());
     }
 
-    if (model.get('hasDirtyAttributes')) {
-      return model.save();
+    if (model.company.get('hasDirtyAttributes')) {
+      return model.company.save();
     }
   }
 });
