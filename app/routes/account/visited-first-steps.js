@@ -45,6 +45,7 @@ export default Route.extend({
 
     if (firstStepsCompleted.length === 3) {
       model.company.set('firstStepsCompletedOn', new Date());
+      // this.transitionTo('account');
     }
 
     if (model.company.get('hasDirtyAttributes')) {

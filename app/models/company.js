@@ -6,7 +6,7 @@ import { A } from '@ember/array';
 import moment from 'moment';
 import Validations from './validations/company';
 
-export default Model.extend(Validations, {
+export default Model.extend(Validations,  {
   name:  attr('string'),
   email: attr('string'),
 
@@ -39,8 +39,6 @@ export default Model.extend(Validations, {
 
   urlPrefix: attr('string'),
   collectEEO: attr('boolean'),
-
-  visitedFirstSteps: attr('array'),
 
   linkedToSlate: computed('linkedServices.[]', function () {
     let services = this.get('linkedServices');

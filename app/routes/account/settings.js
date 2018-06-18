@@ -8,5 +8,17 @@ export default Route.extend(addEdit, {
 
   model () {
     return this.get('auth.user.company');
+  },
+
+  afterModel (model) {
+    const firstStepsCompleted = model.get('firstStepsCompleted');
+
+    if (!firstStepsCompleted.includes('settings')) {
+      firstStepsCompleted.addObject('settings');
+    }
+
+    if (model.get('hasDirtyAttributes')) {
+      return model.save();
+    }
   }
 });
