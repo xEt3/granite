@@ -29,9 +29,10 @@
           {{/unless}}
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
-            {{#confirm-modal as |confirm|}}
+            {{#confirm-modal  as deleteContext=model.fullName as |confirm|}}
               <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}><i class="trash icon"></i>Delete Record</a>
             {{/confirm-modal}}
+            {{log model}}
           </div>
         </div>
       {{/ui-dropdown}}

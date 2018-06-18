@@ -57,8 +57,7 @@
                 <i class="close icon"></i>Cancel Action Item
               </a>
             {{/confirm-modal}}
-
-            {{#confirm-modal class="item" as |confirm|}}
+            {{#confirm-modal as deleteContext=model.title class="item" as |confirm|}}
               <a href="#" id="action-item__action--delete" {{action (pipe confirm (action 'delete'))}}>
                 <i class="trash icon"></i>Delete Record
               </a>
