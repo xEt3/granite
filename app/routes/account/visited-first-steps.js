@@ -34,21 +34,25 @@ export default Route.extend({
 
   afterModel (model) {
     const firstStepsCompleted = model.company.get('firstStepsCompleted');
+    let change = false;
 
     if (model.employeeCount && !firstStepsCompleted.includes('employees')) {
       firstStepsCompleted.addObject('employees');
+      change = true;
     }
 
     if (model.locationCount && model.departmentCount && !firstStepsCompleted.includes('anatomy')) {
       firstStepsCompleted.addObject('anatomy');
+      change = true;
     }
 
     if (firstStepsCompleted.length === 3) {
       model.company.set('firstStepsCompletedOn', new Date());
+      change = true;
       // this.transitionTo('account');
     }
 
-    if (model.company.get('hasDirtyAttributes')) {
+    if (change) {
       return model.company.save();
     }
   }

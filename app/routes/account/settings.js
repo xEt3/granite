@@ -15,9 +15,6 @@ export default Route.extend(addEdit, {
 
     if (!firstStepsCompleted.includes('settings')) {
       firstStepsCompleted.addObject('settings');
-    }
-
-    if (model.get('hasDirtyAttributes')) {
       return model.save();
     }
   }
