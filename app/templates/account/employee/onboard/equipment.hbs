@@ -5,7 +5,11 @@
 <form class="ui form" {{action "saveAndContinue" on="submit"}}>
   <div class="ui basic segment">
     <div class="right aligned text">
-      {{#input/equipment-picker assignableAssets=assignableAssets onSelect=(action 'selectAsset') onCreate=(action 'createAsset') newAssetCategory=(action 'newAssetCategory')}}
+      {{#input/equipment-picker
+        assignableAssets=assignableAssets
+        onSelect=(action 'selectAsset')
+        onCreate=(action 'createAsset')
+        newAssetCategory=(action 'newAssetCategory')}}
         <h3 class="ui header"><a href="#"><i class="plus icon"></i></a></h3>
       {{/input/equipment-picker}}
     </div>

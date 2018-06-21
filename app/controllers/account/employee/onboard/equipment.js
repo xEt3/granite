@@ -110,7 +110,7 @@ export default Controller.extend(ajaxStatus, {
     },
 
     newAssetCategory () {
-      this.send('refreshModel');
+      this.send('refresh');
     }
   }
 });

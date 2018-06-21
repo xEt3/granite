@@ -1,14 +1,21 @@
 <div class="right aligned text">
-  {{#input/equipment-picker assignableAssets=assignableAssets onSelect=(action 'selectAsset') onCreate=(action 'createAsset') newAssetCategory=(action 'newAssetCategory')}}
-    <h3 class="ui header"><a href="#"><i class="plus icon text-white "></i></a></h3>
+  {{#input/equipment-picker
+    assignableAssets=assignableAssets
+    onSelect=(action 'selectAsset')
+    onCreate=(action 'createAsset')
+    newAssetCategory=(action 'newAssetCategory')}}
+    <h3 class="ui header"><a href="#"><i class="plus icon text-white"></i></a></h3>
   {{/input/equipment-picker}}
 </div>
 
-{{#if assignedAssets}}
+{{#if model}}
   <div class="ui basic segment">
     <div class="ui cards">
-      {{#each assignedAssets as |asset|}}
-        {{list-item/assigned-asset-item asset=asset employee=employee onUnassign=(action 'unassignAsset')}}
+      {{#each model as |asset|}}
+        {{list-item/assigned-asset-item
+          asset=asset
+          employee=employee
+          onUnassign=(action 'unassignAsset')}}
       {{/each}}
     </div>
     {{#if working}}
@@ -26,7 +33,7 @@
 {{#ui-modal name="new-asset" class="new-asset" detachable=true onApprove=(action 'saveAsset') onDeny=(action 'abortAsset')}}
   <i class="cancel close icon"></i>
   <div class="header">
-    Creating a new item in "{{pendingAssetItem.asset.name}}" for {{model.firstName}}
+    Creating a new item in "{{pendingAssetItem.asset.name}}" for {{employee.firstName}}
   </div>
   <div class="content">
     <form class="ui form container">

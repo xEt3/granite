@@ -13,7 +13,7 @@ export default Controller.extend(ajaxStatus, {
 
       this.set('pendingAssetItem', this.store.createRecord('asset-item', {
         asset: category,
-        identifier: this.get('model.firstName') + '\'s ' + singularize(category.get('name')),
+        identifier: this.get('employee.firstName') + '\'s ' + singularize(category.get('name')),
         creator: user,
         company: user.get('company')
       }));
@@ -44,7 +44,7 @@ export default Controller.extend(ajaxStatus, {
       this.ajaxStart();
 
       let user = this.get('auth.user'),
-          employee = this.get('model');
+          employee = this.get('employee');
 
       if ( asset.get('assignments').findBy('employee.id', employee.get('id')) ) {
         this.ajaxSuccess(null, true);
@@ -60,16 +60,16 @@ export default Controller.extend(ajaxStatus, {
 
       asset.save()
         .then(assetItem => {
-          this.get('assignedAssets').addObject(assetItem);
+          this.get('model').addObject(assetItem);
           this.ajaxSuccess(null, true);
         })
         .catch(this.ajaxError.bind(this));
     },
 
     unassignAsset ( asset ) {
-      this.get('assignedAssets').removeObject(asset);
+      this.get('model').removeObject(asset);
 
-      let assignment = asset.get('assignments').findBy('employee.id', this.get('model.id'));
+      let assignment = asset.get('assignments').findBy('employee.id', this.get('employee.id'));
 
       if ( assignment ) {
         this.ajaxStart();
@@ -81,7 +81,7 @@ export default Controller.extend(ajaxStatus, {
     },
 
     newAssetCategory () {
-      this.send('refreshModel');
+      this.send('refresh');
     }
   }
 });

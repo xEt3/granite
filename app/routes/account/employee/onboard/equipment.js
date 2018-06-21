@@ -1,8 +1,9 @@
 import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
+import refreshable from 'granite/mixins/refreshable';
 import Object from '@ember/object';
 
-export default Route.extend({
+export default Route.extend(refreshable, {
   model () {
     let employee = this.modelFor('account.employee.onboard');
 
@@ -33,11 +34,5 @@ export default Route.extend({
       assignableAssets: model.assignableAssets,
       assignedAssets: model.assignedAssets
     });
-  },
-
-  actions : {
-    refreshModel () {
-      this.refresh();
-    }
   }
 });

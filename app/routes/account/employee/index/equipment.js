@@ -1,8 +1,9 @@
 import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
+import refreshable from 'granite/mixins/refreshable';
 import Object from '@ember/object';
 
-export default Route.extend({
+export default Route.extend(refreshable, {
   model () {
     let employee = this.modelFor('account.employee');
     return RSVP.hash({
@@ -28,15 +29,9 @@ export default Route.extend({
   },
   setupController ( controller, model ) {
     controller.setProperties({
-      model: model.employee,
-      assignableAssets: model.assignableAssets,
-      assignedAssets: model.assignedAssets
+      model: model.assignedAssets,
+      employee: model.employee,
+      assignableAssets: model.assignableAssets
     });
-  },
-
-  actions : {
-    refreshModel () {
-      this.refresh();
-    }
   }
 });
