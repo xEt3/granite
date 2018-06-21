@@ -43,10 +43,10 @@ export default Controller.extend(addEdit, {
       });
 
       this.saveModel(f)
-        .then(form => {
-          this.set('model.screening', form);
-          this.get('target').send('saveAndContinue');
-        });
+      .then(form => {
+        this.set('model.screening', form);
+        this.get('target').send('saveAndContinue');
+      });
     }
   }
 });
