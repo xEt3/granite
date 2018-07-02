@@ -1,8 +1,9 @@
 import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
+import refreshable from 'granite/mixins/refreshable';
 import Object from '@ember/object';
 
-export default Route.extend({
+export default Route.extend(refreshable, {
   model () {
     let employee = this.modelFor('account.employee.onboard');
 
@@ -17,7 +18,7 @@ export default Route.extend({
           }
 
           return this.store.query('asset-item', itemQuery)
-          .then(stock => Object.create({ asset, stock }));
+            .then(stock => Object.create({ asset, stock }));
         });
       }),
 

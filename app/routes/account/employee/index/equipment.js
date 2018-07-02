@@ -1,19 +1,37 @@
 import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
+import refreshable from 'granite/mixins/refreshable';
+import Object from '@ember/object';
 
-export default Route.extend({
+export default Route.extend(refreshable, {
   model () {
     let employee = this.modelFor('account.employee');
     return RSVP.hash({
-      assetItems: this.store.query('asset-item', { 'assignments.employee': employee.get('id') }),
-      employee
+      employee,
+      assignableAssets: this.store.query('asset', {}).then(assets => {
+        return RSVP.map(assets.toArray(), asset => {
+          let itemQuery = { asset: asset.get('id') };
+
+          if ( !asset.get('sharable') ) {
+            itemQuery['assignments.0'] = { $exists: false };
+          }
+
+          return this.store.query('asset-item', itemQuery)
+            .then(stock => Object.create({ asset, stock }));
+        });
+      }),
+
+      assignedAssets: this.store.query('asset-item', {
+        'assignments.employee': employee.get('id')
+      }).then(assets => assets.toArray())
     });
 
   },
   setupController ( controller, model ) {
     controller.setProperties({
-      model: model.assetItems,
-      employee: model.employee
+      model: model.assignedAssets,
+      employee: model.employee,
+      assignableAssets: model.assignableAssets
     });
   }
 });
