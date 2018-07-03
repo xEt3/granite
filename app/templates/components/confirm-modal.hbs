@@ -8,10 +8,7 @@
     {{if title title 'Heads up!'}}
   </div>
   <div class="content">
-    {{if confirmContent confirmContent 'Are you sure you want to remove'}}
-    {{#if deleteContext}}
-    <strong>"{{deleteContext}}" ?</strong>
-    {{/if}}
+    {{if confirmContent confirmContent (if deleteContext (concat 'Are you sure you want to remove ' deleteContext '?') 'Are you sure you want to remove that?')}}
   </div>
   <div class="actions">
     <button class="ui inverted red button" {{action 'respond' false}}>
