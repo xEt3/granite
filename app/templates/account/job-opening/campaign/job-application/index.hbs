@@ -19,10 +19,10 @@
     </div>
     <div class="ui divider"></div>
 
-    {{#if (and opening.screening model.scoreRelative)}}
+    {{#if opening.screening}}
       <h3>Screening</h3>
       <p>
-        This applicant is a <strong>{{model.scoreRelative}}% match</strong> based on their responses to your screening.
+        {{#if model.scoreRelative}}This applicant is a <strong>{{model.scoreRelative}}% match</strong> based on their responses to your screening.{{/if}}
         <a href="#" {{action openModal responsesModalId 'responses'}}>View responses</a>
       </p>
     {{/if}}
@@ -67,7 +67,7 @@
           {{#if group.response.value.weight}}
             <span class="ui label">{{group.response.value.weight}}</span>
           {{/if}}
-          {{group.response.value.text}}
+          {{or group.response.value.text group.response.value}}
         </p>
       </div>
     {{/each}}

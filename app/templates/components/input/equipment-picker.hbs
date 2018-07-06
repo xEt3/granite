@@ -6,6 +6,17 @@
       <i class="search icon"></i>
       <input type="text" name="search" placeholder="Search Equipment...">
     </div>
+
+    {{#modals/add-asset-category
+      class="ui center aligned text"
+      newAssetCategory=newAssetCategory
+      as |openAddCategoryModal|
+    }}
+      <a href="#" class="smaller text" {{action openAddCategoryModal}}>
+        <i class="ui plus icon"></i> Add Asset Category
+      </a>
+    {{/modals/add-asset-category}}
+
     {{#each assignableAssets as |assetGroup|}}
       <div class="item">
         <i class="left dropdown icon"></i>
@@ -36,6 +47,12 @@
           {{/each}}
         </div>
       </div>
+      {{else}}
+        <div class="item">
+          <span class="text">
+            No Asset Categories
+          </span>
+        </div>
     {{/each}}
   </div>
 {{/ui-dropdown}}

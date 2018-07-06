@@ -7,8 +7,16 @@ import $ from 'jquery';
 export default Controller.extend(addEdit, {
   transitionAfterSave: 'account.employee.index',
   transitionWithModel: true,
-  noDirtyModelAttributes: computed.not('model.hasDirtyAttributes'),
-  disabled: computed.or('loading', 'noDirtyModelAttributes'),
+
+  relationshipsChanged: computed(`model.{location,department,supervisor}`, 'initialRelationships.[]', function () {
+    const initialRelationships = this.get('initialRelationships');
+    for (let i = 0; i < initialRelationships.length; i++) {
+      if (this.get(`model.${initialRelationships[i].relationshipPath}.id`) !== initialRelationships[i].id) {
+        return true;
+      }
+    }
+    return false;
+  }),
 
   actions: {
     selectEffectiveDate () {
