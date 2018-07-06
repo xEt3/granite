@@ -7,6 +7,13 @@
     Are you sure you want to {{#if model}}disqualify {{model.person.firstName}} for this position{{else}}do that{{/if}}?
   </div>
   <div class="actions">
+    {{#ui-checkbox checked=model.disqualificationEmail onChange=(action (mut model.disqualificationEmail))}}
+      <label class="text-white">Send Rejection Notification
+        {{#if model}}
+          to {{model.person.firstName}} (<a href="mailto:{{model.person.email}}" class="ats-confirm-disqualify__email-link">{{model.person.email}}</a>)
+        {{/if}}?
+      </label>
+    {{/ui-checkbox}}
     <button class="ui inverted red button" {{action 'respond' false}}>
       Cancel
     </button>

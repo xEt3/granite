@@ -4,14 +4,15 @@ import { belongsTo } from 'ember-data/relationships';
 import { computed } from '@ember/object';
 
 export default Model.extend({
-  coverLetter:   attr('string'),
-  responses:     attr('array'),
-  stage:         attr('string'),
-  stageOrder:    attr('number'),
-  manualEntry:   attr('boolean'),
-  disqualified:  attr('boolean'),
-  scoreAdditive: attr('number'),
-  scoreRelative: attr('number'),
+  coverLetter:           attr('string'),
+  responses:             attr('array'),
+  stage:                 attr('string'),
+  stageOrder:            attr('number'),
+  manualEntry:           attr('boolean'),
+  disqualified:          attr('boolean'),
+  disqualificationEmail: attr('boolean'),
+  scoreAdditive:         attr('number'),
+  scoreRelative:         attr('number'),
 
   resume:     belongsTo('file', { async: true, inverse: null }),
   jobOpening: belongsTo('job-opening', { async: true, inverse: null }),
