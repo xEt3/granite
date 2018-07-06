@@ -8,10 +8,10 @@
     </div>
     {{outlet}}
     <div class="ui divider"></div>
-    {{#form/action-button type="submit" class="ui massive fluid green button" disabled=disabled loading=working}}
+    {{#form/action-button type="submit" class="ui massive fluid green button" disabled=(not (or model.hasDirtyAttributes relationshipsChanged)) loading=working}}
       <i class="save icon"></i>Save
     {{/form/action-button}}
-    <button type="button" class="ui massive fluid basic button" disabled={{disabled}} {{action (pipe (action 'selectEffectiveDate') (action 'save'))}}>
+    <button type="button" class="ui massive fluid basic button" disabled={{not (or model.hasDirtyAttributes relationshipsChanged)}} {{action (pipe (action 'selectEffectiveDate') (action 'save'))}}>
       <i class="calendar icon"></i>Save with effective date
     </button>
   </form>

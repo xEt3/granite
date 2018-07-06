@@ -144,7 +144,7 @@ export default Component.extend(ajaxStatus, {
           this.ajaxSuccess('Saved application successfully');
           this.setProperties({
             newApplicant: null,
-            newApplication: null,
+            newApplication: null
           });
           this.send('removeFile');
           this.closeModal();
