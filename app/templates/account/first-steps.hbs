@@ -1,0 +1,64 @@
+<div class="ui hero cover grey overlay hero__first-steps-cover">
+  <div class="ui center aligned container first-steps hero__content">
+    <h1 class="ui text-white header first-steps__header">
+      Welcome to Granite Human Resources<br />
+      <small>
+        Here are a few steps you can take to get your company started with Granite
+      </small>
+    </h1>
+
+    <div class="ui divider"></div>
+
+    <div class="ui stackable three column grid">
+      <div class="column">
+        {{#link-to 'account.anatomy' class="ui segment raised link card first-steps__card"}}
+          {{#if (contains 'anatomy' model.company.firstStepsCompleted)}}
+            <div class="done__icon overlay">
+              <i class="massive check icon"></i>
+            </div>
+          {{/if}}
+          <h3>Anatomy</h3>
+          <p class="spacing">Anatomy is where you will find "Departments", "Locations", and "Users".</p>
+          <div class="ui bottom attached gray label first-steps__steps">
+            <p>add a location{{#if (gte model.locationCount 1)}}
+            <i class="check icon"></i>
+            {{/if}}</p>
+            <p>add a department{{#if (gte model.departmentCount 1)}}
+            <div class="done__icon__department">
+             <i class="check icon"></i>
+            </div>
+            {{/if}}</p>
+          </div>
+        {{/link-to}}
+      </div>
+      <div class="column">
+        {{#link-to 'account.employees' class="ui segment raised link card first-steps__card"}}
+          {{#if (contains 'employees' model.company.firstStepsCompleted)}}
+            <div class="done__icon overlay">
+              <i class="massive check icon"></i>
+            </div>
+          {{/if}}
+          <h3>Employees</h3>
+          <p class="spacing">Employees is where you can add/remove or make changes to your current empolyees.</p>
+          <div class="ui bottom attached gray label">
+            <p>add an Employee</p>
+          </div>
+        {{/link-to}}
+      </div>
+      <div class="column">
+        {{#link-to 'account.settings' class="ui segment raised link card first-steps__card"}}
+          {{#if (contains 'settings' model.company.firstStepsCompleted)}}
+            <div class="done__icon overlay">
+              <i class="massive check icon"></i>
+            </div>
+          {{/if}}
+          <h3>Settings</h3>
+          <p class="spacing">Settings is where you can find "Billing", "Intergrations" and "Templates" to make your life easier.</p>
+          <div class="ui bottom attached gray label">
+            <p>visit settings (top right corner)</p>
+          </div>
+        {{/link-to}}
+      </div>
+    </div>
+  </div>
+</div>
