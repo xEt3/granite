@@ -1,0 +1,19 @@
+{{#link-to step.link class=linkClass}}
+  {{#if completed}}
+    <div class="done__icon overlay">
+      <i class="massive check icon"></i>
+    </div>
+  {{/if}}
+  <h3>{{step.title}}</h3>
+  <p class="spacing">{{step.description}}</p>
+  {{!-- <div class="ui bottom attached gray label first-steps__steps">
+    <p>add a location{{#if (gte model.locationCount 1)}}
+    <i class="check icon"></i>
+    {{/if}}</p>
+    <p>add a department{{#if (gte model.departmentCount 1)}}
+    <div class="done__icon__department">
+     <i class="check icon"></i>
+    </div>
+    {{/if}}</p>
+  </div> --}}
+{{/link-to}}
