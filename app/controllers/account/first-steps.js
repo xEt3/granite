@@ -6,18 +6,24 @@ export default Controller.extend({
     return [{
       key: 'anatomy',
       title: 'Anatomy',
-      description: 'Anatomy is where you will find "Departments", "Locations", and "Users".',
-      link: 'account.anatomy'
+      icon: 'sitemap',
+      description: 'Start in anatomy to create panel users, departments, locations, and review your company\'s organizational chart.',
+      link: 'account.anatomy',
+      condition: 'Create a department and location'
     }, {
       key: 'employees',
       title: 'Employees',
-      description: 'Employees is where you can add/remove or make changes to your current empolyees.',
-      link: 'account.employees'
+      icon: 'users',
+      description: 'Add employees, view personnel information, approve and review change requests, and perform HR actions here.',
+      link: 'account.employees',
+      condition: 'Create an employee'
     }, {
       key: 'settings',
       title: 'Settings',
-      description: 'Settings is where you can find "Billing", "Integrations" and "Templates" to make your life easier.',
-      link: 'account.settings'
+      icon: 'settings',
+      description: 'Edit billing information, customize email/action templates, change company branding and company settings.',
+      link: 'account.settings',
+      condition: 'Visit the settings page'
     }];
   })
 });

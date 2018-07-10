@@ -3,19 +3,28 @@
     <h1 class="ui text-white header first-steps__header">
       Welcome to Granite Human Resources<br />
       <small>
-        Here are a few steps you can take to get your company started with Granite
+        Once you complete these first steps, you'll see a company activity feed.
       </small>
     </h1>
 
     <div class="ui divider"></div>
 
-    <div class="ui stackable three column grid">
-      {{#each steps as |step|}}
-        {{display/first-steps
-          step
-          completed=(contains step.key model.company.firstStepsCompleted)
-        }}
-      {{/each}}
+    <div class="first-steps__container {{if model.company.firstStepsCompletedOn 'first-steps__container--animating'}}">
+      {{#if model.company.firstStepsCompletedOn}}
+        <div class="first-steps-container__message">
+          <div class="content">
+            {{emoji-icon 'tada'}} Great job completing the first steps! We'll take you to your activity feed now.
+          </div>
+        </div>
+      {{/if}}
+      <div class="ui clearing stackable three column grid">
+        {{#each steps as |step|}}
+          {{display/first-steps
+            step
+            completed=(contains step.key model.company.firstStepsCompleted)
+          }}
+        {{/each}}
+      </div>
     </div>
   </div>
 </div>

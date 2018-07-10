@@ -1,6 +1,7 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { hash } from 'rsvp';
+import { scheduleOnce, later } from '@ember/runloop';
 
 export default Route.extend({
   auth: service(),
@@ -49,11 +50,21 @@ export default Route.extend({
     if (firstStepsCompleted.length === 3) {
       model.company.set('firstStepsCompletedOn', new Date());
       change = true;
-      // this.transitionTo('account');
     }
 
-    if (change) {
-      return model.company.save();
+    if (!change) {
+      return;
     }
+
+    return model.company.save()
+    .then(company => {
+      if (!company.get('firstStepsCompletedOn')) {
+        return;
+      }
+
+      scheduleOnce('afterRender', () => {
+        later(() => this.transitionTo('account.index'), 3000);
+      });
+    });
   }
 });

@@ -5,7 +5,7 @@ const FirstStepsComponent = Component.extend({
   classNames: [ 'column' ],
 
   linkClass: computed('completed', function () {
-    return `ui segment raised link card first-steps__card ${this.get('completed') ? 'first-steps__card--completed' : ''}`;
+    return `first-steps__card ${this.get('completed') ? 'first-steps__card--completed' : ''}`;
   })
 });
 
