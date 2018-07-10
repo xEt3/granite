@@ -1,0 +1,171 @@
+@card-border-radius: .4rem;
+@card-padding: 2em 2.2em;
+@animation-easing: ~"cubic-bezier(1,.01,0,.99)";
+
+@keyframes firstStepsCompleted {
+  from {
+    opacity: 0;
+    transform: translateY(400%) scale(1.5);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes firstStepsCompletedStepOut1 {
+  from { opacity: inherit; }
+  to {
+    opacity: 0;
+    transform: translateX(-200%);
+  }
+}
+
+@keyframes firstStepsCompletedStepOut2 {
+  from { opacity: inherit; }
+  to {
+    opacity: 0;
+    transform: translateY(-200%);
+  }
+}
+
+@keyframes firstStepsCompletedStepOut3 {
+  from { opacity: inherit; }
+  to {
+    opacity: 0;
+    transform: translateX(200%);
+  }
+}
+
+.ui.hero.cover.hero__first-steps-cover {
+  margin-top: -20px;
+  min-height: 90vh;
+  padding: 100px 1em;
+
+  .hero__content {
+    position: static;
+    transform: none;
+  }
+
+  @media screen and (max-height: 600px) {
+    min-height: 600px;
+  }
+
+  @media screen and (min-width: @screen-md) {
+
+  }
+}
+
+.first-steps__container {
+  position: relative;
+
+  .first-steps-container__message {
+    display: none;
+    visibility: hidden;
+
+    border-radius: @card-border-radius;
+    padding: @card-padding;
+    font-size: 2.5em;
+    font-weight: bold;
+    line-height: 1.5em;
+    color: white;
+
+    .three-point-gradient(fade(@granite-green, 80%), fade(lighten(@granite-green, 10%), 80%), fade(darken(@granite-green, 15%), 80%));
+    background: @gradient;
+    background-color: @granite-grey;
+    background-repeat: no-repeat;
+  }
+
+  &.first-steps__container--animating {
+    .first-steps-container__message {
+      display: block;
+      visibility: visible;
+      position: absolute;
+      opacity: 0;
+
+      animation: firstStepsCompleted 1.2s 1s @animation-easing forwards;
+    }
+
+    .grid .column:nth-child(1) .first-steps__card {
+      animation: firstStepsCompletedStepOut1 .8s .5s @animation-easing forwards;
+    }
+
+    .grid .column:nth-child(2) .first-steps__card {
+      animation: firstStepsCompletedStepOut2 .8s .5s @animation-easing forwards;
+    }
+
+    .grid .column:nth-child(3) .first-steps__card {
+      animation: firstStepsCompletedStepOut3 .8s .5s @animation-easing forwards;
+    }
+  }
+}
+
+.first-steps {
+  h1.ui.header.first-steps__header {
+    font-size: 3em;
+    margin-bottom: 1em;
+    opacity: .9;
+
+    > small {
+      font-size: .5em;
+      line-height: .3em;
+    }
+  }
+
+  .first-steps__card {
+    display: block;
+    border-radius: @card-border-radius;
+    position: relative;
+    padding: @card-padding;
+    .three-point-gradient(fade(lighten(@granite-blue, 25%), 90%), fade(@granite-blue, 90%), fade(darken(@granite-blue, 20%), 90%));
+    background: @gradient;
+    background-color: white;
+    background-repeat: no-repeat;
+    color: white;
+    transition: all 0.45s ease-in-out;
+    transform: translateZ(0);
+
+    &:hover {
+      transform: translateY(-10px);
+    }
+
+    p {
+      font-size: 1.2em;
+    }
+
+    .first-steps-card__title {
+      font-size: 2.5em;
+      margin: 0 0 .5em 0;
+    }
+
+    &.first-steps__card--completed {
+      .three-point-gradient(fade(@granite-green, 80%), fade(lighten(@granite-green, 10%), 80%), fade(darken(@granite-green, 15%), 80%));
+      background: @gradient;
+      background-color: @granite-grey;
+      background-repeat: no-repeat;
+      color: lighten(@granite-green, 25%);
+      opacity: .6;
+
+      &:hover {
+        opacity: 1;
+
+        .first-steps-card__check-icon {
+          opacity: 0;
+        }
+      }
+
+      .first-steps-card__check-icon {
+        display: block;
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        color: white;
+        transition: all 0.45s ease-in-out;
+      }
+    }
+  }
+}
