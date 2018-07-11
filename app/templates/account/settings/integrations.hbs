@@ -1,11 +1,28 @@
 <div class="ui form">
+  {{#if (and f s)}}
+    <div class="ui red inverted text segment">
+      <h3>
+        <i class="warning icon"></i> Failed to link {{s}}.
+        <a href="#" class="right floated text-white" {{action "clearFailure"}}>
+          <i class="times icon"></i>
+        </a>
+      </h3>
+    </div>
+  {{/if}}
+
   <h3 class="ui header">Slate Payroll Exchange</h3>
   <p>
     Granite connects directly to import/export data to/from Slate. To connect with Slate Payroll, click the button below.
   </p>
   <div class="ui divider"></div>
   <div class="field">
-    {{#form/integration-button service="slate" linkedServices=model.linkedServices class="right labeled icon secondary massive fluid" onNotify=(action "onNotify") ongrant=(action "grant") as |alreadyLinked|}}
+    {{#form/integration-button
+      service="slate"
+      linkedServices=model.linkedServices
+      class="right labeled icon secondary massive fluid"
+      onNotify=(action "onNotify")
+      as |alreadyLinked|
+    }}
       <span class="vertically centered">
         {{if alreadyLinked 'Connected To Slate Payroll' 'Connect To Slate Payroll'}}
       </span> <span class="icon__slate"></span> <i class="random icon"></i>

@@ -8,6 +8,16 @@ export default Route.extend({
     return this.store.findRecord('company', this.get('auth.user').get('content').belongsTo('company').id(), { reload: true });
   },
 
+  setupController (controller, model) {
+    this._super(...arguments);
+
+    const { g, i, s } = controller.getProperties('g', 'i', 's');
+
+    if (g && i && s && !model.get('linkedServices').includes(s)) {
+      controller.grant();
+    }
+  },
+
   actions: {
     refresh () {
       this.refresh();
