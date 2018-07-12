@@ -10,7 +10,14 @@
     </div>
   {{/if}}
 
-  <h3 class="ui header">Slate Payroll Exchange</h3>
+  <h3 class="ui header clearfix">
+    Slate Payroll Exchange
+    {{#if (contains 'slate' model.linkedServices)}}
+      {{#link-to 'account.import' class="right floated"}}
+        <small><i class="sign in alternate icon"></i>Import data from Slate Payroll...</small>
+      {{/link-to}}
+    {{/if}}
+  </h3>
   <p>
     Granite connects directly to import/export data to/from Slate. To connect with Slate Payroll, click the button below.
   </p>

@@ -167,6 +167,8 @@ Router.map(function() {
       });
       this.route('setup-complete');
     });
+
+    this.route('import', function() {});
   });
 
   this.route('error');
