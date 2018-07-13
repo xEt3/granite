@@ -63,7 +63,7 @@ export default Route.extend({
       }
 
       scheduleOnce('afterRender', () => {
-        later(() => this.transitionTo('account.index'), 3000);
+        later(() => this.transitionTo('account.index'), 4300);
       });
     });
   }
