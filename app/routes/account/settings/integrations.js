@@ -5,7 +5,7 @@ export default Route.extend({
   auth: service(),
 
   model () {
-    return this.store.findRecord('company', this.get('auth.user').get('content').belongsTo('company').id(), { reload: true });
+    return this.get('auth.user.company');
   },
 
   setupController (controller, model) {

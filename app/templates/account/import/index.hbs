@@ -4,6 +4,9 @@
     <table class="ui striped stackable responsive table">
       <thead>
         <tr>
+          <th>
+            {{ui-checkbox checked=false onChange=(action (mut model.checked))}}
+          </th>
           {{#each recordSet.displayMap as |header|}}
             <th>{{header}}</th>
           {{/each}}
@@ -12,6 +15,14 @@
       <tbody>
         {{#each recordSet.records as |record|}}
           <tr class="{{if record.duplicate 'warning'}}">
+            <td>
+              {{#if record.duplicate}}
+                <div class="ui red ribbon label">Possible duplicate of {{record.duplicate.name}}</div>
+              {{/if}}
+              <div>
+                {{ui-checkbox class="" label="" checked=false onChange=(action (mut model.checked))}}
+              </div>
+            </td>
             {{#each recordSet.displayMap as |field|}}
               <td>{{get record field}}</td>
             {{/each}}
