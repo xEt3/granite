@@ -167,6 +167,7 @@ Router.map(function() {
       });
       this.route('setup-complete');
     });
+    this.route('first-steps');
   });
 
   this.route('error');
