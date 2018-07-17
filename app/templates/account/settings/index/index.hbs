@@ -20,14 +20,13 @@
       capture='camera'}}
   </div>
 
-  {{#each model.logoPalette as |color|}}
-    <div style="display: inline-block; width: 50px; height: 20px; background-color: {{color}}; border-radius: .8rem; border: 1px solid #CCC;"></div>
-  {{/each}}
+  <div class="ui divider"></div>
 
   {{quick-form
     settingsForm
     model
     this
+    class="ui grid"
     tagName='div'}}
 
   <div class="ui divider"></div>
