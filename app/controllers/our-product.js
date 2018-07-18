@@ -32,6 +32,28 @@ export default Controller.extend({
     }, {
       text: 'Document Issues',
       screen: 'product-screenshots/document-issues.jpg'
+    }],
+
+    assetManagemnet: [{
+      text: 'Organize Assets',
+      screen: 'product-screenshots/organize-assets.png'
+    }, {
+      text: 'Custom Attributes',
+      screen: 'product-screenshots/custom-attributes.png'
+    }, {
+      text: 'Offboarding Collection',
+      screen: 'product-screenshots/offboarding-assest.png'
+    }],
+
+    humanCapital: [{
+      text: 'Quick Access To Important',
+      screen: 'product-screenshots/issue-corrective-actions.png'
+    }, {
+      text: 'Easily Offboard/Onboard',
+      screen: 'product-screenshots/document-issues.jpg'
+    }, {
+      text: 'record Custom Fields',
+      screen: 'product-screenshots/document-issues.jpg'
     }]
   }))
 });
