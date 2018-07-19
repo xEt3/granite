@@ -5,55 +5,55 @@ export default Controller.extend({
   features: computed(() => ({
     recruiting: [{
       text: 'Automated Job Listings',
-      screen: 'product-screenshots/automated-job-listings.png'
+      screen: 'screenshot_automated-job-listings.png'
     }, {
       text: 'Applicant Tracking',
-      screen: 'product-screenshots/applicant-tracking.png'
+      screen: 'screenshot_applicant-tracking.png'
     }, {
       text: 'Pre-screening',
-      screen: 'product-screenshots/pre-screening.png'
+      screen: 'screenshot_pre-screening.png'
     }, {
       text: 'Scheduling',
-      screen: 'product-screenshots/scheduling.png'
+      screen: 'screenshot_scheduling.png'
     }, {
       text: 'Automated Communications',
-      screen: 'product-screenshots/automated-communications.png'
+      screen: 'screenshot_automated-communications.png'
     }, {
       text: 'Hosted Careers Page',
-      screen: 'product-screenshots/careers-page.png'
+      screen: 'screenshot_careers-page.png'
     }, {
       text: 'Seamless Onboarding',
-      screen: 'product-screenshots/ats-onboarding.png'
+      screen: 'screenshot_ats-onboarding.png'
     }],
 
     counseling: [{
       text: 'Issue Corrective Actions',
-      screen: 'product-screenshots/issue-corrective-actions.png'
+      screen: 'screenshot_issue-corrective-actions.png'
     }, {
       text: 'Document Issues',
-      screen: 'product-screenshots/document-issues.jpg'
+      screen: 'screenshot_document-issues.jpg'
     }],
 
     assetManagemnet: [{
       text: 'Organize Assets',
-      screen: 'product-screenshots/organize-assets.png'
+      screen: 'screenshot_organize-assets.png'
     }, {
       text: 'Custom Attributes',
-      screen: 'product-screenshots/custom-attributes.png'
+      screen: 'screenshot_custom-attributes.png'
     }, {
       text: 'Offboarding Collection',
-      screen: 'product-screenshots/offboarding-assets1.png'
+      screen: 'screenshot_offboarding-assets.png'
     }],
 
     humanCapital: [{
       text: 'Quick Access To Information',
-      screen: 'product-screenshots/employee-info.png'
+      screen: 'screenshot_employee-info.png'
     }, {
       text: 'Easily Offboard/Onboard',
-      screen: 'product-screenshots/offboarding1.png'
+      screen: 'screenshot_offboarding.png'
     }, {
       text: 'Record Custom Fields',
-      screen: 'product-screenshots/custom-fields.png'
+      screen: 'screenshot_custom-fields.png'
     }]
   }))
 });

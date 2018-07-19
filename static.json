@@ -4,8 +4,5 @@
     "/api/v1/": {
       "origin": "${API_URL}"
     }
-  },
-  "routes": {
-    "/assets/*": "/assets/"
   }
 }
