@@ -145,7 +145,8 @@ module.exports = {
     'md5': true,
     'Dropzone': true,
     'localforage': true,
-    'io': true
+    'io': true,
+    'ScrollReveal': true
   },
   overrides: [
     // node files

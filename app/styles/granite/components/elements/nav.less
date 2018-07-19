@@ -1,4 +1,7 @@
 .ui.nav__main {
+  position: relative;
+  z-index: 1;
+
   .menu .item a {
     text-transform: uppercase;
     font-weight: 900;
@@ -20,7 +23,11 @@
 
     .menu .item a:not(.button) {
       color: @granite-blue !important;
-      text-shadow: 0px 0px 0px fade(@granite-grey, 40%);
+      text-shadow: 0px 1px 2px fade(@granite-grey, 40%);
+
+      &.active {
+        color: @granite-green !important;
+      }
 
       &:hover {
         text-shadow: 2px 1px 4px fade(@granite-grey, 30%);

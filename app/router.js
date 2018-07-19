@@ -9,7 +9,6 @@ const Router = EmberRouter.extend({
 Router.map(function() {
   this.route('vogue');
   this.route('pricing');
-  this.route('features');
   this.route('contact');
 
   this.route('about', function() {
@@ -177,6 +176,7 @@ Router.map(function() {
   this.route('login');
   this.route('setup-account', { path: '/setup/account/:user_id' });
   this.route('recover', { path: '/recover/:recovery_id' });
+  this.route('our-product');
 });
 
 export default Router;

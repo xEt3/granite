@@ -15,7 +15,8 @@ const includes = [
 
 const nodeIncludes = [
   'semantic-ui-calendar/dist/calendar.css',
-  'semantic-ui-calendar/dist/calendar.js'
+  'semantic-ui-calendar/dist/calendar.js',
+  'scrollreveal/dist/scrollreveal.min.js'
 ];
 
 module.exports = function(defaults) {
