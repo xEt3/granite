@@ -42,7 +42,7 @@ export default Controller.extend({
       screen: 'product-screenshots/custom-attributes.png'
     }, {
       text: 'Offboarding Collection',
-      screen: 'product-screenshots/offboarding-assest1.png'
+      screen: 'product-screenshots/offboarding-assets1.png'
     }],
 
     humanCapital: [{
