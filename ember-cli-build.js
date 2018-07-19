@@ -30,6 +30,10 @@ module.exports = function(defaults) {
 
     'ember-cli-range-slider': {
       skin: 'flat'
+    },
+
+    fingerprint: {
+      exclude: ['product-screenshots/']
     }
   });
 
