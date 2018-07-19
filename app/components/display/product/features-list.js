@@ -44,7 +44,6 @@ const FeaturesListComponent = Component.extend({
   actions: {
     selectFeature (feature) {
       this.set('selectedFeature', feature);
-      this.set('')
     }
   }
 });
