@@ -46,13 +46,13 @@ export default Controller.extend({
     }],
 
     humanCapital: [{
-      text: 'Quick Access To Important',
+      text: 'Quick Access To Information',
       screen: 'product-screenshots/employee-info.png'
     }, {
       text: 'Easily Offboard/Onboard',
       screen: 'product-screenshots/offboarding1.png'
     }, {
-      text: 'record Custom Fields',
+      text: 'Record Custom Fields',
       screen: 'product-screenshots/custom-fields.png'
     }]
   }))
