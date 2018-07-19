@@ -47,13 +47,13 @@ export default Controller.extend({
 
     humanCapital: [{
       text: 'Quick Access To Important',
-      screen: 'product-screenshots/issue-corrective-actions.png'
+      screen: 'product-screenshots/employee-info.png'
     }, {
       text: 'Easily Offboard/Onboard',
-      screen: 'product-screenshots/document-issues.jpg'
+      screen: 'product-screenshots/offboarding.png'
     }, {
       text: 'record Custom Fields',
-      screen: 'product-screenshots/document-issues.jpg'
+      screen: 'product-screenshots/custom-fields.png'
     }]
   }))
 });
