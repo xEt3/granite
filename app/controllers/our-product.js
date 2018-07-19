@@ -50,7 +50,7 @@ export default Controller.extend({
       screen: 'product-screenshots/employee-info.png'
     }, {
       text: 'Easily Offboard/Onboard',
-      screen: 'product-screenshots/offboarding.png'
+      screen: 'product-screenshots/offboarding1.png'
     }, {
       text: 'record Custom Fields',
       screen: 'product-screenshots/custom-fields.png'
