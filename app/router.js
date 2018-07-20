@@ -168,7 +168,9 @@ Router.map(function() {
       this.route('setup-complete');
     });
 
-    this.route('import', function() {});
+    this.route('import', function() {
+      this.route('discovered', { path: '/:result_set_id' });
+    });
   });
 
   this.route('error');

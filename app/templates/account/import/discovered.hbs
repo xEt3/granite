@@ -1,0 +1,34 @@
+{{#each model.deserialized as |recordSet|}}
+  <h3>{{recordSet.name}}</h3>
+  <table class="ui striped stackable responsive table">
+    <thead>
+      <tr>
+        <th>
+          {{ui-checkbox checked=false onChange=(action (mut model.checked))}}
+        </th>
+        {{#each recordSet.displayMap as |header|}}
+          <th>{{header}}</th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+      {{#each recordSet.records as |record|}}
+        <tr class="{{if record.duplicate 'warning'}}">
+          <td>
+            {{#if record.duplicate}}
+              <div class="ui red ribbon label">
+                Possible duplicate of {{get record.duplicate}}
+              </div>
+            {{/if}}
+            <div>
+              {{ui-checkbox class="" label="" checked=false onChange=(action (mut model.checked))}}
+            </div>
+          </td>
+          {{#each recordSet.displayMap as |field|}}
+            <td>{{get record field}}</td>
+          {{/each}}
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{/each}}

@@ -16,8 +16,8 @@ export default Controller.extend(ajaxStatus, {
 
       this.get('ajax').request(`/api/v1/integrations/${serviceName}/discover-import`)
       .then(response => {
-        this.set('records', response);
         this.ajaxSuccess(null, true);
+        this.transitionToRoute('account.import.discovered', response);
       });
     }
   }
