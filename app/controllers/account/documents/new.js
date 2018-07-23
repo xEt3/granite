@@ -26,10 +26,12 @@ export default Controller.extend(addEdit, {
       delete res.file;
       this.get('store').pushPayload(res);
       this.get('resolveUpload')(this.get('store').peekRecord('file', res.files[0].id));
+      this.send('removeFile', file);
     },
 
     removeFile (file) {
       Dropzone.forElement('#input__dropzone--document').removeFile(file);
+      this.set('fileIsAdded', false);
     },
 
     leaveUpload () {

@@ -57,11 +57,11 @@ export default Controller.extend(ajaxStatus, pagination, addEdit, {
   remapToModels (assignment) {
     let employees = assignment.get('employees');
 
+    assignment.set('employee', employees.get('firstObject'));
+
     if (employees.get('length') === 1) {
       return assignment;
     }
-
-    assignment.set('employee', employees.get('firstObject'));
 
     let assignmentPojo = assignment.getProperties('file', 'creator', 'company', 'signatureRequired', 'message');
 
