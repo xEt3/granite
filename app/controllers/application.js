@@ -64,6 +64,13 @@ export default Controller.extend({
     }
   })),
 
+  transitionAfterExpiration: observer('auth.isExpired', function() {
+    if (this.get('auth.isExpired')) {
+      $('.ui.modal').modal('hide');
+      this.send('logout', true);
+    }
+  }),
+
   actions: {
     authResponse ( response ) {
       let auth = this.get('auth');
