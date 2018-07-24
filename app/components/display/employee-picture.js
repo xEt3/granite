@@ -4,9 +4,8 @@ import { computed } from '@ember/object';
 export default Component.extend({
   tagName: 'img',
   attributeBindings: [ 'src' ],
-  defaultUrl: computed('id', function(){
-    let string = `/api/v1/employee/${this.get('id')}/avatar`;
-    return string;
+  defaultUrl: computed('id', function() {
+    return this.get('id') ? `/api/v1/employee/${this.get('id')}/avatar` : 'https://www.gravatar.com/avatar/?f=y&d=mp';
   }),
   src: computed.or('url', 'defaultUrl')
 });
