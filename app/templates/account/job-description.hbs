@@ -10,7 +10,7 @@
           <div class="header">Actions</div>
           <a href="#" class="item" {{action "createCampaign"}}><i class="wizard icon"></i>Hire for this job</a>
           <div class="text-danger header">Danger Zone</div>
-          {{#confirm-modal class="item" as |confirm|}}
+          {{#confirm-modal deleteContext=model.title class="item" as |confirm|}}
             <a href="#" id="job__action--delete" class="text-danger" {{action (pipe confirm (action 'delete'))}}>
               <i class="trash icon"></i>Delete Record
             </a>

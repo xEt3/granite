@@ -1,4 +1,4 @@
-{{#confirm-modal as |confirmDelete|}}
+{{#confirm-modal deleteContext=(concat 'Corrective Action: ' model.type) as |confirmDelete|}}
   <hgroup>
     <span class="ui header">
       {{#link-to 'account.employee.index.counseling.issue.corrective-action'}}
