@@ -1,7 +1,20 @@
 import Controller from '@ember/controller';
 import { A } from '@ember/array';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import ajaxStatus from 'granite/mixins/ajax-status';
 
 export default Controller.extend({
+  ajax: service(),
+
+  totalSelected: computed('selected.{employees.[],departments.[],locations.[]}', function () {
+    let selected = this.get('selected');
+
+    return Object.keys(selected).reduce((total, recordset) => {
+      return (selected[recordset] || []).length + total;
+    }, 0);
+  }),
+
   actions: {
     toggleAllSelected (name, records) {
       if (this.get(`selected.${name}.length`) === records.length) {
@@ -17,8 +30,20 @@ export default Controller.extend({
     },
 
     transitionTo (args) {
-      console.log(args);
       this.transitionToRoute(...args);
+    },
+
+    import () {
+      const selected = this.get('selected'),
+            totalSelected = this.get('totalSelected');
+
+      if (!totalSelected) {
+        return;
+      }
+
+      this.ajaxStart();
+
+      // this.get('ajax').post()
     }
   }
 });

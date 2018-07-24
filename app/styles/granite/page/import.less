@@ -1,0 +1,50 @@
+.import__select-all-checkbox {
+  > .checkbox > label {
+    font-size: .8em;
+    color: @gray-light;
+    padding-left: 2.2em;
+  }
+}
+
+.import__record {
+  transition: all 0.35s ease-in-out;
+
+  &.import__record--duplicate {
+    background-color: lighten(@orange, 25%) !important;
+
+    &.import__record--is-selected {
+      background-color: lighten(@orange, 40%) !important;
+
+      .import__duplicate-label {
+        background-color: lighten(@granite-red, 10%) !important;
+        border-color: lighten(@granite-red, 5%) !important;
+      }
+    }
+
+    td:first-child {
+      padding-top: .25em;
+      padding-bottom: .25em;
+    }
+
+    .import__duplicate-label {
+      padding-left: 1em;
+      margin-bottom: .25em;
+
+      a {
+        padding-left: .25em;
+        color: darken(@granite-blue, 10%);
+      }
+    }
+  }
+}
+
+.import {
+  .ui.active.dimmer > .ui.loader {
+    top: 0;
+    transform: translateX(-50%) translateY(100%);
+
+    div {
+      margin-top: 1em;
+    }
+  }
+}

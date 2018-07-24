@@ -1,3 +1,25 @@
+{{#if working}}
+  <div class="ui active inverted dimmer">
+    <div class="ui indeterminate massive text loader">
+      Importing Records
+      <div class="smaller text">This might take some time...</div>
+    </div>
+  </div>
+{{/if}}
+
+{{#if (gt totalSelected 0)}}
+  {{#confirm-modal
+    class="item"
+    confirmContent="Are you sure you want to import these records?"
+    as |confirm|
+  }}
+    <button class="ui massive fluid green button" {{action (pipe confirm (action 'import'))}}>
+      <i class="play icon"></i> Import {{totalSelected}} {{inflect-text 'Record' totalSelected}}
+    </button>
+    <div class="ui divider"></div>
+  {{/confirm-modal}}
+{{/if}}
+
 {{#each model.deserialized as |recordSet|}}
   {{#tables/import/record-set
     recordSet
