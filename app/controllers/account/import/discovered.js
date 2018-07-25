@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import ajaxStatus from 'granite/mixins/ajax-status';
 
-export default Controller.extend({
+export default Controller.extend(ajaxStatus, {
   ajax: service(),
   queryParams: [ 'service' ],
   service: null,
