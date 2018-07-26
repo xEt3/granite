@@ -47,12 +47,15 @@ export default Controller.extend(ajaxStatus, {
       this.ajaxStart();
 
       this.get('ajax').post(`/api/v1/integrations/${serviceName}/import`, {
-        selected,
-        resultSet: this.get('model._id')
+        data: {
+          selected,
+          resultSet: this.get('model.id')
+        }
       })
       .then(result => {
         this.ajaxSuccess(`Successfully imported ${totalSelected} records.`);
-      });
+      })
+      .catch(this.ajaxError.bind(this));
     }
   }
 });
