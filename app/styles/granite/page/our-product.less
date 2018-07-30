@@ -1,4 +1,10 @@
 /* background */
+.our-product{
+  overflow-x: hidden;
+  width:100%;
+}
+
+
 .product__section {
   position: relative;
   overflow: hidden;
@@ -91,9 +97,13 @@
     margin: 10% -10%;
     min-height: 80vh;
 
+    @media screen and (max-height: 800px) {
+        min-height: 680px;
+      }
+
     .product-section__content {
       position: absolute;
-      top: 50%;
+      top: 48%;
       left: 0;
       right: 0;
       transform: translateY(-50%) rotate(10deg);
@@ -190,7 +200,8 @@
       transform: none;
     }
   }
-
+  // @media screen and (max-width: @screen-md) {
+  //   }
 
 }
 
@@ -224,16 +235,731 @@
 
 }
 
-@media screen and (max-height: 800px) {
-  .product__section--top{
-    min-height: 800px;
-  }
-  // nav:first-child{
-  //   width: 100%;
-  //   overflow: hidden;
-  // }
-.right.menu {
-    transition: all 0.6s ease-in-out;
+//done************************************
+@media screen and (min-width: @screen-lg) {
+
+
+// *****************************************
+.product__section:nth-child(odd) {
+    min-height: 852px;
 }
 
+.product__section--recruiting {
+
+    >.product-section__content{
+      // text-align: center;
+
+      >.section-content__features>.features-screenshot{
+          margin-top: 2%;
+
+
+        }
+      }
+
+  }
+
+
+
+
+// *************************************
+.counseling {
+  min-height: 76em;
+  width: 100%;
+  margin-top: 3em;
+  overflow: hidden;
+
+
+>.product__section--counseling{
+      min-height: 62em;
+    }
 }
+
+
+// ***************************************
+
+
+.product__section--asset-managemnet{
+  margin-top: 1%; //marked important
+>.product-section__content>.section-content__title{
+      font-size: 4.2em;
+      }
+
+      }
+
+
+// ********************************************
+
+
+.human {
+  min-height: 105em;
+  width: 100%;
+  overflow: hidden;
+
+  >.product__section--human-capital{
+  margin-top: -9em;//!important
+  min-height: 129em;//!important
+
+  >.product-section__content{
+    margin-top:13%;
+
+  }
+
+}
+
+
+}
+
+
+  }
+
+
+
+
+
+
+
+
+
+//done
+@media screen and (min-width: @screen-labtop) and (max-width: 1999px) {
+
+//   .product__section:nth-child(even) {
+//       text-align: center;
+//   }
+//
+//   .product__section>.product-section__content>.section-content__features{
+//     margin-top: 8% ;
+//     flex-flow: wrap ;
+//
+//     >.features-list
+//   {
+//     text-align: center !important;
+//     +.features-screenshot > img{
+//       width: 104%;
+//       margin-left: -2%;
+//     }
+//   }
+// }
+
+
+
+
+// *****************************************
+.product__section--recruiting {
+
+    >.product-section__content{
+      // text-align: center;
+
+      >.section-content__features>.features-screenshot{
+          margin-top: 2%;
+
+
+        }
+      }
+
+  }
+
+
+
+
+// *************************************
+.counseling {
+  min-height: 73em;
+  width: 100%;
+  margin-top: 3em;
+  overflow: hidden;
+
+
+>.product__section--counseling{
+      min-height: 59em;
+    }
+}
+
+
+// ***************************************
+
+
+.product__section--asset-managemnet{
+  margin-top: 1%; //marked important
+>.product-section__content>.section-content__title{
+      font-size: 4.2em;
+      }
+
+      }
+
+
+// ********************************************
+
+
+.human {
+  min-height: 105em;
+  width: 100%;
+  overflow: hidden;
+
+  >.product__section--human-capital{
+  margin-top: -12em;//!important
+  min-height: 129em;//!important
+  // text-align: center;
+
+  >.product-section__content{
+    margin-top:16%;
+>.section-content__features>.features-screenshot>img{
+      max-width: 41em;
+}
+  }
+
+}
+
+
+}
+
+
+  }
+
+
+
+
+@media screen and (min-width: @screen-tab) and (max-width: 991px) {
+
+  .product__section:nth-child(even) {
+      text-align: center;
+  }
+
+  .product__section>.product-section__content>.section-content__features{
+    margin-top: 8% ;
+    flex-flow: wrap ;
+
+    >.features-list
+  {
+    text-align: center !important;
+    +.features-screenshot > img{
+      width: 100%;
+      margin-left: -2%;
+    }
+  }
+}
+
+
+  .granite {
+    min-height: 58em;
+    width: 100%;
+    overflow: hidden;
+
+>.product__section--top {
+  height: auto;
+  overflow: hidden;
+  min-width: 134%;
+  margin: -9% -10% 0% -18% !important;
+
+  >.product-section__content{
+    font-size: 3.5em;
+    line-height: 1em;
+    min-width: 50%;
+    position: absolute;
+    left: 1.2em;
+    right: 0;
+  }
+}
+}
+
+// *****************************************
+.product__section--recruiting {
+    margin-top: 5%;
+
+    >.product-section__content{
+      text-align: center;
+
+      >.section-content__features>.features-screenshot{
+          margin-top: 2%;
+
+
+        }
+      }
+
+  }
+
+
+
+
+// *************************************
+
+
+
+
+.our-product>.product__section--counseling{
+  min-width: 136%;
+      margin-left: -19%;
+      min-height: 62em;
+      text-align: center;
+
+   >.product-section__content{
+  top: 29em;
+  font-size: 97%;
+  margin-left: 1.2%;
+  text-align: center;
+
+  >.section-content__features>.features-screenshot{
+      margin-right: 7%;
+
+>img{
+  margin-left: 3%;
+}
+  }
+}
+}
+
+
+
+// ***************************************
+
+
+.product__section--asset-managemnet{
+  margin-top: 1%; //marked important
+>.product-section__content>.section-content__title{
+      font-size: 4.2em;
+      }
+
+      }
+
+
+// ********************************************
+
+
+
+  .our-product>.product__section--human-capital{
+  margin-top: 2em;//!important
+  min-height: 129em;//!important
+  text-align: center;
+
+  >.product-section__content{
+    margin-top: 14%;
+
+
+
+}
+
+
+}
+
+
+  }
+
+
+
+
+
+
+@media screen and (min-width: @screen-md1) and (max-width: 767px) {
+
+  .product__section:nth-child(even) {
+      text-align: center;
+  }
+
+  .product__section>.product-section__content>.section-content__features{
+    margin-top: 8% ;
+    flex-flow: wrap ;
+
+    >.features-list
+  {
+    text-align: center !important;
+    +.features-screenshot > img{
+      min-width: 104%;
+      margin-left: -2%;
+    }
+  }
+}
+
+
+  .granite {
+    min-height: 58em;
+    width: 100%;
+    overflow: hidden;
+
+>.product__section--top {
+  height: auto;
+  overflow: hidden;
+  width: 134%;
+  margin: -9% -10% 0% -18% !important;
+
+  >.product-section__content{
+    font-size: 3.5em;
+    line-height: 1em;
+  min-width: 50%;
+    position: absolute;
+    left: .7em;
+    right: 0;
+  }
+}
+}
+
+// *****************************************
+.product__section--recruiting {
+    margin-top: -25%;
+
+    >.product-section__content{
+      text-align: center;
+
+      >.section-content__features>.features-screenshot{
+          margin-top: 2%;
+
+
+        }
+      }
+
+  }
+
+
+
+
+// *************************************
+.counseling {
+  min-height: 67em;
+  width: 100%;
+  margin-top: 3em;
+  overflow: hidden;
+
+
+>.product__section--counseling{
+  min-width: 136%;
+      margin-left: -19%;
+      min-height: 58em;
+
+   >.product-section__content{
+  top: 28em;
+  left:2.8em;
+
+  >.section-content__features>.features-screenshot{
+      margin-right: 7%;
+
+
+  }
+}
+}
+}
+
+
+// ***************************************
+
+
+.product__section--asset-managemnet{
+  margin-top: 1%; //marked important
+>.product-section__content>.section-content__title{
+      font-size: 4.2em;
+      }
+
+      }
+
+
+// ********************************************
+
+
+.human {
+  min-height: 116em;
+  width: 100%;
+  overflow: hidden;
+
+  >.product__section--human-capital{
+  margin-top: -14em;
+  min-height: 129em;
+  text-align: center;
+
+  >.product-section__content{
+    margin-top: 34%;
+
+  }
+
+}
+
+
+}
+
+
+  }
+
+
+  @media screen and (min-width: @screen-sm) and (max-width: 575px) {
+
+    .product__section:nth-child(even) {
+        text-align: center;
+    }
+
+    .product__section>.product-section__content>.section-content__features{
+      margin-top: 8% ;
+      flex-flow: wrap ;
+
+      >.features-list
+    {
+      text-align: center !important;
+      +.features-screenshot > img{
+        max-width: 100%;
+        margin-left: -1%;
+        height: auto;
+      }
+    }
+  }
+
+
+    .granite {
+      min-height: 58em;
+      width: 100%;
+      overflow: hidden;
+
+  >.product__section--top {
+    height: auto;
+    overflow: hidden;
+    min-width: 134%;
+    margin: -9% -10% 0% -18% !important;
+
+    >.product-section__content{
+      font-size: 3.5em;
+      line-height: 1em;
+      min-width: 50%;
+      position: absolute;
+      left: .7em;
+      right: 0;
+    }
+  }
+  }
+
+  // *****************************************
+  .product__section--recruiting {
+      margin-top: -25%;
+
+      >.product-section__content{
+        text-align: center;
+
+        >.section-content__features>.features-screenshot{
+            margin-top: 2%;
+
+
+          }
+        }
+
+    }
+
+
+
+
+  // *************************************
+  .counseling {
+    min-height: 65em;
+    width: 100%;
+    margin-top: 3em;
+    overflow: hidden;
+
+
+  >.product__section--counseling{
+    min-width: 150%;
+        margin-left: -28%;
+        min-height: 54em;
+
+     >.product-section__content{
+    top: 48%;
+    left:9%;
+    font-size: 92%;
+
+    >.section-content__features>.features-screenshot{
+        margin-right: 7%;
+
+
+    }
+  }
+  }
+  }
+
+
+  // ***************************************
+
+
+  .product__section--asset-managemnet{
+    margin-top: -23%; //marked important
+  >.product-section__content>.section-content__title{
+        font-size: 390%;
+        }
+
+        }
+
+
+  // ********************************************
+
+
+  .human {
+    min-height: 116em;
+    width: 100%;
+    overflow: hidden;
+
+    >.product__section--human-capital{
+    margin-top: -16em;//!important
+    min-height: 129em;//!important
+    text-align: center;
+
+    >.product-section__content{
+      top: 13em;
+      right:4em;
+      margin-top: 51%;
+
+    }
+
+  }
+
+
+  }
+
+
+    }
+
+
+//done!!!!************************************
+    @media screen and (max-width: 374px) {
+
+
+
+
+
+      .product__section.product__section--img .product-section__content {
+    padding: 15% 14%;
+}
+      .product__section:nth-child(odd){
+        width:136%;
+        margin:10% -18%;
+      }
+
+      .product__section:nth-child(even) {
+          text-align: center;
+      }
+
+      .product__section>.product-section__content>.section-content__features{
+        margin-top: 8% ;
+        flex-flow: wrap ;
+
+        >.features-list
+      {
+        text-align: center !important;
+        +.features-screenshot > img{
+          min-width: 100%;
+          max-width: 100%;
+          height:auto;
+          margin-left: -1%;
+        }
+      }
+    }
+
+
+
+    .our-product >.product__section.product__section--top {
+      height: auto;
+      overflow: hidden;
+      min-width: 134%;
+      margin: -9% -10% 33% -18% !important;
+
+      >.product-section__content{
+        font-size: 3.5em;
+        line-height: 1em;
+        min-width: 50%;
+        position: absolute;
+        left: .7em;
+        right: 0;
+      }
+    }
+
+
+    // *****************************************
+    .product__section--recruiting {
+        margin-top: -25%;
+
+        >.product-section__content{
+          text-align: center;
+          >.section-content__title{
+              font-size: 427%;
+            }
+
+          >.section-content__features>.features-screenshot{
+              margin-top: 2%;
+
+
+            }
+          }
+
+      }
+
+
+
+
+    // *************************************
+
+    .product__section .product-section__content .section-content__title {
+      font-size: 4.7em;
+    }
+
+    .product__section.product__section--counseling:before {
+        right: -50%;
+            z-index: -1;
+                height: 15%;
+    }
+
+
+    >.product__section--counseling{
+      min-width: 150%;
+          margin-left: -27.5%;
+          min-height: 100vh;
+          overflow: hidden;
+
+       >.product-section__content{
+      top: 49%;
+      left:9%;
+      font-size: 89%;
+      >.section-content__title{
+          font-size: 427%;
+        }
+
+      >.section-content__features>.features-screenshot{
+          margin-right: 7%;
+
+
+      }
+    }
+    }
+
+
+
+    // ***************************************
+
+
+    .product__section--asset-managemnet{
+      margin-top: -6%;
+    >.product-section__content>.section-content__title{
+          font-size: 335%;
+          }
+
+          }
+
+
+    // ********************************************
+
+
+// .product__section.product__section--human-capital:before {
+
+      .our-product > .product__section.product__section--human-capital:before {
+        right: -50%;
+        z-index: -1;
+        height: 15%;
+      }
+
+
+      .product__section--human-capital{
+      margin-top: -13em;//!important
+      min-height: 100vh;
+      text-align: center;
+overflow: hidden;
+      >.product-section__content{
+        margin-top: 69%;
+        margin-left: -.3em;
+        min-width: 36em;
+        font-size: 11px;
+
+      }
+
+    }
+
+
+    }

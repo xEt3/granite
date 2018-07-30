@@ -6,9 +6,9 @@
 </div>
 
 {{#if topLevel}}
-<div class="right menu">
-<div class="ui container basic segment">
-{{#ui-menu menuClass="pointing"}}
+
+
+<div class="right menu ">
     <div class="item">
       {{#link-to 'about'}}About{{/link-to}}
     </div>
@@ -22,11 +22,11 @@
       {{#link-to 'contact'}}Contact{{/link-to}}
     </div>
     {{#if auth.authenticated}}
-      <div class="item">
+      <div class="item butt">
         {{#link-to 'account' class="ui outlined blue button"}}Go To Dashboard{{/link-to}}
       </div>
     {{else}}
-      <div class="item">
+      <div class="item butt">
         <div class="ui buttons">
           {{#link-to 'login' class="ui blue button"}}Log in{{/link-to}}
           <div class="or"></div>
@@ -34,8 +34,5 @@
         </div>
       </div>
     {{/if}}
-{{/ui-menu}}
-</div>
-
 </div>
 {{/if}}
