@@ -16,7 +16,11 @@ export default Route.extend({
       .map(({ id }) => id)
     }, selected), {});
 
-    controller.set('selected', A(defaultSelection));
+    controller.setProperties({
+      selected: A(defaultSelection),
+      importResult: null
+    });
+
     this._super(...arguments);
   }
 });
