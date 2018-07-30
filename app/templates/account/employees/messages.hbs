@@ -1,0 +1,57 @@
+<div class="ui raised padded segment container clearfix">
+  <hgroup class="clearfix">
+    <h1 class="ui header content__nav-label">Messages</h1>
+  </hgroup>
+
+  <div class="ui stackable grid">
+    <div class="ui six wide column">
+      <form class="ui form" {{action "beginThread" on="submit"}}>
+        <div class="field">
+          {{#ui-dropdown
+            class="fluid search multiple selection"
+            id="message-targets"
+            selected=messageParticipantTargets
+            onChange=(action (mut messageParticipantTargets)) as |execute mapper|
+          }}
+            <i class="dropdown icon"></i>
+            <div class="default text">Search or select people to message</div>
+            <div class="menu">
+              {{#each allEmployees as |employee|}}
+                <div class="item" data-value="{{map-value mapper employee}}">
+                  {{employee.fullName}}
+                </div>
+              {{/each}}
+            </div>
+          {{/ui-dropdown}}
+        </div>
+
+        {{#liquid-if messageParticipantTargets.length}}
+          {{#form/action-button type="submit" class="ui fluid green button"}}
+            Start
+            {{if (gt messageParticipantTargets.length 1) 'Group'}}
+            Chat
+          {{/form/action-button}}
+        {{/liquid-if}}
+      </form>
+
+      <div class="ui segments">
+        {{#each model as |thread|}}
+          {{list-item/message-thread thread user=user}}
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="ui ten wide column">
+      {{outlet}}
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+</div>

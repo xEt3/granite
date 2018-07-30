@@ -9,7 +9,10 @@
         <div class="ui left pointing orange tiny label">{{model.changeQueue}}</div>
       {{/if}}
     {{/link-to}}
+    {{#link-to 'account.employees.messages' class="item"}}
+      <i class="envelope icon"></i>Messages
+    {{/link-to}}
   </div>
-
+  
   {{outlet}}
 </div>
