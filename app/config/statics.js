@@ -135,4 +135,20 @@ const modelPageMap = {
   employees:   { path: 'account.employee', all: false }
 };
 
-export { issueTypes, suffixes, states, jobCategories, jobTypes, formTypes, closeMessageMap, modelPageMap };
+const recordDisplayPropertyMap = {
+  departments: [ 'name' ],
+  locations: [ 'name' ],
+  employees: [ 'name.first', 'name.last' ]
+};
+
+export {
+  issueTypes,
+  suffixes,
+  states,
+  jobCategories,
+  jobTypes,
+  formTypes,
+  closeMessageMap,
+  modelPageMap,
+  recordDisplayPropertyMap
+};

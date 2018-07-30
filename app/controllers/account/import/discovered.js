@@ -54,6 +54,7 @@ export default Controller.extend(ajaxStatus, {
       })
       .then(result => {
         this.ajaxSuccess(`Successfully imported ${totalSelected} records.`);
+        this.set('importResult', result);
       })
       .catch(this.ajaxError.bind(this));
     }
