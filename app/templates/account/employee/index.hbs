@@ -21,6 +21,7 @@
       {{/if}}
 
       {{#ui-dropdown class="item icon top right pointing"}}
+
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
           {{#link-to 'account.employee.index.edit' class='item'}}<i class="edit icon"></i>Edit{{/link-to}}
@@ -80,6 +81,13 @@
           </div>
         </div>
     </div>
+  </div>
+  <div>
+    {{#if model.externalLink.service}}
+      <div class="ui basic label" >
+        <a href={{model.externalLink.documentLink}}><i class="download icon"></i>Imported from {{capitalize model.externalLink.service}}</a>
+      </div>
+    {{/if}}
   </div>
   <div class="ui section divider"></div>
   {{outlet}}
