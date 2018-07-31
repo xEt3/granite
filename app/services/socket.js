@@ -15,7 +15,7 @@ export default Service.extend({
 
     const socket = io({
       query: {
-        user: this.get('auth.userId')
+        user: this.get('auth.user.employee.id')
       }
     });
     console.log('socket?', socket);

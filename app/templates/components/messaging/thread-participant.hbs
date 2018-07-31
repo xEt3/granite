@@ -1,0 +1,8 @@
+{{display/employee-picture
+  url=participant.picture
+  id=participant.id
+}}
+{{participant.fullName}}
+{{#if detail}}
+  <div class="{{if online 'green'}} detail">{{detail}}</div>
+{{/if}}

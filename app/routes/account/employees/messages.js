@@ -38,7 +38,7 @@ export default Route.extend({
             data: {
               _count: true,
               messageThread: thread.get('id'),
-              readBy: { $nin: [ this.get('auth.user.id') ] }
+              readBy: { $nin: [ this.get('auth.user.employee.id') ] }
             }
           })
         }).then(result => {
@@ -47,9 +47,9 @@ export default Route.extend({
           return thread;
         });
       })),
-      user: this.get('auth.user'),
+      user: this.get('auth.user.employee'),
       employees: this.store.query('employee', {
-        _id: { $nin: [ this.get('auth.userId') ] },
+        _id: { $nin: [ this.get('auth.user.employee.id') ] },
         sort: {
           'name.last': 1
         }
@@ -58,7 +58,7 @@ export default Route.extend({
   },
 
   setupController (controller, model) {
-    // console.log('model in route:', model);
+    console.log('model in route:', model.threads);
     controller.setProperties({
       model: model.threads,
       allEmployees: model.employees,

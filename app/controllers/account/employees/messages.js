@@ -10,7 +10,7 @@ export default Controller.extend(ajaxStatus, {
       this.ajaxStart();
 
       const participants = this.get('messageParticipantTargets'),
-            allParticipants = participants.concat([ this.get('user.employee') ]);
+            allParticipants = participants.concat([ this.get('user') ]);
 
       this.get('store').query('message-thread', {
         between: { $all: allParticipants.mapBy('id') },
