@@ -181,5 +181,18 @@
         </p>
       </div>
     </div>
+    <div class="ui raised segment">
+      <span class="ui blue ribbon label"><i class="download icon"></i>Imported</span>
+      {{#link-to 'account.employee.index.edit.index' class='ui right corner blue label'}}
+        <i class="pencil icon"></i>
+      {{/link-to}}
+      <div class="ui basic segment">
+        Source: {{capitalize model.externalLink.service}} <br />
+        Imported On: <br />
+        Last Change Sync: <br />
+        Automatic Change Syncing: <br />
+        <a class="visit__slate" href={{model.externalLink.documentLink}}>Visit record on Slate <i class="external alternate icon"></i></a>
+      </div>
+    </div>
   </div>
 </div>
