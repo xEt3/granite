@@ -181,6 +181,7 @@
         </p>
       </div>
     </div>
+    {{#if model.externalLink.service}}
     <div class="ui raised segment">
       <span class="ui blue ribbon label"><i class="download icon"></i>Imported</span>
       {{#link-to 'account.employee.index.edit.index' class='ui right corner blue label'}}
@@ -194,5 +195,6 @@
         <a class="visit__slate" href={{model.externalLink.documentLink}}>Visit record on Slate <i class="external alternate icon"></i></a>
       </div>
     </div>
+    {{/if}}
   </div>
 </div>
