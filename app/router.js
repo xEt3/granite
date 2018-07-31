@@ -70,6 +70,7 @@ Router.map(function() {
           this.route('index', { path: '/personal' });
           this.route('job');
           this.route('custom-fields');
+          this.route('settings');
         });
         this.route('edit-picture');
       });

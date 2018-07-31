@@ -176,25 +176,29 @@
               <a href="tel:{{model.emergencyContactPhone}}">{{format-phone model.emergencyContactPhone}}</a>
             {{/if}}
           {{else}}
-          <h3 class="ui center aligned header no-info-header">No Emergency Contact Available</h3>
+            <h3 class="ui center aligned header no-info-header">No Emergency Contact Available</h3>
           {{/if}}
         </p>
       </div>
     </div>
-    {{#if model.externalLink.service}}
-    <div class="ui raised segment">
-      <span class="ui blue ribbon label"><i class="download icon"></i>Imported</span>
-      {{#link-to 'account.employee.index.edit.index' class='ui right corner blue label'}}
-        <i class="pencil icon"></i>
-      {{/link-to}}
-      <div class="ui basic segment">
-        Source: {{capitalize model.externalLink.service}} <br />
-        Imported On: <br />
-        Last Change Sync: <br />
-        Automatic Change Syncing: <br />
-        <a class="visit__slate" href={{model.externalLink.documentLink}}>Visit record on Slate <i class="external alternate icon"></i></a>
+    {{#if model.externalLinkService}}
+      <div class="ui raised segment">
+        <span class="ui basic ribbon label"><i class="download icon"></i>Imported</span>
+        {{#link-to 'account.employee.index.edit.settings' class='ui right corner label'}}
+          <i class="pencil icon"></i>
+        {{/link-to}}
+        <div class="ui basic segment">
+          Source: {{capitalize model.externalLinkService}}<br />
+          Imported On: {{time model.created 'h:mma M/D/YY'}}<br />
+          Last Change Sync: <br />
+          Automatic Change Syncing: {{if model.externalLinkAutomaticSync 'Enabled' 'Disabled'}}
+          {{#if model.externalLinkDocumentLink}}
+            <a class="right floated text" href={{model.externalLinkDocumentLink}}>
+              Visit record on Slate <i class="external alternate icon"></i>
+            </a>
+          {{/if}}
+        </div>
       </div>
-    </div>
     {{/if}}
   </div>
 </div>

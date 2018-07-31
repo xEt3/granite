@@ -71,7 +71,13 @@ export default Model.extend(Validations, {
   finalAddressZip:         attr('string'),
   finalEmail:              attr('string'),
   finalAddressCollected:   attr('date'),
-  externalLink:            attr(),
+
+  externalLinkService:       attr('string'),
+  externalLinkId:            attr('string'),
+  externalLinkDocumentLink:  attr('string'),
+  externalLinkAutomaticSync: attr('boolean'),
+  externalLinkLastSync:      attr('date'),
+
 
   company:     belongsTo('company', { async: true, inverse: null }),
   location:    belongsTo('location', { async: true, inverse: null }),

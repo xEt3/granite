@@ -82,13 +82,6 @@
         </div>
     </div>
   </div>
-  <div>
-    {{#if model.externalLink.service}}
-      <div class="ui basic label" >
-        <a href={{model.externalLink.documentLink}}><i class="download icon"></i>Imported from {{capitalize model.externalLink.service}}</a>
-      </div>
-    {{/if}}
-  </div>
   <div class="ui section divider"></div>
   {{outlet}}
 </div>
