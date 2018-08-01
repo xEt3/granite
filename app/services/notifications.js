@@ -42,6 +42,9 @@ export default Service.extend({
   },
 
   send (title, body, icon) {
+    console.log('title:', title);
+    console.log('body:', body);
+    console.log('icon:', icon);
     return this.__checkPermission()
     .then(permission => {
       if (permission !== true) {

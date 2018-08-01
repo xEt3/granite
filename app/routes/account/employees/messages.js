@@ -64,5 +64,12 @@ export default Route.extend({
       allEmployees: model.employees,
       user: model.user
     });
+  },
+
+  actions: {
+    refresh () {
+      console.log('REFRESHING');
+      this.refresh();
+    }
   }
 });

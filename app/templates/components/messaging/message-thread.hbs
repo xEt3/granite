@@ -1,8 +1,9 @@
 {{#each thread.between as |participant|}}
+  {{log 'thread member:' participant}}
   {{messaging/thread-participant
     participant
     connectedUsers=socket.connectedUsers
-    user=auth.user
+    user=auth.user.employee
     class="messaging-thread__participant"}}
 {{/each}}
 
@@ -40,7 +41,7 @@
       </div>
     </div>
     <div class="four wide column field">
-      {{#form/action-button type="submit" disabled=(not (or message fileIsAdded))class="ui fluid green button"}}
+      {{#form/action-button type="submit" disabled=(not (or message fileIsAdded)) class="ui fluid green button"}}
         Send{{if fileIsAdded ' file'}}
       {{/form/action-button}}
     </div>

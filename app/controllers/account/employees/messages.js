@@ -13,14 +13,13 @@ export default Controller.extend(ajaxStatus, {
             allParticipants = participants.concat([ this.get('user') ]);
 
       this.get('store').query('message-thread', {
-        between: { $all: allParticipants.mapBy('id') },
+        between: { $all: allParticipants.mapBy('id'), $size: allParticipants.length },
         limit: 1,
         sort: {
           created: -1
         }
       })
       .then(result => {
-        console.log('result:', result);
         if (result.get('length') > 0) {
           console.log('existing thread, transitioning');
           this.ajaxSuccess(null, true);
@@ -35,11 +34,13 @@ export default Controller.extend(ajaxStatus, {
         return pendingThread.save().then(thread => {
           console.log('saved thread', pendingThread);
           this.ajaxSuccess(null, true);
-          this.transitionToRoute('account.employees.messages.thread', thread);
+          this.transitionToRoute('account.employees.messages.thread', thread.id);
         });
       })
       .finally(() => {
         this.set('messageParticipantTargets', null);
+        console.log('GOING TO REFRESH');
+        this.send('refresh');
       })
       .catch(this.ajaxError.bind(this));
     }

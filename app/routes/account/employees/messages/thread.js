@@ -61,19 +61,17 @@ export default Route.extend({
 
   onMessage ([message]) {
     if (!document.hasFocus()) {
-      const { content: msg, from } = (message || {});
+      const { content: msg, from } = message || {};
 
       this.get('notifications').send(
         `New Message From ${(from.name || {}).first || 'User'}`,
         msg ? msg.length > 40 ? `${msg.substring(0, 40)}...` : msg : message.file ? 'Attachment' : null,
-        from.picture || null
+        from.picture || `/api/v1/employee/${from._id}/avatar`
       );
     }
 
     const threadId = this.get('controller.model.thread.id'),
           controller = this.get('controller');
-
-    console.log(message, threadId);
 
     if (message.messageThread !== threadId) {
       return;
