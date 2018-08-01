@@ -13,6 +13,6 @@ export default Route.extend({
           reviewedOn: { $not: { $type: 9 } }
         }
       }).then(response => response && response.count)
-    })
+    });
   }
 });

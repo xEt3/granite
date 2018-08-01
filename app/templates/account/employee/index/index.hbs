@@ -190,7 +190,13 @@
         <div class="ui basic segment">
           Source: {{capitalize model.externalLinkService}}<br />
           Imported On: {{time model.created 'h:mma M/D/YY'}}<br />
-          Last Change Sync: <br />
+          Last Change Sync:
+          {{if
+            model.externalLinkLastSync
+            (time model.externalLinkLastSync 'h:mm:ssa M/D/YY')
+            'Never'}}
+          <a href="#">Force sync from {{model.externalLinkService}}</a>
+          <br />
           Automatic Change Syncing: {{if model.externalLinkAutomaticSync 'Enabled' 'Disabled'}}
           {{#if model.externalLinkDocumentLink}}
             <a class="right floated text" href={{model.externalLinkDocumentLink}}>
