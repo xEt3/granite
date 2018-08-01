@@ -1,9 +1,8 @@
 /* background */
-.our-product{
+.our-product {
   overflow-x: hidden;
-  width:100%;
+  width: 100%;
 }
-
 
 .product__section {
   position: relative;
@@ -31,11 +30,11 @@
     }
 
     &:after {
-      content: '';
+      content: "";
       display: block;
       position: absolute;
-      left: 0px;
-      right: 0px;
+      left: 0;
+      right: 0;
       top: -50%;
       bottom: -50%;
       // background-color: white;
@@ -71,12 +70,11 @@
       .product-section__content--granite {
         font-size: 1.5em;
       }
-
     }
 
     &:after {
       background-color: fade(@granite-grey, 50%);
-      background-image: url('images/product_background-1.jpg');
+      background-image: url("images/product_background-1.jpg");
       background-position: center top;
     }
   }
@@ -84,7 +82,7 @@
   &.product__section--counseling {
     &:after {
       background-color: fade(@granite-grey, 50%);
-      background-image: url('images/product_background-2.jpg');
+      background-image: url("images/product_background-2.jpg");
       background-position: center top;
     }
   }
@@ -98,8 +96,8 @@
     min-height: 80vh;
 
     @media screen and (max-height: 800px) {
-        min-height: 680px;
-      }
+      min-height: 680px;
+    }
 
     .product-section__content {
       position: absolute;
@@ -173,7 +171,7 @@
     margin-top: 0;
 
     &:before {
-      content: '';
+      content: "";
       display: block;
       position: absolute;
       top: 0;
@@ -193,7 +191,7 @@
 
     &:after {
       background-color: fade(@granite-grey, 60%);
-      background-image: url('images/human-capital-blur.jpg');
+      background-image: url("images/human-capital-blur.jpg");
       background-position: center top;
       top: 0;
       bottom: 0;
@@ -202,9 +200,7 @@
   }
   // @media screen and (max-width: @screen-md) {
   //   }
-
 }
-
 
 .product-section__cta {
   text-align: center;
@@ -212,10 +208,10 @@
   padding-top: 3em;
   border-top: 1px solid fade(white, 30%);
 
-  h1, h2 {
+  h1,
+  h2 {
     font-weight: 200;
   }
-
 
   h1 {
     font-size: 4em;
@@ -230,736 +226,227 @@
     font-size: 2.5em;
     padding: 1em 2.5em;
   }
-
-
-
 }
 
-//done************************************
 @media screen and (min-width: @screen-lg) {
-
-
-// *****************************************
-.product__section:nth-child(odd) {
+  .product__section:nth-child(odd) {
     min-height: 852px;
-}
-
-.product__section--recruiting {
-
-    >.product-section__content{
-      // text-align: center;
-
-      >.section-content__features>.features-screenshot{
-          margin-top: 2%;
-
-
-        }
-      }
-
   }
-
-
-
-
-// *************************************
-.counseling {
-  min-height: 76em;
-  width: 100%;
-  margin-top: 3em;
-  overflow: hidden;
-
-
->.product__section--counseling{
-      min-height: 62em;
-    }
 }
-
-
-// ***************************************
-
-
-.product__section--asset-managemnet{
-  margin-top: 1%; //marked important
->.product-section__content>.section-content__title{
-      font-size: 4.2em;
-      }
-
-      }
-
-
-// ********************************************
-
-
-.human {
-  min-height: 105em;
-  width: 100%;
-  overflow: hidden;
-
-  >.product__section--human-capital{
-  margin-top: -9em;//!important
-  min-height: 129em;//!important
-
-  >.product-section__content{
-    margin-top:13%;
-
-  }
-
-}
-
-
-}
-
-
-  }
-
-
-
-
-
-
-
-
-
-//done
-@media screen and (min-width: @screen-labtop) and (max-width: 1999px) {
-
-//   .product__section:nth-child(even) {
-//       text-align: center;
-//   }
-//
-//   .product__section>.product-section__content>.section-content__features{
-//     margin-top: 8% ;
-//     flex-flow: wrap ;
-//
-//     >.features-list
-//   {
-//     text-align: center !important;
-//     +.features-screenshot > img{
-//       width: 104%;
-//       margin-left: -2%;
-//     }
-//   }
-// }
-
-
-
-
-// *****************************************
-.product__section--recruiting {
-
-    >.product-section__content{
-      // text-align: center;
-
-      >.section-content__features>.features-screenshot{
-          margin-top: 2%;
-
-
-        }
-      }
-
-  }
-
-
-
-
-// *************************************
-.counseling {
-  min-height: 73em;
-  width: 100%;
-  margin-top: 3em;
-  overflow: hidden;
-
-
->.product__section--counseling{
-      min-height: 59em;
-    }
-}
-
-
-// ***************************************
-
-
-.product__section--asset-managemnet{
-  margin-top: 1%; //marked important
->.product-section__content>.section-content__title{
-      font-size: 4.2em;
-      }
-
-      }
-
-
-// ********************************************
-
-
-.human {
-  min-height: 105em;
-  width: 100%;
-  overflow: hidden;
-
-  >.product__section--human-capital{
-  margin-top: -12em;//!important
-  min-height: 129em;//!important
-  // text-align: center;
-
-  >.product-section__content{
-    margin-top:16%;
->.section-content__features>.features-screenshot>img{
-      max-width: 41em;
-}
-  }
-
-}
-
-
-}
-
-
-  }
-
-
-
 
 @media screen and (min-width: @screen-tab) and (max-width: 991px) {
-
   .product__section:nth-child(even) {
-      text-align: center;
+    text-align: center;
   }
 
-  .product__section>.product-section__content>.section-content__features{
-    margin-top: 8% ;
-    flex-flow: wrap ;
+  .product__section > .product-section__content > .section-content__features {
+    flex-flow: wrap;
 
-    >.features-list
-  {
-    text-align: center !important;
-    +.features-screenshot > img{
-      width: 100%;
-      margin-left: -2%;
+    > .features-list {
+      text-align: center !important;
+
+      + .features-screenshot > img {
+        min-width: 100%;
+      }
     }
   }
-}
 
-
-  .granite {
-    min-height: 58em;
-    width: 100%;
-    overflow: hidden;
-
->.product__section--top {
-  height: auto;
-  overflow: hidden;
-  min-width: 134%;
-  margin: -9% -10% 0% -18% !important;
-
-  >.product-section__content{
-    font-size: 3.5em;
-    line-height: 1em;
-    min-width: 50%;
-    position: absolute;
-    left: 1.2em;
-    right: 0;
-  }
-}
-}
-
-// *****************************************
-.product__section--recruiting {
+  .product__section--recruiting {
     margin-top: 5%;
 
-    >.product-section__content{
+    > .product-section__content {
       text-align: center;
-
-      >.section-content__features>.features-screenshot{
-          margin-top: 2%;
-
-
-        }
-      }
-
+    }
   }
 
+  .our-product > .product__section--counseling {
+    min-width: 136%;
+    text-align: center;
 
-
-
-// *************************************
-
-
-
-
-.our-product>.product__section--counseling{
-  min-width: 136%;
-      margin-left: -19%;
-      min-height: 62em;
+    > .product-section__content {
+      top: 22em;
+      margin-left: -4.8%;
       text-align: center;
-
-   >.product-section__content{
-  top: 29em;
-  font-size: 97%;
-  margin-left: 1.2%;
-  text-align: center;
-
-  >.section-content__features>.features-screenshot{
-      margin-right: 7%;
-
->img{
-  margin-left: 3%;
-}
-  }
-}
-}
-
-
-
-// ***************************************
-
-
-.product__section--asset-managemnet{
-  margin-top: 1%; //marked important
->.product-section__content>.section-content__title{
-      font-size: 4.2em;
-      }
-
-      }
-
-
-// ********************************************
-
-
-
-  .our-product>.product__section--human-capital{
-  margin-top: 2em;//!important
-  min-height: 129em;//!important
-  text-align: center;
-
-  >.product-section__content{
-    margin-top: 14%;
-
-
-
-}
-
-
-}
-
-
+    }
   }
 
+  .our-product > .product__section--human-capital {
+    margin-top: -10em; //!important
+    text-align: center;
+    z-index: -1;
+  }
 
-
-
-
+  .section-content__features > .features-list {
+    text-align: center;
+  }
+}
 
 @media screen and (min-width: @screen-md1) and (max-width: 767px) {
-
   .product__section:nth-child(even) {
-      text-align: center;
+    text-align: center;
   }
 
-  .product__section>.product-section__content>.section-content__features{
-    margin-top: 8% ;
-    flex-flow: wrap ;
+  .product__section > .product-section__content > .section-content__features {
+    margin-top: 8%;
+    flex-flow: wrap;
 
-    >.features-list
-  {
-    text-align: center !important;
-    +.features-screenshot > img{
-      min-width: 104%;
-      margin-left: -2%;
-    }
-  }
-}
-
-
-  .granite {
-    min-height: 58em;
-    width: 100%;
-    overflow: hidden;
-
->.product__section--top {
-  height: auto;
-  overflow: hidden;
-  width: 134%;
-  margin: -9% -10% 0% -18% !important;
-
-  >.product-section__content{
-    font-size: 3.5em;
-    line-height: 1em;
-  min-width: 50%;
-    position: absolute;
-    left: .7em;
-    right: 0;
-  }
-}
-}
-
-// *****************************************
-.product__section--recruiting {
-    margin-top: -25%;
-
-    >.product-section__content{
-      text-align: center;
-
-      >.section-content__features>.features-screenshot{
-          margin-top: 2%;
-
-
-        }
-      }
-
-  }
-
-
-
-
-// *************************************
-.counseling {
-  min-height: 67em;
-  width: 100%;
-  margin-top: 3em;
-  overflow: hidden;
-
-
->.product__section--counseling{
-  min-width: 136%;
-      margin-left: -19%;
-      min-height: 58em;
-
-   >.product-section__content{
-  top: 28em;
-  left:2.8em;
-
-  >.section-content__features>.features-screenshot{
-      margin-right: 7%;
-
-
-  }
-}
-}
-}
-
-
-// ***************************************
-
-
-.product__section--asset-managemnet{
-  margin-top: 1%; //marked important
->.product-section__content>.section-content__title{
-      font-size: 4.2em;
-      }
-
-      }
-
-
-// ********************************************
-
-
-.human {
-  min-height: 116em;
-  width: 100%;
-  overflow: hidden;
-
-  >.product__section--human-capital{
-  margin-top: -14em;
-  min-height: 129em;
-  text-align: center;
-
-  >.product-section__content{
-    margin-top: 34%;
-
-  }
-
-}
-
-
-}
-
-
-  }
-
-
-  @media screen and (min-width: @screen-sm) and (max-width: 575px) {
-
-    .product__section:nth-child(even) {
-        text-align: center;
-    }
-
-    .product__section>.product-section__content>.section-content__features{
-      margin-top: 8% ;
-      flex-flow: wrap ;
-
-      >.features-list
-    {
+    > .features-list {
       text-align: center !important;
-      +.features-screenshot > img{
+
+      + .features-screenshot > img {
+        min-width: 100%;
         max-width: 100%;
-        margin-left: -1%;
-        height: auto;
       }
     }
   }
 
+  .product__section--recruiting {
+    margin-top: 5%;
 
-    .granite {
-      min-height: 58em;
-      width: 100%;
-      overflow: hidden;
+    > .product-section__content {
+      text-align: center;
+    }
+  }
 
-  >.product__section--top {
-    height: auto;
-    overflow: hidden;
+  .our-product > .product__section--counseling {
+    min-width: 133%;
+    margin-left: -19%;
+    min-height: 52em;
+
+    > .product-section__content {
+      left: 2.8em;
+      text-align: center;
+    }
+  }
+
+  .our-product > .product__section--human-capital {
+    margin-top: -11em;
+    text-align: center;
+    z-index: -1;
+
+    > .product-section__content {
+      margin-top: 16%;
+    }
+  }
+}
+
+@media screen and (min-width: @screen-sm) and (max-width: 575px) {
+  .product__section:nth-child(even) {
+    text-align: center;
+  }
+
+  .product__section > .product-section__content > .section-content__features {
+    flex-flow: wrap;
+
+    > .features-list {
+      text-align: center !important;
+
+      + .features-screenshot > img {
+        max-width: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+
+  .our-product > .product__section--top {
     min-width: 134%;
     margin: -9% -10% 0% -18% !important;
 
-    >.product-section__content{
-      font-size: 3.5em;
-      line-height: 1em;
-      min-width: 50%;
+    > .product-section__content {
       position: absolute;
       left: .7em;
       right: 0;
     }
   }
-  }
 
-  // *****************************************
   .product__section--recruiting {
-      margin-top: -25%;
+    margin-top: 5%;
 
-      >.product-section__content{
-        text-align: center;
-
-        >.section-content__features>.features-screenshot{
-            margin-top: 2%;
-
-
-          }
-        }
-
+    > .product-section__content {
+      text-align: center;
     }
+  }
 
-
-
-
-  // *************************************
-  .counseling {
-    min-height: 65em;
-    width: 100%;
-    margin-top: 3em;
-    overflow: hidden;
-
-
-  >.product__section--counseling{
+  .our-product > .product__section--counseling {
     min-width: 150%;
-        margin-left: -28%;
-        min-height: 54em;
+    margin-left: -28%;
 
-     >.product-section__content{
-    top: 48%;
-    left:9%;
-    font-size: 92%;
-
-    >.section-content__features>.features-screenshot{
-        margin-right: 7%;
-
-
+    > .product-section__content {
+      left: 9%;
     }
   }
+
+  .our-product > .product__section--human-capital {
+    margin-top: -13em;
+    text-align: center;
+    z-index: -1;
+
+    > .product-section__content {
+      margin-top: 20%;
+      padding: 65% 23% 0 11%;
+    }
   }
+}
+
+@media screen and (max-width: 374px) {
+  .product__section.product__section--img .product-section__content {
+    padding: 15% 15%;
   }
 
+  .product__section:nth-child(odd) {
+    width: 136%;
+    margin: 10% -18%;
+  }
 
-  // ***************************************
+  .product__section:nth-child(even) {
+    text-align: center;
+  }
 
+  .product__section > .product-section__content > .section-content__features {
+    margin-top: 8%;
+    flex-flow: wrap;
 
-  .product__section--asset-managemnet{
-    margin-top: -23%; //marked important
-  >.product-section__content>.section-content__title{
-        font-size: 390%;
-        }
+    > .features-list {
+      text-align: center !important;
 
-        }
+      + .features-screenshot > img {
+        min-width: 100%;
+        max-width: 100%;
+        height: auto;
+      }
+    }
+  }
 
+  .our-product > .product__section.product__section--top {
+    margin: -9% -10% 33% -18% !important;
+  }
 
-  // ********************************************
+  .product__section--recruiting {
+    margin-top: -25%;
 
+    > .product-section__content .section-content__title {
+      font-size: 4.4em;
+    }
+  }
 
-  .human {
-    min-height: 116em;
-    width: 100%;
-    overflow: hidden;
+  .our-product > .product__section.product__section--counseling .product-section__content .section-content__title {
+    font-size: 4.4em;
+  }
 
-    >.product__section--human-capital{
-    margin-top: -16em;//!important
-    min-height: 129em;//!important
+  .product__section--asset-managemnet > .product-section__content > .section-content__title {
+    font-size: 3.8em;
+  }
+
+  .our-product > .product__section.product__section--human-capital:before {
+    height: 15%;
+  }
+
+  .product__section--human-capital {
     text-align: center;
 
-    >.product-section__content{
-      top: 13em;
-      right:4em;
-      margin-top: 51%;
-
+    > .product-section__content {
+      min-width: 36em;
+      font-size: 11px;
     }
-
   }
-
-
-  }
-
-
-    }
-
-
-//done!!!!************************************
-    @media screen and (max-width: 374px) {
-
-
-
-
-
-      .product__section.product__section--img .product-section__content {
-    padding: 15% 14%;
 }
-      .product__section:nth-child(odd){
-        width:136%;
-        margin:10% -18%;
-      }
-
-      .product__section:nth-child(even) {
-          text-align: center;
-      }
-
-      .product__section>.product-section__content>.section-content__features{
-        margin-top: 8% ;
-        flex-flow: wrap ;
-
-        >.features-list
-      {
-        text-align: center !important;
-        +.features-screenshot > img{
-          min-width: 100%;
-          max-width: 100%;
-          height:auto;
-          margin-left: -1%;
-        }
-      }
-    }
-
-
-
-    .our-product >.product__section.product__section--top {
-      height: auto;
-      overflow: hidden;
-      min-width: 134%;
-      margin: -9% -10% 33% -18% !important;
-
-      >.product-section__content{
-        font-size: 3.5em;
-        line-height: 1em;
-        min-width: 50%;
-        position: absolute;
-        left: .7em;
-        right: 0;
-      }
-    }
-
-
-    // *****************************************
-    .product__section--recruiting {
-        margin-top: -25%;
-
-        >.product-section__content{
-          text-align: center;
-          >.section-content__title{
-              font-size: 427%;
-            }
-
-          >.section-content__features>.features-screenshot{
-              margin-top: 2%;
-
-
-            }
-          }
-
-      }
-
-
-
-
-    // *************************************
-
-    .product__section .product-section__content .section-content__title {
-      font-size: 4.7em;
-    }
-
-    .product__section.product__section--counseling:before {
-        right: -50%;
-            z-index: -1;
-                height: 15%;
-    }
-
-
-    >.product__section--counseling{
-      min-width: 150%;
-          margin-left: -27.5%;
-          min-height: 100vh;
-          overflow: hidden;
-
-       >.product-section__content{
-      top: 49%;
-      left:9%;
-      font-size: 89%;
-      >.section-content__title{
-          font-size: 427%;
-        }
-
-      >.section-content__features>.features-screenshot{
-          margin-right: 7%;
-
-
-      }
-    }
-    }
-
-
-
-    // ***************************************
-
-
-    .product__section--asset-managemnet{
-      margin-top: -6%;
-    >.product-section__content>.section-content__title{
-          font-size: 335%;
-          }
-
-          }
-
-
-    // ********************************************
-
-
-// .product__section.product__section--human-capital:before {
-
-      .our-product > .product__section.product__section--human-capital:before {
-        right: -50%;
-        z-index: -1;
-        height: 15%;
-      }
-
-
-      .product__section--human-capital{
-      margin-top: -13em;//!important
-      min-height: 100vh;
-      text-align: center;
-overflow: hidden;
-      >.product-section__content{
-        margin-top: 69%;
-        margin-left: -.3em;
-        min-width: 36em;
-        font-size: 11px;
-
-      }
-
-    }
-
-
-    }
