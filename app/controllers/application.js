@@ -5,6 +5,10 @@ import { on } from '@ember/object/evented';
 import { inject as service } from '@ember/service';
 import $ from 'jquery';
 import ENV from 'granite/config/environment';
+import fadeRgb from 'granite/utils/fade-rgb';
+import { darken, lighten } from 'granite/utils/mul-rgb';
+import { htmlSafe } from '@ember/string';
+
 
 const nonTopLevelRoutes = [
   'account',
@@ -13,6 +17,7 @@ const nonTopLevelRoutes = [
 ];
 
 export default Controller.extend({
+  auth: service(),
   notifications: service('notification-messages'),
 
   accountNavigationItems: [{
@@ -63,6 +68,16 @@ export default Controller.extend({
       });
     }
   })),
+
+
+  backdrop: computed('auth.user.company.rgbPalette', function () {
+    const palette = this.get('auth.user.company.rgbPalette');
+
+    return htmlSafe(palette ? `
+      linear-gradient(${fadeRgb(lighten(palette[0], 10), 1)}, transparent),
+      linear-gradient(80deg, ${fadeRgb(darken(palette[0], 20), 1)}, transparent),
+      linear-gradient(-60deg, ${fadeRgb(palette[2], 1)}, transparent);` : '#FFF');
+  }),
 
   transitionAfterExpiration: observer('auth.isExpired', function() {
     if (this.get('auth.isExpired')) {

@@ -1,6 +1,7 @@
 {{notification-container notifications=notifications position="bottom"}}
 
-<div class="ui main">
+<div class="ui main" style="background: {{backdrop}} ">
+  {{log backdrop.palette}}
   {{#unless topLevel}}
     {{elements/account-navigation links=accountNavigationItems ui_context='body .ember-view .main'}}
   {{/unless}}
