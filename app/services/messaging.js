@@ -3,7 +3,6 @@ import { debounce } from '@ember/runloop';
 import { A } from '@ember/array';
 
 export default Service.extend({
-  auth: service(),
   socket: service(),
 
   queueDrainTimeout: 800,

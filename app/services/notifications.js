@@ -1,5 +1,4 @@
 import Service from '@ember/service';
-// import { computed } from '@ember/object';
 import { Promise, resolve } from 'rsvp';
 
 export default Service.extend({
@@ -42,9 +41,6 @@ export default Service.extend({
   },
 
   send (title, body, icon) {
-    console.log('title:', title);
-    console.log('body:', body);
-    console.log('icon:', icon);
     return this.__checkPermission()
     .then(permission => {
       if (permission !== true) {

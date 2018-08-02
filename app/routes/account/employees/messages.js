@@ -1,12 +1,14 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import refreshable from 'granite/mixins/refreshable';
 import { hash, map } from 'rsvp';
 
-export default Route.extend({
+export default Route.extend(refreshable, {
   auth: service(),
   ajax: service(),
   socket: service(),
   notifications: service(),
+
   title (tokens) {
     if (tokens.length > 0) {
       return tokens.join();
@@ -26,7 +28,6 @@ export default Route.extend({
     return hash({
       threads: this.store.findAll('message-thread')
       .then(result => map(result.toArray(), (thread) => {
-        console.log('result:', result);
         return hash({
           lastMessage: this.get('store').query('message', {
             limit: 1,
@@ -41,9 +42,9 @@ export default Route.extend({
               readBy: { $nin: [ this.get('auth.user.employee.id') ] }
             }
           })
-        }).then(result => {
-          thread.set('lastMessage', result.lastMessage.get('firstObject'));
-          thread.set('someUnread', !!result.unreadCount.count);
+        }).then(results => {
+          thread.set('lastMessage', results.lastMessage.get('firstObject'));
+          thread.set('someUnread', !!results.unreadCount.count);
           return thread;
         });
       })),
@@ -58,18 +59,10 @@ export default Route.extend({
   },
 
   setupController (controller, model) {
-    console.log('model in route:', model.threads);
     controller.setProperties({
       model: model.threads,
       allEmployees: model.employees,
       user: model.user
     });
-  },
-
-  actions: {
-    refresh () {
-      console.log('REFRESHING');
-      this.refresh();
-    }
   }
 });

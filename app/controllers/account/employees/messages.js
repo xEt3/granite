@@ -39,7 +39,6 @@ export default Controller.extend(ajaxStatus, {
       })
       .finally(() => {
         this.set('messageParticipantTargets', null);
-        console.log('GOING TO REFRESH');
         this.send('refresh');
       })
       .catch(this.ajaxError.bind(this));

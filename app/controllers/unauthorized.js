@@ -16,7 +16,6 @@ export default Controller.extend({
     }
 
     console.log('inside unauthorizedReason, session:', this);
-    // var sessionExpires = this.session.get('content.expires');
     var sessionExpires = this.auth.get('session.expires');
 
     if ( moment(sessionExpires).isBefore(moment()) ) {
