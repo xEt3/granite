@@ -2,6 +2,7 @@
 {{display/scroll-reveal
   '.product__section:not(.product__section--img-reverse-rotate) h1'
   origin='top'
+  mobile=false
 }}
 {{display/scroll-reveal
   '.product__section:not(.product__section--img-reverse-rotate) .section-content__tagline'
@@ -23,13 +24,13 @@
     {{#display/scroll-reveal
       delay=500
       origin='left'
+      mobile=false
     }}
       simplifies the monumental task of managing Human Resources
     {{/display/scroll-reveal}}
   </div>
 </div>
 
-{{!-- <div class="gran"> --}}
  <div class="product__section product__section--recruiting">
   <div class="product-section__content">
     <h1 class="section-content__title">Recruiting</h1>
@@ -37,10 +38,6 @@
     {{display/product/features-list features.recruiting}}
 </div>
 </div>
-{{!-- </div> --}}
-
-{{!-- <div class='counseling'> --}}
-
 
 <div class="product__section product__section--img product__section--img-reverse-rotate product__section--counseling">
   <div class="product-section__content">
@@ -50,7 +47,6 @@
     {{display/product/features-list features.counseling}}
   </div>
 </div>
-{{!-- </div> --}}
 
 <div class="product__section product__section--asset-management">
   <div class="product-section__content">
@@ -61,7 +57,6 @@
   </div>
 </div>
 
-{{!-- <div class="human"> --}}
   <div class="product__section product__section--img product__section--human-capital">
   <div class="product-section__content">
     <h1 class="section-content__title">Human Capital</h1>
