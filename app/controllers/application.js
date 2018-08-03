@@ -14,6 +14,7 @@ const nonTopLevelRoutes = [
 
 export default Controller.extend({
   notifications: service('notification-messages'),
+  auth: service(),
 
   accountNavigationItems: [{
     icon: 'tachometer alternate',

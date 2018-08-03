@@ -1,0 +1,26 @@
+{{display/employee-picture url=message.from.picture class="ui avatar image" employeeId=message.from._id}}
+
+<div class="content message__content-block">
+  <div class="header message__sender">
+    {{message.from.name.first}}
+  </div>
+  <div class="description message__content">
+    {{message.content}}
+
+    {{#if message.file}}
+      {{#if message.content}}<div class="ui divider"></div>{{/if}}
+
+      {{#if (or isImage message.file.previewPath)}}
+        <img class="ui small image" src={{if isImage message.file.url message.file.previewPath}}>
+      {{/if}}
+
+      <p><a href={{message.file.url}} download>Download Attachment (.{{message.file.extension}}) <i class="download icon"></i></a></p>
+    {{/if}}
+  </div>
+</div>
+
+<div class="message__ts">
+  <span class="light text message-ts__content">
+    {{time-ago message.created}}
+  </span>
+</div>
