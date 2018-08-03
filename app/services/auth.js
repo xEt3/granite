@@ -132,8 +132,8 @@ export default Service.extend({
     return this.get('store').find('company-user', userId);
   }),
 
-  isExpired: computed('clock.minute', 'session.expires', function () {
-    return moment(this.get('session.expires')).isBefore(moment());
+  isExpired: computed('clock.minute', 'session.expires', 'authenticated', function () {
+    return this.get('authenticated') && moment(this.get('session.expires')).isBefore(moment());
   }),
 
   isExpiring: computed('clock.minute', 'session.expires', function () {
