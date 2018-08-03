@@ -9,7 +9,7 @@ export default Route.extend({
   notifications: service(),
 
   titleToken (model) {
-    let names = model.thread.get('between').toArray();
+    let names = model.between ? model.between.toArray() : model.thread.between.toArray();
     if (names.length > 2) {
       return `Conversation with ${names[0].firstName} & ${names[1].firstName}`;
     }
