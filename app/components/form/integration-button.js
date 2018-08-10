@@ -17,75 +17,31 @@ export default Component.extend(ajaxStatus, {
   classNameBindings: [ 'working:loading', 'alreadyLinked:disabled' ],
   linkedServices: A(),
 
-  init () {
-    this._super();
-    this.setupListener();
-  },
-
-  willDestroyElement () {
-    this.teardownListener();
-  },
-
   click ( e ) {
     e.preventDefault();
 
-    if ( this.get('alreadyLinked') ) {
+    if (this.get('alreadyLinked')) {
       return;
     }
 
     this.send('initiateIntegrationIntent');
   },
 
-  setupListener () {
-    let messageHandler = this.messageReceived.bind(this);
-    $(window).on('message', messageHandler);
-  },
-
-  teardownListener () {
-    let messageHandler = this.messageReceived.bind(this);
-    $(window).off('message', messageHandler);
-  },
-
-  messageReceived ( e ) {
-    let eventData = e.originalEvent.data;
-
-    if ( !eventData.name ) {
-      return;
-    }
-
-    let messageData = {
-      id: this.get('intent.id')
-    };
-
-    $('#' + this.get('modalId')).modal('hide');
-
-    let eventHook = this['on' + eventData.name];
-
-    if ( eventHook && typeof eventHook === 'function' ) {
-      eventHook(Object.assign({}, messageData, eventData ? eventData.data : {}));
-    }
-  },
-
-  modalId: computed('elementId', function () {
-    return this.get('elementId') + '-integration-modal';
-  }),
-
   alreadyLinked: computed('linkedServices.[]', 'service', function () {
-    return this.get('linkedServices').includes(this.get('service'));
+    return (this.get('linkedServices') || []).includes(this.get('service'));
   }),
 
   actions: {
     initiateIntegrationIntent () {
       this.ajaxStart();
 
-      let service = this.get('service'),
-          apiUri = this.get('apiUri').replace(':service', service);
+      let integration = this.get('service'),
+          apiUri = this.get('apiUri').replace(':service', integration);
 
       this.get('ajax').post(apiUri)
       .then(response => {
         this.ajaxSuccess(null, true);
-        this.set('intent', response);
-        $('#' + this.get('modalId')).modal('show');
+        window.location = response.authUri;
       })
       .catch(this.ajaxError.bind(this));
     },

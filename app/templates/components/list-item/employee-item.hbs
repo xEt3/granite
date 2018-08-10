@@ -11,6 +11,11 @@
       <span class="ui small text right floated">{{time employee.created}}</span>
     </div>
     <div class="extra">
+      {{#if employee.externalLinkService}}
+      <div class="ui basic label">
+        <i class="download icon"></i>Imported from {{capitalize employee.externalLinkService}}
+      </div>
+        {{/if}}
       {{#if employee.onboarding}}
         <div class="ui green label">
           <i class="circle thin icon"></i>Onboarding
