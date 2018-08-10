@@ -6,10 +6,16 @@
   &.cover {
     background-size: cover;
     min-height: 100vh;
+
+    @media screen and (max-height: 500px) {
+      // important here affects media queries for smaller devices
+      min-height: 500px !important;
+    }
   }
 
   .makeHeroImage(~'granite-cover');
   .makeHeroImage(~'lift-cover');
+  .makeHeroImage(~'first-steps-cover');
 
   &.grey.overlay {
     background-color: @granite-grey;

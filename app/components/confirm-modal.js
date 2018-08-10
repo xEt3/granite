@@ -45,6 +45,9 @@ export default Component.extend({
 
   actions: {
     respond ( response ) {
+      if (this.get('isDestroyed')) {
+        return;
+      }
       let fn = this.get(response ? 'resolve' : 'reject');
       fn.apply(null, this.get('_originalArgs'));
       this.set('responded', true);

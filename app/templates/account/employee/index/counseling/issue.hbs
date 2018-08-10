@@ -1,5 +1,5 @@
 <div class="ui raised padded segment container clearfix animated fadeInUp">
-  {{#confirm-modal as |confirmDelete|}}
+  {{#confirm-modal deleteContext=model.title as |confirmDelete|}}
     <hgroup class="clearfix">
       <h2 class="ui left floated header">
         {{#link-to 'account.employee.index.counseling.issue'}}

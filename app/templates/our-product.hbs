@@ -1,0 +1,77 @@
+{{display/scroll-reveal
+  '.product__section:not(.product__section--img-reverse-rotate) h1'
+  origin='top'
+}}
+{{display/scroll-reveal
+  '.product__section:not(.product__section--img-reverse-rotate) .section-content__tagline'
+  useDelay='once'
+  delay=500
+  viewFactor=0.1
+  origin='bottom'
+}}
+{{display/scroll-reveal
+  '.product__section:not(.product__section--img-reverse-rotate) .section-content__features'
+  useDelay='once'
+  delay=500
+  viewFactor=0.1
+  origin='bottom'
+}}
+
+<div class="product__section product__section--img product__section--top">
+  <div class="product-section__content">
+    <h1 class="product-section__content--granite">Granite HR</h1>
+    {{#display/scroll-reveal
+      delay=500
+      origin='left'
+    }}
+      simplifies the monumental task of managing Human Resources
+    {{/display/scroll-reveal}}
+  </div>
+</div>
+
+<div class="product__section product__section--recruiting">
+  <div class="product-section__content">
+    <h1 class="section-content__title">Recruiting</h1>
+    <h4 class="section-content__tagline">Fast track your hiring process and let Granite do the heavy lifting</h4>
+
+    {{display/product/features-list features.recruiting}}
+  </div>
+</div>
+
+<div class="product__section product__section--img product__section--img-reverse-rotate product__section--counseling">
+  <div class="product-section__content">
+    <h1 class="section-content__title">Counseling</h1>
+    <h4 class="section-content__tagline">Document employee issues and easily issue corrective actions</h4>
+
+    {{display/product/features-list features.counseling}}
+  </div>
+</div>
+
+<div class="product__section product__section--asset-managemnet">
+  <div class="product-section__content">
+    <h1 class="section-content__title">Asset Management</h1>
+    <h4 class="section-content__tagline">Follow assigned, valuable assets through your organization</h4>
+
+    {{display/product/features-list features.assetManagemnet}}
+  </div>
+</div>
+
+<div class="product__section product__section--img product__section--human-capital">
+  <div class="product-section__content">
+    <h1 class="section-content__title">Human Capital</h1>
+    <h4 class="section-content__tagline">Employee records are at your fingertips, with easy <br /> access to common Human Resource actions</h4>
+
+    {{display/product/features-list features.humanCapital}}
+
+    {{#display/scroll-reveal}}
+      <div class="product-section__cta">
+        <h1><i class="power off icon"></i> Like what you see?</h1>
+        <h2>Start a free 14-day trial and see what Granite can do for your business.</h2>
+
+        {{#link-to 'signup' class="ui massive green button"}}
+          Get Started
+        {{/link-to}}
+      </div>
+    {{/display/scroll-reveal}}
+  </div>
+</div>

@@ -2,10 +2,11 @@ import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
 import { computed } from '@ember/object';
+import { A } from '@ember/array';
 import moment from 'moment';
 import Validations from './validations/company';
 
-export default Model.extend(Validations, {
+export default Model.extend(Validations,  {
   name:  attr('string'),
   email: attr('string'),
 
@@ -32,6 +33,9 @@ export default Model.extend(Validations, {
   logoUrl: attr('string'),
   logoDominantColor: attr('string'),
   logoPalette: attr('array'),
+
+  firstStepsCompletedOn: attr('date'),
+  firstStepsCompleted: attr('array', { defaultValue: () => A() }),
 
   urlPrefix: attr('string'),
   collectEEO: attr('boolean'),

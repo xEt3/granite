@@ -17,7 +17,7 @@
           {{#link-to 'account.asset.settings' class="item"}}<i class="settings icon"></i>Settings{{/link-to}}
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
-            {{#confirm-modal as |confirm|}}
+            {{#confirm-modal as deleteContext=model.name as |confirm|}}
               <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}><i class="trash icon"></i>Delete Record</a>
             {{/confirm-modal}}
           </div>

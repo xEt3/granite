@@ -17,7 +17,6 @@
     {{elements/x-footer}}
   </div>
 </div>
-
-{{#if auth.isExpiring}}
+{{#if (and auth.isExpiring (not auth.isExpired))}}
   {{confirm-modal confirmOnRender=true confirmContent='Your session is expiring. Would you like to continue?' onResponse=(action "authResponse")}}
 {{/if}}

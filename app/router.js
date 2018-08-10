@@ -9,7 +9,6 @@ const Router = EmberRouter.extend({
 Router.map(function() {
   this.route('vogue');
   this.route('pricing');
-  this.route('features');
   this.route('contact');
 
   this.route('about', function() {
@@ -47,6 +46,9 @@ Router.map(function() {
         this.route('new');
       });
       this.route('changes');
+      this.route('messages', function() {
+        this.route('thread', { path: '/thread/:thread_id' });
+      });
     });
     this.route('employee', { path: '/employee/:id' }, function() {
       this.route('index', { path: '/' }, function() {
@@ -172,6 +174,8 @@ Router.map(function() {
     this.route('import', function() {
       this.route('discovered', { path: '/:result_set_id' });
     });
+
+    this.route('first-steps');
   });
 
   this.route('error');
@@ -181,6 +185,7 @@ Router.map(function() {
   this.route('login');
   this.route('setup-account', { path: '/setup/account/:user_id' });
   this.route('recover', { path: '/recover/:recovery_id' });
+  this.route('our-product');
 });
 
 export default Router;

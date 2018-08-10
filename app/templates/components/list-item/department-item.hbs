@@ -16,7 +16,7 @@
   <div class="ui attached segment no-margin">
     <div class="clearfix description">
       <div class="right floated">
-        {{#confirm-modal confirmContent="Are you sure you want to delete this department?" as |confirm|}}
+        {{#confirm-modal deleteContext=this.department.name confirmContent="Are you sure you want to delete this department " as |confirm|}}
           <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}>
             <i class="large trash icon"></i>
           </a>

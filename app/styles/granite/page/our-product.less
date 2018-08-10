@@ -1,0 +1,227 @@
+/* background */
+.product__section {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  backface-visibility: hidden;
+
+  &.product__section--img {
+    .product-section__content {
+      padding: 15% 10%;
+    }
+
+    &:nth-child(odd) {
+      .section-content__features {
+        flex-direction: row-reverse;
+
+        .features-list {
+          text-align: right;
+
+          li > a {
+            color: white;
+          }
+        }
+      }
+    }
+
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0px;
+      right: 0px;
+      top: -50%;
+      bottom: -50%;
+      // background-color: white;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: overlay;
+      z-index: -2;
+      transform: rotate(10deg);
+    }
+
+    &.product__section--img-reverse-rotate {
+      transform: rotate(10deg);
+
+      .product-section__content {
+        transform: translateY(-50%) rotate(-10deg);
+      }
+
+      &:after {
+        transform: rotate(-10deg);
+      }
+    }
+  }
+
+  &.product__section--top {
+    margin: -10% -10% 0 -10% !important;
+
+    .product-section__content {
+      font-size: 3.5em;
+      line-height: 1em;
+      width: 50%;
+
+      .product-section__content--granite {
+        font-size: 1.5em;
+      }
+
+    }
+
+    &:after {
+      background-color: fade(@granite-grey, 50%);
+      background-image: url('images/product_background-1.jpg');
+      background-position: center top;
+    }
+  }
+
+  &.product__section--counseling {
+    &:after {
+      background-color: fade(@granite-grey, 50%);
+      background-image: url('images/product_background-2.jpg');
+      background-position: center top;
+    }
+  }
+
+  &:nth-child(odd) {
+    color: white;
+    width: 120%;
+    backface-visibility: hidden;
+    transform: rotate(-10deg);
+    margin: 10% -10%;
+    min-height: 80vh;
+
+    @media screen and (max-height: 800px) {
+      min-height: 800px;
+    }
+
+    .product-section__content {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%) rotate(10deg);
+    }
+  }
+
+  &:nth-child(even) {
+    text-align: right;
+  }
+
+  .product-section__content {
+    padding: 0 5%;
+
+    .section-content__title {
+      font-size: 5em;
+      margin-bottom: 2px;
+    }
+
+    .section-content__tagline {
+      font-weight: 200;
+      font-size: 2em;
+    }
+
+    .section-content__features {
+      text-align: left;
+      margin-top: 5em;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+
+      .features-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 1.5em;
+        width: 100%;
+
+        > li {
+          margin: .25em 0;
+          padding: .25em 0;
+
+          &.feature--is-selected {
+            border-bottom: 5px dotted @gray-lighter;
+          }
+        }
+      }
+
+      .features-screenshot {
+        img {
+          border-radius: .5em;
+          margin-bottom: 5px;
+          height: 55vh;
+          box-shadow: 0 4px 8px fade(@granite-grey, 80%);
+        }
+      }
+    }
+
+    p {
+      font-size: 2em;
+    }
+  }
+
+  &.product__section--human-capital {
+    transform: none;
+    margin-top: 0;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: white;
+      height: 50%;
+      transform: rotate(-10deg) translateY(-70%);
+    }
+
+    .product-section__content {
+      transform: none;
+      position: static;
+      margin-top: 5%;
+      padding: 15% 10% 0 10%;
+    }
+
+    &:after {
+      background-color: fade(@granite-grey, 60%);
+      background-image: url('images/human-capital-blur.jpg');
+      background-position: center top;
+      top: 0;
+      bottom: 0;
+      transform: none;
+    }
+  }
+
+  @media screen and (max-width: @screen-md) {
+  }
+}
+
+
+.product-section__cta {
+  text-align: center;
+  margin: 4.5em 5em 5em 5em;
+  padding-top: 3em;
+  border-top: 1px solid fade(white, 30%);
+
+  h1, h2 {
+    font-weight: 200;
+  }
+
+
+  h1 {
+    font-size: 4em;
+  }
+
+  h2 {
+    font-size: 2em;
+  }
+
+  .button {
+    margin-top: 1em;
+    font-size: 2.5em;
+    padding: 1em 2.5em;
+  }
+}

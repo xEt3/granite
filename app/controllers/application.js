@@ -14,6 +14,7 @@ const nonTopLevelRoutes = [
 
 export default Controller.extend({
   notifications: service('notification-messages'),
+  auth: service(),
 
   accountNavigationItems: [{
     icon: 'tachometer alternate',
@@ -63,6 +64,13 @@ export default Controller.extend({
       });
     }
   })),
+
+  transitionAfterExpiration: observer('auth.isExpired', function() {
+    if (this.get('auth.isExpired')) {
+      $('.ui.modal').modal('hide');
+      this.send('logout', true);
+    }
+  }),
 
   actions: {
     authResponse ( response ) {

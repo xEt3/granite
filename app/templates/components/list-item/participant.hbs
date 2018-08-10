@@ -5,7 +5,7 @@
     class="ui image label"
   }}
     {{display/employee-picture
-      url=participant.picture id=participant.id
+      url=participant.picture employeeId=participant.id
     }}
     {{participant.fullName}}
     {{#if detail}}
@@ -16,7 +16,7 @@
   <span class="ui image label">
     {{display/employee-picture
       url=participant.picture
-      id=participant.id
+      employeeId=participant.id
     }}
     {{participant.fullName}}
     {{#if detail}}
