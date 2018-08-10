@@ -5,7 +5,7 @@ export default Route.extend({
   auth: service(),
 
   model () {
-    return this.get('auth.user.company');
+    return this.get('store').find('company', this.get('auth.user.company.id'));
   },
 
   setupController (controller, model) {
