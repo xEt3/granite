@@ -1,0 +1,25 @@
+<span class="toggle-icon" {{action 'toggleExpand' bubbles=false}}>
+  {{#if model.children.length}}
+    {{#if model.isExpanded}}
+      &#x25BC;
+    {{else}}
+      &#x25B6;
+    {{/if}}
+  {{else}}
+    &nbsp;&nbsp;
+  {{/if}}
+</span>
+{{#if checkable}}
+<div class="ui checked checkbox">
+  {{input type="checkbox" checked=model.isChecked change=(action 'toggleCheck') indeterminate=model.isIndeterminate }}
+    <label class='node'>{{capitalize model.name}}</label>
+</div>
+{{/if}}
+
+<span onclick={{action 'toggleCheck'}}>
+  {{#if hasBlock}}
+    {{yield model}}
+  {{else}}
+    {{model.name}}
+  {{/if}}
+</span>

@@ -17,6 +17,17 @@ export default Controller.extend(addEdit, {
           employee = this.get('model.employee'),
           attrs = [ 'firstName', 'middleName', 'lastName' ];
 
+      let id = [];
+      this.permissionsTree.forEach(permission=>{
+        permission.children.forEach(checked=>{
+          if (checked.isChecked) {
+            id.push(checked.id);
+
+            model.set('permissions', id);
+          }
+        });
+      });
+
       attrs.map(a => model.set(a, employee.get(a)));
     }
   }
