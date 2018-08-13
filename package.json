@@ -11,7 +11,7 @@
     "build": "ember build",
     "start": "ember server --proxy http://localhost:4000",
     "dock": "ember server --proxy http://$DOCKER_IP:$DOCKER_LB_PORT",
-    "lint:js": "eslint .",
+    "lint:js": "eslint app tests",
     "test": "ember test",
     "test-ci": "ember test --query=nolint",
     "deploy": "git push heroku master",
