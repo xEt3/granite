@@ -9,7 +9,6 @@ import fadeRgb from 'granite/utils/fade-rgb';
 import { darken, lighten } from 'granite/utils/mul-rgb';
 import { htmlSafe } from '@ember/string';
 
-
 const nonTopLevelRoutes = [
   'account',
   'login',
@@ -68,7 +67,6 @@ export default Controller.extend({
       });
     }
   })),
-
 
   backdrop: computed('auth.user.company.rgbPalette', function () {
     const palette = this.get('auth.user.company.rgbPalette');
