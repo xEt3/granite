@@ -103,7 +103,7 @@ export default function() {
 
   this.get('/employees', () => {
     return { employees: [] };
-  })
+  });
 
   this.post('/companies');
 
