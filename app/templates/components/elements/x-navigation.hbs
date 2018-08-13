@@ -22,11 +22,11 @@
       {{#link-to 'contact'}}Contact{{/link-to}}
     </div>
     {{#if auth.authenticated}}
-      <div class="item butt">
+      <div class="item login_or_dashboard">
         {{#link-to 'account' class="ui outlined blue button"}}Go To Dashboard{{/link-to}}
       </div>
     {{else}}
-      <div class="item butt">
+      <div class="item login_or_dashboard">
         <div class="ui buttons">
           {{#link-to 'login' class="ui blue button"}}Log in{{/link-to}}
           <div class="or"></div>
