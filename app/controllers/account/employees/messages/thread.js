@@ -18,7 +18,7 @@ export default Controller.extend({
       if (!message && !file) {
         return;
       }
-      console.log('file?', file);
+
       this.get('socket').emit('thread_message', {
         message,
         file: file && file.file && file.file._id,

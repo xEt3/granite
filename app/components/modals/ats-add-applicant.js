@@ -56,7 +56,7 @@ export default Component.extend(ajaxStatus, {
     for (let field in applicantRequiredFields) {
       if (field !== '_super') {
         let value = newApplicant[applicantRequiredFields[field]];
-        if (value === "" || value === undefined) {
+        if (value === '' || value === undefined) {
           return false;
         }
       }
@@ -126,30 +126,30 @@ export default Component.extend(ajaxStatus, {
       });
 
       applicant.save()
-        .then(() => {
-          if (this.get('fileIsAdded')) {
-            return this.uploadResume();
-          }
-        })
-        .then((response) => {
-          if (response) {
-            store.pushPayload('file', response);
-            let fileRecord = store.peekRecord('file', response.file.id);
-            application.set('resume', fileRecord);
-          }
+      .then(() => {
+        if (this.get('fileIsAdded')) {
+          return this.uploadResume();
+        }
+      })
+      .then((response) => {
+        if (response) {
+          store.pushPayload('file', response);
+          let fileRecord = store.peekRecord('file', response.file.id);
+          application.set('resume', fileRecord);
+        }
 
-          return application.save();
-        })
-        .then(() => {
-          this.ajaxSuccess('Saved application successfully');
-          this.setProperties({
-            newApplicant: null,
-            newApplication: null
-          });
-          this.send('removeFile');
-          this.closeModal();
-          this.refresh();
+        return application.save();
+      })
+      .then(() => {
+        this.ajaxSuccess('Saved application successfully');
+        this.setProperties({
+          newApplicant: null,
+          newApplication: null
         });
+        this.send('removeFile');
+        this.closeModal();
+        this.refresh();
+      });
     },
 
     notify (type, msg) {

@@ -9,12 +9,12 @@ export default Route.extend(add, {
 
   getModelDefaults () {
     return resolve(this.get('auth.user.company'))
-      .then(company => {
-        return {
-          company,
-          addressState: company.get('addressState'),
-          creator: this.get('auth.user')
-        };
-      });
+    .then(company => {
+      return {
+        company,
+        addressState: company.get('addressState'),
+        creator: this.get('auth.user')
+      };
+    });
   }
 });

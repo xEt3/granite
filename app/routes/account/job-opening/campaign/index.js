@@ -16,13 +16,13 @@ export default Route.extend({
       return {
         labels: _results.map(x => moment(x._id).format('M/D/YY')),
         datasets: [{
-          label: "Total Applied",
+          label: 'Total Applied',
           data: _results.mapBy('total').toArray(),
           fill: false,
           backgroundColor: 'rgb(255, 128, 102)',
-          borderColor: 'rgb(255, 128, 102)',
+          borderColor: 'rgb(255, 128, 102)'
         }, {
-          label: "Total Reviewed",
+          label: 'Total Reviewed',
           data: _results.mapBy('totalReviewed').toArray(),
           fill: false,
           backgroundColor: 'rgb(44, 195, 147)',

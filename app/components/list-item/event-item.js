@@ -15,6 +15,6 @@ export default BaseLiComponent.extend({
     const attendeesLength = get(attendees || [], 'length'),
           includeFacilator = facilitator && !(attendees || A()).findBy('id', facilitator.get('id'));
 
-    return (attendeesLength + (includeFacilator ? 1 : 0) + (attendantId ? 1 : 0)) || 0;
+    return attendeesLength + (includeFacilator ? 1 : 0) + (attendantId ? 1 : 0) || 0;
   })
 });

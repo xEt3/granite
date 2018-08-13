@@ -41,7 +41,7 @@ export default Mixin.create({
         sorter = this.sortQuery;
 
     if (this.get('filters')) {
-      this.filter(query, params, this.get('filters'))
+      this.filter(query, params, this.get('filters'));
     }
 
     if (mutate && typeof mutate === 'function') {
