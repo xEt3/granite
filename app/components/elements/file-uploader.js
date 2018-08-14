@@ -157,7 +157,7 @@ export default Component.extend(ajaxStatus, {
     });
   },
 
-  inputId: computed('elementId', function (){
+  inputId: computed('elementId', function () {
     return this.get('elementId') + '-input';
   }),
 

@@ -24,18 +24,4 @@
     <div class="ui divider"></div>
     <button class="fluid ui button" disabled={{disabled}} {{action 'loadMoreActivities'}}>Load More...</button>
   </div>
-  <div class="right aligned text">
-    <span class="fields">
-      {{#ui-radio id="user-radio" name="feed-source" class="radio__button" value="user" current=feedSource}}
-        <label for="user-radio">
-          {{ui-popup tagName="i" position="left center" class="user icon" content="Just your feed"}}
-        </label>
-      {{/ui-radio}}
-      {{#ui-radio id="all-radio" name="feed-source" class="radio__button" value="all" current=feedSource}}
-        <label for="all-radio">
-          {{ui-popup tagName="i" position="left center" class="users icon" content="Entire company feed"}}
-        </label>
-      {{/ui-radio}}
-    </span>
-  </div>
 </div>

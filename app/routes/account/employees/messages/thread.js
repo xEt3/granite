@@ -39,7 +39,6 @@ export default Route.extend({
       }
 
       if (!this.get('controller.model.messages') && scrollback) {
-        console.log('fresh scrollback')
         msgQuery.limit = 50 * (scrollback + 1);
         scrollback = false;
       }
@@ -49,7 +48,7 @@ export default Route.extend({
               existingMessages = this.get('controller.model.messages');
 
         const messages = existingMessages && scrollback ? hist.concat(existingMessages.toArray()).uniqBy('_id') : A(hist);
-        console.log('resolve');
+
         return {
           thread,
           messages,
@@ -77,7 +76,6 @@ export default Route.extend({
       return;
     }
 
-    console.log('got thread message ingress', message);
     controller.get('model.messages').pushObject(message);
     controller.set('ingressPushCount', (controller.get('ingressPushCount') || 0) + 1);
   },
@@ -99,7 +97,7 @@ export default Route.extend({
     if (scrollback) {
       messageQuery.page = scrollback;
     }
-    console.log('mq', messageQuery);
+
     const event = socket.emitAndListen(
       'get_thread_history',
       messageQuery,
@@ -107,24 +105,17 @@ export default Route.extend({
     );
 
     return event.then(([data]) => {
-      console.log(data);
-      console.log('promise returned');
-
       let messages = (data.messages || []).reverse();
       return { messages, count: data.count };
     });
   },
 
   afterModel () {
-    console.log('subscribe');
     this.messaging.subscribe('thread_message', this.onMessage, this, 'thread_controller');
   },
 
   resetController (controller, exit, transition) {
-    console.log('reset trans', transition);
-    console.log('reset?', controller, exit);
     if (exit || !(transition.queryParams || {}).sb) {
-      console.log('reset controller');
       controller.set('sb', 0);
     }
   }

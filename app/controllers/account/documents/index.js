@@ -65,9 +65,9 @@ export default Controller.extend(ajaxStatus, pagination, addEdit, {
 
     let assignmentPojo = assignment.getProperties('file', 'creator', 'company', 'signatureRequired', 'message');
 
-    return [ assignment, ...(employees.slice(1).map(employee => {
+    return [ assignment, ...employees.slice(1).map(employee => {
       return this.store.createRecord('file-assignment', $.extend({ employee }, assignmentPojo));
-    }))];
+    })];
   },
 
   actions: {

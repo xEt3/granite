@@ -129,4 +129,26 @@ const closeMessageMap = {
   allocateTalentPool: 'non-disqualified candidates will be added to your talent pool'
 };
 
-export { issueTypes, suffixes, states, jobCategories, jobTypes, formTypes, closeMessageMap };
+const modelPageMap = {
+  departments: { path: 'account.anatomy.departments', all: true },
+  locations:   { path: 'account.anatomy.locations', all: true },
+  employees:   { path: 'account.employee', all: false }
+};
+
+const recordDisplayPropertyMap = {
+  departments: [ 'name' ],
+  locations: [ 'name' ],
+  employees: [ 'name.first', 'name.last' ]
+};
+
+export {
+  issueTypes,
+  suffixes,
+  states,
+  jobCategories,
+  jobTypes,
+  formTypes,
+  closeMessageMap,
+  modelPageMap,
+  recordDisplayPropertyMap
+};

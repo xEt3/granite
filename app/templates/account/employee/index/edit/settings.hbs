@@ -1,0 +1,19 @@
+{{#if model.externalLinkService}}
+  <div class="field">
+    <label for="automatic-change-sync">
+      Automatic Change Syncing<br />
+      <small class="light text">
+        Automatic change syncing will automatically sync changes from the record's origin.<br />
+        If a record has been modified on Granite that conflicts with a change from the origin, a sync conflict will be generated.
+      </small>
+    </label>
+    Off
+    {{ui-checkbox
+      class="toggle"
+      label="On"
+      checked=model.externalLinkAutomaticSync
+      onChange=(action (mut model.externalLinkAutomaticSync))}}
+  </div>
+{{else}}
+  <h3 class="ui center aligned text">No Settings Available.</h3>
+{{/if}}

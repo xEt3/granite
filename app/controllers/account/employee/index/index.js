@@ -1,8 +1,10 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { inject as service } from '@ember/service';
 
 export default Controller.extend(addEdit, {
+  ajax: service(),
   editing: false,
 
   customFieldsExist: computed('model.customFields', function () {
@@ -17,6 +19,20 @@ export default Controller.extend(addEdit, {
   ),
 
   actions: {
+    forceSync() {
+      this.ajaxStart();
+      this.get('ajax').post(`/api/v1/integrations/${this.get('model.externalLinkService')}/force-sync`, {
+        data: {
+          modelName: 'employees',
+          recordId: this.get('model.id')
+        }
+      }).then(mod => {
+        this.ajaxSuccess(mod.modifiedProps.length >= 1 ? 'Successfully Synced Record: ' + mod.modifiedProps.length + ' Changes' : 'Successfully Synced Record: No Changes' );
+        this.send('refresh');
+      })
+      .catch(this.ajaxError.bind(this));
+    },
+
     beginEditing() {
       this.set('editing', true);
     },

@@ -20,7 +20,6 @@ export default BaseListItem.extend({
   init () {
     this._super(...arguments);
     this.id = Math.round(Math.random() * 10000);
-    console.log(this.get('id'), 'is subscribing to event');
     this.messaging.subscribe('thread_message', this.onMessage, this, this.get('id'));
   },
 
@@ -31,9 +30,6 @@ export default BaseListItem.extend({
   },
 
   onMessage ([message]) {
-    console.log('thread got message', message);
-    console.log(this.get('model.id'));
-
     if (message.messageThread !== this.get('model.id')) {
       return;
     }

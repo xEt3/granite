@@ -1,0 +1,26 @@
+<td>
+  {{#if duplicate}}
+    <div class="ui red ribbon label import__duplicate-label">
+      {{#ui-popup
+        content=(concat
+          matchReason
+          ' match'
+        )
+      }}
+        Possible duplicate of
+        <a href="#" {{action "linkToDuplicate"}}>
+          {{duplicate.text}}
+        </a>
+      {{/ui-popup}}
+    </div>
+  {{/if}}
+  <div>
+    {{ui-checkbox
+      class=""
+      label=""
+      checked=isSelected
+      onChange=(action onToggle)
+    }}
+  </div>
+</td>
+{{yield record}}

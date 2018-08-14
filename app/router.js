@@ -72,6 +72,7 @@ Router.map(function() {
           this.route('index', { path: '/personal' });
           this.route('job');
           this.route('custom-fields');
+          this.route('settings');
         });
         this.route('edit-picture');
       });
@@ -169,6 +170,11 @@ Router.map(function() {
       });
       this.route('setup-complete');
     });
+
+    this.route('import', function() {
+      this.route('discovered', { path: '/:result_set_id' });
+    });
+
     this.route('first-steps');
   });
 

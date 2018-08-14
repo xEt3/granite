@@ -21,7 +21,6 @@ export default Controller.extend(ajaxStatus, {
       })
       .then(result => {
         if (result.get('length') > 0) {
-          console.log('existing thread, transitioning');
           this.ajaxSuccess(null, true);
           return this.transitionToRoute('account.employees.messages.thread', result.get('firstObject'));
         }
@@ -29,10 +28,8 @@ export default Controller.extend(ajaxStatus, {
         let pendingThread = this.get('store').createRecord('message-thread', {
           between: allParticipants
         });
-        console.log('making thread', pendingThread);
 
         return pendingThread.save().then(thread => {
-          console.log('saved thread', pendingThread);
           this.ajaxSuccess(null, true);
           this.transitionToRoute('account.employees.messages.thread', thread.id);
         });

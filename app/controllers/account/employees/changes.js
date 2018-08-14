@@ -14,11 +14,11 @@ export default Controller.extend(addEdit, {
       this.ajaxStart();
 
       this.get('ajax').post(`/api/v1/change/${change.get('id')}/apply`)
-        .then(() => {
-          this.ajaxSuccess(`Successfully applied ${change.get('changes.length')} changes for ${change.get('employee.firstName')}.`);
-          this.send('refresh');
-        })
-        .catch(this.ajaxError.bind(this));
+      .then(() => {
+        this.ajaxSuccess(`Successfully applied ${change.get('changes.length')} changes for ${change.get('employee.firstName')}.`);
+        this.send('refresh');
+      })
+      .catch(this.ajaxError.bind(this));
     },
 
     rejectChange (change) {
@@ -32,9 +32,9 @@ export default Controller.extend(addEdit, {
       });
 
       this.saveModel(change)
-        .then(() => {
-          this.send('refresh');
-        });
+      .then(() => {
+        this.send('refresh');
+      });
     }
   }
 });

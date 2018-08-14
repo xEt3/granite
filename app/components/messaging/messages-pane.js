@@ -39,7 +39,7 @@ const MessagesPaneComponent = Component.extend({
       }
 
       $this.scrollTop(lastScroll ? $this[0].scrollHeight - lastScroll : 0);
-    })
+    });
   }),
 
   isFetchable: computed('messages.length', 'messageThreshold', function () {
@@ -60,7 +60,6 @@ const MessagesPaneComponent = Component.extend({
           isFetchable = this.get('isFetchable');
 
     if (isFetchable && t.scrollTop <= this.get('topOffsetFudgePX')) {
-      console.log('at top');
       this.setProperties({
         isTopStuck: true,
         lastScrollHeight: t.scrollHeight
@@ -76,18 +75,15 @@ const MessagesPaneComponent = Component.extend({
 
       return this.triggerTopScrollEvent();
     } else {
-      console.log('not at top');
       this.set('isTopStuck', false);
     }
 
     if (t.scrollHeight === t.scrollTop + t.clientHeight) {
-      console.log('at bottom');
       this.setProperties({
         isTopStuck: false,
         isBottomStuck: true
       });
     } else {
-      console.log('not at bottom');
       this.set('isBottomStuck', false);
     }
   }
@@ -95,6 +91,6 @@ const MessagesPaneComponent = Component.extend({
 
 MessagesPaneComponent.reopenClass({
   positionalParams: [ 'messages' ]
-})
+});
 
 export default MessagesPaneComponent;
