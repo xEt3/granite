@@ -2,7 +2,7 @@ import { Factory } from 'ember-cli-mirage';
 
 export default Factory.extend({
   id: 1,
-  name:"testComp",
+  name: 'testComp',
   contactPhone: '4044448888',
   contactFirstName: 'Jeae',
   contactLastName: 'cherer',

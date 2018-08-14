@@ -18,7 +18,7 @@ export default Route.extend(refreshable, {
           }
 
           return this.store.query('asset-item', itemQuery)
-            .then(stock => Object.create({ asset, stock }));
+          .then(stock => Object.create({ asset, stock }));
         });
       }),
 

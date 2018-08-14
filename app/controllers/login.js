@@ -44,20 +44,20 @@ export default Controller.extend(ajaxStatus, {
       this.get('ajax').request('/api/v1/recovery/company-user/', {
         data: { email }
       })
-        .catch((err = {}) => {
-          if (err.status === 500) {
-            wasFatal = true;
-            this.ajaxError(err);
-          }
-        })
-        .finally(() => {
-          if (wasFatal) {
-            return;
-          }
+      .catch((err = {}) => {
+        if (err.status === 500) {
+          wasFatal = true;
+          this.ajaxError(err);
+        }
+      })
+      .finally(() => {
+        if (wasFatal) {
+          return;
+        }
 
-          this.ajaxSuccess('If your email belongs to a GraniteHR account, you\'ll get an email soon.');
-          this.set('recovery', false);
-        });
+        this.ajaxSuccess('If your email belongs to a GraniteHR account, you\'ll get an email soon.');
+        this.set('recovery', false);
+      });
     }
   }
 });

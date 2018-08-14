@@ -29,7 +29,6 @@ export default Service.extend({
     let listenerKey = key || Math.round(Math.random() * 10000);
 
     this.set(`${listenersKey}.${listenerKey}`, fn.bind(context));
-    console.log('subscribing', listenerKey, 'to', event);
 
     if (!this.get(`${event}__subscribed`)) {
       this.__initializeSubscription(event);
@@ -48,7 +47,7 @@ export default Service.extend({
     if (!this.get(listenersKey)) {
       return;
     }
-    console.log('destroyedListener', key);
+
     this.set(`${listenersKey}.${key}`, undefined);
   },
 
@@ -56,10 +55,9 @@ export default Service.extend({
     this.set(`${event}__subscribed`, true);
 
     this.socket.on(event, (...args) => {
-      console.log('got event', event);
       let listeners = this.get(`${event}__listeners`) || {};
+
       Object.keys(listeners).forEach(key => {
-        console.log('emitting to', key);
         listeners[key](args);
       });
     });

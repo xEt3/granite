@@ -44,15 +44,15 @@ export default Component.extend({
       let children = res.employee;
 
       return (removeOriginalNode && get(node, 'simulate') ?
-      this.populateChildNodes(Object.create(this.get('originalNode')))
-      .then(populated => {
-        populated.children.forEach(child => {
-          if ( get(child, '_id') !== get(node, '_id') ) {
-            get(node, 'children').addObject(child);
-          }
-        });
-      }) :
-      RSVP.Promise.resolve())
+        this.populateChildNodes(Object.create(this.get('originalNode')))
+        .then(populated => {
+          populated.children.forEach(child => {
+            if ( get(child, '_id') !== get(node, '_id') ) {
+              get(node, 'children').addObject(child);
+            }
+          });
+        }) :
+        RSVP.Promise.resolve())
       .then(() => {
         if ( children && children.length > 0 ) {
           return RSVP.map(children, child => {
@@ -131,56 +131,56 @@ export default Component.extend({
         g.selectAll('.node').remove();
 
         let link = g.selectAll('.link')
-          .data(treemap.descendants().slice(1));
+        .data(treemap.descendants().slice(1));
 
         link.exit().remove();
         link.enter().append('path')
-              .attr('class', 'link')
-            .merge(link)
-              .attr('d', d => {
-                return 'M' + d.x + ',' + d.y
+        .attr('class', 'link')
+        .merge(link)
+        .attr('d', d => {
+          return 'M' + d.x + ',' + d.y
                 + 'C' + d.x + ',' + (d.y + d.parent.y) / 2
                 + ' ' + d.parent.x + ',' +  (d.y + d.parent.y) / 2
                 + ' ' + d.parent.x + ',' + d.parent.y;
-              });
+        });
 
         let nodes = g.selectAll('.node')
-          .data(treemap.descendants());
+        .data(treemap.descendants());
 
         nodes.exit().remove();
         let node = nodes.enter().append('g');
         node.merge(nodes)
-          .attr('class', d => {
-            let c = 'node';
-            c += d.children ? ' node--internal' : ' node--leaf';
+        .attr('class', d => {
+          let c = 'node';
+          c += d.children ? ' node--internal' : ' node--leaf';
 
-            if ( d.data.deprecating ) {
-              c += ' node--deprecating';
-            }
+          if ( d.data.deprecating ) {
+            c += ' node--deprecating';
+          }
 
-            if ( d.data._id === baseNodeId ) {
-              c += ' node--base';
-            }
+          if ( d.data._id === baseNodeId ) {
+            c += ' node--base';
+          }
 
-            return c;
-          })
-          .attr('transform', d => 'translate(' + d.x + ',' + d.y + ')');
+          return c;
+        })
+        .attr('transform', d => 'translate(' + d.x + ',' + d.y + ')');
 
         // The data DOES get passed down to the circles, and the enter() statement
         // will create a circle child for each data entry
         node.append('circle')
-          .attr('r', e => e.data._id === baseNodeId ? bnr : nr)
-          .exit().remove();
+        .attr('r', e => e.data._id === baseNodeId ? bnr : nr)
+        .exit().remove();
 
         node.append('text')
-          .attr('dy', '.35em')
-          .attr('y', d => {
-            let xW = (d.data._id === baseNodeId ? bnr : nr) * 1.5;
-            return d.children ? 0 - xW : xW;
-          })
-          .style('text-anchor', 'middle')
-          .text(d => d.data.name.first + ' ' + d.data.name.last)
-          .exit().remove();
+        .attr('dy', '.35em')
+        .attr('y', d => {
+          let xW = (d.data._id === baseNodeId ? bnr : nr) * 1.5;
+          return d.children ? 0 - xW : xW;
+        })
+        .style('text-anchor', 'middle')
+        .text(d => d.data.name.first + ' ' + d.data.name.last)
+        .exit().remove();
       });
     });
   })

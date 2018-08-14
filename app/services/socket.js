@@ -18,7 +18,6 @@ export default Service.extend({
         user: this.get('auth.user.employee.id')
       }
     });
-    console.log('socket?', socket);
 
     this.setProperties({
       socket,
@@ -39,7 +38,6 @@ export default Service.extend({
 
   emit (event, data) {
     const socket = this.get('socket');
-    console.log('emitting', event, data);
     socket.emit(event, data);
   },
 
@@ -70,13 +68,9 @@ export default Service.extend({
     if (method) {
       method(args);
     }
-    console.log('emit args?', args);
-    // remove listener?
 
     const listenersKey = `__${event.replace(' ', '_')}_listeners`,
           listeners = this.get(listenersKey);
-
-    console.log('listeners are', listeners);
 
     (listeners || A()).forEach(resolvePromise => resolvePromise(args));
     this.set(listenersKey, A());
@@ -84,7 +78,6 @@ export default Service.extend({
 
   __bindEvents (socket) {
     socket.on('thread_history', (messages) => {
-      console.log('getting thread history', messages);
       this.__internalEmit('thread_history', messages);
     });
 

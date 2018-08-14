@@ -34,7 +34,7 @@ export default Controller.extend({
       screen: 'product-screenshots/screenshot_document-issues.jpg'
     }],
 
-    assetManagemnet: [{
+    assetManagement: [{
       text: 'Organize Assets',
       screen: 'product-screenshots/screenshot_organize-assets.png'
     }, {

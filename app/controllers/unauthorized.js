@@ -15,7 +15,6 @@ export default Controller.extend({
       return 'Undefined Error.';
     }
 
-    console.log('inside unauthorizedReason, session:', this);
     var sessionExpires = this.auth.get('session.expires');
 
     if ( moment(sessionExpires).isBefore(moment()) ) {

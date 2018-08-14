@@ -1,4 +1,4 @@
-import RSVP from "rsvp";
+import RSVP from 'rsvp';
 
 export function initialize(appInstance) {
   let rollbarService = appInstance.lookup('service:rollbar');

@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { later, cancel } from '@ember/runloop';
 
 const FeaturesListComponent = Component.extend({
   classNames: [ 'section-content__features' ],
@@ -16,14 +15,14 @@ const FeaturesListComponent = Component.extend({
   },
 
   scheduleAutoCycle () {
-    this.set('_autoCycleTimer', later(this, this.incrementAutoCycle, this.get('autoCycleMs')));
+    this.set('_autoCycleTimer', setTimeout(this.incrementAutoCycle, this.get('autoCycleMs')));
   },
 
   cancelAutoCycle () {
     let timerId = this.get('_autoCycleTimer');
 
     if (timerId) {
-      cancel(timerId);
+      clearTimeout(timerId);
     }
   },
 
