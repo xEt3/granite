@@ -140,6 +140,7 @@ Router.map(function() {
       });
       this.route('company-users', function() {
         this.route('new');
+        this.route('edit', { path: '/edit/:user_id' });
       });
     });
     this.route('action-item', { path: '/action-item/:slug' }, function() {
