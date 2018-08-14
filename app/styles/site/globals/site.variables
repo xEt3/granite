@@ -5,7 +5,7 @@
 /* Fonts */
 @fontName: 'Open Sans';
 @fontNameMonospaced: 'Menlo', 'Lucida Console', Monaco, monospace;
-@googleFontRequest: 'Open+Sans:300,400,600';
+@googleFontSizes: '300,400,600';
 
 @mobile-breakpoint: 768px;
 

@@ -53,19 +53,19 @@ export default Controller.extend(ajaxStatus, {
       this.ajaxStart();
 
       this.get('pendingAssetItem').save()
-        .then(asset => {
-          this.send('selectAsset', asset);
-        })
-        .catch(this.ajaxError.bind(this));
+      .then(asset => {
+        this.send('selectAsset', asset);
+      })
+      .catch(this.ajaxError.bind(this));
     },
 
     abortAsset () {
       let asset = this.get('pendingAssetItem');
 
       asset.destroyRecord()
-        .then(() => {
-          this.set('pendingAssetItem', null);
-        });
+      .then(() => {
+        this.set('pendingAssetItem', null);
+      });
     },
 
     selectAsset ( asset ) {
@@ -87,11 +87,11 @@ export default Controller.extend(ajaxStatus, {
       asset.get('assignments').addObject(assignment);
 
       asset.save()
-        .then(assetItem => {
-          this.get('assignedAssets').addObject(assetItem);
-          this.ajaxSuccess(null, true);
-        })
-        .catch(this.ajaxError.bind(this));
+      .then(assetItem => {
+        this.get('assignedAssets').addObject(assetItem);
+        this.ajaxSuccess(null, true);
+      })
+      .catch(this.ajaxError.bind(this));
     },
 
     unassignAsset ( asset ) {
@@ -104,8 +104,8 @@ export default Controller.extend(ajaxStatus, {
         asset.get('assignments').removeObject(assignment);
 
         asset.save()
-          .then(() => this.ajaxSuccess(null, true))
-          .catch(this.ajaxError.bind(this));
+        .then(() => this.ajaxSuccess(null, true))
+        .catch(this.ajaxError.bind(this));
       }
     },
 

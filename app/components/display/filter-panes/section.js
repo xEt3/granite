@@ -25,6 +25,6 @@ const SectionComponent = Component.extend({
 
 SectionComponent.reopenClass({
   positionalParams: [ 'sectionName' ]
-})
+});
 
 export default SectionComponent;

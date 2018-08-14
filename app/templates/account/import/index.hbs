@@ -1,0 +1,32 @@
+<form class="ui form" {{action "discover" on="submit"}}>
+  <div class="ui field">
+    <label for="import-services">Select an external source to import from</label>
+    {{#ui-dropdown
+      class="fluid selection"
+      id="import-services"
+      selected=service
+      onChange=(action (mut service))
+      as |execute mapper|
+    }}
+      <i class="dropdown icon"></i>
+      <div class="default text">Select an external source</div>
+      <div class="menu">
+        {{#each model.linkedServices as |service|}}
+          <div class="item" data-value="{{map-value mapper service}}">
+            {{service}}
+          </div>
+        {{/each}}
+      </div>
+    {{/ui-dropdown}}
+  </div>
+
+  <div class="ui divider"></div>
+  {{#form/action-button
+    type="submit"
+    class="ui massive fluid green button"
+    disabled=(not service)
+    loading=working
+  }}
+    <i class="cloud download icon"></i> Discover Records
+  {{/form/action-button}}
+</form>

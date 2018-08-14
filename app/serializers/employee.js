@@ -5,7 +5,7 @@ import serializeKeys from '../utils/expand-serialized-object';
 export default ApplicationSerializer.extend({
   normalize ( modelClass, hash ) {
     normalizeKeys(hash, 'suffix', 'name');
-    normalizeKeys(hash, true, 'address', 'emergencyContact', 'finalAddress');
+    normalizeKeys(hash, true, 'address', 'emergencyContact', 'finalAddress', 'externalLink');
     return this._super(...arguments);
   },
 
@@ -15,8 +15,8 @@ export default ApplicationSerializer.extend({
         deleteKeys = [ 'firstName', 'middleName', 'lastName', 'suffixName', 'emergencyContactPhone', 'emergencyContactNameLast', 'emergencyContactNameFirst' ],
         isNull = val => !val || val === '';
 
-    keys.forEach( key => {
-      if ( isNull(json[key])){
+    keys.forEach(key => {
+      if (isNull(json[key])) {
         delete json[key];
       }
     });
@@ -38,7 +38,7 @@ export default ApplicationSerializer.extend({
 
     deleteKeys.map(k => delete json[k]);
 
-    serializeKeys(json, 'address', 'finalAddress');
+    serializeKeys(json, 'address', 'finalAddress', 'externalLink');
 
     return json;
   }

@@ -34,6 +34,6 @@ const ControlComponent = Component.extend({
 
 ControlComponent.reopenClass({
   positionalParams: [ 'controlName', 'state' ]
-})
+});
 
 export default ControlComponent;

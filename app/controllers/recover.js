@@ -23,29 +23,29 @@ export default Controller.extend(ajaxStatus, {
       }
 
       this.get('ajax')
-        .post(`/api/v1/recovery/company-user/${userId}`, {
-          data: { token, password }
-        })
-        .then(() => {
+      .post(`/api/v1/recovery/company-user/${userId}`, {
+        data: { token, password }
+      })
+      .then(() => {
+        this.setProperties({
+          password: null,
+          passwordConfirm: null
+        });
+
+        this.ajaxSuccess('Success! You can login with your new password.');
+        this.transitionToRoute('login');
+      })
+      .catch((err = {}) => {
+        if (err.status === 500) {
+          this.ajaxError(err);
+        } else {
+          this.ajaxError(err, true);
           this.setProperties({
             password: null,
             passwordConfirm: null
           });
-
-          this.ajaxSuccess('Success! You can login with your new password.');
-          this.transitionToRoute('login');
-        })
-        .catch((err = {}) => {
-          if (err.status === 500) {
-            this.ajaxError(err);
-          } else {
-            this.ajaxError(err, true);
-            this.setProperties({
-              password: null,
-              passwordConfirm: null
-            });
-          }
-        });
+        }
+      });
     }
   }
 });

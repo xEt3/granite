@@ -46,6 +46,9 @@ Router.map(function() {
         this.route('new');
       });
       this.route('changes');
+      this.route('messages', function() {
+        this.route('thread', { path: '/thread/:thread_id' });
+      });
     });
     this.route('employee', { path: '/employee/:id' }, function() {
       this.route('index', { path: '/' }, function() {
@@ -69,6 +72,7 @@ Router.map(function() {
           this.route('index', { path: '/personal' });
           this.route('job');
           this.route('custom-fields');
+          this.route('settings');
         });
         this.route('edit-picture');
       });
@@ -166,6 +170,11 @@ Router.map(function() {
       });
       this.route('setup-complete');
     });
+
+    this.route('import', function() {
+      this.route('discovered', { path: '/:result_set_id' });
+    });
+
     this.route('first-steps');
   });
 

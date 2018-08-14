@@ -1,0 +1,69 @@
+{{#each thread.between as |participant|}}
+  {{messaging/thread-participant
+    participant
+    connectedUsers=socket.connectedUsers
+    user=auth.user.employee
+    class="messaging-thread__participant"}}
+{{/each}}
+
+<div class="ui divider"></div>
+
+{{#messaging/messages-pane
+  messages
+  retrievalMax=retrievalMax
+  onScrolledToTop=(action scrolledToTop)
+}}
+  <div class="ui list">
+    {{#each messages as |message|}}
+      {{messaging/message-item
+        message
+        user=auth.user}}
+    {{else}}
+      <h2 class="ui center aligned light text header">There's nothing here yet!</h2>
+    {{/each}}
+  </div>
+{{/messaging/messages-pane}}
+
+<div class="ui divider"></div>
+
+<form class="ui form messaging-thread__message-form" {{action sendMessage on="submit"}}>
+  <div class="ui stackable grid">
+    <div class="twelve wide column field">
+      <div class="ui icon input">
+        {{input
+          type='text'
+          value=message
+          placeholder=(if fileIsAdded 'Add a comment to this file...' 'Type a message...')
+        }}
+
+        <i class="paperclip icon dropzone__attach-trigger" {{action "removeFile"}}></i>
+      </div>
+    </div>
+    <div class="four wide column field">
+      {{#form/action-button type="submit" disabled=(not (or message fileIsAdded)) class="ui fluid green button"}}
+        Send{{if fileIsAdded ' file'}}
+      {{/form/action-button}}
+    </div>
+  </div>
+
+  {{drop-zone
+    class='dropzone__messaging'
+    url=fileEndpoint
+    uploadMultiple=false
+    acceptedFiles='.doc,.docx,.pdf,.rtf,.txt,.jpg,.png,.gif,.xls,.xlsx'
+    maxFiles=1
+    autoProcessQueue=false
+    dictDefaultMessage=''
+    thumbnailHeight=100
+    thumbnailWidth=100
+    thumbnailMethod='contain'
+    headers=(hash X-API-Token=auth.token)
+    addedfile=(action 'addedFile')
+    error=(action 'uploadError')
+    removedfile=(action 'didRemoveFile')
+    uploadprogress=(action 'uploadProgressUpdate')
+    success=(action 'uploadedFile')
+    capture='camera'
+    addRemoveLinks=true
+    clickable='.dropzone__attach-trigger'}}
+</form>

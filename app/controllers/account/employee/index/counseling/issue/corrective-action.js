@@ -82,7 +82,7 @@ export default Controller.extend(addEdit, del, {
 
       action.get('followUps').addObject(followup);
       this.saveModel()
-        .then(() => this.set('followup', null));
+      .then(() => this.set('followup', null));
     },
 
     openFollowupModal () {

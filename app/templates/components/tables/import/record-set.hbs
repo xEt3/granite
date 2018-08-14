@@ -1,0 +1,40 @@
+<h3 class="titlecased text">{{recordSet.name}}</h3>
+<table class="ui striped stackable responsive table">
+  <thead>
+    <tr>
+      <th class="import__select-all-checkbox">
+        {{ui-checkbox
+          label=(if allSelected "Deselect All" "Select All")
+          checked=allSelected
+          onChange=(action
+            toggleAllSelected
+            recordSet.name
+            recordSet.records
+          )
+        }}
+      </th>
+      {{#each recordSet.displayMap as |header|}}
+        <th>{{humanize-key header}}</th>
+      {{/each}}
+    </tr>
+  </thead>
+  <tbody>
+    {{#each recordSet.records as |record|}}
+      {{yield
+        (hash
+          row=(component
+            'tables/import/record-set-record'
+            record
+            selectedRows
+            onToggle=(action onToggle recordSet.name record.id)
+            onTransition=(action onTransition)
+            fields=recordSet.displayMap
+            recordType=recordSet.name
+          )
+        )
+        recordSet.displayMap
+      }}
+    {{/each}}
+  </tbody>
+</table>
+<div class="ui divider"></div>

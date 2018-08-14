@@ -1,0 +1,10 @@
+{{#if (and isFetchable retrievalMax isTopStuck)}}
+  <div class="messages-pane__head--retrieval-max">No more messages available.</div>
+{{/if}}
+
+{{#if isLoading}}
+  <div class="messages-pane__head--loader">
+    <i class="notched circle loading icon"></i> Loading more messages...
+  </div>
+{{/if}}
+{{yield}}

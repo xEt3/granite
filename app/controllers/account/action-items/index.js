@@ -5,18 +5,18 @@ import { A } from '@ember/array';
 import ajaxStatus from 'granite/mixins/ajax-status';
 
 export default Controller.extend(ajaxStatus, {
-  queryParams: ['filter', 'isDsc'],
+  auth:            service(),
+  queryParams:     ['filter', 'isDsc'],
   priorityFilters: ['lowest', 'low', 'medium', 'high', 'highest'],
-  priorityColors: [ '', 'grey', 'teal', 'red', 'orange' ],
-  filter: A(),
-  expandFiltered: false,
-  index: null,
-  isDsc: false,
-  auth: service(),
-  enableNotify: true,
+  priorityColors:  [ '', 'grey', 'teal', 'red', 'orange' ],
+  filter:          A(),
+  expandFiltered:  false,
+  index:           null,
+  isDsc:           false,
+  enableNotify:    true,
 
   actions: {
-    toggleSubscription ( actionItem ) {
+    toggleSubscription (actionItem) {
       Promise.resolve(this.get('auth.user.employee'))
       .then(employee => {
         let subscribers = actionItem.get('subscribers'),
@@ -33,10 +33,11 @@ export default Controller.extend(ajaxStatus, {
       .catch(this.ajaxError.bind(this));
     },
 
-    changeFilter(index) {
+    changeFilter (index) {
       let indexPlusOne = index + 1,
           filter = this.get('filter');
-      if(filter.includes(indexPlusOne)){
+
+      if (filter.includes(indexPlusOne)) {
         filter.removeObject(indexPlusOne);
       } else {
         filter.addObject(indexPlusOne);

@@ -176,10 +176,40 @@
               <a href="tel:{{model.emergencyContactPhone}}">{{format-phone model.emergencyContactPhone}}</a>
             {{/if}}
           {{else}}
-          <h3 class="ui center aligned header no-info-header">No Emergency Contact Available</h3>
+            <h3 class="ui center aligned header no-info-header">No Emergency Contact Available</h3>
           {{/if}}
         </p>
       </div>
     </div>
+    {{#if model.externalLinkService}}
+      <div class="ui raised segment">
+        {{#if working}}
+          <div class="ui inverted active dimmer">
+            <div class="ui active text loader">Forcing sync...</div>
+          </div>
+        {{/if}}
+        <span class="ui basic ribbon label"><i class="download icon"></i>Imported</span>
+        {{#link-to 'account.employee.index.edit.settings' class='ui right corner label'}}
+          <i class="pencil icon"></i>
+        {{/link-to}}
+        <div class="ui basic segment">
+          Source: {{capitalize model.externalLinkService}}<br />
+          Imported On: {{time model.created 'h:mma M/D/YY'}}<br />
+          Last Change Sync:
+          {{if
+            model.externalLinkLastSync
+            (time model.externalLinkLastSync 'h:mm:ssa M/D/YY')
+            'Never'}}
+          <a href="#" {{action 'forceSync'}}>Force sync from {{model.externalLinkService}}</a>
+          <br />
+          Automatic Change Syncing: {{if model.externalLinkAutomaticSync 'Enabled' 'Disabled'}}
+          {{#if model.externalLinkDocumentLink}}
+            <a class="right floated text" href={{model.externalLinkDocumentLink}}>
+              Visit record on Slate <i class="external alternate icon"></i>
+            </a>
+          {{/if}}
+        </div>
+      </div>
+    {{/if}}
   </div>
 </div>

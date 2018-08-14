@@ -15,7 +15,7 @@ export default Route.extend({
           start: -1
         }
       }),
-      opening: this.modelFor('account.job-opening'),
+      opening: this.modelFor('account.job-opening')
     })
     .then(hashResults => hash(Object.assign({}, hashResults, {
       stage: hashResults.model.get('stage') ? this.getStage(hashResults.model.get('stage')) : Promise.resolve(),
