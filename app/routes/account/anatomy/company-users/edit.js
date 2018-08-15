@@ -46,3 +46,4 @@ export default Route.extend({
       }, A()).toArray()
     });
   }
+});
