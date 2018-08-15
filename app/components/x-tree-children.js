@@ -10,15 +10,10 @@ export default Component.extend({
   },
 
   recalculateState () {
-    console.log('recalculateStateAction in x-tree-children', this.get('model'));
     const children = this.get('model.children');
 
     if (children && children.length) {
-      console.log('has children');
       const lengthSelected = children.filterBy('isChecked', true).length;
-
-      console.log('children length', children.length);
-      console.log('lengthSelected', lengthSelected);
 
       this.set('model.isChecked', lengthSelected > 0);
       this.set('model.isIndeterminate', lengthSelected > 0 && lengthSelected !== children.length);

@@ -42,8 +42,6 @@ export default Component.extend({
 
   setChildCheckboxesRecursively(parentNode, checkValue) {
     const children = parentNode.children || [];
-    console.log('parent', parentNode);
-    console.log('child ', parentNode.children )
 
     if (children.length) {
       children.setEach('isChecked', checkValue);

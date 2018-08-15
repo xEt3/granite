@@ -10,8 +10,9 @@
   {{/if}}
 </span>
 {{#if checkable}}
-  <div class="ui checkbox {{if model.isIndeterminate 'indeterminate' (if model.isChecked 'checked')}}">
-    {{input
+  <div preventsDefault=false class="ui checkbox {{if model.isIndeterminate 'indeterminate' (if model.isChecked 'checked')}}">
+
+    <label class="node">{{input
       type="checkbox"
       checked=model.isChecked
       change=(pipe-action
@@ -19,7 +20,6 @@
         (action 'toggleCheck')
       )
       indeterminate=model.isIndeterminate}}
-    <label class="node">
       {{capitalize model.name}}
     </label>
   </div>

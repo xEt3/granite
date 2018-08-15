@@ -37,8 +37,7 @@ export default Route.extend({
 
         parents.findBy('name', verb).children.push(
           Object.assign({ id, name: key }, nodeDefaults, {
-            isChecked: model.user.get('permissions').includes(id),
-            l:console.log("user perm ", model.user.get('permissions').length)
+            isChecked: model.user.get('permissions').includes(id)
           })
         );
 
