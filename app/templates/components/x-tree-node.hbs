@@ -10,10 +10,19 @@
   {{/if}}
 </span>
 {{#if checkable}}
-<div class="ui checked checkbox">
-  {{input type="checkbox" checked=model.isChecked change=(action 'toggleCheck') indeterminate=model.isIndeterminate }}
-    <label class='node'>{{capitalize model.name}}</label>
-</div>
+  <div class="ui checkbox {{if model.isIndeterminate 'indeterminate' (if model.isChecked 'checked')}}">
+    {{input
+      type="checkbox"
+      checked=model.isChecked
+      change=(pipe-action
+        (action toggleProperty 'model.isChecked')
+        (action 'toggleCheck')
+      )
+      indeterminate=model.isIndeterminate}}
+    <label class="node">
+      {{capitalize model.name}}
+    </label>
+  </div>
 {{/if}}
 
 <span onclick={{action 'toggleCheck'}}>

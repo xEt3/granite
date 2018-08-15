@@ -4,8 +4,8 @@
     hover=hover
     hoverOut=hoverOut
     checkable=checkable
-    syncCheckbox=syncCheckbox
     chosenId=chosenId
+    recalculateStateAction=(action recalculateState)
     model=model as |node|}}
     {{yield node}}
   {{/x-tree-node}}
@@ -16,8 +16,8 @@
       hover=hover
       hoverOut=hoverOut
       checkable=checkable
-      syncCheckbox=syncCheckbox
       chosenId=chosenId
+      recalculateStateAction=(action recalculateState)
       model=model.children as |node|}}
       {{yield node}}
     {{/x-tree-branch}}
@@ -30,6 +30,7 @@
     hoverOut=hoverOut
     checkable=checkable
     syncCheckbox=syncCheckbox
+    recalculateStateAction=(action recalculateState)
     chosenId=chosenId}}
 
   {{#if model.isExpanded}}
@@ -40,6 +41,7 @@
       hoverOut=hoverOut
       checkable=checkable
       syncCheckbox=syncCheckbox
+      recalculateStateAction=(action recalculateState)
       chosenId=chosenId}}
   {{/if}}
 {{/if}}

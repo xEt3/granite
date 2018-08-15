@@ -6,8 +6,8 @@
         hover=hover
         hoverOut=hoverOut
         checkable=checkable
-        syncCheckbox=syncCheckbox
         chosenId=chosenId
+        recalculateStateAction=(action recalculateState)
         model=child as |node|}}
         {{yield node}}
       {{/x-tree-children}}
@@ -18,7 +18,7 @@
         hover=hover
         hoverOut=hoverOut
         checkable=checkable
-        syncCheckbox=syncCheckbox
+        recalculateStateAction=(action recalculateState)
         chosenId=chosenId}}
     {{/if}}
   {{/if}}

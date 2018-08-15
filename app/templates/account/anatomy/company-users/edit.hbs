@@ -1,0 +1,14 @@
+{{outlet}}
+<hgroup class="clearfix">
+  <h1 class="ui header left floated">
+    Editing {{model.fullName}}
+  </h1>
+</hgroup>
+{{list-item/user-item model }}
+<div>
+  {{log 'this is user perm length' model.permissions}}
+  {{log ' all prems  ' permissionsTree}}
+  {{log 'model ' model}}
+  {{#x-tree checkable=true syncCheckbox=true model=permissionsTree as |node|}}
+  {{/x-tree}}
+</div>
