@@ -19,9 +19,9 @@ export default Controller.extend(addEdit, {
 
       let id = [];
       this.permissionsTree.forEach(permission=>{
-        permission.children.forEach(checked=>{
-          if (checked.isChecked) {
-            id.push(checked.id);
+        permission.children.forEach(child=>{
+          if (child.isChecked) {
+            id.push(child.id);
 
             model.set('permissions', id);
           }

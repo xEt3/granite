@@ -1,7 +1,7 @@
 <h2 class="ui dividing header">Create a New User</h2>
 
 <form class="ui form" {{action (pipe (action 'presetAttrs') (action 'save')) on="submit"}}>
-  {{input/ui-input type="email" inputId="user-email" placeholder="Email Address" value=model.email}}
+  {{input/ui-input type="email" inputId="user-eail" placeholder="Email Address" value=model.email}}
   <div class="ui divider"></div>
 
   <div class="field">
@@ -36,9 +36,6 @@
       {{#x-tree checkable=true syncCheckbox=true model=permissionsTree as |node|}}{{/x-tree}}
     </label>
   </div>
-
-  {{!TODO: Add permission assignments}}
-
   <div class="ui divider"></div>
   {{#form/action-button type="submit" class="ui huge fluid green button" disabled=disableForm loading=working}}Save User{{/form/action-button}}
 </form>
