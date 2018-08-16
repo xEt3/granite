@@ -32,3 +32,35 @@ test('getting to company-users', function(assert) {
     assert.ok($listItems.text().toLowerCase().replace(/\s\s+/g, ' ').indexOf('old yeller') > -1, 'List items should contain "old yeller"');
   });
 });
+
+test('adding new user with permissions', function(assert) {
+  authenticate(this.application);
+  visit('account/anatomy/company-users');
+
+  andThen(() => {
+    assert.equal(currentURL(), 'account/anatomy/company-users');
+    click('.plus');
+  });
+
+  andThen(() => {
+    pauseTest();
+    assert.equal(currentURL(), '/account/anatomy/company-users/new');
+    assert.ok(find('input[type="email"]'), 'Email input on page');
+    assert.ok(find('input[class="search"]'), 'Employee dropdown on page');
+
+    fillIn('input[type="email"]', 'testuser@test.com');
+    click('.search');
+    click('.ui.divider');
+  });
+
+  andThen(() => {
+pauseTest();
+    assert.ok(find('lable[class="node"]')[0], 'Permission names on page');
+
+    assert.ok(find('span[class="toggle-icon"]')[0], 'Permissions have a dropdown');
+
+    click('class="toggle-icon"');
+
+
+  });
+});
