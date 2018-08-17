@@ -159,7 +159,7 @@ Router.map(function () {
       this.route('discussion');
       this.route('edit');
     });
-    this.route('document', { path: '/document/:id' });
+    this.route('document', { path: '/document/:id' }, function() {});
 
     this.route('job-opening', { path: '/recruiting/job-opening/:id' }, function () {
       this.route('campaign', { path: '/' }, function () {

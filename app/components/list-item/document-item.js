@@ -5,10 +5,11 @@ import { computed } from '@ember/object';
 const { K } = Ember;
 
 const DocumentItemComponent = Component.extend({
-  classNames:        [ 'item' ],
-  classNameBindings: [ 'file.isDeleted:negative' ],
-  imagePreview:      computed.match('file.extension', /je?pg|png|gif/i),
-  onDelete:          K,
+  classNames: [ 'item' ],
+  tagName: '',
+  // classNameBindings: [ 'file.isDeleted:negative' ],
+  imagePreview: computed.match('file.extension', /je?pg|png|gif/i),
+  onDelete: K,
 
   actions: {
     delete () {
