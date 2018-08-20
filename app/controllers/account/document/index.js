@@ -66,7 +66,10 @@ export default Controller.extend(addEdit, {
 
   actions: {
     delete () {
-      this.get('model').destroyRecord().then(this.get('onDelete'));
+      this.get('model').destroyRecord()
+      .then(() => {
+        this.transitionToRoute('account.documents');
+      });
     },
 
     openAssignmentModal (file) {
