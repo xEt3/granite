@@ -36,7 +36,7 @@ test('getting to company-users', function(assert) {
 
 test('adding new user with permissions', function(assert) {
   server.create('employees');
-  server.create('permissions');
+  server.createList('permissions', 8);
   authenticate(this.application);
   visit('account/anatomy/company-users');
 
