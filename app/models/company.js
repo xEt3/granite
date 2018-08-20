@@ -22,6 +22,9 @@ export default Model.extend(Validations,  {
   contactMiddleName: attr('string'),
   contactLastName:   attr('string'),
 
+  deactivatedOn:  attr('Date'),
+  reactivatedOn:  attr('Date'),
+
   linkedServices: attr('array'),
   employeeCustomFields: attr('array'),
   correctiveActionSeverities: hasMany('corrective-action-severity'),

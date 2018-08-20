@@ -1,0 +1,8 @@
+{{#if model}}
+  <h2>Transactions</h2>
+  {{#each model as |transaction index|}}
+    {{list-item/invoice-payment-method transaction=transaction index=index}}
+  {{/each}}
+{{else}}
+  <h3>No transactions yet.</h3>
+{{/if}}
