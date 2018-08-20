@@ -18,6 +18,7 @@ test('getting to company-users', function(assert) {
   });
 
   andThen(() => {
+
     let tab = '.ui.menu a[href="/account/anatomy/company-users"]';
     assert.equal(currentURL(), '/account/anatomy');
     assert.ok(find(tab)[0], 'Tab shows');
@@ -34,8 +35,11 @@ test('getting to company-users', function(assert) {
 });
 
 test('adding new user with permissions', function(assert) {
+  server.create('employees');
+  server.create('permissions');
   authenticate(this.application);
   visit('account/anatomy/company-users');
+
 
   andThen(() => {
     assert.equal(currentURL(), 'account/anatomy/company-users');
@@ -43,24 +47,53 @@ test('adding new user with permissions', function(assert) {
   });
 
   andThen(() => {
-    pauseTest();
     assert.equal(currentURL(), '/account/anatomy/company-users/new');
     assert.ok(find('input[type="email"]'), 'Email input on page');
-    assert.ok(find('input[class="search"]'), 'Employee dropdown on page');
+    assert.ok(find('div[class="default text"]'), 'Employee dropdown on page');
 
+    click('div[class="default text"]');
     fillIn('input[type="email"]', 'testuser@test.com');
-    click('.search');
-    click('.ui.divider');
   });
 
   andThen(() => {
-pauseTest();
-    assert.ok(find('lable[class="node"]')[0], 'Permission names on page');
+    pauseTest();
 
-    assert.ok(find('span[class="toggle-icon"]')[0], 'Permissions have a dropdown');
+    assert.ok(find('label[class="node"]')[0], 'Permission names on page');
+    assert.ok(find('span[class="toggle-icon"]')[4], '5 Permissions have a dropdown');
 
-    click('class="toggle-icon"');
+    click('span[class="toggle-icon"]');
+    click('input[type="checkbox"]');
+    click('button[type="submit"]');
+  });
 
+  andThen(() => {
+    assert.equal(currentURL(), '/account/anatomy/company-users');
+  });
+});
 
+test('editing user\'s permissions', function(assert) {
+  authenticate(this.application);
+  server.create('employees');
+  server.create('permissions');
+  visit('account/anatomy/company-users');
+
+  andThen(() => {
+    assert.equal(currentURL(), 'account/anatomy/company-users');
+    click('i[class="edit icon"]');
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), '/account/anatomy/company-users/edit/1');
+    assert.ok(find('h1[class="ui header left floated"]'), 'Header on page on page');
+    assert.ok(find('ul[class="tree-branch"]'), 'group of permissions on page');
+    assert.ok(find('span[class="toggle-icon"]')[4], '5 Permissions have a dropdown');
+
+    click('span[class="toggle-icon"]');
+    click('input[type="checkbox"]');
+    click('button[type="submit"]');
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), '/account/anatomy/company-users');
   });
 });
