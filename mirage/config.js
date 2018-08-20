@@ -133,42 +133,6 @@ export default function() {
     };
   });
 
-//   this.get('/permissions', () =>{
-// return{
-//     permissions: [{
-//       created: '2018-04-27T15:19:31.693Z',
-//       id: '5ae33f839980c183fd063ffa',
-//       key:'create action items',
-//       __v:0,
-//       _id:'5ae33f839980c183fd063ffa'
-//     }, {
-//       created: '2018-04-27T15:19:31.693Z',
-//       id: '5ae33f839980c183fd063ffb',
-//       key:'read action items',
-//       __v:0,
-//       _id:'5ae33f839980c183fd063ffb'
-//     }, {
-//       created: '2018-04-27T15:19:31.693Z',
-//       id: '5ae33f839980c183fd063ffc',
-//       key:'update action items',
-//       __v:0,
-//       _id:'5ae33f839980c183fd063ffc'
-//     }, {
-//       created: '2018-04-27T15:19:31.693Z',
-//       id: '5ae33f839980c183fd063ffd',
-//       key:'delete action items',
-//       __v:0,
-//       _id:'5ae33f839980c183fd063ffd'
-//     }, {
-//       created: '2018-04-27T15:19:31.693Z',
-//       id: '5ae33f839980c183fd063ffe',
-//       key:'get action items',
-//       __v:0,
-//       _id:'5ae33f839980c183fd063ffe'
-//     }]
-//     };
-//   });
-
   this.get('permissions');
 
   this.get('/employees');
