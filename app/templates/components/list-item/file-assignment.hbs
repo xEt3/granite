@@ -1,0 +1,28 @@
+{{assignment.employee.fullName}}
+{{#if assignment.signatureRequired}}
+  <span class="ui small text">
+    {{#if assignment.readOn}}
+      Read {{time assignment.readOn}},
+    {{else}}
+      Not read yet,
+    {{/if}}
+    {{#if assignment.signedOn}}
+      <a href="#" {{action toggleProperty 'viewSignature'}}>
+        signed on {{time assignment.signedOn}}.
+      </a>
+    {{else}}
+      not signed yet.
+    {{/if}}
+  </span>
+{{/if}}
+
+
+{{#liquid-if viewSignature}}
+  {{#if assignment.signature}}
+    <div class="signature-container">
+      <img src="{{assignment.signature}}" width="150px" height="80px" />
+    </div>
+  {{else}}
+    <span class="ui small text">Not signed yet</span>
+  {{/if}}
+{{/liquid-if}}

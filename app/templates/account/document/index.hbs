@@ -1,8 +1,15 @@
 <div class="ui raised padded segment container clearfix">
-  {{#link-to 'account.documents'}}TEMP BACK BUTTON{{/link-to}}
   <hgroup>
-    <h2>{{if model.title model.title 'Document'}}</h2>
+    <h2>
+      {{if model.title model.title 'Document'}}
+      {{#if model.tags}}
+        {{#each model.tags as |tag|}}
+          <span class="ui tiny label">{{tag}}</span>
+        {{/each}}
+      {{/if}}
+    </h2>
   </hgroup>
+
   <span class="ui small text">
     Created by {{model.creator.fullName}} on {{time model.created}}
   </span>
@@ -24,7 +31,7 @@
         </a>
         <div class="text-danger header">Danger Zone</div>
         <div class="item">
-          {{#confirm-modal deleteContext=(concat this.file.title " - " this.file.mimeType) as |confirm|}}
+          {{#confirm-modal deleteContext=(concat model.title " - " model.mimeType) as |confirm|}}
             <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}><i class="trash icon"></i>Delete File</a>
           {{/confirm-modal}}
         </div>
@@ -35,12 +42,35 @@
   <div class="ui divider"></div>
 
   <div class="content">
-    {{#if imagePreview}}
-      <div class="ui small rounded image">
-        <img src="{{model.url}}">
+    <div class="left floated">
+      {{#if imagePreview}}
+        <div class="ui small rounded image left floated">
+          <img src="{{model.url}}">
+        </div>
+      {{else}}
+        {{display/icon-for-file model class="massive"}}
+      {{/if}}
+    </div>
+
+    {{#if model.description}}
+      <h4>{{model.description}}</h4>
+    {{/if}}
+
+    {{#if fileAssignments}}
+      <div>
+        Assigned to {{fileAssignments.length}} employee(s)
+        <a href="#" {{action toggleProperty 'viewAssignees'}}>
+          <i class="angle {{if viewAssignees 'up' 'down'}} icon"></i>
+        </a>
+
+        {{#liquid-if viewAssignees}}
+          <ul>
+            {{#each fileAssignments as |assignment|}}
+              <li>{{list-item/file-assignment assignment=assignment}}</li>
+            {{/each}}
+          </ul>
+        {{/liquid-if}}
       </div>
-    {{else}}
-      {{display/icon-for-file model class="huge"}}
     {{/if}}
   </div>
 </div>
@@ -71,6 +101,3 @@
     </button>
   </div>
 {{/ui-modal}}
-
-
-{{log 'model' model}}

@@ -7,6 +7,7 @@ export default Model.extend({
   signatureRequired: attr('boolean'),
   signature:         attr('string'),
   readOn:            attr('date'),
+  signedOn:          attr('date'),
   creator:           belongsTo('employee'),
   company:           belongsTo('company'),
   employee:          belongsTo('employee'),

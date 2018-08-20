@@ -45,10 +45,10 @@ export default Controller.extend(addEdit, {
 
   afterSave () {
     this.set('fileAssignment', null);
+    this.send('refresh');
   },
 
   remapToModels (assignment) {
-    console.log('inside remapToModels');
     let employees = assignment.get('employees');
 
     assignment.set('employee', employees.get('firstObject'));
@@ -70,7 +70,6 @@ export default Controller.extend(addEdit, {
     },
 
     openAssignmentModal (file) {
-      console.log('inside openAssignmentModal');
       this.setProperties({
         respondedAssignment: false,
         assigningDocument: file
