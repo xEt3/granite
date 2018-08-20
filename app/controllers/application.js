@@ -18,7 +18,6 @@ const nonTopLevelRoutes = [
 export default Controller.extend({
   auth: service(),
   notifications: service('notification-messages'),
-  auth: service(),
   subscription: service(),
 
   accountNavigationItems: [{
