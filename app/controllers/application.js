@@ -19,6 +19,7 @@ export default Controller.extend({
   auth: service(),
   notifications: service('notification-messages'),
   auth: service(),
+  subscription: service(),
 
   accountNavigationItems: [{
     icon: 'tachometer alternate',
@@ -86,6 +87,10 @@ export default Controller.extend({
   }),
 
   actions: {
+    transitionToSubscription () {
+      this.transitionToRoute('account.settings.billing.index');
+    },
+
     authResponse ( response ) {
       let auth = this.get('auth');
 

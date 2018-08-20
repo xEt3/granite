@@ -1,0 +1,17 @@
+<div class={{if highlightRow 'highlight-invoice-row'}}>
+  {{#link-to 'account.settings.billing.invoice' transaction.id}}
+    <div class="ui three column very relaxed grid text-black">
+      <div class="column">
+        <span class="payment-date">{{time transaction.createdAt 'MMMM Do, YYYY'}}</span>
+      </div>
+      <div class="column">
+        <img class="ui mini image payment-image" src={{paymentMethod.image}}>
+        {{paymentMethod.method}}
+      </div>
+      <div class="column">
+        ${{transaction.amount}}
+      </div>
+    </div>
+  {{/link-to}}
+  <div class="ui divider"></div>
+</div>

@@ -22,7 +22,7 @@ export default Mixin.create({
     const promise = this.get(`${prefix}Promise`);
 
     this.set(`${prefix}Responded`, true);
-    promise[response ? 'resolve' : 'reject'](response);
+    return promise[response ? 'resolve' : 'reject'](response);
   },
 
   actions: {

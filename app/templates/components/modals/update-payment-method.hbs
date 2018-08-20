@@ -1,0 +1,29 @@
+{{#ui-modal id=modalId observeChanges=true}}
+  <i class="close icon"></i>
+  <div class="header">
+    Update Payment Method
+  </div>
+  <div class="content">
+    {{#if (not braintreeToken)}}
+      <div class="ui active inverted dimmer">
+        <div class="ui text loader">Loading</div>
+      </div>
+    {{else}}
+      {{braintree-dropin
+        braintreeOptions=(hash
+        paypal=(hash
+        flow="vault"))
+        authorization=braintreeToken.token
+        onNonce=(action (mut nonce))}}
+    {{/if}}
+    <p class="right aligned very small text"><i class="lock icon"></i>Powered by Braintree Payments</p>
+  </div>
+  <div class="actions">
+    <button class="ui button" {{action 'closeModal'}}>
+      Cancel
+    </button>
+    <button class="ui green button" {{action 'respond' nonce}} disabled={{or (not nonce) working}}>
+      Save New Payment Method
+    </button>
+  </div>
+{{/ui-modal}}
