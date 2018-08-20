@@ -12,7 +12,6 @@ export default Component.extend({
 
   recalculateState () {
     if (this.get('recalculateStateAction')) {
-      console.log('attempting to bubble recalculateStateAction');
       this.get('recalculateStateAction')();
     }
   },
