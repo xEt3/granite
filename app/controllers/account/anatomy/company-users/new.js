@@ -22,7 +22,6 @@ export default Controller.extend(addEdit, {
         permission.children.forEach(child=>{
           if (child.isChecked) {
             id.push(child.id);
-
             model.set('permissions', id);
           }
         });
