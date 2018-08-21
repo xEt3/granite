@@ -9,9 +9,11 @@ const injectLogin = async function (server, properties = {}) {
     server.db.sessions.remove();
   }
 
-  const company = server.create('company', Object.assign({
-    urlKey: faker.random.number(),
-    name: faker.company.companyName()
+  const company = server.create('company-user', Object.assign({
+    id: faker.random.number(),
+    firstName:faker.company.companyName(),
+    lastName:faker.company.companyName(),
+    email: faker.internet.email()
   }, properties.company));
 
   const employee = server.create('employee', Object.assign({
