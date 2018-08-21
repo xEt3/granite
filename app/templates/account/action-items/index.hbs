@@ -6,7 +6,7 @@
 <div class="clearfix">
   <span class="right floated">
     {{#ui-popup content="Sort according to due date"}}
-      <a href="#" class="text-white"><i class="sort large numeric {{if isDsc "ascending icon" "descending icon"}}" {{action (toggle "isDsc" this)}}></i></a>
+      <a href="#" class="text-white" {{action (toggle "isDsc" this)}}><i class="sort large numeric {{if isDsc "ascending icon" "descending icon"}}"></i></a>
     {{/ui-popup}}
   </span>
   <span class="left floated">

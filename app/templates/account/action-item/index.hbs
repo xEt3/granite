@@ -44,7 +44,7 @@
       {{#each model.prerequisites as |prework|}}
         {{#link-to "account.action-item.index" prework class="item"}}
           <div class="header">
-             {{prework.title}}
+            {{prework.title}}
           </div>
           {{#if prework.checklist}}
             <div class="ui list">
@@ -54,7 +54,7 @@
                 </div>
               {{/each}}
             </div>
-            {{/if}}
+          {{/if}}
         {{/link-to}}
       {{/each}}
     </div>
