@@ -13,7 +13,7 @@
     "dock": "ember server --proxy http://$DOCKER_IP:$DOCKER_LB_PORT",
     "lint:js": "eslint app tests",
     "test": "ember test",
-    "test-ci": "ember test --query=nolint",
+    "test-ci": "ember test --query=nolint --test-port=7000",
     "deploy": "git push heroku master",
     "postinstall": "bower install --allow-root"
   },

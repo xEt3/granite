@@ -32,7 +32,10 @@ Router.map(function() {
       this.route('index', { path: '/general' }, function() {
         this.route('processes');
       });
-      this.route('billing');
+      this.route('billing', function() {
+        this.route('invoices');
+        this.route('invoice', { path: '/invoice/:id' });
+      });
       this.route('integrations');
       this.route('templates', function() {
         this.route('edit', { path: '/:template_id/edit' });
