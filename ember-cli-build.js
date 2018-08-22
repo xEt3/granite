@@ -33,7 +33,7 @@ module.exports = function(defaults) {
     },
 
     fingerprint: {
-      exclude: ['product-screenshots/']
+      exclude: ['product-screenshots/', 'documents/']
     }
   });
 
