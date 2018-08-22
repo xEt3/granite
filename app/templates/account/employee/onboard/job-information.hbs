@@ -27,9 +27,9 @@
       <div class="field">
         <label for="pay-rate">Pay Rate</label>
         <div class="ui left icon input pay-rate-number">
-          <input type="number" id="pay-rate" value="Pay Rate">
+          {{input type="number" id="pay-rate" value=model.payRate}}
           <i class="dollar icon"></i>
-          {{#ui-dropdown class="inline pay-rate-unit" selected="yearly" onChange=(action (mut model.payRateType))}}
+          {{#ui-dropdown class="inline pay-rate-unit" selected=model.payRateType onChange=(action (mut model.payRateType))}}
             <div class="default text">Unit</div>
             <i class="dropdown icon"></i>
             <div class="menu">
@@ -48,7 +48,7 @@
       </div>
       <div class="field">
         <label for="workers-comp">Workers Comp Class Code</label>
-        <input type="text" id="workers-comp">
+        {{input type="text" id="workers-comp" value=model.workersCompClassCode}}
       </div>
     </div>
   </div>

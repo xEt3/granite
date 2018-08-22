@@ -35,6 +35,7 @@ export default Model.extend(Validations, {
   picture:                   attr('string'),
   phone:                     attr('string'),
   ssn:                       attr('string'),
+  workersCompClassCode:      attr('string'),
 
   ssnMasked: computed('ssn', function () {
     var ssn = this.get('ssn');
