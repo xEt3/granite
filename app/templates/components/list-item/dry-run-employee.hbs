@@ -1,0 +1,28 @@
+<div class="ui fluid card">
+  <div class="content">
+    <h3>
+      Employee record #{{x-inc index}}
+      {{#if (or (not dryRunRecord.name.first) (not dryRunRecord.name.last))}}
+        {{#ui-popup tagName="span" content="First and last name are required."}}
+          <i class="exclamation circle icon text-red"></i>
+        {{/ui-popup}}
+      {{/if}}
+    </h3>
+    <ul>
+      {{#each-in dryRunRecord as |key value|}}
+        <li>
+          <strong>{{key}}:</strong>
+          {{#if value.firstObject}}
+            <ul>
+              {{#each value as |subValue|}}
+                <li>{{to-string subValue}}</li>
+              {{/each}}
+            </ul>
+          {{else}}
+            {{to-string value}}
+          {{/if}}
+        </li>
+      {{/each-in}}
+    </ul>
+  </div>
+</div>
