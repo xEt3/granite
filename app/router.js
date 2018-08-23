@@ -45,7 +45,9 @@ Router.map(function() {
 
     this.route('employees', function() {
       this.route('add', function() {
-        this.route('census');
+        this.route('census', function() {
+          this.route('review', { path: '/:uploadId/review' });
+        });
         this.route('new');
       });
       this.route('changes');

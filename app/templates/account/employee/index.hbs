@@ -24,22 +24,24 @@
 
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
-          {{#if (not activatedOn)}}
-            {{#confirm-modal as |confirm|}}
-              <div class="item" role="button" {{action (pipe confirm (action 'resend'))}}>
-                <i class="envelope icon"></i>Resend Activation Email
-                {{#if working}}
-                  <div class="ui active dimmer">
-                    <div class="ui text loader">Loading</div>
-                  </div>
-                {{/if}}
-              </div>
-            {{/confirm-modal}}
-          {{/if}}
           {{#link-to 'account.employee.index.edit' class='item'}}<i class="edit icon"></i>Edit{{/link-to}}
           {{#unless model.onboarding}}
             {{#link-to 'account.employee.offboard.index' class='item'}}<i class="cut icon"></i>Offboard Employee...{{/link-to}}
           {{/unless}}
+          {{#if (not model.activatedOn)}}
+            <div class="item">
+              {{#confirm-modal as |confirmActivation|}}
+                <a href="#" {{action (pipe confirmActivation (action 'resend'))}}>
+                  <i class="envelope icon"></i>Resend Activation Email...
+                  {{#if working}}
+                    <div class="ui active dimmer">
+                      <div class="ui text loader">Loading</div>
+                    </div>
+                  {{/if}}
+                </a>
+              {{/confirm-modal}}
+            </div>
+          {{/if}}
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
             {{#confirm-modal as deleteContext=model.fullName as |confirm|}}
