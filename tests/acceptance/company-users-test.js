@@ -23,7 +23,6 @@ module('Acceptance | company users', function(hooks) {
     assert.equal($($breadCrumbs).text().replace(/\s\s+|\n/g, ''), 'Account/Anatomy/Company Users');
     assert.ok(find('a[href="/account/anatomy/company-users/new"]'), 'Add link exists');
     let $listItems = findAll('.text.segment .item');
-    console.log('look ',$($listItems).text().toLowerCase() );
     assert.ok($($listItems).text().toLowerCase().replace(/\s\s+/g, ' ').indexOf('old yeller') > -1, 'List items should contain "old yeller"')
   });
 
