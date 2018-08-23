@@ -1,4 +1,4 @@
-{{#unless (and (not field.showLabel) (or (eq field.type 'checkbox') (eq field.type 'toggle')))}}
+{{#if  (not (and (not field.showLabel) (or (eq field.type 'checkbox') (eq field.type 'toggle'))))}}
   <label for="{{computedClassName}}" class="{{field.labelClass}}">
     {{field.label}}
     {{#if (and field.helpText field.indirectHelp)}}
@@ -11,7 +11,7 @@
   {{#if (and field.helpText (not field.indirectHelp))}}
     <p class="quick-form__help-text">{{field.helpText}}</p>
   {{/if}}
-{{/unless}}
+{{/if}}
 
 {{#if (eq field.type 'select')}}
   {{#ui-dropdown

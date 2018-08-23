@@ -9,7 +9,9 @@
     <span class="ui right ribbon green label">{{activity.tag}}</span>
   {{/if}}
   <div class="summary">
+    {{! template-lint-disable }}
     {{{activity.descriptionHtml}}}
+    {{! template-lint-enable }}
   </div>
   <div class="meta">
     {{#ui-popup tagName="span" position="top center" title="Comments"}}

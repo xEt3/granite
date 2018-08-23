@@ -21,7 +21,7 @@
   <div class="five ui buttons">
     {{#each priorityFilters as |priorityFilter index|}}
       <button class="ui labeled icon {{object-at index priorityColors}} button" {{action "changeFilter" index}}>
-        <i class="{{unless (contains (inc index) filter) "square outline" "checkmark box"}} icon"></i>
+        <i class="{{if (not (contains (inc index) filter)) "square outline" "checkmark box"}} icon"></i>
         {{priorityFilter}}
       </button>
     {{/each}}

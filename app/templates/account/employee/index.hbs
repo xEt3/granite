@@ -26,7 +26,7 @@
         <div class="menu">
           {{#if (not activatedOn)}}
             {{#confirm-modal as |confirm|}}
-              <div class="item" {{action (pipe confirm (action 'resend'))}}>
+              <div class="item" role="button" {{action (pipe confirm (action 'resend'))}}>
                 <i class="envelope icon"></i>Resend Activation Email
                 {{#if working}}
                   <div class="ui active dimmer">
@@ -54,44 +54,44 @@
   <div class="ui basic container segment text-white employee-index-container {{unless onSummary 'employee__index-container--minimal'}}">
     <div class="ui equal width stackable grid container">
       <div class="twelve wide column">
-          <h1 class="ui left floated center aligned header employee-header-group">
-            {{#ui-dimmer class="ui circular image" onElement=".ui.segment" variation="inverted" duration=(hash show=1500) on="hover" as |execute|}}
-              {{#link-to 'account.employee.index.edit-picture' class="ui circular segment dimmer hover-circular"}}
-                <div class="content">
-                  <div class="center text-white">
-                    <div>Edit Picture</div>
-                  </div>
+        <h1 class="ui left floated center aligned header employee-header-group">
+          {{#ui-dimmer class="ui circular image" onElement=".ui.segment" variation="inverted" duration=(hash show=1500) on="hover"}}
+            {{#link-to 'account.employee.index.edit-picture' class="ui circular segment dimmer hover-circular"}}
+              <div class="content">
+                <div class="center text-white">
+                  <div>Edit Picture</div>
                 </div>
-              {{/link-to}}
-              <div class="ui small circular image employee-image">
-                {{display/employee-picture url=model.picture employeeId=model.id}}
               </div>
-            {{/ui-dimmer}}
-            <div class="inverted content text-white employee-basic-meta">
-              {{model.fullName}}
-              <div class="sub header text-white">
-                {{model.jobTitle}} <br />
-                {{#if model.hireDate}}
-                  Since {{time model.hireDate 'MMMM YYYY'}}
-                {{/if}}
-              </div>
+            {{/link-to}}
+            <div class="ui small circular image employee-image">
+              {{display/employee-picture url=model.picture employeeId=model.id}}
             </div>
-          </h1>
-        </div>
-        <div class="right aligned four wide column vertically-aligned contact-column">
-          <div class="ui center aligned basic container text-white contact-container">
-            {{#if model.phone}}
-              <div class="phone-contact-icon">
-                <a href="tel:{{model.phone}}"><i class="big circular inverted green phone icon phone-contact-icon-hover"></i></a>
-              </div>
-            {{/if}}
-            {{#if model.email}}
-              <div class="item email-contact-icon">
-                <a href="mailto:{{model.email}}"><i class="big circular inverted grey mail icon email-contact-icon-hover"></i></a>
-              </div>
-            {{/if}}
+          {{/ui-dimmer}}
+          <div class="inverted content text-white employee-basic-meta">
+            {{model.fullName}}
+            <div class="sub header text-white">
+              {{model.jobTitle}} <br />
+              {{#if model.hireDate}}
+                Since {{time model.hireDate 'MMMM YYYY'}}
+              {{/if}}
+            </div>
           </div>
+        </h1>
+      </div>
+      <div class="right aligned four wide column vertically-aligned contact-column">
+        <div class="ui center aligned basic container text-white contact-container">
+          {{#if model.phone}}
+            <div class="phone-contact-icon">
+              <a href="tel:{{model.phone}}"><i class="big circular inverted green phone icon phone-contact-icon-hover"></i></a>
+            </div>
+          {{/if}}
+          {{#if model.email}}
+            <div class="item email-contact-icon">
+              <a href="mailto:{{model.email}}"><i class="big circular inverted grey mail icon email-contact-icon-hover"></i></a>
+            </div>
+          {{/if}}
         </div>
+      </div>
     </div>
   </div>
   <div class="ui section divider"></div>

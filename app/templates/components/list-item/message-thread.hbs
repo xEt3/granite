@@ -1,5 +1,6 @@
 {{#link-to 'account.employees.messages.thread' model.id class=linkClass}}
-  <h4 class="ui header message-thread__thread-title">{{participantsCondensed}}
+  <h4 class="ui header message-thread__thread-title">
+    {{participantsCondensed}}
     <div class="minimal margin lightly weighted header message-thread__last-message">
       {{#if lastMsg.content}}
         {{lastMsg.content}}

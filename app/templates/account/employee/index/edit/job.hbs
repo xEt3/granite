@@ -48,7 +48,7 @@
 </div>
 <div class="field">
   <label for="job-location">Location</label>
-  {{#ui-dropdown class="selection" selected=model.location onChange=(action (mut model.location)) as |execute mapper|}}
+  {{#ui-dropdown class="selection" selected=model.location onChange=(action (mut model.location))}}
     <div class="default text">Location</div>
     <i class="dropdown icon"></i>
     <div class="menu">
@@ -62,7 +62,7 @@
 </div>
 <div class="field">
   <label for="job-department">Department</label>
-  {{#ui-dropdown class="selection" selected=model.department onChange=(action (mut model.department)) as |execute mapper|}}
+  {{#ui-dropdown class="selection" selected=model.department onChange=(action (mut model.department))}}
     <div class="default text">Department</div>
     <i class="dropdown icon"></i>
     <div class="menu">
@@ -76,7 +76,7 @@
 </div>
 <div class="field">
   <label for="supervisor">Supervisor</label>
-  {{#ui-dropdown class="selection" selected=model.supervisor onChange=(action (mut model.supervisor)) as |execute mapper|}}
+  {{#ui-dropdown class="selection" selected=model.supervisor onChange=(action (mut model.supervisor))}}
     <div class="default text">Supervisor</div>
     <i class="dropdown icon"></i>
     <div class="menu">

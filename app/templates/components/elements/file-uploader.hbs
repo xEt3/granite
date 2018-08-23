@@ -10,7 +10,8 @@
         <div class="ui center aligned segment dropzone">
           <i class="cloud upload massive icon"></i><p class="dragText">{{if dragText dragText 'Drag Your Files Here.'}}</p>
           <h4>Or <a href="#" {{action "triggerFileInput" on="click"}}>choose a file from your computer</a></h4>
-          <p class="extensions">Supported file types are:
+          <p class="extensions">
+            Supported file types are:
             {{#each allowedExtensions as |extension|}}
               {{extension}}
             {{/each}}

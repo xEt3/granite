@@ -11,7 +11,7 @@
       {{#if message.content}}<div class="ui divider"></div>{{/if}}
 
       {{#if (or isImage message.file.previewPath)}}
-        <img class="ui small image" src={{if isImage message.file.url message.file.previewPath}}>
+        <img alt="" class="ui small image" src={{if isImage message.file.url message.file.previewPath}}>
       {{/if}}
 
       <p><a href={{message.file.url}} download>Download Attachment (.{{message.file.extension}}) <i class="download icon"></i></a></p>

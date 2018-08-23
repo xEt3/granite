@@ -40,10 +40,10 @@
   {{/liquid-if}}
 
   {{#liquid-unless adding class="ui header clearfix"}}
-      <div class="ui fluid button" {{action "beginAddingCustomField"}}>
-        <i class="plus icon"></i>
+    <div role="button" class="ui fluid button" {{action "beginAddingCustomField"}}>
+      <i class="plus icon"></i>
         Add A Custom Field
-      </div>
+    </div>
   {{/liquid-unless}}
 
   <form {{action "saveAndContinue" on="submit"}}>
