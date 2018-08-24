@@ -16,12 +16,11 @@
     {{/if}}
     {{#if model.isScored}}
       {{#display/calc-color model.scoreAbs as |red green|}}
-        {{! template-lint-disable }}
+        {{! template-lint-disable style-concatenation }}
         <span class="ui label" style="color: rgb({{red}}, {{green}}, 0)" class="card-content__score">
           <i class="exchange icon"></i>{{model.scoreAbs}}%
           Match
         </span>
-        {{! template-lint-enable }}
       {{/display/calc-color}}
     {{/if}}
   </div>
