@@ -1,4 +1,4 @@
-{{#if  (not (and (not field.showLabel) (or (eq field.type 'checkbox') (eq field.type 'toggle'))))}}
+{{#if (not (and (not field.showLabel) (or (eq field.type 'checkbox') (eq field.type 'toggle'))))}}
   <label for="{{computedClassName}}" class="{{field.labelClass}}">
     {{field.label}}
     {{#if (and field.helpText field.indirectHelp)}}
