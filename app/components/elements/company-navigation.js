@@ -9,11 +9,9 @@ export default Component.extend({
   tagName: 'nav',
   classNames: [ 'ui menu account__navigation' ],
 
-  logoUrl: computed('auth.user.company.logoUrl', function() {
-    let img =  this.get('auth.user.company.logoUrl') ||
-    '/assets/images/granite-logo-mountains.png';
-    return htmlSafe(`background-image: url('${img}')`
-    );
+  logoUrl: computed('auth.user.company.logoUrl', function () {
+    let img = this.get('auth.user.company.logoUrl') || '/assets/images/granite-logo-mountains.png';
+    return htmlSafe(`background-image: url('${img}')`);
   }),
 
   actions: {
