@@ -1,8 +1,7 @@
 import { module, test } from 'qunit';
-import moduleForAcceptance from 'granite/tests/helpers/module-for-acceptance';
 import { setupApplicationTest } from 'ember-qunit';
 import authenticate from 'granite/tests/helpers/auth';
-import { visit, currentURL, click, pauseTest, find, findAll, settled, fillIn} from '@ember/test-helpers';
+import { visit, currentURL, click, find, findAll, settled} from '@ember/test-helpers';
 
 module('Acceptance | company assets', function(hooks) {
   setupApplicationTest(hooks);
@@ -24,14 +23,52 @@ module('Acceptance | company assets', function(hooks) {
   });
 
   test('list of assets',async function(assert){
-    await server.createList('assets', 500);
     await server.createList('asset-items', 7);
     await authenticate.call(this, server);
     await visit('/account/assets');
-    await pauseTest();
     assert.equal(currentURL(), '/account/assets', 'on assets page');
   });
 
-});
+  test('assets attributes',async function(assert){
+    let myAssetCategory = server.create('asset', {name: 'apple'});
 
-// No assets available.
+    await server.createList('asset-items', 7);
+    await authenticate.call(this, server);
+    await visit('/account/assets');
+    await settled();
+    assert.dom('div.content .header').hasText('apple');
+    await click('div.content .header');
+    assert.equal(currentURL(), `/account/asset/${myAssetCategory.id}/stock`, 'on assets stock page');
+    assert.equal(findAll('span.header.clearfix').length, 7, '7 on page');
+
+  });
+
+  test('assets information',async function(assert){
+    let myAssetCategory = server.create('asset', {name: 'apple', attributes: ['blue']});
+
+    await server.createList('asset-items', 7);
+    await authenticate.call(this, server);
+    await visit('/account/assets');
+    await settled();
+    await click('div.content .header');
+    assert.dom('i.info.icon').exists();
+    await click('i.info.icon');
+    assert.equal(currentURL(), `/account/asset/${myAssetCategory.id}/information`, 'on assets information page');
+    await settled();
+    assert.dom('.content.clearfix span').hasText('blue');
+  });
+
+  test('assets documents',async function(assert){
+    let myAssetCategory = server.create('asset', {name: 'apple', attributes: ['blue']});
+
+    await server.createList('asset-items', 7);
+    await authenticate.call(this, server);
+    await visit('/account/assets');
+    await settled();
+    await click('div.content .header');
+    assert.dom('i.file.icon').exists();
+    await click('.ui.pointing.menu a i.file.icon');
+    assert.equal(currentURL(), `/account/asset/${myAssetCategory.id}/documents`, 'on assets information page');
+  });
+
+});

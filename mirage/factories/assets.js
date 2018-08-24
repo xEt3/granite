@@ -1,12 +1,10 @@
 import { Factory, faker } from 'ember-cli-mirage';
 
-
-
 const items = ['mobile', 'tablet', 'desktop', 'laptop',
   'car', 'lab', 'configure', 'asterisk', 'cube', 'sound', 'photo' ];
 
 export default Factory.extend({
-  attributs:   [faker.commerce.color],
+  attributes:   [faker.commerce.color],
   created:     faker.date.past,
   description: faker.hacker.phrase,
   _id() {

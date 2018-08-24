@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { Response, faker } from 'ember-cli-mirage';
 
+
 const parseIncoming = req => {
   return req.requestBody ? JSON.parse('{"' + decodeURIComponent(req.requestBody).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}') : {};
 };
@@ -144,6 +145,8 @@ export default function() {
   this.post('/payment-methods');
 
   this.get('/assets');
+
+  this.put('/asset/:id');
 
   this.get('/asset-items');
 

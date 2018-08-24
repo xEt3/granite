@@ -24,10 +24,10 @@
     "bower": "^1.5.2"
   },
   "devDependencies": {
-    "scrollreveal": "^4.0.0",
     "babel-eslint": "8.2.6",
     "bower": "^1.5.2",
     "broccoli-asset-rev": "^3.0.0",
+    "d3": "^5.5.0",
     "ember-ajax": "^3.0.0",
     "ember-cli": "~3.3.0",
     "ember-cli-active-link-wrapper": "0.3.2",
@@ -82,11 +82,11 @@
     "eslint": "^5.3.0",
     "eslint-plugin-ember": "^5.0.0",
     "glob": "^7.1.2",
-    "d3": "^5.5.0",
     "less-plugin-glob": "^2.0.2",
     "liquid-fire": "^0.29.2",
     "loader.js": "^4.2.3",
     "qunit-dom": "^0.7.1",
+    "scrollreveal": "^4.0.0",
     "semantic-ui-calendar": "^0.0.8",
     "semantic-ui-ember": "^3.0.3",
     "semantic-ui-less": "^2.3.3"
