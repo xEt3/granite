@@ -1,12 +1,12 @@
 {{#if model.logo}}
-  <img src={{model.logo}} class="ui mini image applicant-source-item__image" />
+  <img src={{model.logo}} alt="Logo" class="ui mini image applicant-source-item__image" />
 {{/if}}
 <div class="content">
   <div class="header">
-  {{ui-checkbox
-    class="checkbox"
-    checked=(readonly selected)
-    label=model.name}}
+    {{ui-checkbox
+      class="checkbox"
+      checked=(readonly selected)
+      label=model.name}}
   </div>
   <div class="meta">
     <span>{{model.description}}</span>

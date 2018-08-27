@@ -44,7 +44,7 @@
                     direction="downward"
                     name="guess-column"
                     selected=guesses
-                    onChange=(action 'mutateGuess' i) as |execute mapper|}}
+                    onChange=(action 'mutateGuess' i)}}
                     <div class="default text">Select field for column</div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
@@ -63,7 +63,7 @@
             <th>
               <div class="ui blue ribbon label">
                 {{#ui-popup content='We show the column labels you originally uploaded here for reference.'}}
-                Your Columns
+                  Your Columns
                 {{/ui-popup}}
               </div>
             </th>

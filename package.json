@@ -12,6 +12,7 @@
     "start": "ember server --proxy http://localhost:4000",
     "dock": "ember server --proxy http://$DOCKER_IP:$DOCKER_LB_PORT",
     "lint:js": "eslint app tests",
+    "lint:hbs": "./node_modules/.bin/ember-template-lint app/templates/**/*",
     "test": "ember test",
     "test-ci": "ember test --query=nolint --test-port=7000",
     "deploy": "git push heroku master",
@@ -21,7 +22,8 @@
   "author": "Associated Employers",
   "license": "UNLICENSED",
   "dependencies": {
-    "bower": "^1.5.2"
+    "bower": "^1.5.2",
+    "ember-template-lint": "^0.8.23"
   },
   "devDependencies": {
     "babel-eslint": "8.2.6",

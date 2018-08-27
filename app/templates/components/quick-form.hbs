@@ -1,11 +1,11 @@
 {{#each form as |field|}}
-  {{#unless (and field.displayIf (not (get model field.displayIf)))}}
+  {{#if (not (and field.displayIf (not (get model field.displayIf))))}}
     {{input/quick-form-input
       field
       model
       controller
       class=field.class}}
-  {{/unless}}
+  {{/if}}
 {{/each}}
 
 {{#if onsubmit}}

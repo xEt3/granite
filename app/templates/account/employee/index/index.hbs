@@ -2,20 +2,20 @@
   <div class="ui equal width stackable grid">
     {{#if model.supervisor}}
       <div class="center aligned column">
-          <div class="ui mini statistic statistic-item">
-            <div class="value">
-              {{#link-to 'account.employee' model.supervisor.id class="statistic-value"}}
-                {{model.supervisor.fullName}}
-              {{/link-to}}
-            </div>
-            <div class="label text-white">
-              Supervisor
-            </div>
+        <div class="ui mini statistic statistic-item">
+          <div class="value">
+            {{#link-to 'account.employee' model.supervisor.id class="statistic-value"}}
+              {{model.supervisor.fullName}}
+            {{/link-to}}
           </div>
+          <div class="label text-white">
+            Supervisor
+          </div>
+        </div>
       </div>
     {{/if}}
     {{#if model.department}}
-    <div class="center aligned column">
+      <div class="center aligned column">
         <div class="ui mini statistic statistic-item">
           <div class="value statistic-value">
             {{model.department.name}}
@@ -24,10 +24,10 @@
             Department
           </div>
         </div>
-    </div>
+      </div>
     {{/if}}
     {{#if model.location}}
-    <div class="center aligned column">
+      <div class="center aligned column">
         <div class="ui mini statistic statistic-item">
           <div class="value statistic-value">
             {{model.location.name}}
@@ -36,7 +36,7 @@
             Location
           </div>
         </div>
-    </div>
+      </div>
     {{/if}}
   </div>
 </div>
@@ -134,7 +134,7 @@
               </u>
             </div>
           {{else}}
-          <h3 class="ui center aligned header no-info-header">No Additional Information</h3>
+            <h3 class="ui center aligned header no-info-header">No Additional Information</h3>
           {{/if}}
         </p>
       </div>
