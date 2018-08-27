@@ -8,14 +8,14 @@ module('Unit | Serializer | permissions', function(hooks) {
   // Replace this with your real tests.
   test('it exists', function(assert) {
     let store = this.owner.lookup('service:store');
-    let serializer = store.serializerFor('permissions');
+    let serializer = store.serializerFor('permission');
 
     assert.ok(serializer);
   });
 
   test('it serializes records', function(assert) {
     let store = this.owner.lookup('service:store');
-    let record = run(() => store.createRecord('permissions', {}));
+    let record = run(() => store.createRecord('permission', {}));
 
     let serializedRecord = record.serialize();
 
