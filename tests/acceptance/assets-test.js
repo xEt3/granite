@@ -40,7 +40,6 @@ module('Acceptance | company assets', function(hooks) {
     await click('div.content .header');
     assert.equal(currentURL(), `/account/asset/${myAssetCategory.id}/stock`, 'on assets stock page');
     assert.equal(findAll('span.header.clearfix').length, 7, '7 on page');
-
   });
 
   test('assets information',async function(assert){

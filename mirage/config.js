@@ -146,8 +146,6 @@ export default function() {
 
   this.get('/assets');
 
-  this.put('/asset/:id');
-
   this.get('/asset-items');
 
   this.get('/bt/token', () => {
