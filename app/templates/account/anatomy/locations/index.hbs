@@ -8,11 +8,11 @@
       {{#liquid-if addingLocation}}
         {{#link-to 'account.anatomy.locations.index' class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
       {{else}}
-          {{#link-to 'account.anatomy.locations.index.new' class="right floated"}}
-            {{#ui-popup tagName='span' content="Add a location"}}
-              <i class="plus icon"></i>
-            {{/ui-popup}}
-          {{/link-to}}
+        {{#link-to 'account.anatomy.locations.index.new' class="right floated"}}
+          {{#ui-popup tagName='span' content="Add a location"}}
+            <i class="plus icon"></i>
+          {{/ui-popup}}
+        {{/link-to}}
       {{/liquid-if}}
     </h3>
 
@@ -32,11 +32,11 @@
 {{liquid-outlet class="add-location"}}
 
 <div class="ui relaxed list">
-    {{#each model as |location|}}
-      {{list-item/location-item location=location onDelete=(action 'delete' )}}
-    {{else}}
-      <h2 class="ui center aligned header">No locations available.</h2>
-    {{/each}}
+  {{#each model as |location|}}
+    {{list-item/location-item location=location onDelete=(action 'delete' )}}
+  {{else}}
+    <h2 class="ui center aligned header">No locations available.</h2>
+  {{/each}}
 </div>
 
 {{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}

@@ -33,10 +33,10 @@
 {{liquid-outlet class="add-department"}}
 
 <div class="ui relaxed list">
-    {{#each model as |department|}}
-      {{list-item/department-item department=department onDelete=(action 'delete' )}}
-    {{else}}
-      <h2 class="ui center aligned header">No departments available.</h2>
-    {{/each}}
+  {{#each model as |department|}}
+    {{list-item/department-item department=department onDelete=(action 'delete' )}}
+  {{else}}
+    <h2 class="ui center aligned header">No departments available.</h2>
+  {{/each}}
 </div>
 {{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}

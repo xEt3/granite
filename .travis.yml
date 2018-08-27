@@ -21,6 +21,7 @@ before_script:
 - ember sauce:connect
 script:
 - yarn lint:js
+- yarn lint:hbs
 - yarn test-ci
 after_script:
 - ember sauce:disconnect

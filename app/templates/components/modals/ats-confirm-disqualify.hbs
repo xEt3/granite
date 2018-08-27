@@ -8,7 +8,8 @@
   </div>
   <div class="actions">
     {{#ui-checkbox checked=model.disqualificationEmail onChange=(action (mut model.disqualificationEmail))}}
-      <label class="text-white">Send Rejection Notification
+      <label class="text-white">
+        Send Rejection Notification
         {{#if model}}
           to {{model.person.firstName}} (<a href="mailto:{{model.person.email}}" class="ats-confirm-disqualify__email-link">{{model.person.email}}</a>)
         {{/if}}?

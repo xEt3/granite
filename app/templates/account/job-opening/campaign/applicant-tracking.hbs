@@ -36,7 +36,7 @@
       {{/if}}
     </div>
 
-    <div class="ui selectable divided items {{unless (or showingAllPending (lt pendingApplications.length 4)) 'fade-unless-hovered'}}">
+    <div class="ui selectable divided items {{if (not (or showingAllPending (lt pendingApplications.length 4))) 'fade-unless-hovered'}}">
       {{#each
         (if (not showingAllPending)
           (take 3 pendingApplications)

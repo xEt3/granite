@@ -4,7 +4,7 @@
 <form class="ui form" {{action "save" on="submit"}}>
   {{#if definition.isRenderable}}
     <p>
-      Templates support the "Mustache" language. See <a href="http://mustache.github.io/mustache.5.html" target="_blank">the mustache manual</a> for more information.
+      Templates support the "Mustache" language. See <a href="http://mustache.github.io/mustache.5.html" rel="noopener" target="_blank">the mustache manual</a> for more information.
     </p>
   {{/if}}
   {{#each definition.contentKeys as |contentKey|}}
@@ -15,7 +15,7 @@
           content=contentKey.description
           class="ui right floated"
         }}
-            <i class="info circle icon"></i>
+          <i class="info circle icon"></i>
         {{/ui-popup}}
       </label>
       {{textarea
