@@ -19,11 +19,10 @@ module('Acceptance | company users', function(hooks) {
 
     await click(tab);
     assert.equal(currentURL(), '/account/anatomy/company-users');
-    let $breadCrumbs = find('.account__breadcrumb');
-    assert.equal($($breadCrumbs).text().replace(/\s\s+|\n/g, ''), 'Account/Anatomy/Company Users');
+    assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Anatomy/Company Users');
     assert.ok(find('a[href="/account/anatomy/company-users/new"]'), 'Add link exists');
-    let $listItems = findAll('.text.segment .item');
-    assert.ok($($listItems).text().toLowerCase().replace(/\s\s+/g, ' ').indexOf('old yeller') > -1, 'List items should contain "old yeller"');
+    let $listItems = findAll('.text.segment .item')[1];
+    assert.ok($listItems.textContent.trim().toLowerCase().replace(/\s\s+/g, ' ').indexOf('old yeller') > -1, 'List items should contain "old yeller"');
   });
 
   test('adding new user with permissions', async function(assert) {

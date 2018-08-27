@@ -19,7 +19,7 @@ module('Acceptance | company assets', function(hooks) {
     assert.ok(find('.ui.right.floated.pagination.menu'), 'pagination menu is on page');
     assert.ok(find('a[href="/account/assets/new"]'), 'plus icon is on page');
     let $header = find('.ui.center.aligned.header');
-    assert.equal($($header).text().replace(/\s\s+|\n/g, ''), 'No assets available.', 'No assets were available');
+    assert.equal($header.textContent.trim().replace(/\s\s+|\n/g, ''), 'No assets available.', 'No assets were available');
   });
 
   test('list of assets',async function(assert){
