@@ -41,6 +41,28 @@ export default Controller.extend(addEdit, {
   },
 
   actions: {
+    // reorderItems (items = [], reordered) {
+    //   console.log('inside reorderItems');
+    //   this.send('setOrder')(items);
+    // },
+
+    setOrder (items = []/*, item, index*/) {
+      console.log('number of items:', items.length);
+      console.log('inside setOrder, items:', items);
+      const reordered = items.map((stage, i) => {
+        console.log('stage:', stage);
+        console.log('stage.order:', stage.order);
+      });
+
+      this.get('pipeline').save()
+      .then(p => {
+        console.log('saved pipeline, p:', p);
+      });
+    },
+
+
+
+
     openSeverityModal () {
       this.set('respondedSeverityAddition', false);
 

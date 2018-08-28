@@ -24,6 +24,30 @@
   </div>
 
   <div class="ui divider"></div>
+
+  <h3 class="ui header">Recruitment Pipeline Stages</h3>
+  <p>
+    Add up to five recruitment stages.
+  </p>
+  <div class="ui divider"></div>
+  <button type="button" class="ui primary fluid button" {{action "openSeverityModal"}}>
+    <i class="plus icon"></i>Add Stage
+  </button>
+
+
+  {{#sortable-group tagName="ul" onChange="setOrder" as |group|}}
+    {{#each pipeline.stages as |stage|}}
+      {{#sortable-item tagName="li" model=stage group=group}}
+        {{stage.name}}
+      {{/sortable-item}}
+    {{/each}}
+  {{/sortable-group}}
+
+
+
+
+
+  <div class="ui divider"></div>
   <form {{action "save" on="submit"}}>
     {{#form/action-button
       type="submit"
