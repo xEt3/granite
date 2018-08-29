@@ -7,9 +7,7 @@ const CardPipelineComponent = Component.extend(addEdit, {
 
   actions: {
     setOrder (items/*, item, index*/) {
-      console.log('inside setOrder, items:', items);
       const reordered = items.map((app, i) => {
-        console.log('app:', app);
         const prevIndex = app.get('stageOrder');
 
         if (prevIndex !== i) {

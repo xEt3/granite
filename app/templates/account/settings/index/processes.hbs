@@ -35,7 +35,7 @@
   </button>
 
 
-  {{#sortable-group tagName="ul" onChange="setOrder" as |group|}}
+  {{#sortable-group tagName="ul" onChange="reorderItems" as |group|}}
     {{#each pipeline.stages as |stage|}}
       {{#sortable-item tagName="li" model=stage group=group}}
         {{stage.name}}
@@ -52,6 +52,7 @@
     {{#form/action-button
       type="submit"
       class='ui positive fluid huge button'
+      disabled=disableSave
       loading=working}}
       Save Changes
     {{/form/action-button}}

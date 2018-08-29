@@ -7,6 +7,11 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default Controller.extend(addEdit, {
   auth: service(),
+  correctiveActionsDirty: false,
+  stagesDirty: false,
+  disableSave: computed('correctiveActionsDirty', 'stagesDirty', function () {
+    return this.get('correctiveActionsDirty') || this.get('stagesDirty') ? false : true;
+  }),
 
   severityForm: computed(() => [{
     label: 'Name',
@@ -28,6 +33,8 @@ export default Controller.extend(addEdit, {
   }]),
 
   afterSave (model) {
+    console.log('modelName:', model.get('modelName'));
+
     let correctiveActionSeverities = model.get('correctiveActionSeverities'),
         removeDuplicates = [];
 
@@ -38,26 +45,57 @@ export default Controller.extend(addEdit, {
       }
     });
     correctiveActionSeverities.removeObjects(removeDuplicates);
+    this.setProperties({
+      correctiveActionsDirty: false,
+      stagesDirty: false
+    });
+  },
+
+  checkDirty (arrayOne, arrayTwo) {
+    if (arrayOne.length !== arrayTwo.length) {
+      return true;
+    }
+
+    for (let i = 0; i < arrayOne.length; i++) {
+      if (arrayOne[i] !== arrayTwo[i]) {
+        return true;
+      }
+    }
+
+    return false;
   },
 
   actions: {
-    // reorderItems (items = [], reordered) {
-    //   console.log('inside reorderItems');
-    //   this.send('setOrder')(items);
-    // },
+    reorderItems(items) {
+      let pipeline = this.get('pipeline'),
+          stages = pipeline.stages;
 
-    setOrder (items = []/*, item, index*/) {
-      console.log('number of items:', items.length);
-      console.log('inside setOrder, items:', items);
-      const reordered = items.map((stage, i) => {
-        console.log('stage:', stage);
-        console.log('stage.order:', stage.order);
+      items.map((stage, i) => {
+        const prevIndex = stage.order;
+
+        if (prevIndex !== i) {
+          stage.order = i;
+        }
       });
 
-      this.get('pipeline').save()
-      .then(p => {
-        console.log('saved pipeline, p:', p);
-      });
+      let isDirty = this.get('checkDirty')(stages, items);
+
+      if (isDirty) {
+        this.set('stagesDirty', true);
+        pipeline.set('stages', items);
+      }
+    },
+
+    save () {
+      //check CAS and save company
+      if (this.get('correctiveActionsDirty')) {
+        this.saveModel(this.get('model'));
+      }
+
+      //check stages and save pipeline
+      if (this.get('stagesDirty')) {
+        this.saveModel(this.get('pipeline'));
+      }
     },
 
 
@@ -101,6 +139,9 @@ export default Controller.extend(addEdit, {
     removeSeverity (severity) {
       severity.destroy();
       this.get('auth.user.company.correctiveActionSeverities').removeObject(severity);
+      if (severity.id) {
+        this.set('correctiveActionsDirty', true);
+      }
     },
 
     respondSeverityAddition (response) {
@@ -115,6 +156,10 @@ export default Controller.extend(addEdit, {
       }
 
       this.set('editingCas', false);
+
+      if (response) {
+        this.set('correctiveActionsDirty', true);
+      }
     }
   }
 });
