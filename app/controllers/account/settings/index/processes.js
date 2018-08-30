@@ -9,6 +9,11 @@ export default Controller.extend(addEdit, {
   auth: service(),
   correctiveActionsDirty: false,
   stagesDirty: false,
+
+  canAddStages: computed('pipeline.stages[]', function () {
+    return this.get('pipeline.stages').length < 5 ? true : false;
+  }),
+
   disableSave: computed('correctiveActionsDirty', 'stagesDirty', function () {
     return this.get('correctiveActionsDirty') || this.get('stagesDirty') ? false : true;
   }),
@@ -32,11 +37,20 @@ export default Controller.extend(addEdit, {
     path: 'formal'
   }]),
 
-  afterSave (model) {
-    console.log('modelName:', model.get('modelName'));
+  stageForm: computed(() => [{
+    label: 'Name of stage',
+    type: 'text',
+    path: 'name',
+    placeholder: 'ex. Interview'
+  }]),
 
+  afterSave (model) {
     let correctiveActionSeverities = model.get('correctiveActionSeverities'),
         removeDuplicates = [];
+
+    if (!correctiveActionSeverities) {
+      return;
+    }
 
     correctiveActionSeverities.forEach(s => {
       if (!s.get('id')) {
@@ -67,13 +81,18 @@ export default Controller.extend(addEdit, {
 
   actions: {
     reorderItems(items) {
+      console.log('reordering items');
       let pipeline = this.get('pipeline'),
           stages = pipeline.stages;
+
+      console.log('stages:', stages);
 
       items.map((stage, i) => {
         const prevIndex = stage.order;
 
         if (prevIndex !== i) {
+          console.log(`${stage.name} is moving to slot ${stage.order}`);
+          console.log('stage:', stage);
           stage.order = i;
         }
       });
@@ -120,12 +139,39 @@ export default Controller.extend(addEdit, {
       return new Promise((resolveSeverity, rejectSeverity) => this.setProperties({ resolveSeverity, rejectSeverity }));
     },
 
+    openStageModal () {
+      this.set('respondedStageAddition', false);
+
+      if (!this.get('editingStage')) {
+        this.send('addStage');
+      }
+
+      $('#modal__add-stage').modal({
+        detachable: true,
+        onHidden: () => {
+          if ( !this.get('respondedStageAddition') ) {
+            this.send('respondStageAddition', false);
+          }
+        }
+      }).modal('show');
+
+      return new Promise((resolveStage, rejectStage) => this.setProperties({ resolveStage, rejectStage }));
+    },
+
     beginSeverityEdit (currentSeverity) {
       this.setProperties({
         currentSeverity,
         editingCas: true
       });
       this.send('openSeverityModal');
+    },
+
+    beginStageEdit (currentStage) {
+      this.setProperties({
+        currentStage,
+        editingStage: true
+      });
+      this.send('openStageModal');
     },
 
     addSeverity () {
@@ -136,11 +182,28 @@ export default Controller.extend(addEdit, {
       user.get('company.correctiveActionSeverities').addObject(severity);
     },
 
+    addStage () {
+      let stage = this.store.createRecord('pipeline-stage', {
+        order: this.get('pipeline.stages').length
+      });
+
+      this.set('currentStage', stage);
+      this.get('pipeline.stages').addObject(stage);
+    },
+
     removeSeverity (severity) {
       severity.destroy();
       this.get('auth.user.company.correctiveActionSeverities').removeObject(severity);
       if (severity.id) {
         this.set('correctiveActionsDirty', true);
+      }
+    },
+
+    removeStage (stage) {
+      stage.destroy();
+      this.get('pipeline.stages').removeObject(stage);
+      if (stage.id) {
+        this.set('stagesDirty', true);
       }
     },
 
@@ -159,6 +222,24 @@ export default Controller.extend(addEdit, {
 
       if (response) {
         this.set('correctiveActionsDirty', true);
+      }
+    },
+
+    respondStageAddition (response) {
+      this.get(response ? 'resolveStage' : 'rejectStage')(response);
+      this.set('respondedStageAddition', true);
+      $('#modal__add-stage').modal('hide');
+
+      let currentStage = this.get('currentStage');
+
+      if (!response && !this.get('editingStage')) {
+        this.send('removeStage', currentStage);
+      }
+
+      this.set('editingStage', false);
+
+      if (response) {
+        this.set('stagesDirty', true);
       }
     }
   }

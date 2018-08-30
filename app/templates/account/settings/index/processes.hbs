@@ -10,11 +10,11 @@
   <div class="ui list">
     {{#each model.correctiveActionSeverities as |severity|}}
       <div class="item">
-        {{severity.name}} ({{severity.order}})
-        <a href="#" {{action "beginSeverityEdit" severity}}>
-          <i class="edit icon"></i>
-        </a>
         {{#confirm-modal class="item" as |confirm|}}
+          {{severity.name}} ({{severity.order}})
+          <a href="#" {{action "beginSeverityEdit" severity}}>
+            <i class="edit icon"></i>
+          </a>
           <a href="#" class="right floated text-danger" {{action (pipe confirm (action "removeSeverity" severity))}}>Remove</a>
         {{/confirm-modal}}
       </div>
@@ -30,15 +30,29 @@
     Add up to five recruitment stages.
   </p>
   <div class="ui divider"></div>
-  <button type="button" class="ui primary fluid button" {{action "openSeverityModal"}}>
-    <i class="plus icon"></i>Add Stage
-  </button>
+  {{#liquid-if canAddStages}}
+    <button type="button" class="ui primary fluid button" {{action "openStageModal"}}>
+      <i class="plus icon"></i>Add Stage
+    </button>
+  {{/liquid-if}}
 
 
-  {{#sortable-group tagName="ul" onChange="reorderItems" as |group|}}
+  {{#sortable-group tagName="ul" classNames="pipeline-stage-list__cards" onChange="reorderItems" as |group|}}
     {{#each pipeline.stages as |stage|}}
-      {{#sortable-item tagName="li" model=stage group=group}}
-        {{stage.name}}
+      {{#sortable-item tagName="li" classNames="stage-list__card" model=stage group=group}}
+        <div class="card-content__wrapper">
+          <div class="card-content__title-bar">
+            {{#confirm-modal class="item" as |confirm|}}
+              <span class="card-content__stage-name">
+                {{stage.name}}
+                <a href="#" {{action "beginStageEdit" stage}}>
+                  <i class="edit icon"></i>
+                </a>
+              </span>
+              <a href="#" class="right floated text-danger" {{action (pipe confirm (action "removeStage" stage))}}>Remove</a>
+            {{/confirm-modal}}
+          </div>
+        </div>
       {{/sortable-item}}
     {{/each}}
   {{/sortable-group}}
@@ -59,7 +73,7 @@
   </form>
 </div>
 
-{{#ui-modal name='modal__add-cas' id='modal__add-cas' class='small form'}}
+{{#ui-modal id='modal__add-cas' class='small form'}}
   <div class="header">
     <i class="plus icon"></i>{{if editingCas 'Edit' 'Add'}} corrective action option
   </div>
@@ -77,6 +91,30 @@
       </button>
     {{/unless}}
     <button class="ui primary right labeled icon button" {{action 'respondSeverityAddition' true}}>
+      Done
+      <i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}
+
+{{#ui-modal id='modal__add-stage' class='small form'}}
+  <div class="header">
+    <i class="plus icon"></i>{{if editingStage 'Edit' 'Add'}} recruiting pipeline stage
+  </div>
+  <div class="content">
+    {{quick-form
+      stageForm
+      currentStage
+      this
+      tagName='div'}}
+  </div>
+  <div class="actions">
+    {{#unless editingStage}}
+      <button class="ui red button" {{action 'respondStageAddition' false}}>
+        Cancel
+      </button>
+    {{/unless}}
+    <button class="ui primary right labeled icon button" {{action 'respondStageAddition' true}}>
       Done
       <i class="check icon"></i>
     </button>

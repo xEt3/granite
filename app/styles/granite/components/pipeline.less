@@ -119,5 +119,37 @@
         }
       }
     }
+
+
+
+
+
+  }
+}
+
+.pipeline-stage-list__cards {
+  padding: 0;
+  list-style: none;
+
+  .stage-list__card {
+    background-color: white;
+    box-shadow: 0 2px 4px fade(@gray-dark, 50%);
+    margin-bottom: 1em;
+    border-radius: @trim-border-rad;
+    transition: all .1s ease-in-out;
+    cursor: move;
+    font-size: .9em;
+    position: relative;
+
+    .card-content__wrapper {
+      padding: .8em 1em;
+    }
+
+    .card-content__title-bar {
+      .card-content__stage-name {
+        font-weight: 600;
+        font-size: 1.1em;
+      }
+    }
   }
 }
