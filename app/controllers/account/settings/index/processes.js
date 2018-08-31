@@ -98,12 +98,8 @@ export default Controller.extend(addEdit, {
         }
       });
 
-      let isDirty = this.get('checkDirty')(stages, items);
-
-      if (isDirty) {
-        this.set('stagesDirty', true);
-        pipeline.set('stages', items);
-      }
+      pipeline.set('stages', items);
+      this.set('stagesDirty', JSON.stringify(pipeline) !== this.get('pipelineInitialState'));
     },
 
     save () {

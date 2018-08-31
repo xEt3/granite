@@ -13,7 +13,8 @@ export default Route.extend({
   setupController (controller, model) {
     controller.setProperties({
       model: model.company,
-      pipeline: model.pipeline
+      pipeline: model.pipeline,
+      pipelineInitialState: JSON.stringify(model.pipeline)
     });
   }
 });
