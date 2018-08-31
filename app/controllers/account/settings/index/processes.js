@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import { computed, set } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { Promise } from 'rsvp';
 import $ from 'jquery';
@@ -80,7 +80,7 @@ export default Controller.extend(addEdit, {
   },
 
   actions: {
-    reorderItems(items) {
+    reorderItems (items) {
       console.log('reordering items');
       let pipeline = this.get('pipeline'),
           stages = pipeline.stages;
@@ -93,7 +93,8 @@ export default Controller.extend(addEdit, {
         if (prevIndex !== i) {
           console.log(`${stage.name} is moving to slot ${stage.order}`);
           console.log('stage:', stage);
-          stage.order = i;
+          // stage.order = i;
+          set(stage, 'order', i);
         }
       });
 
