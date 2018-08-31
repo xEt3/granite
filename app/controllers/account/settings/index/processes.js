@@ -8,7 +8,13 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 export default Controller.extend(addEdit, {
   auth: service(),
   correctiveActionsDirty: false,
+  // stagesDirty: computed('pipeline.stages.[]', 'pipelineInitialState', function () {
+  //   console.log('called it');
+  //   return JSON.stringify(this.get('pipeline')) !== this.get('pipelineInitialState');
+  // }),
   stagesDirty: false,
+
+  // this.set('stagesDirty', JSON.stringify(pipeline) !== this.get('pipelineInitialState'));
 
   canAddStages: computed('pipeline.stages[]', function () {
     return this.get('pipeline.stages').length < 5 ? true : false;
@@ -48,52 +54,32 @@ export default Controller.extend(addEdit, {
     let correctiveActionSeverities = model.get('correctiveActionSeverities'),
         removeDuplicates = [];
 
-    if (!correctiveActionSeverities) {
-      return;
+    if (correctiveActionSeverities) {
+      correctiveActionSeverities.forEach(s => {
+        if (!s.get('id')) {
+          s.destroy();
+          removeDuplicates.push(s);
+        }
+      });
+      correctiveActionSeverities.removeObjects(removeDuplicates);
     }
 
-    correctiveActionSeverities.forEach(s => {
-      if (!s.get('id')) {
-        s.destroy();
-        removeDuplicates.push(s);
-      }
-    });
-    correctiveActionSeverities.removeObjects(removeDuplicates);
     this.setProperties({
       correctiveActionsDirty: false,
       stagesDirty: false
     });
-  },
 
-  checkDirty (arrayOne, arrayTwo) {
-    if (arrayOne.length !== arrayTwo.length) {
-      return true;
-    }
-
-    for (let i = 0; i < arrayOne.length; i++) {
-      if (arrayOne[i] !== arrayTwo[i]) {
-        return true;
-      }
-    }
-
-    return false;
+    this.send('refresh');
   },
 
   actions: {
     reorderItems (items) {
-      console.log('reordering items');
-      let pipeline = this.get('pipeline'),
-          stages = pipeline.stages;
-
-      console.log('stages:', stages);
+      let pipeline = this.get('pipeline');
 
       items.map((stage, i) => {
         const prevIndex = stage.order;
 
         if (prevIndex !== i) {
-          console.log(`${stage.name} is moving to slot ${stage.order}`);
-          console.log('stage:', stage);
-          // stage.order = i;
           set(stage, 'order', i);
         }
       });
@@ -191,17 +177,12 @@ export default Controller.extend(addEdit, {
     removeSeverity (severity) {
       severity.destroy();
       this.get('auth.user.company.correctiveActionSeverities').removeObject(severity);
-      if (severity.id) {
-        this.set('correctiveActionsDirty', true);
-      }
+      this.set('correctiveActionsDirty', JSON.stringify(this.get('model.correctiveActionSeverities').toArray()) !== this.get('casInitialState'));
     },
 
     removeStage (stage) {
-      stage.destroy();
       this.get('pipeline.stages').removeObject(stage);
-      if (stage.id) {
-        this.set('stagesDirty', true);
-      }
+      this.set('stagesDirty', JSON.stringify(this.get('pipeline')) !== this.get('pipelineInitialState'));
     },
 
     respondSeverityAddition (response) {
@@ -216,10 +197,7 @@ export default Controller.extend(addEdit, {
       }
 
       this.set('editingCas', false);
-
-      if (response) {
-        this.set('correctiveActionsDirty', true);
-      }
+      this.set('correctiveActionsDirty', JSON.stringify(this.get('model.correctiveActionSeverities').toArray()) !== this.get('casInitialState'));
     },
 
     respondStageAddition (response) {
@@ -234,10 +212,7 @@ export default Controller.extend(addEdit, {
       }
 
       this.set('editingStage', false);
-
-      if (response) {
-        this.set('stagesDirty', true);
-      }
+      this.set('stagesDirty', JSON.stringify(this.get('pipeline')) !== this.get('pipelineInitialState'));
     }
   }
 });
