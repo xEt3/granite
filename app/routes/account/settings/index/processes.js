@@ -25,11 +25,9 @@ export default Route.extend(refreshable, {
   actions: {
     willTransition (transition) {
       if (!this.controller.disableSave) {
-        if (!confirm('u sure?')) {
+        if (!confirm('You have unsaved changes, are you sure you want to leave this page?')) {
           transition.abort();
         }
-        //PROBLEM HERE WITH LEAVING PAGE AND COMING BACK AND DATA IS NOT CLEARED
-        //ex. MOVED ORDER AROUND, LEFT, CAME BACK, ORDER WAS THE SAME AND BUTTON WAS ALWAYS OPEN FOR SAVE
       }
     }
   }
