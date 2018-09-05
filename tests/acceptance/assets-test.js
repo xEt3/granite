@@ -77,5 +77,4 @@ module('Acceptance | company assets', function(hooks) {
     await click('.ui.pointing.menu a i.file.icon');
     assert.equal(currentURL(), `/account/asset/${myAssetCategory.id}/documents`, 'on assets information page');
   });
-
 });
