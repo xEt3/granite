@@ -16,7 +16,6 @@ module('Unit | Serializer | permissions', function(hooks) {
   test('it serializes records', function(assert) {
     let store = this.owner.lookup('service:store');
     let record = run(() => store.createRecord('permission', {}));
-
     let serializedRecord = record.serialize();
 
     assert.ok(serializedRecord);

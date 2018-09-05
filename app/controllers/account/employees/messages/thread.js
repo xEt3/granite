@@ -21,7 +21,7 @@ export default Controller.extend({
 
       this.get('socket').emit('thread_message', {
         message,
-        file: file && file.file && file.file._id,
+        file: file && file._id,
         thread: this.get('model.thread.id')
       });
     },
