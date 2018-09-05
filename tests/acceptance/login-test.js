@@ -38,12 +38,15 @@ test('failed logins', function(assert) {
 });
 
 test('correct login', function(assert) {
+  let company = server.create('company'),
+      user    = server.create('company-user', { company: company.id });
+
   visit('/login');
 
   andThen(() => {
     assert.equal(currentURL(), '/login', 'Current url is login');
-    fillIn('input[type="email"]', 'user@test.com');
-    fillIn('input[type="password"]', '1234');
+    fillIn('input[type="email"]', user.email);
+    fillIn('input[type="password"]', user.password);
     click('button[type="submit"]');
   });
 

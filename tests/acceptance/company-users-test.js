@@ -5,7 +5,7 @@ import authenticate from 'granite/tests/helpers/auth';
 moduleForAcceptance('Acceptance | company users');
 
 test('getting to company-users', function(assert) {
-  authenticate(this.application);
+  authenticate(this.application, {}, server, { companyUser: { firstName: 'old', lastName: 'yeller' }});
   visit('/account/dashboard');
 
   andThen(() => {

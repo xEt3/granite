@@ -7,10 +7,14 @@ export default Route.extend(addEdit, {
   transitionAfterSave: false,
 
   model () {
-    return this.get('auth.user.company');
+    console.log('auth.user in model:', this.get('auth.user'));
+    let x = this.get('auth.user.company');
+    console.log('returning model in settings route:', x);
+    return x;
   },
 
   afterModel (model) {
+    console.log('model in settings route:', model);
     const firstStepsCompleted = model.get('firstStepsCompleted');
 
     if (!firstStepsCompleted.includes('settings')) {
