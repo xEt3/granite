@@ -47,11 +47,13 @@
   </div>
 
   {{drop-zone
-    class='dropzone__messaging'
+    id=dropzoneId
     url=fileEndpoint
+    class='dropzone__messaging'
     uploadMultiple=false
     acceptedFiles='.doc,.docx,.pdf,.rtf,.txt,.jpg,.png,.gif,.xls,.xlsx'
     maxFiles=1
+    method='put'
     autoProcessQueue=false
     dictDefaultMessage=''
     thumbnailHeight=100

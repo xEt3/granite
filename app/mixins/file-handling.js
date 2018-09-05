@@ -105,6 +105,7 @@ export default Mixin.create({
         __file: file,
         fileIsAdded: true
       });
+
     },
 
     upload () {
