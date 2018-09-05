@@ -50,7 +50,6 @@ module('Acceptance | company users', function(hooks) {
     assert.equal(currentURL(), '/account/anatomy/company-users');
   });
 
-
   test('editing user\'s permissions', async function(assert) {
     await authenticate.call(this, server);
     await server.create('employees');
