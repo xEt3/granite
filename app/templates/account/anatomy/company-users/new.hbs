@@ -27,9 +27,15 @@
       <p>No employees are available.</p>
     {{/if}}
   </div>
-
-  {{!TODO: Add permission assignments}}
-
+  <div class="field">
+    <label for="action-item-prerequisites">
+      {{#ui-popup tagName='span' content='Users must have an employee record assigned.'}}
+        Permissions
+        <i class="right floated info icon"></i>
+      {{/ui-popup}}
+      {{#x-tree checkable=true syncCheckbox=true model=permissionsTree as |node|}}{{/x-tree}}
+    </label>
+  </div>
   <div class="ui divider"></div>
   {{#form/action-button type="submit" class="ui huge fluid green button" disabled=disableForm loading=working}}Save User{{/form/action-button}}
 </form>

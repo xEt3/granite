@@ -1,16 +1,24 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { resolve } from 'rsvp';
+import fileSupport from 'granite/mixins/file-handling';
 
-const MessageThreadComponent = Component.extend({
+const MessageThreadComponent = Component.extend(fileSupport, {
   socket: service(),
   auth: service(),
+  store: service(),
 
-  fileEndpoint: '/api/v1/file',
   classNames: [ 'messaging__thread' ],
 
+  fileData: {
+    systemUse: true,
+    associatedData: {
+      type: 'companyProfileImage'
+    }
+  },
+
   sendMessage () {
-    resolve(this.get('fileIsAdded') ? this.uploadFile() : null)
+    resolve(this.get('fileIsAdded') ? this.upload() : null)
     .then(file => {
       this.get('onMessage')(this.get('message'), file);
       this.set('message', null);
@@ -22,18 +30,7 @@ const MessageThreadComponent = Component.extend({
     this.get('onScrollback')();
   },
 
-  uploadFile () {
-    return new Promise((resolveUpload, rejectUpload) => {
-      this.setProperties({ resolveUpload, rejectUpload });
-      Dropzone.forElement('.dropzone__messaging').processQueue();
-    });
-  },
-
   actions: {
-    addedFile (file) {
-      this.set('fileIsAdded', file);
-    },
-
     removeFile () {
       const $dropzone = Dropzone.forElement('.dropzone__messaging');
 
@@ -51,10 +48,6 @@ const MessageThreadComponent = Component.extend({
 
     uploadError (err) {
       this.get('rejectUpload')(err);
-    },
-
-    uploadedFile (prog, response) {
-      this.get('resolveUpload')(response);
     },
 
     // TODO: use uploadProgress
