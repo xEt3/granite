@@ -42,6 +42,20 @@ export default function() {
     }
   });
 
+  this.put('/company-users/:id', (n, request) => {
+    return {
+      companyUser: {
+        _id: request.params.id,
+        name: {
+          first: 'Bob',
+          last: 'Ross'
+        },
+
+        email: 'happytree@bobross.xxx'
+      }
+    };
+  });
+
   this.get('/company-users/:id', (n, request) => {
     return {
       companyUser: {
@@ -50,6 +64,7 @@ export default function() {
           first: 'Bob',
           last: 'Ross'
         },
+
         email: 'happytree@bobross.xxx'
       }
     };
@@ -81,7 +96,11 @@ export default function() {
           first: 'Bob',
           last: 'Ross'
         },
-        email: 'happytree@bobross.xxx'
+        email: 'happytree@bobross.xxx',
+        permissions : [
+          '5ae33f839980c183fd064029',
+          '5b1554934919630e0c3ead2d'
+        ]
       }, {
         _id: 2,
         name: {
@@ -101,9 +120,22 @@ export default function() {
     return list;
   });
 
-  this.get('/employees', () => {
-    return { employees: [] };
+  this.post('/company-users', ()  =>{
+    return {
+      companyUser: {
+        _id: 3,
+        name: {
+          first: 'Jack',
+          middle: null,
+          last: 'Homer'},
+        employee:17
+      }
+    };
   });
+
+  this.get('permissions');
+
+  this.get('/employees');
 
   this.post('/companies');
 
