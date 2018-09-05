@@ -1,4 +1,4 @@
-<span class="toggle-icon" {{action 'toggleExpand' bubbles=false}}>
+<span role="button" class="toggle-icon" {{action 'toggleExpand' bubbles=false}}>
   {{#if model.children.length}}
     {{#if model.isExpanded}}
       &#x25BC;
@@ -25,7 +25,7 @@
   </div>
 {{/if}}
 
-<span onclick={{action 'toggleCheck'}}>
+<span role="button" onclick={{action 'toggleCheck'}}>
   {{#if hasBlock}}
     {{yield model}}
   {{else}}

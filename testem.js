@@ -5,7 +5,7 @@ module.exports = {
   test_page: 'tests/index.html?hidepassed',
   disable_watching: true,
   browser_disconnect_timeout: 120,
-  browser_start_timeout: 60,
+  browser_start_timeout: 120,
 
   launch_in_ci: [
     'SL_MicrosoftEdge_public_16_16299_Windows_10',
