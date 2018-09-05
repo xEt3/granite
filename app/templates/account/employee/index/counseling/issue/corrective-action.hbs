@@ -25,9 +25,9 @@
           <i class="edit icon"></i>Edit
         {{/link-to}}
         <div class="text-danger header">Danger Zone</div>
-          <a href="#" class="text-danger item" {{action (pipe confirmDelete (action 'delete'))}}>
-            <i class="trash icon"></i>Delete Record
-          </a>
+        <a href="#" class="text-danger item" {{action (pipe confirmDelete (action 'delete'))}}>
+          <i class="trash icon"></i>Delete Record
+        </a>
       </div>
     {{/ui-dropdown}}
   </hgroup>
@@ -47,11 +47,11 @@
       'MMMM Do YYYY'}}
   </div>
   <div class="content">
-  {{quick-form
-    followupForm
-    followup
-    this
-    tagName='div'}}
+    {{quick-form
+      followupForm
+      followup
+      this
+      tagName='div'}}
   </div>
   <div class="actions">
     <button class="ui red button" {{action 'respondFollowup' false}}>

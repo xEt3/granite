@@ -13,7 +13,8 @@
             <a href="#" {{action "triggerFileInput" on="click"}}>Choose a file from your computer</a>
             or <a href="/assets/documents/census-template.xlsx" download>start with this template</a>
           </h4>
-          <p class="extensions">Supported file types are:
+          <p class="extensions">
+            Supported file types are:
             {{#each allowedExtensions as |extension|}}
               {{extension}}
             {{/each}}

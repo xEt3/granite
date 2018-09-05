@@ -4,14 +4,14 @@
     <div class="ui horizontal list">
       {{#if model.resume}}
         <div class="item">
-          <a href="{{model.resume.url}}" target="_blank">
+          <a href="{{model.resume.url}}" rel="noopener" target="_blank">
             <i class="external link icon"></i>Resume/CV
           </a>
         </div>
       {{/if}}
       {{#if model.coverLetter}}
-        <div class="item" {{action openModal coverLetterModalId 'coverLetter'}}>
-          <a href="#">
+        <div class="item">
+          <a href="#" {{action openModal coverLetterModalId 'coverLetter'}}>
             <i class="file icon"></i>Cover Letter
           </a>
         </div>

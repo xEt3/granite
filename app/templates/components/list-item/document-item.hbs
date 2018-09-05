@@ -1,6 +1,6 @@
 {{#if imagePreview}}
   <div class="ui tiny rounded image">
-    <img src="{{file.url}}">
+    <img src="{{file.url}}" alt="">
   </div>
 {{else}}
   {{display/icon-for-file file class="huge"}}
@@ -12,7 +12,7 @@
   </div>
 
   <div class="right floated">
-    <a href="{{file.url}}" target="_blank"><i class="download fitted icon"></i></a>
+    <a href="{{file.url}}" rel="noopener" target="_blank"><i class="download fitted icon"></i></a>
 
     {{#ui-dropdown class="item icon top right pointing floated"}}
       <i class="right aligned text ellipsis vertical icon"></i>

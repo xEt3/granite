@@ -1,4 +1,5 @@
-<h2>Subscription Status
+<h2>
+  Subscription Status
   {{#if subscription.cardExpiresSoon}}
     <label class="ui right floated big red label">Card Expires Soon</label>
   {{else if subscription.currentPaymentMethod.expired}}
@@ -7,7 +8,8 @@
     <label class="ui right floated big red label">Problem With Payment Method</label>
   {{/if}}
 </h2>
-<h4>Status:
+<h4>
+  Status:
   <span class={{statusClass}}>{{model.status}}</span>
   {{#if subscription.isCancelled}}
     <span class="ui small text">(Canceled on {{time company.deactivatedOn}})</span>
@@ -19,9 +21,10 @@
     <span class="ui small text">(Balance of ${{model.balance}})</span>
   {{/if}}
 </h4>
-<h4>Payment Method:
+<h4>
+  Payment Method:
   {{#if subscription.currentPaymentMethod}}
-    <img class="ui mini spaced image" src={{subscription.currentPaymentMethod.imageUrl}}>
+    <img class="ui mini spaced image" alt="Current Payment Method" src={{subscription.currentPaymentMethod.imageUrl}}>
     {{#if subscription.currentPaymentMethod.email}}
       {{subscription.currentPaymentMethod.email}}
     {{else if subscription.currentPaymentMethod.maskedNumber}}
@@ -43,10 +46,12 @@
   </a>
 </h4>
 <h4>Number of Employees: {{subscription.activeEmployeeTotal}}</h4>
-<h4>Next Bill: ${{model.nextBillAmount}}
-  <span class="ui small text">(On {{time model.nextBillingDate}})</span>
-</h4>
-<h4>Last Transaction:
+  <h4>
+    Next Bill: ${{model.nextBillAmount}}
+    <span class="ui small text">(On {{time model.nextBillingDate}})</span>
+  </h4>
+<h4>
+  Last Transaction:
   {{#if subscription.latestTransaction.amount}}
     ${{subscription.latestTransaction.amount}}
     <span class="ui small text">(On {{time subscription.latestTransaction.createdAt}} for {{subscription.latestTransactionDescription}})</span>

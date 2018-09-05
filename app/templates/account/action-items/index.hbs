@@ -6,7 +6,7 @@
 <div class="clearfix">
   <span class="right floated">
     {{#ui-popup content="Sort according to due date"}}
-      <a href="#" class="text-white"><i class="sort large numeric {{if isDsc "ascending icon" "descending icon"}}" {{action (toggle "isDsc" this)}}></i></a>
+      <a href="#" class="text-white" {{action (toggle "isDsc" this)}}><i class="sort large numeric {{if isDsc "ascending icon" "descending icon"}}"></i></a>
     {{/ui-popup}}
   </span>
   <span class="left floated">
@@ -21,7 +21,7 @@
   <div class="five ui buttons">
     {{#each priorityFilters as |priorityFilter index|}}
       <button class="ui labeled icon {{object-at index priorityColors}} button" {{action "changeFilter" index}}>
-        <i class="{{unless (contains (inc index) filter) "square outline" "checkmark box"}} icon"></i>
+        <i class="{{if (not (contains (inc index) filter)) "square outline" "checkmark box"}} icon"></i>
         {{priorityFilter}}
       </button>
     {{/each}}

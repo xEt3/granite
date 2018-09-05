@@ -49,8 +49,8 @@
   </div>
 </div>
 {{#confirm-modal confirmContent='Are you sure you want to unassign this item and return it to your stock?' as |confirm|}}
-  <div class="ui bottom attached button" {{action (pipe confirm (action 'unassign'))}}>
+  <button class="ui bottom attached button" role="button" {{action (pipe confirm (action 'unassign'))}}>
     <i class="remove user icon"></i>
     Unassign asset
-</div>
+  </button>
 {{/confirm-modal}}
