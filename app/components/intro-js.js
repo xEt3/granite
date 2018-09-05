@@ -110,7 +110,7 @@ var IntroJSComponent = Component.extend({
     if ( ENV.environment === 'test' ) {
       return;
     }
-    
+
     var intro,
         options = this.get('introJSOptions');
 
