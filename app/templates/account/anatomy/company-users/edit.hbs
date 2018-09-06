@@ -1,0 +1,12 @@
+<form class="ui form" {{action (pipe (action 'permissionCheck') (action 'save')) on="submit"}}>
+  <hgroup class="clearfix">
+    <h1 class="ui header left floated">
+      Editing {{model.fullName}}
+    </h1>
+  </hgroup>
+  <div class="ui divider"></div>
+  <label class="permission_label">Permissions</label>
+  {{#x-tree checkable=true model=permissionsTree}}{{/x-tree}}
+  <div class="ui divider"></div>
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Save Changes{{/form/action-button}}
+</form>

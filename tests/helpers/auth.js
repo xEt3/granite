@@ -1,32 +1,39 @@
-import moment from 'moment';
+import { settled } from '@ember/test-helpers';
 import { faker } from 'ember-cli-mirage';
+import moment from 'moment';
 
-export default function authenticate(app, data, server, properties = {}) {
-  let auth = app.__container__ ? app.__container__.lookup('service:auth') : app.owner.lookup('service:auth');
+const injectLogin = async function (server, properties = {}) {
+  const authService = this.owner.lookup('service:auth');
 
-  console.log('1. auth in helper', auth);
+  if (server.db.sessions.length > 0) {
+    server.db.sessions.remove();
+  }
 
-
-  const company = server.create('company', Object.assign({
-    urlPrefix: faker.random.number(),
-    name: faker.company.companyName()
+  const company = server.create('company-user', Object.assign({
+    id: faker.random.number(),
+    firstName:faker.company.companyName(),
+    lastName:faker.company.companyName(),
+    email: faker.internet.email()
   }, properties.company));
 
-  const companyUser = server.create('company-user', Object.assign({
+  const employee = server.create('employee', Object.assign({
     company: company.id
-  }, properties.companyUser));
+  }, properties.employee));
 
-  auth.set('session', server.create('session', {
-    token: faker.commerce.department() + faker.commerce.productAdjective(),
-    user: companyUser.id,
-    expires: moment().add(1, 'hour').toISOString(),
-    id: 1
-  }));
+  const session = server.create('session', {
+    user: employee.id,
+    company: company.id,
+    token: '123',
+    expires: moment().add(1, 'hour')
+  });
 
-  console.log('???', auth.get('session.user'));
+  authService.set('session', session);
+  await settled();
 
   return {
     company,
-    companyUser
+    employee
   };
-}
+};
+
+export default injectLogin;

@@ -15,6 +15,7 @@ export default Model.extend({
 
   company: belongsTo('company', { async: true, inverse: false }),
   employee: belongsTo('employee', { async: true, inverse: 'companyUser' }),
+  permissions: attr('array'),
 
   activatedOn: attr('date'),
 

@@ -1,56 +1,45 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'granite/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { visit, currentURL, click, find, fillIn} from '@ember/test-helpers';
+import { setupApplicationTest } from 'ember-qunit';
 
-moduleForAcceptance('Acceptance | login behaviors');
+module('Acceptance | login behaviors', function(hooks) {
+  setupApplicationTest(hooks);
 
-test('failed logins', function(assert) {
-  assert.expect(8);
-  visit('/');
-
-  andThen(() => {
+  test('failed logins', async function(assert) {
+    assert.expect(8);
+    await visit('/');
     assert.equal(currentURL(), '/');
-    click('a[href="/login"]');
-  });
 
-  andThen(() => {
+    await click('a[href="/login"]');
     assert.equal(currentURL(), '/login');
-    assert.ok(find('input[type="email"]')[0], 'Email input on page');
-    assert.ok(find('input[type="password"]')[0], 'Password input on page');
-    assert.ok(find('button[type="submit"]')[0], 'Submit button on page');
+    assert.ok(find('input[type="email"]'), 'Email input on page');
+    assert.ok(find('input[type="password"]'), 'Password input on page');
+    assert.ok(find('button[type="submit"]'), 'Submit button on page');
 
-    fillIn('input[type="email"]', 'testuser@test.com');
-    fillIn('input[type="password"]', '1234');
+    await fillIn('input[type="email"]', 'testuser@test.com');
+    await fillIn('input[type="password"]', '1234');
     click('button[type="submit"]');
 
     let done = assert.async();
 
     setTimeout(() => {
       let $error = find('[class*="c-notification__container"] > [class*="c-notification--error"] > [class*="c-notification__content"]');
-      assert.ok($error[0], 'Error shows');
-      assert.ok($error.text().toLowerCase().indexOf('user not found') > -1, $error.text() + ' Contains "user not found"');
+      assert.ok($error, 'Error shows');
+      assert.ok($error.textContent.trim().toLowerCase().indexOf('user not found') > -1, $error.textContent.trim() + ' Contains "user not found"');
       done();
     }, 1500);
-  });
 
-  andThen(() => {
     assert.equal(currentURL(), '/login');
   });
-});
 
-test('correct login', function(assert) {
-  let company = server.create('company'),
-      user    = server.create('company-user', { company: company.id });
-
-  visit('/login');
-
-  andThen(() => {
+  test('correct login', async function(assert) {
+    await visit('/login');
     assert.equal(currentURL(), '/login', 'Current url is login');
-    fillIn('input[type="email"]', user.email);
-    fillIn('input[type="password"]', user.password);
-    click('button[type="submit"]');
-  });
 
-  andThen(() => {
+    await fillIn('input[type="email"]', 'user@test.com');
+    await fillIn('input[type="password"]', '1234');
+    await click('button[type="submit"]');
+
     assert.equal(currentURL(), '/account/dashboard', 'Current url is account');
   });
 });

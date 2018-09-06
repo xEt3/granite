@@ -4,6 +4,7 @@ import { hasMany, belongsTo } from 'ember-data/relationships';
 import { computed } from '@ember/object';
 import { A } from '@ember/array';
 import moment from 'moment';
+import hexToRgb from 'granite/utils/hex-to-rgb';
 import Validations from './validations/company';
 
 export default Model.extend(Validations,  {
@@ -36,6 +37,11 @@ export default Model.extend(Validations,  {
   logoUrl: attr('string'),
   logoDominantColor: attr('string'),
   logoPalette: attr('array'),
+
+  rgbPalette: computed('logoPalette', function () {
+    const palette = this.get('logoPalette');
+    return palette && palette.length ? palette.map(hexToRgb) : false;
+  }),
 
   firstStepsCompletedOn: attr('date'),
   firstStepsCompleted: attr('array', { defaultValue: () => A() }),

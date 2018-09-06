@@ -1,8 +1,11 @@
-import { Factory, faker } from 'ember-cli-mirage';
+import { Factory } from 'ember-cli-mirage';
 import moment from 'moment';
+import Faker from 'ember-cli-mirage/faker';
 
 export default Factory.extend({
-  token: faker.commerce.department() + faker.commerce.productAdjective(),
-  expires: moment().add(1, 'hour').toISOString(),
-  user: null
+  token:           Faker.commerce.department() + Faker.commerce.productAdjective(),
+  expiration:      moment().add(1, 'hour').toISOString(),
+  esAuthenticated: true,
+  user:            null,
+  company:         null
 });

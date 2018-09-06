@@ -1,8 +1,6 @@
 import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
 import { A } from '@ember/array';
-import { inject as service } from '@ember/service';
-import add from 'granite/mixins/route-abstractions/add';
+import RSVP from 'rsvp';
 
 const crud = [ 'create', 'read', 'update', 'delete' ],
       nodeDefaults = {
@@ -12,31 +10,18 @@ const crud = [ 'create', 'read', 'update', 'delete' ],
         isVisible: true
       };
 
-export default Route.extend(add, {
-  auth: service(),
-  modelName: 'company-user',
-
-  getModelDefaults () {
-    return {
-      company: this.get('auth.user.company')
-    };
-  },
-
-  model () {
+export default Route.extend({
+  model(params) {
     return RSVP.hash({
-      permissions: this.store.findAll('permission'),
-      user: this._super(...arguments),
-      employees: this.store.query('employee', {
-        _id: { $ne: this.get('auth.user.employee.id') }
-      })
+      user: this.store.findRecord('company-user', params.user_id),
+      permissions: this.store.findAll('permission')
     });
   },
 
   setupController ( controller, model ) {
     controller.setProperties({
       model: model.user,
-      employees: model.employees,
-      permissions: model.permissions,
+      permission: model.permissions,
       permissionsTree: model.permissions.toArray().reduce((parents, permission) => {
         let { id, key } = permission,
             verb = key.split(' ').shift();
@@ -51,7 +36,9 @@ export default Route.extend(add, {
         }
 
         parents.findBy('name', verb).children.push(
-          Object.assign({ id, name: key }, nodeDefaults)
+          Object.assign({ id, name: key }, nodeDefaults, {
+            isChecked: model.user.get('permissions').includes(id)
+          })
         );
 
         return parents;
