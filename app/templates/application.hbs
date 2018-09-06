@@ -1,8 +1,7 @@
 {{notification-container notifications=notifications position="bottom"}}
 
 {{display/subscription-banner transitionToSubscription=(action 'transitionToSubscription') accountLocked=subscription.accountLocked}}
-
-<div class="ui main">
+<div class="ui main" style="background: {{backdrop}} ">
   {{#unless topLevel}}
     {{elements/account-navigation links=accountNavigationItems ui_context='body .ember-view .main'}}
   {{/unless}}
