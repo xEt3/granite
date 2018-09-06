@@ -1,12 +1,12 @@
 {{notification-container notifications=notifications position="bottom"}}
 
 {{display/subscription-banner transitionToSubscription=(action 'transitionToSubscription') accountLocked=subscription.accountLocked}}
-<div class="ui main" style="background: {{backdrop}} ">
+<div class="ui main">
   {{#unless topLevel}}
     {{elements/account-navigation links=accountNavigationItems ui_context='body .ember-view .main'}}
   {{/unless}}
 
-  <div class="ember-view ui fluid container {{unless topLevel 'in__application pusher'}}">
+  <div class="ember-view ui fluid container {{unless topLevel 'in__application pusher'}}" style={{backdrop}}>
     {{#if topLevel}}
       {{elements/x-navigation transparent=navTransparent topLevel=topLevel}}
     {{/if}}

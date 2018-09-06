@@ -71,11 +71,13 @@ export default Controller.extend({
 
   backdrop: computed('auth.user.company.rgbPalette', function () {
     const palette = this.get('auth.user.company.rgbPalette');
-
-    return htmlSafe(palette ? `
+    const grad = palette ? `
       linear-gradient(${fadeRgb(lighten(palette[0], 10), 1)}, transparent),
       linear-gradient(80deg, ${fadeRgb(darken(palette[0], 20), 1)}, transparent),
-      linear-gradient(-60deg, ${fadeRgb(palette[2], 1)}, transparent);` : '#FFF');
+      linear-gradient(-60deg, ${fadeRgb(palette[2], 1)}, transparent)` :
+      false;
+
+    return htmlSafe(grad ? `background: ${grad}` : '');
   }),
 
   transitionAfterExpiration: observer('auth.isExpired', function() {
