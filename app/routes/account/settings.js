@@ -7,9 +7,9 @@ export default Route.extend(addEdit, {
   transitionAfterSave: false,
 
   model () {
-    console.log('auth.user in model:', this.get('auth.user'));
+    console.log('auth.user.company:', this.get('auth.user.company'));
     let x = this.get('auth.user.company');
-    console.log('returning model in settings route:', x);
+    // console.log('returning model in settings route:', x);
     return x;
   },
 

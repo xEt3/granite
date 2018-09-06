@@ -17,7 +17,12 @@ export default Service.extend({
 
   authenticated: computed.bool('token'),
   token: computed.reads('session.token'),
-  userId: computed.reads('session.user'),
+  // userId: computed.reads('session.user'),
+  userId: computed('session.user', function () {
+    let x = this.get('session.user');
+    console.log('session.user:', x);
+    return x;
+  }),
 
   initializeClock: on('init', function () {
     this.get('clock');
@@ -48,6 +53,7 @@ export default Service.extend({
       Logger.debug('AS :: Saved session record in localforage');
       this.set('session', record);
       this.get('currentUser');
+      console.log('returning out of here');
       return record;
     });
   },
@@ -124,8 +130,8 @@ export default Service.extend({
 
   user: computed('userId', function () {
     const userId = this.get('userId');
-    console.log('session in auth service', this.get('session'));
-    console.log('userId in auth service:', userId);
+    console.log('in service, userId:', userId);
+    console.log('session in service:', this.get('session'));
 
     if ( !userId || !this.get('authenticated') ) {
       return Promise.resolve();

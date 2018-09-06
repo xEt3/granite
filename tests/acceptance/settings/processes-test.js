@@ -8,7 +8,7 @@ module('Acceptance | settings/processes', function(hooks) {
   setupApplicationTest(hooks);
 
   test('can add pipeline stage', async function(assert) {
-    let { company, companyUser } = authenticate(this, {}, server);
+    let { company, companyUser } = await authenticate.call(this, server);
 
     await visit('/account/settings/general');
     // await fillIn('input[type="email"]', companyUser.email);
