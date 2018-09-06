@@ -136,6 +136,8 @@ export default function() {
 
   this.get('permissions');
 
+  this.get('/action-items');
+
   this.get('/employees');
 
   this.get('/employees/:id');
