@@ -34,6 +34,10 @@ module.exports = function(defaults) {
 
     fingerprint: {
       exclude: ['product-screenshots/', 'documents/']
+    },
+
+    'ember-cli-babel': {
+      includePolyfill: true
     }
   });
 
