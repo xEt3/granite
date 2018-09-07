@@ -3,6 +3,7 @@ import RSVP from 'rsvp';
 import edit from 'granite/mixins/route-abstractions/edit';
 
 export default Route.extend(edit, {
+  titleToken: 'Edit',
   bypassModelHook: true,
 
   model () {

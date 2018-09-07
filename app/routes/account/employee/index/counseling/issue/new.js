@@ -6,6 +6,7 @@ import add from 'granite/mixins/route-abstractions/add';
 import { issueTypes } from 'granite/config/statics';
 
 export default Route.extend(add, {
+  titleToken: 'Corrective Action',
   auth: service(),
   ajax: service(),
   modelName: 'corrective-action',

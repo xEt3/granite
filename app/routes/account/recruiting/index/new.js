@@ -5,6 +5,7 @@ import { computed } from '@ember/object';
 import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
+  titleToken: 'New Campaign',
   auth: service(),
   modelName: 'job-opening',
 

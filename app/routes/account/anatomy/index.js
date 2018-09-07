@@ -1,6 +1,8 @@
 import Route from '@ember/routing/route';
 
 export default Route.extend({
+  titleToken: 'Company Anatomy',
+
   model () {
     return this.store.query('employee', {
       $or: [{

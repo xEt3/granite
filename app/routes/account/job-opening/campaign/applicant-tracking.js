@@ -3,6 +3,8 @@ import { hash } from 'rsvp';
 import refreshable from 'granite/mixins/refreshable';
 
 export default Route.extend(refreshable, {
+  titleToken: 'Applicants',
+
   queryParams: {
     showDisqualified: {
       refreshModel: true

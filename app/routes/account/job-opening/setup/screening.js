@@ -3,6 +3,7 @@ import { Promise } from 'rsvp';
 import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
+  titleToken: 'Screening',
   modelName: 'form',
 
   model () {

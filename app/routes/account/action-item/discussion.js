@@ -3,6 +3,8 @@ import RSVP from 'rsvp';
 import refreshable from 'granite/mixins/refreshable';
 
 export default Route.extend(refreshable, {
+  titleToken: 'Discussion',
+
   model () {
     let actionItem = this.modelFor('account.action-item');
 

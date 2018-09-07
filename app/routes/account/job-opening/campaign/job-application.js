@@ -4,6 +4,8 @@ import { Promise, hash } from 'rsvp';
 const modelKeys = [ 'model', 'events', 'stage', 'opening', 'screening' ];
 
 export default Route.extend({
+  titleToken: 'Application',
+
   model (params) {
     return hash({
       model: this.store.find('job-application', params.application_id),

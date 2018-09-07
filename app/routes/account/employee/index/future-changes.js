@@ -4,6 +4,8 @@ import refreshable from 'granite/mixins/refreshable';
 import moment from 'moment';
 
 export default Route.extend(refreshable, {
+  titleToken: 'Future Changes',
+
   model() {
     let employee = this.modelFor('account.employee');
     return RSVP.hash({

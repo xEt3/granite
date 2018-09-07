@@ -4,6 +4,9 @@ import { inject as service } from '@ember/service';
 
 export default Route.extend({
   auth: service(),
+  title (tokens) {
+    return tokens.join(' - ') + ' - ' + this.context.title + ' - Granite HR';
+  },
 
   model ( params ) {
     return RSVP.hash({

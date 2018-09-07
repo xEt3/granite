@@ -2,6 +2,10 @@ import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
 
 export default Route.extend({
+  titleToken() {
+    return 'Action Item';
+  },
+  
   model() {
     let actionItem = this.modelFor('account.action-item');
 

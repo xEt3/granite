@@ -2,6 +2,8 @@ import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
 
 export default Route.extend({
+  titleToken: 'Todos',
+
   model () {
     return RSVP.hash({
       actionItem: this._super(...arguments),

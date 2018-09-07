@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import refreshable from 'granite/mixins/refreshable';
 
 export default Route.extend(refreshable, {
+  titleToken: 'Users',
   auth: service(),
   queryParams: {
     page: { refreshModel: true }
