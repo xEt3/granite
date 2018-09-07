@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import { resolve } from 'rsvp';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default Route.extend(addEdit, {
@@ -7,14 +8,10 @@ export default Route.extend(addEdit, {
   transitionAfterSave: false,
 
   model () {
-    console.log('auth.user.company:', this.get('auth.user.company'));
-    let x = this.get('auth.user.company');
-    // console.log('returning model in settings route:', x);
-    return x;
+    return resolve(this.get('auth.user')).then(user => user && user.get('company'));
   },
 
   afterModel (model) {
-    console.log('model in settings route:', model);
     const firstStepsCompleted = model.get('firstStepsCompleted');
 
     if (!firstStepsCompleted.includes('settings')) {

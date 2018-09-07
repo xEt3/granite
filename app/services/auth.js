@@ -130,13 +130,10 @@ export default Service.extend({
 
   user: computed('userId', function () {
     const userId = this.get('userId');
-    console.log('in service, userId:', userId);
-    console.log('session in service:', this.get('session'));
 
     if ( !userId || !this.get('authenticated') ) {
       return Promise.resolve();
     }
-    //GETS HERE WITH CORRECT ID, BUT THEN DOESN'T STUB TO MIRAGE
     return this.get('store').find('company-user', userId);
   }),
 

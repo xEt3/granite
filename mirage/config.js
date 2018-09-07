@@ -51,18 +51,7 @@ export default function() {
       }
     };
   });
-  // this.get('/company-users/:id', (n, request) => {
-  //   return {
-  //     companyUser: {
-  //       _id: request.params.id,
-  //       name: {
-  //         first: 'Bob',
-  //         last: 'Ross'
-  //       },
-  //       email: 'happytree@bobross.xxx'
-  //     }
-  //   };
-  // });
+
   this.get('/activities', (n, request) => {
     const params = parseIncoming(request),
           limit = params.limit || 10;
@@ -75,37 +64,6 @@ export default function() {
     }
     return { activity: activities };
   });
-
-  // this.get('/company-users', (n, request) => {
-  //   const params = parseIncoming(request);
-  //   let list = {
-  //     companyUser: [{
-  //       _id: 1,
-  //       name: {
-  //         first: 'Bob',
-  //         last: 'Ross'
-  //       },
-  //       email: 'happytree@bobross.xxx',
-  //       permissions : [
-  //         '5ae33f839980c183fd064029',
-  //         '5b1554934919630e0c3ead2d'
-  //       ]
-  //     }, {
-  //       _id: 2,
-  //       name: {
-  //         first: 'Old',
-  //         last: 'Yeller'
-  //       },
-  //       email: 'gone@hotmail.net'
-  //     }]
-  //   };
-  //   if ( params._id && params._id.$ne ) {
-  //     list.companyUser = list.companyUser.filter(i => {
-  //       return '' + i._id !== params._id.$ne;
-  //     });
-  //   }
-  //   return list;
-  // });
 
   this.post('/company-users', ()  =>{
     return {
@@ -124,6 +82,7 @@ export default function() {
     return { subscription: null }; //works for now
   });
 
+  this.get('/recruiting-pipelines');
   this.get('/company-users');
   this.get('/company-users/:id');
   this.get('/permissions');
