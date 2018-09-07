@@ -9,6 +9,7 @@ const $or = [{
 }];
 
 export default Route.extend({
+  titleToken: 'Reorganization',
   ajax: service(),
 
   model () {

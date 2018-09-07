@@ -6,6 +6,7 @@ import edit from 'granite/mixins/route-abstractions/edit';
 import { issueTypes } from 'granite/config/statics';
 
 export default Route.extend(edit, {
+  titleToken: 'Edit',
   auth: service(),
   ajax: service(),
   modelName: 'corrective-action',

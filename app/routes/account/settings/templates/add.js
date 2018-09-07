@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
+  titleToken: 'Add Templates',
   ajax: service(),
   modelName: 'template',
 

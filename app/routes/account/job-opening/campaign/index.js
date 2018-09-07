@@ -4,6 +4,7 @@ import { A } from '@ember/array';
 import moment from 'moment';
 
 export default Route.extend({
+  titleToken: 'Summary',
   ajax: service(),
 
   model () {

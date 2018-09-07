@@ -2,6 +2,7 @@ import Route from '@ember/routing/route';
 import edit from 'granite/mixins/route-abstractions/edit';
 
 export default Route.extend(edit, {
+  titleToken: 'Edit',
   modelName: 'template',
   segmentKey: 'template_id',
 

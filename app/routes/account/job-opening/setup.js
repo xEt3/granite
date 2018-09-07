@@ -3,6 +3,7 @@ import { A } from '@ember/array';
 import wizard from 'granite/mixins/wizard/route';
 
 export default Route.extend(wizard, {
+  titleToken: 'Job Opening',
   key: 'setup',
   basePath: 'account.job-opening.setup',
   returnPath: 'account.job-opening.setup-complete',

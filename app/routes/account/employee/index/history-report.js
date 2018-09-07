@@ -7,6 +7,7 @@ import refreshable from 'granite/mixins/refreshable';
 import humanizeKey from 'granite/utils/humanize-key-name';
 
 export default Route.extend(refreshable, {
+  titleToken: 'History Report',
   ajax: service(),
   limit: 5,
   queryParams: {

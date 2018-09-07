@@ -4,6 +4,8 @@ import refreshable from 'granite/mixins/refreshable';
 import Object from '@ember/object';
 
 export default Route.extend(refreshable, {
+  title:'Equipment',
+
   model () {
     let employee = this.modelFor('account.employee');
     return RSVP.hash({

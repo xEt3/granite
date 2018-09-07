@@ -4,6 +4,7 @@ import { resolve } from 'rsvp';
 import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
+  titleToken: 'New Location',
   modelName: 'location',
   auth: service(),
 

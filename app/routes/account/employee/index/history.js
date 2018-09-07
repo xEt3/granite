@@ -3,6 +3,8 @@ import { A } from '@ember/array';
 import moment from 'moment';
 
 export default Route.extend({
+  titleToken: 'History',
+
   model ( params ) {
     const page = params.page;
 

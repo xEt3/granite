@@ -4,6 +4,8 @@ import { inject as service } from '@ember/service';
 import refreshable from 'granite/mixins/refreshable';
 
 export default Route.extend(refreshable, {
+  titleToken: 'Locations',
+
   queryParams: {
     page: { refreshModel: true }
   },

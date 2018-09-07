@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 
 export default Route.extend({
+  titleToken: 'Dashboard',
   ajax: service(),
   auth: service(),
 

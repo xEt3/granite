@@ -16,6 +16,9 @@ const errorRouteMap = {
 };
 
 export default Route.extend({
+  title (tokens) {
+    return [ ...tokens, 'Granite HR' ].join(' - ');
+  },
   auth: service(),
   notifications: service('notification-messages'),
 

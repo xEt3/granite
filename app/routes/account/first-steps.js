@@ -6,6 +6,7 @@ import { scheduleOnce, later } from '@ember/runloop';
 export default Route.extend({
   auth: service(),
   ajax: service(),
+  titleToken: 'First Steps',
 
   model () {
     return hash({

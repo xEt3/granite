@@ -2,6 +2,8 @@ import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
 
 export default Route.extend({
+  titleToken: 'Sources',
+
   model () {
     let jobOpening = this.modelFor('account.job-opening');
 

@@ -3,6 +3,8 @@ import RSVP from 'rsvp';
 import edit from 'granite/mixins/route-abstractions/edit';
 
 export default Route.extend(edit, {
+  titleToken: 'Settings',
+
   model () {
     return RSVP.hash({
       jobOpening: this.modelFor('account.job-opening'),

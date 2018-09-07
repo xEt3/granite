@@ -1,6 +1,8 @@
 import Route from '@ember/routing/route';
 
 export default Route.extend({
+  titleToken: 'Options',
+
   setupController (controller, model) {
     if (!model.get('finalAddressLine1')) {
       model.setProperties({

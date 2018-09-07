@@ -7,6 +7,7 @@ import add from 'granite/mixins/route-abstractions/add';
 import { issueTypes } from 'granite/config/statics';
 
 export default Route.extend(add, {
+  titleToken: 'New Issue',
   auth: service(),
   ajax: service(),
   modelName: 'employee-issue',

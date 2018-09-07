@@ -3,6 +3,8 @@ import { isEmpty } from '@ember/utils';
 import RSVP from 'rsvp';
 
 export default Route.extend({
+  titleToken: 'Action Items',
+
   queryParams: {
     filter: {
       refreshModel: true

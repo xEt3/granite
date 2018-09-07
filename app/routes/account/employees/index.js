@@ -4,6 +4,7 @@ import resource from 'granite/mixins/route-abstractions/resource';
 // import moment from 'moment';
 
 export default Route.extend(resource, {
+  titleToken: 'Employees',
   modelName: 'employee',
 
   queryParams: {

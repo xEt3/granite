@@ -13,6 +13,7 @@ const crud = [ 'create', 'read', 'update', 'delete' ],
       };
 
 export default Route.extend(add, {
+  titleToken: 'New User',
   auth: service(),
   modelName: 'company-user',
 
