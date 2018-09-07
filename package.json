@@ -98,6 +98,6 @@
     "semantic-ui-less": "^2.3.3"
   },
   "engines": {
-    "node": ">=8.11.4"
+    "node": "10.* || 8.*"
   }
 }
