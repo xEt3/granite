@@ -13,7 +13,6 @@ export default Controller.extend(addEdit, {
   //   return JSON.stringify(this.get('pipeline')) !== this.get('pipelineInitialState');
   // }),
   stagesDirty: false,
-
   // this.set('stagesDirty', JSON.stringify(pipeline) !== this.get('pipelineInitialState'));
 
   canAddStages: computed('pipeline.stages[]', function () {
@@ -100,9 +99,6 @@ export default Controller.extend(addEdit, {
       }
     },
 
-
-
-
     openSeverityModal () {
       this.set('respondedSeverityAddition', false);
 
@@ -111,6 +107,7 @@ export default Controller.extend(addEdit, {
       }
 
       $('#modal__add-cas').modal({
+        context: '.ember-application',
         detachable: true,
         onHidden: () => {
           if ( !this.get('respondedSeverityAddition') ) {
@@ -130,6 +127,7 @@ export default Controller.extend(addEdit, {
       }
 
       $('#modal__add-stage').modal({
+        context: '.ember-application',
         detachable: true,
         onHidden: () => {
           if ( !this.get('respondedStageAddition') ) {

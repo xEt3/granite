@@ -17,12 +17,7 @@ export default Service.extend({
 
   authenticated: computed.bool('token'),
   token: computed.reads('session.token'),
-  // userId: computed.reads('session.user'),
-  userId: computed('session.user', function () {
-    let x = this.get('session.user');
-    console.log('session.user:', x);
-    return x;
-  }),
+  userId: computed.reads('session.user'),
 
   initializeClock: on('init', function () {
     this.get('clock');
@@ -53,7 +48,6 @@ export default Service.extend({
       Logger.debug('AS :: Saved session record in localforage');
       this.set('session', record);
       this.get('currentUser');
-      console.log('returning out of here');
       return record;
     });
   },

@@ -4,7 +4,7 @@
     Options are severities of actions issued during counseling when using the employee counseling module. An example of a series of options is: "Counseling", "Written Warning", "Final Written Warning" with orders of 1 through 3 respectively. Please review your handbook to make sure your process is communicated to your employees. Consult us if you have questions about this setup.
   </p>
   <div class="ui divider"></div>
-  <button type="button" class="ui primary fluid button" {{action "openSeverityModal"}}>
+  <button type="button" class="ui primary add-cas fluid button" {{action "openSeverityModal"}}>
     <i class="plus icon"></i>Add Option
   </button>
   <div class="ui list">
@@ -49,17 +49,13 @@
                   <i class="edit icon"></i>
                 </a>
               </span>
-              <a href="#" class="right floated text-danger" {{action (pipe confirm (action "removeStage" stage))}}>Remove</a>
+              <a href="#" class="right floated text-danger delete-stage" {{action (pipe confirm (action "removeStage" stage))}}>Remove</a>
             {{/confirm-modal}}
           </div>
         </div>
       {{/sortable-item}}
     {{/each}}
   {{/sortable-group}}
-
-
-
-
 
   <div class="ui divider"></div>
   <form {{action "save" on="submit"}}>
@@ -97,7 +93,7 @@
   </div>
 {{/ui-modal}}
 
-{{#ui-modal id='modal__add-stage' class='small form' container='.ember-application'}}
+{{#ui-modal id='modal__add-stage' class='small form'}}
   <div class="header">
     <i class="plus icon"></i>{{if editingStage 'Edit' 'Add'}} recruiting pipeline stage
   </div>
@@ -110,11 +106,11 @@
   </div>
   <div class="actions">
     {{#unless editingStage}}
-      <button class="ui red button" {{action 'respondStageAddition' false}}>
+      <button class="ui red cancel-add-stage button" {{action 'respondStageAddition' false}}>
         Cancel
       </button>
     {{/unless}}
-    <button class="ui primary right labeled icon button" {{action 'respondStageAddition' true}}>
+    <button class="ui primary right labeled confirm-add-stage icon button" {{action 'respondStageAddition' true}}>
       Done
       <i class="check icon"></i>
     </button>

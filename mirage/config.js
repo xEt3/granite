@@ -82,6 +82,7 @@ export default function() {
     return { subscription: null }; //works for now
   });
 
+  this.put('recruiting-pipelines/:id');
   this.get('/recruiting-pipelines');
   this.get('/company-users');
   this.get('/company-users/:id');

@@ -7,7 +7,6 @@ module('Acceptance | login behaviors', function(hooks) {
 
   test('correct login', async function(assert) {
     let companyUser = await server.create('companyUser');
-    console.log('created companyUser:', companyUser);
     await visit('/login');
     assert.equal(currentURL(), '/login', 'Current url is login');
 
