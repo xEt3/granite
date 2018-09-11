@@ -15,7 +15,9 @@ const FeaturesListComponent = Component.extend({
   },
 
   scheduleAutoCycle () {
-    this.set('_autoCycleTimer', setTimeout(this.incrementAutoCycle, this.get('autoCycleMs')));
+    if (!this.isDestroyed) {
+      this.set('_autoCycleTimer', setTimeout(this.incrementAutoCycle.bind(this), this.get('autoCycleMs')));
+    }
   },
 
   cancelAutoCycle () {
