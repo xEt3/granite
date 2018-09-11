@@ -1,4 +1,4 @@
-import { Factory } from 'ember-cli-mirage';
+import { Factory, hasMany } from 'ember-cli-mirage';
 import moment from 'moment';
 
 export default Factory.extend({
@@ -17,5 +17,12 @@ export default Factory.extend({
     'employees',
     'anatomy'
   ],
-  firstStepsCompletedOn: moment().subtract(1, 'hour').toISOString()
+  firstStepsCompletedOn: moment().subtract(1, 'hour').toISOString(),
+  correctiveActionSeverities: hasMany('correctiveActionSeverities'),
+
+  afterCreate (company, server) {
+    let x = server.create('corrective-action-severity');
+    console.log('company:', company);
+    company.correctiveActionSeverities.addObject(x);
+  }
 });

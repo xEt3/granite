@@ -4,10 +4,11 @@
     Options are severities of actions issued during counseling when using the employee counseling module. An example of a series of options is: "Counseling", "Written Warning", "Final Written Warning" with orders of 1 through 3 respectively. Please review your handbook to make sure your process is communicated to your employees. Consult us if you have questions about this setup.
   </p>
   <div class="ui divider"></div>
-  <button type="button" class="ui primary add-cas fluid button" {{action "openSeverityModal"}}>
+  <button type="button" id="add-cas" class="ui primary fluid button" {{action "openSeverityModal"}}>
     <i class="plus icon"></i>Add Option
   </button>
   <div class="ui list">
+    {{log 'severities from template' model.correctiveActionSeverities}}
     {{#each model.correctiveActionSeverities as |severity|}}
       <div class="item">
         {{#confirm-modal class="item" as |confirm|}}
@@ -31,7 +32,7 @@
   </p>
   <div class="ui divider"></div>
   {{#liquid-if canAddStages}}
-    <button type="button" class="ui primary fluid add-stage button" {{action "openStageModal"}}>
+    <button type="button" id="add-stage" class="ui primary fluid button" {{action "openStageModal"}}>
       <i class="plus icon"></i>Add Stage
     </button>
   {{/liquid-if}}
@@ -106,7 +107,7 @@
   </div>
   <div class="actions">
     {{#unless editingStage}}
-      <button class="ui red cancel-add-stage button" {{action 'respondStageAddition' false}}>
+      <button class="ui red button" {{action 'respondStageAddition' false}}>
         Cancel
       </button>
     {{/unless}}
