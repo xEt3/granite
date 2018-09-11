@@ -6,7 +6,7 @@ export default Route.extend(authenticated, {
   title (tokens) {
     return tokens.join(' - ') + ' - Granite HR';
   },
-  
+
   actions: {
     willTransition () {
       $('.account__sidebar').sidebar('hide');
