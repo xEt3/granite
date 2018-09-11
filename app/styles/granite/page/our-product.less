@@ -1,4 +1,9 @@
 /* background */
+.our-product {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 .product__section {
   position: relative;
   overflow: hidden;
@@ -25,11 +30,11 @@
     }
 
     &:after {
-      content: '';
+      content: "";
       display: block;
       position: absolute;
-      left: 0px;
-      right: 0px;
+      left: 0;
+      right: 0;
       top: -50%;
       bottom: -50%;
       // background-color: white;
@@ -65,12 +70,11 @@
       .product-section__content--granite {
         font-size: 1.5em;
       }
-
     }
 
     &:after {
       background-color: fade(@granite-grey, 50%);
-      background-image: url('images/product_background-1.jpg');
+      background-image: url("images/product_background-1.jpg");
       background-position: center top;
     }
   }
@@ -78,7 +82,7 @@
   &.product__section--counseling {
     &:after {
       background-color: fade(@granite-grey, 50%);
-      background-image: url('images/product_background-2.jpg');
+      background-image: url("images/product_background-2.jpg");
       background-position: center top;
     }
   }
@@ -92,12 +96,12 @@
     min-height: 80vh;
 
     @media screen and (max-height: 800px) {
-      min-height: 800px;
+      min-height: 680px;
     }
 
     .product-section__content {
       position: absolute;
-      top: 50%;
+      top: 48%;
       left: 0;
       right: 0;
       transform: translateY(-50%) rotate(10deg);
@@ -167,7 +171,7 @@
     margin-top: 0;
 
     &:before {
-      content: '';
+      content: "";
       display: block;
       position: absolute;
       top: 0;
@@ -187,18 +191,16 @@
 
     &:after {
       background-color: fade(@granite-grey, 60%);
-      background-image: url('images/human-capital-blur.jpg');
+      background-image: url("images/human-capital-blur.jpg");
       background-position: center top;
       top: 0;
       bottom: 0;
       transform: none;
     }
   }
-
-  @media screen and (max-width: @screen-md) {
-  }
+  // @media screen and (max-width: @screen-md) {
+  //   }
 }
-
 
 .product-section__cta {
   text-align: center;
@@ -206,10 +208,10 @@
   padding-top: 3em;
   border-top: 1px solid fade(white, 30%);
 
-  h1, h2 {
+  h1,
+  h2 {
     font-weight: 200;
   }
-
 
   h1 {
     font-size: 4em;
@@ -223,5 +225,248 @@
     margin-top: 1em;
     font-size: 2.5em;
     padding: 1em 2.5em;
+  }
+}
+
+@media screen and (min-width: @screen-lg) {
+  .product__section:nth-child(odd) {
+    min-height: 852px;
+  }
+}
+
+@media screen and (min-width: @screen-md) and (max-width: @screen-lg) {
+  .product__section:nth-child(even) {
+    text-align: center;
+  }
+
+  .product__section > .product-section__content > .section-content__features {
+    flex-flow: wrap;
+
+    > .features-list {
+      text-align: center !important;
+
+      + .features-screenshot > img {
+        min-width: 100%;
+      }
+    }
+  }
+
+  .product__section--recruiting {
+    margin-top: 5%;
+
+    > .product-section__content {
+      text-align: center;
+    }
+  }
+
+  .our-product > .product__section--counseling {
+    min-width: 136%;
+    text-align: center;
+
+    > .product-section__content {
+      top: 22em;
+      margin-left: -13.8%;
+      text-align: center;
+    }
+  }
+
+  .our-product > .product__section--human-capital {
+    margin-top: -10em; //!important
+    text-align: center;
+    z-index: -1;
+
+    > .product-section__content {
+      margin-top: 8%;
+    }
+  }
+
+  .section-content__features > .features-list {
+    text-align: center;
+  }
+}
+
+@media screen and (min-width: @screen-sm) and (max-width: @screen-md) {
+  .product__section:nth-child(even) {
+    text-align: center;
+  }
+
+  .product__section > .product-section__content > .section-content__features {
+    margin-top: 8%;
+    flex-flow: wrap;
+
+    > .features-list {
+      text-align: center !important;
+
+      + .features-screenshot > img {
+        min-width: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+
+  .product__section--recruiting {
+    margin-top: 5%;
+
+    > .product-section__content {
+      text-align: center;
+    }
+  }
+
+  .our-product > .product__section--counseling {
+    min-width: 133%;
+    margin-left: -19%;
+    min-height: 52em;
+
+    > .product-section__content {
+      left: 2.8em;
+      text-align: center;
+    }
+  }
+
+  .our-product > .product__section--human-capital {
+    margin-top: -11em;
+    text-align: center;
+    z-index: -1;
+
+    > .product-section__content {
+      margin-top: 16%;
+    }
+  }
+}
+
+@media screen and (min-width: @screen-xs) and (max-width: @screen-sm) {
+  .product__section:nth-child(even) {
+    text-align: center;
+  }
+
+  .product-section__content {
+    text-align: center;
+  }
+
+  .product__section > .product-section__content > .section-content__features {
+    flex-flow: wrap;
+
+    > .features-list {
+      text-align: center !important;
+
+      + .features-screenshot > img {
+        max-width: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+
+  .our-product > .product__section--top {
+    min-width: 134%;
+    margin: -9% -10% 0% -18% !important;
+
+    > .product-section__content {
+      position: absolute;
+      left: .7em;
+      right: 0;
+      text-align: left;
+    }
+  }
+
+  .product__section--recruiting {
+    margin-top: 5%;
+  }
+
+  .our-product > .product__section--counseling {
+    min-width: 155%;
+    margin-left: -32%;
+    min-height: 67em;
+
+    > .product-section__content {
+      top: 45%;
+      left: 0;
+      padding: 16% 19%;
+
+      > .section-content__features .features-screenshot img {
+        margin-left: 2%;
+      }
+    }
+  }
+
+  .product__section--asset-management .product-section__content {
+    font-size: .7em;
+  }
+
+  .product__section.product__section--human-capital:before {
+    right: -4em;
+  }
+
+  .our-product > .product__section--human-capital {
+    margin-top: -13em;
+    text-align: center;
+    z-index: -1;
+
+    > .product-section__content {
+      margin-top: 20%;
+      padding: 65% 13% 0 11%;
+    }
+  }
+}
+
+@media screen and (max-width: @screen-xs) {
+  .product__section.product__section--img .product-section__content {
+    padding: 15% 15%;
+  }
+
+  .product__section:nth-child(odd) {
+    width: 136%;
+    margin: 10% -18%;
+  }
+
+  .product__section:nth-child(even) {
+    text-align: center;
+  }
+
+  .product__section > .product-section__content > .section-content__features {
+    margin-top: 8%;
+    flex-flow: wrap;
+
+    > .features-list {
+      text-align: center !important;
+
+      + .features-screenshot > img {
+        min-width: 100%;
+        max-width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  .our-product > .product__section.product__section--top {
+    margin: -9% -10% 33% -18% !important;
+  }
+
+  .product__section--recruiting {
+    margin-top: -25%;
+
+    > .product-section__content .section-content__title {
+      font-size: 4.4em;
+    }
+  }
+
+  .our-product > .product__section.product__section--counseling .product-section__content .section-content__title {
+    font-size: 4.4em;
+  }
+
+  .product__section--asset-management > .product-section__content > .section-content__title {
+    font-size: 3.5em;
+  }
+
+  .our-product > .product__section.product__section--human-capital:before {
+    height: 15%;
+  }
+
+  .product__section--human-capital {
+    text-align: center;
+
+    > .product-section__content {
+      min-width: 36em;
+      font-size: 11px;
+    }
   }
 }

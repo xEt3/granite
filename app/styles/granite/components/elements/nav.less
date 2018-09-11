@@ -93,8 +93,121 @@
 
     .nav__main-logo a {
       color: white;
-      transition: all 0.4s ease-in-out;
+      transition: all .4s ease-in-out;
       text-shadow: 2px 1px 4px fade(@granite-grey, 40%);
     }
+  }
+}
+
+@media screen and (min-width: @screen-sm) and (max-width: @screen-md) {
+  .ui.menu:not(.vertical) .item {
+    margin-right: -1.3em;
+    padding-right: 24px;
+  }
+
+  .ui.menu {
+    font-size: 11px;
+  }
+
+  .ui.buttons .button,
+  .ui.buttons .or,
+  .ui.button {
+    font-size: 10px;
+  }
+}
+
+@media screen and (min-width: @screen-xs) and (max-width: @screen-md) {
+  .ui.menu:not(.vertical) .right.item,
+  .ui.menu:not(.vertical) .right.menu {
+    margin-bottom: 3px;
+    justify-content: space-around;
+    border-width: 1px;
+    border-top: 1px solid fade(@granite-grey, 10%);
+  }
+
+  .ui.menu:not(.vertical) .item {
+    padding: 8px;
+    margin-top: 3px;
+  }
+
+  .ui.menu {
+    font-size: 14px;
+    flex-direction: column;
+  }
+
+  .ui.buttons .button,
+  .ui.buttons .or,
+  .ui.button {
+    font-size: 13.4px;
+  }
+
+  .ui.nav__main .nav__main-logo a .logo {
+    width: 120px;
+    height: 38px;
+  }
+
+  .right.menu {
+    margin-top: 3px !important;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .menu > .item.login_or_dashboard {
+    position: absolute;
+    top: -1px;
+    right: 0;
+  }
+
+  .right.menu > .item::before {
+    display: none;
+  }
+}
+
+@media screen and (max-width: @screen-xs) {
+  .ui.menu:not(.vertical) .right.item,
+  .ui.menu:not(.vertical) .right.menu {
+    margin-bottom: 3px;
+    justify-content: space-around;
+    border-width: 1px;
+    border-top: 1px solid fade(@granite-grey, 10%);
+  }
+
+  .ui.menu:not(.vertical) .item {
+    padding: 8px;
+    margin-top: 3px;
+  }
+
+  .ui.menu {
+    font-size: 14px;
+    flex-direction: column;
+  }
+
+  .ui.buttons .button,
+  .ui.buttons .or,
+  .ui.button {
+    font-size: 13.4px;
+  }
+
+  .ui.nav__main .nav__main-logo a .logo {
+    width: 120px;
+    height: 38px;
+  }
+
+  .right.menu {
+    margin-top: 3px !important;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .menu > .item.login_or_dashboard {
+    position: absolute;
+    top: -1px;
+    right: 0;
+  }
+
+  .right.menu > .item::before {
+    display: none;
   }
 }

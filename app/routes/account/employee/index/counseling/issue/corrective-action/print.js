@@ -5,7 +5,7 @@ let followThroughPath = 'account.employee.index.counseling.issue.corrective-acti
 
 export default Route.extend({
   titleToken: 'Print',
-  
+
   afterModel (model) {
     return model.get('employee.department');
   },

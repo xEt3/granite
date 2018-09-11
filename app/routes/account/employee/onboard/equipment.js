@@ -5,7 +5,7 @@ import Object from '@ember/object';
 
 export default Route.extend(refreshable, {
   title: 'Equipment - Granite HR',
-  
+
   model () {
     let employee = this.modelFor('account.employee.onboard');
 

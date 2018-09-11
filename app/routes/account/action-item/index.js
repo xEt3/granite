@@ -5,7 +5,7 @@ export default Route.extend({
   titleToken() {
     return 'Action Item';
   },
-  
+
   model() {
     let actionItem = this.modelFor('account.action-item');
 
