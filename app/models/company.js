@@ -28,7 +28,7 @@ export default Model.extend(Validations,  {
 
   linkedServices: attr('array'),
   employeeCustomFields: attr('array'),
-  correctiveActionSeverities: hasMany('corrective-action-severity'),
+  correctiveActionSeverities: hasMany('corrective-action-severity', { inverse: null }),
   tz: attr('string', {
     defaultValue: () => moment.tz.guess()
   }),

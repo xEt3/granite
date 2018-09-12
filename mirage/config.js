@@ -1,8 +1,30 @@
 import moment from 'moment';
 import { Response, faker } from 'ember-cli-mirage';
+
 const parseIncoming = req => {
   return req.requestBody ? JSON.parse('{"' + decodeURIComponent(req.requestBody).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}') : {};
 };
+
+// HACK - mirage is incapable of handling incoming embedded records https://github.com/samselikoff/ember-cli-mirage/issues/797#issuecomment-233115924
+// this function correctly handles embedded changes & additions
+const processEmbeddedRelationships = ({ model, key, data, parentId, parentKey, parentModel }) => {
+  let relationshipData = data[key];
+
+  if (!Array.isArray(relationshipData)) {
+    relationshipData = [ relationshipData ];
+  }
+
+  return relationshipData.map(record => {
+    let idVal = record.id || record._id;
+
+    return idVal ?
+      model.find(idVal).update(record) :
+      model.create(Object.assign({}, record, {
+        [parentKey]: parentModel.find(parentId)
+      }));
+  });
+};
+
 export default function() {
   this.logging = true;
   this.namespace = '/api/v1';
@@ -82,6 +104,22 @@ export default function() {
     return { subscription: null }; //works for now
   });
 
+  this.put('/companies/:id', function({ companies, correctiveActionSeverities }, request) {
+    let id = request.params.id,
+        attrs = this.normalizedRequestAttrs();
+
+    attrs.correctiveActionSeverities = processEmbeddedRelationships({
+      model: correctiveActionSeverities,
+      key: 'correctiveActionSeverities',
+      data: attrs,
+      parentId: id,
+      parentKey: 'company',
+      parentModel: companies
+    });
+
+    return companies.find(id).update(attrs);
+  });
+
   this.put('recruiting-pipelines/:id');
   this.get('/recruiting-pipelines');
   this.get('/company-users');
@@ -96,7 +134,6 @@ export default function() {
   this.get('/departments');
   this.get('/locations');
   this.post('/companies');
-  this.put('/companies/:id');
   this.get('/companies/:id');
   this.post('/payment-methods');
   this.get('/assets');

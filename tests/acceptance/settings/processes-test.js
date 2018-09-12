@@ -141,12 +141,13 @@ module('Acceptance | settings/processes', function(hooks) {
   //add cas and x+1 cas appear
   test('adding cas functions properly', async function(assert) {
     let { company } = await authenticate.call(this, server);
+
     server.create('recruiting-pipeline', { company: company.id });
     let newName = 'New Cas';
-    let newOrder = company.correctiveActionSeverities.length + 1;
+    let newOrder = company.correctiveActionSeverityIds.length + 1;
 
     await visit('/account/settings/general/processes');
-    let initialCasAmount = company.correctiveActionSeverities.length;
+    let initialCasAmount = company.correctiveActionSeverityIds.length;
     assert.equal(findAll('div.ui.list > div.item').length, initialCasAmount, 'correct number of cas are listed initally');
 
     await click('#add-cas');
@@ -158,7 +159,7 @@ module('Acceptance | settings/processes', function(hooks) {
     //click done
     await click('#modal__add-cas button.primary');
     //assert that list length in db is initial
-    let casAmountAfterAdd = server.db.companies.find(company.id).correctiveActionSeverities.length;
+    let casAmountAfterAdd = server.db.companies.find(company.id).correctiveActionSeverityIds.length;
     assert.equal(casAmountAfterAdd, initialCasAmount, 'cas amount in db is unchanged because addition not saved yet');
     //assert that list length on page is initial + 1
     assert.equal(findAll('div.ui.list > div.item').length, initialCasAmount + 1, 'added cas is displayed on screen');
@@ -167,7 +168,9 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.dom(displayedSeverities[displayedSeverities.length - 1]).includesText(newName, 'cas addition is listed last and has correct name');
     assert.dom(displayedSeverities[displayedSeverities.length - 1]).includesText(newOrder, 'cas addition is displaying correct order');
     //save changes
+
     await click('button[type="submit"]');
+
 
     //assert that list length in db now initial + 1
     //assert that list length on page is still initial + 1
