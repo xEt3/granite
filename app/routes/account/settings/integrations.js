@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default Route.extend({
   titleToken: 'Integrations',
-  auth: service(),
+  auth:       service(),
 
   model () {
     return this.get('store').find('company', this.get('auth.user.company.id'));

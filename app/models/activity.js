@@ -20,10 +20,8 @@ export default Model.extend({
   comments: hasMany('comment', { inverse: false }),
   likes:    hasMany('like', { inverse: false }),
 
-  created: attr('date', {
-    defaultValue: () => new Date()
-  }),
+  created: attr('date', { defaultValue: () => new Date() }),
 
-  actor: resolveForTypeKey('actor'),
+  actor:  resolveForTypeKey('actor'),
   target: resolveForTypeKey('target')
 });

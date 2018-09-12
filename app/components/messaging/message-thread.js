@@ -5,16 +5,14 @@ import fileSupport from 'granite/mixins/file-handling';
 
 const MessageThreadComponent = Component.extend(fileSupport, {
   socket: service(),
-  auth: service(),
-  store: service(),
+  auth:   service(),
+  store:  service(),
 
   classNames: [ 'messaging__thread' ],
 
   fileData: {
-    systemUse: true,
-    associatedData: {
-      type: 'companyProfileImage'
-    }
+    systemUse:      true,
+    associatedData: { type: 'companyProfileImage' }
   },
 
   sendMessage () {
@@ -57,8 +55,6 @@ const MessageThreadComponent = Component.extend(fileSupport, {
   }
 });
 
-MessageThreadComponent.reopenClass({
-  positionalParams: [ 'messages', 'thread' ]
-});
+MessageThreadComponent.reopenClass({ positionalParams: [ 'messages', 'thread' ] });
 
 export default MessageThreadComponent;

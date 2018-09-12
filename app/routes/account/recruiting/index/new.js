@@ -6,12 +6,12 @@ import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
   titleToken: 'New Campaign',
-  auth: service(),
-  modelName: 'job-opening',
+  auth:       service(),
+  modelName:  'job-opening',
 
   model () {
     return RSVP.hash({
-      jobOpening: this._super(...arguments),
+      jobOpening:      this._super(...arguments),
       jobDescriptions: this.store.findAll('job')
     });
   },

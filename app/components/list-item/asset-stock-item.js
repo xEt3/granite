@@ -12,8 +12,8 @@ export default Component.extend({
     let fields = this.get('asset.customFields'),
         attributes = A();
 
-    for ( let key in fields ) {
-      if ( !fields.hasOwnProperty(key) ) {
+    for (let key in fields) {
+      if (!fields.hasOwnProperty(key)) {
         continue;
       }
 
@@ -28,11 +28,11 @@ export default Component.extend({
 
   actions: {
 
-    delete() {
+    delete () {
       this.get('onDelete')(this.get('asset'));
     },
 
-    toggleProperty ( prop ) {
+    toggleProperty (prop) {
       this.toggleProperty(prop);
     }
   }

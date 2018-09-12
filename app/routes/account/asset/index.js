@@ -5,8 +5,6 @@ export default Route.extend(refreshable, {
   titleToken: 'Asset Inventory',
 
   model () {
-    return this.store.query('asset-item', {
-      asset: this.paramsFor('account.asset').id
-    });
+    return this.store.query('asset-item', { asset: this.paramsFor('account.asset').id });
   }
 });

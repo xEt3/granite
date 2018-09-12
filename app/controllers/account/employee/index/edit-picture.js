@@ -4,7 +4,7 @@ import { run } from '@ember/runloop';
 import moment from 'moment';
 
 export default Controller.extend({
-  pictureExts: [ 'jpg', 'jpeg', 'png'],
+  pictureExts:     [ 'jpg', 'jpeg', 'png' ],
   pictureEndpoint: computed('model.id', function () {
     return `/api/v1/employee/${this.get('model.id')}/picture`;
   }),

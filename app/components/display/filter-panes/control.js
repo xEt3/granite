@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 
 const ControlComponent = Component.extend({
   classNames: [ 'ui', 'field' ],
-  hasNull: true,
+  hasNull:    true,
 
   didInsertElement () {
     this._super(...arguments);
@@ -32,8 +32,6 @@ const ControlComponent = Component.extend({
   }
 });
 
-ControlComponent.reopenClass({
-  positionalParams: [ 'controlName', 'state' ]
-});
+ControlComponent.reopenClass({ positionalParams: [ 'controlName', 'state' ] });
 
 export default ControlComponent;

@@ -8,7 +8,7 @@ export default Controller.extend(del, {
   addingAsset: computed.equal('application.currentPath', 'account.asset.index.new'),
 
   actions: {
-    toggleProperty ( prop ) {
+    toggleProperty (prop) {
       this.toggleProperty(prop);
     }
   }

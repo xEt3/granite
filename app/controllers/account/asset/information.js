@@ -12,16 +12,16 @@ export default Controller.extend(addEdit, {
   afterSave () {
     this.setProperties({
       pendingAttribute: null,
-      addingAttribute: false
+      addingAttribute:  false
     });
   },
 
   actions: {
-    toggleProperty ( prop ) {
+    toggleProperty (prop) {
       this.toggleProperty(prop);
     },
 
-    removeAttribute ( attr ) {
+    removeAttribute (attr) {
       let model = this.get('model');
 
       model.get('attributes').removeObject(attr);
@@ -34,7 +34,7 @@ export default Controller.extend(addEdit, {
 
       this.ajaxStart();
 
-      if ( !attr ) {
+      if (!attr) {
         this.ajaxError('Attribute name is required.');
         return;
       }

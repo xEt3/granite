@@ -4,7 +4,7 @@ import { computed } from '@ember/object';
 const dictMap = [ 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten' ];
 
 export default Component.extend({
-  classNames: [ 'ui', 'steps' ],
+  classNames:        [ 'ui', 'steps' ],
   classNameBindings: [ 'dictStep' ],
 
   didReceiveAttrs () {

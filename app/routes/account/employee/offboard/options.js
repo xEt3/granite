@@ -8,8 +8,8 @@ export default Route.extend({
       model.setProperties({
         finalAddressLine1: model.get('addressLine1'),
         finalAddressLine2: model.get('addressLine2'),
-        finalAddressCity: model.get('addressCity'),
-        finalAddressZip: model.get('addressZip'),
+        finalAddressCity:  model.get('addressCity'),
+        finalAddressZip:   model.get('addressZip'),
         finalAddressState: model.get('addressState')
       });
     }

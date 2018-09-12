@@ -21,7 +21,7 @@ export default Component.extend({
 
     return {
       method: isPaypal ? paypal.payerEmail : creditCard.maskedNumber,
-      image: (isPaypal ? paypal : creditCard).imageUrl
+      image:  (isPaypal ? paypal : creditCard).imageUrl
     };
   })
 });

@@ -6,7 +6,7 @@ export default Controller.extend(ajaxStatus, {
   ajax: service(),
 
   queryParams: [ 'u' ],
-  u: null, // user id parameter
+  u:           null, // user id parameter
 
   actions: {
     recover () {
@@ -24,11 +24,14 @@ export default Controller.extend(ajaxStatus, {
 
       this.get('ajax')
       .post(`/api/v1/recovery/company-user/${userId}`, {
-        data: { token, password }
+        data: {
+          token,
+          password
+        }
       })
       .then(() => {
         this.setProperties({
-          password: null,
+          password:        null,
           passwordConfirm: null
         });
 
@@ -41,7 +44,7 @@ export default Controller.extend(ajaxStatus, {
         } else {
           this.ajaxError(err, true);
           this.setProperties({
-            password: null,
+            password:        null,
             passwordConfirm: null
           });
         }

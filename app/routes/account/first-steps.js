@@ -4,16 +4,16 @@ import { hash } from 'rsvp';
 import { scheduleOnce, later } from '@ember/runloop';
 
 export default Route.extend({
-  auth: service(),
-  ajax: service(),
+  auth:       service(),
+  ajax:       service(),
   titleToken: 'First Steps',
 
   model () {
     return hash({
-      company: this.get('auth.user.company'),
+      company:       this.get('auth.user.company'),
       employeeCount: this.get('ajax').request('/api/v1/employees', {
         data: {
-          _count: true,
+          _count:       true,
           terminatedOn: { $not: { $type: 9 } }
         }
       }).then(response => response && response.count),
@@ -21,14 +21,14 @@ export default Route.extend({
       locationCount: this.get('ajax').request('/api/v1/locations', {
         data: {
           _count: true,
-          name: { $not: { $type: 10 } }
+          name:   { $not: { $type: 10 } }
         }
       }).then(response => response && response.count),
 
       departmentCount: this.get('ajax').request('/api/v1/departments', {
         data: {
           _count: true,
-          name: { $not: { $type: 10 } }
+          name:   { $not: { $type: 10 } }
         }
       }).then(response => response && response.count)
     });

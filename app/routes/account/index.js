@@ -5,11 +5,11 @@ import { isEmpty } from '@ember/utils';
 
 export default Route.extend({
   titleToken: 'Dashboard',
-  ajax: service(),
-  auth: service(),
+  ajax:       service(),
+  auth:       service(),
 
   queryParams: {
-    tag: { refreshModel: true },
+    tag:  { refreshModel: true },
     page: { refreshModel: true }
   },
 
@@ -26,8 +26,8 @@ export default Route.extend({
   model (params) {
     let activityQuery = {
       limit: this.get('cachedActivities') ? params.limit : params.limit * (params.page + 1),
-      page: this.get('cachedActivities') ? params.page : 0,
-      sort: { created: -1 }
+      page:  this.get('cachedActivities') ? params.page : 0,
+      sort:  { created: -1 }
     };
 
     if (!isEmpty(params.tag)) {
@@ -35,7 +35,12 @@ export default Route.extend({
     }
     return hash({
       activities: this.store.query('activity', activityQuery),
-      tags: this.get('ajax').request('/api/v1/activities', { data: { _distinct: true, select: 'tag' } })
+      tags:       this.get('ajax').request('/api/v1/activities', {
+        data: {
+          _distinct: true,
+          select:    'tag'
+        }
+      })
     });
   },
 

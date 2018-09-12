@@ -3,7 +3,7 @@ import resource from 'granite/mixins/route-abstractions/resource';
 
 export default Route.extend(resource, {
   titleToken: 'Issues',
-  modelName: 'corrective-action',
+  modelName:  'corrective-action',
 
   mutateQuery (q) {
     // get the corrective actions where employeeIssue

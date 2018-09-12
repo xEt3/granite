@@ -7,7 +7,7 @@ const MessagesPaneComponent = Component.extend({
 
   topOffsetFudgePX: 20,
   messageThreshold: 49,
-  isBottomStuck: true,
+  isBottomStuck:    true,
 
   didInsertElement () {
     this._super(...arguments);
@@ -61,7 +61,7 @@ const MessagesPaneComponent = Component.extend({
 
     if (isFetchable && t.scrollTop <= this.get('topOffsetFudgePX')) {
       this.setProperties({
-        isTopStuck: true,
+        isTopStuck:       true,
         lastScrollHeight: t.scrollHeight
       });
 
@@ -80,7 +80,7 @@ const MessagesPaneComponent = Component.extend({
 
     if (t.scrollHeight === t.scrollTop + t.clientHeight) {
       this.setProperties({
-        isTopStuck: false,
+        isTopStuck:    false,
         isBottomStuck: true
       });
     } else {
@@ -89,8 +89,6 @@ const MessagesPaneComponent = Component.extend({
   }
 });
 
-MessagesPaneComponent.reopenClass({
-  positionalParams: [ 'messages' ]
-});
+MessagesPaneComponent.reopenClass({ positionalParams: [ 'messages' ] });
 
 export default MessagesPaneComponent;

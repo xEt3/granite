@@ -11,7 +11,11 @@ const makeUtil = pos => {
       return v > 255 ? 255 : v < 0 ? 0 : v;
     });
 
-    return { r, g, b };
+    return {
+      r,
+      g,
+      b
+    };
   };
 };
 

@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 
 export default Route.extend({
   titleToken: 'Edit Jobs',
-  auth: service(),
+  auth:       service(),
 
   model () {
     let company = this.get('auth.user.company'),
@@ -14,20 +14,23 @@ export default Route.extend({
 
     return RSVP.hash({
       employee,
-      employees: this.store.query('employee', { 'company': companyId, _id: { $ne: employeeId } }),
+      employees: this.store.query('employee', {
+        'company': companyId,
+        _id:       { $ne: employeeId }
+      }),
       departments: this.store.query('department', { 'company': companyId }),
-      locations: this.store.query('location', { 'company': companyId }),
+      locations:   this.store.query('location', { 'company': companyId }),
       company
     });
   },
 
-  setupController ( controller, model ) {
+  setupController (controller, model) {
     controller.setProperties({
-      model: model.employee,
-      employees: model.employees,
+      model:       model.employee,
+      employees:   model.employees,
       departments: model.departments,
-      locations: model.locations,
-      company: model.company
+      locations:   model.locations,
+      company:     model.company
     });
   }
 });

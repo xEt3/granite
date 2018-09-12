@@ -16,30 +16,33 @@ let TodoItemComponent = Component.extend({
   },
 
   actions: {
-    changeStatus() {
-      this.get('onStatusChange')( this.get('todo') );
+    changeStatus () {
+      this.get('onStatusChange')(this.get('todo'));
     },
 
     selectAssignee () {
       this.set('respondedAssignee', false);
       $(`#${this.get('modalId')}`).modal({
         detachable: true,
-        onHidden: () => {
-          if ( !this.get('respondedAssignee') ) {
+        onHidden:   () => {
+          if (!this.get('respondedAssignee')) {
             this.send('respondAssignee', false);
           }
         }
       }).modal('show');
 
-      return new Promise((resolve, reject) => this.setProperties({ resolve, reject }));
+      return new Promise((resolve, reject) => this.setProperties({
+        resolve,
+        reject
+      }));
     },
 
-    changeAssignee ( assignee ) {
+    changeAssignee (assignee) {
       this.set('newAssignee', null);
       this.get('onAssigneeChange')(this.get('todo'), assignee);
     },
 
-    respondAssignee ( assignee ) {
+    respondAssignee (assignee) {
       this.get(assignee !== false ? 'resolve' : 'reject')(assignee || null);
       this.set('respondedAssignee', true);
       $(`#${this.get('modalId')}`).modal('hide');
@@ -47,9 +50,7 @@ let TodoItemComponent = Component.extend({
   }
 });
 
-TodoItemComponent.reopenClass({
-  positionalParams: [ 'todo' ]
-});
+TodoItemComponent.reopenClass({ positionalParams: [ 'todo' ] });
 
 export default TodoItemComponent;
 

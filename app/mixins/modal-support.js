@@ -7,15 +7,18 @@ export default Mixin.create({
     $(`#${id}`)
     .modal({
       detachable: true,
-      onHidden: () => {
-        if ( !this.get(`${key}Responded`) ) {
+      onHidden:   () => {
+        if (!this.get(`${key}Responded`)) {
           this.get(`${key}Promise.reject`)();
         }
       }
     })
     .modal('show');
 
-    return new Promise((resolve, reject) => this.set(`${key}Promise`, { resolve, reject }));
+    return new Promise((resolve, reject) => this.set(`${key}Promise`, {
+      resolve,
+      reject
+    }));
   },
 
   modalResponse (prefix, response) {

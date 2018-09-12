@@ -5,49 +5,47 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import { formalActionSuggestions } from 'granite/config/suggestions';
 
 let formInputs = [{
-  label: 'Option',
-  type: 'select',
-  inputClass: 'search',
-  path: 'severity',
+  label:       'Option',
+  type:        'select',
+  inputClass:  'search',
+  path:        'severity',
   contentPath: 'controller.sortedSeverities',
-  displayKey: 'title',
-  valuePath: 'id',
-  selectText: 'Select Option'
+  displayKey:  'title',
+  valuePath:   'id',
+  selectText:  'Select Option'
 }, {
-  label: 'Date to Issue',
-  type: 'date',
-  path: 'issuedOn',
+  label:    'Date to Issue',
+  type:     'date',
+  path:     'issuedOn',
   helpText: 'This is the date that you presented the corrective action to the employee. This date is editable, has no effect on operations, and is only for your records.'
 }, {
   label: 'Follow up date (optional)',
-  type: 'date',
-  path: 'followUpOn'
+  type:  'date',
+  path:  'followUpOn'
 }, {
-  label: 'Your notes',
-  type: 'textarea',
-  path: 'notes',
-  rows: '6',
-  helpText: 'These are internal notes and the employee will not see them.',
+  label:        'Your notes',
+  type:         'textarea',
+  path:         'notes',
+  rows:         '6',
+  helpText:     'These are internal notes and the employee will not see them.',
   indirectHelp: true
 }, {
-  label: 'Type',
-  type: 'select',
-  inputClass: 'search',
-  path: 'type',
+  label:       'Type',
+  type:        'select',
+  inputClass:  'search',
+  path:        'type',
   contentPath: 'controller.issueTypes',
-  selectText: 'Select or type and press enter to add a new option',
-  inputAttrs: {
-    allowAdditions: true
-  }
+  selectText:  'Select or type and press enter to add a new option',
+  inputAttrs:  { allowAdditions: true }
 }];
 
 export default Controller.extend(addEdit, {
-  auth: service(),
+  auth:                service(),
   transitionWithModel: true,
   transitionAfterSave: 'account.employee.index.counseling.issue.corrective-action',
 
-  severities: computed.reads('auth.user.company.correctiveActionSeverities'),
-  severitySorting: ['order'],
+  severities:       computed.reads('auth.user.company.correctiveActionSeverities'),
+  severitySorting:  [ 'order' ],
   sortedSeverities: computed.sort('severities', 'severitySorting'),
 
   form: computed('model.severity', 'severities.[]', function () {
@@ -56,24 +54,24 @@ export default Controller.extend(addEdit, {
 
     return severityIsFormal ? [
       ...formInputs.slice(0, 3), {
-        label: 'Issues',
-        type: 'textarea',
-        path: 'descriptionIssues',
-        helpText: formalActionSuggestions.issues,
+        label:        'Issues',
+        type:         'textarea',
+        path:         'descriptionIssues',
+        helpText:     formalActionSuggestions.issues,
         indirectHelp: true,
-        rows: '6'
+        rows:         '6'
       }, {
-        label: 'Expectations',
-        type: 'textarea',
-        path: 'descriptionExpectations',
-        helpText: formalActionSuggestions.expectations,
+        label:        'Expectations',
+        type:         'textarea',
+        path:         'descriptionExpectations',
+        helpText:     formalActionSuggestions.expectations,
         indirectHelp: true,
-        rows: '6'
+        rows:         '6'
       }, {
         label: 'Consequences if expectations are not met',
-        type: 'textarea',
-        path: 'descriptionConsequences',
-        rows: '6'
+        type:  'textarea',
+        path:  'descriptionConsequences',
+        rows:  '6'
       }, ...formInputs.slice(3)
     ] : formInputs;
   })

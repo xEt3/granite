@@ -5,8 +5,8 @@ import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
   titleToken: 'Add Templates',
-  ajax: service(),
-  modelName: 'template',
+  ajax:       service(),
+  modelName:  'template',
 
   getModelDefaults (params) {
     return this.get('ajax').request(`/api/v1/template/${params.template_key}/default`)
@@ -37,7 +37,7 @@ export default Route.extend(add, {
 
   setupController (controller, model) {
     controller.setProperties({
-      model: model.template,
+      model:      model.template,
       definition: model.definition.get('firstObject')
     });
   }

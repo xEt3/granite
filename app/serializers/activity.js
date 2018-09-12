@@ -4,7 +4,7 @@ import ApplicationSerializer from './application';
 export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
   attrs: {
     comments: { embedded: 'always' },
-    likes: { embedded: 'always' }
+    likes:    { embedded: 'always' }
   },
 
   serialize () {
@@ -12,15 +12,15 @@ export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
 
     let isNull = val => !val || val === '';
 
-    if ( isNull(json.targetId) ) {
+    if (isNull(json.targetId)) {
       delete json.targetId;
     }
 
-    if ( isNull(json.actorId) ) {
+    if (isNull(json.actorId)) {
       delete json.actorId;
     }
 
-    if ( !json.likes.length ) {
+    if (!json.likes.length) {
       json.likes = null;
     }
 

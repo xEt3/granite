@@ -2,13 +2,13 @@ import Component from '@ember/component';
 
 export default Component.extend({
   options: {
-    theme: 'snow',
+    theme:   'snow',
     modules: {
       toolbar: [
-        [ { header: [2, 3, 4, false] } ],
+        [{ header: [ 2, 3, 4, false ] }],
         [ 'bold', 'italic', 'underline', 'strike' ],
-        [ { 'list': 'ordered' }, { 'list': 'bullet' } ],
-        [ { 'indent': '-1' }, { 'indent': '+1' } ],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        [{ 'indent': '-1' }, { 'indent': '+1' }],
         [ 'link' ],
         [ 'clean' ]
       ]

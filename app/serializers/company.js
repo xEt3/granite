@@ -4,15 +4,13 @@ import serializeObject from '../utils/serialize-object';
 import expandObject from '../utils/expand-serialized-object';
 
 export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
-  attrs: {
-    correctiveActionSeverities: { embedded: 'always' }
-  },
+  attrs: { correctiveActionSeverities: { embedded: 'always' } },
 
-  normalize ( modelClass, hash ) {
-    if ( modelClass.modelName === 'company' ) {
+  normalize (modelClass, hash) {
+    if (modelClass.modelName === 'company') {
       serializeObject(hash, true, 'address');
-      if ( hash.contact ) {
-        if ( hash.contact.name ) {
+      if (hash.contact) {
+        if (hash.contact.name) {
           hash.contactLastName = hash.contact.name.last;
           hash.contactFirstName = hash.contact.name.first;
           hash.contactMiddleName = hash.contact.name.middle;
@@ -26,7 +24,7 @@ export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
     return this._super(...arguments);
   },
 
-  serialize ( snapshot, options ) {
+  serialize (snapshot, options) {
     var json = this._super(snapshot, options);
     expandObject(json, 'address');
     json.contact = {};

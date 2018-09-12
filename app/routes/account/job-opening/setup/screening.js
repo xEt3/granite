@@ -4,7 +4,7 @@ import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
   titleToken: 'Screening',
-  modelName: 'form',
+  modelName:  'form',
 
   model () {
     let jobOpening = this.modelFor('account.job-opening'),
@@ -13,19 +13,22 @@ export default Route.extend(add, {
     // Attempt to find a form for the current job opening
     return this.store.query('form', {
       targetType: 'JobOpening',
-      targetId: jobOpening.get('id')
+      targetId:   jobOpening.get('id')
     })
     // Resolve the found form or otherwise make a new form
     .then(response => Promise.resolve(response.get('firstObject') || makeNew()))
     .then(form => {
-      return { form, jobOpening };
+      return {
+        form,
+        jobOpening
+      };
     });
   },
 
   setupController (controller, model) {
     controller.setProperties({
       model: model.jobOpening,
-      form: model.form
+      form:  model.form
     });
   }
 });

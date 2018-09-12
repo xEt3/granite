@@ -14,7 +14,7 @@ export default Controller.extend({
 
       if (!keyIsArray && value && get(value, 'id')) {
         attendees.addObject({
-          type: k,
+          type:   k,
           person: value
         });
       } else if (keyIsArray && value && get(value, 'length') > 0) {

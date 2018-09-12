@@ -6,7 +6,7 @@ const parsedName = s => {
   }) : s;
 };
 
-export default function resolveForTypeKey ( key, iKey ) {
+export default function resolveForTypeKey (key, iKey) {
   let typeKey = iKey ? key : key + 'Type',
       idKey = iKey ? iKey : key + 'Id';
 

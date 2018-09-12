@@ -9,22 +9,20 @@ export default Controller.extend(addEdit, {
   auth: service(),
 
   severityForm: computed(() => [{
-    label: 'Name',
-    type: 'text',
-    path: 'name',
+    label:       'Name',
+    type:        'text',
+    path:        'name',
     placeholder: 'ex. Written Warning'
   }, {
-    label: 'Order/Severity',
-    type: 'number',
-    path: 'order',
+    label:       'Order/Severity',
+    type:        'number',
+    path:        'order',
     placeholder: 'ex. 1 for verbal warnings',
-    inputAttrs: {
-      min: '1'
-    }
+    inputAttrs:  { min: '1' }
   }, {
     label: 'Is this option formal/written?',
-    type: 'checkbox',
-    path: 'formal'
+    type:  'checkbox',
+    path:  'formal'
   }]),
 
   afterSave (model) {
@@ -50,14 +48,17 @@ export default Controller.extend(addEdit, {
 
       $('#modal__add-cas').modal({
         detachable: true,
-        onHidden: () => {
-          if ( !this.get('respondedSeverityAddition') ) {
+        onHidden:   () => {
+          if (!this.get('respondedSeverityAddition')) {
             this.send('respondSeverityAddition', false);
           }
         }
       }).modal('show');
 
-      return new Promise((resolveSeverity, rejectSeverity) => this.setProperties({ resolveSeverity, rejectSeverity }));
+      return new Promise((resolveSeverity, rejectSeverity) => this.setProperties({
+        resolveSeverity,
+        rejectSeverity
+      }));
     },
 
     beginSeverityEdit (currentSeverity) {

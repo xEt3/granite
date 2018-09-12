@@ -1,5 +1,3 @@
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  titleToken: 'Edit Custom Fields'
-});
+export default Route.extend({ titleToken: 'Edit Custom Fields' });

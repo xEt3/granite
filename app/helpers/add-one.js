@@ -1,6 +1,6 @@
 import { helper } from '@ember/component/helper';
 
-export function addOne([num]) {
+export function addOne ([ num ]) {
   return parseFloat(num) + 1;
 }
 

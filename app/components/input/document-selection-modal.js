@@ -8,20 +8,20 @@ import $ from 'jquery';
 import pagination from 'granite/mixins/controller-abstractions/pagination';
 
 export default Component.extend(pagination, {
-  ajax: service(),
-  store: service(),
-  classNames: [ 'document__selector' ],
-  limit: 10,
-  page: 1,
-  debounceSearches: 800,
-  searchText: '',
+  ajax:              service(),
+  store:             service(),
+  classNames:        [ 'document__selector' ],
+  limit:             10,
+  page:              1,
+  debounceSearches:  800,
+  searchText:        '',
   selectedDocuments: A(),
 
-  didReceiveAttrs() {
+  didReceiveAttrs () {
     this._super(...arguments);
     let selection = A();
 
-    if ( this.get('selected') ) {
+    if (this.get('selected')) {
       selection.addObjects(this.get('selected'));
     }
 
@@ -29,17 +29,18 @@ export default Component.extend(pagination, {
 
     this.get('ajax').request('/api/v1/files', {
       data: {
-        _distinct: true, select: 'tags'
+        _distinct: true,
+        select:    'tags'
       }
     }).then(tags => {
-      if ( !this.get('isDestroyed') && !this.get('isDestroying') ) {
+      if (!this.get('isDestroyed') && !this.get('isDestroying')) {
         this.set('tags', tags);
       }
     });
   },
 
   searchTermChanged: observer('searchText', function () {
-    if ( this.get('_searchDebounce') ) {
+    if (this.get('_searchDebounce')) {
       run.cancel(this.get('_searchDebounce'));
     }
 
@@ -54,28 +55,34 @@ export default Component.extend(pagination, {
         limit = this.get('limit'),
         search = this.get('_searchText'),
         tag = this.get('selectedTag'),
-        query = { limit, page },
+        query = {
+          limit,
+          page
+        },
         previousSearch = this.get('previousSearch'),
         previousTag = this.get('previousTag');
 
     this.setProperties({
-      previousTag: tag,
+      previousTag:    tag,
       previousSearch: search
     });
 
-    if ( tag !== previousTag || search !== previousSearch ) {
+    if (tag !== previousTag || search !== previousSearch) {
       this.set('page', 1);
       page = 0;
     }
 
-    if ( tag ) {
+    if (tag) {
       query.tags = { $in: [ tag ] };
     }
 
-    if ( search ) {
+    if (search) {
       let description,
-          title = description = { $regex: search, $options: 'i' };
-      query.$or = [ { title }, { description } ];
+          title = description = {
+            $regex:   search,
+            $options: 'i'
+          };
+      query.$or = [{ title }, { description }];
     }
 
     return new Promise(resolve => {
@@ -118,9 +125,7 @@ export default Component.extend(pagination, {
 
     selectDocuments () {
       $('#modal__document-selection')
-      .modal({
-        detachable: true
-      })
+      .modal({ detachable: true })
       .modal('show');
     }
   }

@@ -15,6 +15,20 @@ module.exports = {
     browser: true
   },
   rules: {
+    'key-spacing': [ 'error', {
+      align: {
+        on: 'value'
+      }
+    }],
+    'object-property-newline': [ 'error', {
+      allowAllPropertiesOnSameLine: false
+    }],
+    'object-curly-newline': ["error", { "multiline": true }],
+    'array-bracket-spacing': [ 'error', 'always', { 'objectsInArrays': false } ],
+    'space-in-brackets': [ 'error', 'always' ],
+    'object-curly-spacing': [ 'error', 'always', { 'arraysInObjects': true } ],
+    'space-in-parens': [ 'error', 'never' ],
+    'space-before-function-paren': [ 'error', 'always' ],
     'ember/avoid-leaking-state-in-ember-objects': 0,
     'ember/routes-segments-snake-case': 0,
     'semi': ['error', 'always'],
@@ -131,8 +145,7 @@ module.exports = {
     'valid-jsdoc': 2,
     'wrap-iife': 0,
     'wrap-regex': 0,
-    'vars-on-top': 0,
-    'key-spacing': 0
+    'vars-on-top': 0
   },
   'globals': {
     'SignaturePad': true,

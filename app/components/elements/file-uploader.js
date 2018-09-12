@@ -10,39 +10,39 @@ import ajaxStatus from 'granite/mixins/ajax-status';
 const { Logger } = Ember;
 
 export default Component.extend(ajaxStatus, {
-  auth: service(),
+  auth:              service(),
   classNameBindings: [ 'dragging' ],
-  files: A(),
-  doesNotHaveFiles: computed.not('hasFiles'),
-  allowedExtensions: [ 'xls', 'xlsx', 'csv', 'numbers', 'txt'],
-  allowMulti: true,
-  url: '',
-  dragging: false,
+  files:             A(),
+  doesNotHaveFiles:  computed.not('hasFiles'),
+  allowedExtensions: [ 'xls', 'xlsx', 'csv', 'numbers', 'txt' ],
+  allowMulti:        true,
+  url:               '',
+  dragging:          false,
 
-  dragEnter(e) {
+  dragEnter (e) {
     e.stopPropagation();
     e.preventDefault();
   },
 
-  dragOver(e) {
+  dragOver (e) {
     e.stopPropagation();
     e.preventDefault();
     this.set('dragging', true);
   },
 
-  dragLeave(e) {
+  dragLeave (e) {
     e.stopPropagation();
     e.preventDefault();
     this.set('dragging', false);
   },
 
-  drop(e) {
+  drop (e) {
     e.stopPropagation();
     e.preventDefault();
     var addingFiles = this._buildFiles(e.dataTransfer.files);
     this._validateFiles(addingFiles);
     this.set('dragging', false);
-    if ( this.get('autoUpload') ) {
+    if (this.get('autoUpload')) {
       this.send('saveDocument');
     }
   },
@@ -53,20 +53,18 @@ export default Component.extend(ajaxStatus, {
 
     return new Promise((resolve, reject) => {
       $.ajax({
-        type: 'POST',
-        data: formData,
-        url: this.get('url'),
+        type:        'POST',
+        data:        formData,
+        url:         this.get('url'),
         processData: false,
         contentType: false,
-        cache: false,
-        headers: {
-          'X-API-Token': this.get('auth.token')
-        },
-        xhr: () => {
+        cache:       false,
+        headers:     { 'X-API-Token': this.get('auth.token') },
+        xhr:         () => {
           let xhr = new window.XMLHttpRequest();
 
           xhr.upload.addEventListener('progress', evt => {
-            if ( evt && evt.lengthComputable ) {
+            if (evt && evt.lengthComputable) {
               this.set('uploadProgress', Math.round(evt.loaded / evt.total * 100));
             }
           }, false);
@@ -79,10 +77,10 @@ export default Component.extend(ajaxStatus, {
     });
   },
 
-  _validateFiles ( files, clear ) {
+  _validateFiles (files, clear) {
     this._clearError();
 
-    if ( clear !== false ) {
+    if (clear !== false) {
       this._clearFiles();
     }
 
@@ -91,7 +89,7 @@ export default Component.extend(ajaxStatus, {
         max    = this.get('maxFiles'),
         _files = this.get('files');
 
-    var extReg = new RegExp(this.get('allowedExtensions').map(function ( ext, index, exts ) {
+    var extReg = new RegExp(this.get('allowedExtensions').map(function (ext, index, exts) {
       return exts.length - 1 === index ? ext : ext + '|';
     }).join(''), 'i');
 
@@ -99,21 +97,21 @@ export default Component.extend(ajaxStatus, {
       self.set('fileError', err);
     };
 
-    for ( var i in files ) {
-      if ( !files.hasOwnProperty( i ) || typeof files[ i ] !== 'object' ) {
+    for (var i in files) {
+      if (!files.hasOwnProperty(i) || typeof files[ i ] !== 'object') {
         continue;
       }
 
       var file = files[ i ];
 
-      if ( !extReg.test( file.name ) ) {
+      if (!extReg.test(file.name)) {
         handleError('One or more file types are not supported.');
-      } else if ( !allowMulti && _files.length > 0 || _files.length > max - 1 ) {
+      } else if (!allowMulti && _files.length > 0 || _files.length > max - 1) {
         handleError('File limit reached.');
-      } else if ( Math.floor( file.size / 1000000 ) > this.get('maxSize') ) {
+      } else if (Math.floor(file.size / 1000000) > this.get('maxSize')) {
         handleError('Max file size exceeded.');
       } else {
-        _files.addObject( file );
+        _files.addObject(file);
       }
     }
   },
@@ -140,14 +138,14 @@ export default Component.extend(ajaxStatus, {
     $fileInput.unwrap();
   },
 
-  _end ( err ) {
+  _end (err) {
     let errMsg = err && err.responseText ? err.responseText : err;
 
-    if ( errMsg && errMsg.errors ) {
+    if (errMsg && errMsg.errors) {
       errMsg = errMsg.errors.mapBy('detail').join(', ');
     }
 
-    if ( err ) {
+    if (err) {
       Logger.error(err);
     }
 
@@ -161,14 +159,14 @@ export default Component.extend(ajaxStatus, {
     return this.get('elementId') + '-input';
   }),
 
-  shouldSetHasFiles: computed('files.[]', function() {
+  shouldSetHasFiles: computed('files.[]', function () {
     // eslint-disable-next-line ember/no-side-effects
     this.set('hasFiles', this.get('files') && this.get('files.length') > 0);
   }),
 
 
   actions: {
-    notify ( type, msg ) {
+    notify (type, msg) {
       this.get('onNotify')(type, msg);
     },
 
@@ -180,7 +178,7 @@ export default Component.extend(ajaxStatus, {
       var addingFiles = this._buildFiles(this.$().find('#' + this.get('inputId'))[0].files);
       this._validateFiles(addingFiles);
 
-      if ( this.get('autoUpload') ) {
+      if (this.get('autoUpload')) {
         this.send('saveDocument');
       }
     },
@@ -199,9 +197,9 @@ export default Component.extend(ajaxStatus, {
       });
     },
 
-    removeFile ( file ) {
-      this.get('files').removeObject( file );
-      if ( !this.get('files.length') ) {
+    removeFile (file) {
+      this.get('files').removeObject(file);
+      if (!this.get('files.length')) {
         this._resetFileInput();
       }
     }

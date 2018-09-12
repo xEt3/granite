@@ -8,7 +8,7 @@ export default Route.extend({
       const controller = this.get('controller'),
             lf = window.localforage;
 
-      if ( !controller.get('fromError') ) {
+      if (!controller.get('fromError')) {
         return lf.getItem('graniteRoutePreviousToError').then(previousRoute => {
           return this.transitionTo(previousRoute && previousRoute !== 'error' ? previousRoute : 'index');
         });
@@ -16,7 +16,7 @@ export default Route.extend({
 
       let previousRoute = controller.get('previousRoute');
 
-      if ( previousRoute ) {
+      if (previousRoute) {
         lf.setItem('graniteRoutePreviousToError', previousRoute);
       }
     },

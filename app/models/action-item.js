@@ -9,9 +9,7 @@ const { attr, hasMany, belongsTo } = DS;
 const Validations = buildValidations({
   title: [
     validator('presence', true),
-    validator('length', {
-      min: 2
-    })
+    validator('length', { min: 2 })
   ]
 });
 
@@ -21,14 +19,26 @@ export default Model.extend(Validations, {
   priority:    attr('number', { defaultValue: 1 }),
 
   // Relational
-  participants:  hasMany('employee', { async: true, inverse: null }),
-  subscribers:   hasMany('employee', { async: true, inverse: null }),
-  comments:      hasMany('comment', { async: true, inverse: null }),
-  prerequisites: hasMany('action-item', { async: true, inverse: null }),
+  participants: hasMany('employee', {
+    async:   true,
+    inverse: null
+  }),
+  subscribers: hasMany('employee', {
+    async:   true,
+    inverse: null
+  }),
+  comments: hasMany('comment', {
+    async:   true,
+    inverse: null
+  }),
+  prerequisites: hasMany('action-item', {
+    async:   true,
+    inverse: null
+  }),
   // attachments:   hasMany('document', { async: true }),
-  checklist:     hasMany('checklist-item', { inverse: null }),
-  company:       belongsTo('company'),
-  owner:         belongsTo('employee'),
+  checklist: hasMany('checklist-item', { inverse: null }),
+  company:   belongsTo('company'),
+  owner:     belongsTo('employee'),
 
   target:     resolveForTypeKey('target'),
   targetId:   attr('string-or-null'),
@@ -41,9 +51,7 @@ export default Model.extend(Validations, {
   dueOn:        attr('date'),
   delayedUntil: attr('date'),
   remindOn:     attr('date'),
-  created:      attr('date', {
-    defaultValue: () => new Date()
-  }),
+  created:      attr('date', { defaultValue: () => new Date() }),
 
   slug: computed('title', function () {
     let title = this.get('title');
@@ -51,7 +59,7 @@ export default Model.extend(Validations, {
   }),
 
   incompleteTodos: computed.filter('checklist', todo => !todo.get('completedOn')),
-  completeTodos: computed.filter('checklist', todo => todo.get('completedOn')),
+  completeTodos:   computed.filter('checklist', todo => todo.get('completedOn')),
 
   percentComplete: computed('checklist.[]', 'completeTodos.[]', function () {
     let total = this.get('completeTodos.length') || 0,

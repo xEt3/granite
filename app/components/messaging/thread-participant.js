@@ -2,9 +2,9 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 const ThreadParticipantComponent = Component.extend({
-  tagName: 'span',
-  classNames: ['ui', 'image', 'label' ],
-  classNameBindings: ['online:green'],
+  tagName:           'span',
+  classNames:        [ 'ui', 'image', 'label' ],
+  classNameBindings: [ 'online:green' ],
 
   online: computed('connectedUsers.[]', 'participant', function () {
     return this.get('connectedUsers').includes(this.get('participant.id'));
@@ -15,8 +15,6 @@ const ThreadParticipantComponent = Component.extend({
   })
 });
 
-ThreadParticipantComponent.reopenClass({
-  positionalParams: [ 'participant' ]
-});
+ThreadParticipantComponent.reopenClass({ positionalParams: [ 'participant' ] });
 
 export default ThreadParticipantComponent;

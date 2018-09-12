@@ -10,14 +10,14 @@ import RSVP from 'rsvp';
 export default Mixin.create({
   /* Make a preflight request to create a file before upload. Use this if you are
   using the file api as-is, without additional middleware. */
-  filePreflight: true,
+  filePreflight:    true,
   /* Base endpoint path for post preflight request - replaces fileEndpoint var with
   parsed endpoint */
   fileBaseEndpoint: '/api/v1/file/:id',
 
   // initialize
   fileIsAdded: false,
-  dropzoneId: 'dropzone', // use your own!
+  dropzoneId:  'dropzone', // use your own!
 
   fileEndpoint: computed('fileBaseEndpoint', 'filePreflightIdentifier', function () {
     const fileBaseEndpoint = this.get('fileBaseEndpoint'),
@@ -101,8 +101,8 @@ export default Mixin.create({
   actions: {
     addedFile (file) {
       this.setProperties({
-        __dropzone: this,
-        __file: file,
+        __dropzone:  this,
+        __file:      file,
         fileIsAdded: true
       });
 

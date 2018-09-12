@@ -15,12 +15,12 @@ export default Controller.extend({
 
   makeNode (object, base = {}) {
     return $.extend(base, {
-      _id: object.get('id'),
+      _id:  object.get('id'),
       name: {
         first: object.get('firstName'),
-        last: object.get('lastName')
+        last:  object.get('lastName')
       },
-      email: object.get('email'),
+      email:      object.get('email'),
       supervisor: object.belongsTo('supervisor').id()
     });
   },

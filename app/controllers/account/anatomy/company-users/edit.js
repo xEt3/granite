@@ -21,7 +21,7 @@ export default Controller.extend(addEdit,{
       });
     },
 
-    permissionCheck() {
+    permissionCheck () {
       let checked = [];
 
       this.permissionsTree.forEach(permission=>{

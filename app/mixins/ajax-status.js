@@ -5,8 +5,8 @@ import { run } from '@ember/runloop';
 
 const { Logger } = Ember;
 
-function searchError ( errors ) {
-  const detailKeys = A(['detail', 'message', 'title', 'status']),
+function searchError (errors) {
+  const detailKeys = A([ 'detail', 'message', 'title', 'status' ]),
         key = detailKeys.find(k => errors[0][k]);
 
   return key ? errors.mapBy(key).join(', ') : errors[0];
@@ -14,9 +14,9 @@ function searchError ( errors ) {
 
 export default Mixin.create({
   successMessageTimeout: 3,
-  enableNotify: true,
+  enableNotify:          true,
 
-  ajaxError ( err, user ) {
+  ajaxError (err, user) {
     let errMsg = err ? err.payload || err.responseText || err.message || err : err;
 
     if (errMsg && errMsg.errors) {

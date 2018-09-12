@@ -10,15 +10,13 @@ export default Route.extend(refreshable, {
 
     return RSVP.hash({
       employee,
-      assetItems: this.store.query('asset-item', {
-        'assignments.employee': employee.get('id')
-      }).then(assets => assets.toArray())
+      assetItems: this.store.query('asset-item', { 'assignments.employee': employee.get('id') }).then(assets => assets.toArray())
     });
   },
 
   setupController (controller, model) {
     controller.setProperties({
-      model: model.assetItems,
+      model:    model.assetItems,
       employee: model.employee
     });
   }

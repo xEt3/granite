@@ -1,5 +1,3 @@
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  titleToken: 'About Our Product'
-});
+export default Route.extend({ titleToken: 'About Our Product' });

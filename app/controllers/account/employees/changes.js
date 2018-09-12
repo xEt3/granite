@@ -27,7 +27,7 @@ export default Controller.extend(addEdit, {
       }
 
       change.setProperties({
-        approved: false,
+        approved:   false,
         reviewedOn: new Date()
       });
 

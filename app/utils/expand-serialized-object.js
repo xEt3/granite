@@ -1,10 +1,10 @@
-function _findMatchingArg ( key, args ) {
+function _findMatchingArg (key, args) {
   var matchingArg;
 
-  for ( var i = 0; i < args.length; i++ ) {
+  for (var i = 0; i < args.length; i++) {
     let pathPrefix = args[i];
 
-    if ( key.indexOf(pathPrefix) > -1 ) {
+    if (key.indexOf(pathPrefix) > -1) {
       matchingArg = pathPrefix;
       break;
     }
@@ -13,11 +13,11 @@ function _findMatchingArg ( key, args ) {
   return matchingArg;
 }
 
-function _lowerCaseFirst ( str ) {
+function _lowerCaseFirst (str) {
   return str.charAt(0).toLowerCase() + str.slice(1);
 }
 
-function _remapKeys ( object, newKey, matchingKeys ) {
+function _remapKeys (object, newKey, matchingKeys) {
   object[newKey] = {};
 
   matchingKeys.forEach(oldKey => {
@@ -26,10 +26,10 @@ function _remapKeys ( object, newKey, matchingKeys ) {
   });
 }
 
-export default function serializeObject ( object ) {
+export default function serializeObject (object) {
   let args = Array.prototype.slice.call(arguments, 1);
 
-  if ( !object || typeof object !== 'object' ) {
+  if (!object || typeof object !== 'object') {
     return object;
   }
 
@@ -38,7 +38,7 @@ export default function serializeObject ( object ) {
   objectKeys.forEach(key => {
     let matchingArg = _findMatchingArg(key, args);
 
-    if ( !matchingArg ) {
+    if (!matchingArg) {
       return;
     }
 

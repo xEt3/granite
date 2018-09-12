@@ -7,7 +7,7 @@ import ENV from 'granite/config/environment';
 
 export default Service.extend({
   refreshResolution: 1000,
-  t: computed.alias('time'),
+  t:                 computed.alias('time'),
 
   _tick: on('init', function () {
     const m = moment();
@@ -19,7 +19,7 @@ export default Service.extend({
       time:   m.toDate()
     });
 
-    if ( ENV.environment !== 'test' ) {
+    if (ENV.environment !== 'test') {
       run.later(this, this._tick, this.get('refreshResolution'));
     }
   })

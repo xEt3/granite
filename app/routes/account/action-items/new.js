@@ -5,19 +5,19 @@ import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
   titleToken: 'New Action Item',
-  auth: service(),
-  modelName: 'action-item',
+  auth:       service(),
+  modelName:  'action-item',
 
   getModelDefaults () {
     return {
-      owner: this.get('auth.user.employee'),
+      owner:   this.get('auth.user.employee'),
       company: this.get('auth.user.company')
     };
   },
 
   model () {
     return RSVP.hash({
-      actionItem: this._super(...arguments),
+      actionItem:  this._super(...arguments),
       actionItems: this.store.query('action-item', {
         completedOn: { $not: { $type: 9 } },
         cancelledOn: { $not: { $type: 9 } }
@@ -26,11 +26,11 @@ export default Route.extend(add, {
     });
   },
 
-  setupController ( controller, model ) {
+  setupController (controller, model) {
     controller.setProperties({
-      model: model.actionItem,
+      model:       model.actionItem,
       actionItems: model.actionItems,
-      employees: model.employees
+      employees:   model.employees
     });
   }
 });

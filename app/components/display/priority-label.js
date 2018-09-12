@@ -5,8 +5,8 @@ const priorityMap = [ 'Lowest', 'Low', 'Medium', 'High', 'Highest' ],
       priorityColorMap = [ '', 'grey', 'teal', 'red', 'orange' ];
 
 let PriorityLabelComponent = Component.extend({
-  tagName: 'span',
-  classNames: [ 'ui' ],
+  tagName:           'span',
+  classNames:        [ 'ui' ],
   classNameBindings: [ 'priorityColor' ],
 
   priorityText: computed('priority', function () {
@@ -19,9 +19,7 @@ let PriorityLabelComponent = Component.extend({
   })
 });
 
-PriorityLabelComponent.reopenClass({
-  positionalParams: [ 'priority' ]
-});
+PriorityLabelComponent.reopenClass({ positionalParams: [ 'priority' ] });
 
 export default PriorityLabelComponent;
 /* Usage

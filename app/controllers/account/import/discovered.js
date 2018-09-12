@@ -5,9 +5,9 @@ import { computed } from '@ember/object';
 import ajaxStatus from 'granite/mixins/ajax-status';
 
 export default Controller.extend(ajaxStatus, {
-  ajax: service(),
+  ajax:        service(),
   queryParams: [ 'service' ],
-  service: null,
+  service:     null,
 
   totalSelected: computed('selected.{employees.[],departments.[],locations.[]}', function () {
     let selected = this.get('selected');

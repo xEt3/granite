@@ -5,7 +5,7 @@ const ipsum = 'Bacon ipsum dolor amet pig id ut ea velit chicken incididunt bris
 export default Controller.extend({
   ipsum,
   queryParams: [ 'focus' ],
-  focus: null,
+  focus:       null,
 
   typeSizes: [
     '100',
@@ -68,7 +68,7 @@ export default Controller.extend({
   ],
 
   actions: {
-    toggleProperty ( prop ) {
+    toggleProperty (prop) {
       this.toggleProperty(prop);
     }
   }

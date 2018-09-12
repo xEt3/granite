@@ -9,7 +9,7 @@ import { isEmpty } from '@ember/utils';
  * passed for `id` and `labelKey` for `name`.
  * If the model is flat, it will return a list.
  */
-export function buildTree(model, options = {}) {
+export function buildTree (model, options = {}) {
   let tree = {};
   let roots = A();
 
@@ -54,7 +54,7 @@ export function buildTree(model, options = {}) {
 
 // Gets all descendents of a tree (array)
 // Returns a flat list of all descenents, including the top level of the tree
-export function getDescendents(tree, depth = -1) {
+export function getDescendents (tree, depth = -1) {
   let descendents = A();
 
   if (depth < 0) { // Unlimited depth
@@ -74,7 +74,7 @@ export function getDescendents(tree, depth = -1) {
 
 // Gets all ancestors of a childNode given a tree (array)
 // Returns a flat list of ancestors, including the childNode
-export function getAncestors(tree, childNode) {
+export function getAncestors (tree, childNode) {
   let ancestors = A();
   let childId = childNode.get('id');
 
@@ -96,6 +96,6 @@ export function getAncestors(tree, childNode) {
 
 // Gets the direct parent of a childNode given a flat list
 // Returns single object (parent) or undefined
-export function getParent(list, childNode) {
+export function getParent (list, childNode) {
   return list.find(x => x.children.find(y => y.id === childNode.get('id')));
 }

@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 const QuickFormComponent = Component.extend({
-  tagName: 'form',
+  tagName:    'form',
   classNames: [ 'ui form' ],
 
   submit (e) {
@@ -17,9 +17,7 @@ const QuickFormComponent = Component.extend({
   })
 });
 
-QuickFormComponent.reopenClass({
-  positionalParams: [ 'form', 'model', 'controller' ]
-});
+QuickFormComponent.reopenClass({ positionalParams: [ 'form', 'model', 'controller' ] });
 
 export default QuickFormComponent;
 

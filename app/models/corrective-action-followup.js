@@ -8,7 +8,5 @@ export default Model.extend({
   nextFollowup: attr('date'),
   creator:      belongsTo('employee'),
 
-  created: attr('date', {
-    defaultValue: () => new Date()
-  })
+  created: attr('date', { defaultValue: () => new Date() })
 });

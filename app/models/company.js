@@ -23,20 +23,21 @@ export default Model.extend(Validations,  {
   contactMiddleName: attr('string'),
   contactLastName:   attr('string'),
 
-  deactivatedOn:  attr('Date'),
-  reactivatedOn:  attr('Date'),
+  deactivatedOn: attr('Date'),
+  reactivatedOn: attr('Date'),
 
-  linkedServices: attr('array'),
-  employeeCustomFields: attr('array'),
+  linkedServices:             attr('array'),
+  employeeCustomFields:       attr('array'),
   correctiveActionSeverities: hasMany('corrective-action-severity'),
-  tz: attr('string', {
-    defaultValue: () => moment.tz.guess()
-  }),
+  tz:                         attr('string', { defaultValue: () => moment.tz.guess() }),
 
-  logo: belongsTo('file', { async: true, inverse: null }),
-  logoUrl: attr('string'),
+  logo: belongsTo('file', {
+    async:   true,
+    inverse: null
+  }),
+  logoUrl:           attr('string'),
   logoDominantColor: attr('string'),
-  logoPalette: attr('array'),
+  logoPalette:       attr('array'),
 
   rgbPalette: computed('logoPalette', function () {
     const palette = this.get('logoPalette');
@@ -44,9 +45,9 @@ export default Model.extend(Validations,  {
   }),
 
   firstStepsCompletedOn: attr('date'),
-  firstStepsCompleted: attr('array', { defaultValue: () => A() }),
+  firstStepsCompleted:   attr('array', { defaultValue: () => A() }),
 
-  urlPrefix: attr('string'),
+  urlPrefix:  attr('string'),
   collectEEO: attr('boolean'),
 
   linkedToSlate: computed('linkedServices.[]', function () {

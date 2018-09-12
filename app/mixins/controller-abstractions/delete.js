@@ -2,13 +2,13 @@ import Mixin from '@ember/object/mixin';
 import AjaxHooks from '../ajax-status';
 
 export default Mixin.create(AjaxHooks, {
-  _afterDelete ( record ) {
+  _afterDelete (record) {
     const transitionAfterSave = this.get('transitionAfterDelete') || this.get('transitionAfterSave');
 
-    if ( transitionAfterSave ) {
+    if (transitionAfterSave) {
       let transitionArgs = [ transitionAfterSave ];
 
-      if ( this.get('transitionWithModel') ) {
+      if (this.get('transitionWithModel')) {
         transitionArgs.push(record.get(this.getWithDefault('modelIdentifier', 'id')));
       }
 
@@ -17,10 +17,10 @@ export default Mixin.create(AjaxHooks, {
   },
 
   actions: {
-    delete ( model ) {
+    delete (model) {
       const _model = model || this.get('model');
 
-      if ( !_model ) {
+      if (!_model) {
         return;
       }
 
@@ -30,7 +30,7 @@ export default Mixin.create(AjaxHooks, {
         this.ajaxSuccess('Successfully deleted.');
         this._afterDelete(record);
 
-        if ( this.afterSave && typeof this.afterSave === 'function' ) {
+        if (this.afterSave && typeof this.afterSave === 'function') {
           this.afterSave(record);
         }
       }).catch(this.ajaxError.bind(this));

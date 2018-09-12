@@ -6,9 +6,7 @@ export default Model.extend({
   stages: attr('array'),
 
   jobOpenings: hasMany('job-opening', { inverse: null }),
-  company: belongsTo('company', { inverse: null }),
+  company:     belongsTo('company', { inverse: null }),
 
-  created: attr('date', {
-    defaultValue: () => new Date()
-  })
+  created: attr('date', { defaultValue: () => new Date() })
 });

@@ -1,40 +1,40 @@
 export default [{
-  when: 'employee',
+  when:    'employee',
   prepend: {
     segment: 'employees',
-    link: 'account.employees'
+    link:    'account.employees'
   }
 }, {
-  when: 'asset',
+  when:    'asset',
   prepend: {
     segment: 'assets',
-    link: 'account.assets'
+    link:    'account.assets'
   }
 }, {
-  when: 'action-item',
+  when:    'action-item',
   prepend: {
     segment: 'action items',
-    link: 'account.action-items'
+    link:    'account.action-items'
   }
 }, {
-  when: 'job-description',
+  when:    'job-description',
   prepend: {
     segment: 'recruiting',
-    link: 'account.recruiting'
+    link:    'account.recruiting'
   }
 }, {
-  when: 'job-opening',
+  when:    'job-opening',
   prepend: {
     segment: 'recruiting',
-    link: 'account.recruiting'
+    link:    'account.recruiting'
   }
 }, {
-  when: 'job-description',
+  when:    'job-description',
   prepend: {
     segment: 'job descriptions',
-    link: 'account.recruiting.job-descriptions'
+    link:    'account.recruiting.job-descriptions'
   }
 }, {
-  when: 'eeo',
+  when:         'eeo',
   overrideName: 'Equal Employment Opportunity'
 }];

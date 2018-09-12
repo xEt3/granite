@@ -6,9 +6,9 @@ import del from 'granite/mixins/controller-abstractions/delete';
 import { closeMessageMap } from 'granite/config/statics';
 
 export default Controller.extend(addEdit, del, {
-  auth: service(),
+  auth:                  service(),
   transitionAfterDelete: 'account.recruiting.index.index',
-  transitionWithModel: false,
+  transitionWithModel:   false,
 
   confirmCloseMessage: computed('model.{sendCloseNotice,allocateTalentPool}', function () {
     if (!this.get('model')) {

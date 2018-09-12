@@ -7,14 +7,12 @@ export default Model.extend({
   name: attr('string'),
 
   elements: hasMany('form-element'),
-  company: belongsTo('company'),
-  creator: belongsTo('employee'),
+  company:  belongsTo('company'),
+  creator:  belongsTo('employee'),
 
   target:     resolveForTypeKey('target'),
   targetId:   attr('string-or-null'),
   targetType: attr('string-or-null'),
 
-  created: attr('date', {
-    defaultValue: () => new Date()
-  })
+  created: attr('date', { defaultValue: () => new Date() })
 });

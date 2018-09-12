@@ -17,7 +17,7 @@ export default Route.extend({
     }, selected), {});
 
     controller.setProperties({
-      selected: A(defaultSelection),
+      selected:     A(defaultSelection),
       importResult: null
     });
 

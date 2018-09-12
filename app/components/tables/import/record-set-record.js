@@ -5,8 +5,8 @@ import { modelPageMap } from 'granite/config/statics';
 import titleCase from 'granite/utils/title-case';
 
 const RecordSetRecordComponent = Component.extend({
-  tagName: 'tr',
-  classNames: [ 'import__record' ],
+  tagName:           'tr',
+  classNames:        [ 'import__record' ],
   classNameBindings: [
     'record.duplicate:import__record--duplicate',
     'isSelected:import__record--is-selected'
@@ -23,7 +23,7 @@ const RecordSetRecordComponent = Component.extend({
       return;
     }
 
-    return A(match.map(m => titleCase([m.split('.')[0]]))).uniq().join(', ');
+    return A(match.map(m => titleCase([ m.split('.')[0] ]))).uniq().join(', ');
   }),
 
   duplicate: computed('fields.[]', 'record.duplicate', 'recordType', function () {
@@ -59,8 +59,6 @@ const RecordSetRecordComponent = Component.extend({
   }
 });
 
-RecordSetRecordComponent.reopenClass({
-  positionalParams: [ 'record', 'selectedRows' ]
-});
+RecordSetRecordComponent.reopenClass({ positionalParams: [ 'record', 'selectedRows' ] });
 
 export default RecordSetRecordComponent;

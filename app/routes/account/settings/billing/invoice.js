@@ -20,8 +20,6 @@ export default Route.extend({
         this.set('transaction', t);
       }
     });
-    controller.setProperties({
-      model: this.get('transaction')
-    });
+    controller.setProperties({ model: this.get('transaction') });
   }
 });

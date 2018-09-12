@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed, set } from '@ember/object';
 
 export default Component.extend({
-  tagName: '',
+  tagName:    '',
   linkPrefix: 'account.',
 
   _links: computed('links', function () {

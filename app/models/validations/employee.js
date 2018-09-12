@@ -3,16 +3,12 @@ import { validator, buildValidations } from 'ember-cp-validations';
 export default buildValidations({
   firstName: [
     validator('presence', true),
-    validator('length', {
-      min: 2
-    })
+    validator('length', { min: 2 })
   ],
 
   lastName: [
     validator('presence', true),
-    validator('length', {
-      min: 2
-    })
+    validator('length', { min: 2 })
   ],
 
   // emergencyContactFirstName: [
@@ -35,16 +31,12 @@ export default buildValidations({
 
   addressLine1: [
     validator('presence', true),
-    validator('length', {
-      min: 2
-    })
+    validator('length', { min: 2 })
   ],
 
   addressCity: [
     validator('presence', true),
-    validator('length', {
-      min: 2
-    })
+    validator('length', { min: 2 })
   ],
 
   addressState: [
@@ -53,23 +45,17 @@ export default buildValidations({
 
   addressZip: [
     validator('presence', true),
-    validator('length', {
-      is: 5
-    })
+    validator('length', { is: 5 })
   ],
 
   ssn: [
     validator('presence', true),
-    validator('length', {
-      is: 9
-    })
+    validator('length', { is: 9 })
   ],
 
   jobTitle: [
     validator('presence', true),
-    validator('length', {
-      min: 2
-    })
+    validator('length', { min: 2 })
   ],
 
   hireDate: [

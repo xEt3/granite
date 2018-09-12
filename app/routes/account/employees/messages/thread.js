@@ -4,8 +4,8 @@ import { A } from '@ember/array';
 import { resolve } from 'rsvp';
 
 export default Route.extend({
-  socket: service(),
-  messaging: service(),
+  socket:        service(),
+  messaging:     service(),
   notifications: service(),
 
   titleToken (model) {
@@ -16,9 +16,7 @@ export default Route.extend({
     return `Conversation with ${names[0].firstName}`;
   },
 
-  queryParams: {
-    sb: { refreshModel: true }
-  },
+  queryParams: { sb: { refreshModel: true } },
 
   init () {
     this._super(...arguments);
@@ -58,7 +56,7 @@ export default Route.extend({
     });
   },
 
-  onMessage ([message]) {
+  onMessage ([ message ]) {
     if (!document.hasFocus()) {
       const { content: msg, from } = message || {};
 
@@ -104,9 +102,12 @@ export default Route.extend({
       'thread_history'
     );
 
-    return event.then(([data]) => {
+    return event.then(([ data ]) => {
       let messages = (data.messages || []).reverse();
-      return { messages, count: data.count };
+      return {
+        messages,
+        count: data.count
+      };
     });
   },
 

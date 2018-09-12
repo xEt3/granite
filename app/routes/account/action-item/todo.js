@@ -6,7 +6,7 @@ export default Route.extend({
 
   model () {
     return RSVP.hash({
-      actionItem: this._super(...arguments),
+      actionItem:  this._super(...arguments),
       actionItems: this.store.query('action-item', {
         completedOn: { $not: { $type: 9 } },
         cancelledOn: { $not: { $type: 9 } }
@@ -15,11 +15,11 @@ export default Route.extend({
     });
   },
 
-  setupController( controller, model ) {
+  setupController (controller, model) {
     controller.setProperties({
-      model: model.actionItem,
+      model:       model.actionItem,
       actionItems: model.actionItems,
-      employees: model.employees
+      employees:   model.employees
     });
   }
 });

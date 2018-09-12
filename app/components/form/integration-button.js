@@ -5,18 +5,18 @@ import { inject as service } from '@ember/service';
 import ajaxStatus from '../../mixins/ajax-status';
 
 export default Component.extend(ajaxStatus, {
-  ajax: service(),
-  tagName: 'button',
-  type: 'button',
-  apiUri: '/api/v1/integrations/intent/:service',
-  service: '',
-  disabled: computed.reads('working'),
+  ajax:              service(),
+  tagName:           'button',
+  type:              'button',
+  apiUri:            '/api/v1/integrations/intent/:service',
+  service:           '',
+  disabled:          computed.reads('working'),
   attributeBindings: [ 'type', 'disabled' ],
-  classNames: [ 'ui', 'button' ],
+  classNames:        [ 'ui', 'button' ],
   classNameBindings: [ 'working:loading', 'alreadyLinked:disabled' ],
-  linkedServices: A(),
+  linkedServices:    A(),
 
-  click ( e ) {
+  click (e) {
     e.preventDefault();
 
     if (this.get('alreadyLinked')) {

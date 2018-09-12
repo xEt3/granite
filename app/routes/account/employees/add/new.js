@@ -3,14 +3,14 @@ import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
   titleToken: 'New Employee',
-  modelName: 'employee',
+  modelName:  'employee',
 
   getModelDefaults () {
     return {
-      company: this.get('auth.user.company'),
-      onboarder: this.get('auth.user'),
-      onboarding: true,
-      onboardingStep: 0,
+      company:            this.get('auth.user.company'),
+      onboarder:          this.get('auth.user'),
+      onboarding:         true,
+      onboardingStep:     0,
       onboardingProgress: 0
     };
   }

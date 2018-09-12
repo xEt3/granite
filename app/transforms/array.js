@@ -3,15 +3,15 @@ import { typeOf } from '@ember/utils';
 import $ from 'jquery';
 
 export default DS.Transform.extend({
-  deserialize ( serialized ) {
+  deserialize (serialized) {
     return typeOf(serialized) === 'array' ? serialized : [];
   },
 
-  serialize ( deserialized ) {
+  serialize (deserialized) {
     var type = typeOf(deserialized);
-    if ( type === 'array' ) {
+    if (type === 'array') {
       return deserialized;
-    } else if ( type === 'string' ) {
+    } else if (type === 'string') {
       return deserialized.split(',').map(item => $.trim(item));
     } else {
       return [];

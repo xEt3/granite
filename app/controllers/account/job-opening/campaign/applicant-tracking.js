@@ -17,19 +17,19 @@ const employeeProps = [
 ];
 
 export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
-  auth: service(),
-  queryParams: [ 'showDisqualified' ],
-  selectedApplications: A(),
-  confirmInjectModalId: 'modal__ats-confirm-inject',
+  auth:                     service(),
+  queryParams:              [ 'showDisqualified' ],
+  selectedApplications:     A(),
+  confirmInjectModalId:     'modal__ats-confirm-inject',
   confirmDisqualifyModalId: 'modal__ats-confirm-disqualify',
-  schedulerModalId: 'modal__ats-scheduler',
-  showDisqualified: false,
+  schedulerModalId:         'modal__ats-scheduler',
+  showDisqualified:         false,
 
-  pendingApplications: computed.filter('model.applications', function(app) {
+  pendingApplications: computed.filter('model.applications', function (app) {
     return !get(app, 'reviewedOn') && !get(app, 'disqualified');
   }),
 
-  activeCandidates: computed.filter('model.applications', function(app) {
+  activeCandidates: computed.filter('model.applications', function (app) {
     return !!get(app, 'stage');
   }),
 
@@ -51,7 +51,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
 
       application.setProperties({
         stage,
-        candidate: true,
+        candidate:  true,
         stageOrder: 0,
         reviewedOn: new Date()
       });
@@ -80,9 +80,9 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
           isEmployeeApplicant = app.get('isEmployee');
 
     event.setProperties({
-      contextId: app.get('id'),
-      contextType: 'JobApplication',
-      attendantId: get(isEmployeeApplicant ? app.get('employee') : app.get('applicant'), 'id'),
+      contextId:     app.get('id'),
+      contextType:   'JobApplication',
+      attendantId:   get(isEmployeeApplicant ? app.get('employee') : app.get('applicant'), 'id'),
       attendantType: isEmployeeApplicant ? 'Employee' : 'Applicant'
     });
 
@@ -102,7 +102,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     let employee = jobApplication.get('employee');
 
     jobApplication.setProperties({
-      hired: true,
+      hired:      true,
       hiredSetOn: new Date(),
       hiredSetBy: this.get('auth.user.employee')
     });
@@ -110,9 +110,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     // Check for existing employee record,
     // if nothing exists, create one
     if (!jobApplication.get('isEmployee') && applicant) {
-      let employeeData = Object.assign({}, applicant.getProperties(employeeProps), {
-        onboarding: true
-      });
+      let employeeData = Object.assign({}, applicant.getProperties(employeeProps), { onboarding: true });
       employee = this.get('store').createRecord('employee', employeeData);
     }
 

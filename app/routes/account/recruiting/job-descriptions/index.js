@@ -3,5 +3,5 @@ import resource from 'granite/mixins/route-abstractions/resource';
 
 export default Route.extend(resource, {
   titleToken: 'Job Descriptions',
-  modelName: 'job'
+  modelName:  'job'
 });

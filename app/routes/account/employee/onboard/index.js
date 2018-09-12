@@ -1,5 +1,3 @@
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  titleToken: 'Onboard'
-});
+export default Route.extend({ titleToken: 'Onboard' });

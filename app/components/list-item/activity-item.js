@@ -6,17 +6,17 @@ import ajaxStatus from '../../mixins/ajax-status';
 const contextColorMap = {
   positive: 'text-green',
   negative: 'text-red',
-  neutral: ''
+  neutral:  ''
 };
 
 export default Component.extend(ajaxStatus, {
-  auth: service(),
-  store: service(),
-  classNames: [ 'account__activity-item', 'event' ],
+  auth:        service(),
+  store:       service(),
+  classNames:  [ 'account__activity-item', 'event' ],
   commentSort: [ 'created:desc' ],
 
   enableLikes: computed.equal('activity.context', 'positive'),
-  comments: computed.sort('activity.comments', 'commentSort'),
+  comments:    computed.sort('activity.comments', 'commentSort'),
 
   contextColor: computed('activity.context', function () {
     let context = this.get('activity.context');
@@ -32,9 +32,7 @@ export default Component.extend(ajaxStatus, {
   }),
 
   newComment () {
-    this.set('comment', this.get('store').createRecord('comment', {
-      commenter: this.get('auth.user.employee')
-    }));
+    this.set('comment', this.get('store').createRecord('comment', { commenter: this.get('auth.user.employee') }));
   },
 
   actions: {
@@ -43,7 +41,7 @@ export default Component.extend(ajaxStatus, {
     },
 
     toggleComments () {
-      if ( !this.get('comment') ) {
+      if (!this.get('comment')) {
         this.newComment();
       }
 
@@ -76,20 +74,18 @@ export default Component.extend(ajaxStatus, {
             likes = activity.get('likes.content'),
             currentLike = this.get('likeByCurrentUser');
 
-      if ( currentLike ) {
+      if (currentLike) {
         likes.removeObject(currentLike);
         currentLike.deleteRecord();
       } else {
-        var like = this.get('store').createRecord('like', {
-          liker: this.get('auth.user')
-        });
+        var like = this.get('store').createRecord('like', { liker: this.get('auth.user') });
 
         likes.addObject(like);
       }
 
       activity.save()
       .then(() => {
-        if ( like ) {
+        if (like) {
           like.destroy();
         }
 

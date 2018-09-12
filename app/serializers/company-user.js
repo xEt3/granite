@@ -1,12 +1,12 @@
 import ApplicationSerializer from './application';
 
 export default ApplicationSerializer.extend({
-  normalize ( modelClass, hash ) {
-    if ( modelClass.modelName !== 'company-user' ) {
+  normalize (modelClass, hash) {
+    if (modelClass.modelName !== 'company-user') {
       return this._super(...arguments);
     }
 
-    if ( hash.name ) {
+    if (hash.name) {
       hash.firstName = hash.name.first;
       hash.middleName = hash.name.middle;
       hash.lastName = hash.name.last;
@@ -17,7 +17,7 @@ export default ApplicationSerializer.extend({
     return this._super(...arguments);
   },
 
-  serialize ( snapshot, options ) {
+  serialize (snapshot, options) {
     var json = this._super(snapshot, options);
 
     json.name = {

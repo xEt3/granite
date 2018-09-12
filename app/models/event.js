@@ -21,11 +21,11 @@ export default Model.extend({
   contextId:     attr('string'),
 
   created: {
-    type: Date,
+    type:    Date,
     default: Date.now,
-    index: true
+    index:   true
   },
 
   attendant: resolveForTypeKey('attendant'),
-  context: resolveForTypeKey('context')
+  context:   resolveForTypeKey('context')
 });

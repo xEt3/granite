@@ -6,9 +6,9 @@ export default Route.extend({
 
   afterModel (model) {
     model.setProperties({
-      setup: false,
-      setupStep: null,
-      setupProgress: null,
+      setup:          false,
+      setupStep:      null,
+      setupProgress:  null,
       completedSetup: new Date()
     });
 

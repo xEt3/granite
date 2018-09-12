@@ -3,8 +3,8 @@ import layout from '../templates/components/x-tree-branch';
 
 export default Component.extend({
   layout,
-  tagName: 'ul',
-  classNames: ['tree-branch'],
+  tagName:    'ul',
+  classNames: [ 'tree-branch' ],
 
   recalculateState () {
     if (this.get('recalculateStateAction')) {

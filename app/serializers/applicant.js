@@ -2,7 +2,7 @@ import ApplicationSerializer from './application';
 import normalizeKeys from '../utils/serialize-object';
 
 export default ApplicationSerializer.extend({
-  normalize ( modelClass, hash ) {
+  normalize (modelClass, hash) {
     normalizeKeys(hash, 'suffix', 'name');
     return this._super(...arguments);
   },

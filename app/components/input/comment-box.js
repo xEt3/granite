@@ -8,7 +8,7 @@ import { merge } from '@ember/polyfills';
 const { Logger: { debug } } = Ember;
 
 export default Component.extend({
-  store: service(),
+  store:     service(),
   atOptions: {},
 
   _atOptions: computed(function () {
@@ -17,9 +17,12 @@ export default Component.extend({
       let opts = this.get('atOptions');
       return [
         merge(opts, {
-          at: '@',
+          at:   '@',
           data: employees.map(employee => {
-            return { id: employee.get('id'), name: employee.get('fullName') };
+            return {
+              id:   employee.get('id'),
+              name: employee.get('fullName')
+            };
           })
         })
       ];

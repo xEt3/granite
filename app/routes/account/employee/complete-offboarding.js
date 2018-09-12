@@ -6,8 +6,8 @@ export default Route.extend({
 
   afterModel (model) {
     model.setProperties({
-      offboarding: false,
-      offboardingStep: null,
+      offboarding:         false,
+      offboardingStep:     null,
       offboardingProgress: null
     });
 

@@ -4,18 +4,18 @@ import { inject as service } from '@ember/service';
 
 export default Route.extend({
   titleToken: 'Billing',
-  ajax: service(),
+  ajax:       service(),
 
   model () {
     return RSVP.hash({
-      token: this.get('ajax').request('/api/v1/bt/token'),
+      token:   this.get('ajax').request('/api/v1/bt/token'),
       company: this.modelFor('signup.index')
     });
   },
 
   setupController (controller, model) {
     controller.setProperties({
-      model: model.company,
+      model:          model.company,
       braintreeToken: model.token
     });
   }

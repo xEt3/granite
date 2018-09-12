@@ -15,7 +15,10 @@ export default DS.Model.extend({
   addressZipcode: attr('string'),
 
   company: belongsTo('company'),
-  creator: belongsTo('company-user', { async: true, inverse: false }),
+  creator: belongsTo('company-user', {
+    async:   true,
+    inverse: false
+  }),
 
   phoneFormatted: computed('phone',function () {
     var phone = this.get('phone');

@@ -26,24 +26,22 @@ export default Model.extend({
   setupProgress:  attr('number'),
   completedSetup: attr('date'),
 
-  job:              belongsTo('job'),
-  company:          belongsTo('company'),
-  creator:          belongsTo('employee'),
-  location:         belongsTo('location'),
-  screening:        belongsTo('form'),
-  subscribers:      hasMany('employee'),
-  applicantSources: hasMany('applicant-source'),
+  job:                    belongsTo('job'),
+  company:                belongsTo('company'),
+  creator:                belongsTo('employee'),
+  location:               belongsTo('location'),
+  screening:              belongsTo('form'),
+  subscribers:            hasMany('employee'),
+  applicantSources:       hasMany('applicant-source'),
   manualApplicantSources: hasMany('manual-applicant-source'),
-  emailSubscribers: attr('array'),
+  emailSubscribers:       attr('array'),
 
   startOn:     attr('date'),
   endOn:       attr('date'),
   dueOn:       attr('date'),
   completedOn: attr('date'),
 
-  created: attr('date', {
-    defaultValue: () => new Date()
-  }),
+  created: attr('date', { defaultValue: () => new Date() }),
 
   hiring: computed('completedSetup', 'completedOn', 'startOn', 'endOn', function () {
     let now = moment(),

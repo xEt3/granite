@@ -4,7 +4,7 @@ import serializeKeys from '../utils/expand-serialized-object';
 
 
 export default ApplicationSerializer.extend({
-  normalize ( modelClass, hash ) {
+  normalize (modelClass, hash) {
     normalizeKeys(hash, true, 'address');
     return this._super(...arguments);
   },

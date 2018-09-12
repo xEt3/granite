@@ -6,10 +6,10 @@ import moment from 'moment';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default Controller.extend(addEdit, {
-  auth: service(),
+  auth:         service(),
   enableNotify: false,
-  addingTodo: false,
-  addedTodos: A(),
+  addingTodo:   false,
+  addedTodos:   A(),
 
   _afterSave () {
     this.get('addedTodos').forEach(t => {
@@ -26,7 +26,7 @@ export default Controller.extend(addEdit, {
   }),
 
   actions: {
-    toggleProperty ( prop ) {
+    toggleProperty (prop) {
       this.toggleProperty(prop);
     },
 
@@ -36,7 +36,7 @@ export default Controller.extend(addEdit, {
 
       let item = this.store.createRecord('checklist-item', { title });
 
-      if ( assignee ) {
+      if (assignee) {
         item.setProperties({
           assignedTo: assignee,
           assignedBy: this.get('auth.user.employee'),
@@ -49,19 +49,19 @@ export default Controller.extend(addEdit, {
       this.send('save');
 
       this.setProperties({
-        pendingTodo: null,
+        pendingTodo:         null,
         pendingTodoAssignee: null
       });
     },
 
-    removeTodo ( todo ) {
+    removeTodo (todo) {
       this.get('model.checklist').removeObject(todo);
       this.get('addedTodos').removeObject(todo);
       todo.destroy();
     },
 
-    changeCompletedStatus ( todo ) {
-      if ( !todo.get('completedOn') ) {
+    changeCompletedStatus (todo) {
+      if (!todo.get('completedOn')) {
         todo.setProperties({
           completedBy: this.get('auth.user.employee'),
           completedOn: moment().toDate()
@@ -75,7 +75,7 @@ export default Controller.extend(addEdit, {
       this.send('save');
     },
 
-    changeAssignee ( todo, assignedTo ) {
+    changeAssignee (todo, assignedTo) {
       todo.setProperties({
         assignedTo,
         assignedBy: assignedTo ? this.get('auth.user.employee') : null,

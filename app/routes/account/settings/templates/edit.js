@@ -3,7 +3,7 @@ import edit from 'granite/mixins/route-abstractions/edit';
 
 export default Route.extend(edit, {
   titleToken: 'Edit',
-  modelName: 'template',
+  modelName:  'template',
   segmentKey: 'template_id',
 
   model () {
@@ -19,7 +19,7 @@ export default Route.extend(edit, {
 
   setupController (controller, model) {
     controller.setProperties({
-      model: model.template,
+      model:      model.template,
       definition: model.definition
     });
   }

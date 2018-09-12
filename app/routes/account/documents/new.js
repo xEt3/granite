@@ -5,7 +5,7 @@ import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
   titleToken: 'New Document',
-  auth: service(),
+  auth:       service(),
 
   model () {
     return Promise.resolve();

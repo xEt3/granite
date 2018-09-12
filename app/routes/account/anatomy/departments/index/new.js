@@ -4,8 +4,8 @@ import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
   titleToken: 'New Department',
-  modelName: 'department',
-  auth: service(),
+  modelName:  'department',
+  auth:       service(),
 
   getModelDefaults () {
     return {

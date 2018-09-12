@@ -3,7 +3,7 @@ import normalizeKeys from '../utils/serialize-object';
 import serializeKeys from '../utils/expand-serialized-object';
 
 export default ApplicationSerializer.extend({
-  normalize ( modelClass, hash ) {
+  normalize (modelClass, hash) {
     normalizeKeys(hash, 'suffix', 'name');
     normalizeKeys(hash, true, 'address', 'emergencyContact', 'finalAddress', 'externalLink');
     return this._super(...arguments);
@@ -31,7 +31,7 @@ export default ApplicationSerializer.extend({
     json.emergencyContact = {
       name: {
         first: json.emergencyContactNameFirst,
-        last: json.emergencyContactNameLast
+        last:  json.emergencyContactNameLast
       },
       phone: json.emergencyContactPhone
     };

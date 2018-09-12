@@ -3,7 +3,7 @@ import Route from '@ember/routing/route';
 export default Route.extend({
   titleToken: 'Settings',
 
-  model() {
+  model () {
     return this.modelFor('account.recruiting.job-description');
   }
 });

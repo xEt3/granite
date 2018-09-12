@@ -4,10 +4,10 @@ import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
   deserialized: attr(),
-  serialized: attr('string'),
+  serialized:   attr('string'),
 
-  company:    belongsTo('company'),
-  creator:    belongsTo('employee'),
+  company: belongsTo('company'),
+  creator: belongsTo('employee'),
 
   created: attr('date')
 });

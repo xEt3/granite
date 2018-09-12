@@ -9,15 +9,19 @@ export default Controller.extend({
   }),
 
   actions: {
-    selectGroup ( selectedGroup, groupDisplayOffset, timelineOffset ) {
-      this.setProperties({ selectedGroup, groupDisplayOffset, timelineOffset });
+    selectGroup (selectedGroup, groupDisplayOffset, timelineOffset) {
+      this.setProperties({
+        selectedGroup,
+        groupDisplayOffset,
+        timelineOffset
+      });
     },
 
     deselectGroup () {
       this.setProperties({
-        selectedGroup: null,
+        selectedGroup:      null,
         groupDisplayOffset: null,
-        timelineOffset: null
+        timelineOffset:     null
       });
     }
   }

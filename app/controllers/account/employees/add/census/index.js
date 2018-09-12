@@ -9,7 +9,7 @@ export default Controller.extend(ajaxStatus, {
   supportedExtensions: [ 'csv', 'xls', 'xlsx' ],
 
   actions: {
-    fileUploadError ( err ) {
+    fileUploadError (err) {
       this.set('fileUploadError', err);
 
       run.later(() => {
@@ -17,11 +17,11 @@ export default Controller.extend(ajaxStatus, {
       }, 1500);
     },
 
-    successHandler ( response ) {
+    successHandler (response) {
       this.transitionToRoute('account.employees.add.census.review', response);
     },
 
-    onNotify ( type, msg ) {
+    onNotify (type, msg) {
       this.send('notify', type, msg);
     }
   }

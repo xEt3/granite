@@ -27,8 +27,6 @@ const MessageItemComponent = Component.extend(inViewportMixin, {
   }
 });
 
-MessageItemComponent.reopenClass({
-  positionalParams: [ 'message' ]
-});
+MessageItemComponent.reopenClass({ positionalParams: [ 'message' ] });
 
 export default MessageItemComponent;

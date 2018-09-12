@@ -2,11 +2,11 @@ import Mixin from '@ember/object/mixin';
 import { inject as service } from '@ember/service';
 
 export default Mixin.create({
-  auth: service(),
+  auth:                    service(),
   authenticationChangeUrl: 'index',
 
-  beforeModel ( transition ) {
-    if ( !this.get('auth.authenticated') ) {
+  beforeModel (transition) {
+    if (!this.get('auth.authenticated')) {
       this.controllerFor('login').set('previousTransition', transition);
       return this.transitionTo('login');
     }
@@ -16,7 +16,7 @@ export default Mixin.create({
   },
 
   __authenticationStateChanged () {
-    if ( this.get('auth.authenticated') === false ) {
+    if (this.get('auth.authenticated') === false) {
       this.transitionTo(this.get('authenticationChangeUrl'));
     }
   },

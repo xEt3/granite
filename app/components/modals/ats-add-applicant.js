@@ -6,17 +6,20 @@ import ajaxStatus from 'granite/mixins/ajax-status';
 import $ from 'jquery';
 
 export default Component.extend(ajaxStatus, {
-  store: service(),
+  store:                   service(),
   applicantRequiredFields: [ 'firstName', 'lastName', 'phone', 'email' ],
-  fileIsAdded: false,
+  fileIsAdded:             false,
 
-  resumeEndpoint: computed('model.jobOpening.id', function() {
+  resumeEndpoint: computed('model.jobOpening.id', function () {
     return `/api/v1/upload/resume/${this.get('model.jobOpening.id')}`;
   }),
 
   uploadResume () {
     return new Promise((resolveUpload, rejectUpload) => {
-      this.setProperties({ resolveUpload, rejectUpload });
+      this.setProperties({
+        resolveUpload,
+        rejectUpload
+      });
       Dropzone.forElement('.input__dropzone').processQueue();
     });
   },
@@ -29,17 +32,20 @@ export default Component.extend(ajaxStatus, {
     const store = this.get('store');
 
     this.setProperties({
-      newApplicant: store.createRecord('applicant', {}),
+      newApplicant:   store.createRecord('applicant', {}),
       newApplication: store.createRecord('jobApplication', {})
     });
 
     $('#' + this.get('modalId')).modal({
       detachable: true,
-      closable: false,
-      context: 'body.ember-application'
+      closable:   false,
+      context:    'body.ember-application'
     }).modal('show');
 
-    return new Promise((resolve, reject) => this.setProperties({ resolve, reject }));
+    return new Promise((resolve, reject) => this.setProperties({
+      resolve,
+      reject
+    }));
   },
 
   startApplication: computed('modalId', function () {
@@ -121,8 +127,8 @@ export default Component.extend(ajaxStatus, {
       application.setProperties({
         applicant,
         manualEntry: true,
-        jobOpening: this.get('model.jobOpening'),
-        reviewedOn: this.get('newApplication').stage ? new Date() : null
+        jobOpening:  this.get('model.jobOpening'),
+        reviewedOn:  this.get('newApplication').stage ? new Date() : null
       });
 
       applicant.save()
@@ -143,7 +149,7 @@ export default Component.extend(ajaxStatus, {
       .then(() => {
         this.ajaxSuccess('Saved application successfully');
         this.setProperties({
-          newApplicant: null,
+          newApplicant:   null,
           newApplication: null
         });
         this.send('removeFile');

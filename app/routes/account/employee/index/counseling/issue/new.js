@@ -7,14 +7,14 @@ import { issueTypes } from 'granite/config/statics';
 
 export default Route.extend(add, {
   titleToken: 'Corrective Action',
-  auth: service(),
-  ajax: service(),
-  modelName: 'corrective-action',
+  auth:       service(),
+  ajax:       service(),
+  modelName:  'corrective-action',
 
   model () {
     return RSVP.hash({
       correctiveAction: this._super(...arguments),
-      issueTypes: this.getIssueTypes()
+      issueTypes:       this.getIssueTypes()
     });
   },
 
@@ -26,8 +26,8 @@ export default Route.extend(add, {
       return {
         severity,
         employeeIssue,
-        type: employeeIssue.get('type'),
-        creator: this.get('auth.user.employee'),
+        type:     employeeIssue.get('type'),
+        creator:  this.get('auth.user.employee'),
         employee: this.modelFor('account.employee')
       };
     });
@@ -44,7 +44,7 @@ export default Route.extend(add, {
     return this.get('ajax').request('/api/v1/employee-issues', {
       data: {
         _distinct: true,
-        select: 'type'
+        select:    'type'
       }
     })
     .then(res => A([ ...issueTypes, ...res ]).uniq());
@@ -56,8 +56,8 @@ export default Route.extend(add, {
     // the first, newest action
     return this.store.query('corrective-action', {
       employeeIssue: employeeIssue.get('id'),
-      limit: 1,
-      sort: { created : -1 }
+      limit:         1,
+      sort:          { created: -1 }
     })
     .then(result => {
       // Get the first correctiveAction in the APRA or the employeeIssue

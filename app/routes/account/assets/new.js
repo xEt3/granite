@@ -4,8 +4,8 @@ import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
   titleToken: 'New Assets',
-  auth: service(),
-  modelName: 'asset',
+  auth:       service(),
+  modelName:  'asset',
 
   getModelDefaults () {
     return {

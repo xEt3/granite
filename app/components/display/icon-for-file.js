@@ -4,9 +4,9 @@ import { A } from '@ember/array';
 import fileTypes from 'granite/config/mime-types';
 
 const IconForFileComponent = Component.extend({
-  tagName: 'i',
+  tagName:           'i',
   classNameBindings: [ 'icon' ],
-  classNames: [ 'icon' ],
+  classNames:        [ 'icon' ],
 
   icon: computed('file.{mimeType,extension}', function () {
     let m = A(fileTypes).find(f => f.match.test(this.get(`file.${f.strategy}`)));
@@ -14,8 +14,6 @@ const IconForFileComponent = Component.extend({
   })
 });
 
-IconForFileComponent.reopenClass({
-  positionalParams: [ 'file' ]
-});
+IconForFileComponent.reopenClass({ positionalParams: [ 'file' ] });
 
 export default IconForFileComponent;

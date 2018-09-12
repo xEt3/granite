@@ -3,14 +3,14 @@ import { Promise } from 'rsvp';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default Controller.extend(addEdit, {
-  fileIsAdded: false,
+  fileIsAdded:         false,
   transitionAfterSave: 'account.documents.index',
   transitionWithModel: false,
-  tagSuggestions: [ 'Reference', 'Employee Specific', 'Company Wide' ],
+  tagSuggestions:      [ 'Reference', 'Employee Specific', 'Company Wide' ],
 
   actions: {
     addedFile (file) {
-      if ( this.get('fileIsAdded') ) {
+      if (this.get('fileIsAdded')) {
         this.send('removeFile', this.get('fileIsAdded'));
       }
 

@@ -2,8 +2,8 @@ import Mixin from '@ember/object/mixin';
 
 export default Mixin.create({
   queryParams: {
-    page: { refreshModel: true },
-    limit: { refreshModel: true },
+    page:   { refreshModel: true },
+    limit:  { refreshModel: true },
     sortBy: { refreshModel: true }
   },
 
@@ -21,7 +21,7 @@ export default Mixin.create({
 
   model (params) {
     let query = {
-      page: params.page - 1 || 0,
+      page:  params.page - 1 || 0,
       limit: params.limit
     };
 

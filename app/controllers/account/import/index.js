@@ -6,7 +6,7 @@ export default Controller.extend(ajaxStatus, {
   ajax: service(),
 
   queryParams: [ 'service' ],
-  service: null,
+  service:     null,
 
   actions: {
     discover () {
@@ -17,9 +17,7 @@ export default Controller.extend(ajaxStatus, {
       this.get('ajax').request(`/api/v1/integrations/${serviceName}/discover-import`)
       .then(response => {
         this.ajaxSuccess(null, true);
-        this.transitionToRoute('account.import.discovered', response, {
-          queryParams: { service: serviceName }
-        });
+        this.transitionToRoute('account.import.discovered', response, { queryParams: { service: serviceName } });
       });
     }
   }

@@ -24,9 +24,9 @@ const typesWithScore = [
 
 const FormElementComponent = SortableItem.extend({
   formTypes,
-  class: [ 'form-element__list-item' ],
+  class:             [ 'form-element__list-item' ],
   classNameBindings: [ 'removing:form-element__list-item--removing' ],
-  handle: '.form-element__handle',
+  handle:            '.form-element__handle',
 
   emptyObject: computed('model.type', function () {
     return Object.create();
@@ -55,7 +55,7 @@ const FormElementComponent = SortableItem.extend({
         r = this.get('model.required'),
         label = l ? `${this.get('positionInForm')}) ${l}` : ' ';
 
-    if ( l && r ) {
+    if (l && r) {
       label += '*';
     }
 
@@ -63,7 +63,7 @@ const FormElementComponent = SortableItem.extend({
   }),
 
   rerenderFormElement: observer('model.{allowAdditions,multiple}', function () {
-    if ( this.get('isDestroyed') || this.get('isDestroying') ) {
+    if (this.get('isDestroyed') || this.get('isDestroying')) {
       return;
     }
 
@@ -91,8 +91,6 @@ const FormElementComponent = SortableItem.extend({
   }
 });
 
-FormElementComponent.reopenClass({
-  positionalParams: [ 'model', 'group' ]
-});
+FormElementComponent.reopenClass({ positionalParams: [ 'model', 'group' ] });
 
 export default FormElementComponent;

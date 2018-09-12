@@ -3,5 +3,5 @@ import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
   titleToken: 'New Position',
-  modelName: 'job'
+  modelName:  'job'
 });

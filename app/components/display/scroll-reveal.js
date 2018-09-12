@@ -18,7 +18,7 @@ const sroptlist = [
 ];
 
 const ScrollRevealComponent = Component.extend({
-  reset: true,
+  reset:    true,
   duration: 1000,
 
   init () {
@@ -57,8 +57,6 @@ const ScrollRevealComponent = Component.extend({
   }
 });
 
-ScrollRevealComponent.reopenClass({
-  positionalParams: [ 'selector' ]
-});
+ScrollRevealComponent.reopenClass({ positionalParams: [ 'selector' ] });
 
 export default ScrollRevealComponent;

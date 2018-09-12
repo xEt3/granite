@@ -15,38 +15,38 @@ const offboardProps = [
 ];
 
 export default Route.extend(wizard, {
-  key: 'offboarding',
-  basePath: 'account.employee.offboard',
+  key:        'offboarding',
+  basePath:   'account.employee.offboard',
   returnPath: 'account.employee.complete-offboarding',
-  setUserOn: 'offboarder',
+  setUserOn:  'offboarder',
 
   steps: A([{
-    icon: 'info',
+    icon:  'info',
     title: 'Start',
-    link: 'index'
+    link:  'index'
   }, {
-    icon: 'list',
+    icon:  'list',
     title: 'Details',
-    link: 'details'
+    link:  'details'
   }, {
-    icon: 'options',
+    icon:  'options',
     title: 'Options',
-    link: 'options'
+    link:  'options'
   }, {
-    icon: 'mobile',
+    icon:  'mobile',
     title: 'Assets',
-    link: 'assets'
+    link:  'assets'
   }, {
-    icon: 'cubes',
+    icon:  'cubes',
     title: 'Reorganization',
-    link: 'reorganization'
+    link:  'reorganization'
   }]),
 
   actions: {
     cancelOffboard () {
       const model = this.get('controller.model');
 
-      if ( !model ) {
+      if (!model) {
         return;
       }
 

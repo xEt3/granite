@@ -6,7 +6,7 @@ export default Controller.extend({
   socket: service(),
 
   queryParams: [ 'sb' ],
-  sb: 0,
+  sb:          0,
 
   retrievalMax: computed('model.{count,messages.length}', function () {
     const msgLen = this.get('model.messages.length');
@@ -21,7 +21,7 @@ export default Controller.extend({
 
       this.get('socket').emit('thread_message', {
         message,
-        file: file && file._id,
+        file:   file && file._id,
         thread: this.get('model.thread.id')
       });
     },

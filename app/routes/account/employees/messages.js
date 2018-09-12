@@ -4,9 +4,9 @@ import refreshable from 'granite/mixins/refreshable';
 import { hash, map } from 'rsvp';
 
 export default Route.extend(refreshable, {
-  auth: service(),
-  ajax: service(),
-  socket: service(),
+  auth:          service(),
+  ajax:          service(),
+  socket:        service(),
   notifications: service(),
 
   title (tokens) {
@@ -30,16 +30,16 @@ export default Route.extend(refreshable, {
       .then(result => map(result.toArray(), (thread) => {
         return hash({
           lastMessage: this.get('store').query('message', {
-            limit: 1,
+            limit:         1,
             messageThread: thread.get('id'),
-            sort: { created: -1 }
+            sort:          { created: -1 }
           }),
 
           unreadCount: this.get('ajax').request('/api/v1/messages', {
             data: {
-              _count: true,
+              _count:        true,
               messageThread: thread.get('id'),
-              readBy: { $nin: [ this.get('auth.user.employee.id') ] }
+              readBy:        { $nin: [ this.get('auth.user.employee.id') ] }
             }
           })
         }).then(results => {
@@ -48,21 +48,19 @@ export default Route.extend(refreshable, {
           return thread;
         });
       })),
-      user: this.get('auth.user.employee'),
+      user:      this.get('auth.user.employee'),
       employees: this.store.query('employee', {
-        _id: { $nin: [ this.get('auth.user.employee.id') ] },
-        sort: {
-          'name.last': 1
-        }
+        _id:  { $nin: [ this.get('auth.user.employee.id') ] },
+        sort: { 'name.last': 1 }
       })
     });
   },
 
   setupController (controller, model) {
     controller.setProperties({
-      model: model.threads,
+      model:        model.threads,
       allEmployees: model.employees,
-      user: model.user
+      user:         model.user
     });
   }
 });

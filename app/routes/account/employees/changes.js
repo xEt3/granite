@@ -7,7 +7,7 @@ export default Route.extend(refreshable, {
   model () {
     return this.get('store').query('change', {
       reviewedOn: { $not: { $type: 9 } },
-      sort: { created: -1 }
+      sort:       { created: -1 }
     });
   }
 });

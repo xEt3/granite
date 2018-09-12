@@ -7,7 +7,7 @@ import breadcrumbOverrides from '../config/breadcrumb';
 export default Controller.extend({
   breadcrumbOverrides,
 
-  auth: service(),
+  auth:        service(),
   application: controller(),
   currentPath: computed.reads('application.currentPath'),
 

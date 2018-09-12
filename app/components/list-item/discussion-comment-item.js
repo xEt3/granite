@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 let DiscussionCommentItemComponent = Component.extend({
-  auth: service(),
+  auth:       service(),
   classNames: [ 'ui', 'comment' ],
 
   isOwner: computed('auth.user.employee.id', 'comment.commenter.id', function () {
@@ -17,16 +17,14 @@ let DiscussionCommentItemComponent = Component.extend({
 
       comment.destroyRecord();
 
-      if ( onDelete && typeof onDelete === 'function' ) {
+      if (onDelete && typeof onDelete === 'function') {
         onDelete(comment);
       }
     }
   }
 });
 
-DiscussionCommentItemComponent.reopenClass({
-  positionalParams: [ 'comment' ]
-});
+DiscussionCommentItemComponent.reopenClass({ positionalParams: [ 'comment' ] });
 
 export default DiscussionCommentItemComponent;
 /* Usage

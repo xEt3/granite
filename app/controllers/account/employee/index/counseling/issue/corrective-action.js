@@ -7,34 +7,30 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import del from 'granite/mixins/controller-abstractions/delete';
 
 export default Controller.extend(addEdit, del, {
-  auth: service(),
+  auth:                  service(),
   transitionAfterDelete: 'account.employee.index.counseling.issue',
-  transitionAfterSave: false,
+  transitionAfterSave:   false,
 
   followupForm: computed(() => [{
     label: 'Is the issue resolved?',
-    type: 'checkbox',
-    path: 'didResolve'
+    type:  'checkbox',
+    path:  'didResolve'
   }, {
-    label: 'Followup notes',
-    type: 'textarea',
-    rows: '7',
-    path: 'notes',
+    label:       'Followup notes',
+    type:        'textarea',
+    rows:        '7',
+    path:        'notes',
     placeholder: 'Your notes about this follow up go here.'
   }, {
-    label: 'When did you follow up?',
-    type: 'date',
-    path: 'created',
-    inputAttrs: {
-      inline: true
-    }
+    label:      'When did you follow up?',
+    type:       'date',
+    path:       'created',
+    inputAttrs: { inline: true }
   }, {
-    label: 'Next follow up date (optional)',
-    type: 'date',
-    path: 'nextFollowup',
-    inputAttrs: {
-      inline: true
-    }
+    label:      'Next follow up date (optional)',
+    type:       'date',
+    path:       'nextFollowup',
+    inputAttrs: { inline: true }
   }]),
 
   afterSave (model) {
@@ -55,9 +51,7 @@ export default Controller.extend(addEdit, del, {
       this.get('followup').destroyRecord();
     }
 
-    let followup = this.store.createRecord('corrective-action-followup', {
-      creator: this.get('auth.user.employee')
-    });
+    let followup = this.store.createRecord('corrective-action-followup', { creator: this.get('auth.user.employee') });
 
     this.set('followup', followup);
     return followup;
@@ -74,9 +68,9 @@ export default Controller.extend(addEdit, del, {
 
       if (followup.get('didResolve')) {
         action.setProperties({
-          didResolve: true,
+          didResolve:         true,
           resolutionStatusOn: new Date(),
-          followUpOn: followup.get('nextFollowup') || action.get('followUpOn')
+          followUpOn:         followup.get('nextFollowup') || action.get('followUpOn')
         });
       }
 
@@ -91,8 +85,8 @@ export default Controller.extend(addEdit, del, {
 
       $('#modal__corrective-action--followup').modal({
         detachable: true,
-        onHidden: () => {
-          if ( !this.get('respondedFollowup') ) {
+        onHidden:   () => {
+          if (!this.get('respondedFollowup')) {
             this.send('respondedFollowup', false);
 
           }

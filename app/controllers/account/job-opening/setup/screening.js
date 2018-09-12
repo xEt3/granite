@@ -39,7 +39,7 @@ export default Controller.extend(addEdit, {
 
       f.setProperties({
         targetType: 'JobOpening',
-        targetId: this.get('model.id')
+        targetId:   this.get('model.id')
       });
 
       this.saveModel(f)

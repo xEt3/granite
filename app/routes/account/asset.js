@@ -5,7 +5,7 @@ export default Route.extend({
     return this.context.name;
   },
 
-  model ( params ) {
+  model (params) {
     return this.store.find('asset', params.id);
   }
 });

@@ -13,14 +13,19 @@ import { tree, hierarchy } from 'd3-hierarchy';
 const select = 'name email jobTitle supervisor';
 
 export default Component.extend({
-  tagName: 'svg',
-  ajax: service(),
-  classNames: [ 'visualization__org-tree', 'visualization__org-tree--full' ],
+  tagName:           'svg',
+  ajax:              service(),
+  classNames:        [ 'visualization__org-tree', 'visualization__org-tree--full' ],
   attributeBindings: [ 'width', 'height' ],
 
-  nodeRadius: 8,
+  nodeRadius:     8,
   baseNodeRadius: 11,
-  margin: { top: 40, right: 90, bottom: 50, left: 90 },
+  margin:         {
+    top:    40,
+    right:  90,
+    bottom: 50,
+    left:   90
+  },
 
   didUpdateAttrs () {
     this._super(...arguments);
@@ -42,10 +47,10 @@ export default Component.extend({
     .then(res => {
       let children = res.employee;
 
-      if ( children && children.length > 0 ) {
+      if (children && children.length > 0) {
         return RSVP.map(children, child => {
           let _child = baseNode && get(baseNode, '_id') === get(child, '_id') ? Object.create(baseNode) : child;
-          if ( !base, get(_child, '_id') === get(baseNode, '_id') ) {
+          if (!base, get(_child, '_id') === get(baseNode, '_id')) {
             return;
           }
           return this.populateChildNodes(_child)
@@ -68,7 +73,7 @@ export default Component.extend({
 
   _baseRender: on('didInsertElement', function () {
     this.setProperties({
-      width: this.$().width(),
+      width:  this.$().width(),
       height: this.$().height()
     });
 
@@ -79,7 +84,7 @@ export default Component.extend({
             width = svg.attr('width') - margin.left - margin.right,
             height = svg.attr('height') - margin.top - margin.bottom,
             g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`),
-            t = tree().size([width, height]);
+            t = tree().size([ width, height ]);
 
         this.setProperties({
           svg,
@@ -132,11 +137,11 @@ export default Component.extend({
           let c = 'node';
           c += d.children ? ' node--internal' : ' node--leaf';
 
-          if ( d.data.deprecating ) {
+          if (d.data.deprecating) {
             c += ' node--deprecating';
           }
 
-          if ( d.data._id === baseNodeId ) {
+          if (d.data._id === baseNodeId) {
             c += ' node--base';
           }
 

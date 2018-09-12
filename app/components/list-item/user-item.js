@@ -10,9 +10,7 @@ let UserItemComponent = Component.extend({
   }
 });
 
-UserItemComponent.reopenClass({
-  positionalParams: [ 'user' ]
-});
+UserItemComponent.reopenClass({ positionalParams: [ 'user' ] });
 
 export default UserItemComponent;
 

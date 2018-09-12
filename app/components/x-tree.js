@@ -6,7 +6,7 @@ import { get, set }  from '@ember/object';
 export default Component.extend({
   layout,
 
-  init() {
+  init () {
     this._super(...arguments);
     let tree = this.get('model');
 

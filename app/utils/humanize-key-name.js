@@ -8,15 +8,15 @@ let canned = {
   __v: 'Version'
 };
 
-export default function humanizeKeyName(key) {
-  if ( !key ) {
+export default function humanizeKeyName (key) {
+  if (!key) {
     return key;
   }
 
-  if ( canned[key] ) {
+  if (canned[key]) {
     return canned[key];
   }
 
   let transformedKey = key.split('.').map(p => ES.decamelize(p).replace(/([a-z])([0-9])/g, '$1 $2')).join(' ');
-  return titleCase([transformedKey.replace(/_/g, ' ')]);
+  return titleCase([ transformedKey.replace(/_/g, ' ') ]);
 }

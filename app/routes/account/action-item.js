@@ -8,13 +8,11 @@ export default Route.extend({
     return tokens.join(' - ') + ' - ' + this.context.title + ' - Granite HR';
   },
 
-  model ( params ) {
+  model (params) {
     return RSVP.hash({
-      actionItem: this.store.queryRecord('action-item', {
-        title: params.slug.replace(/-/g, ' ')
-      }),
+      actionItem:   this.store.queryRecord('action-item', { title: params.slug.replace(/-/g, ' ') }),
       companyUsers: this.store.query('company-user', {
-        _id: { $ne: this.get('auth.user._id') },
+        _id:    { $ne: this.get('auth.user._id') },
         select: 'name employee'
       })
     })

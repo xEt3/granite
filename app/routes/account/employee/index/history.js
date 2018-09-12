@@ -5,16 +5,14 @@ import moment from 'moment';
 export default Route.extend({
   titleToken: 'History',
 
-  model ( params ) {
+  model (params) {
     const page = params.page;
 
     return this.store.query('history', {
-      limit: 20,
+      limit:    20,
       targetId: this.modelFor('account.employee').get('id'),
-      page: page ? page - 1 : 0,
-      sort: {
-        created: -1
-      }
+      page:     page ? page - 1 : 0,
+      sort:     { created: -1 }
     })
     .then(histories => {
       let historyGroups = A();
@@ -23,16 +21,16 @@ export default Route.extend({
             lastGroup = historyGroups.get('lastObject');
 
         let groupData = {
-          date: moment(day).startOf('day').toDate(),
+          date:    moment(day).startOf('day').toDate(),
           history: A()
         };
 
-        if ( !lastGroup ) {
+        if (!lastGroup) {
           groupData.startOfMonth = true;
           groupData.startOfYear = true;
-        } else if ( !moment(lastGroup.date).isSame(groupData.date, 'year') ) {
+        } else if (!moment(lastGroup.date).isSame(groupData.date, 'year')) {
           groupData.startOfYear = true;
-        } else if ( !moment(lastGroup.date).isSame(groupData.date, 'month') ) {
+        } else if (!moment(lastGroup.date).isSame(groupData.date, 'month')) {
           groupData.startOfMonth = true;
         }
 

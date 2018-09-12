@@ -16,8 +16,6 @@ const PipelineStageComponent = Component.extend({
   }
 });
 
-PipelineStageComponent.reopenClass({
-  positionalParams: [ 'stage', 'stages' ]
-});
+PipelineStageComponent.reopenClass({ positionalParams: [ 'stage', 'stages' ] });
 
 export default PipelineStageComponent;

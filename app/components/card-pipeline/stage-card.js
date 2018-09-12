@@ -9,8 +9,8 @@ import { task } from 'ember-concurrency';
 const { Logger: { error } } = Ember;
 
 const PipelineCardComponent = Component.extend({
-  store: service(),
-  classNames: [ 'pipeline-card__content' ],
+  store:             service(),
+  classNames:        [ 'pipeline-card__content' ],
   classNameBindings: [
     'application.hired:pipeline-card__content--hired',
     'application.disqualified:pipeline-card__content--disqualified'
@@ -33,12 +33,10 @@ const PipelineCardComponent = Component.extend({
     try {
       let results = yield this.get('store').query('event', {
         contextType: 'JobApplication',
-        contextId: this.get('application.id'),
-        limit: 1,
-        start: { $gt: new Date() },
-        sort: {
-          start: -1
-        }
+        contextId:   this.get('application.id'),
+        limit:       1,
+        start:       { $gt: new Date() },
+        sort:        { start: -1 }
       });
 
       return (results || A()).get('firstObject');
@@ -58,8 +56,6 @@ const PipelineCardComponent = Component.extend({
   }
 });
 
-PipelineCardComponent.reopenClass({
-  positionalParams: [ 'application', 'stages' ]
-});
+PipelineCardComponent.reopenClass({ positionalParams: [ 'application', 'stages' ] });
 
 export default PipelineCardComponent;

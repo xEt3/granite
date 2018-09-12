@@ -3,10 +3,10 @@ import { A } from '@ember/array';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default Controller.extend(addEdit, {
-  addedTodos: A(),
+  addedTodos:          A(),
   transitionAfterSave: 'account.action-item',
   transitionWithModel: true,
-  modelIdentifier: 'slug',
+  modelIdentifier:     'slug',
 
   _afterSave () {
     this.get('addedTodos').forEach(t => {
@@ -18,7 +18,7 @@ export default Controller.extend(addEdit, {
   },
 
   actions: {
-    updatePriority ( newValue ) {
+    updatePriority (newValue) {
       this.set('model.priority', newValue[0]);
     },
 
@@ -28,7 +28,7 @@ export default Controller.extend(addEdit, {
 
       let item = this.store.createRecord('checklist-item', { title });
 
-      if ( assignee ) {
+      if (assignee) {
         item.setProperties({
           assignedTo: assignee,
           assignedBy: this.get('auth.user.employee'),
@@ -40,12 +40,12 @@ export default Controller.extend(addEdit, {
       this.get('addedTodos').addObject(item);
 
       this.setProperties({
-        pendingTodo: null,
+        pendingTodo:         null,
         pendingTodoAssignee: null
       });
     },
 
-    removeTodo ( todo ) {
+    removeTodo (todo) {
       this.get('model.checklist').removeObject(todo);
       this.get('addedTodos').removeObject(todo);
       todo.destroy();

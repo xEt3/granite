@@ -4,9 +4,9 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import del from 'granite/mixins/controller-abstractions/delete';
 
 export default Controller.extend(addEdit, del, {
-  auth: service(),
+  auth:                  service(),
   transitionAfterDelete: 'account.recruiting.job-descriptions',
-  transitionWithModel: false,
+  transitionWithModel:   false,
 
   actions: {
     createCampaign () {
@@ -14,7 +14,10 @@ export default Controller.extend(addEdit, del, {
 
       let job = this.get('model'),
           creator = this.get('auth.user'),
-          jobOpening = this.store.createRecord('job-opening', { job, creator });
+          jobOpening = this.store.createRecord('job-opening', {
+            job,
+            creator
+          });
 
       jobOpening.save()
       .then(record => {

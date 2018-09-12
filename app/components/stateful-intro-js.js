@@ -15,21 +15,21 @@ export default Component.extend({
   }),
 
   actions: {
-    markAsShown ( exit ) {
-      if ( exit && !this.get('markAsShownOnExit') ) {
+    markAsShown (exit) {
+      if (exit && !this.get('markAsShownOnExit')) {
         return;
       }
 
       let user = this.get('user.content');
 
-      if ( !user ) {
+      if (!user) {
         return;
       }
 
       let hints = user.get('shownHints'),
           key = this.get('hintKey');
 
-      if ( !hints ) {
+      if (!hints) {
         return;
       }
 

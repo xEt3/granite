@@ -14,17 +14,18 @@ export default Component.extend({
   createConfirm () {
     const store = this.get('store');
 
-    this.setProperties({
-      newAsset: store.createRecord('asset', {})
-    });
+    this.setProperties({ newAsset: store.createRecord('asset', {}) });
 
     $('#' + this.get('modalId')).modal({
       detachable: true,
-      closable: false,
-      context: 'body.ember-application'
+      closable:   false,
+      context:    'body.ember-application'
     }).modal('show');
 
-    return new Promise((resolve, reject) => this.setProperties({ resolve, reject }));
+    return new Promise((resolve, reject) => this.setProperties({
+      resolve,
+      reject
+    }));
   },
 
   startAddingAsset: computed('modalId', function () {
@@ -38,9 +39,7 @@ export default Component.extend({
   actions: {
     save () {
       this.get('newAsset').save().then(() => {
-        this.setProperties({
-          newAsset: null
-        });
+        this.setProperties({ newAsset: null });
         this.closeModal();
         this.get('newAssetCategory')();
       });

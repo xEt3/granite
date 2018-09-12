@@ -5,18 +5,18 @@ import { inject as service } from '@ember/service';
 import ajaxStatus from '../ajax-status';
 
 export default Mixin.create(ajaxStatus, {
-  auth: service(),
+  auth:       service(),
   /*
     The key of properties set on the model (ex. for offboarding 'offboarding')
     This will set offboarding, offboardingStep, and offboardingProgress on the
     current model.
    */
-  key: null,
+  key:        null,
   /*
     The route path of where the wizard is located. If your wizard is at
     "account.employee.setup", this should be the base path
    */
-  basePath: null,
+  basePath:   null,
   /*
     Where the user will be returned to if no more steps exist.
    */
@@ -27,7 +27,7 @@ export default Mixin.create(ajaxStatus, {
     ex. setUserOn = 'offboarder', every step we will make sure the current
     user is set on model.offboarder
    */
-  setUserOn: null,
+  setUserOn:  null,
 
   afterModel (model) {
     this._super(...arguments);
@@ -36,7 +36,7 @@ export default Mixin.create(ajaxStatus, {
         steps = this.get('steps'),
         basePath = this.get('basePath');
 
-    if ( step && step > 1 ) {
+    if (step && step > 1) {
       run.scheduleOnce('afterRender', () => {
         if (this.get('controller.currentStepIndex') === 1) {
           let l = get(steps.objectAt(step), 'link');
@@ -48,7 +48,7 @@ export default Mixin.create(ajaxStatus, {
 
   setupController (controller) {
     controller.setProperties({
-      steps: this.get('steps'),
+      steps:    this.get('steps'),
       basePath: this.get('basePath')
     });
 
@@ -69,7 +69,7 @@ export default Mixin.create(ajaxStatus, {
       morph[key + 'Step'] = controller.get('currentStepIndex');
       morph[key + 'Progress'] = parseInt(controller.get('progress'), 0);
 
-      if ( this.get('setUserOn') ) {
+      if (this.get('setUserOn')) {
         morph[this.get('setUserOn')] = this.get('auth.user');
       }
 
@@ -79,7 +79,7 @@ export default Mixin.create(ajaxStatus, {
       .then(() => {
         this.ajaxSuccess('Successfully saved progress.');
 
-        if ( !controller.get('nextStep') ) {
+        if (!controller.get('nextStep')) {
           this.transitionTo(this.get('returnPath'));
           return;
         }

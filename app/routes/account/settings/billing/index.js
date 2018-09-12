@@ -4,8 +4,8 @@ import { hash } from 'rsvp';
 import refreshable from 'granite/mixins/refreshable';
 
 export default Route.extend(refreshable, {
-  ajax: service(),
-  auth: service(),
+  ajax:         service(),
+  auth:         service(),
   subscription: service(),
 
   model () {
@@ -13,19 +13,17 @@ export default Route.extend(refreshable, {
 
     return hash({
       company,
-      paymentMethod: this.store.queryRecord('payment-method', {
-        company: company.get('id')
-      }),
+      paymentMethod:    this.store.queryRecord('payment-method', { company: company.get('id') }),
       subscriptionInfo: this.subscription.getSubscription()
     });
   },
 
   setupController (controller, model) {
     controller.setProperties({
-      model: model.subscriptionInfo.subscription,
-      customer: model.subscriptionInfo.customer,
+      model:         model.subscriptionInfo.subscription,
+      customer:      model.subscriptionInfo.customer,
       paymentMethod: model.paymentMethod,
-      company: model.company
+      company:       model.company
     });
   },
 
