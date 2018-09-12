@@ -1,18 +1,18 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import authenticate from 'granite/tests/helpers/auth';
-import { visit, currentURL, click, find, settled} from '@ember/test-helpers';
+import { visit, currentURL, click, find, settled } from '@ember/test-helpers';
 
-module('Acceptance | action items', function(hooks) {
+module('Acceptance | action items', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('getting to the action items',async function(assert){
+  test('getting to the action items', async function (assert) {
     await authenticate.call(this, server);
     await visit('/account/action-items');
     assert.equal(currentURL(), '/account/action-items', 'on Action Items page');
   });
 
-  test('action items elements show on page',async function(assert){
+  test('action items elements show on page', async function (assert) {
     await authenticate.call(this, server);
     await server.create('action-items');
     await visit('/account/action-items');
@@ -34,19 +34,19 @@ module('Acceptance | action items', function(hooks) {
     assert.dom('div:nth-child(3) > h4 > span').hasText('No Participants');
   });
 
-  test('filter by priority',async function(assert){
-    await authenticate.call(this, server );
+  test('filter by priority', async function (assert) {
+    await authenticate.call(this, server);
     await server.createList('action-items', 5);
     await visit('/account/action-items');
     await click('i.large.filter.icon');
     assert.dom('.five.ui.buttons').isVisible();
 
-    ['Lowest', 'Low', 'Medium', 'High', 'Highest'].forEach((priority, i) => {
+    [ 'Lowest', 'Low', 'Medium', 'High', 'Highest' ].forEach((priority, i) => {
       assert.dom(`div.five.ui.buttons > button:nth-child(${i + 1})`).hasText(priority.toLowerCase());
       assert.dom(`div:nth-child(${i + 1}) > div > div:nth-child(2) > span`).hasText(`${priority} (${i + 1})`);
     });
 
-    for (let i = 1; i <= 5; i++){
+    for (let i = 1; i <= 5; i++) {
       assert.dom(`button:nth-child(${i}) > i.square`).exists();
       await click(`div.five.ui.buttons > button:nth-child(${i})`);
       assert.dom(`button:nth-child(${i}) > i.checkmark`).exists();

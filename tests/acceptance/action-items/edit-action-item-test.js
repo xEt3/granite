@@ -1,16 +1,16 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import authenticate from 'granite/tests/helpers/auth';
-import { visit, currentURL, click, find, settled, fillIn} from '@ember/test-helpers';
+import { visit, currentURL, click, find, settled, fillIn } from '@ember/test-helpers';
 
 module('Acceptance | edit action items', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('getting to the action item edit page', async function (assert){
+  test('getting to the action item edit page', async function (assert) {
     await authenticate.call(this, server);
 
     let action = await server.create('action-items', {
-      title: 'apples',
+      title:         'apples',
       prerequisites: []
     });
 
@@ -21,11 +21,11 @@ module('Acceptance | edit action items', function (hooks) {
     assert.equal(currentURL(), `/account/action-item/${action.title}/edit`);
   });
 
-  test('elements on action item edit page', async function (assert){
+  test('elements on action item edit page', async function (assert) {
     await authenticate.call(this, server);
 
     let action = await server.create('action-items', {
-      title: 'apples',
+      title:         'apples',
       prerequisites: []
     });
 
@@ -46,11 +46,11 @@ module('Acceptance | edit action items', function (hooks) {
     assert.dom('form > button').isVisible();
   });
 
-  test('edit action item', async function (assert){
+  test('edit action item', async function (assert) {
     await authenticate.call(this, server);
 
     let action = await server.create('action-items', {
-      title: 'apples',
+      title:         'apples',
       prerequisites: []
     });
 

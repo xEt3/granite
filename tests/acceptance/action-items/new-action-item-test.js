@@ -1,20 +1,20 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import authenticate from 'granite/tests/helpers/auth';
-import { visit, currentURL, click, pauseTest, find, settled, fillIn} from '@ember/test-helpers';
+import { visit, currentURL, click, settled, fillIn } from '@ember/test-helpers';
 
-module('Acceptance | new action items', function(hooks) {
+module('Acceptance | new action items', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('adding a new action item',async function(assert){
-    await authenticate.call(this, server );
+  test('adding a new action item', async function (assert) {
+    await authenticate.call(this, server);
     await visit('/account/action-items');
     await click('h2 > a > i.plus');
     assert.equal(currentURL(), '/account/action-items/new');
   });
 
-  test('elements show on page',async function(assert){
-    await authenticate.call(this, server );
+  test('elements show on page', async function (assert) {
+    await authenticate.call(this, server);
     await visit('/account/action-items/new');
     assert.dom('div > h2.header').hasText('Create a New Action Item');
     assert.dom('div > div:nth-child(1) > label').hasText('Title');
@@ -39,8 +39,8 @@ module('Acceptance | new action items', function(hooks) {
     assert.dom('form:nth-child(12) > button').isVisible();
   });
 
-  test('adding new item',async function(assert){
-    await authenticate.call(this, server );
+  test('adding new item', async function (assert) {
+    await authenticate.call(this, server);
     await visit('/account/action-items/new');
     await fillIn('input#action-item-title', 'check the fridge');
     await fillIn('div:nth-child(2) > textarea', 'oh snap I am full');
