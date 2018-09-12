@@ -140,9 +140,7 @@ module('Acceptance | settings/processes', function(hooks) {
   });
   //add cas and x+1 cas appear
   test('adding cas functions properly', async function(assert) {
-    // let x = server.createList('correctiveActionSeverity', 4).map(cas => cas.id);
-    let { company } = await authenticate.call(this, server/*, { company: { correctiveActionSeverities: x } }*/);
-    console.log('created company:', company);
+    let { company } = await authenticate.call(this, server);
     server.create('recruiting-pipeline', { company: company.id });
     let newName = 'New Cas';
     let newOrder = company.correctiveActionSeverities.length + 1;

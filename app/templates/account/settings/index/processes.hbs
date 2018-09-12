@@ -8,7 +8,6 @@
     <i class="plus icon"></i>Add Option
   </button>
   <div class="ui list">
-    {{log 'severities from template' model.correctiveActionSeverities}}
     {{#each model.correctiveActionSeverities as |severity|}}
       <div class="item">
         {{#confirm-modal class="item" as |confirm|}}
