@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { visit, currentURL, click, find, findAll, fillIn, settled, isSettled, pauseTest } from '@ember/test-helpers';
+import { visit, currentURL, click, find, findAll, fillIn } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 // import { faker } from 'ember-cli-mirage';
 import authenticate from 'granite/tests/helpers/auth';
@@ -138,8 +138,8 @@ module('Acceptance | settings/processes', function(hooks) {
 
     assert.equal(findAll('div.ui.list > div.item').length, initialCasAmount, 'correct number of cas are listed after cancelling addition');
   });
-  //add cas and x+1 cas appear
-  test('adding cas functions properly', async function(assert) {
+
+  test('adding and saving cas functions properly', async function(assert) {
     let { company } = await authenticate.call(this, server);
 
     server.create('recruiting-pipeline', { company: company.id });
@@ -156,32 +156,20 @@ module('Acceptance | settings/processes', function(hooks) {
 
     await fillIn('#modal__add-cas input[name="name"]', newName);
     await fillIn('#modal__add-cas input[name="order"]', newOrder);
-    //click done
     await click('#modal__add-cas button.primary');
-    //assert that list length in db is initial
+
     let casAmountAfterAdd = server.db.companies.find(company.id).correctiveActionSeverityIds.length;
     assert.equal(casAmountAfterAdd, initialCasAmount, 'cas amount in db is unchanged because addition not saved yet');
-    //assert that list length on page is initial + 1
     assert.equal(findAll('div.ui.list > div.item').length, initialCasAmount + 1, 'added cas is displayed on screen');
-    //assert that last cas has correct attributes in db and on page
-    let displayedSeverities = findAll('div.ui.list > div.item');
-    assert.dom(displayedSeverities[displayedSeverities.length - 1]).includesText(newName, 'cas addition is listed last and has correct name');
-    assert.dom(displayedSeverities[displayedSeverities.length - 1]).includesText(newOrder, 'cas addition is displaying correct order');
-    //save changes
-
+    let displayedSeveritiesAfterAdd = findAll('div.ui.list > div.item');
+    assert.dom(displayedSeveritiesAfterAdd[displayedSeveritiesAfterAdd.length - 1]).includesText(newName, 'cas addition is listed last and has correct name');
+    assert.dom(displayedSeveritiesAfterAdd[displayedSeveritiesAfterAdd.length - 1]).includesText(newOrder, 'cas addition is displaying correct order');
     await click('button[type="submit"]');
 
-
-    //assert that list length in db now initial + 1
-    //assert that list length on page is still initial + 1
-
-
-
-    let done = assert.async();
-    setTimeout(() => {
-      done();
-    }, 10000);
-    assert.equal(1, 1, 'generic assertion');
+    let casIdsAfterSave = server.db.companies.find(company.id).correctiveActionSeverityIds;
+    assert.equal(casIdsAfterSave.length, initialCasAmount + 1, 'cas amount in db is +1');
+    assert.equal(findAll('div.ui.list > div.item').length, initialCasAmount + 1, 'correct amount of displayed cas is still correct after save');
+    assert.equal(server.db.correctiveActionSeverities.findBy({ name: newName }).formal, false, 'formal is false because it was not checked in the modal');
   });
   //check that formal gets checked correctly in the db
   //remove cas and x-1 stages appear
@@ -192,3 +180,4 @@ module('Acceptance | settings/processes', function(hooks) {
 // setTimeout(function() {
 //   done();
 // }, 10000);
+// assert.equal(1, 1, 'generic assertion');

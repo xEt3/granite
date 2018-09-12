@@ -61,7 +61,8 @@ export default function() {
     return new Response(401, {}, 'User not found');
   });
 
-  this.put('/company-users/:id', (n, request) => {
+  // this.put('/company-users/:id');
+  this.put('/company-users/:id', (n, request) => { //PROBABLY COULD BE SWITCHED TO SHORTHAND
     return {
       companyUser: {
         _id: request.params.id,
@@ -87,7 +88,8 @@ export default function() {
     return { activity: activities };
   });
 
-  this.post('/company-users', ()  =>{
+  // this.post('/company-users');
+  this.post('/company-users', ()  => {//PROBABLY COULD BE SWITCHED TO SHORTHAND
     return {
       companyUser: {
         _id: 3,
@@ -105,6 +107,7 @@ export default function() {
   });
 
   this.put('/companies/:id', function({ companies, correctiveActionSeverities }, request) {
+    //needs to be like this because mirage is incapable of processing embedded relationships
     let id = request.params.id,
         attrs = this.normalizedRequestAttrs();
 
