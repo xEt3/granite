@@ -29,7 +29,7 @@ module('Acceptance | recruiting', function (hooks) {
     await visit('/account/recruiting/campaigns');
     assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Recruiting');
     assert.dom('a > div > div.header').hasText(job.name);
-    await pauseTest();
+    // await pauseTest();
     assert.dom('div > div.meta').hasText(job.job.title);
 
 

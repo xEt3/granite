@@ -1,8 +1,8 @@
-import { Factory, faker } from 'ember-cli-mirage';
+import { Factory, faker, association } from 'ember-cli-mirage';
 
 export default Factory.extend({
   name:                      faker.name.title,
-  title:                     faker.name.firstName,
+  title:                     faker.name.jobTitle,
   description:               faker.name.jobDescriptor,
   availableInternally:       true,
   internalDuration:          null,
@@ -20,5 +20,14 @@ export default Factory.extend({
   completedOn:               null,
   created:                   faker.date.past,
   location:                  null,
-  hiring:                    false
+  hiring:                    false,
+
+  job: association(),
+
+  afterCreate (jobOpening, db) {
+    db.create('job', {
+      jobOpening,
+      title: jobOpening.title
+    });
+  }
 });
