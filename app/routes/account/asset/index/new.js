@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import { inject as service } from '@ember/service';
 import add from 'granite/mixins/route-abstractions/add';
 
-export default Route.extend(add,{
+export default Route.extend(add, {
   titleToken: 'New Asset',
   modelName:  'asset-item',
   auth:       service(),

@@ -20,7 +20,7 @@ export default DS.Model.extend({
     inverse: false
   }),
 
-  phoneFormatted: computed('phone',function () {
+  phoneFormatted: computed('phone', function () {
     var phone = this.get('phone');
     return phone ? phone.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3') : phone;
   }),

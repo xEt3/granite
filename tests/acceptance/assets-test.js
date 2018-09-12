@@ -6,13 +6,13 @@ import { visit, currentURL, click, find, findAll, settled } from '@ember/test-he
 module('Acceptance | company assets', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('getting to the assets',async function (assert) {
+  test('getting to the assets', async function (assert) {
     await authenticate.call(this, server);
     await visit('/account/assets');
     assert.equal(currentURL(), '/account/assets', 'on assets page');
   });
 
-  test('no assets',async function (assert) {
+  test('no assets', async function (assert) {
     await authenticate.call(this, server);
     await visit('/account/assets');
     assert.equal(currentURL(), '/account/assets', 'on assets page');
@@ -22,21 +22,21 @@ module('Acceptance | company assets', function (hooks) {
     assert.equal($header.textContent.trim().replace(/\s\s+|\n/g, ''), 'No assets available.', 'No assets were available');
   });
 
-  test('list of assets',async function (assert) {
+  test('list of assets', async function (assert) {
     await server.createList('asset-items', 7);
     await authenticate.call(this, server);
     await visit('/account/assets');
     assert.equal(currentURL(), '/account/assets', 'on assets page');
   });
 
-  test('assets attributes',async function (assert) {
+  test('assets attributes', async function (assert) {
     await authenticate.call(this, server);
     let myAssetCategory = server.create('asset', { name: 'apple' });
 
     await server.createList('asset-items', 7);
     await visit('/account/assets');
     await settled();
-    assert.equal(currentURL(),'/account/assets');
+    assert.equal(currentURL(), '/account/assets');
     assert.dom('div.content .header').hasText('apple');
     let item = `a[href="/account/asset/${myAssetCategory.id}/stock"]`;
 
@@ -47,7 +47,7 @@ module('Acceptance | company assets', function (hooks) {
     assert.equal(findAll('span.header.clearfix').length, 7, '7 items are on the page');
   });
 
-  test('assets information',async function (assert) {
+  test('assets information', async function (assert) {
     let myAssetCategory = server.create('asset', {
       name:       'apple',
       attributes: [ 'blue' ]
@@ -67,7 +67,7 @@ module('Acceptance | company assets', function (hooks) {
     assert.dom('.content.clearfix span').hasText('blue');
   });
 
-  test('assets documents',async function (assert) {
+  test('assets documents', async function (assert) {
     let myAssetCategory = server.create('asset', {
       name:       'apple',
       attributes: [ 'blue' ]

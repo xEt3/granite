@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import { inject as service } from '@ember/service';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-export default Route.extend(addEdit,{
+export default Route.extend(addEdit, {
   titleToken: 'Job Information',
   auth:       service(),
 

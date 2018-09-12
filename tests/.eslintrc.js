@@ -40,6 +40,7 @@ module.exports = {
     'object-property-newline': [ 'error', {
       allowAllPropertiesOnSameLine: false
     }],
+    'comma-spacing': [ 'error', { before: false, after: true } ],
     'object-curly-newline': ["error", { "multiline": true }],
     'array-bracket-spacing': [ 'error', 'always', { 'objectsInArrays': false } ],
     'space-in-brackets': [ 'error', 'always' ],
