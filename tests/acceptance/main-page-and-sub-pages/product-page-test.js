@@ -9,10 +9,10 @@ const headings = [
   'Human Capital'
 ];
 
-module('Acceptance | our product page', function(hooks) {
+module('Acceptance | our product page', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('visiting /our-product', async function(assert) {
+  test('visiting /our-product', async function (assert) {
     await visit('/our-product');
     assert.equal(currentURL(), '/our-product');
 

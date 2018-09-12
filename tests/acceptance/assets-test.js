@@ -1,18 +1,18 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import authenticate from 'granite/tests/helpers/auth';
-import { visit, currentURL, click, find, findAll, settled} from '@ember/test-helpers';
+import { visit, currentURL, click, find, findAll, settled } from '@ember/test-helpers';
 
-module('Acceptance | company assets', function(hooks) {
+module('Acceptance | company assets', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('getting to the assets',async function(assert){
+  test('getting to the assets',async function (assert) {
     await authenticate.call(this, server);
     await visit('/account/assets');
     assert.equal(currentURL(), '/account/assets', 'on assets page');
   });
 
-  test('no assets',async function(assert){
+  test('no assets',async function (assert) {
     await authenticate.call(this, server);
     await visit('/account/assets');
     assert.equal(currentURL(), '/account/assets', 'on assets page');
@@ -22,16 +22,16 @@ module('Acceptance | company assets', function(hooks) {
     assert.equal($header.textContent.trim().replace(/\s\s+|\n/g, ''), 'No assets available.', 'No assets were available');
   });
 
-  test('list of assets',async function(assert){
+  test('list of assets',async function (assert) {
     await server.createList('asset-items', 7);
     await authenticate.call(this, server);
     await visit('/account/assets');
     assert.equal(currentURL(), '/account/assets', 'on assets page');
   });
 
-  test('assets attributes',async function(assert){
+  test('assets attributes',async function (assert) {
     await authenticate.call(this, server);
-    let myAssetCategory = server.create('asset', {name: 'apple'});
+    let myAssetCategory = server.create('asset', { name: 'apple' });
 
     await server.createList('asset-items', 7);
     await visit('/account/assets');
@@ -47,8 +47,11 @@ module('Acceptance | company assets', function(hooks) {
     assert.equal(findAll('span.header.clearfix').length, 7, '7 items are on the page');
   });
 
-  test('assets information',async function(assert){
-    let myAssetCategory = server.create('asset', {name: 'apple', attributes: ['blue']});
+  test('assets information',async function (assert) {
+    let myAssetCategory = server.create('asset', {
+      name:       'apple',
+      attributes: [ 'blue' ]
+    });
 
     await server.createList('asset-items', 7);
     await authenticate.call(this, server);
@@ -64,8 +67,11 @@ module('Acceptance | company assets', function(hooks) {
     assert.dom('.content.clearfix span').hasText('blue');
   });
 
-  test('assets documents',async function(assert){
-    let myAssetCategory = server.create('asset', {name: 'apple', attributes: ['blue']});
+  test('assets documents',async function (assert) {
+    let myAssetCategory = server.create('asset', {
+      name:       'apple',
+      attributes: [ 'blue' ]
+    });
 
     await server.createList('asset-items', 7);
     await authenticate.call(this, server);

@@ -2,15 +2,15 @@ import { module, test } from 'qunit';
 import { visit, currentURL, find } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 
-module('Acceptance | contact page', function(hooks) {
+module('Acceptance | contact page', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('visiting /features-page', async function(assert) {
+  test('visiting /features-page', async function (assert) {
     await visit('/contact');
     assert.equal(currentURL(), '/contact');
   });
 
-  test('Contact Phone number is there and link works', async function(assert) {
+  test('Contact Phone number is there and link works', async function (assert) {
     await visit('/contact');
     //will get the phone number link length
     var phoneLinkStringLength = document.links.namedItem('phone').href.length;
@@ -25,12 +25,12 @@ module('Acceptance | contact page', function(hooks) {
     assert.equal(14,phoneLinkStringLength, 'the phone links shows ' + phoneLinkString + ' equaling 14 chars');
   });
 
-  test('Contact Email is there and link works', async function(assert) {
+  test('Contact Email is there and link works', async function (assert) {
     await visit('/contact');
     assert.ok(find('a[href="mailto:hello@granitehr.com"]'), 'Email link shown on page');
   });
 
-  test('Contact Social media is there and link works', async function(assert) {
+  test('Contact Social media is there and link works', async function (assert) {
     await visit('/contact');
     assert.ok(find('a[href="http://twitter.com/user/granitehr"]'), 'Twitter link shown on page');
     assert.ok(find('a[href="http://facebook.com/granitehr"]'), 'Facebook link shown on page');
