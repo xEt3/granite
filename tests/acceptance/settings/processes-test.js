@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { visit, currentURL, click, find, findAll, fillIn } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
-// import { faker } from 'ember-cli-mirage';
 import authenticate from 'granite/tests/helpers/auth';
 
 module('Acceptance | settings/processes', function(hooks) {
@@ -99,7 +98,7 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.equal(findAll('.stage-list__card').length, stageCountInDB - 1, 'correct number of stages are displayed after removal');
   });
 
-  test('editing pipeline stage name', async function(assert) {
+  test('editing and saving pipeline stage name', async function(assert) {
     let { company } = await authenticate.call(this, server);
     let pipeline = server.create('recruiting-pipeline', { company: company.id });
     let newStageName = 'Edited Stage';
@@ -120,9 +119,16 @@ module('Acceptance | settings/processes', function(hooks) {
 
     assert.equal(stageCardsAfterEdit.length, pipeline.stages.length, 'no new stages were accidentally created by edit');
     assert.dom(stageCardsAfterEdit[0]).includesText(newStageName, 'Stage that was edited has correct new name displaying');
-    //save edits
-    //assert that the db is how it should be
-    //assert that correct number of stages are displayed
+
+    await click('button[type="submit"]');
+
+    let dbStagesAfterSave = server.db.recruitingPipelines.find(pipeline.id).stages;
+    assert.equal(dbStagesAfterSave.length, pipeline.stages.length, 'no added stages in db');
+    assert.equal(dbStagesAfterSave[0].name, newStageName, 'name of edited stage saved in db');
+
+    let stageCardsAfterSave = findAll('.stage-list__card');
+    assert.equal(stageCardsAfterSave.length, pipeline.stages.length, 'no stages accidentally added after save');
+    assert.dom(stageCardsAfterSave[0]).includesText(newStageName, 'edited stage still has correct new name after save');
   });
 
   test('closing the add cas modal functions correctly', async function(assert) {
@@ -171,8 +177,48 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.equal(findAll('div.ui.list > div.item').length, initialCasAmount + 1, 'correct amount of displayed cas is still correct after save');
     assert.equal(server.db.correctiveActionSeverities.findBy({ name: newName }).formal, false, 'formal is false because it was not checked in the modal');
   });
-  //check that formal gets checked correctly in the db
+
+  test('formal flag gets saved on cas correctly', async function(assert) {
+    let { company } = await authenticate.call(this, server),
+        newName = 'New Cas2',
+        newOrder = company.correctiveActionSeverityIds.length + 1;
+    server.create('recruiting-pipeline', { company: company.id });
+
+    await visit('/account/settings/general/processes');
+    await click('#add-cas');
+    await fillIn('#modal__add-cas input[name="name"]', newName);
+    await fillIn('#modal__add-cas input[name="order"]', newOrder);
+    await click('#modal__add-cas div.ui.checkbox');
+    await click('#modal__add-cas button.primary');
+    await click('button[type="submit"]');
+
+    let dbEntryForNewCas = server.db.correctiveActionSeverities.findBy({ name: newName });
+    assert.equal(dbEntryForNewCas.formal, true, 'formal is set to true on saved db cas');
+  });
   //remove cas and x-1 stages appear
+  test('remove and saving cas', async function(assert) {
+    let { company } = await authenticate.call(this, server);
+    server.create('recruiting-pipeline', { company: company.id });
+
+    await visit('/account/settings/general/processes');
+
+    //assert that db = displayed amount from get go
+    //click remove link
+    //click yes on confirm modal
+    //assert that there is x - 1 cas displayed
+    //assert that db is untouched
+    //click submit button to save
+    //assert that still x - 1 cas displayed
+    //assert that db is x-1
+
+
+
+    let done = assert.async();
+    setTimeout(function() {
+      done();
+    }, 10000);
+    assert.equal(1, 1, 'generic assertion');
+  });
   //edit cas
 });
 

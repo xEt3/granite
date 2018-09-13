@@ -1,6 +1,4 @@
 import { settled } from '@ember/test-helpers';
-import { faker } from 'ember-cli-mirage';
-import moment from 'moment';
 
 const injectLogin = async function (server, properties = {}) {
   const authService = this.owner.lookup('service:auth');
@@ -12,8 +10,6 @@ const injectLogin = async function (server, properties = {}) {
   const company = server.create('company', properties.company);
 
   const companyUser = server.create('company-user', Object.assign({
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
     company: company.id
   }, properties.companyUser));
 
@@ -26,9 +22,7 @@ const injectLogin = async function (server, properties = {}) {
 
   const session = server.create('session', {
     user: companyUser.id,
-    company: company.id,
-    token: '123',
-    expires: moment().add(1, 'hour')
+    company: company.id
   });
 
   companyUser.update('employee', employee.id);
