@@ -8,15 +8,10 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 export default Controller.extend(addEdit, {
   auth: service(),
   correctiveActionsDirty: false,
-  // stagesDirty: computed('pipeline.stages.[]', 'pipelineInitialState', function () {
-  //   console.log('called it');
-  //   return JSON.stringify(this.get('pipeline')) !== this.get('pipelineInitialState');
-  // }),
   stagesDirty: false,
-  // this.set('stagesDirty', JSON.stringify(pipeline) !== this.get('pipelineInitialState'));
 
-  canAddStages: computed('pipeline.stages[]', function () {
-    return this.get('pipeline.stages').length < 5 ? true : false;
+  canAddStages: computed('pipeline.stages.length', function () {
+    return this.get('pipeline.stages.length') < 5 ? true : false;
   }),
 
   disableSave: computed('correctiveActionsDirty', 'stagesDirty', function () {
@@ -88,12 +83,10 @@ export default Controller.extend(addEdit, {
     },
 
     save () {
-      //check CAS and save company
       if (this.get('correctiveActionsDirty')) {
         this.saveModel(this.get('model'));
       }
 
-      //check stages and save pipeline
       if (this.get('stagesDirty')) {
         this.saveModel(this.get('pipeline'));
       }
@@ -164,9 +157,9 @@ export default Controller.extend(addEdit, {
     },
 
     addStage () {
-      let stage = this.store.createRecord('pipeline-stage', {
+      let stage = {
         order: this.get('pipeline.stages').length
-      });
+      };
 
       this.set('currentStage', stage);
       this.get('pipeline.stages').addObject(stage);

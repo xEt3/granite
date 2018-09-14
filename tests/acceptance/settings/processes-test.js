@@ -85,7 +85,8 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.equal(findAll('.stage-list__card').length, stageCountInDB, 'correct number of stages displayed initially');
     assert.equal(deleteStageLinks.length, stageCountInDB, 'all stages have remove button');
     await click(deleteStageLinks[deleteStageLinks.length - 1]);
-    await click('.confirm-modal.animating button.green');//confirm button for stage removal
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    await click('.confirm-modal.active button.green');
 
     let stageCountInDBAfterRemove = server.db.recruitingPipelines.find(pipeline.id).stages.length;
 
@@ -207,7 +208,8 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.equal(casInDb.length, casDisplayed.length, 'cas displayed matches cas in db');
 
     await click(findAll('div.ui.list a.right')[0]);
-    await click('.confirm-modal.animating button.green');
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    await click('.confirm-modal.active button.green');
 
     let casInDbAfterRemove = server.db.companies.find(company.id).correctiveActionSeverityIds;
     let casDisplayedAfterRemove = findAll('div.ui.list > div.item');
@@ -315,10 +317,37 @@ module('Acceptance | settings/processes', function(hooks) {
       assert.dom(displayedCas[i]).includesText(s.name);
     });
   });
-});
 
-// let done = assert.async();
-// setTimeout(function() {
-//   done();
-// }, 10000);
-// assert.equal(1, 1, 'generic assertion');
+  test('pipeline stages caps at 5', async function(assert) {
+    let { company } = await authenticate.call(this, server),
+        pipeline = server.create('recruiting-pipeline', { company: company.id });
+
+    await pipeline.stages.addObject({
+      created : moment().subtract(1, 'week'),
+      order : 3,
+      name : 'Stage 4',
+      _id : '5b72da4a53889f02bd1486dz'
+    });
+
+    await visit('/account/settings/general/processes');
+
+    assert.equal(pipeline.stages.length, 4, 'there are currently 4 stages');
+    assert.dom('button#add-stage').isVisible('add stage button is showing because there are only 4 stages');
+
+    await click('#add-stage');
+    await fillIn('#modal__add-stage input[name="name"]', 'fifth stage');
+    await click('.confirm-add-stage');
+    await click('button[type="submit"]');
+
+    assert.equal(server.db.recruitingPipelines.find(pipeline.id).stages.length, 5, 'there are now 5 stages');
+    assert.dom('button#add-stage').isNotVisible('add stage button should not be visible because there are 5 stages');
+
+    await click(find('a.delete-stage'));
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    await click('.confirm-modal.active button.green');
+    await click('button[type="submit"]');
+
+    assert.equal(server.db.recruitingPipelines.find(pipeline.id).stages.length, 4, 'deleted stage, so size back down to 4');
+    assert.dom('button#add-stage').isVisible('add stage button is showing because there are 4 stages again');
+  });
+});

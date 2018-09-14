@@ -128,6 +128,7 @@ export default Service.extend({
     if ( !userId || !this.get('authenticated') ) {
       return Promise.resolve();
     }
+
     return this.get('store').find('company-user', userId);
   }),
 

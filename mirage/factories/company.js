@@ -3,14 +3,14 @@ import moment from 'moment';
 
 export default Factory.extend({
   name: faker.company.companyName,
-  contactPhone: '4044448888',
-  contactFirstName: 'Jeremy',
-  contactLastName: 'Cherer',
-  email: 'bahaha@test.com',
-  addressLine1: '3220 4th ave N',
-  addressCity: 'Billings',
-  addressState: 'Montana',
-  addressZipCode: 59101,
+  contactPhone: faker.phone.phoneNumber(),
+  contactFirstName: faker.name.firstName(),
+  contactLastName: faker.name.lastName(),
+  email: faker.internet.email(),
+  addressLine1: faker.address.streetAddress(),
+  addressCity: faker.address.city(),
+  addressState: faker.address.state(),
+  addressZipCode: faker.address.zipCode(),
   urlPrefix: faker.random.word,
   firstStepsCompletedOn: moment().subtract(1, 'hour').toISOString(),
 

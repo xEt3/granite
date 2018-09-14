@@ -1,23 +1,9 @@
 import { module, test } from 'qunit';
-import { visit, currentURL, click, find, fillIn, settled } from '@ember/test-helpers';
+import { visit, currentURL, click, find, fillIn } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 
 module('Acceptance | login behaviors', function(hooks) {
   setupApplicationTest(hooks);
-
-  test('correct login', async function(assert) {
-    let companyUser = await server.create('companyUser');
-    await visit('/login');
-    assert.equal(currentURL(), '/login', 'Current url is login');
-
-    await fillIn('input[type="email"]', companyUser.email);
-    await fillIn('input[type="password"]', companyUser.password);
-    await click('button[type="submit"]');
-
-    await settled();
-
-    assert.equal(currentURL(), '/account/dashboard', 'Current url is account');
-  });
 
   test('failed logins', async function(assert) {
     assert.expect(8);
@@ -44,8 +30,19 @@ module('Acceptance | login behaviors', function(hooks) {
     }, 1500);
 
     assert.equal(currentURL(), '/login');
-    await settled();
   });
 
+  test('correct login', async function(assert) {
+    let companyUser = await server.create('companyUser');
+    await visit('/login');
+    assert.equal(currentURL(), '/login', 'Current url is login');
 
+    await fillIn('input[type="email"]', companyUser.email);
+    await fillIn('input[type="password"]', companyUser.password);
+    await click('button[type="submit"]');
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    assert.equal(currentURL(), '/account/dashboard', 'Current url is account');
+  });
 });

@@ -36,7 +36,6 @@
     </button>
   {{/liquid-if}}
 
-
   {{#sortable-group tagName="ul" classNames="pipeline-stage-list__cards" onChange="reorderItems" as |group|}}
     {{#each pipeline.stages as |stage|}}
       {{#sortable-item tagName="li" classNames="stage-list__card" model=stage group=group}}
