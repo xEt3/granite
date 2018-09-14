@@ -6,8 +6,8 @@ export default Controller.extend(ajaxStatus, {
   ajax: service(),
 
   queryParams: [ 'expired', 'recovery' ],
-  expired: false,
-  recovery: false,
+  expired:     false,
+  recovery:    false,
 
   actions: {
     login () {
@@ -16,7 +16,7 @@ export default Controller.extend(ajaxStatus, {
 
       this.ajaxStart();
 
-      if ( !email || !password ) {
+      if (!email || !password) {
         return this.ajaxError('Please complete all fields before submitting.');
       }
 
@@ -25,7 +25,7 @@ export default Controller.extend(ajaxStatus, {
         let previousTransition = this.get('previousTransition');
         this.ajaxSuccess('Successfully logged in.');
 
-        if ( previousTransition ) {
+        if (previousTransition) {
           previousTransition.retry();
         } else {
           this.transitionToRoute('account.index');
@@ -41,9 +41,7 @@ export default Controller.extend(ajaxStatus, {
       this.ajaxStart();
       this.set('recoveryEmail', null);
 
-      this.get('ajax').request('/api/v1/recovery/company-user/', {
-        data: { email }
-      })
+      this.get('ajax').request('/api/v1/recovery/company-user/', { data: { email } })
       .catch((err = {}) => {
         if (err.status === 500) {
           wasFatal = true;

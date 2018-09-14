@@ -2,10 +2,10 @@ import { module, test } from 'qunit';
 import { visit, currentURL, click, find, fillIn } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 
-module('Acceptance | login behaviors', function(hooks) {
+module('Acceptance | login behaviors', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('failed logins', async function(assert) {
+  test('failed logins', async function (assert) {
     assert.expect(8);
     await visit('/');
     assert.equal(currentURL(), '/');
@@ -32,8 +32,10 @@ module('Acceptance | login behaviors', function(hooks) {
     assert.equal(currentURL(), '/login');
   });
 
-  test('correct login', async function(assert) {
+
+  test('correct login', async function (assert) {
     let companyUser = await server.create('companyUser');
+
     await visit('/login');
     assert.equal(currentURL(), '/login', 'Current url is login');
 

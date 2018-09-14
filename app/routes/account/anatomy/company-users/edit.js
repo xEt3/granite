@@ -6,22 +6,22 @@ const crud = [ 'create', 'read', 'update', 'delete' ],
       nodeDefaults = {
         isExpanded: false,
         isSelected: false,
-        isChecked: false,
-        isVisible: true
+        isChecked:  false,
+        isVisible:  true
       };
 
 export default Route.extend({
-  model(params) {
+  model (params) {
     return RSVP.hash({
-      user: this.store.findRecord('company-user', params.user_id),
+      user:        this.store.findRecord('company-user', params.user_id),
       permissions: this.store.findAll('permission')
     });
   },
 
-  setupController ( controller, model ) {
+  setupController (controller, model) {
     controller.setProperties({
-      model: model.user,
-      permission: model.permissions,
+      model:           model.user,
+      permission:      model.permissions,
       permissionsTree: model.permissions.toArray().reduce((parents, permission) => {
         let { id, key } = permission,
             verb = key.split(' ').shift();
@@ -29,16 +29,17 @@ export default Route.extend({
 
         if (!parents.findBy('name', verb)) {
           parents.push(Object.assign({
-            id: verb,
-            name: verb,
+            id:       verb,
+            name:     verb,
             children: []
           }, nodeDefaults));
         }
 
         parents.findBy('name', verb).children.push(
-          Object.assign({ id, name: key }, nodeDefaults, {
-            isChecked: model.user.get('permissions').includes(id)
-          })
+          Object.assign({
+            id,
+            name: key
+          }, nodeDefaults, { isChecked: model.user.get('permissions').includes(id) })
         );
 
         return parents;

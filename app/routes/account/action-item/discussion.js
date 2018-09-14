@@ -3,6 +3,8 @@ import RSVP from 'rsvp';
 import refreshable from 'granite/mixins/refreshable';
 
 export default Route.extend(refreshable, {
+  titleToken: 'Discussion',
+
   model () {
     let actionItem = this.modelFor('account.action-item');
 
@@ -10,14 +12,14 @@ export default Route.extend(refreshable, {
       actionItem,
       comments: this.store.query('comment', {
         targetId: actionItem.get('id'),
-        sort: { created: -1 }
+        sort:     { created: -1 }
       })
     });
   },
 
   setupController (controller, model) {
     controller.setProperties({
-      model: model.comments,
+      model:      model.comments,
       actionItem: model.actionItem
     });
   }

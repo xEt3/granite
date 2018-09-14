@@ -3,9 +3,9 @@ import { inject as service } from '@ember/service';
 
 export default Service.extend({
   store: service(),
-  auth: service(),
+  auth:  service(),
 
-  create ( data = {} ) {
+  create (data = {}) {
     let user = this.get('auth.user');
 
     data.actorType = 'CompanyUser';

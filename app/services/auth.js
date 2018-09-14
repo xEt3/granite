@@ -11,13 +11,13 @@ const { Logger } = Ember;
 
 export default Service.extend({
   authUrl: '/api/v1/login/company-user',
-  clock: service(),
-  store: service(),
-  ajax:  service(),
+  clock:   service(),
+  store:   service(),
+  ajax:    service(),
 
   authenticated: computed.bool('token'),
-  token: computed.reads('session.token'),
-  userId: computed.reads('session.user'),
+  token:         computed.reads('session.token'),
+  userId:        computed.reads('session.user'),
 
   initializeClock: on('init', function () {
     this.get('clock');
@@ -29,8 +29,11 @@ export default Service.extend({
    * @param  {String} password User password
    * @return {Promise}         Resolves to session
    */
-  login ( email, password ) {
-    let data = { email, password };
+  login (email, password) {
+    let data = {
+      email,
+      password
+    };
     Logger.debug('AS :: Requesting authentication service', this.get('authUrl'));
     return this.get('ajax').post(this.get('authUrl'), { data })
     .then(response => {
@@ -59,7 +62,7 @@ export default Service.extend({
   logout () {
     Logger.debug('AS :: Logout');
 
-    if ( !this.get('session') ) {
+    if (!this.get('session')) {
       Logger.debug('AS :: No session available - skipping logout');
       return Promise.resolve();
     }
@@ -72,13 +75,11 @@ export default Service.extend({
   },
 
   refreshSession () {
-    if ( !this.get('authenticated') ) {
+    if (!this.get('authenticated')) {
       return Promise.resolve();
     }
 
-    return this.get('ajax').request('/api/v1/grant/' + this.get('session.id') + '/refresh', {
-      method: 'POST'
-    })
+    return this.get('ajax').request('/api/v1/grant/' + this.get('session.id') + '/refresh', { method: 'POST' })
     .then(response => {
       let session = this.get('session');
       session.set('expires', response.expires);
@@ -91,21 +92,21 @@ export default Service.extend({
    * @param  {Boolean} cleanup Cleans expirees as we get the session
    * @return {Promise}         Resolves to false or existing session
    */
-  initializeExistingSession ( cleanup = true ) {
+  initializeExistingSession (cleanup = true) {
     Logger.debug('AS :: Initializing existing session');
     return this.get('store').findAll('session').then(sessions => {
       var existingSession;
       Logger.debug('AS :: Got local sessions');
       sessions.toArray().forEach(session => {
-        if ( moment(session.get('expires')).isAfter(moment()) ) {
+        if (moment(session.get('expires')).isAfter(moment())) {
           Logger.debug('AS :: Found active session');
           existingSession = session;
-        } else if ( cleanup ) {
+        } else if (cleanup) {
           session.destroyRecord();
         }
       });
 
-      if ( existingSession ) {
+      if (existingSession) {
         this.set('session', existingSession);
       }
 
@@ -125,7 +126,7 @@ export default Service.extend({
   user: computed('userId', function () {
     const userId = this.get('userId');
 
-    if ( !userId || !this.get('authenticated') ) {
+    if (!userId || !this.get('authenticated')) {
       return Promise.resolve();
     }
 

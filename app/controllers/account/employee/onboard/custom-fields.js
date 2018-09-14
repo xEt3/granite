@@ -4,7 +4,7 @@ import $ from 'jquery';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default Controller.extend(addEdit, {
-  adding: false,
+  adding:    false,
   showTable: computed.or('objectLength', 'adding'),
 
   objectLength: computed('model.customFields', function () {
@@ -18,10 +18,10 @@ export default Controller.extend(addEdit, {
 
   actions: {
     beginAddingCustomField () {
-      this.set( 'adding', true );
+      this.set('adding', true);
     },
 
-    toggleProperty ( prop ) {
+    toggleProperty (prop) {
       this.toggleProperty(prop);
     },
 
@@ -36,15 +36,15 @@ export default Controller.extend(addEdit, {
 
       this.ajaxStart();
 
-      if ( !attr ) {
+      if (!attr) {
         this.ajaxError('Custom field name is required.');
         return;
-      } else if ( !value ) {
+      } else if (!value) {
         this.ajaxError('Custom field value is required.');
         return;
       }
 
-      if ( !model.get('customFields') ) {
+      if (!model.get('customFields')) {
         model.set('customFields', {});
       }
       model.set(`customFields.${attr}`, value);
@@ -52,19 +52,19 @@ export default Controller.extend(addEdit, {
       this.saveModel().then(() => {
         this.setProperties({
           pendingCustomFieldValue: null,
-          pendingCustomFieldName: null,
-          adding: true
+          pendingCustomFieldName:  null,
+          adding:                  true
         });
       });
     },
 
-    editValue ( key, newValue ) {
+    editValue (key, newValue) {
       let model = this.get('model');
       model.set(`customFields.${key}`, newValue);
       this.saveModel();
     },
 
-    deleteCustomField ( key ) {
+    deleteCustomField (key) {
       let model = this.get('model'),
           customFields = model.get('customFields');
 

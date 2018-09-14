@@ -18,10 +18,10 @@ export default Model.extend(Validations, {
     return fullName.length > 0 ? fullName : undefined;
   }),
 
-  firstName:                 attr('string'),
-  middleName:                attr('string'),
-  lastName:                  attr('string'),
-  suffixName:                attr('string'),
+  firstName:  attr('string'),
+  middleName: attr('string'),
+  lastName:   attr('string'),
+  suffixName: attr('string'),
 
   addressLine1:              attr('string'),
   addressLine2:              attr('string'),
@@ -50,15 +50,21 @@ export default Model.extend(Validations, {
   exempt:      attr('boolean', { defaultValue: false }),
   payRateType: attr('string', { defaultValue: 'Hourly' }),
 
-  onboarding:         attr('boolean'),
-  onboardingStep:     attr('number'),
-  onboarder:          belongsTo('company-user', { async: true, inverse: null }),
+  onboarding:     attr('boolean'),
+  onboardingStep: attr('number'),
+  onboarder:      belongsTo('company-user', {
+    async:   true,
+    inverse: null
+  }),
   onboardingProgress: attr('number'),
 
   // Termination
-  offboarding:             attr('boolean'),
-  offboardingStep:         attr('number'),
-  offboarder:              belongsTo('company-user', { async: true, inverse: null }),
+  offboarding:     attr('boolean'),
+  offboardingStep: attr('number'),
+  offboarder:      belongsTo('company-user', {
+    async:   true,
+    inverse: null
+  }),
   offboardingProgress:     attr('number'),
   offboardingDocuments:    hasMany('file', { defaultValue: [] }),
   terminatedOn:            attr('date'),
@@ -80,12 +86,30 @@ export default Model.extend(Validations, {
   externalLinkLastSync:      attr('date'),
 
 
-  company:     belongsTo('company', { async: true, inverse: null }),
-  location:    belongsTo('location', { async: true, inverse: null }),
-  department:  belongsTo('department', { async: true, inverse: null }),
-  supervisor:  belongsTo('employee', { async: true, inverse: null }),
-  companyUser: belongsTo('company-user', { async: true, inverse: 'employee' }),
-  creator:     belongsTo('company-user', { async: true, inverse: null }),
+  company: belongsTo('company', {
+    async:   true,
+    inverse: null
+  }),
+  location: belongsTo('location', {
+    async:   true,
+    inverse: null
+  }),
+  department: belongsTo('department', {
+    async:   true,
+    inverse: null
+  }),
+  supervisor: belongsTo('employee', {
+    async:   true,
+    inverse: null
+  }),
+  companyUser: belongsTo('company-user', {
+    async:   true,
+    inverse: 'employee'
+  }),
+  creator: belongsTo('company-user', {
+    async:   true,
+    inverse: null
+  }),
 
   dateOfBirth:  attr('date'),
   effectiveOn:  attr('date'), // Placeholder for effective dated changes. This field is only here to pass along to the api

@@ -5,5 +5,5 @@ export default BaseLiComponent.extend({
 
   /* stubs */
   onApprove: () => {},
-  onReject: () => {}
+  onReject:  () => {}
 });

@@ -29,24 +29,27 @@ export default Controller.extend(addEdit, {
 
     addManualSource () {
       this.setProperties({
-        manualSource: this.store.createRecord('manual-applicant-source'),
+        manualSource:          this.store.createRecord('manual-applicant-source'),
         respondedManualSource: false
       });
 
       $('#modal__add--manual-source').modal({
         detachable: true,
-        onHidden: () => {
-          if ( !this.get('respondedManualSource') ) {
+        onHidden:   () => {
+          if (!this.get('respondedManualSource')) {
             this.send('respondManualSource', false);
           }
         }
       }).modal('show');
 
-      return new Promise((resolveMs, rejectMs) => this.setProperties({ resolveMs, rejectMs }));
+      return new Promise((resolveMs, rejectMs) => this.setProperties({
+        resolveMs,
+        rejectMs
+      }));
     },
 
     respondManualSource (response) {
-      if ( !response ) {
+      if (!response) {
         this.get('manualSource').destroyRecord();
       }
 

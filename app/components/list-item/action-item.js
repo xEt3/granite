@@ -3,8 +3,8 @@ import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  auth: service(),
-  userId: computed.reads('auth.user.employee.id'),
+  auth:          service(),
+  userId:        computed.reads('auth.user.employee.id'),
   subscriberIds: computed.mapBy('actionItem.subscribers', 'id'),
 
   todosComplete: computed('actionItem.{checklist.length,incompleteTodos.length}', function () {

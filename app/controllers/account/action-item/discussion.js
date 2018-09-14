@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default Controller.extend(addEdit, {
-  auth: service(),
+  auth:                service(),
   transitionAfterSave: false,
 
   actions: {
@@ -16,7 +16,7 @@ export default Controller.extend(addEdit, {
       let comment = this.store.createRecord('comment', {
         commenter,
         text,
-        targetId: this.get('actionItem.id'),
+        targetId:   this.get('actionItem.id'),
         targetType: 'ActionItem'
       });
 

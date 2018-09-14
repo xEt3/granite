@@ -2,8 +2,8 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 const FeaturesListComponent = Component.extend({
-  classNames: [ 'section-content__features' ],
-  autoCycle: 0,
+  classNames:  [ 'section-content__features' ],
+  autoCycle:   0,
   autoCycleMs: 5000,
 
   didInsertElement () {
@@ -15,7 +15,9 @@ const FeaturesListComponent = Component.extend({
   },
 
   scheduleAutoCycle () {
-    this.set('_autoCycleTimer', setTimeout(this.incrementAutoCycle, this.get('autoCycleMs')));
+    if (!this.isDestroyed) {
+      this.set('_autoCycleTimer', setTimeout(this.incrementAutoCycle.bind(this), this.get('autoCycleMs')));
+    }
   },
 
   cancelAutoCycle () {
@@ -47,8 +49,6 @@ const FeaturesListComponent = Component.extend({
   }
 });
 
-FeaturesListComponent.reopenClass({
-  positionalParams: [ 'features' ]
-});
+FeaturesListComponent.reopenClass({ positionalParams: [ 'features' ] });
 
 export default FeaturesListComponent;

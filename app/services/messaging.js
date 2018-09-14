@@ -6,7 +6,7 @@ export default Service.extend({
   socket: service(),
 
   queueDrainTimeout: 800,
-  __readQueue: A(),
+  __readQueue:       A(),
 
   markMessageRead (message) {
     this.__readQueue.push(message._id);

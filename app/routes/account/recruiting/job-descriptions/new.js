@@ -5,8 +5,9 @@ import { computed } from '@ember/object';
 import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
-  auth: service(),
-  modelName: 'job',
+  titleToken: 'New Description',
+  auth:       service(),
+  modelName:  'job',
 
   model () {
     return RSVP.hash({

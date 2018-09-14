@@ -12,7 +12,24 @@ module.exports = {
     'plugin:ember/recommended'
   ],
   env: {
-    browser: true
+    es6: true,
+    browser: true,
+    node: true,
+    amd: false,
+    jquery: true,
+    qunit: true,
+    embertest: true
+  },
+  globals: {
+    SignaturePad: true,
+    Modernizr: true,
+    moment: true,
+    containsText: true,
+    currentURL: true,
+    waitForPromise: true,
+    md5: true,
+    server: true,
+    Dropzone: true
   },
   rules: {
     'key-spacing': [ 'error', {
@@ -24,7 +41,7 @@ module.exports = {
       allowAllPropertiesOnSameLine: false
     }],
     'comma-spacing': [ 'error', { before: false, after: true } ],
-    'object-curly-newline': [ 'error', { multiline: true } ],
+    'object-curly-newline': ["error", { "multiline": true }],
     'array-bracket-spacing': [ 'error', 'always', { 'objectsInArrays': false } ],
     'space-in-brackets': [ 'error', 'always' ],
     'object-curly-spacing': [ 'error', 'always', { 'arraysInObjects': true } ],
@@ -147,41 +164,5 @@ module.exports = {
     'wrap-iife': 0,
     'wrap-regex': 0,
     'vars-on-top': 0
-  },
-  'globals': {
-    'SignaturePad': true,
-    'Modernizr': true,
-    'moment': true,
-    'scrollReveal': true,
-    'google': true,
-    'NProgress': true,
-    'd3': true,
-    'Bloodhound': true,
-    'markdown': true,
-    'md5': true,
-    'Dropzone': true,
-    'localforage': true,
-    'io': true,
-    'ScrollReveal': true
-  },
-  overrides: [
-    // node files
-    {
-      files: [
-        'ember-cli-build.js',
-        'testem.js',
-        'blueprints/*/index.js',
-        'config/**/*.js',
-        'lib/*/index.js'
-      ],
-      parserOptions: {
-        sourceType: 'script',
-        ecmaVersion: 2015
-      },
-      env: {
-        browser: false,
-        node: true
-      }
-    }
-  ]
+  }
 };

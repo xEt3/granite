@@ -5,7 +5,7 @@ import moment from 'moment';
 import modalSupport from 'granite/mixins/modal-support';
 
 export default Controller.extend(modalSupport, {
-  responsesModalId: 'modal__ja-responses',
+  responsesModalId:   'modal__ja-responses',
   coverLetterModalId: 'modal__ja-cover-letter',
 
   upcomingEvents: computed.filter('events', function (event) {

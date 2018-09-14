@@ -14,10 +14,22 @@ export default Model.extend({
   scoreAdditive:         attr('number'),
   scoreRelative:         attr('number'),
 
-  resume:     belongsTo('file', { async: true, inverse: null }),
-  jobOpening: belongsTo('job-opening', { async: true, inverse: null }),
-  applicant:  belongsTo('applicant', { async: true, inverse: null }),
-  employee:   belongsTo('employee', { async: true, inverse: null }),
+  resume: belongsTo('file', {
+    async:   true,
+    inverse: null
+  }),
+  jobOpening: belongsTo('job-opening', {
+    async:   true,
+    inverse: null
+  }),
+  applicant: belongsTo('applicant', {
+    async:   true,
+    inverse: null
+  }),
+  employee: belongsTo('employee', {
+    async:   true,
+    inverse: null
+  }),
 
   person: computed('applicant', 'employee.id', function () {
     return this.get('employee.id') ? this.get('employee') : this.get('applicant');
@@ -25,12 +37,13 @@ export default Model.extend({
 
   hired:      attr('boolean'),
   hiredSetOn: attr('date'),
-  hiredSetBy: belongsTo('employee', { async: true, inverse: null }),
+  hiredSetBy: belongsTo('employee', {
+    async:   true,
+    inverse: null
+  }),
 
   reviewedOn: attr('date'),
-  created: attr('date', {
-    defaultValue: () => new Date()
-  }),
+  created:    attr('date', { defaultValue: () => new Date() }),
 
   isScored: computed('scoreAdditive', 'scoreRelative', 'responses', function () {
     return !isNaN(this.get('scoreAdditive')) && !isNaN(this.get('scoreRelative')) && !!this.get('responses.firstObject');

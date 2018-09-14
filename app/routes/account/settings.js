@@ -4,7 +4,7 @@ import { resolve } from 'rsvp';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default Route.extend(addEdit, {
-  auth: service(),
+  auth:                service(),
   transitionAfterSave: false,
 
   model () {

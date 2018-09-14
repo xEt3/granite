@@ -7,7 +7,5 @@ export default Model.extend({
   company: belongsTo('company'),
   creator: belongsTo('employee'),
 
-  created: attr('date', {
-    defaultValue: () => new Date()
-  })
+  created: attr('date', { defaultValue: () => new Date() })
 });

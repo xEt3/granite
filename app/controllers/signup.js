@@ -4,20 +4,20 @@ import { inject as controller } from '@ember/controller';
 import { A } from '@ember/array';
 
 const steps = [{
-  title: 'Company Information',
+  title:       'Company Information',
   description: 'Let\'s get to know your company',
-  icon: 'info circle',
-  path: 'signup.index'
+  icon:        'info circle',
+  path:        'signup.index'
 }, {
-  title: 'Billing',
+  title:       'Billing',
   description: 'Begin your 14-day trial',
-  icon: 'cubes',
-  path: 'signup.billing'
+  icon:        'cubes',
+  path:        'signup.billing'
 }, {
-  title: 'Begin Setup',
+  title:       'Begin Setup',
   description: 'Get your company set up in Granite',
-  icon: 'settings',
-  path: 'signup.finish'
+  icon:        'settings',
+  path:        'signup.finish'
 }];
 
 export default Controller.extend({

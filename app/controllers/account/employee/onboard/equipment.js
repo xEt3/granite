@@ -20,7 +20,7 @@ export default Controller.extend(ajaxStatus, {
       let asset = get(stock, 'asset'),
           existingGroup = findGroup(asset);
 
-      if ( !existingGroup ) {
+      if (!existingGroup) {
         groups.addObject(Object.create({
           asset,
           assets: A()
@@ -36,14 +36,14 @@ export default Controller.extend(ajaxStatus, {
   }),
 
   actions: {
-    createAsset ( category ) {
+    createAsset (category) {
       let user = this.get('auth.user');
 
       this.set('pendingAssetItem', this.store.createRecord('asset-item', {
-        asset: category,
+        asset:      category,
         identifier: this.get('model.firstName') + '\'s ' + singularize(category.get('name')),
-        creator: user,
-        company: user.get('company')
+        creator:    user,
+        company:    user.get('company')
       }));
 
       $('.new-asset').modal('show');
@@ -68,13 +68,13 @@ export default Controller.extend(ajaxStatus, {
       });
     },
 
-    selectAsset ( asset ) {
+    selectAsset (asset) {
       this.ajaxStart();
 
       let user = this.get('auth.user'),
           employee = this.get('model');
 
-      if ( asset.get('assignments').findBy('employee.id', employee.get('id')) ) {
+      if (asset.get('assignments').findBy('employee.id', employee.get('id'))) {
         this.ajaxSuccess(null, true);
         return;
       }
@@ -94,12 +94,12 @@ export default Controller.extend(ajaxStatus, {
       .catch(this.ajaxError.bind(this));
     },
 
-    unassignAsset ( asset ) {
+    unassignAsset (asset) {
       this.get('assignedAssets').removeObject(asset);
 
       let assignment = asset.get('assignments').findBy('employee.id', this.get('model.id'));
 
-      if ( assignment ) {
+      if (assignment) {
         this.ajaxStart();
         asset.get('assignments').removeObject(assignment);
 

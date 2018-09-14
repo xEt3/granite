@@ -18,10 +18,14 @@ export default Model.extend(Validations, {
   tags:           attr('array'),
   systemUse:      attr('boolean'),
 
-  creator: belongsTo('company-user', { async: true, inverse: null }),
-  company: belongsTo('company', { async: true, inverse: null }),
+  creator: belongsTo('company-user', {
+    async:   true,
+    inverse: null
+  }),
+  company: belongsTo('company', {
+    async:   true,
+    inverse: null
+  }),
 
-  created: attr('date', {
-    defaultValue: () => new Date()
-  })
+  created: attr('date', { defaultValue: () => new Date() })
 });

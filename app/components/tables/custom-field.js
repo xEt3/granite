@@ -7,7 +7,7 @@ export default Component.extend({
     editValue () {
       this.setProperties({
         editingValue: true,
-        newValue: this.get('value')
+        newValue:     this.get('value')
       });
     },
 

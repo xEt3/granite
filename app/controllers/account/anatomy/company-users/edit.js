@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-export default Controller.extend(addEdit,{
+export default Controller.extend(addEdit, {
   transitionAfterSave: 'account.anatomy.company-users',
   transitionWithModel: false,
 
@@ -21,7 +21,7 @@ export default Controller.extend(addEdit,{
       });
     },
 
-    permissionCheck() {
+    permissionCheck () {
       let checked = [];
 
       this.permissionsTree.forEach(permission=>{

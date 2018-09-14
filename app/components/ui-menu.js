@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 
 export default Component.extend({
-  open: false,
+  open:       false,
   classNames: [ 'menu__container-responsive' ],
 
   actions: {

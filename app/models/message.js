@@ -5,12 +5,10 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 export default Model.extend({
   content: attr('string'),
 
-  from: hasMany('employee'),
-  file: belongsTo('file'),
+  from:          hasMany('employee'),
+  file:          belongsTo('file'),
   messageThread: belongsTo('messageThread'),
-  company: belongsTo('company'),
+  company:       belongsTo('company'),
 
-  created: attr('date', {
-    defaultValue: () => new Date()
-  })
+  created: attr('date', { defaultValue: () => new Date() })
 });

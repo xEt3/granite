@@ -6,14 +6,15 @@ import edit from 'granite/mixins/route-abstractions/edit';
 import { issueTypes } from 'granite/config/statics';
 
 export default Route.extend(edit, {
-  auth: service(),
-  ajax: service(),
-  modelName: 'corrective-action',
+  titleToken: 'Edit',
+  auth:       service(),
+  ajax:       service(),
+  modelName:  'corrective-action',
 
   model () {
     return RSVP.hash({
       correctiveAction: this.modelFor('account.employee.index.counseling.issue.corrective-action'),
-      issueTypes: this.getIssueTypes()
+      issueTypes:       this.getIssueTypes()
     });
   },
 
@@ -28,7 +29,7 @@ export default Route.extend(edit, {
     return this.get('ajax').request('/api/v1/employee-issues', {
       data: {
         _distinct: true,
-        select: 'type'
+        select:    'type'
       }
     })
     .then(res => A([ ...issueTypes, ...res ]).uniq());

@@ -9,8 +9,6 @@ const FirstStepsComponent = Component.extend({
   })
 });
 
-FirstStepsComponent.reopenClass({
-  positionalParams: [ 'step' ]
-});
+FirstStepsComponent.reopenClass({ positionalParams: [ 'step' ] });
 
 export default FirstStepsComponent;

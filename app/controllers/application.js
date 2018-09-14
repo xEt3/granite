@@ -16,42 +16,42 @@ const nonTopLevelRoutes = [
 ];
 
 export default Controller.extend({
-  auth: service(),
+  auth:          service(),
   notifications: service('notification-messages'),
-  subscription: service(),
+  subscription:  service(),
 
   accountNavigationItems: [{
-    icon: 'tachometer alternate',
+    icon:  'tachometer alternate',
     title: 'Dashboard',
-    link: 'index'
+    link:  'index'
   }, {
-    icon: 'check',
+    icon:  'check',
     title: 'Action Items',
-    link: 'action-items'
+    link:  'action-items'
   }, {
-    icon: 'users',
+    icon:  'users',
     title: 'Employees',
-    link: 'employees'
+    link:  'employees'
   }, {
-    icon: 'user add',
+    icon:  'user add',
     title: 'Recruiting',
-    link: 'recruiting'
+    link:  'recruiting'
   }, {
-    icon: 'file',
+    icon:  'file',
     title: 'Documents',
-    link: 'documents'
+    link:  'documents'
   }, {
-    icon: 'mobile',
+    icon:  'mobile',
     title: 'Company Assets',
-    link: 'assets'
+    link:  'assets'
   }, {
   //   icon: 'doctor',
   //   title: 'Leave Management',
   //   link: 'index'
   // }, {
-    icon: 'sitemap',
+    icon:  'sitemap',
     title: 'Company Anatomy',
-    link: 'anatomy'
+    link:  'anatomy'
   }],
 
   navTransparent: computed.equal('currentPath', 'index'),
@@ -62,7 +62,7 @@ export default Controller.extend({
   }),
 
   updateBodyClass: on('init', observer('topLevel', function () {
-    if ( ENV.environment !== 'test' ) {
+    if (ENV.environment !== 'test') {
       run.scheduleOnce('afterRender', () => {
         $('body')[this.get('topLevel') ? 'removeClass' : 'addClass']('application__in-account');
       });
@@ -71,14 +71,16 @@ export default Controller.extend({
 
   backdrop: computed('auth.user.company.rgbPalette', function () {
     const palette = this.get('auth.user.company.rgbPalette');
-
-    return htmlSafe(palette ? `
+    const grad = palette ? `
       linear-gradient(${fadeRgb(lighten(palette[0], 10), 1)}, transparent),
       linear-gradient(80deg, ${fadeRgb(darken(palette[0], 20), 1)}, transparent),
-      linear-gradient(-60deg, ${fadeRgb(palette[2], 1)}, transparent);` : '#FFF');
+      linear-gradient(-60deg, ${fadeRgb(palette[2], 1)}, transparent)` :
+      false;
+
+    return htmlSafe(grad ? `background: ${grad}` : '');
   }),
 
-  transitionAfterExpiration: observer('auth.isExpired', function() {
+  transitionAfterExpiration: observer('auth.isExpired', function () {
     if (this.get('auth.isExpired')) {
       $('.ui.modal').modal('hide');
       this.send('logout', true);
@@ -90,10 +92,10 @@ export default Controller.extend({
       this.transitionToRoute('account.settings.billing.index');
     },
 
-    authResponse ( response ) {
+    authResponse (response) {
       let auth = this.get('auth');
 
-      if ( response ) {
+      if (response) {
         auth.refreshSession()
         .catch(() => {
           this.send('logout', true);

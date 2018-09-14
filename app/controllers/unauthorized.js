@@ -6,18 +6,18 @@ import moment from 'moment';
 
 export default Controller.extend({
   loginController: controller('login'),
-  auth: service(),
+  auth:            service(),
 
   unauthorizedReason: computed('fromError', function () {
     var error = this.get('fromError');
 
-    if ( !error ) {
+    if (!error) {
       return 'Undefined Error.';
     }
 
     var sessionExpires = this.auth.get('session.expires');
 
-    if ( moment(sessionExpires).isBefore(moment()) ) {
+    if (moment(sessionExpires).isBefore(moment())) {
       this.get('loginController').set('fromError', 'Your session has expired. Please log in again.');
       this.transitionToRoute('login');
       return 'Your session has expired.';

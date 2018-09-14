@@ -7,8 +7,6 @@ const RecordSetComponent = Component.extend({
   })
 });
 
-RecordSetComponent.reopenClass({
-  positionalParams: [ 'recordSet' ]
-});
+RecordSetComponent.reopenClass({ positionalParams: [ 'recordSet' ] });
 
 export default RecordSetComponent;

@@ -1,13 +1,14 @@
 import { module, test } from 'qunit';
 import authenticate from 'granite/tests/helpers/auth';
-import { visit, currentURL, click, find, findAll, settled, fillIn} from '@ember/test-helpers';
+import { visit, currentURL, click, find, findAll, settled, fillIn } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 
-module('Acceptance | company users', function(hooks) {
+module('Acceptance | company users', function (hooks) {
   setupApplicationTest(hooks);
 
   test('getting to company-users', async function(assert) {
     await authenticate.call(this, server, { companyUser: { firstName: 'old', lastName: 'yeller' } });
+
     await visit('/account/dashboard');
     assert.equal(currentURL(), '/account/dashboard');
 
@@ -26,7 +27,7 @@ module('Acceptance | company users', function(hooks) {
     assert.ok($listItems.textContent.trim().toLowerCase().replace(/\s\s+/g, ' ').indexOf('old yeller') > -1, 'List items should contain "old yeller"');
   });
 
-  test('adding new user with permissions', async function(assert) {
+  test('adding new user with permissions', async function (assert) {
     await server.create('employees');
     await server.createList('permissions', 8);
     await authenticate.call(this, server);
@@ -41,7 +42,7 @@ module('Acceptance | company users', function(hooks) {
 
     await click('div#user-employee-link > div.text');
     await fillIn('input[type="email"]', 'testuser@test.com');
-    assert.equal(findAll('.node').length, 5, '5 permissions are shown' );
+    assert.equal(findAll('.node').length, 5, '5 permissions are shown');
     assert.equal(findAll('.toggle-icon').length, 5, '5 permissions have dropdowns');
 
     await click('span[class="toggle-icon"]');
@@ -55,8 +56,9 @@ module('Acceptance | company users', function(hooks) {
     let permissions = await server.createList('permissions', 8).map(p => {
       return p.id;
     });
-
+    
     await authenticate.call(this, server, { companyUser: { permissions } });
+
     await visit('account/anatomy/company-users');
 
     assert.equal(currentURL(), 'account/anatomy/company-users');
@@ -64,7 +66,7 @@ module('Acceptance | company users', function(hooks) {
 
     assert.equal(currentURL(), '/account/anatomy/company-users/edit/1');
     assert.ok(find('h1[class="ui header left floated"]'), 'Header on page on page');
-    assert.equal(findAll('.node').length, 5, '5 permissions are shown' );
+    assert.equal(findAll('.node').length, 5, '5 permissions are shown');
     assert.equal(findAll('.toggle-icon').length, 5, '5 permissions have dropdowns');
 
     await click('span[class="toggle-icon"]');

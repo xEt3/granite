@@ -4,7 +4,8 @@ import resource from 'granite/mixins/route-abstractions/resource';
 // import moment from 'moment';
 
 export default Route.extend(resource, {
-  modelName: 'employee',
+  titleToken: 'Employees',
+  modelName:  'employee',
 
   queryParams: {
     onboarding:    { refreshModel: true },
@@ -30,31 +31,19 @@ export default Route.extend(resource, {
 
   mutateQuery (query, params) {
     if (params.hireDateStart) {
-      query.hireDate = {
-        $gte: params.hireDateStart
-      };
+      query.hireDate = { $gte: params.hireDateStart };
     }
 
     if (params.hireDateEnd) {
-      query.hireDate = Object.assign(query.hireDate || {}, {
-        $lte: params.hireDateEnd
-      });
+      query.hireDate = Object.assign(query.hireDate || {}, { $lte: params.hireDateEnd });
     }
 
     if (params.terminated === true) {
-      query.terminatedOn = {
-        $type: 9
-      };
+      query.terminatedOn = { $type: 9 };
     } else  {
-      query.$or = [{
-        terminatedOn: {
-          $not: {$type:9}
-        }
-      }, {
-        offboarding: true,
-        terminatedOn: {
-          $type: 9
-        }
+      query.$or = [{ terminatedOn: { $not: { $type: 9 } } }, {
+        offboarding:  true,
+        terminatedOn: { $type: 9 }
       }];
     }
 
@@ -67,18 +56,27 @@ export default Route.extend(resource, {
 
   model () {
     return hash({
-      employees: this._super(...arguments),
+      employees:    this._super(...arguments),
       filterModels: hash({
-        employees:   this.store.query('employee', { select: '_id name jobTitle', sort: { 'name.last': 1 } }),
-        departments: this.store.query('department', { select: '_id name', sort: { name: 1 } }),
-        locations:   this.store.query('location', { select: '_id name', sort: { name: 1 } })
+        employees: this.store.query('employee', {
+          select: '_id name jobTitle',
+          sort:   { 'name.last': 1 }
+        }),
+        departments: this.store.query('department', {
+          select: '_id name',
+          sort:   { name: 1 }
+        }),
+        locations: this.store.query('location', {
+          select: '_id name',
+          sort:   { name: 1 }
+        })
       })
     });
   },
 
   setupController (controller, model) {
     controller.setProperties({
-      model: model.employees,
+      model:        model.employees,
       filterModels: model.filterModels
     });
   }

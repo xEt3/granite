@@ -4,9 +4,9 @@ import { inject as service } from '@ember/service';
 import ajaxStatus from 'granite/mixins/ajax-status';
 
 export default Controller.extend(ajaxStatus, {
-  ajax: service(),
+  ajax:        service(),
   queryParams: [ 'a' ],
-  a: null,
+  a:           null,
 
   enableActivation: computed('password', 'passwordConfirm', function () {
     const p = this.get('password');
@@ -26,7 +26,7 @@ export default Controller.extend(ajaxStatus, {
         }
       })
       .then(result => {
-        if ( result.activated !== true ) {
+        if (result.activated !== true) {
           return this.ajaxError('Problem activating');
         }
 

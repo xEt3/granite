@@ -2,7 +2,9 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
 export default Route.extend({
-  ajax: service(),
+  titleToken: 'Billing',
+  auth:       service(),
+  ajax:       service(),
 
   model () {
     let company = this.modelFor('account.settings');

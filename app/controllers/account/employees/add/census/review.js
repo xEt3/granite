@@ -10,24 +10,24 @@ export default Controller.extend(ajaxStatus, {
 
   intros: computed(function () {
     return [{
-      element: '.guess-fields-row',
-      intro: 'We\'ve attempted to guess the columns that you uploaded. This row represents our guesses.',
+      element:  '.guess-fields-row',
+      intro:    'We\'ve attempted to guess the columns that you uploaded. This row represents our guesses.',
       position: 'top'
     }, {
-      element: '.guess-fields-row .field input',
-      intro: 'Use a select box to change the field if our guess was incorrect.',
+      element:  '.guess-fields-row .field input',
+      intro:    'Use a select box to change the field if our guess was incorrect.',
       position: 'top'
     }, {
-      element: '.client-fields-row',
-      intro: 'We show the column labels you originally uploaded here for reference.',
+      element:  '.client-fields-row',
+      intro:    'We show the column labels you originally uploaded here for reference.',
       position: 'top'
     }, {
-      element: '.data-rows',
-      intro: 'Review this section before continuing to make sure your data is imported correctly.',
+      element:  '.data-rows',
+      intro:    'Review this section before continuing to make sure your data is imported correctly.',
       position: 'bottom'
     }, {
-      element: '.import-button',
-      intro: 'Click import to import the data you have reviewed on this screen.',
+      element:  '.import-button',
+      intro:    'Click import to import the data you have reviewed on this screen.',
       position: 'bottom'
     }];
   }),
@@ -61,9 +61,7 @@ export default Controller.extend(ajaxStatus, {
       this.set('dryrun', true);
       this.ajaxStart();
 
-      return this.get('ajax').post(`/api/v1/employee/census/${uploadId}/dryrun`, {
-        data: { headerMap }
-      }).then(dryrunResult => {
+      return this.get('ajax').post(`/api/v1/employee/census/${uploadId}/dryrun`, { data: { headerMap } }).then(dryrunResult => {
         this.set('dryrun', null);
         this.set('dryrunResult', dryrunResult);
         this.ajaxSuccess(null, true);
@@ -84,9 +82,7 @@ export default Controller.extend(ajaxStatus, {
       const headerMap = this.get('model.data')[0],
             uploadId = this.get('model.uploadId');
 
-      this.get('ajax').post('/api/v1/employee/census/' + uploadId + '/process', {
-        data: { headerMap }
-      })
+      this.get('ajax').post('/api/v1/employee/census/' + uploadId + '/process', { data: { headerMap } })
       .then(() => {
         this.ajaxSuccess();
         this.transitionToRoute('account.employees');

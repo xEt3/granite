@@ -4,7 +4,7 @@ import { computed } from '@ember/object';
 import ajaxStatus from 'granite/mixins/ajax-status';
 
 export default Component.extend(ajaxStatus, {
-  auth: service(),
+  auth:         service(),
   subscription: service(),
 
   didUpdateAttrs () {

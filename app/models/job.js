@@ -13,7 +13,5 @@ export default Model.extend(Validations, {
   department: belongsTo('department'),
   assets:     hasMany('asset'),
 
-  created: attr('date', {
-    defaultValue: () => new Date()
-  })
+  created: attr('date', { defaultValue: () => new Date() })
 });

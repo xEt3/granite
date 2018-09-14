@@ -2,8 +2,8 @@ import Mixin from '@ember/object/mixin';
 import { computed } from '@ember/object';
 
 export default Mixin.create({
-  limit: 10,
-  __totalItems: computed.reads('model.meta.totalRecords'),
+  limit:                10,
+  __totalItems:         computed.reads('model.meta.totalRecords'),
   __metadataTotalItems: computed.reads('metadata.totalRecords'),
 
   pages: computed('__totalItems', '__metadataTotalItems', 'limit', function () {

@@ -2,14 +2,11 @@ import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
 import { inject as service } from '@ember/service';
 
-const $or = [{
-  terminatedOn: { $exists: false }
-}, {
-  terminatedOn: null
-}];
+const $or = [{ terminatedOn: { $exists: false } }, { terminatedOn: null }];
 
 export default Route.extend({
-  ajax: service(),
+  titleToken: 'Reorganization',
+  ajax:       service(),
 
   model () {
     let employee = this.modelFor('account.employee.offboard'),
@@ -31,7 +28,7 @@ export default Route.extend({
       data: {
         $or,
         supervisor: employee.get('id'),
-        select: '_id'
+        select:     '_id'
       }
     })
     .then(res => res.employee && res.employee.length);
@@ -39,8 +36,8 @@ export default Route.extend({
 
   setupController (controller, model) {
     controller.setProperties({
-      model: model.employee,
-      employees: model.employees,
+      model:            model.employee,
+      employees:        model.employees,
       hasDirectReports: model.hasDirectReports
     });
   }

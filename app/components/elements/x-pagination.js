@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-  _pages: computed.reads('pages'),
+  _pages:     computed.reads('pages'),
   classNames: [ 'ui', 'right', 'floated', 'pagination', 'menu' ],
   maxButtons: 6,
 
@@ -14,29 +14,29 @@ export default Component.extend({
     let l = [],
         t = this.getProperties('_pages', '_page', 'maxButtons');
 
-    if ( !t._pages ) {
+    if (!t._pages) {
       return [];
     }
 
     var p = t._page > t.maxButtons / 2 ? t._page - t.maxButtons / 2 : 1;
 
-    if ( isNaN(t._pages) || isNaN(p) ) {
+    if (isNaN(t._pages) || isNaN(p)) {
       return [];
     }
 
-    if ( p + t.maxButtons > t._pages ) {
+    if (p + t.maxButtons > t._pages) {
       p = t._pages - t.maxButtons + 1;
     }
 
-    if ( p < 0 ) {
+    if (p < 0) {
       p = 1;
     }
 
     var topLoop = t._pages >= t.maxButtons ? t.maxButtons : t._pages;
 
-    for ( var loop = 0; loop < topLoop; loop++ ) {
+    for (var loop = 0; loop < topLoop; loop++) {
       l.push({
-        n: p,
+        n:      p,
         active: p === t._page
       });
 
@@ -57,13 +57,13 @@ export default Component.extend({
   },
 
   actions: {
-    setPage ( n ) {
+    setPage (n) {
       this.set('_page', n);
       this.change();
     },
 
-    incrementPage ( inc = 1 ) {
-      if ( this.get('_page') + inc >= this.get('_pages') ) {
+    incrementPage (inc = 1) {
+      if (this.get('_page') + inc >= this.get('_pages')) {
         this.set('_page', this.get('_pages'));
       } else {
         this.incrementProperty('_page', inc);
@@ -72,8 +72,8 @@ export default Component.extend({
       this.change();
     },
 
-    decrementPage ( dec = 1 ) {
-      if ( dec >= this.get('_page') ) {
+    decrementPage (dec = 1) {
+      if (dec >= this.get('_page')) {
         this.set('_page', 1);
       } else {
         this.decrementProperty('_page', dec);

@@ -4,7 +4,8 @@ import { inject as service } from '@ember/service';
 import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
-  auth: service(),
+  titleToken: 'New Document',
+  auth:       service(),
 
   model () {
     return Promise.resolve();

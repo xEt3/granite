@@ -31,7 +31,7 @@ var INTRO_JS_OPTIONS = [
 ];
 
 var IntroJSComponent = Component.extend({
-  setupIntroJS: observer('start-if', function() {
+  setupIntroJS: observer('start-if', function () {
     run.scheduleOnce('afterRender', this, this.startIntroJS);
   }).on('didInsertElement'),
 
@@ -87,7 +87,7 @@ var IntroJSComponent = Component.extend({
     'overlay-opacity',
     'disable-interaction',
     'steps',
-    function() {
+    function () {
       var option, normalizedName, value, options = {};
 
       for (var i = 0; i < INTRO_JS_OPTIONS.length; i++) {
@@ -105,7 +105,7 @@ var IntroJSComponent = Component.extend({
     }
   ),
 
-  startIntroJS: function() {
+  startIntroJS: function () {
     var intro,
         options = this.get('introJSOptions');
 
@@ -127,10 +127,10 @@ var IntroJSComponent = Component.extend({
     }
   },
 
-  registerCallbacksWithIntroJS: function() {
+  registerCallbacksWithIntroJS: function () {
     var intro = this.get('introJS');
 
-    intro.onbeforechange(bind(this, function(elementOfNewStep) {
+    intro.onbeforechange(bind(this, function (elementOfNewStep) {
       var prevStep = this.get('currentStep');
       this._setCurrentStep(this.get('introJS._currentStep'));
       var nextStep = this.get('currentStep');
@@ -138,39 +138,39 @@ var IntroJSComponent = Component.extend({
       this.sendAction('on-before-change', prevStep, nextStep, this, elementOfNewStep);
     }));
 
-    intro.onchange(bind(this, function(targetElement) {
+    intro.onchange(bind(this, function (targetElement) {
       this.sendAction('on-change', this.get('currentStep'), this, targetElement);
     }));
 
     intro.onafterchange(bind(this, this._onAfterChange));
 
-    intro.oncomplete(bind(this, function() {
+    intro.oncomplete(bind(this, function () {
       this.sendAction('on-complete', this.get('currentStep'));
     }));
 
     intro.onexit(bind(this, this._onExit));
   },
 
-  _setIntroJS: function(intJS) {
+  _setIntroJS: function (intJS) {
     this.set('introJS', intJS);
   },
 
-  _onAfterChange: function(targetElement) {
+  _onAfterChange: function (targetElement) {
     this.sendAction('on-after-change', this.get('currentStep'), this, targetElement);
   },
 
-  _onExit: function() {
+  _onExit: function () {
     this.sendAction('on-exit', this.get('currentStep'), this);
   },
 
-  exitIntroJS: on('willDestroyElement', function() {
+  exitIntroJS: on('willDestroyElement', function () {
     var intro = this.get('introJS');
     if (intro) {
       intro.exit();
     }
   }),
 
-  _setCurrentStep: function(step) {
+  _setCurrentStep: function (step) {
     var stepObject = A(this.get('steps')).objectAt(step);
     this.set('currentStep', stepObject);
   }

@@ -5,7 +5,7 @@ import { Promise } from 'rsvp';
 import { camelize } from '@ember/string';
 
 export default Service.extend({
-  auth: service(),
+  auth:           service(),
   connectedUsers: A(),
 
   initialize () {
@@ -13,11 +13,7 @@ export default Service.extend({
       return;
     }
 
-    const socket = io({
-      query: {
-        user: this.get('auth.user.employee.id')
-      }
-    });
+    const socket = io({ query: { user: this.get('auth.user.employee.id') } });
 
     this.setProperties({
       socket,
@@ -31,7 +27,7 @@ export default Service.extend({
     this.get('socket').disconnect();
 
     this.setProperties({
-      socket: null,
+      socket:              null,
       socketIsInitialized: false
     });
   },

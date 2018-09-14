@@ -42,7 +42,10 @@ export default Service.extend({
         return;
       }
 
-      let notification = new Notification(title, { body, icon });
+      let notification = new Notification(title, {
+        body,
+        icon
+      });
       setTimeout(() => notification.close(), this.get('notificationTimeout'));
     });
   }

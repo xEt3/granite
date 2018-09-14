@@ -24,17 +24,20 @@ export default Controller.extend(addEdit, {
 
       $('#effective-date-modal').modal({
         detachable: true,
-        onHidden: () => {
-          if ( !this.get('responded') ) {
+        onHidden:   () => {
+          if (!this.get('responded')) {
             this.send('respondEffectiveDateModal', false);
           }
         }
       }).modal('show');
 
-      return new Promise((resolve, reject) => this.setProperties({ resolve, reject }));
+      return new Promise((resolve, reject) => this.setProperties({
+        resolve,
+        reject
+      }));
     },
 
-    respondEffectiveDateModal ( response ) {
+    respondEffectiveDateModal (response) {
       this.get(response ? 'resolve' : 'reject')();
       this.set('responded', true);
       $('#effective-date-modal').modal('hide');

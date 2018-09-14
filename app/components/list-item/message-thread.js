@@ -4,8 +4,8 @@ import { inject as service } from '@ember/service';
 
 export default BaseListItem.extend({
   messaging: service(),
-  router: service(),
-  tagName: '',
+  router:    service(),
+  tagName:   '',
 
   lastMsg: computed.or('__lastMessage', 'model.lastMessage'),
 
@@ -29,7 +29,7 @@ export default BaseListItem.extend({
     this.messaging.unsubscribe('thread_message', this.get('id'));
   },
 
-  onMessage ([message]) {
+  onMessage ([ message ]) {
     if (message.messageThread !== this.get('model.id')) {
       return;
     }

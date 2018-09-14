@@ -4,18 +4,22 @@ import { inject as service } from '@ember/service';
 import refreshable from 'granite/mixins/refreshable';
 
 export default Route.extend(refreshable, {
-  queryParams: {
-    page: { refreshModel: true }
-  },
+  titleToken: 'Departments',
+
+  queryParams: { page: { refreshModel: true } },
 
   auth: service(),
 
-  model ( params ) {
+  model (params) {
     let limit = this.get('controller.limit') || 20,
         page = (params.page || 1) - 1,
         company = this.get('auth.user.company'),
         companyId = company.get('id'),
-        departments = this.store.query('department', { page, limit, 'company': companyId });
+        departments = this.store.query('department', {
+          page,
+          limit,
+          'company': companyId
+        });
 
     return RSVP.hash({
       company,
@@ -23,10 +27,10 @@ export default Route.extend(refreshable, {
     });
   },
 
-  setupController ( controller, model ) {
+  setupController (controller, model) {
     this._super(...arguments);
     controller.setProperties({
-      model: model.departments,
+      model:   model.departments,
       company: model.company
     });
   }

@@ -4,11 +4,11 @@ export default Component.extend({
   classNames: [ 'item' ],
 
   actions: {
-    delete() {
+    delete () {
       this.get('onDelete')(this.get('location'));
     },
 
-    toggleProperty ( prop ) {
+    toggleProperty (prop) {
       this.toggleProperty(prop);
     }
   }

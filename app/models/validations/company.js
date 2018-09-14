@@ -3,9 +3,7 @@ import { validator, buildValidations } from 'ember-cp-validations';
 export default buildValidations({
   name: [
     validator('presence', true),
-    validator('length', {
-      min: 2
-    })
+    validator('length', { min: 2 })
   ],
 
   contactPhone: [
@@ -18,9 +16,7 @@ export default buildValidations({
 
   contactLastName: [
     validator('presence', true),
-    validator('length', {
-      min: 2
-    })
+    validator('length', { min: 2 })
   ],
 
   email: [
@@ -30,16 +26,12 @@ export default buildValidations({
 
   addressLine1: [
     validator('presence', true),
-    validator('length', {
-      min: 2
-    })
+    validator('length', { min: 2 })
   ],
 
   addressCity: [
     validator('presence', true),
-    validator('length', {
-      min: 2
-    })
+    validator('length', { min: 2 })
   ],
 
   addressState: [
@@ -48,15 +40,11 @@ export default buildValidations({
 
   addressZipCode: [
     validator('presence', true),
-    validator('length', {
-      is: 5
-    })
+    validator('length', { is: 5 })
   ],
 
   urlPrefix: [
     validator('presence', true),
-    validator('length', {
-      max: 45
-    })
+    validator('length', { max: 45 })
   ]
 });

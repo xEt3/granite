@@ -20,20 +20,20 @@ import { Promise, map } from 'rsvp';
 import AjaxHooks from '../ajax-status';
 
 export default Mixin.create(AjaxHooks, {
-  enableNotify: true,
+  enableNotify:        true,
   transitionWithModel: true,
 
-  _validateModel ( model ) {
+  _validateModel (model) {
     const fields = this.get('requireFields');
 
-    if ( !fields ) {
+    if (!fields) {
       return false;
     }
 
     let invalidFields = [];
 
     fields.forEach(field => {
-      if ( !get(model, field) ) {
+      if (!get(model, field)) {
         invalidFields.push(field);
       }
     });
@@ -44,10 +44,10 @@ export default Mixin.create(AjaxHooks, {
   _afterSave (record) {
     const transitionAfterSave = this.get('transitionAfterSave');
 
-    if ( transitionAfterSave ) {
+    if (transitionAfterSave) {
       let transitionArgs = [ transitionAfterSave ];
 
-      if ( this.get('transitionWithModel') ) {
+      if (this.get('transitionWithModel')) {
         transitionArgs.push(record.get(this.getWithDefault('modelIdentifier', 'id')));
       }
 
@@ -58,7 +58,7 @@ export default Mixin.create(AjaxHooks, {
   saveModel (model) {
     const _model = model || this.get('model');
 
-    if ( !_model ) {
+    if (!_model) {
       return Promise.resolve();
     }
 
@@ -70,7 +70,7 @@ export default Mixin.create(AjaxHooks, {
 
     let invalid = this._validateModel(_model);
 
-    if ( invalid ) {
+    if (invalid) {
       let requireFieldDescriptors = get(this, 'requireFieldDescriptors'),
           invalidMessage = 'You must specify these fields: ' + invalid.map(field => {
             return requireFieldDescriptors ? requireFieldDescriptors[field] || field : field;
@@ -83,7 +83,7 @@ export default Mixin.create(AjaxHooks, {
     return _model.save().then(record => {
       this.ajaxSuccess('Successfully saved.');
 
-      if ( this.afterSave && typeof this.afterSave === 'function' ) {
+      if (this.afterSave && typeof this.afterSave === 'function') {
         this.afterSave(record);
       }
 
@@ -93,7 +93,7 @@ export default Mixin.create(AjaxHooks, {
   },
 
   actions: {
-    save ( model ) {
+    save (model) {
       this.saveModel(model);
     }
   }

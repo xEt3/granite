@@ -6,7 +6,7 @@ export default Controller.extend(ajaxStatus, {
     unassignAsset (asset) {
       let assignment = asset.get('assignments').findBy('employee.id', this.get('employee.id'));
 
-      if ( assignment ) {
+      if (assignment) {
         this.ajaxStart();
         asset.get('assignments').removeObject(assignment);
 

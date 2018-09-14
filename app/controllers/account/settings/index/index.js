@@ -13,62 +13,60 @@ export default Controller.extend(addEdit, fileSupport, {
   states,
 
   settingsForm: computed(() => [{
-    label: 'Company Name',
-    type: 'text',
-    path: 'name',
+    label:       'Company Name',
+    type:        'text',
+    path:        'name',
     parentClass: 'sixteen wide column'
   }, {
-    label: 'Email',
-    type: 'text',
-    path: 'email',
+    label:       'Email',
+    type:        'text',
+    path:        'email',
     parentClass: 'sixteen wide column'
   }, {
-    label: 'Address Line 1',
-    type: 'text',
-    path: 'addressLine1',
+    label:       'Address Line 1',
+    type:        'text',
+    path:        'addressLine1',
     parentClass: 'sixteen wide column'
   }, {
-    label: 'Address Line 2',
-    type: 'text',
-    path: 'addressLine2',
+    label:       'Address Line 2',
+    type:        'text',
+    path:        'addressLine2',
     parentClass: 'sixteen wide column'
   }, {
-    label: 'City',
-    type: 'text',
-    path: 'addressCity',
+    label:       'City',
+    type:        'text',
+    path:        'addressCity',
     parentClass: 'six wide column'
   }, {
-    label: 'State',
-    type: 'select',
-    inputClass: 'search',
-    path: 'addressState',
+    label:       'State',
+    type:        'select',
+    inputClass:  'search',
+    path:        'addressState',
     contentPath: 'controller.states',
-    displayKey: 'label',
-    valuePath: 'value',
+    displayKey:  'label',
+    valuePath:   'value',
     parentClass: 'six wide column',
-    selectText: 'Select a State'
+    selectText:  'Select a State'
   }, {
-    label: 'Zipcode',
-    type: 'text',
-    path: 'addressZipCode',
+    label:       'Zipcode',
+    type:        'text',
+    path:        'addressZipCode',
     parentClass: 'four wide column'
   }, {
-    label: 'Timezone',
-    type: 'select',
-    inputClass: 'search',
-    path: 'tz',
+    label:       'Timezone',
+    type:        'select',
+    inputClass:  'search',
+    path:        'tz',
     contentPath: 'controller.timezones',
-    selectText: 'Select a Time Zone',
+    selectText:  'Select a Time Zone',
     parentClass: 'sixteen wide column'
   }]),
 
   /* File settings */
   dropzoneId: 'input__dropzone--company-image',
-  fileData: {
-    systemUse: true,
-    associatedData: {
-      type: 'companyProfileImage'
-    }
+  fileData:   {
+    systemUse:      true,
+    associatedData: { type: 'companyProfileImage' }
   },
 
   actions: {
@@ -79,7 +77,7 @@ export default Controller.extend(addEdit, fileSupport, {
       .then(uploaded => {
         if (uploaded) {
           this.get('model').setProperties({
-            logo: uploaded,
+            logo:    uploaded,
             logoUrl: uploaded.get('url')
           });
         }

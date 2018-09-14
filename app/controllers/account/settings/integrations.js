@@ -23,9 +23,7 @@ export default Controller.extend(ajaxStatus, {
 
     this.get('ajax').request('/api/v1/integrations/grant/' + i, {
       method: 'POST',
-      data: {
-        grant: g
-      }
+      data:   { grant: g }
     })
     .then(() => {
       this.ajaxSuccess(`Successfully linked ${s}.`);

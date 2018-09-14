@@ -16,7 +16,7 @@ export default Route.extend({
 
   setupController (controller, model) {
     controller.setProperties({
-      model: model.transactions.transactions,
+      model:   model.transactions.transactions,
       company: model.company
     });
   }

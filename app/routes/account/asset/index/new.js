@@ -3,15 +3,16 @@ import RSVP from 'rsvp';
 import { inject as service } from '@ember/service';
 import add from 'granite/mixins/route-abstractions/add';
 
-export default Route.extend(add,{
-  modelName: 'asset-item',
-  auth: service(),
+export default Route.extend(add, {
+  titleToken: 'New Asset',
+  modelName:  'asset-item',
+  auth:       service(),
 
   getModelDefaults () {
     return {
-      asset: this.modelFor('account.asset'),
-      company: this.get('auth.user.company'),
-      creator: this.get('auth.user'),
+      asset:        this.modelFor('account.asset'),
+      company:      this.get('auth.user.company'),
+      creator:      this.get('auth.user'),
       customFields: {}
     };
   },
@@ -31,7 +32,7 @@ export default Route.extend(add,{
     */
   },
 
-  setupController ( controller, model ) {
+  setupController (controller, model) {
     controller.setProperties({
       model: model.assetStockItem,
       asset: model.asset

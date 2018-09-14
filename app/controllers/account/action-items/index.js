@@ -6,8 +6,8 @@ import ajaxStatus from 'granite/mixins/ajax-status';
 
 export default Controller.extend(ajaxStatus, {
   auth:            service(),
-  queryParams:     ['filter', 'isDsc'],
-  priorityFilters: ['lowest', 'low', 'medium', 'high', 'highest'],
+  queryParams:     [ 'filter', 'isDsc' ],
+  priorityFilters: [ 'lowest', 'low', 'medium', 'high', 'highest' ],
   priorityColors:  [ '', 'grey', 'teal', 'red', 'orange' ],
   filter:          A(),
   expandFiltered:  false,

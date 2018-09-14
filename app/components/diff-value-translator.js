@@ -8,12 +8,12 @@ import { inject as service } from '@ember/service';
 import Employee from '../models/employee';
 
 export default Component.extend({
-  tagName: 'span',
+  tagName:    'span',
   displayMap: {
-    company: 'name',
-    location: 'name',
-    department: 'name',
-    employee: 'fullName',
+    company:        'name',
+    location:       'name',
+    department:     'name',
+    employee:       'fullName',
     'company-user': 'fullName'
   },
   store: service(),
@@ -33,10 +33,13 @@ export default Component.extend({
     let coercion;
 
     attributeKinds.forEach((type, field) => {
-      if ( changed === field ) {
+      if (changed === field) {
         let transform = transformedAttrs.get(field);
-        coercion = { type, transform };
-        if ( coercion.type === 'belongsTo' ) {
+        coercion = {
+          type,
+          transform
+        };
+        if (coercion.type === 'belongsTo') {
           coercion.model = get(Employee.typeForRelationship(field, this.get('store')), 'modelName');
         }
       }
@@ -53,13 +56,13 @@ export default Component.extend({
   computedValue: computed('coercionType', 'pathForChange', function () {
     const { value, coercionType } = this.getProperties('value', 'coercionType');
 
-    if ( !coercionType || !value ) {
+    if (!coercionType || !value) {
       return value;
     }
 
-    if ( coercionType.transform === 'date' ) {
+    if (coercionType.transform === 'date') {
       return moment(value).format('M/D/YYYY');
-    } else if ( coercionType.type === 'belongsTo' ) {
+    } else if (coercionType.type === 'belongsTo') {
       return this.get('store').findRecord(coercionType.model, value);
     } else {
       return value;

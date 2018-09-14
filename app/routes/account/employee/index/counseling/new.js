@@ -7,9 +7,10 @@ import add from 'granite/mixins/route-abstractions/add';
 import { issueTypes } from 'granite/config/statics';
 
 export default Route.extend(add, {
-  auth: service(),
-  ajax: service(),
-  modelName: 'employee-issue',
+  titleToken: 'New Issue',
+  auth:       service(),
+  ajax:       service(),
+  modelName:  'employee-issue',
 
   model () {
     return RSVP.hash({
@@ -21,7 +22,7 @@ export default Route.extend(add, {
 
   getModelDefaults () {
     return RSVP.hash({
-      creator: this.get('auth.user.employee'),
+      creator:  this.get('auth.user.employee'),
       employee: this.modelFor('account.employee')
     });
   },
@@ -38,22 +39,20 @@ export default Route.extend(add, {
     return this.get('ajax').request('/api/v1/employee-issues', {
       data: {
         _distinct: true,
-        select: 'type'
+        select:    'type'
       }
     })
     .then(res => A(issueTypes.concat(res)).uniq());
   },
 
   employees: computed(function () {
-    let $nin = [this.modelFor('account.employee').get('id')],
+    let $nin = [ this.modelFor('account.employee').get('id') ],
         user = this.get('auth.user');
 
     if (user.get('employee.id')) {
       $nin.push(user.get('employee.id'));
     }
 
-    return this.store.query('employee', {
-      _id: { $nin }
-    });
+    return this.store.query('employee', { _id: { $nin } });
   })
 });

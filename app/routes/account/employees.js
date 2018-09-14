@@ -9,7 +9,7 @@ export default Route.extend({
     return hash({
       changeQueue: this.get('ajax').request('/api/v1/changes', {
         data: {
-          _count: true,
+          _count:     true,
           reviewedOn: { $not: { $type: 9 } }
         }
       }).then(response => response && response.count)

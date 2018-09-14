@@ -5,8 +5,8 @@ import { htmlSafe } from '@ember/string';
 import $ from 'jquery';
 
 export default Component.extend({
-  auth: service(),
-  tagName: 'nav',
+  auth:       service(),
+  tagName:    'nav',
   classNames: [ 'ui menu account__navigation' ],
 
   logoUrl: computed('auth.user.company.logoUrl', function () {

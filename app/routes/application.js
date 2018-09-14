@@ -16,7 +16,10 @@ const errorRouteMap = {
 };
 
 export default Route.extend({
-  auth: service(),
+  title (tokens) {
+    return [ ...tokens, 'Granite HR' ].join(' - ');
+  },
+  auth:          service(),
   notifications: service('notification-messages'),
 
   beforeModel () {
@@ -32,16 +35,16 @@ export default Route.extend({
       notifications[type].apply(notifications, args);
     },
 
-    error ( error ) {
+    error (error) {
       Logger.error(error);
 
       var route = 'error',
           err = error.errors ? error.errors[0] : error;
 
-      if ( err && err.status ) {
+      if (err && err.status) {
         var routeInMap = errorRouteMap[ err.status ];
 
-        if ( routeInMap ) {
+        if (routeInMap) {
           route = routeInMap;
         }
       }
@@ -49,23 +52,23 @@ export default Route.extend({
       Logger.log('Routing to', route, 'to handle UX error...');
 
       this.controllerFor(route).setProperties({
-        fromError: err,
+        fromError:     err,
         previousRoute: this.get('controller.currentPath')
       });
 
       this.transitionTo('/' + route);
     },
 
-    logout ( expired ) {
+    logout (expired) {
       this.get('auth').logout()
       .then(() => {
-        if ( expired ) {
+        if (expired) {
           this.transitionTo('login', { queryParams: { expired: true } });
         }
       });
     },
 
-    loading ( transition ) {
+    loading (transition) {
       progress.start();
       transition.finally(() => progress.done());
     }

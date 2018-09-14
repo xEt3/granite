@@ -13,11 +13,12 @@ export default Controller.extend(ajaxStatus, {
             allParticipants = participants.concat([ this.get('user') ]);
 
       this.get('store').query('message-thread', {
-        between: { $all: allParticipants.mapBy('id'), $size: allParticipants.length },
+        between: {
+          $all:  allParticipants.mapBy('id'),
+          $size: allParticipants.length
+        },
         limit: 1,
-        sort: {
-          created: -1
-        }
+        sort:  { created: -1 }
       })
       .then(result => {
         if (result.get('length') > 0) {
@@ -25,9 +26,7 @@ export default Controller.extend(ajaxStatus, {
           return this.transitionToRoute('account.employees.messages.thread', result.get('firstObject'));
         }
 
-        let pendingThread = this.get('store').createRecord('message-thread', {
-          between: allParticipants
-        });
+        let pendingThread = this.get('store').createRecord('message-thread', { between: allParticipants });
 
         return pendingThread.save().then(thread => {
           this.ajaxSuccess(null, true);

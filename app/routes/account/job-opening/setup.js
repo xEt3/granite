@@ -3,34 +3,35 @@ import { A } from '@ember/array';
 import wizard from 'granite/mixins/wizard/route';
 
 export default Route.extend(wizard, {
-  key: 'setup',
-  basePath: 'account.job-opening.setup',
+  titleToken: 'Job Opening',
+  key:        'setup',
+  basePath:   'account.job-opening.setup',
   returnPath: 'account.job-opening.setup-complete',
 
   steps: A([{
-    icon: 'home',
+    icon:  'home',
     title: 'Start',
-    link: 'index'
+    link:  'index'
   }, {
-    icon: 'settings',
+    icon:  'settings',
     title: 'Settings',
-    link: 'settings'
+    link:  'settings'
   }, {
-    icon: 'help',
+    icon:  'help',
     title: 'Screening',
-    link: 'screening'
+    link:  'screening'
   }, {
-    icon: 'announcement',
+    icon:  'announcement',
     title: 'Sources',
-    link: 'sources'
+    link:  'sources'
   }, {
-    icon: 'pie chart',
+    icon:  'pie chart',
     title: 'EEO',
-    link: 'eeo'
+    link:  'eeo'
   }, {
-    icon: 'flag checkered',
+    icon:  'flag checkered',
     title: 'Finish',
-    link: 'finish'
+    link:  'finish'
   }]),
 
   actions: {

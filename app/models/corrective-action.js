@@ -10,12 +10,13 @@ export default Model.extend({
 
   descriptionIssues:       attr('string'),
   descriptionExpectations: attr('string'),
-  descriptionConsequences: attr('string', {
-    defaultValue: formalActionSuggestions.consequences
-  }),
+  descriptionConsequences: attr('string', { defaultValue: formalActionSuggestions.consequences }),
 
-  company:           belongsTo('company'),
-  creator:           belongsTo('employee', { async: true, inverse: null }),
+  company: belongsTo('company'),
+  creator: belongsTo('employee', {
+    async:   true,
+    inverse: null
+  }),
   employee:          belongsTo('employee'),
   employeeIssue:     belongsTo('employee-issue'),
   excludedEmployees: hasMany('employee'),
@@ -28,18 +29,14 @@ export default Model.extend({
   followUpOn:         attr('date'),
   resolutionStatusOn: attr('date'),
 
-  issuedOn: attr('date', {
-    defaultValue: () => new Date()
-  }),
+  issuedOn: attr('date', { defaultValue: () => new Date() }),
 
-  created: attr('date', {
-    defaultValue: () => new Date()
-  }),
+  created: attr('date', { defaultValue: () => new Date() }),
 
   actionSeverity: computed('severity', 'company', function () {
     let severity = this.get('severity');
 
-    if ( severity ) {
+    if (severity) {
       return Promise.resolve(this.get('company'))
       .then(c => c.get('correctiveActionSeverities.content').findBy('id', severity));
     }

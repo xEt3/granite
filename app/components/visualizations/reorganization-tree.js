@@ -13,15 +13,20 @@ import { tree, hierarchy } from 'd3-hierarchy';
 const select = 'name email supervisor';
 
 export default Component.extend({
-  tagName: 'svg',
-  ajax: service(),
-  classNames: [ 'visualization__org-tree' ],
-  attributeBindings: [ 'width', 'height' ],
+  tagName:            'svg',
+  ajax:               service(),
+  classNames:         [ 'visualization__org-tree' ],
+  attributeBindings:  [ 'width', 'height' ],
   removeOriginalNode: computed.reads('baseNode.simulate'),
 
-  nodeRadius: 8,
+  nodeRadius:     8,
   baseNodeRadius: 11,
-  margin: { top: 40, right: 90, bottom: 50, left: 90 },
+  margin:         {
+    top:    40,
+    right:  90,
+    bottom: 50,
+    left:   90
+  },
 
   didUpdateAttrs () {
     this._super(...arguments);
@@ -47,25 +52,25 @@ export default Component.extend({
         this.populateChildNodes(Object.create(this.get('originalNode')))
         .then(populated => {
           populated.children.forEach(child => {
-            if ( get(child, '_id') !== get(node, '_id') ) {
+            if (get(child, '_id') !== get(node, '_id')) {
               get(node, 'children').addObject(child);
             }
           });
         }) :
         RSVP.Promise.resolve())
       .then(() => {
-        if ( children && children.length > 0 ) {
+        if (children && children.length > 0) {
           return RSVP.map(children, child => {
             let _child = baseNode && get(baseNode, '_id') === get(child, '_id') ? Object.create(baseNode) : child;
-            if ( !base, get(_child, '_id') === get(baseNode, '_id') ) {
+            if (!base, get(_child, '_id') === get(baseNode, '_id')) {
               return;
             }
             return this.populateChildNodes(_child)
             .then(populated => {
               let original = this.get('originalNode');
-              if ( removeOriginalNode && populated.children.length > 0 && original && get(original, '_id') === get(_child, '_id') ) {
+              if (removeOriginalNode && populated.children.length > 0 && original && get(original, '_id') === get(_child, '_id')) {
                 populated.children.map(c => {
-                  if ( !A(get(node, 'children')).findBy('_id', get(c, '_id')) ) {
+                  if (!A(get(node, 'children')).findBy('_id', get(c, '_id'))) {
                     get(node, 'children').push(c);
                   }
                 });
@@ -92,7 +97,7 @@ export default Component.extend({
 
   _baseRender: on('didInsertElement', function () {
     this.setProperties({
-      width: this.$().width(),
+      width:  this.$().width(),
       height: this.$().height()
     });
 
@@ -102,7 +107,7 @@ export default Component.extend({
           width = svg.attr('width') - margin.left - margin.right,
           height = svg.attr('height') - margin.top - margin.bottom,
           g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`),
-          t = tree().size([width, height]);
+          t = tree().size([ width, height ]);
 
       this.setProperties({
         svg,
@@ -154,11 +159,11 @@ export default Component.extend({
           let c = 'node';
           c += d.children ? ' node--internal' : ' node--leaf';
 
-          if ( d.data.deprecating ) {
+          if (d.data.deprecating) {
             c += ' node--deprecating';
           }
 
-          if ( d.data._id === baseNodeId ) {
+          if (d.data._id === baseNodeId) {
             c += ' node--base';
           }
 

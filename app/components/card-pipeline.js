@@ -25,7 +25,7 @@ const CardPipelineComponent = Component.extend(addEdit, {
 
     moveAppToStage (app, stage) {
       app.setProperties({
-        stage: get(stage, '_id'),
+        stage:      get(stage, '_id'),
         stageOrder: -1
       });
 
@@ -44,8 +44,6 @@ const CardPipelineComponent = Component.extend(addEdit, {
   }
 });
 
-CardPipelineComponent.reopenClass({
-  positionalParams: [ 'candidates' ]
-});
+CardPipelineComponent.reopenClass({ positionalParams: [ 'candidates' ] });
 
 export default CardPipelineComponent;

@@ -2,7 +2,8 @@ import Route from '@ember/routing/route';
 import resource from 'granite/mixins/route-abstractions/resource';
 
 export default Route.extend(resource, {
-  modelName: 'corrective-action',
+  titleToken: 'Issues',
+  modelName:  'corrective-action',
 
   mutateQuery (q) {
     // get the corrective actions where employeeIssue

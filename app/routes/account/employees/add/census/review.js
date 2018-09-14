@@ -8,7 +8,7 @@ export default Route.extend({
     return this.get('ajax').request(`/api/v1/employee/census/${uploadId}`);
   },
 
-  setupController(controller) {
+  setupController (controller) {
     controller.set('dryrunResult', null);
     this._super(...arguments);
   }

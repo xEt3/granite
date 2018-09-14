@@ -15,17 +15,18 @@ export default Model.extend({
   creatorId:   attr('string'),
   targetType:  attr('string'),
   targetId:    attr('string'),
-  company:     belongsTo('company', { async: true, inverse: false }),
+  company:     belongsTo('company', {
+    async:   true,
+    inverse: false
+  }),
 
   reviewedOn:  attr('date'),
   effectiveOn: attr('date'),
 
-  created: attr('date', {
-    defaultValue: () => new Date()
-  }),
+  created: attr('date', { defaultValue: () => new Date() }),
 
   creator: resolveForTypeKey('creator'),
-  target: resolveForTypeKey('target'),
+  target:  resolveForTypeKey('target'),
 
   changedKeys: computed('diff.[]', function () {
     let diff = this.get('diff');

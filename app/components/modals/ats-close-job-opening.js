@@ -12,28 +12,31 @@ export default Component.extend({
   }),
 
   didReceiveAttrs () {
-    if ( this.get('confirmOnRender') ) {
+    if (this.get('confirmOnRender')) {
       run.scheduleOnce('afterRender', () => this.get('startConfirmation')());
     }
   },
 
   createConfirm () {
     this.setProperties({
-      responded: false,
+      responded:     false,
       _originalArgs: arguments
     });
 
     $('#' + this.get('modalId')).modal({
       detachable: true,
-      closable: false,
-      onHidden: () => {
-        if ( !this.get('responded') ) {
+      closable:   false,
+      onHidden:   () => {
+        if (!this.get('responded')) {
           this.send('respond', false);
         }
       }
     }).modal('show');
 
-    return new Promise((resolve, reject) => this.setProperties({ resolve, reject }));
+    return new Promise((resolve, reject) => this.setProperties({
+      resolve,
+      reject
+    }));
   },
 
   startConfirmation: computed('modalId', function () {
@@ -45,7 +48,7 @@ export default Component.extend({
   },
 
   actions: {
-    respond ( response ) {
+    respond (response) {
       let fn = this.get(response ? 'resolve' : 'reject');
       fn.apply(null, this.get('_originalArgs'));
       this.set('responded', true);
@@ -54,7 +57,7 @@ export default Component.extend({
       // Bubble up the response to an action attr if available
       let onResponse = this.get('onResponse');
 
-      if ( onResponse && typeof onResponse === 'function' ) {
+      if (onResponse && typeof onResponse === 'function') {
         onResponse(response);
       }
     }

@@ -4,9 +4,9 @@ import layout from '../templates/components/x-tree-node';
 
 export default Component.extend({
   layout,
-  classNameBindings: ['model.isSelected:tree-highlight', 'isChosen:tree-chosen'],
+  classNameBindings: [ 'model.isSelected:tree-highlight', 'isChosen:tree-chosen' ],
 
-  isChosen: computed('model.id', 'chosenId', function() {
+  isChosen: computed('model.id', 'chosenId', function () {
     return this.get('model.id') === this.get('chosenId');
   }),
 
@@ -16,14 +16,14 @@ export default Component.extend({
     }
   },
 
-  click() {
+  click () {
     let select = this.get('select');
     if (select) {
       select(this.get('model'));
     }
   },
 
-  mouseEnter() {
+  mouseEnter () {
     this.set('model.isSelected', true);
     let hover = this.get('hover');
     if (hover) {
@@ -31,7 +31,7 @@ export default Component.extend({
     }
   },
 
-  mouseLeave() {
+  mouseLeave () {
     this.set('model.isSelected', false);
     let hoverOut = this.get('hoverOut');
     if (hoverOut) {
@@ -39,7 +39,7 @@ export default Component.extend({
     }
   },
 
-  setChildCheckboxesRecursively(parentNode, checkValue) {
+  setChildCheckboxesRecursively (parentNode, checkValue) {
     const children = parentNode.children || [];
 
     if (children.length) {
@@ -51,7 +51,7 @@ export default Component.extend({
   },
 
   actions: {
-    toggleCheck() {
+    toggleCheck () {
       if (this.get('model.children.length')) {
         this.setChildCheckboxesRecursively(this.get('model'), this.get('model.isChecked'));
       }
@@ -59,7 +59,7 @@ export default Component.extend({
       this.recalculateState();
     },
 
-    toggleExpand() {
+    toggleExpand () {
       this.toggleProperty('model.isExpanded');
     }
   }

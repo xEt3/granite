@@ -4,7 +4,7 @@ import $ from 'jquery';
 export default Modal.extend({
   modalId: 'modal_update-payment-method',
 
-  actions : {
+  actions: {
     closeModal () {
       $(`#${this.get('modalId')}`).modal('hide');
     }

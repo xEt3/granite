@@ -10,7 +10,7 @@ export default Route.extend(edit, {
   setupController (controller, model) {
     controller.setProperties({
       model,
-      currentDepartment: model.department,
+      currentDepartment:    model.department,
       initialRelationships: employeeBelongsTo.map(relationshipPath => {
         return {
           relationshipPath,

@@ -3,18 +3,19 @@ import RSVP from 'rsvp';
 import { inject as service } from '@ember/service';
 
 export default Route.extend({
-  auth: service(),
+  titleToken: 'Documents',
+  auth:       service(),
 
   queryParams: {
     sortProp: { refreshModel: true },
-    asc: { refreshModel: true },
-    page: { refreshModel: true }
+    asc:      { refreshModel: true },
+    page:     { refreshModel: true }
   },
 
   beforeModel () {
     let hints = this.get('auth.user.shownHints');
 
-    if ( !hints || !hints.includes('documents') ) {
+    if (!hints || !hints.includes('documents')) {
       return this.transitionTo('account.documents.intro');
     }
   },
@@ -27,8 +28,8 @@ export default Route.extend({
       limit,
       page,
       systemUse: { $ne: true },
-      url: { $exists: true },
-      sort: {}
+      url:       { $exists: true },
+      sort:      {}
     };
 
     documentsQuery.sort[params.sortProp] = params.asc ? -1 : 1;
@@ -41,7 +42,7 @@ export default Route.extend({
 
   setupController (controller, model) {
     controller.setProperties({
-      model: model.documents,
+      model:     model.documents,
       employees: model.employees
     });
   }

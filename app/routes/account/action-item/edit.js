@@ -3,6 +3,7 @@ import RSVP from 'rsvp';
 import edit from 'granite/mixins/route-abstractions/edit';
 
 export default Route.extend(edit, {
+  titleToken:      'Edit',
   bypassModelHook: true,
 
   model () {
@@ -11,16 +12,16 @@ export default Route.extend(edit, {
     return RSVP.hash({
       actionItem,
       actionItems: this.store.query('action-item', {
-        _id: { $ne: actionItem.get('id') },
+        _id:         { $ne: actionItem.get('id') },
         completedOn: { $not: { $type: 9 } },
         cancelledOn: { $not: { $type: 9 } }
       })
     });
   },
 
-  setupController ( controller, model ) {
+  setupController (controller, model) {
     controller.setProperties({
-      model: model.actionItem,
+      model:       model.actionItem,
       actionItems: model.actionItems
     });
   }

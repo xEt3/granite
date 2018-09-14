@@ -1,7 +1,7 @@
 import { helper } from '@ember/component/helper';
 import { singularize, pluralize } from 'ember-inflector';
 
-export function inflectText([text, length]) {
+export function inflectText ([ text, length ]) {
   return length && length === 1 ? singularize(text) : pluralize(text);
 }
 

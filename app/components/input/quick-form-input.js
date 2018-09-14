@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed, defineProperty } from '@ember/object';
 
 const QuickFormInputComponent = Component.extend({
-  classNames: [ 'field' ],
+  classNames:        [ 'field' ],
   classNameBindings: [ 'computedClassName', 'field.parentClass' ],
 
   init () {
@@ -53,8 +53,6 @@ const QuickFormInputComponent = Component.extend({
   })
 });
 
-QuickFormInputComponent.reopenClass({
-  positionalParams: [ 'field', 'model', 'controller' ]
-});
+QuickFormInputComponent.reopenClass({ positionalParams: [ 'field', 'model', 'controller' ] });
 
 export default QuickFormInputComponent;

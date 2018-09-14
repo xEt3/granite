@@ -3,8 +3,9 @@ import { inject as service } from '@ember/service';
 import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
-  auth: service(),
-  modelName: 'asset',
+  titleToken: 'New Assets',
+  auth:       service(),
+  modelName:  'asset',
 
   getModelDefaults () {
     return {

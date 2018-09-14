@@ -3,30 +3,30 @@ import { A } from '@ember/array';
 import wizard from 'granite/mixins/wizard/route';
 
 export default Route.extend(wizard, {
-  key: 'onboarding',
-  basePath: 'account.employee.onboard',
+  key:        'onboarding',
+  basePath:   'account.employee.onboard',
   returnPath: 'account.employee.onboard-complete',
-  setUserOn: 'onboarder',
+  setUserOn:  'onboarder',
 
   steps: A([{
-    icon: 'home',
+    icon:  'home',
     title: 'Personal',
-    link: 'index'
+    link:  'index'
   }, {
-    icon: 'travel',
+    icon:  'travel',
     title: 'Job',
-    link: 'job-information'
+    link:  'job-information'
   }, {
-    icon: 'mobile',
+    icon:  'mobile',
     title: 'Assets',
-    link: 'equipment'
+    link:  'equipment'
   }, {
-    icon: 'photo',
+    icon:  'photo',
     title: 'Picture',
-    link: 'picture'
+    link:  'picture'
   }, {
-    icon: 'keyboard',
+    icon:  'keyboard',
     title: 'Custom Info',
-    link: 'custom-fields'
+    link:  'custom-fields'
   }])
 });

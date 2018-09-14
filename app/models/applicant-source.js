@@ -3,13 +3,11 @@ const { attr } = DS;
 
 export default DS.Model.extend({
 
-  name: attr('string'),
+  name:        attr('string'),
   description: attr('string'),
-  logo: attr('string'),
+  logo:        attr('string'),
 
   costPerDay: attr('number'),
 
-  created:      attr('date', {
-    defaultValue: () => new Date()
-  })
+  created: attr('date', { defaultValue: () => new Date() })
 });

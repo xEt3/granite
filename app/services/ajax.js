@@ -6,11 +6,11 @@ export default AjaxService.extend({
   auth: service(),
 
   headers: computed('auth.{authenticated,token}', {
-    get() {
+    get () {
       let headers = {};
       const token = this.get('auth.token');
 
-      if ( this.get('auth.authenticated') ) {
+      if (this.get('auth.authenticated')) {
         headers['X-API-Token'] = token;
       }
 

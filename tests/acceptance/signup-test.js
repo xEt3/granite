@@ -18,10 +18,10 @@ const fieldMap = {
   urlPrefix:         '#url-prefix input'
 };
 
-module('Acceptance | signup', function(hooks) {
+module('Acceptance | signup', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('filling in signup form', async function(assert) {
+  test('filling in signup form', async function (assert) {
     await visit('/signup');
     assert.equal(currentURL(), '/signup');
 
@@ -39,8 +39,11 @@ module('Acceptance | signup', function(hooks) {
       addressLine2:      faker.random.number(),
       addressCity:       faker.address.city(),
       state:             faker.address.state(),
-      addressZipCode:    faker.random.number({ min:11111, max:99999 }),
-      urlPrefix:         'abc'
+      addressZipCode:    faker.random.number({
+        min: 11111,
+        max: 99999
+      }),
+      urlPrefix: 'abc'
     };
 
     let model = controller.get('model');
@@ -67,8 +70,8 @@ module('Acceptance | signup', function(hooks) {
 
     await click(`.select__address-state .select-address-state__item[data-id="${fakeData.state}"]`);
     await settled();
-    const stateSel = [controller.get('model.addressState')[0].innerHTML.trim()];
-    assert.equal(stateSel,fakeData.state, `the state dropdown is ${fakeData.state}`);
+    const stateSel = [ controller.get('model.addressState')[0].innerHTML.trim() ];
+    assert.equal(stateSel, fakeData.state, `the state dropdown is ${fakeData.state}`);
 
     await click('button[type="submit"]');
     await settled();

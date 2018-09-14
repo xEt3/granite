@@ -1,6 +1,6 @@
 {
   "name": "granite",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A solid solution for human resources",
   "private": true,
   "directories": {
@@ -11,7 +11,8 @@
     "build": "ember build",
     "start": "ember server --proxy http://localhost:4000",
     "dock": "ember server --proxy http://$DOCKER_IP:$DOCKER_LB_PORT",
-    "lint:js": "eslint app tests",
+    "lint:js": "./node_modules/.bin/eslint app tests",
+    "lint:fixer-up": "./node_modules/.bin/eslint app tests --fix",
     "lint:hbs": "./node_modules/.bin/ember-template-lint app/templates/**/*",
     "test": "ember test",
     "test-ci": "ember test --query=nolint --test-port=7000",
@@ -22,7 +23,6 @@
   "author": "Associated Employers",
   "license": "UNLICENSED",
   "dependencies": {
-    "bower": "^1.5.2",
     "ember-template-lint": "^0.8.23"
   },
   "devDependencies": {
@@ -40,9 +40,11 @@
     "ember-cli-chart": "3.4.0",
     "ember-cli-dependency-checker": "^3.0.0",
     "ember-cli-dropzonejs": "1.1.1",
+    "ember-cli-document-title": "^0.4.0",
     "ember-cli-emojii": "^1.0.2",
     "ember-cli-eslint": "^4.2.1",
     "ember-cli-htmlbars": "^3.0.0",
+    "ember-cli-head": "^0.4.1",
     "ember-cli-htmlbars-inline-precompile": "^1.0.0",
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-less": "2.0.1",
@@ -53,7 +55,6 @@
     "ember-cli-nprogress": "0.3.1",
     "ember-cli-qunit": "^4.3.2",
     "ember-cli-range-slider": "0.2.7",
-    "ember-cli-release": "^1.0.0-beta.2",
     "ember-cli-sauce": "^2.2.0",
     "ember-cli-shims": "^1.2.0",
     "ember-cli-sri": "^2.1.0",
@@ -95,6 +96,6 @@
     "semantic-ui-less": "^2.3.3"
   },
   "engines": {
-    "node": "8.* || 9.* || >= 10.*"
+    "node": "6.* || 8.* || >= 10.*"
   }
 }

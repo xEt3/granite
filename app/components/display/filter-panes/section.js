@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 
 const SectionComponent = Component.extend({
-  classNames: [ 'ui', 'vertical', 'segment' ],
+  classNames:        [ 'ui', 'vertical', 'segment' ],
   classNameBindings: [ 'active::fade-unless-hovered' ],
 
   toggleActive () {
@@ -23,8 +23,6 @@ const SectionComponent = Component.extend({
   }
 });
 
-SectionComponent.reopenClass({
-  positionalParams: [ 'sectionName' ]
-});
+SectionComponent.reopenClass({ positionalParams: [ 'sectionName' ] });
 
 export default SectionComponent;

@@ -4,10 +4,10 @@ import del from 'granite/mixins/controller-abstractions/delete';
 
 export default Controller.extend(pagination, del, {
   queryParams: [ 'page' ],
-  limit: 10,
+  limit:       10,
 
   actions: {
-    toggleProperty ( prop ) {
+    toggleProperty (prop) {
       this.toggleProperty(prop);
     }
   }
