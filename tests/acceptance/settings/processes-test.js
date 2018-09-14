@@ -195,31 +195,126 @@ module('Acceptance | settings/processes', function(hooks) {
     let dbEntryForNewCas = server.db.correctiveActionSeverities.findBy({ name: newName });
     assert.equal(dbEntryForNewCas.formal, true, 'formal is set to true on saved db cas');
   });
-  //remove cas and x-1 stages appear
+
   test('remove and saving cas', async function(assert) {
     let { company } = await authenticate.call(this, server);
     server.create('recruiting-pipeline', { company: company.id });
 
     await visit('/account/settings/general/processes');
 
-    //assert that db = displayed amount from get go
-    //click remove link
-    //click yes on confirm modal
-    //assert that there is x - 1 cas displayed
-    //assert that db is untouched
-    //click submit button to save
-    //assert that still x - 1 cas displayed
-    //assert that db is x-1
+    let  casInDb = company.correctiveActionSeverities;
+    let casDisplayed = findAll('div.ui.list > div.item');
+    assert.equal(casInDb.length, casDisplayed.length, 'cas displayed matches cas in db');
 
+    await click(findAll('div.ui.list a.right')[0]);
+    await click('.confirm-modal.animating button.green');
 
+    let casInDbAfterRemove = server.db.companies.find(company.id).correctiveActionSeverityIds;
+    let casDisplayedAfterRemove = findAll('div.ui.list > div.item');
+    assert.equal(casDisplayedAfterRemove.length, casDisplayed.length - 1, 'deleted cas is not displayed any longer');
+    assert.equal(casInDbAfterRemove.length, casInDb.length, 'db is untouched because remove has not been saved yet');
 
-    let done = assert.async();
-    setTimeout(function() {
-      done();
-    }, 10000);
-    assert.equal(1, 1, 'generic assertion');
+    await click('button[type="submit"]');
+
+    let casInDbAfterSave = server.db.companies.find(company.id).correctiveActionSeverityIds;
+    let casDisplayedAfterSave = findAll('div.ui.list > div.item');
+    assert.equal(casDisplayedAfterSave.length, casDisplayed.length - 1, 'correct number of cas are still displayed after saving');
+    assert.equal(casInDbAfterSave.length, casInDb.length - 1, 'removed cas was removed in db');
   });
-  //edit cas
+
+  test('editing and saving cas', async function(assert) {
+    let { company } = await authenticate.call(this, server),
+        newName = 'Edited Cas',
+        newOrder = 1000000;
+    server.create('recruiting-pipeline', { company: company.id });
+
+    await visit('/account/settings/general/processes');
+
+    let casDisplayed = findAll('div.ui.list > div.item');
+    let casInDb = company.correctiveActionSeverities;
+    let initialCasBeingEdited = server.db.correctiveActionSeverities.find(company.correctiveActionSeverityIds[0]);
+    assert.equal(casDisplayed.length, casInDb.length, 'cas displayed matches cas in db');
+
+    await click('div.ui.list > div.item > div.item > a');
+    await fillIn('#modal__add-cas input[name="name"]', newName);
+    await fillIn('#modal__add-cas input[name="order"]', newOrder);
+    await click('#modal__add-cas div.ui.checkbox');
+    await click('#modal__add-cas button.primary');
+
+    let casDisplayedAfterEdit = findAll('div.ui.list > div.item');
+    let casInDbAfterEdit = server.db.companies.find(company.id).correctiveActionSeverityIds;
+    assert.equal(casDisplayedAfterEdit.length, casDisplayed.length, 'no new cas are displayed accidentally after edit');
+    assert.dom(casDisplayedAfterEdit[0]).includesText((newName, newOrder), 'edited cas displays new new and new order correctly');
+    assert.equal(casInDbAfterEdit.length, casInDb.length, 'db is untouched after edit');
+
+    await click('button[type="submit"]');
+
+    let casDisplayedAfterSave = findAll('div.ui.list > div.item');
+    let casInDbAfterSave = server.db.companies.find(company.id).correctiveActionSeverityIds;
+    let editedCasInDb = server.db.correctiveActionSeverities.find(casInDbAfterSave[0]);
+    assert.dom(casDisplayedAfterSave[0]).includesText((newName, newOrder), 'edited cas still displayed correctly after save');
+    assert.equal(casInDbAfterSave.length, casInDb.length, 'no cas were accidentally added or removed after saving');
+    assert.equal(editedCasInDb.name, newName, 'saved edited cas has correct name in db');
+    assert.equal(editedCasInDb.order, newOrder, 'saved edited cas has correct order in db');
+    assert.equal(editedCasInDb.formal, true, 'saved edited cas is set to formal');
+    assert.equal(editedCasInDb.id, initialCasBeingEdited.id, 'edited cas has same id as original');
+    assert.notEqual(editedCasInDb.name, initialCasBeingEdited.name, 'cas name was actually changed after save in db');
+    assert.notEqual(editedCasInDb.order, initialCasBeingEdited.order, 'cas order was actually changed after save in db');
+    assert.notEqual(editedCasInDb.formal, initialCasBeingEdited.formal, 'cas formal was actually changed after save in db');
+  });
+
+  test('save button is disabled properly', async function(assert) {
+    let { company } = await authenticate.call(this, server),
+        pipeline = server.create('recruiting-pipeline', { company: company.id });
+
+    await visit('/account/settings/general/processes');
+
+    assert.dom('button[type="submit"]').isDisabled('button is disabled right off the bat');
+
+    await click(findAll('.card-content__stage-name > a[href="#"] > .edit.icon')[0]);
+    await fillIn('#modal__add-stage input[name="name"]', 'Hiya');
+    await click('.confirm-add-stage');
+
+    assert.dom('button[type="submit"]').isNotDisabled('submit button is now clickable after change made');
+
+    await fillIn('#modal__add-stage input[name="name"]', pipeline.stages[0].name);
+    await click('.confirm-add-stage');
+
+    assert.dom('button[type="submit"]').isDisabled('save button is disabled again after change was reverted');
+  });
+
+  test('save button disables after save is made', async function(assert) {
+    let { company } = await authenticate.call(this, server);
+    server.create('recruiting-pipeline', { company: company.id });
+
+    await visit('/account/settings/general/processes');
+    let submitButton = find('button[type="submit"]');
+
+    assert.dom(submitButton).isDisabled('button is disabled right off the bat');
+
+    await click(findAll('.card-content__stage-name > a[href="#"] > .edit.icon')[0]);
+    await fillIn('#modal__add-stage input[name="name"]', 'Hiya');
+    await click('.confirm-add-stage');
+
+    assert.dom(submitButton).isNotDisabled('submit button is now clickable after change made');
+
+    await click(submitButton);
+
+    assert.dom(submitButton).isDisabled('save button is disabled again after save');
+  });
+
+  test('pipeline stages are displayed in the correct order', async function(assert) {
+    let { company } = await authenticate.call(this, server),
+        pipeline = server.create('recruiting-pipeline', { company: company.id });
+
+    await visit('/account/settings/general/processes');
+
+    let displayedCas = findAll('.card-content__stage-name');
+
+    pipeline.stages.forEach((s, i) => {
+      assert.dom(displayedCas[i]).includesText(s.name);
+    });
+  });
 });
 
 // let done = assert.async();
