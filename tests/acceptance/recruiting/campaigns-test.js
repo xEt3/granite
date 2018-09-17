@@ -25,14 +25,18 @@ module('Acceptance | recruiting', function (hooks) {
         ]
       }
     });
-    let job = await server.create('job-openings');
+    let job = await server.create('job');
+
+    let campaign = await server.create('job-openings', { job: job.id });
     await visit('/account/recruiting/campaigns');
     assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Recruiting');
-    assert.dom('a > div > div.header').hasText(job.name);
-    // await pauseTest();
-    assert.dom('div > div.meta').hasText(job.job.title);
-
-
+    assert.dom('hgroup > h1').hasText('Recruiting Campaigns');
+    assert.dom('a > div > div.header').hasText(campaign.name);
+    assert.dom('div > div.meta').includesText(`Hiring for ${campaign.job.title}`);
+    assert.dom('div.extra > span.ui.green.label').hasText('Hiring');
+    assert.dom('span.ui.blue.label > span').includesText('months ago');
+    assert.dom('i.plus.icon').isVisible();
+    assert.dom('div.ui.right.floated.pagination.menu > a').exists({ count: 4 });
+    assert.dom('div.ui.container > div.ui.pointing.menu > a').exists({ count: 2 });
   });
-
 });
