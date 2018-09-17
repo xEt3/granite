@@ -6,8 +6,13 @@ import { setupApplicationTest } from 'ember-qunit';
 module('Acceptance | company users', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('getting to company-users', async function(assert) {
-    await authenticate.call(this, server, { companyUser: { firstName: 'old', lastName: 'yeller' } });
+  test('getting to company-users', async function (assert) {
+    await authenticate.call(this, server, {
+      companyUser: {
+        firstName: 'old',
+        lastName:  'yeller'
+      }
+    });
 
     await visit('/account/dashboard');
     assert.equal(currentURL(), '/account/dashboard');
@@ -52,11 +57,11 @@ module('Acceptance | company users', function (hooks) {
     assert.equal(currentURL(), '/account/anatomy/company-users');
   });
 
-  test('editing user\'s permissions', async function(assert) {
+  test('editing user\'s permissions', async function (assert) {
     let permissions = await server.createList('permissions', 8).map(p => {
       return p.id;
     });
-    
+
     await authenticate.call(this, server, { companyUser: { permissions } });
 
     await visit('account/anatomy/company-users');

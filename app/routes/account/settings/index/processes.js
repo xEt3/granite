@@ -5,19 +5,17 @@ import refreshable from 'granite/mixins/refreshable';
 export default Route.extend(refreshable, {
   model () {
     return hash({
-      company: this.modelFor('account.settings'),
-      pipeline: this.store.query('recruiting-pipeline', {
-        'jobOpening.0': { $exists: false }
-      })
+      company:  this.modelFor('account.settings'),
+      pipeline: this.store.query('recruiting-pipeline', { 'jobOpening.0': { $exists: false } })
       .then(results => results ? results.get('firstObject') : results)
     });
   },
 
   setupController (controller, model) {
     controller.setProperties({
-      model: model.company,
-      pipeline: model.pipeline,
-      casInitialState: JSON.stringify(model.company.get('correctiveActionSeverities').toArray()),
+      model:                model.company,
+      pipeline:             model.pipeline,
+      casInitialState:      JSON.stringify(model.company.get('correctiveActionSeverities').toArray()),
       pipelineInitialState: JSON.stringify(model.pipeline)
     });
   },

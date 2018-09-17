@@ -1,13 +1,13 @@
 import { Factory, faker } from 'ember-cli-mirage';
 
 const defaultList = [{
-  name: 'Verbal Warning',
+  name:   'Verbal Warning',
   formal: false
 }, {
-  name: 'Written Warning',
+  name:   'Written Warning',
   formal: true
 }, {
-  name: 'Termination',
+  name:   'Termination',
   formal: true
 }];
 

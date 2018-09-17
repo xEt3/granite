@@ -3,10 +3,10 @@ import { visit, currentURL, click, find, findAll, fillIn } from '@ember/test-hel
 import { setupApplicationTest } from 'ember-qunit';
 import authenticate from 'granite/tests/helpers/auth';
 
-module('Acceptance | settings/processes', function(hooks) {
+module('Acceptance | settings/processes', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('pipeline-stage modal presents', async function(assert) {
+  test('pipeline-stage modal presents', async function (assert) {
     let { company } = await authenticate.call(this, server);
     server.create('recruiting-pipeline', { company: company.id });
 
@@ -19,7 +19,7 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.dom('div[id="modal__add-stage"').isVisible('add stage modal is visible');
   });
 
-  test('corrective action severity modal presents', async function(assert) {
+  test('corrective action severity modal presents', async function (assert) {
     let { company } = await authenticate.call(this, server);
     server.create('recruiting-pipeline', { company: company.id });
 
@@ -30,7 +30,7 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.dom('div[id="modal__add-cas"').isVisible('add cas modal is visible');
   });
 
-  test('canceling pipeline-stage add', async function(assert) {
+  test('canceling pipeline-stage add', async function (assert) {
     let { company } = await authenticate.call(this, server);
     let pipeline = server.create('recruiting-pipeline', { company: company.id });
     let stageCountInDB = pipeline.stages.length;
@@ -46,7 +46,7 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.equal(findAll('.stage-list__card').length, stageCountInDB, 'correct number of stages are displayed after cancelling');
   });
 
-  test('adding and saving pipeline stage', async function(assert) {
+  test('adding and saving pipeline stage', async function (assert) {
     let { company } = await authenticate.call(this, server);
     let pipeline = server.create('recruiting-pipeline', { company: company.id });
     let stageCountInDB = pipeline.stages.length;
@@ -74,7 +74,7 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.dom(displayedStages[displayedStages.length - 1]).includesText(nameOfNewStage, 'last displayed stage is the newly added stage');
   });
 
-  test('removing and saving pipeline stage', async function(assert) {
+  test('removing and saving pipeline stage', async function (assert) {
     let { company } = await authenticate.call(this, server),
         pipeline = server.create('recruiting-pipeline', { company: company.id }),
         stageCountInDB = pipeline.stages.length;
@@ -99,7 +99,7 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.equal(findAll('.stage-list__card').length, stageCountInDB - 1, 'correct number of stages are displayed after removal');
   });
 
-  test('editing and saving pipeline stage name', async function(assert) {
+  test('editing and saving pipeline stage name', async function (assert) {
     let { company } = await authenticate.call(this, server);
     let pipeline = server.create('recruiting-pipeline', { company: company.id });
     let newStageName = 'Edited Stage';
@@ -132,7 +132,7 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.dom(stageCardsAfterSave[0]).includesText(newStageName, 'edited stage still has correct new name after save');
   });
 
-  test('closing the add cas modal functions correctly', async function(assert) {
+  test('closing the add cas modal functions correctly', async function (assert) {
     let { company } = await authenticate.call(this, server);
     server.create('recruiting-pipeline', { company: company.id });
 
@@ -146,7 +146,7 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.equal(findAll('div.ui.list > div.item').length, initialCasAmount, 'correct number of cas are listed after cancelling addition');
   });
 
-  test('adding and saving cas functions properly', async function(assert) {
+  test('adding and saving cas functions properly', async function (assert) {
     let { company } = await authenticate.call(this, server);
 
     server.create('recruiting-pipeline', { company: company.id });
@@ -179,7 +179,7 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.equal(server.db.correctiveActionSeverities.findBy({ name: newName }).formal, false, 'formal is false because it was not checked in the modal');
   });
 
-  test('formal flag gets saved on cas correctly', async function(assert) {
+  test('formal flag gets saved on cas correctly', async function (assert) {
     let { company } = await authenticate.call(this, server),
         newName = 'New Cas2',
         newOrder = company.correctiveActionSeverityIds.length + 1;
@@ -197,7 +197,7 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.equal(dbEntryForNewCas.formal, true, 'formal is set to true on saved db cas');
   });
 
-  test('remove and saving cas', async function(assert) {
+  test('remove and saving cas', async function (assert) {
     let { company } = await authenticate.call(this, server);
     server.create('recruiting-pipeline', { company: company.id });
 
@@ -224,7 +224,7 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.equal(casInDbAfterSave.length, casInDb.length - 1, 'removed cas was removed in db');
   });
 
-  test('editing and saving cas', async function(assert) {
+  test('editing and saving cas', async function (assert) {
     let { company } = await authenticate.call(this, server),
         newName = 'Edited Cas',
         newOrder = 1000000;
@@ -265,7 +265,7 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.notEqual(editedCasInDb.formal, initialCasBeingEdited.formal, 'cas formal was actually changed after save in db');
   });
 
-  test('save button is disabled properly', async function(assert) {
+  test('save button is disabled properly', async function (assert) {
     let { company } = await authenticate.call(this, server),
         pipeline = server.create('recruiting-pipeline', { company: company.id });
 
@@ -285,7 +285,7 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.dom('button[type="submit"]').isDisabled('save button is disabled again after change was reverted');
   });
 
-  test('save button disables after save is made', async function(assert) {
+  test('save button disables after save is made', async function (assert) {
     let { company } = await authenticate.call(this, server);
     server.create('recruiting-pipeline', { company: company.id });
 
@@ -305,7 +305,7 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.dom(submitButton).isDisabled('save button is disabled again after save');
   });
 
-  test('pipeline stages are displayed in the correct order', async function(assert) {
+  test('pipeline stages are displayed in the correct order', async function (assert) {
     let { company } = await authenticate.call(this, server),
         pipeline = server.create('recruiting-pipeline', { company: company.id });
 
@@ -318,15 +318,15 @@ module('Acceptance | settings/processes', function(hooks) {
     });
   });
 
-  test('pipeline stages caps at 5', async function(assert) {
+  test('pipeline stages caps at 5', async function (assert) {
     let { company } = await authenticate.call(this, server),
         pipeline = server.create('recruiting-pipeline', { company: company.id });
 
     await pipeline.stages.addObject({
-      created : moment().subtract(1, 'week'),
-      order : 3,
-      name : 'Stage 4',
-      _id : '5b72da4a53889f02bd1486dz'
+      created: moment().subtract(1, 'week'),
+      order:   3,
+      name:    'Stage 4',
+      _id:     '5b72da4a53889f02bd1486dz'
     });
 
     await visit('/account/settings/general/processes');
@@ -343,7 +343,7 @@ module('Acceptance | settings/processes', function(hooks) {
     assert.dom('button#add-stage').isNotVisible('add stage button should not be visible because there are 5 stages');
 
     await click(find('a.delete-stage'));
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
     await click('.confirm-modal.active button.green');
     await click('button[type="submit"]');
 

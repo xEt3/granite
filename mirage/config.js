@@ -2,7 +2,7 @@ import moment from 'moment';
 import { Response, faker } from 'ember-cli-mirage';
 
 const parseIncoming = req => {
-  return req.requestBody ? JSON.parse('{"' + decodeURIComponent(req.requestBody).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}') : {};
+  return req.requestBody ? JSON.parse('{"' + decodeURIComponent(req.requestBody).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}') : {};
 };
 
 // HACK - mirage is incapable of handling incoming embedded records https://github.com/samselikoff/ember-cli-mirage/issues/797#issuecomment-233115924
@@ -19,13 +19,11 @@ const processEmbeddedRelationships = ({ model, key, data, parentId, parentKey, p
 
     return idVal ?
       model.find(idVal).update(record) :
-      model.create(Object.assign({}, record, {
-        [parentKey]: parentModel.find(parentId)
-      }));
+      model.create(Object.assign({}, record, { [parentKey]: parentModel.find(parentId) }));
   });
 };
 
-export default function() {
+export default function () {
   this.logging = true;
   this.namespace = '/api/v1';
 
@@ -48,15 +46,15 @@ export default function() {
     const params = parseIncoming(request);
 
     let userExists = db.companyUsers.where({
-      email: params.email,
+      email:    params.email,
       password: params.password
     });
 
     if (userExists && userExists.models[0]) {
       let session = db.sessions.create({
-        token: faker.commerce.department() + faker.commerce.productAdjective(),
+        token:   faker.commerce.department() + faker.commerce.productAdjective(),
         expires: moment().add(1, 'hour').toISOString(),
-        user: userExists.models[0].id,
+        user:    userExists.models[0].id,
         company: userExists.models[0].company
       });
       return session.attrs;
@@ -70,7 +68,7 @@ export default function() {
     let activities = [];
     for (let i = 0; i < limit; i++) {
       activities.push({
-        _id: i + 21,
+        _id:             i + 21,
         descriptionHtml: faker.fake('{{name.firstName}} {{hacker.verb}} {{hacker.noun}}')
       });
     }
@@ -81,17 +79,17 @@ export default function() {
     return { subscription: null }; //works for now
   });
 
-  this.put('/companies/:id', function({ companies, correctiveActionSeverities }, request) {
+  this.put('/companies/:id', function ({ companies, correctiveActionSeverities }, request) {
     //needs to be like this because mirage is incapable of processing embedded relationships
     let id = request.params.id,
         attrs = this.normalizedRequestAttrs();
 
     attrs.correctiveActionSeverities = processEmbeddedRelationships({
-      model: correctiveActionSeverities,
-      key: 'correctiveActionSeverities',
-      data: attrs,
-      parentId: id,
-      parentKey: 'company',
+      model:       correctiveActionSeverities,
+      key:         'correctiveActionSeverities',
+      data:        attrs,
+      parentId:    id,
+      parentKey:   'company',
       parentModel: companies
     });
 

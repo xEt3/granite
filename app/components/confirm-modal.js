@@ -24,7 +24,7 @@ export default Component.extend({
     });
 
     $('#' + this.get('modalId')).modal({
-      context: '.ember-application',
+      context:    '.ember-application',
       detachable: true,
       onHidden:   () => {
         if (!this.get('responded')) {

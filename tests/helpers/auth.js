@@ -9,19 +9,17 @@ const injectLogin = async function (server, properties = {}) {
 
   const company = server.create('company', properties.company);
 
-  const companyUser = server.create('company-user', Object.assign({
-    company: company.id
-  }, properties.companyUser));
+  const companyUser = server.create('company-user', Object.assign({ company: company.id }, properties.companyUser));
 
   const employee = server.create('employee', Object.assign({
-    company: company.id,
+    company:     company.id,
     companyUser: companyUser.id,
-    firstName: companyUser.firstName,
-    lastName: companyUser.lastName
+    firstName:   companyUser.firstName,
+    lastName:    companyUser.lastName
   }, properties.employee));
 
   const session = server.create('session', {
-    user: companyUser.id,
+    user:    companyUser.id,
     company: company.id
   });
 

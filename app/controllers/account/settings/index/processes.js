@@ -6,9 +6,9 @@ import $ from 'jquery';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default Controller.extend(addEdit, {
-  auth: service(),
+  auth:                   service(),
   correctiveActionsDirty: false,
-  stagesDirty: false,
+  stagesDirty:            false,
 
   canAddStages: computed('pipeline.stages.length', function () {
     return this.get('pipeline.stages.length') < 5 ? true : false;
@@ -36,9 +36,9 @@ export default Controller.extend(addEdit, {
   }]),
 
   stageForm: computed(() => [{
-    label: 'Name of stage',
-    type: 'text',
-    path: 'name',
+    label:       'Name of stage',
+    type:        'text',
+    path:        'name',
     placeholder: 'ex. Interview'
   }]),
 
@@ -58,7 +58,7 @@ export default Controller.extend(addEdit, {
 
     this.setProperties({
       correctiveActionsDirty: false,
-      stagesDirty: false
+      stagesDirty:            false
     });
 
     this.send('refresh');
@@ -98,7 +98,7 @@ export default Controller.extend(addEdit, {
       }
 
       $('#modal__add-cas').modal({
-        context: '.ember-application',
+        context:    '.ember-application',
         detachable: true,
         onHidden:   () => {
           if (!this.get('respondedSeverityAddition')) {
@@ -121,16 +121,19 @@ export default Controller.extend(addEdit, {
       }
 
       $('#modal__add-stage').modal({
-        context: '.ember-application',
+        context:    '.ember-application',
         detachable: true,
-        onHidden: () => {
-          if ( !this.get('respondedStageAddition') ) {
+        onHidden:   () => {
+          if (!this.get('respondedStageAddition')) {
             this.send('respondStageAddition', false);
           }
         }
       }).modal('show');
 
-      return new Promise((resolveStage, rejectStage) => this.setProperties({ resolveStage, rejectStage }));
+      return new Promise((resolveStage, rejectStage) => this.setProperties({
+        resolveStage,
+        rejectStage
+      }));
     },
 
     beginSeverityEdit (currentSeverity) {
@@ -158,9 +161,7 @@ export default Controller.extend(addEdit, {
     },
 
     addStage () {
-      let stage = {
-        order: this.get('pipeline.stages').length
-      };
+      let stage = { order: this.get('pipeline.stages').length };
 
       this.set('currentStage', stage);
       this.get('pipeline.stages').addObject(stage);
