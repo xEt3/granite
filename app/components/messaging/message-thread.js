@@ -12,7 +12,7 @@ const MessageThreadComponent = Component.extend(fileSupport, {
 
   fileData: {
     systemUse:      true,
-    associatedData: { type: 'companyProfileImage' }
+    associatedData: { type: 'messagingAttachment' }
   },
 
   sendMessage () {
