@@ -1,6 +1,6 @@
 <div class="content">
   <span class="header clearfix">
-    <i class="{{asset.asset.icon}} icon"></i>{{asset.identifier}}
+    {{asset.identifier}}
     {{#if attributes.length}}
       {{#ui-popup tagName='span' content="View attributes"}}
         <a href="#" {{action "toggleProperty" "details"}}><i class="{{if details 'up' 'down'}} angle icon"></i></a>
