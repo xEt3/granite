@@ -152,6 +152,17 @@ export default function () {
   this.get('/job-applications');
   this.put('job-openings/:id');
   this.get('/forms');
+  this.get('/applicant-sources');
+  this.get('/manual-applicant-sources');
+  this.post('/forms');
+  this.post('/applicants');
+  this.put('/applicants/:id');
+  this.post('/job-applications');
+  this.post('/job-applications/:id');
+  this.get('/job-applications/:id');
+  this.get('/applicants/:id');
+  this.put('/job-applications/:id');
+  this.get('/events');
   this.get('/job-openings/:id', ({ jobOpenings }, request) => {
     let id = request.params.id;
 

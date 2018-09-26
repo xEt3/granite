@@ -1,4 +1,4 @@
-import { Factory, faker, association } from 'ember-cli-mirage';
+import { Factory, faker } from 'ember-cli-mirage';
 
 export default Factory.extend({
   name:                faker.name.title,
@@ -24,25 +24,5 @@ export default Factory.extend({
   created:                   faker.date.past,
   location:                  null,
   hiring:                    false,
-
-  // job: trait({
-  //   title:       faker.name.jobTitle,
-  //   description: faker.lorem.paragraph
-  // })
-  job: null
-  // job: association('job'),
-
-  // afterCreate (jobs, server) {
-  //   server.createList('job', 2, {
-  //     jobs,
-  //     title: jobs.title
-  //   });
-  // }
-
-  // afterCreate (jobOpening, db) {
-  //   db.create('job', {
-  //     jobOpening,
-  //     title: jobOpening.title
-  //   });
-  // }
+  job:                       null
 });

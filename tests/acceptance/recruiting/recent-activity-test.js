@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import authenticate from 'granite/tests/helpers/auth';
-import { visit, currentURL, click, find, findAll, settled, pauseTest } from '@ember/test-helpers';
+import { visit, currentURL, click, find, findAll, settled, pauseTest, fillIn } from '@ember/test-helpers';
 
 module('Acceptance | recruiting-recent activity', function (hooks) {
   setupApplicationTest(hooks);
@@ -51,6 +51,7 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
       job:   job.id,
       title: job.title
     });
+
     await visit(`/account/recruiting/job-opening/${job.id}`);
     assert.equal(currentURL(), `/account/recruiting/job-opening/${job.id}`);
     assert.dom('div.menu__container-responsive > div > div > a.item.text-blue').hasText('Continue Setup');
@@ -62,6 +63,7 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
     assert.dom('.wizard__steps.steps a').exists({ count: 6 });
     await click('div:nth-child(2) > button');
     await settled();
+
     assert.equal(currentURL(), `/account/recruiting/job-opening/${job.id}/setup/settings`);
     assert.dom('div:nth-child(1) > h1').hasText(`Setup ${campaign.name}`);
     assert.dom('div > h2:nth-child(1)').hasText('Campaign Settings');
@@ -95,7 +97,6 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
     assert.dom('div#this-job-has-supervisory-duties label').isVisible();
     assert.dom('form > button').isNotDisabled();
     assert.dom('div.wizard__steps.ui.steps.six.ember-view > a.step.ember-view:nth-child(2)').hasClass('active');
-    // console.log(this.server.db.employees[0].firstName);
     await click('div#send-notifications-to > input');
     await click('div#send-notifications-to div.item.selected');
     assert.dom('div#send-notifications-to > a.ui.label').isVisible();
@@ -108,6 +109,7 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
     assert.dom('div#job-type > div.text').hasText('Full Time');
     await click('form > button');
     await settled();
+
     assert.equal(currentURL(), `/account/recruiting/job-opening/${job.id}/setup/screening`);
     assert.dom('div:nth-child(1) > h1').hasText(`Setup ${campaign.name}`);
     assert.dom('div > h2.header').hasText('Screening Form');
@@ -115,37 +117,35 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
     assert.dom('div.field.right.aligned.icon > button.ui.compact.button').isVisible();
     assert.dom('div.field.right.aligned.icon > button.ui.compact.button i.hide').isVisible();
     assert.dom('button.ui.primary.fluid.button').isVisible();
-
     await click('div.field.right.aligned.icon > button.ui.compact.button');
     assert.dom('button.ui.primary.fluid.button').isNotVisible();
-
     assert.dom('div.field.right.aligned.icon > button.ui.compact.button i.hide').isNotVisible();
     assert.dom('div.field.right.aligned.icon > button.ui.compact.button i.unhide').isVisible();
     assert.dom('div.field.right.aligned.icon > button.ui.compact.green.button').isVisible();
     assert.dom('button#toggle-applicant-scoring').hasText('Applicant Scoring Off');
     await click('button#toggle-applicant-scoring');
     assert.dom('button#toggle-applicant-scoring').hasText('Applicant Scoring On');
+    await click('div form > button');
 
+    assert.equal(currentURL(), `/account/recruiting/job-opening/${job.id}/setup/sources`);
+    await settled();
+    assert.dom('h2.ui.horizontal.header + p').hasText('Edit the title and description of your job listing');
+    assert.dom('.field label').hasText('Title');
+    assert.dom('.field input').hasValue(job.title);
+    assert.dom('div:nth-child(4) > label').hasText('Description (How your job description displays on the listing)');
+    assert.dom('.ql-toolbar').exists();
+    assert.dom('div.ql-editor > p').hasText(campaign.description);
+    assert.dom('.ui.header').exists({ count: 4 });
+    await click('button.green');
 
+    assert.equal(currentURL(), `/account/recruiting/job-opening/${job.id}/setup/eeo`);
+    await click('button.green');
 
-
-
-
-
-
-
-    await pauseTest();
-
-
-
-
-
-
-
-
-
-
-
+    assert.equal(currentURL(), `/account/recruiting/job-opening/${job.id}/setup/finish`);
+    assert.dom('form > h2').hasText('Review');
+    assert.dom('form > h3').includesText(job.title);
+    assert.dom('button.green').hasText('Launch Campaign');
+    await click('button.green');
+    assert.equal(currentURL(), `/account/recruiting/job-opening/${job.id}`);
   });
-
 });
