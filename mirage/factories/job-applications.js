@@ -3,8 +3,7 @@ import { Factory, faker } from 'ember-cli-mirage';
 export default Factory.extend({
 
   coverLetter:           null,
-  stage:                 null,
-  stageOrder:            null,
+  stageOrder:            0,
   manualEntry:           true,
   disqualified:          false,
   disqualificationEmail: false,
@@ -12,7 +11,7 @@ export default Factory.extend({
   scoreRelative:         null,
   hired:                 false,
   hiredSetOn:            null,
-  reviewedOn:            null,
+  // reviewedOn:            faker.date.past,
   created:               faker.date.past,
   resume:                null,
   employee:              null,
