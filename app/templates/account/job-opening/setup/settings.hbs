@@ -11,7 +11,7 @@
     {{ui-checkbox
       id=customPipelineToggle
       class='toggle'
-      label='Use custom pipeline settings'
+      label='Use custom recruiting stages'
       parentClass="sixteen wide column"
       checked=(readonly customPipeline)
       onChange=(action 'toggleCustomPipeline')}}
@@ -19,8 +19,6 @@
 
   {{#liquid-if customPipeline}}
     <h2 class="ui horizontal divider header">Custom Recruiting Process</h2>
-    {{!-- create new recruitingPipeline w/ same stages as their default --}}
-
 
     {{#liquid-if canAddStages}}
       <button type="button" id="add-stage" class="ui primary fluid button" {{action "openStageModal"}}>
@@ -33,23 +31,18 @@
         {{#sortable-item tagName="li" classNames="stage-list__card" model=stage group=group}}
           <div class="card-content__wrapper">
             <div class="card-content__title-bar">
-              {{#confirm-modal class="item" as |confirm|}}
-                <span class="card-content__stage-name">
-                  <i class="arrows alternate vertical icon"></i> {{stage.name}}
-                  <a href="#" {{action "beginStageEdit" stage}}>
-                    <i class="edit icon"></i>
-                  </a>
-                </span>
-                <a href="#" class="right floated text-danger delete-stage" {{action (pipe confirm (action "removeStage" stage))}}>Remove</a>
-              {{/confirm-modal}}
+              <span class="card-content__stage-name">
+                <i class="arrows alternate vertical icon"></i> {{stage.name}}
+                <a href="#" {{action "beginStageEdit" stage}}>
+                  <i class="edit icon"></i>
+                </a>
+              </span>
+              <a href="#" class="right floated text-danger delete-stage" {{action "removeStage" stage}}>Remove</a>
             </div>
           </div>
         {{/sortable-item}}
       {{/each}}
     {{/sortable-group}}
-
-
-
   {{/liquid-if}}
 
   <h2 class="ui horizontal divider header">Job Settings</h2>
@@ -61,7 +54,7 @@
     class="content ui grid"}}
 
   <div class="ui divider"></div>
-  <form {{action "saveAndContinue" on="submit"}}>
+  <form {{action (pipe (route-action "saveAndContinue") (action "saveCustomPipeline")) on="submit"}}>
     {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
   </form>
 </div>
@@ -90,5 +83,3 @@
     </button>
   </div>
 {{/ui-modal}}
-
-{{log 'defaultPipeline' defaultPipeline}}

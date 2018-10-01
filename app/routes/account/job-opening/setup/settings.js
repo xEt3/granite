@@ -14,8 +14,11 @@ export default Route.extend({
         email:       { $exists: true },
         companyUser: { $exists: true }
       }),
-      //
+      //either get the default pipeline, or get custom created one
       defaultPipeline: this.store.query('recruiting-pipeline', { 'jobOpenings.0': { $exists: false } })
+      .then(results => results ? results.get('firstObject') : results),
+
+      customPipeline: this.store.query('recruiting-pipeline', { jobOpenings: { $in: [ jobOpening.get('id') ] } })
       .then(results => results ? results.get('firstObject') : results)
     });
   },
@@ -25,7 +28,8 @@ export default Route.extend({
       model:           model.jobOpening,
       locations:       model.locations,
       employees:       model.employees,
-      defaultPipeline: model.defaultPipeline
+      defaultPipeline: model.defaultPipeline,
+      customPipeline:  model.customPipeline
     });
   }
 });

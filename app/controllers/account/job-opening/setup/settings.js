@@ -7,8 +7,7 @@ import $ from 'jquery';
 
 export default Controller.extend(addEdit, {
   jobTypes,
-  auth:           service(),
-  customPipeline: null,
+  auth: service(),
 
   campaignSettingsForm: computed(() => [{
     label:       'Send notifications to',
@@ -110,6 +109,13 @@ export default Controller.extend(addEdit, {
     parentClass: 'sixteen wide column'
   }]),
 
+  stageForm: computed(() => [{
+    label:       'Name of stage',
+    type:        'text',
+    path:        'name',
+    placeholder: 'ex. Interview'
+  }]),
+
   canAddStages: computed('customPipeline.stages.length', function () {
     return this.get('customPipeline.stages.length') < 5 ? true : false;
   }),
@@ -117,19 +123,23 @@ export default Controller.extend(addEdit, {
   actions: {
     toggleCustomPipeline () {
       if (this.get('customPipeline')) {
-        console.log('there is a custom pipeline, deleting it');
-        //set customPipeline to null
-        this.set('customPipeline', null);
+        this.get('customPipeline').destroyRecord()
+        .then(() => {
+          this.set('customPipeline', null);
+        });
       } else {
-        let x = this.store.createRecord('recruiting-pipeline', {
+        this.set('customPipeline', this.store.createRecord('recruiting-pipeline', {
           company:     this.get('auth.user.company.id'),
           jobOpenings: [ this.get('model') ],
-          stages:      this.get('defaultPipeline.stages')
-        });
-        this.set('customPipeline', x);
-
+          stages:      this.get('defaultPipeline.stages').map(stages => stages)
+        }));
       }
+    },
 
+    saveCustomPipeline () {
+      if (this.get('customPipeline')) {
+        this.get('customPipeline').save();
+      }
     },
 
     reorderItems (items) {
@@ -171,6 +181,14 @@ export default Controller.extend(addEdit, {
 
     removeStage (stage) {
       this.get('customPipeline.stages').removeObject(stage);
+    },
+
+    beginStageEdit (currentStage) {
+      this.setProperties({
+        currentStage,
+        editingStage: true
+      });
+      this.send('openStageModal');
     },
 
     respondStageAddition (response) {
