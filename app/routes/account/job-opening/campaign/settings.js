@@ -14,7 +14,7 @@ export default Route.extend(edit, {
         email:       { $exists: true },
         companyUser: { $exists: true }
       }),
-      //either get the default pipeline, or get custom created one
+
       defaultPipeline: this.store.query('recruiting-pipeline', { 'jobOpenings.0': { $exists: false } })
       .then(results => results ? results.get('firstObject') : results),
 
