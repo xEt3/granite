@@ -9,7 +9,6 @@ module('Acceptance | login behaviors', function (hooks) {
     assert.expect(8);
     await visit('/');
     assert.equal(currentURL(), '/');
-
     await click('a[href="/login"]');
     assert.equal(currentURL(), '/login');
     assert.ok(find('input[type="email"]'), 'Email input on page');
