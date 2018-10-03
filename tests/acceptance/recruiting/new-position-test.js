@@ -6,7 +6,6 @@ import { visit, currentURL, click, settled } from '@ember/test-helpers';
 module('Acceptance | recruiting-new postion', function (hooks) {
   setupApplicationTest(hooks);
 
-
   test('elements on new postion page', async function (assert) {
     await authenticate.call(this, server, {
       companyUser: {
@@ -25,6 +24,7 @@ module('Acceptance | recruiting-new postion', function (hooks) {
       job:   job.id,
       title: job.title
     });
+
     await visit('/account/recruiting/campaigns');
     await new Promise(resolve => setTimeout(resolve, 500));
     await click('i#add-job-opening');
@@ -60,6 +60,7 @@ module('Acceptance | recruiting-new postion', function (hooks) {
       }
     });
     let job = await server.create('job');
+
     await visit('/account/recruiting/campaigns/new');
     await click('#job-description > input');
     await settled();

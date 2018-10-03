@@ -32,6 +32,7 @@ module('Acceptance | recruiting', function (hooks) {
       job:            job.id,
       completedSetup: faker.date.past
     });
+
     await visit('/account/recruiting/campaigns');
     assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Recruiting');
     assert.dom('hgroup > h1').hasText('Recruiting Campaigns');

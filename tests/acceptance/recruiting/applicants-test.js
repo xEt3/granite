@@ -7,7 +7,6 @@ import { visit, currentURL, click, settled } from '@ember/test-helpers';
 module('Acceptance | recruiting-applicant-tracking', function (hooks) {
   setupApplicationTest(hooks);
 
-
   test('elements on applicant-tracking page', async function (assert) {
     let { company } = await authenticate.call(this, server, {
       companyUser: {
@@ -49,6 +48,7 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
       job:   job.id,
       title: job.title
     });
+
     await server.create('job-applications', {
       jobOpening: campaign.id,
       applicant:  applicant.id
@@ -118,6 +118,7 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
       job:   job.id,
       title: job.title
     });
+
     await server.create('job-applications', {
       jobOpening: campaign.id,
       applicant:  applicant.id,

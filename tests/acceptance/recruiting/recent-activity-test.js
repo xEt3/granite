@@ -6,7 +6,6 @@ import { visit, currentURL, click, find, settled } from '@ember/test-helpers';
 module('Acceptance | recruiting-recent activity', function (hooks) {
   setupApplicationTest(hooks);
 
-
   test('elements on recent activity page', async function (assert) {
     await authenticate.call(this, server, {
       companyUser: {
@@ -25,6 +24,7 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
       job:   job.id,
       title: job.title
     });
+
     await visit(`/account/recruiting/job-opening/${job.id}`);
     assert.equal(currentURL(), `/account/recruiting/job-opening/${job.id}`);
     assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Recruiting/Job Opening/Campaign');
