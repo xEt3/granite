@@ -2,7 +2,7 @@ import { Factory, faker } from 'ember-cli-mirage';
 import moment from 'moment';
 
 export default Factory.extend({
-  id:               1,
+  id:                    1,
   name:                  faker.company.companyName,
   contactPhone:          faker.phone.phoneNumber(),
   contactFirstName:      faker.name.firstName(),

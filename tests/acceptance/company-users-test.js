@@ -60,7 +60,7 @@ module('Acceptance | company users', function (hooks) {
       return p.id;
     });
 
-    await authenticate.call(this, server, { companyUser: { permissions } });
+    let companyUser = await authenticate.call(this, server, { companyUser: { permissions } });
 
     await visit('account/anatomy/company-users');
 
