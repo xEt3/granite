@@ -1,19 +1,14 @@
 import Component from '@ember/component';
+import { A } from '@ember/array';
 import { computed } from '@ember/object';
 
 const PipelineStageComponent = Component.extend({
   classNames: [ 'pipeline__stage' ],
 
-  candidates: computed('activeCandidates.@each.{stage,stageOrder}', 'stage._id', function () {
+  candidates: computed('activeCandidates.@each.{stageOrder,stage}', 'stage._id', function () {
     const stageId = this.get('stage._id');
-    return (this.get('activeCandidates') || []).filter(candidate => stageId === candidate.get('stage')).sortBy('stageOrder');
-  }),
-
-  actions: {
-    reorderItems (items = [], reordered) {
-      this.get('dispatchReorder')(items, reordered, items.indexOf(reordered));
-    }
-  }
+    return A([ stageId, ...(this.get('activeCandidates') || []).filter(candidate => stageId === candidate.get('stage')).sortBy('stageOrder') ]);
+  })
 });
 
 PipelineStageComponent.reopenClass({ positionalParams: [ 'stage', 'stages' ] });

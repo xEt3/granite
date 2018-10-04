@@ -1,13 +1,13 @@
 /* eslint-env node */
 'use strict';
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   let ENV = {
     modulePrefix: 'granite',
     environment,
-    rootURL: '/',
+    rootURL:      '/',
     locationType: 'auto',
-    EmberENV: {
+    EmberENV:     {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
@@ -23,24 +23,23 @@ module.exports = function(environment) {
       // when it is created
     },
 
-    moment: {
-      includeTimezone: 'all'
-    },
+    moment: { includeTimezone: 'all' },
 
     emberRollbarClient: {
-      enabled: environment === 'production',
+      enabled:     environment === 'production',
       accessToken: '6f016ff3c5ef495b9c894871857aefd4'
     },
     SemanticUI: {
       import: {
-        css: false,
+        css:        false,
         javascript: true,
-        fonts: false
+        fonts:      false
       }
     }
   };
 
   if (environment === 'development') {
+    // ENV.BUG_THE_HELL_OUTTA_ME = true;
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
@@ -65,7 +64,7 @@ module.exports = function(environment) {
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
     ENV['ember-cli-mirage'] = {
-      enabled: true,
+      enabled:   true,
       autostart: true
     };
   }

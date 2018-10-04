@@ -9,5 +9,10 @@
     onUnDisqualify=onUnDisqualify
     onUnHire=onUnHire
     onSchedule=onSchedule
+    disableDragging=working
     onOnboardCandidate=onOnboardCandidate}}
 {{/each}}
+
+<div class="ui {{if workingSlow 'active'}} inverted dimmer">
+  <div class="ui text loader">One moment...</div>
+</div>
