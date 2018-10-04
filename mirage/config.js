@@ -138,6 +138,18 @@ export default function() {
 
   this.get('/employees');
 
+  this.get('/employees/:id');
+
+  this.get('/changes');
+
+  this.get('/histories');
+
+  this.get('/employee-issues');
+
+  this.get('/departments');
+
+  this.get('/locations');
+
   this.post('/companies');
 
   this.put('/companies/:id');
