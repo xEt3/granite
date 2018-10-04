@@ -59,6 +59,7 @@ export default Component.extend(ajaxStatus, {
 
       activity.save()
       .then(() => {
+        comments.removeObject(comment);
         comment.destroy();
         this.set('comment', null);
         this.newComment();
