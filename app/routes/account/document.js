@@ -5,3 +5,5 @@ export default Route.extend({
     return this.store.find('file', params.id);
   }
 });
+
+//STEAL FROM /ACCOUNT/DOCUMENT/INDEX

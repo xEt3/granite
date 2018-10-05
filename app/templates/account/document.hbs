@@ -1,1 +1,104 @@
-{{outlet}}
+<div class="ui container basic segment">
+  {{#ui-menu menuClass="pointing"}}
+    {{#link-to 'account.document.index' class="item"}}
+      <i class="list icon"></i>Summary
+    {{/link-to}}
+    <div class="right menu">
+      {{#ui-dropdown class="item icon top right pointing"}}
+        <i class="wrench icon"></i><i class="dropdown icon"></i>
+        <div class="menu">
+          <div class="item">
+            <a href="#" {{action (pipe
+              (action 'openAssignmentModal' file)
+              (action remapToModels)
+              (action 'save')
+              (action 'closeAssignmentModal')
+            )}}>
+              <i class="add user icon"></i> Assign (send) to
+            </a>
+          </div>
+          <div class="text-danger header">Danger Zone</div>
+          <div class="item">
+            {{#confirm-modal deleteContext=(concat model.title " - " model.mimeType) as |confirm|}}
+              <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}><i class="trash icon"></i>Delete File</a>
+            {{/confirm-modal}}
+          </div>
+        </div>
+      {{/ui-dropdown}}
+    </div>
+  {{/ui-menu}}
+
+  <div class="ui raised padded segment container clearfix">
+    <hgroup>
+      <h2>
+        {{display/icon-for-file model}}
+        {{if model.title model.title 'Document'}}
+        {{#if model.tags}}
+          {{#each model.tags as |tag|}}
+            <span class="ui tiny label">{{tag}}</span>
+          {{/each}}
+        {{/if}}
+      </h2>
+    </hgroup>
+
+    <span class="ui small text">
+      Created by {{model.creator.fullName}} on {{time model.created}}
+    </span>
+
+    <div class="right floated">
+      <a href="{{model.url}}" target="_blank" download><i class="download fitted icon"></i></a>
+
+      {{!-- {{#ui-dropdown class="item icon top right pointing floated"}}
+        <i class="right aligned text ellipsis vertical icon"></i>
+        <div class="menu">
+          <div class="header">Actions</div>
+          <a href="#" class="item" {{action (pipe
+            (action 'openAssignmentModal' file)
+            (action remapToModels)
+            (action 'save')
+            (action 'closeAssignmentModal')
+          )}}>
+            <i class="add user icon"></i> Assign (send) to
+          </a>
+          <div class="text-danger header">Danger Zone</div>
+          <div class="item">
+            {{#confirm-modal deleteContext=(concat model.title " - " model.mimeType) as |confirm|}}
+              <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}><i class="trash icon"></i>Delete File</a>
+            {{/confirm-modal}}
+          </div>
+        </div>
+      {{/ui-dropdown}} --}}
+    </div>
+
+    <div class="ui divider"></div>
+
+    {{outlet}}
+  </div>
+</div>
+
+{{#ui-modal name='modal__file-assignment' id='modal__file-assignment' class='small form'}}
+  <div class="header">
+    Assign {{model.title}}
+  </div>
+  <div class="content">
+  {{quick-form
+    fileAssignmentForm
+    fileAssignment
+    this
+    tagName='div'}}
+  </div>
+  <div class="actions">
+    <button class="ui red button" {{action 'respondAssignment' false}}>
+      Cancel
+    </button>
+    <button class="ui primary right labeled icon {{if working 'loading'}} button" {{action 'respondAssignment' true}} disabled={{lt fileAssignment.employees.length 1}}>
+      Assign
+      {{#if (gte fileAssignment.employees.length 2)}}
+        To {{fileAssignment.employees.length}} Employees
+      {{else if (eq fileAssignment.employees.length 1)}}
+        To {{fileAssignment.employees.firstObject.firstName}}
+      {{/if}}
+      <i class="add user icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}

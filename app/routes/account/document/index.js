@@ -8,18 +8,18 @@ export default Route.extend(refreshable, {
 
     return hash({
       document,
-      fileAssignments: this.store.query('fileAssignment', {
-        file: document.id
-      }),
-      employees: this.store.findAll('employee')
+      fileAssignments: this.store.query('fileAssignment', { file: document.id }),
+      employees:       this.store.findAll('employee')
     });
   },
 
   setupController (controller, model) {
     controller.setProperties({
-      model: model.document,
+      model:           model.document,
       fileAssignments: model.fileAssignments,
-      employees: model.employees
+      employees:       model.employees
     });
   }
 });
+
+//COPY NEEDED THINGS TO /ACCOUNT/DOCUMENT
