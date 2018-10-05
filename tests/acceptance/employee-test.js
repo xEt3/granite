@@ -4,13 +4,16 @@ import authenticate from 'granite/tests/helpers/auth';
 import { faker } from 'ember-cli-mirage';
 import { visit, currentURL, click, find, findAll, settled } from '@ember/test-helpers';
 
-module('Acceptance | employee', function (hooks) {
+
+module('Acceptance | employee', function(hooks) {
   setupApplicationTest(hooks);
 
-  test('getting to employee page', async function (assert) {
+  test('getting to employee page',async function(assert){
     let { employee } = await authenticate.call(this, server, {
       employee: {
-        name:    { first: faker.name.firstName() },
+        name: {
+          first: faker.name.firstName()
+        },
         picture: null
       }
     });
@@ -21,21 +24,23 @@ module('Acceptance | employee', function (hooks) {
     assert.equal(currentURL(), `/account/employee/${employee.id}`);
   });
 
-  test('checking elements on page', async function (assert) {
+  test('checking elements on page',async function(assert){
 
     let { employee } = await authenticate.call(this, server, {
       employee: {
-        name:    { first: faker.name.firstName() },
+        name: {
+          first: faker.name.firstName()
+        },
         picture: null,
-        phone:   faker.phone.phoneNumberFormat(1),
-        email:   faker.internet.email(),
+        phone: faker.phone.phoneNumberFormat(1),
+        email: faker.internet.email(),
         address: {
           line1: faker.address.streetAddress(),
           city:  faker.address.city(),
           state: faker.address.state(),
           zip:   faker.address.zipCode()
         },
-        emergencyContact: {
+        emergencyContact : {
           name: {
             first: faker.name.firstName(),
             last:  faker.name.lastName()
@@ -69,6 +74,7 @@ module('Acceptance | employee', function (hooks) {
     assert.dom('.ui.stackable.two.column.grid .ui.basic.segment a:nth-child(3)').hasText(employee.phone);
     [
       [ 'Direct Contact', 'Mailing Address', 'Custom Fields' ],
+
       [ 'Additional Information', 'Anniversaries', 'Emergency Contact' ]
     ].forEach((column, columnIndex) => column.forEach((header, i) => {
       assert.dom(`.ui.stackable.two.column.grid .column:nth-child(${columnIndex + 1}) .raised.segment:nth-child(${i + 1}) span`).hasText(header);
@@ -125,7 +131,7 @@ module('Acceptance | employee', function (hooks) {
     assert.equal(currentURL(), `/account/employee/${employee.id}/history`);
     assert.dom(`img[src="/api/v1/employee/${employee.id}/avatar"]`).exists();
   });
-
+  
   test('employee counseling page', async function (assert) {
     let { employee } = await authenticate.call(this, server, {
       employee: {

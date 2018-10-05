@@ -1,5 +1,6 @@
 @trim-color: lighten(@gray-light, 20%);
 @trim-border-rad: .3rem;
+@pipeline-stage-bg-dragover: fade(@granite-green, 60%);
 
 .pipeline {
   width: 100%;
@@ -11,11 +12,17 @@
   height: 80vh;
   box-shadow: 0 2px 4px fade(@gray-dark, 50%);
 
+  .dragSortList {
+    position: static;
+    overflow: visible;
+  }
+
   > .pipeline__stage {
     width: 100%;
     padding: 1.2em .8em;
     border-right: 1px solid @trim-color;
     overflow-y: auto;
+    position: relative;
 
     &:last-child {
       border-right: none;
@@ -35,8 +42,20 @@
     .pipeline-stage__cards {
       padding: 0;
       list-style: none;
+      min-height: 200px;
 
-      .stage-cards__card {
+      &.-isDraggingOver:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: @pipeline-stage-bg-dragover;
+      }
+
+      .pipeline-card__content {
         background-color: white;
         box-shadow: 0 2px 4px fade(@gray-dark, 50%);
         margin-bottom: 1em;
@@ -45,6 +64,34 @@
         cursor: move;
         font-size: .9em;
         position: relative;
+        overflow: visible !important; // fix for dropdown menus hidden under pipeline stage
+      }
+
+      .stage-cards__card {
+        &:first-child {
+          visibility: hidden;
+          display: none;
+        }
+
+        &.-placeholderAbove {
+          padding-top: 35px;
+        }
+
+        &.-placeholderBelow {
+          margin-bottom: 10px;
+          padding-bottom: 25px;
+        }
+
+        &.-placeholderAbove:before,
+        &.-placeholderBelow:before {
+          content: '';
+          position: absolute;
+          height: 25px;
+          border-radius: @trim-border-rad;
+          background-color: @granite-green;
+          left: 0;
+          right: 0;
+        }
 
         .ui.bottom.label {
           border-radius: 0;
@@ -118,6 +165,24 @@
           margin-bottom: 0;
         }
       }
+    }
+  }
+}
+
+
+@media all and (max-width: @screen-tablet) {
+  .pipeline {
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: auto;
+
+    > .pipeline__stage {
+      width: 100%;
+      padding: 1.2em .8em;
+      border-right: none;
+      border-bottom: 1px solid @trim-color;
+      overflow-y: auto;
+      position: relative;
     }
   }
 }

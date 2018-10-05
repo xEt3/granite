@@ -19,7 +19,7 @@ const nodeIncludes = [
   'scrollreveal/dist/scrollreveal.min.js'
 ];
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   var app = new EmberApp(defaults, {
     lessOptions: {
       paths: [
@@ -28,16 +28,14 @@ module.exports = function(defaults) {
       plugins: [ require('less-plugin-glob') ]
     },
 
-    'ember-cli-range-slider': {
-      skin: 'flat'
-    },
+    'ember-cli-range-slider': { skin: 'flat' },
 
-    fingerprint: {
-      exclude: ['product-screenshots/', 'documents/']
-    },
+    fingerprint: { exclude: [ 'product-screenshots/', 'documents/' ] },
 
-    'ember-cli-babel': {
-      includePolyfill: true
+    babel: {
+      plugins: [
+        'transform-object-rest-spread'
+      ]
     }
   });
 
