@@ -4,10 +4,10 @@ import authenticate from 'granite/tests/helpers/auth';
 import { faker } from 'ember-cli-mirage';
 import { visit, currentURL, settled, findAll, click } from '@ember/test-helpers';
 
-module('Acceptance | employees', function(hooks) {
+module('Acceptance | employees', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('getting to the employees',async function(assert){
+  test('getting to the employees', async function (assert) {
     server.createList('employees', 7);
     await authenticate.call(this, server);
     await visit('/account/dashboard');
