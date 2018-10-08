@@ -86,7 +86,7 @@ export default Mixin.create({
     const loadingProp = this.get('loadingProp');
 
     this.set('__longRunningPropToid', setTimeout(() => {
-      if (this.get(loadingProp)) {
+      if (!this.get('isDestroyed') && this.get(loadingProp)) {
         this.set(`${loadingProp}Slow`, true);
       }
     }, this.get('slowRunningThreshold')));
