@@ -9,22 +9,22 @@ export default Controller.extend(addEdit, {
   auth: service(),
 
   fileAssignmentForm: computed(() => [{
-    label: 'Assign to',
-    type: 'select',
-    inputClass: 'multiple search',
-    path: 'employees',
+    label:       'Assign to',
+    type:        'select',
+    inputClass:  'multiple search',
+    path:        'employees',
     contentPath: 'controller.employees',
-    displayKey: 'fullName',
-    selectText: 'Select one or multiple'
+    displayKey:  'fullName',
+    selectText:  'Select one or multiple'
   }, {
     label: 'Your message (optional)',
-    type: 'textarea',
-    rows: '6',
-    path: 'message'
+    type:  'textarea',
+    rows:  '6',
+    path:  'message'
   }, {
     label: 'Require a signature',
-    type: 'checkbox',
-    path: 'signatureRequired'
+    type:  'checkbox',
+    path:  'signatureRequired'
   }]),
 
   imagePreview: computed.match('model.extension', /je?pg|png|gif/i),
@@ -35,7 +35,7 @@ export default Controller.extend(addEdit, {
     }
 
     let assignment = this.store.createRecord('file-assignment', {
-      file: this.get('model'),
+      file:    this.get('model'),
       creator: this.get('auth.user.employee')
     });
 
@@ -61,7 +61,7 @@ export default Controller.extend(addEdit, {
 
     return [ assignment, ...employees.slice(1).map(employee => {
       return this.store.createRecord('file-assignment', $.extend({ employee }, assignmentPojo));
-    })];
+    }) ];
   },
 
   actions: {
@@ -75,15 +75,15 @@ export default Controller.extend(addEdit, {
     openAssignmentModal (file) {
       this.setProperties({
         respondedAssignment: false,
-        assigningDocument: file
+        assigningDocument:   file
       });
 
       this.createFileAssignment();
 
       $('#modal__file-assignment').modal({
         detachable: true,
-        onHidden: () => {
-          if ( !this.get('respondedAssignment') ) {
+        onHidden:   () => {
+          if (!this.get('respondedAssignment')) {
             this.send('respondedAssignment', false);
 
           }

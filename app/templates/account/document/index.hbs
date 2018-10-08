@@ -1,30 +1,20 @@
 <div class="content">
-  <div class="left floated">
+  <div class="clearfix">
     {{#if imagePreview}}
-      <div class="ui small rounded image left floated">
-        <img src="{{model.url}}">
-      </div>
+      <img class="ui small rounded image left floated" alt="" src="{{model.url}}">
+    {{/if}}
+
+    {{#if model.description}}
+      <h4>{{model.description}}</h4>
     {{/if}}
   </div>
 
-  {{#if model.description}}
-    <h4>{{model.description}}</h4>
-  {{/if}}
+  <hr>
 
   {{#if fileAssignments}}
-    <div>
-      Assigned to {{fileAssignments.length}} employee(s)
-      <a href="#" {{action toggleProperty 'viewAssignees'}}>
-        <i class="angle {{if viewAssignees 'up' 'down'}} icon"></i>
-      </a>
-
-      {{#liquid-if viewAssignees}}
-        <ul>
-          {{#each fileAssignments as |assignment|}}
-            <li>{{list-item/file-assignment assignment=assignment}}</li>
-          {{/each}}
-        </ul>
-      {{/liquid-if}}
-    </div>
+    <h4>Assignees</h4>
+    {{#each fileAssignments as |assignment|}}
+      {{list-item/file-assignment assignment=assignment}}
+    {{/each}}
   {{/if}}
 </div>

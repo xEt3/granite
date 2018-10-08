@@ -63,7 +63,7 @@ export default Controller.extend(addEdit, {
       return this.store.createRecord('file-assignment', $.extend({ employee }, assignmentPojo));
     }) ];
   },
-  //
+
   actions: {
     delete () {
       this.get('model').destroyRecord()

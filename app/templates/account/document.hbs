@@ -38,37 +38,13 @@
             <span class="ui tiny label">{{tag}}</span>
           {{/each}}
         {{/if}}
+        <a href="{{model.url}}" target="_blank" class="right floated" download><i class="download fitted icon"></i></a>
       </h2>
     </hgroup>
 
     <span class="ui small text">
       Created by {{model.creator.fullName}} on {{time model.created}}
     </span>
-
-    <div class="right floated">
-      <a href="{{model.url}}" target="_blank" download><i class="download fitted icon"></i></a>
-
-      {{!-- {{#ui-dropdown class="item icon top right pointing floated"}}
-        <i class="right aligned text ellipsis vertical icon"></i>
-        <div class="menu">
-          <div class="header">Actions</div>
-          <a href="#" class="item" {{action (pipe
-            (action 'openAssignmentModal' file)
-            (action remapToModels)
-            (action 'save')
-            (action 'closeAssignmentModal')
-          )}}>
-            <i class="add user icon"></i> Assign (send) to
-          </a>
-          <div class="text-danger header">Danger Zone</div>
-          <div class="item">
-            {{#confirm-modal deleteContext=(concat model.title " - " model.mimeType) as |confirm|}}
-              <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}><i class="trash icon"></i>Delete File</a>
-            {{/confirm-modal}}
-          </div>
-        </div>
-      {{/ui-dropdown}} --}}
-    </div>
 
     <div class="ui divider"></div>
 
