@@ -9,10 +9,10 @@
     {{/if}}
   </div>
 
-  <hr>
 
   {{#if fileAssignments}}
-    <h4>Assignees</h4>
+    <hr>
+    <h3>Assignees</h3>
     {{#each fileAssignments as |assignment|}}
       {{list-item/file-assignment assignment=assignment}}
     {{/each}}

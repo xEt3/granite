@@ -38,7 +38,7 @@
             <span class="ui tiny label">{{tag}}</span>
           {{/each}}
         {{/if}}
-        <a href="{{model.url}}" target="_blank" class="right floated" download><i class="download fitted icon"></i></a>
+        <a href="{{model.url}}" target="_blank" rel="noopener" class="right floated" download><i class="download fitted icon"></i></a>
       </h2>
     </hgroup>
 
@@ -57,11 +57,11 @@
     Assign {{model.title}}
   </div>
   <div class="content">
-  {{quick-form
-    fileAssignmentForm
-    fileAssignment
-    this
-    tagName='div'}}
+    {{quick-form
+      fileAssignmentForm
+      fileAssignment
+      this
+      tagName='div'}}
   </div>
   <div class="actions">
     <button class="ui red button" {{action 'respondAssignment' false}}>

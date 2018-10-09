@@ -8,7 +8,13 @@ export default Route.extend(refreshable, {
 
     return hash({
       document,
-      fileAssignments: this.store.query('fileAssignment', { file: document.id })
+      fileAssignments: this.store.query('fileAssignment', {
+        file: document.id,
+        sort: {
+          readOn:   -1,
+          signedOn: -1
+        }
+      })
     });
   },
 
