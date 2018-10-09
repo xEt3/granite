@@ -3,6 +3,10 @@ import { hash } from 'rsvp';
 import refreshable from 'granite/mixins/refreshable';
 
 export default Route.extend(refreshable, {
+  titleToken () {
+    return 'Document';
+  },
+
   model () {
     let document = this.modelFor('account.document');
 
