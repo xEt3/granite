@@ -14,7 +14,7 @@
     </div>
   </span>
   <div class="description text small">
-    Assigned to <a href="#" {{action toggleProperty 'showAssignments'}}>{{asset.assignments.length}} employee(s)</a>
+    Assigned to <a href="#" {{action toggleProperty 'showAssignments'}}>{{asset.assignments.length}} {{inflect-text 'employee' asset.assignments.length}}</a>
     - Created {{time-ago asset.created}}{{#if asset.creator}} by {{asset.creator.fullName}}{{/if}}
     {{#liquid-if showAssignments}}
       <ul>
