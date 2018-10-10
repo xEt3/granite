@@ -1,7 +1,10 @@
 {{head-layout}}
 {{notification-container notifications=notifications position="bottom"}}
 
-{{display/subscription-banner transitionToSubscription=(action 'transitionToSubscription') accountLocked=subscription.accountLocked}}
+{{display/subscription-banner
+  transitionToSubscription=(action 'transitionToSubscription')
+  accountLocked=subscription.accountLocked}}
+
 <div class="ui main">
   {{#unless topLevel}}
     {{elements/account-navigation links=accountNavigationItems ui_context='body .ember-view .main'}}

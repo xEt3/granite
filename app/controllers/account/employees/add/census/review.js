@@ -72,8 +72,8 @@ export default Controller.extend(ajaxStatus, {
       this.set('dryrunResult', null);
     },
 
-    mutateGuess (i, val) {
-      this.set(`model.data.0.${i}`, val);
+    mutateGuess (index, val) {
+      this.set(`model.data.0.${index}`, val);
     },
 
     importRecords () {

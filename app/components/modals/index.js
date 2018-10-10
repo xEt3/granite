@@ -10,7 +10,7 @@ export default Component.extend({
       // Bubble response
       let ret = this.get('onResponse')(response);
       // Either way close the modal
-      if (ret.finally) {
+      if (ret && ret.finally) {
         return ret.finally(() => {
           $(`#${modalId}`).modal('hide');
         });

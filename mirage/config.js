@@ -111,21 +111,7 @@ export default function () {
   });
 
   this.get('/recruiting-pipelines');
-  this.put('recruiting-pipelines/:id');
-  this.post('/company-users', ()  =>{
-    return {
-      companyUser: {
-        _id:  3,
-        name: {
-          first:  'Jack',
-          middle: null,
-          last:   'Homer'
-        },
-        employee: 17
-      }
-    };
-  });
-
+  this.put('/recruiting-pipelines/:id');
   this.get('/employees');
   this.put('/company-users/:id');
   this.get('/company-users/:id');
@@ -136,6 +122,8 @@ export default function () {
   this.get('/permissions');
   this.get('/action-items');
   this.get('/asset-items');
+  this.post('/action-items');
+  this.put('/action-items/:id');
   this.get('/assets');
   this.get('/changes');
   this.get('/histories');
@@ -144,8 +132,8 @@ export default function () {
   this.get('/locations');
   this.post('/payment-methods');
   this.get('/comments');
-  this.post('/comments/:id');
   this.del('/comments/:id');
+  this.post('/comments');
   this.get('/job-openings');
   this.post('/job-openings');
   this.post('/jobs');
