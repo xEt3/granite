@@ -63,19 +63,6 @@ export default function () {
     return new Response(401, {}, 'User not found');
   });
 
-  this.put('/company-users/:id', (n, request) => {
-    return {
-      companyUser: {
-        _id:  request.params.id,
-        name: {
-          first: 'Bob',
-          last:  'Ross'
-        },
-        email: 'happytree@bobross.xxx'
-      }
-    };
-  });
-
   this.get('/activities', (n, request) => {
     const params = parseIncoming(request),
           limit = params.limit || 10;
