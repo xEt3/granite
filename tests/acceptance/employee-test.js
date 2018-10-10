@@ -14,6 +14,7 @@ module('Acceptance | employee', function (hooks) {
         picture: null
       }
     });
+
     await visit('/account/employees');
     await settled();
     await click(`a[href="/account/employee/${employee.id}"]`);
