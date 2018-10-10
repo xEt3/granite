@@ -20,7 +20,9 @@ const injectLogin = async function (server, properties = {}) {
 
   const session = server.create('session', {
     user:    companyUser.id,
-    company: company.id
+    company: company.id,
+    token:   '123',
+    expires: moment().add(1, 'hour').toDate()
   });
 
   companyUser.update('employee', employee.id);

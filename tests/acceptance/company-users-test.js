@@ -27,9 +27,7 @@ module('Acceptance | company users', function (hooks) {
     assert.equal(currentURL(), '/account/anatomy/company-users');
     assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Anatomy/Company Users');
     assert.ok(find('a[href="/account/anatomy/company-users/new"]'), 'Add link exists');
-    let $listItems = findAll('.text.segment .item')[0];
-
-    assert.ok($listItems.textContent.trim().toLowerCase().replace(/\s\s+/g, ' ').indexOf('old yeller') > -1, 'List items should contain "old yeller"');
+    assert.dom('div.content > div.header').hasText('old yeller');
   });
 
   test('adding new user with permissions', async function (assert) {
@@ -43,9 +41,9 @@ module('Acceptance | company users', function (hooks) {
     await settled();
     assert.equal(currentURL(), '/account/anatomy/company-users/new');
     assert.ok(find('input[type="email"]'), 'Email input on page');
-    assert.dom('div#user-employee-link > div.text').exists();
+    assert.dom('#user-employee-link > i.dropdown.icon').exists();
 
-    await click('div#user-employee-link > div.text');
+    await click('#user-employee-link > i.dropdown.icon');
     await fillIn('input[type="email"]', 'testuser@test.com');
     assert.equal(findAll('.node').length, 5, '5 permissions are shown');
     assert.equal(findAll('.toggle-icon').length, 5, '5 permissions have dropdowns');
@@ -62,14 +60,13 @@ module('Acceptance | company users', function (hooks) {
       return p.id;
     });
 
-    await authenticate.call(this, server, { companyUser: { permissions } });
+    let companyUser = await authenticate.call(this, server, { companyUser: { permissions } });
 
     await visit('account/anatomy/company-users');
 
     assert.equal(currentURL(), 'account/anatomy/company-users');
     await click('i[class="edit icon"]');
-
-    assert.equal(currentURL(), '/account/anatomy/company-users/edit/1');
+    assert.equal(currentURL(), `/account/anatomy/company-users/edit/${companyUser.employee.companyUser}`);
     assert.ok(find('h1[class="ui header left floated"]'), 'Header on page on page');
     assert.equal(findAll('.node').length, 5, '5 permissions are shown');
     assert.equal(findAll('.toggle-icon').length, 5, '5 permissions have dropdowns');
