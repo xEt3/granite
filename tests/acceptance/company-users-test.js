@@ -7,7 +7,13 @@ module('Acceptance | company users', function (hooks) {
   setupApplicationTest(hooks);
 
   test('getting to company-users', async function (assert) {
-    await authenticate.call(this, server);
+    await authenticate.call(this, server, {
+      companyUser: {
+        firstName: 'old',
+        lastName:  'yeller'
+      }
+    });
+
     await visit('/account/dashboard');
     assert.equal(currentURL(), '/account/dashboard');
 
@@ -21,7 +27,8 @@ module('Acceptance | company users', function (hooks) {
     assert.equal(currentURL(), '/account/anatomy/company-users');
     assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Anatomy/Company Users');
     assert.ok(find('a[href="/account/anatomy/company-users/new"]'), 'Add link exists');
-    let $listItems = findAll('.text.segment .item')[1];
+    let $listItems = findAll('.text.segment .item')[0];
+
     assert.ok($listItems.textContent.trim().toLowerCase().replace(/\s\s+/g, ' ').indexOf('old yeller') > -1, 'List items should contain "old yeller"');
   });
 
@@ -36,9 +43,9 @@ module('Acceptance | company users', function (hooks) {
     await settled();
     assert.equal(currentURL(), '/account/anatomy/company-users/new');
     assert.ok(find('input[type="email"]'), 'Email input on page');
-    assert.ok(find('div[class="text default"]'), 'Employee dropdown on page');
+    assert.dom('div#user-employee-link > div.text').exists();
 
-    await click('div[class="text default"]');
+    await click('div#user-employee-link > div.text');
     await fillIn('input[type="email"]', 'testuser@test.com');
     assert.equal(findAll('.node').length, 5, '5 permissions are shown');
     assert.equal(findAll('.toggle-icon').length, 5, '5 permissions have dropdowns');
@@ -51,9 +58,12 @@ module('Acceptance | company users', function (hooks) {
   });
 
   test('editing user\'s permissions', async function (assert) {
-    await authenticate.call(this, server);
-    await server.create('employees');
-    await server.createList('permissions', 8);
+    let permissions = await server.createList('permissions', 8).map(p => {
+      return p.id;
+    });
+
+    await authenticate.call(this, server, { companyUser: { permissions } });
+
     await visit('account/anatomy/company-users');
 
     assert.equal(currentURL(), 'account/anatomy/company-users');
