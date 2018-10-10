@@ -4102,7 +4102,7 @@ ember-cli-maskedinput@0.1.2:
     ember-cli-babel "^5.1.5"
     inputmask-core "^2.1.1"
 
-ember-cli-mirage@^0.4.3:
+ember-cli-mirage@^0.4.9:
   version "0.4.9"
   resolved "https://registry.yarnpkg.com/ember-cli-mirage/-/ember-cli-mirage-0.4.9.tgz#c49bfe875d0cdf88c85a6ee55103d1980175b914"
   integrity sha512-uBZwRrnLmIWXkiMNxrtwkzg+rA+J/lojfb4JWLARfp8LqB+eBK/K+uPyb6sYO8TS6FXrCdumqFHnDlfVy+4azQ==
@@ -4634,9 +4634,8 @@ ember-drag-sort@^1.1.1:
     ember-macro-helpers "^0.17.0"
 
 ember-element-resize-detector@~0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ember-element-resize-detector/-/ember-element-resize-detector-0.2.0.tgz#79170a97e59e29ecc07ffe1c5d3b84eb0af06326"
-  integrity sha512-77rpADr3UCuzM71g14q1VMckgRXQqRAhBqKQ/oy2nLrZRLiOtoVoUotfYAMUwr9t+75+mbELHYWEd0zU2n3f/Q==
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/ember-element-resize-detector/-/ember-element-resize-detector-0.2.1.tgz#95924b9711c7d5b4510cb354749fe4fad81bf408"
   dependencies:
     broccoli-funnel "^1.0.2"
     broccoli-merge-trees "^1.1.1"

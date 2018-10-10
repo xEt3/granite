@@ -32,13 +32,18 @@ module('Acceptance | login behaviors', function (hooks) {
     assert.equal(currentURL(), '/login');
   });
 
+
   test('correct login', async function (assert) {
+    let companyUser = await server.create('companyUser');
+
     await visit('/login');
     assert.equal(currentURL(), '/login', 'Current url is login');
 
-    await fillIn('input[type="email"]', 'user@test.com');
-    await fillIn('input[type="password"]', '1234');
+    await fillIn('input[type="email"]', companyUser.email);
+    await fillIn('input[type="password"]', companyUser.password);
     await click('button[type="submit"]');
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     assert.equal(currentURL(), '/account/dashboard', 'Current url is account');
   });
