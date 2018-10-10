@@ -25,14 +25,15 @@ const injectLogin = async function (server, properties = {}) {
     expires: moment().add(1, 'hour').toDate()
   });
 
-  companyUser.update('employee', employee.id);
+  companyUser.update('employee', employee);
   authService.set('session', session);
   await settled();
 
   return {
     company,
     companyUser,
-    employee
+    employee,
+    session
   };
 };
 
