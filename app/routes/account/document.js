@@ -1,4 +1,5 @@
 import Route from '@ember/routing/route';
+import { hash } from 'rsvp';
 
 export default Route.extend({
   title (tokens) {
@@ -6,13 +7,16 @@ export default Route.extend({
   },
 
   model (params) {
-    return this.store.find('file', params.id);
+    return hash({
+      document:  this.store.find('file', params.id),
+      employees: this.store.findAll('employee')
+    });
   },
 
   setupController (controller, model) {
     controller.setProperties({
-      model,
-      employees: this.store.findAll('employee')
+      model:     model.document,
+      employees: model.employees
     });
   }
 });

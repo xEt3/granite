@@ -9,9 +9,8 @@
     {{/if}}
   </div>
 
-
   {{#if fileAssignments}}
-    <hr>
+    <div class="ui divider"></div>
     <h3>Assignees</h3>
     {{#each fileAssignments as |assignment|}}
       {{list-item/file-assignment assignment=assignment}}

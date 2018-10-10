@@ -8,7 +8,7 @@ export default Route.extend(refreshable, {
   },
 
   model () {
-    let document = this.modelFor('account.document');
+    let { document } = this.modelFor('account.document');
 
     return hash({
       document,

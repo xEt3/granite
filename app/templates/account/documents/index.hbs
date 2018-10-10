@@ -18,13 +18,12 @@
 
   <div class="ui divided items">
     {{#each model as |doc|}}
-      {{#link-to 'account.document' doc class="item"}}
+      {{#link-to 'account.document' doc.id class="item"}}
         {{list-item/document-item doc}}
       {{/link-to}}
     {{else}}
       <h2 class="ui center aligned header">No documents available.</h2>
     {{/each}}
   </div>
-  
   {{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}
 </div>
