@@ -29,7 +29,7 @@ module('Acceptance | action items', function (hooks) {
     assert.dom('a.right.floated > i').exists();
     await click('a.right.floated > i');
     await settled();
-    assert.dom('i.unhide.fitted.icon').exists();
+    assert.dom('i.hide.fitted.icon').exists();
     assert.dom('div.extra.content > a.primary.button').hasText('View Item');
     assert.dom('div:nth-child(3) > h4 > span').hasText('No Participants');
   });

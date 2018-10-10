@@ -141,6 +141,7 @@ export default function () {
   this.get('/job-applications/:id');
   this.get('/applicants/:id');
   this.put('/job-applications/:id');
+  this.get('/files');
   this.get('/events');
   this.get('/job-openings/:id', ({ jobOpenings }, request) => {
     let id = request.params.id;
