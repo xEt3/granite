@@ -6,20 +6,43 @@ const CardPipelineComponent = Component.extend(addEdit, {
   classNames: [ 'pipeline' ],
 
   actions: {
-    setOrder (items/*, item, index*/) {
-      const reordered = items.map((app, i) => {
-        const prevIndex = app.get('stageOrder');
+    setOrder (targetStageId, { sourceList, sourceIndex, targetList, targetIndex }) {
+      const items = this.get('candidates'),
+            item = sourceList.objectAt(sourceIndex),
+            movedStage = sourceList !== targetList,
+            newIndex = targetIndex === 0 ? 1 : targetIndex;
 
-        if (prevIndex !== i) {
-          app.set('stageOrder', i);
-          this.saveModel(app);
+      let targetListCopy = [ ...targetList ];
+
+      if (sourceList === targetList) {
+        targetListCopy.removeAt(sourceIndex);
+      }
+
+      targetListCopy.insertAt(newIndex, item);
+
+      targetListCopy.slice(1).forEach((app, i) => {
+        if (app.get && app.get('stageOrder') !== i) {
+          const candidate = items.findBy('id', app.get('id'));
+          candidate.set('stageOrder', i);
+
+          if (!movedStage && newIndex - 1 !== i) {
+            this.saveModel(candidate);
+          }
         }
       });
 
-      const cb = this.get('orderChanged');
+      if (movedStage) {
+        let newStageId = targetListCopy[0],
+            candidate = items.findBy('id', targetListCopy.objectAt(newIndex).get('id'));
 
-      if (cb) {
-        cb(reordered);
+        candidate.set('stage', newStageId);
+        this.saveModel(candidate);
+
+        const cb = this.get('appChangedStage');
+
+        if (cb) {
+          cb(candidate, targetStageId);
+        }
       }
     },
 

@@ -15,8 +15,12 @@ function searchError (errors) {
 export default Mixin.create({
   successMessageTimeout: 3,
   enableNotify:          true,
+  loadingProp:           'working',
+  slowRunningThreshold:  500,
 
   ajaxError (err, user) {
+    this.__cancelLongRunningProp();
+
     let errMsg = err ? err.payload || err.responseText || err.message || err : err;
 
     if (errMsg && errMsg.errors) {
@@ -28,8 +32,9 @@ export default Mixin.create({
     }
 
     this.setProperties({
-      working:      false,
-      errorMessage: errMsg
+      [this.get('loadingProp')]:          false,
+      [`${this.get('loadingProp')}Slow`]: false,
+      errorMessage:                       errMsg
     });
 
     if (this.get('enableNotify')) {
@@ -38,10 +43,13 @@ export default Mixin.create({
   },
 
   ajaxSuccess (success, silent) {
+    this.__cancelLongRunningProp();
+
     this.setProperties({
-      working:        false,
-      errorMessage:   null,
-      successMessage: success
+      [this.get('loadingProp')]:          false,
+      [`${this.get('loadingProp')}Slow`]: false,
+      errorMessage:                       null,
+      successMessage:                     success
     });
 
     run.later(() => {
@@ -57,9 +65,30 @@ export default Mixin.create({
 
   ajaxStart () {
     this.setProperties({
-      working:        true,
-      errorMessage:   null,
-      successMessage: null
+      [this.get('loadingProp')]:          true,
+      [`${this.get('loadingProp')}Slow`]: false,
+      errorMessage:                       null,
+      successMessage:                     null
     });
+
+    this.__scheduleLongRunningProp();
+  },
+
+  __cancelLongRunningProp () {
+    const timeoutId = this.get('__longRunningPropToid');
+
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+  },
+
+  __scheduleLongRunningProp () {
+    const loadingProp = this.get('loadingProp');
+
+    this.set('__longRunningPropToid', setTimeout(() => {
+      if (!this.get('isDestroyed') && this.get(loadingProp)) {
+        this.set(`${loadingProp}Slow`, true);
+      }
+    }, this.get('slowRunningThreshold')));
   }
 });

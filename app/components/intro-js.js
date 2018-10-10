@@ -6,6 +6,7 @@ import { run, bind } from '@ember/runloop';
 import { camelize, underscore } from '@ember/string';
 import { on } from '@ember/object/evented';
 import { A } from '@ember/array';
+import ENV from 'granite/config/environment';
 
 const introJS = window.introJs;
 
@@ -106,6 +107,10 @@ var IntroJSComponent = Component.extend({
   ),
 
   startIntroJS: function () {
+    if ( ENV.environment === 'test' ) {
+      return;
+    }
+
     var intro,
         options = this.get('introJSOptions');
 

@@ -32,6 +32,7 @@ module.exports = {
     'space-before-function-paren': [ 'error', 'always' ],
     'ember/avoid-leaking-state-in-ember-objects': 0,
     'ember/routes-segments-snake-case': 0,
+    'ember/no-attrs-in-components': 0,
     'semi': ['error', 'always'],
     'semi-spacing': [2, {'before': false, 'after': true}],
     'no-trailing-spaces': ['error', { 'ignoreComments': true }],

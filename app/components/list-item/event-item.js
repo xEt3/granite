@@ -5,7 +5,7 @@ import BaseLiComponent from './base';
 export default BaseLiComponent.extend({
   classNames: [ 'event' ],
 
-  attendeeCount: computed('model.{facilitator, attendees.[]}', function () {
+  attendeeCount: computed('model.{facilitator,attendees.[]}', function () {
     const {
       attendees,
       facilitator,

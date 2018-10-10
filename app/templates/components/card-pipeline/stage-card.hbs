@@ -4,25 +4,26 @@
       {{application.person.firstName}} {{application.person.lastName}}
     </span>
     <div class="card-title-bar__controls">
-      {{#ui-popup tagName='span' position="top center" content="Change candidate stage..."}}
-        {{#ui-dropdown class="title-bar__control item icon top right pointing"}}
-          <i class="exchange icon"></i>
-          <div class="menu">
-            <div class="header">Move to...</div>
-            {{#each allExceptCurrentStage as |stage|}}
-              <a href="#" class="item" {{action "moveTo" stage}}>{{stage.name}}</a>
-            {{/each}}
-          </div>
-        {{/ui-dropdown}}
-      {{/ui-popup}}
+      {{#ui-dropdown
+        class="title-bar__control item icon top right pointing"
+        direction="downward"
+      }}
+        <i class="exchange icon"></i>
+        <div class="menu">
+          <div class="header">Move candidate to...</div>
+          {{#each allExceptCurrentStage as |stage|}}
+            <a href="#" class="item" {{action "moveTo" stage}}>{{stage.name}}</a>
+          {{/each}}
+        </div>
+      {{/ui-dropdown}}
       {{#unless controlsDisabled}}
-        {{#ui-dropdown class="title-bar__control item icon top right pointing"}}
+        {{#ui-dropdown
+          class="title-bar__control item icon top right pointing"
+        }}
           <i class="setting icon"></i>
           <div class="menu">
             <a href="#" class="item" {{action onSchedule application}}><i class="calendar icon"></i> Schedule...</a>
-
             <a href="#" class="item" {{action onDisqualify application}}><i class="remove circle icon"></i> Disqualify candidate...</a>
-
             {{#if onOnboardCandidate}}
               <a href="#" class="item" {{action onOnboardCandidate application}}>
                 <i class="user plus icon"></i> Hire candidate...

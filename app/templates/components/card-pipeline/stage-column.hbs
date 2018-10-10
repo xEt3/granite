@@ -1,28 +1,24 @@
 <h2 class="pipeline-stage__title">
   {{stage.name}}
-  {{!--
-  Saving this for a future release
-  {{#ui-dropdown class="item icon top left stage-title__settings"}}
-    <i class="setting icon"></i>
-    <div class="menu">
-      {{#link-to 'account.job-opening.campaign.settings' class="item"}}Some item{{/link-to}}
-    </div>
-  {{/ui-dropdown}}
-  --}}
 </h2>
 
-{{#sortable-group tagName="ul" classNames="pipeline-stage__cards" onChange="reorderItems" as |group|}}
-  {{#each candidates as |application|}}
-    {{#sortable-item tagName="li" classNames="stage-cards__card" model=application group=group}}
-      {{card-pipeline/stage-card
-        application
-        stages
-        moveAppToStage=moveAppToStage
-        onUnDisqualify=onUnDisqualify
-        onDisqualify=onDisqualify
-        onUnHire=onUnHire
-        onOnboardCandidate=onOnboardCandidate
-        onSchedule=onSchedule}}
-    {{/sortable-item}}
-  {{/each}}
-{{/sortable-group}}
+{{#drag-sort-list
+  items=candidates
+  dragEndAction=(action dispatchReorder stage.id)
+  classNames="pipeline-stage__cards"
+  childClass="stage-cards__card"
+  draggingEnabled=(not disableDragging)
+  as |jobApp|
+}}
+  {{#if jobApp.id}}
+    {{card-pipeline/stage-card
+      jobApp
+      stages
+      moveAppToStage=moveAppToStage
+      onUnDisqualify=onUnDisqualify
+      onDisqualify=onDisqualify
+      onUnHire=onUnHire
+      onOnboardCandidate=onOnboardCandidate
+      onSchedule=onSchedule}}
+  {{/if}}
+{{/drag-sort-list}}
