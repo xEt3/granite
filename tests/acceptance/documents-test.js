@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import authenticate from 'granite/tests/helpers/auth';
-import { visit, currentURL, click, fillIn, pauseTest } from '@ember/test-helpers';
+import { visit, currentURL, click, fillIn } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 
 module('Acceptance | documents', function (hooks) {
@@ -57,7 +57,7 @@ module('Acceptance | documents', function (hooks) {
     await click('.green.button');
   });
 
-  test('documnet is on page', async function (assert) {
+  test('document is on page', async function (assert) {
     await authenticate.call(this, server);
     await server.create('company');
     let file = await server.create('files');

@@ -126,9 +126,11 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
     });
 
     await visit(`/account/recruiting/job-opening/${job.id}/applicant-tracking`);
-    assert.dom('div.pipeline__stage:nth-child(1) > ul.pipeline-stage__cards').isVisible();
-    assert.dom('div.pipeline__stage:nth-child(2) > ul.pipeline-stage__cards').isNotVisible();
-    assert.dom('div.pipeline__stage:nth-child(3) > ul.pipeline-stage__cards').isNotVisible();
+    // await pauseTest();
+    // 'div.pipeline.ember-view > div:nth-child(1) > div > div:nth-child(2)';
+    assert.dom('div.pipeline__stage:nth-child(1) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isVisible();
+    assert.dom('div.pipeline__stage:nth-child(2) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isNotVisible();
+    assert.dom('div.pipeline__stage:nth-child(3) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isNotVisible();
     assert.dom('span.card-content__applicant-name').hasText(applicant.name.first + ' ' + applicant.name.last);
     assert.dom('.card-content__email > a').hasText(applicant.email);
     assert.dom('.card-content__next-schedule').hasText('Nothing scheduled');
@@ -137,23 +139,23 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
     assert.dom('.exchange.icon').isVisible();
     assert.dom('.setting.icon').isVisible();
     await click('.exchange.icon');
-    assert.dom('.card-title-bar__controls span .menu a.item').exists({ count: 2 });
+    assert.dom('.menu.transition a.item').exists({ count: 2 });
     await settled();
     await new Promise(resolve => setTimeout(resolve, 500));
     await click('.title-bar__control .menu > .item:nth-child(2)');
 
-    assert.dom('div.pipeline__stage:nth-child(1) > ul.pipeline-stage__cards').isNotVisible();
-    assert.dom('div.pipeline__stage:nth-child(2) > ul.pipeline-stage__cards').isVisible();
-    assert.dom('div.pipeline__stage:nth-child(3) > ul.pipeline-stage__cards').isNotVisible();
+    assert.dom('div.pipeline__stage:nth-child(1) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isNotVisible();
+    assert.dom('div.pipeline__stage:nth-child(2) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isVisible();
+    assert.dom('div.pipeline__stage:nth-child(3) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isNotVisible();
     await click('.exchange.icon');
     await new Promise(resolve => setTimeout(resolve, 500));
     await click('.title-bar__control .menu > .item:nth-child(3)');
 
-    assert.dom('div.pipeline__stage:nth-child(1) > ul.pipeline-stage__cards').isNotVisible();
-    assert.dom('div.pipeline__stage:nth-child(2) > ul.pipeline-stage__cards').isNotVisible();
-    assert.dom('div.pipeline__stage:nth-child(3) > ul.pipeline-stage__cards').isVisible();
+    assert.dom('div.pipeline__stage:nth-child(1) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isNotVisible();
+    assert.dom('div.pipeline__stage:nth-child(2) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isNotVisible();
+    assert.dom('div.pipeline__stage:nth-child(3) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isVisible();
     await click('.title-bar__control i.setting.icon');
     await new Promise(resolve => setTimeout(resolve, 500));
-    assert.dom('div.title-bar__control > .setting + .menu > .item').exists({ count: 3 });
+    assert.dom('.title-bar__control .setting.icon + .menu.transition.visible > a.item').exists({ count: 3 });
   });
 });

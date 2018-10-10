@@ -97,52 +97,66 @@ export default function () {
     return companies.find(id).update(attrs);
   });
 
-  this.get('/recruiting-pipelines');
-  this.put('/recruiting-pipelines/:id');
-  this.get('/employees');
-  this.put('/company-users/:id');
-  this.get('/company-users/:id');
-  this.get('/company-users');
-  this.get('/employees/:id');
-  this.post('/companies');
-  this.get('/companies/:id');
-  this.get('/permissions');
-  this.get('/action-items');
-  this.get('/asset-items');
-  this.post('/action-items');
-  this.put('/action-items/:id');
-  this.get('/assets');
-  this.get('/changes');
-  this.get('/histories');
-  this.get('/employee-issues');
-  this.get('/departments');
-  this.get('/locations');
-  this.post('/payment-methods');
-  this.get('/comments');
-  this.del('/comments/:id');
-  this.post('/comments');
-  this.get('/job-openings');
-  this.post('/job-openings');
-  this.post('/jobs');
-  this.post('/job-openings/:id');
-  this.get('/jobs');
-  this.get('/jobs/:id');
-  this.post('/jobs/:id');
-  this.get('/job-applications');
-  this.put('job-openings/:id');
-  this.get('/forms');
-  this.get('/applicant-sources');
-  this.get('/manual-applicant-sources');
-  this.post('/forms');
-  this.post('/applicants');
-  this.put('/applicants/:id');
-  this.post('/job-applications');
-  this.post('/job-applications/:id');
-  this.get('/job-applications/:id');
-  this.get('/applicants/:id');
-  this.put('/job-applications/:id');
-  this.get('/files');
-  this.get('/events');
+
+  let array = [ 'files', 'recruiting-pipelines', 'recruiting-pipelines/:id', 'employees', 'company-users/:id',
+    'company-users', 'employees/:id', 'companies', 'companies/:id', 'permissions', 'action-items', 'asset-items',
+    'action-items/:id', 'assets', 'changes', 'histories', 'employee-issues', 'departments', 'locations',
+    'payment-methods', 'comments', 'comments/:id', 'job-openings', 'jobs', 'jobs/:id', 'job-openings/:id', 'job-applications',
+    'forms', 'applicant-sources', 'applicant-sources', 'manual-applicant-sources', 'applicants', 'applicants/:id',
+    'job-applications/:id', 'events' ];
+  let verbs = [ 'get', 'put', 'post', 'del' ];
+  array.forEach((route)=>{
+    verbs.forEach((verb)=>{
+      this[verb](`/${route}`);
+    });
+  });
+
+
+  // this.get('/recruiting-pipelines');
+  // this.put('/recruiting-pipelines/:id');
+  // this.get('/employees');
+  // this.put('/company-users/:id');
+  // this.get('/company-users/:id');
+  // this.get('/company-users');
+  // this.get('/employees/:id');
+  // this.post('/companies');
+  // this.get('/companies/:id');
+  // this.get('/permissions');
+  // this.get('/action-items');
+  // this.get('/asset-items');
+  // this.post('/action-items');
+  // this.put('/action-items/:id');
+  // this.get('/assets');
+  // this.get('/changes');
+  // this.get('/histories');
+  // this.get('/employee-issues');
+  // this.get('/departments');
+  // this.get('/locations');
+  // this.post('/payment-methods');
+  // this.get('/comments');
+  // this.del('/comments/:id');
+  // this.post('/comments');
+  // this.get('/job-openings');
+  // this.post('/job-openings');
+  // this.post('/jobs');
+  // this.get('/jobs');
+  // this.get('/jobs/:id');
+  // this.post('/jobs/:id');
+  // this.get('/job-applications');
+  // this.put('job-openings/:id');
+  // this.get('/forms');
+  // this.get('/applicant-sources');
+  // this.get('/manual-applicant-sources');
+  // this.post('/forms');
+  // this.post('/applicants');
+  // this.put('/applicants/:id');
+  // this.post('/job-applications');
+  // this.post('/job-applications/:id');
+  // this.get('/job-applications/:id');
+  // this.get('/applicants/:id');
+  // this.put('/job-applications/:id');
+  // this.get('/files');
+  // this.get('/events');
   this.get('/job-openings/:id', ({ jobOpenings }, request) => {
     let id = request.params.id;
 

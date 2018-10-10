@@ -82,8 +82,8 @@ module('Acceptance | employee', function (hooks) {
     assert.dom('div.column:nth-child(1) .raised:nth-child(2) div.segment.basic').hasText(`${employee.address.line1}, ${employee.address.city}, ${employee.address.state} ${employee.address.zip}`);
     assert.dom('.column .raised:nth-child(2) .basic p.text').hasText(`Date of Birth: ${employee.dateOfBirth}`);
     assert.dom('div.list div.line-item-value u').hasText(Object.values(employee.customFields)[0]);
-    assert.dom('div.column:nth-child(2) .raised:nth-child(3) div.segment.basic').hasText(`Emergency Contact: ${employee.emergencyContact.name.first} ${employee.emergencyContact.name.last}`);
-    assert.dom('.employee-basic-meta').hasText(employee.name.first);
+    assert.dom('div.column:nth-child(2) .raised:nth-child(3) div.segment.basic').includesText(`${employee.emergencyContact.name.first} ${employee.emergencyContact.name.last}`);
+    assert.dom('.employee-basic-meta').includesText(employee.name.first);
   });
 
   test('employee equipment page', async function (assert) {
