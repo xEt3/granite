@@ -2,8 +2,8 @@ import { Factory, faker } from 'ember-cli-mirage';
 
 export default Factory.extend({
   name: {
-    first: faker.name.firstName,
-    last:  faker.name.lastName
+    firstName: faker.name.firstName(),
+    lastName:  faker.name.lastName()
   },
   picture: null,
   phone:   faker.phone.phoneNumber,
@@ -20,6 +20,8 @@ export default Factory.extend({
       last:  faker.name.lastName
     }
   },
+  company:      null,
+  companyUser:  null,
   customFields: { [faker.hacker.noun]: faker.date.past },
   ssn:          '123-12-4444',
   dateOfBirth:  faker.date.past,

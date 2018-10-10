@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import authenticate from 'granite/tests/helpers/auth';
-import { visit, currentURL, click, fillIn } from '@ember/test-helpers';
+import { visit, currentURL, click, fillIn, pauseTest } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 
 module('Acceptance | documents', function (hooks) {
