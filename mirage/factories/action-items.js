@@ -14,7 +14,7 @@ export default Factory.extend({
   dueOn:         null,
   delayedUntil:  null,
   remindOn:      null,
-  created:       '10/14/17',
+  created:       new Date(),
   checklist:     [],
   prerequisites: [],
   subscribers:   [],

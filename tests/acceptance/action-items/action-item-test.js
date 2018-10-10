@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import authenticate from 'granite/tests/helpers/auth';
+import moment from 'moment';
 import { visit, currentURL, click, find, settled, fillIn } from '@ember/test-helpers';
 
 module('Acceptance | action item', function (hooks) {
@@ -14,13 +15,15 @@ module('Acceptance | action item', function (hooks) {
     await click('div.extra.content > a.primary.button');
     await settled();
     assert.equal(currentURL(), `/account/action-item/${action.title}`);
+    assert.dom('.ui.point.menu > .right.menu').doesNotExist();
   });
 
   test('action item elements show on page', async function (assert) {
-    await authenticate.call(this, server);
+    let { employee } = await authenticate.call(this, server);
     let action = await server.create('action-items', {
       title:         'apples',
-      prerequisites: []
+      prerequisites: [],
+      owner:         employee
     });
 
     await visit(`/account/action-item/${action.title}`);
@@ -29,13 +32,14 @@ module('Acceptance | action item', function (hooks) {
     assert.dom('div.item.icon > div').hasClass('menu');
     assert.dom('div.item.icon > div.menu.transition.visible').isNotVisible();
     await click('div.item.icon');
+
     await new Promise(resolve => setTimeout(resolve, 500));
     assert.dom('div.item.icon > div.menu.transition.visible').isVisible();
     assert.dom('div.item.icon > div.menu.transition.visible > a').exists({ count: 3 });
     assert.dom('div.item.icon > div.menu.transition.visible > div').exists({ count: 4 });
     assert.dom('div.item.icon > div.menu.transition.visible > div > a').exists({ count: 2 });
     assert.dom('div.ui.very.padded.raised.segment').isVisible();
-    assert.dom('div.ui.green.label').hasText('Started on 10/14/17');
+    assert.dom('div.ui.green.label').hasText(`Started on ${moment(action.created).format('M/D/YY')}`);
     assert.dom('h2.clearfix.header').hasText(`${action.title} No due date`);
     assert.dom(`h2 > a[href="/account/action-item/${action.title}/edit"]`).exists();
     assert.dom('h2.clearfix.header > span').hasText('No due date');

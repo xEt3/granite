@@ -14,7 +14,7 @@ module('Acceptance | action items', function (hooks) {
 
   test('action items elements show on page', async function (assert) {
     await authenticate.call(this, server);
-    await server.create('action-items');
+    let firstItem = await server.create('action-items');
     await visit('/account/action-items');
     assert.equal(currentURL(), '/account/action-items', 'on Action Items page');
     assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Action Items');
@@ -24,7 +24,7 @@ module('Acceptance | action items', function (hooks) {
     assert.dom('i.sort.large.numeric.descending.icon').exists();
     await click('i.sort.large.numeric.descending.icon');
     assert.dom('i.sort.large.numeric.ascending.icon').exists();
-    assert.dom('h6 > div').hasText('Owner: Ongoing since 10/14/17');
+    assert.dom('h6 > div').hasText(`Owner: Ongoing since ${moment(firstItem.created).format('M/D/YY')}`);
     assert.dom('div:nth-child(2) > span').hasText('Lowest (1)');
     assert.dom('a.right.floated > i').exists();
     await click('a.right.floated > i');
