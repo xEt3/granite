@@ -105,6 +105,7 @@ export default function () {
     'forms', 'applicant-sources', 'applicant-sources', 'manual-applicant-sources', 'applicants', 'applicants/:id',
     'job-applications/:id', 'events' ];
   let verbs = [ 'get', 'put', 'post', 'del' ];
+
   array.forEach((route)=>{
     verbs.forEach((verb)=>{
       this[verb](`/${route}`);

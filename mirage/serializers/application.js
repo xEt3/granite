@@ -31,12 +31,14 @@ export default RestSerializer.extend({
           if (belongsToKeys.includes(key)) {
             let association = belongsToAssociations[key];
             let associationModel = association.modelName;
-            relationships[dasherize(key)] = {
-              data: {
-                type: associationModel,
-                id:   attrs[key]
-              }
-            };
+            if (attrs[key]) {
+              relationships[dasherize(key)] = {
+                data: {
+                  type: associationModel,
+                  id:   attrs[key]
+                }
+              };
+            }
           } else if (hasManyKeys.includes(key)) {
             let association = hasManyAssociations[key];
             let associationModel = association.modelName;
@@ -46,7 +48,10 @@ export default RestSerializer.extend({
                 id
               };
             });
-            relationships[dasherize(key)] = { data };
+
+            if (data && data.length) {
+              relationships[dasherize(key)] = { data };
+            }
           } else {
             jsonApiPayload.data.attributes[dasherize(key)] = attrs[key];
           }

@@ -45,7 +45,7 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
 
     let job = await server.create('job');
     let campaign = await server.create('job-openings', {
-      job:   job.id,
+      job,
       title: job.title
     });
 
@@ -115,7 +115,7 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
 
     let job = await server.create('job');
     let campaign = await server.create('job-openings', {
-      job:   job.id,
+      job,
       title: job.title
     });
 
