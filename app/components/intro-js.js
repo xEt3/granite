@@ -107,7 +107,7 @@ var IntroJSComponent = Component.extend({
   ),
 
   startIntroJS: function () {
-    if ( ENV.environment === 'test' ) {
+    if (ENV.environment === 'test') {
       return;
     }
 
