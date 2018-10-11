@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import authenticate from 'granite/tests/helpers/auth';
-import { visit, currentURL, click, find, settled, fillIn } from '@ember/test-helpers';
+import { visit, currentURL, click, find, settled, fillIn, pauseTest } from '@ember/test-helpers';
 
 module('Acceptance | edit action items', function (hooks) {
   setupApplicationTest(hooks);
@@ -49,25 +49,26 @@ module('Acceptance | edit action items', function (hooks) {
   });
 
   test('edit action item', async function (assert) {
-    let { employee } = await authenticate.call(this, server);
+    let { employee, company } = await authenticate.call(this, server);
 
     let action = await server.create('action-items', {
       title:         'apples',
       prerequisites: [],
-      owner:         employee
+      owner:         employee,
+      company:       company
     });
 
     await visit(`/account/action-item/${action.title}/edit`);
-    await fillIn('input#action-item-title', `${action.title} test`);
+    await fillIn('input#action-item-title', `${action.title}`);
     await fillIn('div:nth-child(2) > textarea', `${action.description} testing this`);
-    assert.dom('input#action-item-title').hasValue(`${action.title} test`);
+    assert.dom('input#action-item-title').hasValue(`${action.title}`);
     assert.dom('div:nth-child(2) > textarea').hasValue(`${action.description} testing this`);
     await click('div#action-item-prerequisites > i.dropdown.icon');
     await new Promise(resolve => setTimeout(resolve, 500));
     await click('div#action-item-prerequisites div.menu.left.transition.visible > div');
     await settled();
-    assert.dom('div#action-item-prerequisites > a.ui.label').hasText(`${action.title} test`);
+    assert.dom('div#action-item-prerequisites > a.ui.label').hasText(`${action.title}`);
     await click('form > button');
-    assert.equal(currentURL(), `/account/action-item/${action.title}-test`);
+    assert.equal(currentURL(), `/account/action-item/${action.title}`);
   });
 });
