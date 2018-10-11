@@ -31,7 +31,7 @@
 
 {{liquid-outlet class="add-location"}}
 
-<div class="ui relaxed list">
+<div class="ui divided items">
   {{#each model as |location|}}
     {{list-item/location-item location=location onDelete=(action 'delete' )}}
   {{else}}

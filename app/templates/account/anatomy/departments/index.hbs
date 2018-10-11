@@ -27,16 +27,16 @@
     {{/if}}
   </div>
 </hgroup>
-
 <div class="ui divider"></div>
 
 {{liquid-outlet class="add-department"}}
 
-<div class="ui relaxed list">
+<div class="ui divided items">
   {{#each model as |department|}}
     {{list-item/department-item department=department onDelete=(action 'delete' )}}
   {{else}}
     <h2 class="ui center aligned header">No departments available.</h2>
   {{/each}}
 </div>
+
 {{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}

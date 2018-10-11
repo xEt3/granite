@@ -1,4 +1,4 @@
-<div class="ui segments">
+{{!-- <div class="ui segments">
   <h3 class="ui segment">
     <div class="description right floated text small">
       Created {{time-ago location.created}} by {{location.creator.fullName}}
@@ -39,5 +39,46 @@
         {{/confirm-modal}}
       </div>
     </div>
+  </div>
+</div> --}}
+
+
+<div class="ui tiny rounded image">
+  <i class="huge marker icon"></i>
+</div>
+<div class="content">
+  <div class="header">
+    {{location.name}}
+    {{#if location.code}}
+      <div class="ui blue basic label">
+        <span class="text-white">
+          {{location.code}}
+        </span>
+      </div>
+    {{/if}}
+  </div>
+  <div class="right floated">
+    {{#confirm-modal deleteContext=location.name as |confirm|}}
+      {{#ui-popup tagName='span' position="left center" content="Delete user"}}
+        <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}>
+          <i class="trash icon"></i>
+        </a>
+      {{/ui-popup}}
+    {{/confirm-modal}}
+  </div>
+  <div class="meta">
+    <p>
+      {{location.addressLine1}} <br />
+      {{#if location.addressLine2}}
+        {{location.addressLine2}} <br />
+      {{/if}}
+      {{location.addressCity}}, {{location.addressState}} {{location.addressZipcode}}
+    </p>
+    {{#if location.phoneFormatted}}
+      <div class="left floated text">
+        {{location.phoneFormatted}}
+      </div>
+    {{/if}}
+    <span class="ui small text right floated">Created {{time-ago location.created}} by {{location.creator.fullName}}</span>
   </div>
 </div>
