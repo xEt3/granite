@@ -80,6 +80,20 @@ export default function () {
     return { subscription: null }; //works for now
   });
 
+  let array = [ 'files', 'recruiting-pipelines', 'recruiting-pipelines/:id', 'employees', 'company-users/:id',
+    'company-users', 'employees/:id', 'companies', 'companies/:id', 'permissions', 'action-items', 'asset-items',
+    'action-items/:id', 'assets', 'changes', 'histories', 'employee-issues', 'departments', 'locations',
+    'payment-methods', 'comments', 'comments/:id', 'job-openings', 'jobs', 'jobs/:id', 'job-openings/:id', 'job-applications',
+    'forms', 'applicant-sources', 'applicant-sources', 'manual-applicant-sources', 'applicants', 'applicants/:id',
+    'job-applications/:id', 'events' ];
+  let verbs = [ 'get', 'put', 'post', 'del' ];
+
+  array.forEach((route)=>{
+    verbs.forEach((verb)=>{
+      this[verb](`/${route}`);
+    });
+  });
+
   this.put('/companies/:id', function ({ companies, correctiveActionSeverities }, request) {
     //needs to be like this because mirage is incapable of processing embedded relationships
     let id = request.params.id,
@@ -95,21 +109,6 @@ export default function () {
     });
 
     return companies.find(id).update(attrs);
-  });
-
-
-  let array = [ 'files', 'recruiting-pipelines', 'recruiting-pipelines/:id', 'employees', 'company-users/:id',
-    'company-users', 'employees/:id', 'companies', 'companies/:id', 'permissions', 'action-items', 'asset-items',
-    'action-items/:id', 'assets', 'changes', 'histories', 'employee-issues', 'departments', 'locations',
-    'payment-methods', 'comments', 'comments/:id', 'job-openings', 'jobs', 'jobs/:id', 'job-openings/:id', 'job-applications',
-    'forms', 'applicant-sources', 'applicant-sources', 'manual-applicant-sources', 'applicants', 'applicants/:id',
-    'job-applications/:id', 'events' ];
-  let verbs = [ 'get', 'put', 'post', 'del' ];
-
-  array.forEach((route)=>{
-    verbs.forEach((verb)=>{
-      this[verb](`/${route}`);
-    });
   });
 
 

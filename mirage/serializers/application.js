@@ -1,9 +1,12 @@
 import { RestSerializer } from 'ember-cli-mirage';
 import { pluralize, camelize, dasherize } from 'ember-cli-mirage/utils/inflector';
 
+const embeddedRecords = [ 'correctiveActionSeverities' ];
+
 export default RestSerializer.extend({
   serializeIds: 'always',
   normalizeIds: 'always',
+
   normalize (payload) {
     let type = Object.keys(payload)[0];
     let attrs = payload[type];
@@ -42,6 +45,12 @@ export default RestSerializer.extend({
           } else if (hasManyKeys.includes(key)) {
             let association = hasManyAssociations[key];
             let associationModel = association.modelName;
+
+            if ((embeddedRecords || []).indexOf(key) > -1) {
+              jsonApiPayload.data.attributes[key] = attrs[key];
+              return;
+            }
+
             let data = attrs[key].map(id => {
               return {
                 type: associationModel,

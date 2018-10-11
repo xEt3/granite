@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import Mixin from '@ember/object/mixin';
 import { A } from '@ember/array';
-import { run } from '@ember/runloop';
 
 const { Logger } = Ember;
 
@@ -52,7 +51,7 @@ export default Mixin.create({
       successMessage:                     success
     });
 
-    run.later(() => {
+    setTimeout(() => {
       if (!this.get('isDestroyed') && !this.get('isDestroying')) {
         this.set('successMessage', null);
       }
