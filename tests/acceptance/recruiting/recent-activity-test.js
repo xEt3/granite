@@ -21,7 +21,7 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
     });
     let job = await server.create('job');
     await server.create('job-openings', {
-      job:   job.id,
+      job,
       title: job.title
     });
 
@@ -48,7 +48,7 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
     });
     let job = await server.create('job');
     let campaign = await server.create('job-openings', {
-      job:   job.id,
+      job,
       title: job.title
     });
 

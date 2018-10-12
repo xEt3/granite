@@ -1,12 +1,11 @@
 import { module, test } from 'qunit';
-import { visit, currentURL, click, find, fillIn } from '@ember/test-helpers';
+import { visit, currentURL, click, find, fillIn, settled } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 
 module('Acceptance | login behaviors', function (hooks) {
   setupApplicationTest(hooks);
 
   test('failed logins', async function (assert) {
-    assert.expect(8);
     await visit('/');
     assert.equal(currentURL(), '/');
     await click('a[href="/login"]');
@@ -14,23 +13,13 @@ module('Acceptance | login behaviors', function (hooks) {
     assert.ok(find('input[type="email"]'), 'Email input on page');
     assert.ok(find('input[type="password"]'), 'Password input on page');
     assert.ok(find('button[type="submit"]'), 'Submit button on page');
-
     await fillIn('input[type="email"]', 'testuser@test.com');
     await fillIn('input[type="password"]', '1234');
-    click('button[type="submit"]');
-
-    let done = assert.async();
-
-    setTimeout(() => {
-      let $error = find('[class*="c-notification__container"] > [class*="c-notification--error"] > [class*="c-notification__content"]');
-      assert.ok($error, 'Error shows');
-      assert.ok($error.textContent.trim().toLowerCase().indexOf('user not found') > -1, $error.textContent.trim() + ' Contains "user not found"');
-      done();
-    }, 1500);
-
-    assert.equal(currentURL(), '/login');
+    await click('button[type="submit"]');
+    const controller = this.owner.lookup('controller:login');
+    assert.equal(controller.get('errorMessage'), 'User not found', 'error message is "User not found"');
+    assert.equal(currentURL(), '/login', 'Still on login page');
   });
-
 
   test('correct login', async function (assert) {
     let companyUser = await server.create('companyUser');
@@ -41,8 +30,7 @@ module('Acceptance | login behaviors', function (hooks) {
     await fillIn('input[type="email"]', companyUser.email);
     await fillIn('input[type="password"]', companyUser.password);
     await click('button[type="submit"]');
-
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await settled();
 
     assert.equal(currentURL(), '/account/dashboard', 'Current url is account');
   });

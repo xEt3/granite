@@ -9,7 +9,7 @@ const injectLogin = async function (server, properties = {}) {
 
   const company = server.create('company', properties.company);
 
-  const companyUser = server.create('company-user', Object.assign({ company: company.id }, properties.companyUser));
+  const companyUser = server.create('company-user', Object.assign({ company: company.id  }, properties.companyUser));
 
   const employee = server.create('employee', Object.assign({
     company:     company.id,
@@ -25,14 +25,15 @@ const injectLogin = async function (server, properties = {}) {
     expires: moment().add(1, 'hour').toDate()
   });
 
-  companyUser.update('employee', employee.id);
+  companyUser.update('employee', employee);
   authService.set('session', session);
   await settled();
 
   return {
     company,
     companyUser,
-    employee
+    employee,
+    session
   };
 };
 

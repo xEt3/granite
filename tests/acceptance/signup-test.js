@@ -76,6 +76,7 @@ module('Acceptance | signup', function (hooks) {
     await click('button[type="submit"]');
     await settled();
     assert.equal(currentURL(), '/signup/billing');
+    await new Promise(resolve => setTimeout(resolve, 5000));
 
     const billingController = this.owner.lookup('controller:signup/billing');
 

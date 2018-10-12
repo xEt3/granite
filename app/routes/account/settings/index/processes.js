@@ -15,8 +15,8 @@ export default Route.extend(refreshable, {
     controller.setProperties({
       model:                model.company,
       pipeline:             model.pipeline,
-      casInitialState:      JSON.stringify(model.company.get('correctiveActionSeverities').toArray()),
-      pipelineInitialState: JSON.stringify(model.pipeline)
+      casInitialState:      JSON.parse(JSON.stringify(model.company.get('correctiveActionSeverities').toArray())) || [],
+      pipelineInitialState: JSON.parse(JSON.stringify(model.pipeline.get('stages').toArray())) || []
     });
   },
 
