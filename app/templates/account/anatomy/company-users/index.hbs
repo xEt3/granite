@@ -22,14 +22,12 @@
   </div>
 </hgroup>
 <div class="ui divider"></div>
-{{#confirm-modal deleteContext=deleteContext.fullName as |confirm|}}
   <div class="ui divided items">
     {{#each model as |user|}}
-      {{list-item/user-item user onDelete=(pipe-action (action (mut deleteContext user)) confirm (action 'delete'))}}
+      {{list-item/user-item user onDelete=(action 'delete')}}
     {{else}}
       <h2 class="ui center aligned header">No users available.</h2>
     {{/each}}
   </div>
-{{/confirm-modal}}
 
 {{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}
