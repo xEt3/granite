@@ -13,14 +13,12 @@ module('Acceptance | login behaviors', function (hooks) {
     assert.ok(find('input[type="email"]'), 'Email input on page');
     assert.ok(find('input[type="password"]'), 'Password input on page');
     assert.ok(find('button[type="submit"]'), 'Submit button on page');
-
     await fillIn('input[type="email"]', 'testuser@test.com');
     await fillIn('input[type="password"]', '1234');
-    click('button[type="submit"]');
-    await new Promise(resolve => setTimeout(resolve, 50));
-    assert.dom('[class*="c-notification__container"] > [class*="c-notification--error"] > [class*="c-notification__content"]')
-    .containsText('User not found');
-    assert.equal(currentURL(), '/login');
+    await click('button[type="submit"]');
+    const controller = this.owner.lookup('controller:login');
+    assert.equal(controller.get('errorMessage'), 'User not found', 'error message is "User not found"');
+    assert.equal(currentURL(), '/login', 'Still on login page');
   });
 
   test('correct login', async function (assert) {
