@@ -153,6 +153,10 @@ Router.map(function () {
         this.route('new');
         this.route('edit', { path: '/edit/:user_id' });
       });
+
+      this.route('department', function () {
+        this.route('edit', { path: '/:department_id/edit' });
+      });
     });
     this.route('action-item', { path: '/action-item/:slug' }, function () {
       this.route('todo');
