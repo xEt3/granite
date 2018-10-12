@@ -22,8 +22,12 @@ export default Controller.extend(ajaxStatus, {
       intro:    'We show the column labels you originally uploaded here for reference.',
       position: 'top'
     }, {
-      element:  '.data-rows',
+      element:  '.data-rows > tr',
       intro:    'Review this section before continuing to make sure your data is imported correctly.',
+      position: 'top'
+    }, {
+      element:  '.btn__dry-run',
+      intro:    'Generate a "dry run" with this button. This allows you to review what data will be created before importing.',
       position: 'bottom'
     }, {
       element:  '.import-button',
