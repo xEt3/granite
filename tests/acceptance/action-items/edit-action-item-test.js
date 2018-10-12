@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import authenticate from 'granite/tests/helpers/auth';
-import { visit, currentURL, click, find, settled, fillIn, pauseTest } from '@ember/test-helpers';
+import { visit, currentURL, click, find, settled, fillIn } from '@ember/test-helpers';
 
 module('Acceptance | edit action items', function (hooks) {
   setupApplicationTest(hooks);
@@ -40,9 +40,10 @@ module('Acceptance | edit action items', function (hooks) {
     assert.dom('span.irs > span.irs-single').hasText(`${action.priority}`);
     assert.dom('label > span').hasText('Prerequisites');
     assert.dom('#action-item-prerequisites > div.default.text').isVisible();
+    await settled();
     await click('#action-item-prerequisites');
-    await new Promise(resolve => setTimeout(resolve, 500));
-    await click('div#action-item-prerequisites div.menu.left.transition.visible > div');
+    await settled();
+    await click('div#action-item-prerequisites .menu > .item');
     await settled();
     assert.dom('div#action-item-prerequisites > a.ui.label').hasText(action.title);
     assert.dom('form > button').isVisible();
@@ -63,9 +64,10 @@ module('Acceptance | edit action items', function (hooks) {
     await fillIn('div:nth-child(2) > textarea', `${action.description} testing this`);
     assert.dom('input#action-item-title').hasValue(`${action.title}`);
     assert.dom('div:nth-child(2) > textarea').hasValue(`${action.description} testing this`);
-    await click('div#action-item-prerequisites > i.dropdown.icon');
-    await new Promise(resolve => setTimeout(resolve, 500));
-    await click('div#action-item-prerequisites div.menu.left.transition.visible > div');
+    await settled();
+    await click('#action-item-prerequisites');
+    await settled();
+    await click('div#action-item-prerequisites .menu > .item');
     await settled();
     assert.dom('div#action-item-prerequisites > a.ui.label').hasText(`${action.title}`);
     await click('form > button');
