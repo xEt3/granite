@@ -4,33 +4,24 @@
   </h1>
 
   <div class="right aligned text floated menu__actions">
-    <h3 class="ui header">
-      {{#liquid-if addingUser}}
-        {{#link-to 'account.anatomy.users.index' class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
-      {{else}}
-        {{#link-to 'account.anatomy.company-users.new' class="right floated"}}
-          {{#ui-popup tagName='span' content="Add a user"}}
-            <i class="plus icon"></i>
-          {{/ui-popup}}
-        {{/link-to}}
-      {{/liquid-if}}
-    </h3>
-
-    {{#if auth.user.company.linkedToSlate}}
-      <h3 class="ui right floated header">
-        {{#ui-popup position="left center" content="Import from Slate Payroll..."}}
-          <a href="#">
+    <h3 class="ui right floated header">
+      {{#if auth.user.company.linkedToSlate}}
+        <a href="#">
+          {{#ui-popup tagName='span' position="left center" content="Import from Slate Payroll..."}}
             <i class="sign in alternate icon"></i>
-          </a>
+          {{/ui-popup}}
+        </a>
+      {{/if}}
+
+      {{#link-to 'account.anatomy.company-users.new' class="right floated"}}
+        {{#ui-popup tagName='span' position="left center" content="Add a user"}}
+          <i class="plus icon"></i>
         {{/ui-popup}}
-      </h3>
-    {{/if}}
+      {{/link-to}}
+    </h3>
   </div>
 </hgroup>
 <div class="ui divider"></div>
-
-{{liquid-outlet class="add-user"}}
-
   <div class="ui divided items">
     {{#each model as |user|}}
       {{list-item/user-item user onDelete=(action 'delete')}}

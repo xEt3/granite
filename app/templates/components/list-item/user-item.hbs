@@ -12,7 +12,7 @@
           <i class="edit icon"></i>
         {{/ui-popup}}
       {{/link-to}}
-      {{#confirm-modal deleteContext=user.fullName class="anatomy-item__inline" as |confirm|}}
+      {{#confirm-modal deleteContext=user.fullName tagName="span" as |confirm|}}
         {{#ui-popup tagName='span' position="left center" content="Delete user"}}
           <a href="#" class="text-danger" {{action (pipe confirm (action 'deleteUser'))}}>
             <i class="trash icon"></i>
