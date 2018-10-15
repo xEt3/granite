@@ -102,7 +102,6 @@
     "emojify.js": "~1.1.0",
     "eslint": "^5.6.0",
     "eslint-plugin-ember": "^5.2.0",
-    "expired-sauce": "^0.0.3",
     "glob": "^7.1.2",
     "less-plugin-glob": "^2.0.2",
     "liquid-fire": "^0.29.2",
