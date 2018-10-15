@@ -56,7 +56,8 @@
         {{validated-input type="text" model=model valuePath="addressCity" placeholder="City" id="city"}}
       </div>
       <div class="field">
-        {{#validated-input model=model valuePath="addressState"}}
+        <label for="state"></label>
+        {{#validated-input model=model valuePath="addressState" id="state"}}
           {{#ui-dropdown class="select__address-state search selection" onChange=(action (mut-select model 'addressState'))}}
             <div class="default text">Select a State</div>
             <i class="dropdown icon"></i>
