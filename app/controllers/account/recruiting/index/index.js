@@ -7,11 +7,10 @@ export default Controller.extend(resource, {
   auth: service(),
 
   queryParams: [
-    'showFilters',
     'closed',
     'setup',
-    'terminated',
     'job',
+    'showFilters',
     'page',
     'limit'
   ],
