@@ -1,1 +1,11 @@
-{{yield}}
+{{#if model}}
+  <div class="search-result-item__title">
+    {{log model}}
+    {{display/employee-picture url=employee.picture employeeId=employee.id}}
+    {{model.fullName}}
+  </div>
+  <div class="search-result-item__description">
+    {{log 'hey' model}}
+    {{model.jobTitle}}
+  </div>
+{{/if}}

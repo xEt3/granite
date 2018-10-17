@@ -4,5 +4,6 @@ export default Factory.extend({
   company:     null,
   firstName:   faker.name.firstName(),
   lastName:    faker.name.lastName(),
-  companyUser: null
+  companyUser: null,
+  jobTitle:    faker.name.jobTitle()
 });

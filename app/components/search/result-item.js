@@ -1,3 +1,3 @@
-import Component from '@ember/component';
+import BaseLiComponent from '../list-item/base';
 
-export default Component.extend({});
+export default BaseLiComponent.extend({ classNames: [ 'search__result-item', 'search__result-item--employee' ] });
