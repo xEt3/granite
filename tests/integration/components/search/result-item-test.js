@@ -16,9 +16,8 @@ module('Integration | Component | search/result-item', function (hooks) {
     let employee = await server.create('employee');
     this.set('employee', employee);
     await render(hbs`{{search/result-item employee}}`);
-
-    assert.dom(this.element).hasClass('search__result-item');
-    assert.dom(this.element).hasClass('search__result-item--employee');
+    assert.dom(this.element.querySelector('.search__result-item')).exists();
+    assert.dom(this.element.querySelector('search__result-item--employee')).exists();
 
     assert.dom('.search__result-item > .search-result-item__title').hasText(employee.fullName);
     assert.dom('.search__result-item > .search-result-item__description').hasText(employee.jobTitle);
@@ -31,8 +30,8 @@ module('Integration | Component | search/result-item', function (hooks) {
     this.set('department', department);
     await render(hbs`{{search/result-item department}}`);
 
-    assert.dom(this.element).hasClass('search__result-item');
-    assert.dom(this.element).hasClass('search__result-item--department');
+    assert.dom(this.element.querySelector('search__result-item')).exists();
+    assert.dom(this.element.querySelector('search__result-item--department')).exists();
 
     assert.dom('.search__result-item > .search-result-item__title').hasText(department.name);
     assert.dom('.search__result-item > .search-result-item__description').doesNotExist();
@@ -44,8 +43,8 @@ module('Integration | Component | search/result-item', function (hooks) {
     this.set('location', location);
     await render(hbs`{{search/result-item location}}`);
 
-    assert.dom(this.element).hasClass('search__result-item');
-    assert.dom(this.element).hasClass('search__result-item--location');
+    assert.dom(this.element.querySelector('search__result-item')).exists();
+    assert.dom(this.element.querySelector('search__result-item--location')).exists();
 
     assert.dom('.search__result-item > .search-result-item__title').hasText(location.name);
     assert.dom('.search__result-item > .search-result-item__description').hasText(location.addressLine1);
