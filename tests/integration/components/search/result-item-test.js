@@ -8,7 +8,7 @@ module('Integration | Component | search/result-item', function (hooks) {
 
   test('it requires a result object to display child elements', async function (assert) {
     await render(hbs`{{search/result-item}}`);
-    assert.dom(this.element).hasClass('search__result-item');
+    assert.dom(this.element.querySelector('.search__result-item')).exists();
     assert.dom('.search__result-item > *').doesNotExist('has no child elements');
   });
 
