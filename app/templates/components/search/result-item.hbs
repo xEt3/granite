@@ -1,11 +1,16 @@
 {{#if model}}
-  <div class="search-result-item__title">
-    {{log model}}
-    {{display/employee-picture url=employee.picture employeeId=employee.id}}
+  {{display/employee-picture url=model.picture employeeId=model.id class="search-result-item__image"}}
+  <div>
     {{model.fullName}}
   </div>
   <div class="search-result-item__description">
-    {{log 'hey' model}}
     {{model.jobTitle}}
+  </div>
+{{/if}}
+{{#if model.name}}
+  <div class="search__result-item--department">
+    <div class="search-result-item__title">
+      {{model.name}}
+    </div>
   </div>
 {{/if}}
