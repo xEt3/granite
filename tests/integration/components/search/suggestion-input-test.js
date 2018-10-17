@@ -32,12 +32,12 @@ module('Integration | Component | search/suggestion-input', function (hooks) {
 
     assert.dom('.ui.search').exists();
 
-    await fillIn('.ui.search input', 'richard');
     await focus('.ui.search input');
+    await fillIn('.ui.search input', 'richard');
+    await new Promise(done => setTimeout(done, 1000));
+    await settled();
     await blur('.ui.search input');
     await new Promise(done => setTimeout(done, 2000));
-    // await pauseTest();
-    await settled();
 
     assert.equal(callCount, 1, 'Call count for "performSearch" is 1 (debounced)');
     assert.equal(query, 'richard', 'Query was passed to "performSearch"');
