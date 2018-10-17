@@ -8,6 +8,7 @@ module('Integration | Component | search/result-item', function (hooks) {
 
   test('it requires a result object to display child elements', async function (assert) {
     await render(hbs`{{search/result-item}}`);
+
     assert.dom('.search__result-item').exists();
     assert.dom('.search__result-item > *').doesNotExist('has no child elements');
   });
@@ -16,9 +17,8 @@ module('Integration | Component | search/result-item', function (hooks) {
     let employee = await server.create('employee');
     this.set('employee', employee);
     await render(hbs`{{search/result-item employee}}`);
-    assert.dom('.search__result-item').exists();
-    assert.dom('search__result-item--employee').exists();
 
+    assert.dom('.search__result-item.search__result-item--employee').exists();
     assert.dom('.search__result-item > .search-result-item__title').hasText(employee.fullName);
     assert.dom('.search__result-item > .search-result-item__description').hasText(employee.jobTitle);
     let imageElm = find('.search__result-item > img.search-result-item__image');
@@ -30,9 +30,7 @@ module('Integration | Component | search/result-item', function (hooks) {
     this.set('department', department);
     await render(hbs`{{search/result-item department}}`);
 
-    assert.dom('search__result-item').exists();
-    assert.dom('search__result-item--department').exists();
-
+    assert.dom('.search__result-item.search__result-item--department').exists();
     assert.dom('.search__result-item > .search-result-item__title').hasText(department.name);
     assert.dom('.search__result-item > .search-result-item__description').doesNotExist();
     assert.dom('.search__result-item > img.search-result-item__image').doesNotExist();
@@ -43,9 +41,7 @@ module('Integration | Component | search/result-item', function (hooks) {
     this.set('location', location);
     await render(hbs`{{search/result-item location}}`);
 
-    assert.dom('search__result-item').exists();
-    assert.dom('search__result-item--location').exists();
-
+    assert.dom('.search__result-item.search__result-item--location').exists();
     assert.dom('.search__result-item > .search-result-item__title').hasText(location.name);
     assert.dom('.search__result-item > .search-result-item__description').hasText(location.addressLine1);
     assert.dom('.search__result-item > img.search-result-item__image').doesNotExist();
