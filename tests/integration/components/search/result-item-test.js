@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { render, find, settled } from '@ember/test-helpers';
+import { faker } from 'ember-cli-mirage';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | search/result-item', function (hooks) {
@@ -16,14 +17,22 @@ module('Integration | Component | search/result-item', function (hooks) {
   test('employee type renders correct elements', async function (assert) {
     const { attrs } = await server.create('employee');
     let employee = this.owner.lookup('service:store').createRecord('employee', attrs);
+    employee.set('picture', null);
     this.set('employee', employee);
     await render(hbs`{{search/result-item employee}}`);
 
     assert.dom('.search__result-item.search__result-item--employee').exists();
     assert.dom('.search__result-item > .search-result-item__title').hasText(employee.fullName);
     assert.dom('.search__result-item > .search-result-item__description').hasText(employee.jobTitle);
-    let imageElm = find('.search__result-item > img.search-result-item__image');
+    // Test default image src
+    let imageElm = find('.search__result-item img.search-result-item__image');
     assert.equal(imageElm.getAttribute('src').indexOf('default') > -1, true, 'src has default image url');
+
+    // Test employee property image src
+    employee.set('picture', faker.image.image());
+    await settled();
+    imageElm = find('.search__result-item img.search-result-item__image');
+    assert.equal(imageElm.getAttribute('src').indexOf(employee.get('picture')) > -1, true, 'src has employee image url');
   });
 
   test('department type renders correct elements', async function (assert) {
