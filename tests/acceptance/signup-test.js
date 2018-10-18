@@ -70,7 +70,7 @@ module('Acceptance | signup', function (hooks) {
 
     await click(`.select__address-state .select-address-state__item[data-id="${fakeData.state}"]`);
     await settled();
-    const stateSel = [ controller.get('model.addressState')[0].innerHTML.trim() ];
+    const stateSel = controller.get('model.addressState');
     assert.equal(stateSel, fakeData.state, `the state dropdown is ${fakeData.state}`);
 
     await click('button[type="submit"]');
