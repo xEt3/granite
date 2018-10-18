@@ -1,6 +1,8 @@
 import moment from 'moment';
 import { Response, faker } from 'ember-cli-mirage';
 
+const searchModels = [ 'employees', 'departments', 'locations' ];
+
 const parseIncoming = req => {
   return req.requestBody ? JSON.parse('{"' + decodeURIComponent(req.requestBody).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}') : {};
 };
@@ -113,52 +115,28 @@ export default function () {
     return companies.find(id).update(attrs);
   });
 
+  // quick and dirty mock of search that will function with the mirage db
+  this.get('/search', (db, request) => {
+    const { q } = request.queryParams || {};
 
-  // this.get('/recruiting-pipelines');
-  // this.put('/recruiting-pipelines/:id');
-  // this.get('/employees');
-  // this.put('/company-users/:id');
-  // this.get('/company-users/:id');
-  // this.get('/company-users');
-  // this.get('/employees/:id');
-  // this.post('/companies');
-  // this.get('/companies/:id');
-  // this.get('/permissions');
-  // this.get('/action-items');
-  // this.get('/asset-items');
-  // this.post('/action-items');
-  // this.put('/action-items/:id');
-  // this.get('/assets');
-  // this.get('/changes');
-  // this.get('/histories');
-  // this.get('/employee-issues');
-  // this.get('/departments');
-  // this.get('/locations');
-  // this.post('/payment-methods');
-  // this.get('/comments');
-  // this.del('/comments/:id');
-  // this.post('/comments');
-  // this.get('/job-openings');
-  // this.post('/job-openings');
-  // this.post('/jobs');
-  // this.get('/jobs');
-  // this.get('/jobs/:id');
-  // this.post('/jobs/:id');
-  // this.get('/job-applications');
-  // this.put('job-openings/:id');
-  // this.get('/forms');
-  // this.get('/applicant-sources');
-  // this.get('/manual-applicant-sources');
-  // this.post('/forms');
-  // this.post('/applicants');
-  // this.put('/applicants/:id');
-  // this.post('/job-applications');
-  // this.post('/job-applications/:id');
-  // this.get('/job-applications/:id');
-  // this.get('/applicants/:id');
-  // this.put('/job-applications/:id');
-  // this.get('/files');
-  // this.get('/events');
+    if (!q) {
+      return { results: [] };
+    }
+
+    let results = searchModels.reduce((resultList, modelName) => {
+      return [ ...resultList, ...db[modelName].where((item = {}) => {
+        // stringify the object, isn't that what elastic search does anyways?
+        // ;)
+        return JSON.stringify(item).indexOf(q) > -1;
+      }) ];
+    }, []);
+
+    return {
+      results,
+      total: results.length
+    };
+  });
+
   this.get('/job-openings/:id', ({ jobOpenings }, request) => {
     let id = request.params.id;
 
