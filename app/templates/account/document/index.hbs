@@ -1,0 +1,19 @@
+<div class="content">
+  <div class="clearfix">
+    {{#if imagePreview}}
+      <img class="ui small rounded image left floated" alt="" src="{{model.url}}">
+    {{/if}}
+
+    {{#if model.description}}
+      <h4>{{model.description}}</h4>
+    {{/if}}
+  </div>
+
+  {{#if fileAssignments}}
+    <div class="ui divider"></div>
+    <h3>Assignees</h3>
+    {{#each fileAssignments as |assignment|}}
+      {{list-item/file-assignment assignment=assignment}}
+    {{/each}}
+  {{/if}}
+</div>

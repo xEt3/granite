@@ -6,8 +6,24 @@
         <a href="#" {{action "toggleProperty" "details"}}><i class="{{if details 'up' 'down'}} angle icon"></i></a>
       {{/ui-popup}}
     {{/if}}
-    <div class="description right floated text small">Created {{time-ago asset.created}}{{#if asset.creator}} by {{asset.creator.fullName}}{{/if}}</div>
+
+    <div class="right floated">
+      <a href="#" class="text-danger" {{action "delete"}}>
+        <i class="trash icon"></i>
+      </a>
+    </div>
   </span>
+  <div class="description text small">
+    Assigned to <a href="#" {{action toggleProperty 'showAssignments'}}>{{asset.assignments.length}} {{inflect-text 'employee' asset.assignments.length}}</a>
+    - Created {{time-ago asset.created}}{{#if asset.creator}} by {{asset.creator.fullName}}{{/if}}
+    {{#liquid-if showAssignments}}
+      <ul>
+        {{#each asset.assignments as |assignment|}}
+          <li>{{assignment.employee.fullName}}</li>
+        {{/each}}
+      </ul>
+    {{/liquid-if}}
+  </div>
   {{#if attributes.length}}
     {{#liquid-if details}}
       <div class="ui segment">
@@ -22,9 +38,5 @@
       </div>
     {{/liquid-if}}
   {{/if}}
-  <div class="right floated">
-    <a href="#" class="text-danger" {{action "delete"}}>
-      <i class="trash icon"></i>
-    </a>
-  </div>
+
 </div>

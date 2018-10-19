@@ -29,7 +29,7 @@ module('Acceptance | recruiting', function (hooks) {
     let job = await server.create('job');
 
     let campaign = await server.create('job-openings', {
-      job:            job.id,
+      job,
       completedSetup: faker.date.past
     });
 

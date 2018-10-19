@@ -21,7 +21,7 @@ module('Acceptance | recruiting-new postion', function (hooks) {
     });
     let job = await server.create('job');
     await server.create('job-openings', {
-      job:   job.id,
+      job,
       title: job.title
     });
 

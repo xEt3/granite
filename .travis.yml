@@ -14,7 +14,8 @@ env:
 before_install:
 - curl -o- -L https://yarnpkg.com/install.sh | bash
 - export PATH=$HOME/.yarn/bin:$PATH
-- yarn global add bower
+- yarn global add expired-sauce
+- expiredsauce
 install:
 - yarn install --non-interactive
 before_script:
