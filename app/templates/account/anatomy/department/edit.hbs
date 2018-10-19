@@ -1,3 +1,4 @@
+<h2 class="ui header">Editing {{model.name}}</h2>
 <form class="ui form container" {{action "save" on="submit"}}>
   <div class="field">
     <label for="department-name">Name</label>
@@ -9,4 +10,7 @@
   </div>
   <div class="ui divider"></div>
   {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=(not model.hasDirtyAttributes)}}Save Department{{/form/action-button}}
+  <a href="#" {{action 'cancel'}}>
+    <div class="ui huge fluid orange button">Cancel</div>
+  </a>
 </form>
