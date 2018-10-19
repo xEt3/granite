@@ -41,7 +41,6 @@ module('Integration | Component | search/result-item', function (hooks) {
     let department = this.owner.lookup('service:store').createRecord('department', attrs);
     this.set('department', department);
     await render(hbs`{{search/result-item department}}`);
-    await this.pauseTest();
     assert.dom('.search__result-item').exists({ count: 1 });
     assert.dom('.search__result-item.search__result-item--department').exists({ count: 1 });
     assert.dom('.search__result-item.search__result-item--employee').doesNotExist();
