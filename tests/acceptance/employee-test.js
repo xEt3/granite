@@ -93,7 +93,7 @@ module('Acceptance | employee', function (hooks) {
         picture: null
       }
     });
-    await server.create('asset-items');
+    await server.create('asset-item');
     await visit('/account/employees');
     await settled();
     await click(`a[href="/account/employee/${employee.id}"]`);

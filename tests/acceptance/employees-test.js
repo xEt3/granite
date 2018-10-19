@@ -8,7 +8,7 @@ module('Acceptance | employees', function (hooks) {
   setupApplicationTest(hooks);
 
   test('getting to the employees', async function (assert) {
-    server.createList('employees', 7);
+    server.createList('employee', 7);
     await authenticate.call(this, server);
     await visit('/account/dashboard');
     assert.equal(currentURL(), '/account/dashboard');
@@ -18,20 +18,18 @@ module('Acceptance | employees', function (hooks) {
   });
 
   test('employee w/avatar shows up', async function (assert) {
-    await authenticate.call(this, server);
-    let employee = await server.create('employee');
+    let { employee } = await authenticate.call(this, server);
     await visit('/account/employees');
     await settled();
-    assert.dom('a:nth-child(2) div.content .header').includesText(employee.firstName);
+    assert.dom(findAll('.header')[4]).includesText(employee.name.first);
     assert.dom('.ui.tiny.rounded.image img').exists();
   });
 
   test('employee w/o avatar shows up', async function (assert) {
-    await authenticate.call(this, server);
-    let employee = await server.create('employee', { employee: { picture: null } });
+    let { employee } = await authenticate.call(this, server, { employee: { picture: null } });
     await visit('/account/employees');
     await settled();
-    assert.dom('a:nth-child(2) div.content .header').includesText(employee.firstName);
+    assert.dom(findAll('.header')[4]).includesText(employee.name.first);
     assert.dom(`img[src="/api/v1/employee/${employee.id}/avatar"]`).exists();
   });
 
@@ -75,8 +73,8 @@ module('Acceptance | employees', function (hooks) {
         picture: null
       }
     });
-    await server.create('departments');
-    await server.create('locations');
+    await server.create('department');
+    await server.create('location');
     await visit('/account/employees');
     await settled();
     await click('.filter.icon');

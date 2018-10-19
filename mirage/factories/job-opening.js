@@ -1,11 +1,28 @@
-import { Factory } from 'ember-cli-mirage';
-import { faker } from 'ember-cli-mirage';
-import moment from 'moment';
+import { Factory, faker } from 'ember-cli-mirage';
 
 export default Factory.extend({
-  name:           faker.random.words(),
-  setup:          true,
-  completedSetup: moment(),
-  job:            null,
-  company:        null
+  name:                faker.name.title,
+  title:               faker.name.jobTitle,
+  description:         faker.name.jobDescriptor,
+  availableInternally: false,
+  internalDuration:    null,
+  positions:           faker.random.number({
+    min: 1,
+    max: 9
+  }),
+  sendApplicantConfirmation: false,
+  sendCloseNotice:           false,
+  allocateTalentPool:        false,
+  applicantScoring:          false,
+  closed:                    false,
+  jobType:                   null,
+  supervisoryRequirements:   false,
+  setup:                     false,
+  // completedSetup:            faker.date.past,
+  startOn:                   faker.date.past,
+  completedOn:               null,
+  created:                   faker.date.past,
+  location:                  null,
+  hiring:                    false,
+  job:                       null
 });

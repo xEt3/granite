@@ -11,8 +11,8 @@ module('Acceptance | custom pipeline settings', function (hooks) {
         defaultPipeline = server.create('recruiting-pipeline', { company: company.id }),
         job = server.create('job', { company: company.id }),
         jobOpening = server.create('job-opening', {
-          company: company.id,
-          job:     job.id
+          company,
+          job
         });
 
     await visit(`/account/recruiting/job-opening/${jobOpening.id}/settings`);
@@ -40,8 +40,8 @@ module('Acceptance | custom pipeline settings', function (hooks) {
         defaultPipeline = server.create('recruiting-pipeline', { company: company.id }),
         job = server.create('job', { company: company.id }),
         jobOpening = server.create('job-opening', {
-          company: company.id,
-          job:     job.id
+          company,
+          job
         });
 
     await visit(`/account/recruiting/job-opening/${jobOpening.id}/settings`);
@@ -90,8 +90,8 @@ module('Acceptance | custom pipeline settings', function (hooks) {
         }),
         job = server.create('job', { company: company.id }),
         jobOpening = server.create('job-opening', {
-          company:        company.id,
-          job:            job.id,
+          company,
+          job,
           setup:          false,
           completedSetup: null
         }),
@@ -133,8 +133,8 @@ module('Acceptance | custom pipeline settings', function (hooks) {
     let { company } = await authenticate.call(this, server),
         job = server.create('job', { company: company.id }),
         jobOpening = server.create('job-opening', {
-          company: company.id,
-          job:     job.id
+          company,
+          job
         });
 
     server.create('recruiting-pipeline', {
@@ -186,8 +186,8 @@ module('Acceptance | custom pipeline settings', function (hooks) {
     let { company } = await authenticate.call(this, server),
         job = server.create('job', { company: company.id }),
         jobOpening = server.create('job-opening', {
-          company: company.id,
-          job:     job.id
+          company,
+          job
         }),
         editedStageName = 'Edited Stage';
     server.create('recruiting-pipeline', { company: company.id });
@@ -221,8 +221,8 @@ module('Acceptance | custom pipeline settings', function (hooks) {
         pipeline = server.create('recruiting-pipeline', { company: company.id }),
         job = server.create('job', { company: company.id }),
         jobOpening = server.create('job-opening', {
-          company: company.id,
-          job:     job.id
+          company,
+          job
         }),
         stageCountInDB = pipeline.stages.length;
 

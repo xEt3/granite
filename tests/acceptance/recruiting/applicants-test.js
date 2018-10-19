@@ -20,8 +20,8 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
         ]
       }
     });
-    let applicant = await server.create('applicants');
-    await server.create('recruiting-pipelines', {
+    let applicant = await server.create('applicant');
+    await server.create('recruiting-pipeline', {
       company: company.id,
       stages:  [
         {
@@ -44,12 +44,12 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
     });
 
     let job = await server.create('job');
-    let campaign = await server.create('job-openings', {
+    let campaign = await server.create('job-opening', {
       job,
       title: job.title
     });
 
-    await server.create('job-applications', {
+    await server.create('job-application', {
       jobOpening: campaign.id,
       applicant:  applicant.id
     });
@@ -87,8 +87,8 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
         ]
       }
     });
-    let applicant = await server.create('applicants');
-    let pipeline = await server.create('recruiting-pipelines', {
+    let applicant = await server.create('applicant');
+    let pipeline = await server.create('recruiting-pipeline', {
       company: company.id,
       stages:  [
         {
@@ -114,12 +114,12 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
     });
 
     let job = await server.create('job');
-    let campaign = await server.create('job-openings', {
+    let campaign = await server.create('job-opening', {
       job,
       title: job.title
     });
 
-    await server.create('job-applications', {
+    await server.create('job-application', {
       jobOpening: campaign.id,
       applicant:  applicant.id,
       stage:      pipeline.stages[0]._id

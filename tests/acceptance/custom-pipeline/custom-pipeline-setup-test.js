@@ -6,14 +6,13 @@ import authenticate from 'granite/tests/helpers/auth';
 module('Acceptance | custom pipeline setup', function (hooks) {
   setupApplicationTest(hooks);
 
-  //test that toggle displays default pipeline's stages
   test('toggling custom pipeline displays default stages/ removes stages', async function (assert) {
     let { company } = await authenticate.call(this, server),
         defaultPipeline = server.create('recruiting-pipeline', { company: company.id }),
         job = server.create('job', { company: company.id }),
         jobOpening = server.create('job-opening', {
-          company:        company.id,
-          job:            job.id,
+          company,
+          job,
           setup:          false,
           completedSetup: null
         });
@@ -36,15 +35,14 @@ module('Acceptance | custom pipeline setup', function (hooks) {
     assert.notOk(find('div.custom-pipeline-toggle > div.toggle.checkbox.checked'), 'custom pipeline toggle is not checked anymore');
     assert.equal(findAll('li.stage-list__card').length, 0, 'no stages displayed any more');
   });
-  //test that hitting toggle doesn't save db object
-  //test that hitting next saves the custom pipeline
+
   test('saving custom pipeline works', async function (assert) {
     let { company } = await authenticate.call(this, server),
         defaultPipeline = server.create('recruiting-pipeline', { company: company.id }),
         job = server.create('job', { company: company.id }),
         jobOpening = server.create('job-opening', {
-          company:        company.id,
-          job:            job.id,
+          company,
+          job,
           setup:          false,
           completedSetup: null
         });
@@ -79,8 +77,7 @@ module('Acceptance | custom pipeline setup', function (hooks) {
 
     assert.equal(customPipeline.jobOpenings[0], jobOpening.id, 'custom pipeline saved jobOpening to jobOpenings array correctly');
   });
-  //test that stage can be added + saved
-  //test that stage can't be added when there are already 5 stages
+
   test('custom pipeline stage can be added and saved', async function (assert) {
     let { company } = await authenticate.call(this, server),
         defaultPipeline = server.create('recruiting-pipeline', {
@@ -101,8 +98,8 @@ module('Acceptance | custom pipeline setup', function (hooks) {
         }),
         job = server.create('job', { company: company.id }),
         jobOpening = server.create('job-opening', {
-          company:        company.id,
-          job:            job.id,
+          company,
+          job,
           setup:          false,
           completedSetup: null
         }),
@@ -139,14 +136,13 @@ module('Acceptance | custom pipeline setup', function (hooks) {
       assert.equal(stage.name, defaultPipeline.stages[i].name, `default pipeline stage ${defaultPipeline.stages[i].name} was not altered`);
     });
   });
-  //test that stage can be removed + saved
-  //test that button comes back when 5th stage is deleted
+
   test('removing and saving a stage works', async function (assert) {
     let { company } = await authenticate.call(this, server),
         job = server.create('job', { company: company.id }),
         jobOpening = server.create('job-opening', {
-          company:        company.id,
-          job:            job.id,
+          company,
+          job,
           setup:          false,
           completedSetup: null
         });
@@ -173,34 +169,33 @@ module('Acceptance | custom pipeline setup', function (hooks) {
     await visit(`/account/recruiting/job-opening/${jobOpening.id}/setup/settings`);
     await click('div.custom-pipeline-toggle > div.toggle.checkbox');
 
-    //assert that 5 stages are displayed
     let stagesDisplayed = findAll('li.stage-list__card');
     assert.equal(stagesDisplayed.length, 5, '5 stages are displayed');
     assert.dom('button#add-stage').isNotVisible('add stage button is not visible');
-    //remove a stage
+
     await click(findAll('li.stage-list__card a.delete-stage')[0]);//removes first stage
-    //assert that 4 stages displayed
+
     let stagesDisplayedAfterRemove = findAll('li.stage-list__card');
     assert.equal(stagesDisplayedAfterRemove.length, 4, '4 displayed stages');
-    //assert that add button reappeared
+
     assert.dom('button#add-stage').isVisible('add button reappeared');
-    //assert that db is untouched
+
     let customPipeline = server.db.recruitingPipelines.findBy((pipeline) => pipeline.jobOpenings.includes(jobOpening.id));
     assert.notOk(customPipeline, 'no db entry made yet');
-    //click next
+
     await click('button[type="submit"]');
-    //assert that db changed accordingly with 4 stages now
+
     let customPipelineAfterSave = server.db.recruitingPipelines.findBy((pipeline) => pipeline.jobOpenings.includes(jobOpening.id));
     assert.ok(customPipelineAfterSave, 'custom pipeline created in db');
     assert.equal(customPipelineAfterSave.stages.length, 4, 'custom pipeline has 4 stages');
   });
-  //test that stage can be edited + saved
+
   test('stages can be edited and saved', async function (assert) {
     let { company } = await authenticate.call(this, server),
         job = server.create('job', { company: company.id }),
         jobOpening = server.create('job-opening', {
-          company:        company.id,
-          job:            job.id,
+          company,
+          job,
           setup:          false,
           completedSetup: null
         }),
@@ -210,22 +205,21 @@ module('Acceptance | custom pipeline setup', function (hooks) {
     await visit(`/account/recruiting/job-opening/${jobOpening.id}/setup/settings`);
     await click('div.custom-pipeline-toggle > div.toggle.checkbox');
 
-    //click edit stage
+
     await click(findAll('.card-content__stage-name > a[href="#"] > .edit.icon')[0]);
-    //assert that modal says editing
+
     assert.dom('#modal__add-stage > .header').includesText('Edit', 'Header says editing pipeline stage');
-    //fillIn editedStageName
+
     await fillIn('#modal__add-stage input[name="name"]', editedStageName);
-    //submit
     await click('.confirm-add-stage');
-    //assert that stage name is changed on page
+
     assert.dom(findAll('li.stage-list__card')[0]).includesText(editedStageName, 'Edited stage is displayed');
-    //assert that db still has no custom pipeline
+
     let customPipeline = server.db.recruitingPipelines.findBy((pipeline) => pipeline.jobOpenings.includes(jobOpening.id));
     assert.notOk(customPipeline, 'no db entry made yet');
-    //save it
+
     await click('button[type="submit"]');
-    //assert that db changed
+
     let customPipelineAfterSave = server.db.recruitingPipelines.findBy((pipeline) => pipeline.jobOpenings.includes(jobOpening.id));
     assert.ok(customPipelineAfterSave, 'entry made to db');
     assert.equal(customPipelineAfterSave.stages[0].name, editedStageName, 'edited stage name saved in db');
@@ -236,8 +230,8 @@ module('Acceptance | custom pipeline setup', function (hooks) {
         pipeline = server.create('recruiting-pipeline', { company: company.id }),
         job = server.create('job', { company: company.id }),
         jobOpening = server.create('job-opening', {
-          company:        company.id,
-          job:            job.id,
+          company,
+          job,
           setup:          false,
           completedSetup: null
         }),
@@ -256,7 +250,3 @@ module('Acceptance | custom pipeline setup', function (hooks) {
     assert.equal(findAll('.stage-list__card').length, stageCountInDB, 'correct number of stages are displayed after cancelling');
   });
 });
-
-
-//probably going to need to cherry pick bits and pieces from other pipeline related PR
-//WILL HAVE TO REPEAT FOR NOT-SETUP SETTINGS *should be same tests

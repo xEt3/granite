@@ -160,7 +160,7 @@ export default function () {
       return customPipeline;
     }
 
-    return customPipeline ? customPipeline : defaultPipeline;
+    return customPipeline.models.length > 0 ? customPipeline : defaultPipeline;
   });
 
   this.get('job-openings/:id', function (db, request) {

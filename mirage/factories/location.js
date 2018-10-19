@@ -8,11 +8,12 @@ export default Factory.extend({
     });
     return i;
   },
-  addressLine1:   faker.address.streetAddress(),
-  addressCity:    faker.address.city(),
-  addressState:   faker.address.state(),
-  addressZipcode: faker.address.zipCode(),
-  phone:          faker.phone.phoneNumber,
+  address: {
+    line1: faker.address.streetAddress(),
+    city:  faker.address.city(),
+    state: faker.address.state(),
+    zip:   faker.address.zipCode()
+  },
 
   name: faker.address.state,
   code: faker.random.number({
