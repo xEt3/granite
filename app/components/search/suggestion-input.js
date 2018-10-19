@@ -18,7 +18,10 @@ export default Component.extend({
   performSearch (settings, callback) {
     console.log(settings.urlData.query);
     return this.get('search').performSearch(settings.urlData.query)
-    .then(callback)
+    .then((r) => {
+      console.log(r);
+      callback(r);
+    })
     .catch(callback);
   }
 });
