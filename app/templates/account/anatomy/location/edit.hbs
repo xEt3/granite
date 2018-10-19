@@ -49,8 +49,8 @@
   </div>
   <div class="ui divider"></div>
   {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=(not model.hasDirtyAttributes)}}Save Location{{/form/action-button}}
-  {{#link-to 'account.anatomy.locations.index'}}
+  <a href="#" {{action 'cancel'}}>
     <div class="ui huge fluid orange button">Cancel</div>
-  {{/link-to}}
+  </a>
 </form>
 <div class="ui divider"></div>

@@ -7,5 +7,12 @@ export default Controller.extend(addEdit, {
   states,
   stateIsMontana:      computed.equal('model.addressState', 'MT'),
   transitionAfterSave: 'account.anatomy.locations.index',
-  transitionWithModel: false
+  transitionWithModel: false,
+
+  actions: {
+    cancel () {
+      this.get('model').rollbackAttributes();
+      this.transitionToRoute('account.anatomy.locations.index');
+    }
+  }
 });
