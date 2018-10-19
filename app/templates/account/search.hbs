@@ -1,0 +1,17 @@
+<div class="ui raised padded segment container clearfix">
+  <h1 class="ui header">
+    Search results for "{{q}}"...
+  </h1>
+
+  <div class="ui divider"></div>
+
+
+  {{#each-in model.results as |category group|}}
+    <h2>{{category}}</h2>
+    {{#each group.results as |result|}}
+      {{search/result-item result}}
+    {{/each}}
+  {{else}}
+    <h2 class="center aligned text">No results found.</h2>
+  {{/each-in}}
+</div>

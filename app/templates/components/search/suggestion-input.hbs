@@ -3,9 +3,11 @@
   class="ui fluid category search"
   apiSettings=apiSettings
   fields=search.fields
+  searchDelay=debounceInterval
+  onSelect=(action selected)
 }}
   <div class="ui icon input">
-    <input type="text" placeholder="{{placeholder}}" class="prompt">
+    {{input type="text" placeholder=placeholder class="prompt" value=query}}
     <i class="search link icon"></i>
   </div>
   <div class="results"></div>

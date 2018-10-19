@@ -1,12 +1,13 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { bind } from '@ember/runloop';
+import { bind, scheduleOnce } from '@ember/runloop';
 import { inject as service } from '@ember/service';
+import uriForModel from 'granite/utils/uri-for-model';
 
 export default Component.extend({
+  router:           service(),
   search:           service(),
-  tagName:          '',
-  debounceInterval: 1000,
+  debounceInterval: 100,
 
   apiSettings: computed('debounceInterval', function () {
     return {
@@ -16,12 +17,27 @@ export default Component.extend({
   }),
 
   performSearch (settings, callback) {
-    console.log(settings.urlData.query);
     return this.get('search').performSearch(settings.urlData.query)
-    .then((r) => {
-      console.log(r);
-      callback(r);
-    })
+    .then(callback)
     .catch(callback);
+  },
+
+  selected (resultItem) {
+    const router = this.get('router');
+
+    router.transitionTo.apply(router, uriForModel(resultItem))
+    .then(() =>
+      scheduleOnce('afterRender', () =>
+        this.set('query', null)));
+  },
+
+  keyPress (e) {
+    // detect full page flowthru (enter key)
+    if (e.keyCode !== 13) {
+      return;
+    }
+
+    let q = this.get('query');
+    this.get('router').transitionTo('account.search', { queryParams: { q } });
   }
 });
