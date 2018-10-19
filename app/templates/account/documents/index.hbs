@@ -18,46 +18,12 @@
 
   <div class="ui divided items">
     {{#each model as |doc|}}
-      {{list-item/document-item
-        doc
-        assign=(pipe-action
-          (action 'openAssignmentModal')
-          (action remapToModels)
-          (action 'save')
-          (action 'closeAssignmentModal')
-        )
-      }}
+      {{#link-to 'account.document' doc.id class="item"}}
+        {{list-item/document-item doc}}
+      {{/link-to}}
     {{else}}
       <h2 class="ui center aligned header">No documents available.</h2>
     {{/each}}
   </div>
-
   {{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}
 </div>
-
-{{#ui-modal name='modal__file-assignment' id='modal__file-assignment' class='small form'}}
-  <div class="header">
-    Assign {{assigningDocument.title}}
-  </div>
-  <div class="content">
-    {{quick-form
-     fileAssignmentForm
-     fileAssignment
-     this
-     tagName='div'}}
-  </div>
-  <div class="actions">
-    <button class="ui red button" {{action 'respondAssignment' false}}>
-      Cancel
-    </button>
-    <button class="ui primary right labeled icon {{if working 'loading'}} button" {{action 'respondAssignment' true}} disabled={{lt fileAssignment.employees.length 1}}>
-      Assign
-      {{#if (gte fileAssignment.employees.length 2)}}
-        To {{fileAssignment.employees.length}} Employees
-      {{else if (eq fileAssignment.employees.length 1)}}
-        To {{fileAssignment.employees.firstObject.firstName}}
-      {{/if}}
-      <i class="add user icon"></i>
-    </button>
-  </div>
-{{/ui-modal}}

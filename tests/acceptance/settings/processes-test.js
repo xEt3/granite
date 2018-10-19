@@ -16,7 +16,7 @@ module('Acceptance | settings/processes', function (hooks) {
     assert.ok(find('#add-stage'), 'add stage button exists');
 
     await click('#add-stage');
-    assert.dom('div[id="modal__add-stage"').isVisible('add stage modal is visible');
+    assert.dom('div[id="modal__add-stage"]').isVisible('add stage modal is visible');
   });
 
   test('corrective action severity modal presents', async function (assert) {
@@ -27,7 +27,7 @@ module('Acceptance | settings/processes', function (hooks) {
     assert.ok(find('#add-cas'), 'add stage button exists');
 
     await click('#add-cas');
-    assert.dom('div[id="modal__add-cas"').isVisible('add cas modal is visible');
+    assert.dom('div[id="modal__add-cas"]').isVisible('add cas modal is visible');
   });
 
   test('canceling pipeline-stage add', async function (assert) {
@@ -276,9 +276,8 @@ module('Acceptance | settings/processes', function (hooks) {
     await click(findAll('.card-content__stage-name > a[href="#"] > .edit.icon')[0]);
     await fillIn('#modal__add-stage input[name="name"]', 'Hiya');
     await click('.confirm-add-stage');
-
     assert.dom('button[type="submit"]').isNotDisabled('submit button is now clickable after change made');
-
+    await click(findAll('.card-content__stage-name > a[href="#"] > .edit.icon')[0]);
     await fillIn('#modal__add-stage input[name="name"]', pipeline.stages[0].name);
     await click('.confirm-add-stage');
 

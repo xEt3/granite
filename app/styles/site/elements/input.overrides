@@ -112,8 +112,7 @@
 
 .ui.form .has-success {
   input, .ui.dropdown {
-    box-shadow:  0px 1px 1px fade(@granite-grey, 25%), 0 -3px @granite-green inset !important;
-
+    
     + i {
       position: absolute;
       color: @granite-green;

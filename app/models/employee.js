@@ -48,7 +48,7 @@ export default Model.extend(Validations, {
   jobTitle:    attr('string'),
   payRate:     attr('number'),
   exempt:      attr('boolean', { defaultValue: false }),
-  payRateType: attr('string', { defaultValue: 'Hourly' }),
+  payRateType: attr('string', { defaultValue: 'hourly' }),
 
   onboarding:     attr('boolean'),
   onboardingStep: attr('number'),

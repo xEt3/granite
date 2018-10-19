@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { Promise } from 'rsvp';
 import $ from 'jquery';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import objectArrayIsDirty from 'granite/utils/object-array-is-dirty';
 
 export default Controller.extend(addEdit, {
   auth:                   service(),
@@ -77,7 +78,7 @@ export default Controller.extend(addEdit, {
       });
 
       pipeline.set('stages', items);
-      this.set('stagesDirty', JSON.stringify(pipeline) !== this.get('pipelineInitialState'));
+      this.set('stagesDirty', objectArrayIsDirty(items, this.get('pipelineInitialState')));
     },
 
     save () {
@@ -170,12 +171,12 @@ export default Controller.extend(addEdit, {
     removeSeverity (severity) {
       severity.destroy();
       this.get('auth.user.company.correctiveActionSeverities').removeObject(severity);
-      this.set('correctiveActionsDirty', JSON.stringify(this.get('model.correctiveActionSeverities').toArray()) !== this.get('casInitialState'));
+      this.set('correctiveActionsDirty', objectArrayIsDirty(this.get('model.correctiveActionSeverities').toArray(), this.get('casInitialState')));
     },
 
     removeStage (stage) {
       this.get('pipeline.stages').removeObject(stage);
-      this.set('stagesDirty', JSON.stringify(this.get('pipeline')) !== this.get('pipelineInitialState'));
+      this.set('stagesDirty', objectArrayIsDirty(this.get('pipeline.stages').toArray(), this.get('pipelineInitialState')));
     },
 
     respondSeverityAddition (response) {
@@ -190,7 +191,7 @@ export default Controller.extend(addEdit, {
       }
 
       this.set('editingCas', false);
-      this.set('correctiveActionsDirty', JSON.stringify(this.get('model.correctiveActionSeverities').toArray()) !== this.get('casInitialState'));
+      this.set('correctiveActionsDirty', objectArrayIsDirty(this.get('model.correctiveActionSeverities').toArray(), this.get('casInitialState')));
     },
 
     respondStageAddition (response) {
@@ -205,7 +206,7 @@ export default Controller.extend(addEdit, {
       }
 
       this.set('editingStage', false);
-      this.set('stagesDirty', JSON.stringify(this.get('pipeline')) !== this.get('pipelineInitialState'));
+      this.set('stagesDirty', objectArrayIsDirty(this.get('pipeline.stages').toArray(), this.get('pipelineInitialState')));
     }
   }
 });

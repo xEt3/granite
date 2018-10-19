@@ -88,6 +88,7 @@ export default Component.extend(ajaxStatus, {
       .then(() => {
         if (like) {
           like.destroy();
+          likes.removeObject(like);
         }
 
         this.ajaxSuccess(null, true);

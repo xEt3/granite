@@ -4,9 +4,13 @@
   Reupload census
 {{/link-to}}
 
-<a href="#" class="pull-right text-green btn__dry-run" disabled={{working}} {{action "doDryRun"}}>
-  {{#if dryrunResult}}Regenerate{{else}}Generate{{/if}} dry run data
-</a>
+{{#if dryrun}}
+  <i class="pull-right text-green spinner loading icon"></i>
+{{else}}
+  <a href="#" class="pull-right text-green btn__dry-run" {{action "doDryRun"}}>
+    {{if dryrunResult 'Regenerate' 'Generate'}} dry run data
+  </a>
+{{/if}}
 
 {{#if dryrunResult}}
   <p class="text-center text-white">

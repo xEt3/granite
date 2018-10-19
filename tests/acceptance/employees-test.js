@@ -18,35 +18,27 @@ module('Acceptance | employees', function (hooks) {
   });
 
   test('employee w/avatar shows up', async function (assert) {
-    let { employee } = await authenticate.call(this, server, {
-      employee: {
-        name:    { first: faker.name.firstName() },
-        picture: faker.image.avatar()
-      }
-    });
+    await authenticate.call(this, server);
+    let employee = await server.create('employee');
     await visit('/account/employees');
     await settled();
-    assert.dom('div.content .header').hasText(employee.name.first);
+    assert.dom('a:nth-child(2) div.content .header').includesText(employee.firstName);
     assert.dom('.ui.tiny.rounded.image img').exists();
   });
 
   test('employee w/o avatar shows up', async function (assert) {
-    let { employee } = await authenticate.call(this, server, {
-      employee: {
-        name:    { first: faker.name.firstName() },
-        picture: null
-      }
-    });
+    await authenticate.call(this, server);
+    let employee = await server.create('employee', { employee: { picture: null } });
     await visit('/account/employees');
     await settled();
-    assert.dom('div.content .header').hasText(employee.name.first);
+    assert.dom('a:nth-child(2) div.content .header').includesText(employee.firstName);
     assert.dom(`img[src="/api/v1/employee/${employee.id}/avatar"]`).exists();
   });
 
   test('checking all elements on page', async function (assert) {
     await authenticate.call(this, server, {
       employee: {
-        name:    { first: faker.name.firstName() },
+        name:    { firstName: faker.name.firstName() },
         picture: null
       }
     });
@@ -64,7 +56,7 @@ module('Acceptance | employees', function (hooks) {
   test('add employees menu', async function (assert) {
     await authenticate.call(this, server, {
       employee: {
-        name:    { first: faker.name.firstName() },
+        name:    { firstName: faker.name.firstName() },
         picture: null
       }
     });
@@ -79,7 +71,7 @@ module('Acceptance | employees', function (hooks) {
   test('filter employees', async function (assert) {
     await authenticate.call(this, server, {
       employee: {
-        name:    { first: faker.name.firstName() },
+        name:    { firstName: faker.name.firstName() },
         picture: null
       }
     });

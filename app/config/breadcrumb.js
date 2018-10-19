@@ -5,6 +5,12 @@ export default [{
     link:    'account.employees'
   }
 }, {
+  when:    'document',
+  prepend: {
+    segment: 'documents',
+    link:    'account.documents'
+  }
+}, {
   when:    'asset',
   prepend: {
     segment: 'assets',

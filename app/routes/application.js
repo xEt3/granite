@@ -4,7 +4,8 @@ import { inject as service } from '@ember/service';
 import progress from 'ember-cli-nprogress';
 import { notifyDefaults } from 'granite/config';
 import ENV from 'granite/config/environment';
-import $ from 'jquery';
+
+const IS_TEST = ENV.environment === 'test';
 
 const { Logger } = Ember;
 
@@ -23,7 +24,7 @@ export default Route.extend({
   notifications: service('notification-messages'),
 
   beforeModel () {
-    return ENV.environment === 'test' ? Promise.resolve() : this.get('auth').initializeExistingSession();
+    return IS_TEST ? Promise.resolve() : this.get('auth').initializeExistingSession();
   },
 
   actions: {
@@ -31,7 +32,12 @@ export default Route.extend({
       const notifications = this.get('notifications'),
             args = Array.prototype.slice.call(arguments, 1);
 
-      args[1] = args[1] ? $.extend(notifyDefaults, args[1]) : notifyDefaults;
+      args[1] = Object.assign({}, notifyDefaults, args[1]);
+
+      if (IS_TEST) {
+        args[1].clearDuration = 1;
+      }
+
       notifications[type].apply(notifications, args);
     },
 
@@ -69,6 +75,10 @@ export default Route.extend({
     },
 
     loading (transition) {
+      if (IS_TEST) {
+        return;
+      }
+
       progress.start();
       transition.finally(() => progress.done());
     }

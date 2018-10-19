@@ -11,28 +11,6 @@
     <span class="light text">{{file.extension}}</span>
   </div>
 
-  <div class="right floated">
-    <a href="{{file.url}}" rel="noopener" target="_blank"><i class="download fitted icon"></i></a>
-
-    {{#ui-dropdown class="item icon top right pointing floated"}}
-      <i class="right aligned text ellipsis vertical icon"></i>
-      <div class="menu">
-        <div class="header">Actions</div>
-        {{#if assign}}
-          <a href="#" class="item" {{action assign file}}>
-            <i class="add user icon"></i> Assign (send) to
-          </a>
-        {{/if}}
-        <div class="text-danger header">Danger Zone</div>
-        <div class="item">
-          {{#confirm-modal deleteContext=(concat this.file.title " - " this.file.mimeType) as |confirm|}}
-            <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}><i class="trash icon"></i>Delete File</a>
-          {{/confirm-modal}}
-        </div>
-      </div>
-    {{/ui-dropdown}}
-  </div>
-
   <div class="meta">
     {{#each file.tags as |tag|}}
       <span class="ui tiny label">{{tag}}</span>

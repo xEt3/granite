@@ -1,0 +1,34 @@
+<div class="ui image label">
+  {{display/employee-picture
+    url=assignment.employee.picture
+    employeeId=assignment.employee.id}}
+  {{#link-to 'account.employee' assignment.employee.id class="item text-black"}}
+    {{assignment.employee.fullName}}
+  {{/link-to}}
+  {{#if assignment.readOn}}
+    {{#ui-popup tagName="span" content=viewedOn position="right center"}}
+      <i class="eye icon gray-icon"></i>
+    {{/ui-popup}}
+  {{/if}}
+  {{#if assignment.signedOn}}
+    {{#ui-popup tagName="span" html=signedOn position="right center"}}
+      <a href="#" class="gray-icon" {{action 'openSignatureModal'}}>
+        <i class="edit icon"></i>
+      </a>
+    {{/ui-popup}}
+  {{/if}}
+</div>
+
+{{#ui-modal name='modal__file-assignment-signature' id=modalId}}
+  <div class="header">
+    {{assignment.file.title}} signature for {{assignment.employee.fullName}}
+  </div>
+  <div class="content">
+    <img src={{assignment.signature}} alt="">
+  </div>
+  <div class="actions">
+    <button class="ui red button" {{action 'closeSignatureModal'}}>
+      Close
+    </button>
+  </div>
+{{/ui-modal}}

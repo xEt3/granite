@@ -26,11 +26,11 @@
     </div>
   </div>
 
-  <div class="ui padded raised segment">
+  <div class="ui padded raised segment clearfix">
     <hgroup class="clearfix">
       <h1 class="ui header">
         <div class="content">
-          {{model.name}}
+          <i class="{{model.icon}} icon"></i>{{model.name}}
           <div class="sub header">
             Created {{time-ago model.created}} on {{time model.created}}
           </div>
