@@ -4,9 +4,14 @@ import { inject as service } from '@ember/service';
 import ajaxStatus from 'granite/mixins/ajax-status';
 import titleCase from 'granite/utils/title-case';
 import { decamelize } from '@ember/string';
+import { states } from 'granite/config/statics';
+import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import $ from 'jquery';
 
-export default Controller.extend(ajaxStatus, {
-  ajax: service(),
+export default Controller.extend(ajaxStatus, addEdit, {
+  states,
+  ajax:           service(),
+  stateIsMontana: computed.equal('newLocation.addressState', 'MT'),
 
   intros: computed(function () {
     return [{
@@ -92,6 +97,71 @@ export default Controller.extend(ajaxStatus, {
         this.transitionToRoute('account.employees');
       })
       .catch(this.ajaxError.bind(this));
+    },
+
+    showLocationModal () {
+      this.setProperties({
+        newLocation:       this.get('store').createRecord('location'),
+        respondedLocation: false
+      });
+
+      $('#modal__add-location').modal({
+        detachable: true,
+        closable:   false,
+        onHidden:   () => {
+          if (!this.get('respondedLocation')) {
+            this.send('respondLocationModal', false);
+          }
+        }
+      }).modal('show');
+
+      return new Promise((resolveLocation, rejectLocation) => this.setProperties({
+        resolveLocation,
+        rejectLocation
+      }));
+    },
+
+    showDepartmentModal () {
+      this.setProperties({
+        newDepartment:     this.get('store').createRecord('department'),
+        respondedLocation: false
+      });
+
+      $('#modal__add-department').modal({
+        detachable: true,
+        closable:   false,
+        onHidden:   () => {
+          if (!this.get('respondedDepartment')) {
+            this.send('respondDepartmentModal', false);
+          }
+        }
+      }).modal('show');
+
+      return new Promise((resolveDepartment, rejectDepartment) => this.setProperties({
+        resolveDepartment,
+        rejectDepartment
+      }));
+    },
+
+    respondLocationModal (response) {
+      if (!response) {
+        this.get('newLocation').destroyRecord();
+      }
+
+      this.get(response ? 'resolveLocation' : 'rejectLocation')(response ? this.get('newLocation') : null);
+      this.set('respondedLocation', true);
+      $('#modal__add-location').modal('hide');
+    },
+
+    respondDepartmentModal (response) {
+      if (!response) {
+        this.get('newDepartment').destroyRecord();
+        this.set('newDepartment', null);
+      }
+
+      this.get(response ? 'resolveDepartment' : 'rejectDepartment')(response ? this.get('newDepartment') : null);
+      this.set('respondedDepartment', true);
+      $('#modal__add-department').modal('hide');
     }
   }
 });
