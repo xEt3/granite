@@ -17,3 +17,23 @@
 .census__start-over {
   color: @granite-grey !important;
 }
+
+.overflow i {
+  position: absolute;
+  z-index: 2;
+  right: 1em;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ui.table tr:nth-child(odd) td:last-child {
+  background-color: white;
+  position: relative;
+  z-index: 3;
+}
+
+.ui.table tr:nth-child(even) td:last-child {
+  background-color: #fafafb;
+  position: relative;
+  z-index: 3;
+}
