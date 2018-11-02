@@ -143,7 +143,9 @@ Router.map(function () {
           this.route('new');
         });
       });
-      this.route('location', function () {});
+      this.route('location', function () {
+        this.route('edit', { path: '/:location_id/edit' });
+      });
       this.route('departments', function () {
         this.route('index', { path: '/' }, function () {
           this.route('new');
