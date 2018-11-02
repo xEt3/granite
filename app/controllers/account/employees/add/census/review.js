@@ -58,7 +58,8 @@ export default Controller.extend(ajaxStatus, addEdit, {
   availableFields: computed('model.availableFields.[]', function () {
     return (this.get('model.availableFields') || []).map(({ path, format }) => ({
       path,
-      label: `${this.convertPathToLabel(path)} - ${format}`
+      label:          `${this.convertPathToLabel(path)} - ${format}`,
+      isRelationship: format === 'lookup or id' ? true : false
     }));
   }),
 

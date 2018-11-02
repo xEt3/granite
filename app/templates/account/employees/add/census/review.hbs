@@ -105,9 +105,9 @@
               <td>
                 {{add-one rowIndex}}
               </td>
-              {{#each row as |column|}}
+              {{#each row as |column columnIndex|}}
                 <td>
-                  {{column}}
+                  {{census/table-cell column rowIndex columnIndex potentialData availableFields model.data.[0]}}
                 </td>
               {{/each}}
             </tr>
@@ -129,9 +129,6 @@
     Add Location
   </div>
   <div class="content">
-
-
-
     <div class="field">
       <label for="location-name">Name</label>
       {{input type="text" value=newLocation.name id="location-name" placeholder="Location Name"}}
@@ -177,13 +174,6 @@
         {{input type="text" value=newLocation.addressZipcode placeholder="Zip" id="address-zip"}}
       </div>
     </div>
-
-
-
-
-
-
-
   </div>
   <div class="actions">
     <button class="ui red button" {{action 'respondLocationModal' false}}>
