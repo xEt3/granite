@@ -18,12 +18,43 @@
   color: @granite-grey !important;
 }
 
-.overflow i {
+.overflow::after {
+  content: '';
+  position: absolute;
+  width: 5em;
+  right: 5.4em;
+  margin-top: -30px;
+  height: 80px;
+  opacity: .6;
+  background: linear-gradient(to right, transparent, lighten(@granite-grey,25%));
+}
+
+tr.overflow::after {
+  content: '';
+  position: absolute;
+  width: 5em;
+  right: 5.4em;
+  margin-top: 0;
+  height: 17.4em;
+  opacity: .6;
+  background: linear-gradient(to right, transparent, lighten(@granite-grey,25%));
+}
+
+.arrow-overflow i {
   position: absolute;
   z-index: 2;
-  right: 1em;
-  top: 50%;
+  right: 1.2em;
+  top: 60%;
   transform: translateY(-50%);
+  opacity: .7;
+  color: lighten(@granite-grey, 21%);
+  cursor: pointer;
+}
+
+.ui.table thead tr > th:last-child {
+  background-color: #fafafb;
+  position: relative;
+  z-index: 3;
 }
 
 .ui.table tr:nth-child(odd) td:last-child {

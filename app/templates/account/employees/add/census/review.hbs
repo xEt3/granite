@@ -40,11 +40,11 @@
   <div class="ui raised very padded fluid container">
     <div class="responsive-table census__table">
       <table class="ui striped celled table">
-        <div class='overflow'>
-          <i class="huge teal angle right icon"></i>
+        <div class='arrow-overflow'>
+          <a href="#"> <i class="huge angle right icon" {{action 'quickScroll'}}></i> </a>
         </div>
         <thead>
-          <tr class="guess-fields-row">
+          <tr class="guess-fields-row overflow">
             <th>
               <div class="ui red ribbon label">
                 {{#ui-popup content='We have attempted to guess the columns that you uploaded. This row represents our guesses.'}}
