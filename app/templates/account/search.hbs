@@ -9,7 +9,12 @@
   {{#each-in model.results as |category group|}}
     <h2>{{category}}</h2>
     {{#each group.results as |result|}}
-      {{search/result-item result}}
+      {{log result}}
+      {{search/result-item
+        result._source
+        modelName=result._type
+        title=result.title
+        description=result.description}}
     {{/each}}
   {{else}}
     <h2 class="center aligned text">No results found.</h2>

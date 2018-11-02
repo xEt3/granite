@@ -11,6 +11,11 @@ const urlMap = {
   location: {
     uri: 'anatomy.locations',
     id:  false
+  },
+  jobopening: 'job-opening.campaign',
+  actionitem: {
+    uri: 'action-item',
+    id:  m => (m._source.title || '').replace(/\s/g, '-')
   }
 };
 
@@ -23,7 +28,10 @@ export default function uriForModel (model = {}) {
   ];
 
   if (uriMapping.id !== false) {
-    args.push(_id);
+    let idMap = uriMapping.id,
+        idArg = idMap && typeof idMap === 'function' ? idMap(model) : _id;
+
+    args.push(idArg);
   }
 
   return args;

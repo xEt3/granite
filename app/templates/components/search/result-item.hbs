@@ -1,13 +1,13 @@
 {{#if isEmployee}}
   {{display/employee-picture url=model.picture employeeId=model.id class="search-result-item__image"}}
 {{/if}}
-{{#if properties.title}}
+{{#if _title}}
   <div class="search-result-item__title">
-    {{properties.title}}
+    {{_title}}
   </div>
 {{/if}}
-{{#if properties.description}}
+{{#if _description}}
   <div class="search-result-item__description">
-    {{properties.description}}
+    {{_description}}
   </div>
 {{/if}}

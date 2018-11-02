@@ -1,5 +1,5 @@
 import BaseLiComponent from '../list-item/base';
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
 
 const modelFieldMap = {
   employee: {
@@ -13,31 +13,32 @@ const modelFieldMap = {
   }
 };
 
-export default BaseLiComponent.extend({
-  classNames: [
-    'search__result-item'
-  ],
+const itemProperty = (property) =>
+  computed('modelName', 'model', property, function () {
+    let model = this.get('model'),
+        modelName = this.get('modelName');
 
-  classNameBindings: [ 'modelClass' ],
-
-  modelClass: computed('model.constructor.modelName', function () {
-    return `search__result-item--${this.get('model.constructor.modelName')}`;
-  }),
-
-  modelName: computed.reads('model.constructor.modelName'),
-
-  isEmployee: computed.equal('modelName', 'employee'),
-
-  properties: computed('modelName', 'model', function () {
-    let model = this.get('model');
-    let modelName = this.get('modelName');
     if (!modelName) {
-      return {};
+      return null;
     }
-    let { title, description } = modelFieldMap[modelName] || {};
-    return {
-      title:       title && model.get(title),
-      description: description && model.get(description)
-    };
+
+    if (this.get(property)) {
+      return this.get(property);
+    }
+
+    let propertyMap = modelFieldMap[modelName][property];
+    return propertyMap && get(model, propertyMap);
+  });
+
+export default BaseLiComponent.extend({
+  classNames:        [ 'search__result-item' ],
+  classNameBindings: [ 'modelClass' ],
+  modelName:         computed.reads('model.constructor.modelName'),
+  isEmployee:        computed.equal('modelName', 'employee'),
+  _title:            itemProperty('title'),
+  _description:      itemProperty('description'),
+
+  modelClass: computed('modelName', function () {
+    return `search__result-item--${this.get('modelName')}`;
   })
 });

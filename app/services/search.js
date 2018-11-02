@@ -16,6 +16,14 @@ const resultDisplayMap = {
   companyuser: {
     title:       [ 'name.first', 'name.middle', 'name.last' ],
     description: 'email'
+  },
+  jobopening: {
+    title:       'name',
+    description: [ 'title', 'category' ]
+  },
+  actionitem: {
+    title:       'title',
+    description: 'description'
   }
 };
 
@@ -23,7 +31,9 @@ const categoryMap = {
   employee:    'Employees',
   department:  'Departments',
   location:    'Locations',
-  companyuser: 'Users'
+  companyuser: 'Users',
+  jobopening:  'Job Openings',
+  actionitem:  'Action Items'
 };
 
 const createSerializer = (serializerOptions) => {
