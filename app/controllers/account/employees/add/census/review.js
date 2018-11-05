@@ -64,7 +64,7 @@ export default Controller.extend(ajaxStatus, addEdit, {
   }),
 
   actions: {
-    doDryRun () {
+    doDryRun (displayDryRunResults = false) {
       const headerMap = this.get('model.data')[0],
             uploadId = this.get('model.uploadId');
 
@@ -72,14 +72,17 @@ export default Controller.extend(ajaxStatus, addEdit, {
       this.ajaxStart();
 
       return this.get('ajax').post(`/api/v1/employee/census/${uploadId}/dryrun`, { data: { headerMap } }).then(dryrunResult => {
-        this.set('dryrun', null);
-        this.set('dryrunResult', dryrunResult);
+        this.setProperties({
+          displayDryRunResults,
+          dryrun:        null,
+          potentialData: dryrunResult
+        });
         this.ajaxSuccess(null, true);
       }).catch(this.ajaxError.bind(this));
     },
 
     dumpDryRun () {
-      this.set('dryrunResult', null);
+      this.set('displayDryRunResults', null);
     },
 
     mutateGuess (index, val) {
@@ -163,6 +166,10 @@ export default Controller.extend(ajaxStatus, addEdit, {
       this.get(response ? 'resolveDepartment' : 'rejectDepartment')(response ? this.get('newDepartment') : null);
       this.set('respondedDepartment', true);
       $('#modal__add-department').modal('hide');
+    },
+
+    onNotify (type, msg) {
+      this.send('notify', type, msg);
     }
   }
 });

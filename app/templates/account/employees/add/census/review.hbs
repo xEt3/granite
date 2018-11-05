@@ -8,7 +8,7 @@
 {{#if dryrun}}
   <i class="pull-right text-green spinner loading icon"></i>
 {{else}}
-  <a href="#" class="pull-right text-green btn__dry-run" {{action "doDryRun"}}>
+  <a href="#" class="pull-right text-green btn__dry-run" {{action "doDryRun" true}}>
     {{if dryrunResult 'Regenerate' 'Generate'}} dry run data
   </a>
 {{/if}}
@@ -35,7 +35,7 @@
   </div>
 {{/ui-dropdown}}
 
-{{#if dryrunResult}}
+{{#if displayDryRunResults}}
   <p class="text-center text-white">
     The following would be created as a result of this import:
     <a href="#" class="text-muted pull-right" {{action "dumpDryRun"}}>
@@ -43,8 +43,8 @@
     </a>
   </p>
 
-  {{#each dryrunResult as |dryRunRecord index|}}
-    {{list-item/dry-run-employee dryRunRecord=dryRunRecord index=index}}
+  {{#each potentialData as |potentialDataRecord index|}}
+    {{list-item/dry-run-employee dryRunRecord=potentialDataRecord index=index}}
   {{/each}}
 {{/if}}
 
@@ -71,7 +71,7 @@
                     direction="downward"
                     name="guess-column"
                     selected=guesses
-                    onChange=(action 'mutateGuess' index)}}
+                    onChange=(pipe-action (action 'mutateGuess' index)(action 'doDryRun'))}}
                     <div class="default text">Select field for column</div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
@@ -107,7 +107,16 @@
               </td>
               {{#each row as |column columnIndex|}}
                 <td>
-                  {{census/table-cell column rowIndex columnIndex potentialData availableFields model.data.[0]}}
+                  {{census/table-cell
+                    column
+                    rowIndex
+                    columnIndex
+                    potentialData
+                    availableFields
+                    model.data.[0]
+                    addDepartment = (action 'showDepartmentModal')
+                    onNotify = (action 'onNotify')
+                  }}
                 </td>
               {{/each}}
             </tr>

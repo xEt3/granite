@@ -1,14 +1,30 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
+import ajaxStatus from 'granite/mixins/ajax-status';
+import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-const CensusTableCellComponent = Component.extend({
-  hasRelationship: computed('availableFields.[],', 'guesses.[],', 'columnIndex', function () {
-    let availableFields = this.get('availableFields'),
-        guesses = this.get('guesses'),
-        columnIndex = this.get('columnIndex');
+const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
+  hasRelationship: computed('availableFields.[],', 'guesses.[],', 'columnIndex', 'rowIndex', 'potentialData', 'column', function () {
+    let guessForCell = this.get('guesses')[this.get('columnIndex')],
+        potentialDataForCell = this.get('potentialData')[this.get('rowIndex')][guessForCell],
+        field = this.get('availableFields').findBy('path', guessForCell),
+        column = this.get('column');
 
-    return availableFields.findBy('path', guesses.objectAt(columnIndex)).isRelationship;
-  })
+    //if cell is a relationship cell, and cell has a value in it, and the potentialDataForCell is undefined
+    return field.isRelationship && column && !potentialDataForCell ? field.path : null;
+  }),
+
+  popupMessage: computed('hasRelationship', function () {
+    let relationship = this.get('hasRelationship');
+    return htmlSafe(`Could not find this ${relationship},  click to create.`);
+  }),
+
+  actions: {
+    notify (type, msg) {
+      this.get('onNotify')(type, msg);
+    }
+  }
 });
 
 CensusTableCellComponent.reopenClass({ positionalParams: [ 'column', 'rowIndex', 'columnIndex', 'potentialData', 'availableFields', 'guesses' ] });

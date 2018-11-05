@@ -7,10 +7,12 @@ export default Route.extend({
 
   model ({ uploadId }) {
     return this.get('ajax').request(`/api/v1/employee/census/${uploadId}`)
-    .then(fileData => hash({
-      fileData,
-      potentialData: this.get('ajax').post(`/api/v1/employee/census/${uploadId}/dryrun`, { data: { headerMap: fileData.data[0] } })
-    }));
+    .then(fileData => {
+      return hash({
+        fileData,
+        potentialData: this.get('ajax').post(`/api/v1/employee/census/${uploadId}/dryrun`, { data: { headerMap: fileData.data[0] } })
+      });
+    });
   },
 
   setupController (controller, model) {
@@ -18,7 +20,7 @@ export default Route.extend({
     this._super(...arguments);
     controller.setProperties({
       dryrunResult:  null,
-      model:         model.fileData,
+      model:         model.fileData || model,
       potentialData: model.potentialData
     });
   }

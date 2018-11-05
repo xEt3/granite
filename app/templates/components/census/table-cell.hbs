@@ -1,10 +1,21 @@
-{{column}}
 {{#if hasRelationship}}
-  <i class="plus icon"></i>
-  {{!-- DO SOMETHING HERE TO SEE IF CELL IS EMPTY WITH POTENTIAL DATA AND ROW INDEX--}}
+  {{#ui-popup tagName='span' content=popupMessage position="right center"}}
+    {{column}}
+    <a href="#" {{action (pipe
+      (action addDepartment)
+      (action 'save')
+      )}}>
+      <i class="exclamation circle icon text-red"></i>
+    </a>
+  {{/ui-popup}}
+{{else}}
+  {{column}}
 {{/if}}
-{{log 'rowIndex' rowIndex}}
+
+
+{{!-- {{log 'rowIndex' rowIndex}}
 {{log 'columnIndex' columnIndex}}
 {{log 'column' column}}
 {{log 'potentialData' potentialData}}
-{{log 'guesses' guesses}}
+{{log 'availableFields' availableFields}}
+{{log 'guesses' guesses}} --}}
