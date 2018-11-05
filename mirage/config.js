@@ -27,7 +27,7 @@ const processEmbeddedRelationships = ({ model, key, data, parentId, parentKey, p
 
 export default function () {
   // this.logging = true;
-  this.logging = false;
+  this.logging = true;
   this.namespace = '/api/v1';
 
   // These comments are here to help you get started. Feel free to delete them.
@@ -115,7 +115,7 @@ export default function () {
     return companies.find(id).update(attrs);
   });
 
-  // quick and dirty mock of search that will function with the mirage db
+  // quick and dirty mock of search from ES that will function with the mirage db
   this.get('/search', (db, request) => {
     const { q } = request.queryParams || {};
 
@@ -124,10 +124,18 @@ export default function () {
     }
 
     let results = searchModels.reduce((resultList, modelName) => {
-      return [ ...resultList, ...db[modelName].where((item = {}) => {
+
+      return [ ...resultList, ...((db[modelName].where((item = {}) => {
         // stringify the object, isn't that what elastic search does anyways?
         // ;)
         return JSON.stringify(item).indexOf(q) > -1;
+      }) || {}).models || []).map((item) => {
+        return {
+          _id:     item.id,
+          _source: item,
+          _type:   modelName.split('').slice(0, -1).join(''),
+          _index:  modelName
+        };
       }) ];
     }, []);
 

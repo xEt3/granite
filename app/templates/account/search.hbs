@@ -1,22 +1,23 @@
-<div class="ui raised padded segment container clearfix">
-  <h1 class="ui header">
+<div class="ui raised padded segment container clearfix search__container">
+  <h1 class="ui header search__descriptor">
     Search results for "{{q}}"...
   </h1>
-
   <div class="ui divider"></div>
 
-
   {{#each-in model.results as |category group|}}
-    <h2>{{category}}</h2>
-    {{#each group.results as |result|}}
-      {{log result}}
-      {{search/result-item
-        result._source
-        modelName=result._type
-        title=result.title
-        description=result.description}}
-    {{/each}}
+    <h2 class="search__result-category">{{category}}</h2>
+    <div class="ui divided link items">
+      {{#each group.results as |result|}}
+        {{search/result-item
+          result._source
+          resultItem=result
+          modelName=result._type
+          title=result.title
+          picture=result.picture
+          description=result.description}}
+      {{/each}}
+    </div>
   {{else}}
-    <h2 class="center aligned text">No results found.</h2>
+    <h2 class="center aligned text search__no-results">No results found.</h2>
   {{/each-in}}
 </div>

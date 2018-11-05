@@ -1,15 +1,23 @@
 import BaseLiComponent from '../list-item/base';
 import { computed, get } from '@ember/object';
+import { inject as service } from '@ember/service';
+import uriForModel from 'granite/utils/uri-for-model';
 
 const modelFieldMap = {
   employee: {
     title:       'fullName',
-    description: 'jobTitle'
+    description: 'jobTitle',
+    _id:         '_id',
+    picture:     'picture'
   },
-  department: { title: 'name' },
-  location:   {
+  department: {
+    title: 'name',
+    _id:   '_id'
+  },
+  location: {
     title:       'name',
-    description: 'addressLine1'
+    description: 'addressLine1',
+    _id:         '_id'
   }
 };
 
@@ -31,14 +39,30 @@ const itemProperty = (property) =>
   });
 
 export default BaseLiComponent.extend({
-  classNames:        [ 'search__result-item' ],
+  router:            service(),
+  tagName:           'a',
+  href:              '#',
+  attributeBindings: [ 'href' ],
+  classNames:        [ 'search__result-item', 'item' ],
   classNameBindings: [ 'modelClass' ],
   modelName:         computed.reads('model.constructor.modelName'),
   isEmployee:        computed.equal('modelName', 'employee'),
-  _title:            itemProperty('title'),
-  _description:      itemProperty('description'),
+
+  _title:       itemProperty('title'),
+  _description: itemProperty('description'),
+  __id:         itemProperty('_id'),
+  _picture:     itemProperty('picture'),
 
   modelClass: computed('modelName', function () {
     return `search__result-item--${this.get('modelName')}`;
-  })
+  }),
+
+  click (e) {
+    e.preventDefault();
+
+    const result = this.get('resultItem'),
+          router = this.get('router');
+
+    router.transitionTo.apply(router, uriForModel(result));
+  }
 });

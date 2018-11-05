@@ -27,18 +27,18 @@ module('Acceptance | search | full results', function (hooks) {
 
     await triggerKeyEvent('.search input', 'keypress', 'Enter');
     await settled();
-    assert.equal(currentURL(), '/account/search', 'on results page');
+    assert.equal(currentURL(), '/account/search?q=test', 'on results page');
     // no results
-    assert.dom('.search__descriptor').hasText('No results found');
+    assert.dom('.search__no-results').hasText('No results found.');
     assert.dom('.search__result-item').doesNotExist();
 
     await visit('/account/dashboard');
     assert.equal(currentURL(), '/account/dashboard', 'on dashboard again');
 
     // add results
-    let department = server.create('department', { name: 'tester' }),
-        location = server.create('location', { name: 'tester' }),
-        employee = server.create('employee', { firstName: 'mr testering' });
+    server.create('department', { name: 'tester' });
+    server.create('location', { name: 'tester' });
+    server.create('employee', { firstName: 'mr testering' });
 
     assert.dom('nav.menu > .menu__search-input .search input').exists();
     await focus('.search input');
@@ -47,22 +47,12 @@ module('Acceptance | search | full results', function (hooks) {
 
     await triggerKeyEvent('.search input', 'keypress', 'Enter');
     await settled();
-    assert.equal(currentURL(), '/account/search', 'on results page');
+    assert.equal(currentURL(), '/account/search?q=test', 'on results page');
 
     assert.dom('.search__result-item').exists({ count: 3 });
     assert.dom('.search__result-category').exists({ count: 3 });
-    assert.dom('.search__result-category:nth-child(1)').hasText('Employees');
-    assert.dom('.search__result-category:nth-child(2)').hasText('Departments');
-    assert.dom('.search__result-category:nth-child(3)').hasText('Locations');
-
-    // assert result item by nth-child for each model
-    assert.dom('.search__result-item:nth-child(1) > .search-result__title').hasText(employee.fullName);
-    assert.dom('.search__result-item:nth-child(1) > .search-result__description').hasText(employee.jobTitle);
-
-    assert.dom('.search__result-item:nth-child(2) > .search-result__title').hasText(department.name);
-    assert.dom('.search__result-item:nth-child(2) > .search-result__description').doesNotExist();
-
-    assert.dom('.search__result-item:nth-child(3) > .search-result__title').hasText(location.name);
-    assert.dom('.search__result-item:nth-child(3) > .search-result__description').hasText(location.addressLine1);
+    assert.dom('.search__container .search__result-category:nth-child(3)').hasText('Employees');
+    assert.dom('.search__container .search__result-category:nth-child(5)').hasText('Departments');
+    assert.dom('.search__container .search__result-category:nth-child(7)').hasText('Locations');
   });
 });

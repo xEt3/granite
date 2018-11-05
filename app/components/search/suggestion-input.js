@@ -38,6 +38,9 @@ export default Component.extend({
     }
 
     let q = this.get('query');
+
     this.get('router').transitionTo('account.search', { queryParams: { q } });
+    this.$('input').blur();
+    this.set('query', null);
   }
 });

@@ -18,19 +18,20 @@ module('Integration | Component | search/result-item', function (hooks) {
     const { attrs } = await server.create('employee');
     let employee = this.owner.lookup('service:store').createRecord('employee', attrs);
     employee.set('picture', null);
+    employee.set('_id', employee.get('id')); // HACK: mimic result item
     this.set('employee', employee);
-    await render(hbs`{{search/result-item employee}}`);
+    await render(hbs`{{search/result-item employee picture=picture}}`);
 
     assert.dom('.search__result-item').exists({ count: 1 });
     assert.dom('.search__result-item.search__result-item--employee').exists({ count: 1 });
-    assert.dom('.search__result-item > .search-result-item__title').hasText(employee.fullName);
-    assert.dom('.search__result-item > .search-result-item__description').hasText(employee.jobTitle);
+    assert.dom('.search__result-item .search-result-item__title').hasText(employee.fullName);
+    assert.dom('.search__result-item .search-result-item__description').hasText(employee.jobTitle);
     // Test default image src
     let imageElm = find('.search__result-item img.search-result-item__image');
     assert.equal(imageElm.getAttribute('src').indexOf(`/api/v1/employee/${employee.get('id')}/avatar`) > -1, true, 'src has default image url');
-
     // Test employee property image src
     employee.set('picture', faker.image.image());
+    this.set('picture', employee.get('picture'));
     await settled();
     imageElm = find('.search__result-item img.search-result-item__image');
     assert.equal(imageElm.getAttribute('src').indexOf(this.get('employee.picture')) > -1, true, 'src has employee image url');
@@ -45,9 +46,9 @@ module('Integration | Component | search/result-item', function (hooks) {
     assert.dom('.search__result-item.search__result-item--department').exists({ count: 1 });
     assert.dom('.search__result-item.search__result-item--employee').doesNotExist();
     assert.dom('.search__result-item.search__result-item--location').doesNotExist();
-    assert.dom('.search__result-item > .search-result-item__title').hasText(department.name);
-    assert.dom('.search__result-item > .search-result-item__description').doesNotExist();
-    assert.dom('.search__result-item > img.search-result-item__image').doesNotExist();
+    assert.dom('.search__result-item .search-result-item__title').hasText(department.name);
+    assert.dom('.search__result-item .search-result-item__description').doesNotExist();
+    assert.dom('.search__result-item img.search-result-item__image').doesNotExist();
   });
 
   test('location type renders correct elements', async function (assert) {
@@ -59,8 +60,8 @@ module('Integration | Component | search/result-item', function (hooks) {
     assert.dom('.search__result-item.search__result-item--location').exists({ count: 1 });
     assert.dom('.search__result-item.search__result-item--employee').doesNotExist();
     assert.dom('.search__result-item.search__result-item--department').doesNotExist();
-    assert.dom('.search__result-item > .search-result-item__title').hasText(location.name);
-    assert.dom('.search__result-item > .search-result-item__description').hasText(location.addressLine1);
-    assert.dom('.search__result-item > img.search-result-item__image').doesNotExist();
+    assert.dom('.search__result-item .search-result-item__title').hasText(location.name);
+    assert.dom('.search__result-item .search-result-item__description').hasText(location.addressLine1);
+    assert.dom('.search__result-item img.search-result-item__image').doesNotExist();
   });
 });
