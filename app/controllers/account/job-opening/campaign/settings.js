@@ -136,7 +136,7 @@ export default Controller.extend(addEdit, {
         this.set('customPipeline', this.store.createRecord('recruiting-pipeline', {
           company:     this.get('auth.user.company.id'),
           jobOpenings: [ this.get('model') ],
-          stages:      this.get('defaultPipeline.stages').map(stages => stages)
+          stages:      this.get('defaultPipeline.stages')
         }));
       }
     },
