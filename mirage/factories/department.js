@@ -1,22 +1,14 @@
 import { Factory, faker } from 'ember-cli-mirage';
 
 export default Factory.extend({
-  _id () {
+  id () {
     let i = faker.random.number({
       min: 111111111111,
       max: 9999999999999
     });
     return i;
   },
-  address: {
-    line1: faker.address.streetAddress(),
-    city:  faker.address.city(),
-    state: faker.address.state(),
-    zip:   faker.address.zipCode()
-  },
-  phone: faker.phone.phoneNumber,
-
-  name: faker.address.state,
+  name: faker.commerce.department(),
   code: faker.random.number({
     min: 11,
     max: 99

@@ -194,6 +194,7 @@ Router.map(function () {
     });
 
     this.route('first-steps');
+    this.route('search');
   });
 
   this.route('error');
