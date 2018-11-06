@@ -10,7 +10,9 @@ import $ from 'jquery';
 
 export default Controller.extend(ajaxStatus, addEdit, {
   states,
-  ajax:           service(),
+
+  ajax: service(),
+
   stateIsMontana: computed.equal('newLocation.addressState', 'MT'),
 
   intros: computed(function () {
@@ -54,7 +56,6 @@ export default Controller.extend(ajaxStatus, addEdit, {
     return (this.get('model.data') || []).slice(2);
   }),
 
-
   availableFields: computed('model.availableFields.[]', function () {
     return (this.get('model.availableFields') || []).map(({ path, format }) => ({
       path,
@@ -68,13 +69,13 @@ export default Controller.extend(ajaxStatus, addEdit, {
       const headerMap = this.get('model.data')[0],
             uploadId = this.get('model.uploadId');
 
-      this.set('dryrun', true);
+      this.set('doingDryRun', true);
       this.ajaxStart();
 
       return this.get('ajax').post(`/api/v1/employee/census/${uploadId}/dryrun`, { data: { headerMap } }).then(dryrunResult => {
         this.setProperties({
           displayDryRunResults,
-          dryrun:        null,
+          doingDryRun:   null,
           potentialData: dryrunResult
         });
         this.ajaxSuccess(null, true);
@@ -170,6 +171,10 @@ export default Controller.extend(ajaxStatus, addEdit, {
 
     onNotify (type, msg) {
       this.send('notify', type, msg);
+    },
+
+    onRefresh () {
+      this.send('refresh');
     }
   }
 });

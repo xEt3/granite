@@ -1,39 +1,17 @@
-{{!-- {{intro-js steps=intros start-if=model.data}} --}}
+{{intro-js steps=intros start-if=model.data}}
 
 {{#link-to 'account.employees.add.census.index' class="item text-danger"}}
   <i class="fa fa-fw fa-refresh"></i>
   Reupload census
 {{/link-to}}
 
-{{#if dryrun}}
+{{#if doingDryRun}}
   <i class="pull-right text-green spinner loading icon"></i>
 {{else}}
   <a href="#" class="pull-right text-green btn__dry-run" {{action "doDryRun" true}}>
-    {{if dryrunResult 'Regenerate' 'Generate'}} dry run data
+    {{if displayDryRunResults 'Regenerate' 'Generate'}} dry run data
   </a>
 {{/if}}
-
-{{#ui-dropdown class="right floated top pointing inline"}}
-  <i class="plus icon"></i>
-  <div class="menu">
-    <a href="#" class="item" {{action
-      (pipe
-        (action 'showLocationModal')
-        (action 'save')
-      )
-    }}>
-      <i class="building icon"></i>Location
-    </a>
-    <a href="#" class="item" {{action
-      (pipe
-        (action 'showDepartmentModal')
-        (action 'save')
-      )
-    }}>
-      <i class="cubes icon"></i>Department
-    </a>
-  </div>
-{{/ui-dropdown}}
 
 {{#if displayDryRunResults}}
   <p class="text-center text-white">
@@ -44,7 +22,11 @@
   </p>
 
   {{#each potentialData as |potentialDataRecord index|}}
-    {{list-item/dry-run-employee dryRunRecord=potentialDataRecord index=index}}
+    {{list-item/dry-run-employee
+      dryRunRecord=potentialDataRecord
+      index=index
+      availableFields=availableFields
+    }}
   {{/each}}
 {{/if}}
 
@@ -115,6 +97,8 @@
                     availableFields
                     model.data.[0]
                     addDepartment = (action 'showDepartmentModal')
+                    addLocation = (action 'showLocationModal')
+                    onRefresh = (action 'onRefresh')
                     onNotify = (action 'onNotify')
                   }}
                 </td>

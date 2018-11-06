@@ -1,8 +1,9 @@
 import Route from '@ember/routing/route';
+import refreshable from 'granite/mixins/refreshable';
 import { inject as service } from '@ember/service';
 import { hash } from 'rsvp';
 
-export default Route.extend({
+export default Route.extend(refreshable, {
   ajax: service(),
 
   model ({ uploadId }) {
@@ -16,12 +17,11 @@ export default Route.extend({
   },
 
   setupController (controller, model) {
-    controller.set('dryrunResult', null);
     this._super(...arguments);
     controller.setProperties({
-      dryrunResult:  null,
-      model:         model.fileData || model,
-      potentialData: model.potentialData
+      displayDryRunResults: null,
+      model:                model.fileData || model,
+      potentialData:        model.potentialData
     });
   }
 });

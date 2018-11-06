@@ -1,21 +1,10 @@
 {{#if hasRelationship}}
   {{#ui-popup tagName='span' content=popupMessage position="right center"}}
     {{column}}
-    <a href="#" {{action (pipe
-      (action addDepartment)
-      (action 'save')
-      )}}>
+    <a href='#' {{action 'addAction'}}>
       <i class="exclamation circle icon text-red"></i>
     </a>
   {{/ui-popup}}
 {{else}}
   {{column}}
 {{/if}}
-
-
-{{!-- {{log 'rowIndex' rowIndex}}
-{{log 'columnIndex' columnIndex}}
-{{log 'column' column}}
-{{log 'potentialData' potentialData}}
-{{log 'availableFields' availableFields}}
-{{log 'guesses' guesses}} --}}
