@@ -5,10 +5,9 @@ import ajaxStatus from 'granite/mixins/ajax-status';
 import titleCase from 'granite/utils/title-case';
 import { decamelize } from '@ember/string';
 import { states } from 'granite/config/statics';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import $ from 'jquery';
 
-export default Controller.extend(ajaxStatus, addEdit, {
+export default Controller.extend(ajaxStatus, {
   states,
 
   ajax: service(),
