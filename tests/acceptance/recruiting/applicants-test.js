@@ -64,7 +64,7 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
     await click('small > a');
     assert.dom('small > a').hasText('Hide Disqualified Applicants');
     assert.dom('.pipeline .pipeline__stage').exists({ count: 3 });
-    assert.dom('.content.content__flex > .header').hasText(applicant.name.first + ' ' + applicant.name.last);
+    assert.dom('.content.content__flex > .header').hasText(applicant.firstName + ' ' + applicant.lastName);
     assert.dom('.ui.small.green.button').isNotVisible();
     assert.dom('.ui.small.orange.button').isNotVisible();
     await click('div.divided.items div.field input');
@@ -131,7 +131,7 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
     assert.dom('div.pipeline__stage:nth-child(1) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isVisible();
     assert.dom('div.pipeline__stage:nth-child(2) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isNotVisible();
     assert.dom('div.pipeline__stage:nth-child(3) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isNotVisible();
-    assert.dom('span.card-content__applicant-name').hasText(applicant.name.first + ' ' + applicant.name.last);
+    assert.dom('span.card-content__applicant-name').hasText(applicant.firstName + ' ' + applicant.lastName);
     assert.dom('.card-content__email > a').hasText(applicant.email);
     assert.dom('.card-content__next-schedule').hasText('Nothing scheduled');
     assert.dom('.card-content__application-link > a').hasText('Open Application');
