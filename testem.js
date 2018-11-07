@@ -2,10 +2,10 @@
 
 /* eslint-env node */
 module.exports = {
-  test_page: 'tests/index.html?hidepassed',
-  disable_watching: true,
+  test_page:                  'tests/index.html?hidepassed',
+  disable_watching:           true,
   browser_disconnect_timeout: 120,
-  browser_start_timeout: 120,
+  browser_start_timeout:      120,
 
   launch_in_ci: [
     'bs_edge16',
@@ -34,14 +34,14 @@ module.exports = {
 
   launchers: {
     bs_edge16: {
-      exe: "npx browserstack-launch",
-      args: ["--os", "Windows", "--osv", "10", "--b", "edge", "--bv", "16.0", "--u",
-      protocol: "browser"
+      exe:      'npx browserstack-launch',
+      args:     [ '--os', 'Windows', '--osv', '10', '--b', 'edge', '--bv', '16.0', '--u' ],
+      protocol: 'browser'
     },
     bs_chromelatest: {
-      exe: "node_modules/.bin/browserstack-launch",
-      args: ["--os", "Windows", "--osv", "10", "--b", "chrome", "--bv", "latest", "-t", "600", "--u"],
-      protocol: "browser"
+      exe:      'node_modules/.bin/browserstack-launch',
+      args:     [ '--os', 'Windows', '--osv', '10', '--b', 'chrome', '--bv', 'latest', '-t', '600', '--u' ],
+      protocol: 'browser'
     }
     // SL_MicrosoftEdge_public_16_16299_Windows_10: {
     //   'exe': 'ember',
