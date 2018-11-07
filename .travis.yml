@@ -20,10 +20,10 @@ before_install:
 install:
 - yarn install --non-interactive
 before_script:
-- ember sauce:connect
+- ember browserstack:connect
 script:
 - yarn lint:js
 - yarn lint:hbs
 - yarn test-ci
 after_script:
-- ember sauce:disconnect
+- ember browserstack:disconnect

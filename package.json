@@ -18,7 +18,7 @@
     "lint:fixer-up": "./node_modules/.bin/eslint app tests --fix",
     "lint:hbs": "./node_modules/.bin/ember-template-lint app/templates/**/*",
     "test": "ember test",
-    "test-ci": "ember test --query=nolint --test-port=7000",
+    "test-ci": "ember test --query=nolint",
     "deploy": "git push heroku master",
     "postinstall": "node -e \"try { require('fs').symlinkSync(require('path').resolve('node_modules/@bower_components'), 'bower_components', 'junction') } catch (e) { }\""
   },
