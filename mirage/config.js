@@ -145,14 +145,29 @@ export default function () {
     };
   });
 
-  this.get('/job-openings/:id', ({ jobOpenings }, request) => {
-    let id = request.params.id;
+  this.get('/recruiting-pipelines', function (db, request) {
+    //need to do this to emulate default vs custom request
+    let defaultPipeline = db.recruitingPipelines.where({ jobOpenings: [] });
+    let customPipeline = db.recruitingPipelines.where((pipeline) => {
+      return pipeline.jobOpenings[0] !== undefined;
+    });
 
-    if (request.queryParams.$report) {
-      return [];
+    if (request.queryParams['jobOpenings.0[$exists]']) {
+      //for default pipeline
+      return defaultPipeline;
+    } else if (request.queryParams['jobOpenings[$in]']) {
+      //for custom pipeline
+      return customPipeline;
     }
 
-    return jobOpenings.find(id);
+    return customPipeline.models.length > 0 ? customPipeline : defaultPipeline;
+  });
+
+  this.get('job-openings/:id', function (db, request) {
+    if (request.queryParams.$report === 'summary') {
+      return [];
+    }
+    return db.jobOpenings.find(request.params.id);
   });
 
   this.get('/bt/token', () => {

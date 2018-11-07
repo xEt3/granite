@@ -3,6 +3,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import authenticate from 'granite/tests/helpers/auth';
 import { faker } from 'ember-cli-mirage';
 import { visit, currentURL, click, find, findAll, settled } from '@ember/test-helpers';
+import moment from 'moment';
 
 module('Acceptance | employee', function (hooks) {
   setupApplicationTest(hooks);
@@ -23,30 +24,7 @@ module('Acceptance | employee', function (hooks) {
   });
 
   test('checking elements on page', async function (assert) {
-
-    let { employee } = await authenticate.call(this, server, {
-      employee: {
-        name:    { first: faker.name.firstName() },
-        picture: null,
-        phone:   faker.phone.phoneNumberFormat(1),
-        email:   faker.internet.email(),
-        address: {
-          line1: faker.address.streetAddress(),
-          city:  faker.address.city(),
-          state: faker.address.state(),
-          zip:   faker.address.zipCode()
-        },
-        emergencyContact: {
-          name: {
-            first: faker.name.firstName(),
-            last:  faker.name.lastName()
-          }
-        },
-        customFields: { [faker.hacker.noun()]: faker.lorem.words() },
-        ssn:          '123-12-4444',
-        dateOfBirth:  '10/14/87'
-      }
-    });
+    let { employee } = await authenticate.call(this, server);
 
     await visit('/account/employees');
     await settled();
@@ -67,7 +45,7 @@ module('Acceptance | employee', function (hooks) {
     assert.equal(findAll('.ui.stackable.two.column.grid .ui.raised.segment').length, [ 6 ], 'all the segments are on page');
     assert.equal(findAll('.ui.stackable.two.column.grid .pencil.icon').length, [ 6 ], 'all the pencil are on page');
     assert.dom('.ui.stackable.two.column.grid .ui.basic.segment a').hasText(employee.email);
-    assert.dom('.ui.stackable.two.column.grid .ui.basic.segment a:nth-child(3)').hasText(employee.phone);
+    assert.dom('.ui.stackable.two.column.grid .ui.basic.segment a:nth-child(3)').hasText(employee.phone.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3'));
     [
       [ 'Direct Contact', 'Mailing Address', 'Custom Fields' ],
 
@@ -79,21 +57,16 @@ module('Acceptance | employee', function (hooks) {
     assert.dom('.segment.ui p.text div').hasText('SSN ***-**-4444');
     await click('div.line-item-value u a i.icon');
     assert.dom('.segment.ui p.text div').hasText('SSN 123-12-4444');
-    assert.dom('div.column:nth-child(1) .raised:nth-child(2) div.segment.basic').hasText(`${employee.address.line1}, ${employee.address.city}, ${employee.address.state} ${employee.address.zip}`);
-    assert.dom('.column .raised:nth-child(2) .basic p.text').hasText(`Date of Birth: ${employee.dateOfBirth}`);
+    assert.dom('div.column:nth-child(1) .raised:nth-child(2) div.segment.basic').hasText(`${employee.addressLine1}, ${employee.addressCity}, ${employee.addressState} ${employee.addressZip}`);
+    assert.dom('.column .raised:nth-child(2) .basic p.text').hasText(`Date of Birth: ${moment(employee.dateOfBirth).format('M/D/YY')}`);
     assert.dom('div.list div.line-item-value u').hasText(Object.values(employee.customFields)[0]);
-    assert.dom('div.column:nth-child(2) .raised:nth-child(3) div.segment.basic').includesText(`${employee.emergencyContact.name.first} ${employee.emergencyContact.name.last}`);
-    assert.dom('.employee-basic-meta').includesText(employee.name.first);
+    assert.dom('div.column:nth-child(2) .raised:nth-child(3) div.segment.basic').includesText(`${employee.emergencyContactNameFirst} ${employee.emergencyContactNameLast}`);
+    assert.dom('.employee-basic-meta').includesText(employee.firstName);
   });
 
   test('employee equipment page', async function (assert) {
-    let { employee } = await authenticate.call(this, server, {
-      employee: {
-        name:    { first: faker.name.firstName() },
-        picture: null
-      }
-    });
-    await server.create('asset-items');
+    let { employee } = await authenticate.call(this, server);
+    await server.create('asset-item');
     await visit('/account/employees');
     await settled();
     await click(`a[href="/account/employee/${employee.id}"]`);
@@ -111,12 +84,7 @@ module('Acceptance | employee', function (hooks) {
   });
 
   test('employee changes page', async function (assert) {
-    let { employee } = await authenticate.call(this, server, {
-      employee: {
-        name:    { first: faker.name.firstName() },
-        picture: null
-      }
-    });
+    let { employee } = await authenticate.call(this, server);
     await visit('/account/employees');
     await settled();
     await click(`a[href="/account/employee/${employee.id}"]`);
@@ -129,12 +97,7 @@ module('Acceptance | employee', function (hooks) {
   });
 
   test('employee counseling page', async function (assert) {
-    let { employee } = await authenticate.call(this, server, {
-      employee: {
-        name:    { first: faker.name.firstName() },
-        picture: null
-      }
-    });
+    let { employee } = await authenticate.call(this, server);
     await visit('/account/employees');
     await settled();
     await click(`a[href="/account/employee/${employee.id}"]`);
@@ -145,5 +108,4 @@ module('Acceptance | employee', function (hooks) {
     assert.equal(currentURL(), `/account/employee/${employee.id}/counseling`);
     assert.dom(`img[src="/api/v1/employee/${employee.id}/avatar"]`).exists();
   });
-
 });

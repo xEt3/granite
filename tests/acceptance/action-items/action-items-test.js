@@ -14,7 +14,7 @@ module('Acceptance | action items', function (hooks) {
 
   test('action items elements show on page', async function (assert) {
     await authenticate.call(this, server);
-    let firstItem = await server.create('action-items');
+    let firstItem = await server.create('action-item');
     await visit('/account/action-items');
     assert.equal(currentURL(), '/account/action-items', 'on Action Items page');
     assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Action Items');
@@ -36,7 +36,7 @@ module('Acceptance | action items', function (hooks) {
 
   test('filter by priority', async function (assert) {
     await authenticate.call(this, server);
-    await server.createList('action-items', 5);
+    await server.createList('action-item', 5);
     await visit('/account/action-items');
     await click('i.large.filter.icon');
     assert.dom('.five.ui.buttons').isVisible();

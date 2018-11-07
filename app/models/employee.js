@@ -85,7 +85,6 @@ export default Model.extend(Validations, {
   externalLinkAutomaticSync: attr('boolean'),
   externalLinkLastSync:      attr('date'),
 
-
   company: belongsTo('company', {
     async:   true,
     inverse: null

@@ -9,7 +9,7 @@ module('Acceptance | action item', function (hooks) {
 
   test('opening an action item', async function (assert) {
     await authenticate.call(this, server);
-    let action = await server.create('action-items', { title: 'apples' });
+    let action = await server.create('action-item', { title: 'apples' });
 
     await visit('/account/action-items');
     await click('div.extra.content > a.primary.button');
@@ -20,7 +20,7 @@ module('Acceptance | action item', function (hooks) {
 
   test('action item elements show on page', async function (assert) {
     let { employee } = await authenticate.call(this, server);
-    let action = await server.create('action-items', {
+    let action = await server.create('action-item', {
       title:         'apples',
       prerequisites: [],
       owner:         employee
@@ -51,7 +51,7 @@ module('Acceptance | action item', function (hooks) {
 
   test('todo action item elements', async function (assert) {
     await authenticate.call(this, server);
-    let action = await server.create('action-items', { title: 'apples' });
+    let action = await server.create('action-item', { title: 'apples' });
 
     await visit('/account/action-items');
     await click('div.extra.content > a.primary.button');
@@ -65,7 +65,7 @@ module('Acceptance | action item', function (hooks) {
 
   test('discussion action item elements', async function (assert) {
     await authenticate.call(this, server);
-    let action = await server.create('action-items', { title: 'apples' });
+    let action = await server.create('action-item', { title: 'apples' });
 
     await visit('/account/action-items');
     await click('div.extra.content > a.primary.button');

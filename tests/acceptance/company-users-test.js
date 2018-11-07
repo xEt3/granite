@@ -31,8 +31,8 @@ module('Acceptance | company users', function (hooks) {
   });
 
   test('adding new user with permissions', async function (assert) {
-    await server.create('employees');
-    await server.createList('permissions', 8);
+    await server.create('employee');
+    await server.createList('permission', 8);
     await authenticate.call(this, server);
     await visit('account/anatomy/company-users');
 
@@ -56,7 +56,7 @@ module('Acceptance | company users', function (hooks) {
   });
 
   test('editing user\'s permissions', async function (assert) {
-    let permissions = await server.createList('permissions', 8).map(p => {
+    let permissions = await server.createList('permission', 8).map(p => {
       return p.id;
     });
 

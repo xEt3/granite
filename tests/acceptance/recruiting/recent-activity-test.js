@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import authenticate from 'granite/tests/helpers/auth';
-import { visit, currentURL, click, find, settled } from '@ember/test-helpers';
+import { visit, currentURL, click, find, settled, findAll } from '@ember/test-helpers';
 
 module('Acceptance | recruiting-recent activity', function (hooks) {
   setupApplicationTest(hooks);
@@ -34,7 +34,7 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
   });
 
   test('continue setup', async function (assert) {
-    await authenticate.call(this, server, {
+    let { company } = await authenticate.call(this, server, {
       companyUser: {
         shownHints: [
           'recruiting-campaigns-index',
@@ -46,8 +46,9 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
         ]
       }
     });
+    await server.create('recruiting-pipeline', { company: company.id });
     let job = await server.create('job');
-    let campaign = await server.create('job-openings', {
+    let campaign = await server.create('job-opening', {
       job,
       title: job.title
     });
@@ -89,7 +90,7 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
     assert.dom('#send-confirmation-email-to-applicants label').isVisible();
     assert.dom('#send-job-close-notice-to-unrejected-applicants label').isVisible();
     assert.dom('#add-unrejected-applicants-to-talent-pool-after-filled label').isVisible();
-    assert.dom('div > h2:nth-child(3)').hasText('Job Settings');
+    assert.dom(findAll('div > h2')[1]).hasText('Job Settings');
     assert.dom('label[for="location"]').isVisible();
     assert.dom('#location input').isVisible();
     assert.dom('label[for="job-type"]').isVisible();
@@ -109,7 +110,6 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
     assert.dom('#job-type > div.text').hasText('Full Time');
     await click('form > button');
     await settled();
-
     assert.equal(currentURL(), `/account/recruiting/job-opening/${job.id}/setup/screening`);
     assert.dom('div:nth-child(1) > h1').hasText(`Setup ${campaign.name}`);
     assert.dom('div > h2.header').hasText('Screening Form');
