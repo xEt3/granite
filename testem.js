@@ -8,8 +8,11 @@ module.exports = {
   browser_start_timeout:      120,
 
   launch_in_ci: [
-    'bs_edge16',
-    'bs_chromelatest'
+    'bs_win10_edge16',
+    'bs_win10_chromelatest',
+    'bs_osxmojave_chromelatest',
+    'bs_osxmojave_safari12',
+    'bs_win10_firefoxlatest'
   ],
 
   launch_in_dev: [
@@ -33,14 +36,29 @@ module.exports = {
   },
 
   launchers: {
-    bs_edge16: {
+    bs_win10_edge16: {
       exe:      'node_modules/.bin/browserstack-launch',
       args:     [ '--os', 'Windows', '--osv', '10', '--b', 'edge', '--bv', '16.0', '--u' ],
       protocol: 'browser'
     },
-    bs_chromelatest: {
+    bs_win10_chromelatest: {
       exe:      'node_modules/.bin/browserstack-launch',
       args:     [ '--os', 'Windows', '--osv', '10', '--b', 'chrome', '--bv', 'latest', '-t', '600', '--u' ],
+      protocol: 'browser'
+    },
+    bs_osxmojave_chromelatest: {
+      exe:      'node_modules/.bin/browserstack-launch',
+      args:     [ '--os', 'OS X', '--osv', 'Mojave', '--b', 'chrome', '--bv', 'latest', '-t', '600', '--u' ],
+      protocol: 'browser'
+    },
+    bs_osxmojave_safari12: {
+      exe:      'node_modules/.bin/browserstack-launch',
+      args:     [ '--os', 'OS X', '--osv', 'Mojave', '--b', 'Safari', '--bv', '12.0', '--u' ],
+      protocol: 'browser'
+    },
+    bs_win10_firefoxlatest: {
+      exe:      'node_modules/.bin/browserstack-launch',
+      args:     [ '--os', 'Windows', '--osv', '10', '--b', 'firefox', '--bv', 'latest', '-t', '600', '--u' ],
       protocol: 'browser'
     }
     // SL_MicrosoftEdge_public_16_16299_Windows_10: {
