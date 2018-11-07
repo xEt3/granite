@@ -34,7 +34,7 @@ module.exports = {
 
   launchers: {
     bs_edge16: {
-      exe:      'npx browserstack-launch',
+      exe:      'node_modules/.bin/browserstack-launch',
       args:     [ '--os', 'Windows', '--osv', '10', '--b', 'edge', '--bv', '16.0', '--u' ],
       protocol: 'browser'
     },
