@@ -2,8 +2,9 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 const ControlComponent = Component.extend({
-  classNames: [ 'ui', 'field' ],
-  hasNull:    true,
+  classNames:    [ 'ui', 'field' ],
+  hasNull:       true,
+  itemValuePath: 'id',
 
   didInsertElement () {
     this._super(...arguments);
