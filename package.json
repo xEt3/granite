@@ -74,7 +74,6 @@
     "ember-cli-nprogress": "0.3.1",
     "ember-cli-qunit": "^4.4.0",
     "ember-cli-range-slider": "0.2.7",
-    "ember-cli-sauce": "^2.2.0",
     "ember-cli-shims": "^1.2.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^2.0.0",
