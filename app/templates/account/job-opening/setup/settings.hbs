@@ -7,6 +7,44 @@
     tagName="div"
     class="content ui grid"}}
 
+  <div class="custom-pipeline-toggle">
+    {{ui-checkbox
+      id=customPipelineToggle
+      class='toggle'
+      label='Use custom recruiting stages'
+      parentClass="sixteen wide column"
+      checked=(readonly customPipeline)
+      onChange=(action 'toggleCustomPipeline')}}
+  </div>
+
+  {{#liquid-if customPipeline}}
+    <h2 class="ui horizontal divider header">Custom Recruiting Process</h2>
+
+    {{#liquid-if canAddStages}}
+      <button type="button" id="add-stage" class="ui primary fluid button" {{action "openStageModal"}}>
+        <i class="plus icon"></i>Add Stage
+      </button>
+    {{/liquid-if}}
+
+    {{#sortable-group tagName="ul" classNames="pipeline-stage-list__cards" onChange="reorderItems" as |group|}}
+      {{#each customPipeline.stages as |stage|}}
+        {{#sortable-item tagName="li" classNames="stage-list__card" model=stage group=group}}
+          <div class="card-content__wrapper">
+            <div class="card-content__title-bar">
+              <span class="card-content__stage-name">
+                <i class="arrows alternate vertical icon"></i> {{stage.name}}
+                <a href="#" {{action "beginStageEdit" stage}}>
+                  <i class="edit icon"></i>
+                </a>
+              </span>
+              <a href="#" class="right floated text-danger delete-stage" {{action "removeStage" stage}}>Remove</a>
+            </div>
+          </div>
+        {{/sortable-item}}
+      {{/each}}
+    {{/sortable-group}}
+  {{/liquid-if}}
+
   <h2 class="ui horizontal divider header">Job Settings</h2>
   {{quick-form
     jobSettingsForm
@@ -16,7 +54,32 @@
     class="content ui grid"}}
 
   <div class="ui divider"></div>
-  <form {{action "saveAndContinue" on="submit"}}>
+  <form {{action (pipe (route-action "saveAndContinue") (action "saveCustomPipeline")) on="submit"}}>
     {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
   </form>
 </div>
+
+
+{{#ui-modal id='modal__add-stage' class='small form'}}
+  <div class="header">
+    <i class="plus icon"></i>{{if editingStage 'Edit' 'Add'}} recruiting pipeline stage
+  </div>
+  <div class="content">
+    {{quick-form
+      stageForm
+      currentStage
+      this
+      tagName='div'}}
+  </div>
+  <div class="actions">
+    {{#unless editingStage}}
+      <button class="ui red button" {{action 'respondStageAddition' false}}>
+        Cancel
+      </button>
+    {{/unless}}
+    <button class="ui primary right labeled confirm-add-stage icon button" {{action 'respondStageAddition' true}}>
+      Done
+      <i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}

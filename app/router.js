@@ -143,7 +143,9 @@ Router.map(function () {
           this.route('new');
         });
       });
-      this.route('location', function () {});
+      this.route('location', function () {
+        this.route('edit', { path: '/:location_id/edit' });
+      });
       this.route('departments', function () {
         this.route('index', { path: '/' }, function () {
           this.route('new');
@@ -153,13 +155,17 @@ Router.map(function () {
         this.route('new');
         this.route('edit', { path: '/edit/:user_id' });
       });
+
+      this.route('department', function () {
+        this.route('edit', { path: '/:department_id/edit' });
+      });
     });
     this.route('action-item', { path: '/action-item/:slug' }, function () {
       this.route('todo');
       this.route('discussion');
       this.route('edit');
     });
-    this.route('document', { path: '/document/:id' }, function() {});
+    this.route('document', { path: '/document/:id' }, function () {});
 
     this.route('job-opening', { path: '/recruiting/job-opening/:id' }, function () {
       this.route('campaign', { path: '/' }, function () {
@@ -188,6 +194,7 @@ Router.map(function () {
     });
 
     this.route('first-steps');
+    this.route('search');
   });
 
   this.route('error');

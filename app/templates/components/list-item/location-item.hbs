@@ -8,7 +8,12 @@
     {{/if}}
   </div>
   <div class="right floated">
-    {{#confirm-modal deleteContext=location.name as |confirm|}}
+    {{#link-to 'account.anatomy.location.edit' location.id}}
+      {{#ui-popup tagName='span' position="left center" content="Edit user"}}
+        <i class="edit icon"></i>
+      {{/ui-popup}}
+    {{/link-to}}
+    {{#confirm-modal deleteContext=location.name tagName="span" as |confirm|}}
       {{#ui-popup tagName='span' position="left center" content="Delete user"}}
         <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}>
           <i class="trash icon"></i>
