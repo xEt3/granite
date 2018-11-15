@@ -7,7 +7,9 @@
     "doc": "doc",
     "test": "tests"
   },
-  "cacheDirectories": [ "node_modules" ],
+  "cacheDirectories": [
+    "node_modules"
+  ],
   "scripts": {
     "build": "ember build",
     "start": "ember server --proxy http://localhost:4000",
@@ -16,7 +18,7 @@
     "lint:fixer-up": "./node_modules/.bin/eslint app tests --fix",
     "lint:hbs": "./node_modules/.bin/ember-template-lint app/templates/**/*",
     "test": "ember test",
-    "test-ci": "ember test --query=nolint --test-port=7000",
+    "test-ci": "ember test --query=nolint",
     "deploy": "git push heroku master",
     "postinstall": "node -e \"try { require('fs').symlinkSync(require('path').resolve('node_modules/@bower_components'), 'bower_components', 'junction') } catch (e) { }\""
   },
@@ -53,6 +55,7 @@
     "ember-cli-app-version": "^3.0.0",
     "ember-cli-babel": "^6.6.0",
     "ember-cli-braintree": "^1.1.0",
+    "ember-cli-browserstack": "^0.0.6",
     "ember-cli-chart": "3.4.0",
     "ember-cli-dependency-checker": "^3.0.0",
     "ember-cli-document-title": "^0.4.0",
@@ -71,7 +74,6 @@
     "ember-cli-nprogress": "0.3.1",
     "ember-cli-qunit": "^4.4.0",
     "ember-cli-range-slider": "0.2.7",
-    "ember-cli-sauce": "^2.2.0",
     "ember-cli-shims": "^1.2.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^2.0.0",
