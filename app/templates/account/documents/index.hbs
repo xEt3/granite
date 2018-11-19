@@ -1,3 +1,39 @@
+{{#if showFilters}}
+  {{#display/filter-pane
+        class="ui content form padded segment container"
+        onChange=(action "updateFilter") as |filter|
+      }}
+    <h2>
+      <i class="filter icon"></i> Filters
+      <a href="#" class="ui small text right floated text-red" {{action "resetFilters"}}>Reset All</a>
+    </h2>
+
+    {{#filter.section 'Tags'}}
+      {{#filter.selectControl
+            'tags'
+            tags
+            searchable=true
+            itemValuePath=false
+            model=filterModels.tags as |item|
+          }}
+        {{item}}
+      {{/filter.selectControl}}
+    {{/filter.section}}
+
+    {{#filter.section 'Extension'}}
+      {{#filter.selectControl
+          'extension'
+          extension
+          searchable=true
+          itemValuePath=false
+          model=filterModels.extension as |extension|
+          }}
+        {{extension}}
+      {{/filter.selectControl}}
+    {{/filter.section}}
+  {{/display/filter-pane}}
+{{/if}}
+
 <div class="ui raised padded segment container clearfix">
   <hgroup class="clearfix">
     <h1 class="ui header left floated">
@@ -5,25 +41,32 @@
     </h1>
 
     <div class="right aligned text floated menu__actions">
-      <h3 class="ui header">
-        {{#link-to 'account.documents.new' class="right floated"}}
-          {{#ui-popup tagName='span' content="Add a document"}}
-            <i class="plus icon"></i>
-          {{/ui-popup}}
-        {{/link-to}}
+      <h3 class="ui right floated header">
+        {{#ui-popup position="left center" content="Filters"}}
+          <a href="#" class="{{if showFilters 'text-red'}}" {{action toggleProperty 'showFilters'}}>
+            <i class="{{if showFilters 'remove' 'filter'}} icon"></i>
+          </a>
+        {{/ui-popup}}
       </h3>
+      {{#ui-dropdown class="right floated top pointing inline"}}
+        {{#link-to 'account.documents.new' class="right floated"}}
+          <h3 class="ui inline header">
+            {{#ui-popup tagName='span' content="Add a document"}}
+              <a href="#"><i class="plus icon"></i></a>
+            {{/ui-popup}}
+          </h3>
+        {{/link-to}}
+      {{/ui-dropdown}}
     </div>
   </hgroup>
+
   <div class="ui divider"></div>
 
-  <div class="ui divided items">
-    {{#each model as |doc|}}
-      {{#link-to 'account.document' doc.id class="item"}}
-        {{list-item/document-item doc}}
-      {{/link-to}}
-    {{else}}
-      <h2 class="ui center aligned header">No documents available.</h2>
-    {{/each}}
-  </div>
+  {{display/resource-list
+    model
+    "list-item/document-item"
+    linkTo="account.document"
+    linkClass="item"
+    class="ui divided link items"}}
   {{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}
 </div>
