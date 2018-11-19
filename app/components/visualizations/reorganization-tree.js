@@ -8,6 +8,7 @@ import { run } from '@ember/runloop';
 import { on } from '@ember/object/evented';
 import { inject as service } from '@ember/service';
 import d3 from 'd3-selection';
+import d3Zoom from 'd3-zoom';
 import { tree, hierarchy } from 'd3-hierarchy';
 
 const select = 'name email supervisor';
@@ -102,10 +103,17 @@ export default Component.extend({
     });
 
     return run.next(() => {
-      let margin = this.get('margin');
-      let svg = d3.select('#' + this.get('elementId')),
-          width = svg.attr('width') - margin.left - margin.right,
-          height = svg.attr('height') - margin.top - margin.bottom,
+      let margin = this.get('margin'),
+          width  = this.$().width() - margin.right - margin.left,
+          height = this.$().height() - margin.top - margin.bottom;
+
+      let zoom = d3Zoom.zoom();
+
+      let svg = d3.select('#' + this.get('elementId'))
+          .call(zoom.on('zoom', () => {
+            svg.attr('transform', d3.event.transform);
+          }))
+          .append('g'),
           g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`),
           t = tree().size([ width, height ]);
 
