@@ -27,10 +27,6 @@ const ControlComponent = Component.extend({
       classText += 'fluid multiple selection';
     }
 
-    // if (modelName === 'file') {
-    //   classText += 'fluid multiple selection';
-    // }
-
     if (this.get('searchable')) {
       classText = `search ${classText}`;
     }

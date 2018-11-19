@@ -1,8 +1,8 @@
 {{#if showFilters}}
   {{#display/filter-pane
-        class="ui content form padded segment container"
-        onChange=(action "updateFilter") as |filter|
-      }}
+    class="ui content form padded segment container"
+    onChange=(action "updateFilter") as |filter|
+  }}
     <h2>
       <i class="filter icon"></i> Filters
       <a href="#" class="ui small text right floated text-red" {{action "resetFilters"}}>Reset All</a>
@@ -10,24 +10,24 @@
 
     {{#filter.section 'Tags'}}
       {{#filter.selectControl
-            'tags'
-            tags
-            searchable=true
-            itemValuePath=false
-            model=filterModels.tags as |item|
-          }}
+        'tags'
+        tags
+        searchable=true
+        itemValuePath=false
+        model=filterModels.tags as |item|
+      }}
         {{item}}
       {{/filter.selectControl}}
     {{/filter.section}}
 
     {{#filter.section 'Extension'}}
       {{#filter.selectControl
-          'extension'
-          extension
-          searchable=true
-          itemValuePath=false
-          model=filterModels.extension as |extension|
-          }}
+        'extension'
+        extension
+        searchable=true
+        itemValuePath=false
+        model=filterModels.extension as |extension|
+      }}
         {{extension}}
       {{/filter.selectControl}}
     {{/filter.section}}
