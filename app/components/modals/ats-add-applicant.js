@@ -5,10 +5,14 @@ import { inject as service } from '@ember/service';
 import ajaxStatus from 'granite/mixins/ajax-status';
 import $ from 'jquery';
 
+
 export default Component.extend(ajaxStatus, {
   store:                   service(),
   applicantRequiredFields: [ 'firstName', 'lastName', 'phone', 'email' ],
   fileIsAdded:             false,
+  test:                    false,
+
+
 
   resumeEndpoint: computed('model.jobOpening.id', function () {
     return `/api/v1/upload/resume/${this.get('model.jobOpening.id')}`;
@@ -70,8 +74,15 @@ export default Component.extend(ajaxStatus, {
     return true;
   },
 
+
+
   actions: {
     addedFile (file) {
+      let  $dropzone = Dropzone.forElement('.input__dropzone');
+
+      if (this.get('fileIsAdded')) {
+        $dropzone.removeFile(this.get('fileIsAdded'));
+      }
       this.set('fileIsAdded', file);
     },
 
@@ -89,7 +100,6 @@ export default Component.extend(ajaxStatus, {
       }
 
       $dropzone.removeFile(this.get('fileIsAdded'));
-      this.set('fileIsAdded', false);
     },
 
     uploadError (err) {
