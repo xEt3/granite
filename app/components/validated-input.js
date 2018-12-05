@@ -3,7 +3,7 @@ import { computed, defineProperty } from '@ember/object';
 
 export default Component.extend({
   classNames:        [ 'validated-input' ],
-  classNameBindings: [ 'showErrorClass:has-error', 'isValid:has-success' ],
+  classNameBindings: [ 'showErrorClass:has-error', 'isValid:has-success', 'dupPrefix:prefix-error' ],
   model:             null,
   value:             null,
   type:              'text',
@@ -11,6 +11,7 @@ export default Component.extend({
   placeholder:       '',
   validation:        null,
   isTyping:          false,
+  errs:              [],
 
   init () {
     this._super(...arguments);
@@ -19,6 +20,18 @@ export default Component.extend({
     defineProperty(this, 'value', computed.alias(`model.${valuePath}`));
   },
 
+  dupPrefix: computed('errs.[]', 'hasContent', function () {
+    let input = document.querySelector('#url-prefix input');
+
+    if (this.get('errs') &&  this.get('errs').length >= 1) {
+      let err = this.get('errs').find(element=> {
+        if (element.detail === 'duplicate URL Prefix') {
+          return element;
+        }
+      });
+      return err.val === input.value ? true : false;
+    }
+  }),
   notValidating:  computed.not('validation.isValidating'),
   didValidate:    computed.oneWay('target.didValidate'),
   hasContent:     computed.notEmpty('value'),

@@ -11,12 +11,18 @@
       class=inputClass
       min=inputAttrs.min
       max=inputAttrs.max
-      step=inputAttrs.step}}
+      step=inputAttrs.step
+      errs=errs}}
   {{/if}}
 
   {{#if isValid}}
-    <i class="check icon"></i>
+    {{#if dupPrefix}}
+      <i class="close icon"></i>
+    {{else}}
+      <i class="check icon"></i>
+    {{/if}}
   {{/if}}
+
 
   {{#if showMessage}}
     <div class="input-error animated fadeIn">

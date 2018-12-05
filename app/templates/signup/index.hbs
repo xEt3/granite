@@ -63,7 +63,7 @@
             <i class="dropdown icon"></i>
             <div class="menu">
               {{#each stateOptions as |state|}}
-                <div class="item select-address-state__item" data-id="{{state}}"  data-value="{{map-value mapper state}}">
+                <div class="item select-address-state__item" data-id="{{state}}" data-value="{{map-value mapper state}}">
                   {{state}}
                 </div>
               {{/each}}
@@ -80,7 +80,7 @@
     <h3 class="ui horizontal divider header"><i class="setting icon"></i>Configuration</h3>
     <div class="field">
       <label for="url-prefix" class="sr-only">Employee Access URL</label>
-      {{validated-input type="text" model=model valuePath="urlPrefix" placeholder="Employee Access URL (generally your company's abbreviation)" id="url-prefix"}}
+      {{validated-input type="text" model=model valuePath="urlPrefix" errs=errors placeholder="Employee Access URL (generally your company's abbreviation)" id="url-prefix"}}
     </div>
     {{#display/preview-browser}}{{if model.urlPrefix model.urlPrefix 'portal'}}{{/display/preview-browser}}
     <div class="ui divider"></div>
