@@ -92,6 +92,11 @@ export default Controller.extend(ajaxStatus, {
         this.transitionToRoute('account.employees');
       })
       .catch(this.ajaxError.bind(this));
+    },
+
+    quickScroll () {
+      let table = document.getElementsByClassName('responsive-table')[0];
+      table.scrollLeft = table.scrollWidth;
     }
   }
 });
