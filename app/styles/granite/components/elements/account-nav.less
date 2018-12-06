@@ -4,7 +4,7 @@ nav.ui.menu.account__navigation {
   .item {
     > a {
       color: @granite-grey;
-      transition: all 0.35s ease-in-out;
+      transition: all .35s ease-in-out;
     }
 
     &:hover > a {
@@ -22,9 +22,9 @@ nav.ui.menu.account__navigation {
     &:after {
       content: 'Menu';
       display: inline-block;
-      width: 0px;
+      width: 0;
       overflow: hidden;
-      transition: all 0.35s ease-in-out;
+      transition: all .35s ease-in-out;
       line-height: 1;
       vertical-align: middle;
       font-size: 1.3em;
@@ -60,11 +60,26 @@ nav.ui.menu.account__navigation {
 }
 
 .account__breadcrumb {
-  margin: 0.3em 1.6em 3em 1.6em !important;
-  color: white;
+  margin: .3em 1.6em 3em 1.6em !important;
+
+  .divider {
+    color: white !important;
+  }
 
   a {
     color: white !important;
+  }
+}
+
+.ui.main > .container.main__dark-text {
+  .account__breadcrumb.breadcrumb,
+  .application__outlet-wrapper,
+  div.section {
+    color: @granite-grey !important;
+
+    > a {
+      color: @granite-grey !important;
+    }
   }
 }
 
