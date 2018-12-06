@@ -8,7 +8,7 @@
     color: @granite-offwhite !important;
 
     &:not(.button) {
-      transition: all 0.4s ease-in-out;
+      transition: all .4s ease-in-out;
       text-shadow: 3px 2px 4px fade(@granite-grey, 40%);
 
       &:hover {
@@ -23,7 +23,7 @@
 
     .menu .item a:not(.button) {
       color: @granite-blue !important;
-      text-shadow: 0px 1px 2px fade(@granite-grey, 40%);
+      text-shadow: 0 1px 2px fade(@granite-grey, 40%);
 
       &.active {
         color: @granite-green !important;
@@ -48,7 +48,7 @@
       .logo {
         width: 75px;
         height: 20px;
-        background-image: url('images/granite-logo-mountains.png');
+        background-image: url("images/granite-logo-mountains.png");
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
@@ -58,7 +58,7 @@
         .logo-text {
           opacity: 1;
           max-height: 20px;
-          transition: all 0.5s ease-in-out;
+          transition: all .5s ease-in-out;
           transform: translate(0, 0);
         }
       }
@@ -67,7 +67,7 @@
         display: block;
         height: 20px;
         text-align: center;
-        transition: all 0.5s ease-in-out;
+        transition: all .5s ease-in-out;
         opacity: 0;
         transform: translate(0, 100px);
         font-weight: 100;
@@ -100,7 +100,7 @@
 }
 
 @media screen and (min-width: @screen-sm) and (max-width: @screen-md) {
-  .ui.menu:not(.vertical) .item {
+  .ui.menu:not(.vertical).nav__main .item {
     margin-right: -1.3em;
     padding-right: 24px;
   }
@@ -109,25 +109,26 @@
     font-size: 11px;
   }
 
+  .ui.button,
   .ui.buttons .button,
-  .ui.buttons .or,
-  .ui.button {
+  .ui.buttons .or {
     font-size: 10px;
   }
 }
 
 @media screen and (min-width: @screen-xs) and (max-width: @screen-md) {
-  .ui.menu:not(.vertical) .right.item,
-  .ui.menu:not(.vertical) .right.menu {
+  .ui.menu:not(.vertical).account__navigation .right.menu,
+  nav .ui.menu:not(.vertical) .right.item {
     margin-bottom: 3px;
     justify-content: space-around;
     border-width: 1px;
     border-top: 1px solid fade(@granite-grey, 10%);
   }
 
-  .ui.menu:not(.vertical) .item {
+  .ui.menu:not(.vertical).nav__main .item {
     padding: 8px;
     margin-top: 3px;
+    margin-right: 0;
   }
 
   .ui.menu {
@@ -135,9 +136,9 @@
     flex-direction: column;
   }
 
+  .ui.button,
   .ui.buttons .button,
-  .ui.buttons .or,
-  .ui.button {
+  .ui.buttons .or {
     font-size: 13.4px;
   }
 
@@ -165,15 +166,15 @@
 }
 
 @media screen and (max-width: @screen-xs) {
-  .ui.menu:not(.vertical) .right.item,
-  .ui.menu:not(.vertical) .right.menu {
+  .ui.menu:not(.vertical).account__navigation .right.menu,
+  nav .ui.menu:not(.vertical) .right.item {
     margin-bottom: 3px;
     justify-content: space-around;
     border-width: 1px;
     border-top: 1px solid fade(@granite-grey, 10%);
   }
 
-  .ui.menu:not(.vertical) .item {
+  .ui.menu:not(.vertical).nav__main .item {
     padding: 8px;
     margin-top: 3px;
   }
@@ -183,9 +184,9 @@
     flex-direction: column;
   }
 
+  .ui.button,
   .ui.buttons .button,
-  .ui.buttons .or,
-  .ui.button {
+  .ui.buttons .or {
     font-size: 13.4px;
   }
 
