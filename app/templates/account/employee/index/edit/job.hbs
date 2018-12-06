@@ -16,8 +16,18 @@
 <div class="three fields">
   <div class="field">
     <label for="exemption-status">Exemption Status</label>
-    Non-exempt
-    {{ui-checkbox class="toggle" label="Exempt" checked=model.exempt onChange=(action (mut model.exempt))}}
+    {{#ui-dropdown class="selection" selected=model.exempt onChange=(action (mut model.exempt)) as |execute mapper|}}
+      <div class="default text" value=model.exempt></div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        <div class="item" data-value='{{map-value mapper false}}'>
+          Non-exempt
+        </div>
+        <div class="item" data-value='{{map-value mapper true}}'>
+          Exempt
+        </div>
+      </div>
+    {{/ui-dropdown}}
   </div>
   <div class="field">
     <label for="pay-rate">Pay Rate</label>
