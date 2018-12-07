@@ -10,9 +10,6 @@ export default Component.extend(ajaxStatus, {
   store:                   service(),
   applicantRequiredFields: [ 'firstName', 'lastName', 'phone', 'email' ],
   fileIsAdded:             false,
-  test:                    false,
-
-
 
   resumeEndpoint: computed('model.jobOpening.id', function () {
     return `/api/v1/upload/resume/${this.get('model.jobOpening.id')}`;
