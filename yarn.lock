@@ -9203,7 +9203,7 @@ npmlog@^4.0.0, npmlog@^4.0.2:
     gauge "~2.7.3"
     set-blocking "~2.0.0"
 
-"nprogress@github:alexlafroscia/nprogress#allow-alternate-scheduler":
+nprogress@alexlafroscia/nprogress#allow-alternate-scheduler:
   version "0.2.0"
   resolved "https://codeload.github.com/alexlafroscia/nprogress/tar.gz/af37323172b98441d02aa02447f795f5766419b0"
 
