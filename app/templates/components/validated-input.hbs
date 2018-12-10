@@ -1,4 +1,4 @@
-<div class="field {{fieldClass}}">
+<div class="field {{fieldClass}}" onchange={{action "onChange"}}>
   {{#if hasBlock}}
     {{yield}}
   {{else}}
@@ -16,17 +16,16 @@
   {{/if}}
 
   {{#if isValid}}
-    {{#if dupPrefix}}
-      <i class="close icon"></i>
-    {{else}}
-      <i class="check icon"></i>
-    {{/if}}
+    <i class="check icon"></i>
   {{/if}}
 
 
   {{#if showMessage}}
     <div class="input-error animated fadeIn">
       <div class="error">
+        {{#if (not uniquePrefix)}}
+          This prefix already exists
+        {{/if}}
         {{v-get model valuePath 'message'}}
       </div>
     </div>

@@ -3,7 +3,7 @@ import { computed, defineProperty } from '@ember/object';
 
 export default Component.extend({
   classNames:        [ 'validated-input' ],
-  classNameBindings: [ 'showErrorClass:has-error', 'isValid:has-success', 'dupPrefix:prefix-error' ],
+  classNameBindings: [ 'showErrorClass:has-error', 'isValid:has-success' ],
   model:             null,
   value:             null,
   type:              'text',
@@ -12,6 +12,7 @@ export default Component.extend({
   validation:        null,
   isTyping:          false,
   errs:              [],
+  isDirty:           false,
 
   init () {
     this._super(...arguments);
@@ -20,25 +21,39 @@ export default Component.extend({
     defineProperty(this, 'value', computed.alias(`model.${valuePath}`));
   },
 
-  dupPrefix: computed('errs.[]', 'hasContent', function () {
+  uniquePrefix: computed('errs.[]', 'hasContent', function () {
     let input = document.querySelector('#url-prefix input');
 
     if (this.get('errs') &&  this.get('errs').length >= 1) {
       let err = this.get('errs').find(element=> {
-        if (element.detail === 'duplicate URL Prefix') {
+        if (element.detail === 'Duplicate URL Prefix') {
           return element;
         }
       });
-      return err.val === input.value ? true : false;
+      return err.val === input.value ? false : true;
     }
+    return true;
+
   }),
-  notValidating:  computed.not('validation.isValidating'),
-  didValidate:    computed.oneWay('target.didValidate'),
-  hasContent:     computed.notEmpty('value'),
-  isValid:        computed.and('hasContent', 'validation.isValid', 'notValidating'),
-  isInvalid:      computed.oneWay('validation.isInvalid'),
+  notValidating: computed.not('validation.isValidating'),
+  didValidate:   computed.oneWay('target.didValidate'),
+  hasContent:    computed.notEmpty('value'),
+  isValid:       computed.and('hasContent', 'validation.isValid', 'notValidating', 'uniquePrefix'),
+  isInvalid:     computed('validation.isInvalid', 'uniquePrefix', function () {
+    return   !this.get('uniquePrefix') ? true : this.get('validation.isInvalid');
+
+  }),
   showErrorClass: computed.and('notValidating', 'showMessage', 'validation'),
-  showMessage:    computed('validation.isDirty', 'isInvalid', 'didValidate', function () {
-    return (this.get('validation.isDirty') || this.get('didValidate')) && this.get('isInvalid');
-  })
+  showMessage:    computed('isDirty', 'isInvalid', 'didValidate', 'uniquePrefix', function () {
+    console.log(this);
+    return (this.get('isDirty') || this.get('didValidate')) && this.get('isInvalid');
+
+  }),
+
+  actions: {
+    onChange () {
+      this.set('isDirty', true);
+    }
+  }
+
 });
