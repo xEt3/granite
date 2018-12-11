@@ -2,25 +2,27 @@
 
 {{#ui-modal name='modal__document-selection' id='modal__document-selection' class='ui long modal'}}
   <h1 class="ui header">{{if title title 'Select Documents'}}</h1>
+  <div class='ui center aligned text'>
+    <a href="#" {{action (toggle "show" this)}}><i class="cloud upload icon"></i> Upload a file...</a>
+  </div>
+
   {{#if show}}
     {{drop-zone
     id='input__dropzone--document'
     class='input__dropzone'
     url='/api/v1/file'
     uploadMultiple=false
-    maxFiles=1
-    hiddenInputContainer=input__dropzone--document
     autoProcessQueue=false
     dictDefaultMessage='Drop or Click to Select a File'
     thumbnailWidth='175'
     headers=(hash X-API-Token=auth.token)
+    addedfile=(action 'addedFile')
+    success=(action 'uploadedFile')
     capture='camera'}}
     <div class="ui divider"></div>
   {{/if}}
 
   <div class="content ui form">
-    <button onclick={{action 'toggelShow' }}>Upload Documents</button>
-
     <div class="ui two column grid">
       <div class="ui field column">
         <label>Search by text</label>

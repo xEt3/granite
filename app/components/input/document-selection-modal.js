@@ -115,14 +115,6 @@ export default Component.extend(pagination, {
       this.refreshModal();
     },
 
-    hide () {
-      if (this.get('show')) {
-        this.set('show', false);
-        return;
-      }
-      this.set('show', true);
-    },
-
     removeDocument (file) {
       this.get('selectedDocuments').removeObject(file);
       this.refreshModal();
@@ -137,6 +129,56 @@ export default Component.extend(pagination, {
       $('#modal__document-selection')
       .modal({ detachable: true })
       .modal('show');
+    },
+
+    addedFile (file) {
+      if (this.get('fileIsAdded')) {
+        this.send('removeFile', this.get('fileIsAdded'));
+      }
+
+      this.set('fileIsAdded', file);
+    },
+
+    processQueue () {
+      Dropzone.forElement('#input__dropzone--document').processQueue();
+    },
+
+    uploadedFile (file, res) {
+      res.files = [ res.file ];
+      delete res.file;
+      this.get('store').pushPayload(res);
+      this.get('resolveUpload')(this.get('store').peekRecord('file', res.files[0].id));
+      this.send('removeFile', file);
+    },
+
+    removeFile (file) {
+      Dropzone.forElement('#input__dropzone--document').removeFile(file);
+      this.set('fileIsAdded', false);
+    },
+
+    leaveUpload () {
+      this.send('removeFile', this.get('fileIsAdded'));
+      this.set('fileIsAdded', false);
+      this.transitionToRoute('account.document.index');
+    },
+
+    uploadFile () {
+      this.ajaxStart();
+      let promise = new Promise(resolve => this.set('resolveUpload', resolve));
+      this.send('processQueue');
+
+      promise.then(file => {
+        let properties = [ 'title', 'description', 'tags' ];
+
+        properties.forEach(prop => {
+          file.set(prop, this.get(prop));
+          this.set(prop, null);
+        });
+
+        return file;
+      })
+      .then(this.saveModel.bind(this))
+      .catch(this.ajaxError.bind(this));
     }
   }
 });
