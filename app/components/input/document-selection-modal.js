@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-side-effects */
 import Component from '@ember/component';
 import { computed, observer } from '@ember/object';
 import { A } from '@ember/array';
