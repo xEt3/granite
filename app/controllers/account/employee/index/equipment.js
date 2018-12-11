@@ -41,6 +41,7 @@ export default Controller.extend(ajaxStatus, {
     },
 
     selectAsset (asset) {
+      this.set('assigningAsset', asset);//BROCK ADDED THIS 12/11, MIGHT NOT BE NECESSARY
       this.ajaxStart();
 
       let user = this.get('auth.user'),
@@ -62,6 +63,7 @@ export default Controller.extend(ajaxStatus, {
       .then(assetItem => {
         this.get('model').addObject(assetItem);
         this.ajaxSuccess(null, true);
+        $('.asset-documents').modal('show');//ONLY DO THIS IF THE ASSET OR ASSET ITEM HAS DOCS ASSIGNED
       })
       .catch(this.ajaxError.bind(this));
     },
@@ -82,6 +84,16 @@ export default Controller.extend(ajaxStatus, {
 
     newAssetCategory () {
       this.send('refresh');
+    },
+
+    assignDocs () {
+      console.log('inside assignDocs');
+      this.set('assigningAsset', null);//BROCK ADDED THIS 12/11, MIGHT NOT BE NECESSARY
+    },
+
+    abortDocs () {
+      console.log('inside abortDocs');
+      this.set('assigningAsset', null);//BROCK ADDED THIS 12/11, MIGHT NOT BE NECESSARY
     }
   }
 });

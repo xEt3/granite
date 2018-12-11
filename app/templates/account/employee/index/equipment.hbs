@@ -60,3 +60,22 @@
     </div>
   </div>
 {{/ui-modal}}
+
+{{#ui-modal name="asset-documents" class="asset-documents" detachable=true onApprove=(action 'assignDocs') onDeny=(action 'abortDocs')}}
+  <i class="cancel close icon"></i>
+  <div class="header">
+    Assign Documents related to {{assigningAsset.identifier}}
+  </div>
+  <div class="content">
+    CONTENT
+  </div>
+  <div class="actions">
+    <div class="ui negative deny button">
+      Cancel
+    </div>
+    <div class="ui positive right labeled icon button">
+      Assign Documents
+      <i class="check icon"></i>
+    </div>
+  </div>
+{{/ui-modal}}

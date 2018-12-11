@@ -11,6 +11,7 @@
     <div class="event">
       <div class="content">
         <div class="summary">
+          {{!-- BACKWARDS?? --}}
           {{#if assignment.assigner}}
             {{#link-to 'account.employee' assignment.assigner.id}}
               {{assignment.assigner.fullName}}
