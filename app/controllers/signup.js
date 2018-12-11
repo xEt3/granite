@@ -1,9 +1,8 @@
 import Controller from '@ember/controller';
-import { computed, get, set } from '@ember/object';
+import { computed } from '@ember/object';
 import { inject as controller } from '@ember/controller';
-import { A } from '@ember/array';
 
-const steps = [{
+const baseSteps = [{
   title:       'Company Information',
   description: 'Let\'s get to know your company',
   icon:        'info circle',
@@ -23,16 +22,24 @@ const steps = [{
 export default Controller.extend({
   application: controller(),
 
-  completedSteps: A(),
-
   steps: computed('application.currentPath', function () {
-    const appPath = this.get('application.currentPath'),
-          completedSteps = this.get('completedSteps');
+    const appPath = this.get('application.currentPath');
 
-    return steps.map(step => {
-      set(step, 'active', get(step, 'path') === appPath);
-      set(step, 'completed', completedSteps.includes(get(step, 'path')));
-      return step;
+    let activeToggled;
+
+    return [ ...baseSteps ].map(step => {
+      let active = step.path === appPath;
+
+      let retObj = Object.assign({}, step, {
+        active,
+        completed: !activeToggled && !active
+      });
+
+      if (active) {
+        activeToggled = true;
+      }
+
+      return retObj;
     });
   })
 });
