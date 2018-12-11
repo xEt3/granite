@@ -1,4 +1,4 @@
-<div class="field {{fieldClass}}" onchange={{action "onChange"}}>
+<div class="field {{fieldClass}}">
   {{#if hasBlock}}
     {{yield}}
   {{else}}
@@ -11,22 +11,24 @@
       class=inputClass
       min=inputAttrs.min
       max=inputAttrs.max
-      step=inputAttrs.step
-      errs=errs}}
+      step=inputAttrs.step}}
   {{/if}}
 
   {{#if isValid}}
     <i class="check icon"></i>
   {{/if}}
 
-
-  {{#if showMessage}}
+  {{#if (or showErrorMessage showWarningMessage showFieldError)}}
     <div class="input-error animated fadeIn">
       <div class="error">
-        {{#if (not uniquePrefix)}}
-          This prefix already exists
+        {{#if showFieldError}}
+          {{showFieldError}}
+        {{else}}
+          {{v-get
+            model
+            valuePath
+            (if showWarningMessage 'warningMessage' 'message')}}
         {{/if}}
-        {{v-get model valuePath 'message'}}
       </div>
     </div>
   {{/if}}

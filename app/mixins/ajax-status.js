@@ -11,6 +11,18 @@ function searchError (errors) {
   return key ? errors.mapBy(key).join(', ') : errors[0];
 }
 
+function findFieldErrors (errors = []) {
+  let fe = errors.reduce((fieldErrors, err) => {
+    if (err && err.path) {
+      fieldErrors[err.path] = err.detail || err.title;
+    }
+
+    return fieldErrors;
+  }, {});
+
+  return Object.keys(fe).length > 0 ? fe : false;
+}
+
 export default Mixin.create({
   successMessageTimeout: 3,
   enableNotify:          true,
@@ -20,10 +32,11 @@ export default Mixin.create({
   ajaxError (err, user) {
     this.__cancelLongRunningProp();
 
-    let errMsg = err ? err.payload || err.responseText || err.message || err : err;
+    let errMsg = err ? err.payload || err.responseText || err.message || err : err,
+        errorsArray = errMsg && errMsg.errors;
 
-    if (errMsg && errMsg.errors) {
-      errMsg = typeof errMsg.errors[0] === 'string' ? errMsg.errors : searchError(errMsg.errors);
+    if (errorsArray) {
+      errMsg = typeof errMsg.errors[0] === 'string' ? errorsArray : searchError(errorsArray);
     }
 
     if (err && !user) {
@@ -33,7 +46,8 @@ export default Mixin.create({
     this.setProperties({
       [this.get('loadingProp')]:          false,
       [`${this.get('loadingProp')}Slow`]: false,
-      errorMessage:                       errMsg
+      errorMessage:                       errMsg,
+      fieldErrors:                        errorsArray && findFieldErrors(errorsArray)
     });
 
     if (this.get('enableNotify')) {
@@ -48,7 +62,8 @@ export default Mixin.create({
       [this.get('loadingProp')]:          false,
       [`${this.get('loadingProp')}Slow`]: false,
       errorMessage:                       null,
-      successMessage:                     success
+      successMessage:                     success,
+      fieldErrors:                        false
     });
 
     setTimeout(() => {
@@ -67,7 +82,8 @@ export default Mixin.create({
       [this.get('loadingProp')]:          true,
       [`${this.get('loadingProp')}Slow`]: false,
       errorMessage:                       null,
-      successMessage:                     null
+      successMessage:                     null,
+      fieldErrors:                        false
     });
 
     this.__scheduleLongRunningProp();
