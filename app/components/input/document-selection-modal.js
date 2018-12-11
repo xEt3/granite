@@ -17,6 +17,7 @@ export default Component.extend(pagination, {
   debounceSearches:  800,
   searchText:        '',
   selectedDocuments: A(),
+  show:              false,
 
   didReceiveAttrs () {
     this._super(...arguments);
@@ -112,6 +113,14 @@ export default Component.extend(pagination, {
     addDocument (file) {
       this.get('selectedDocuments').addObject(file);
       this.refreshModal();
+    },
+
+    hide () {
+      if (this.get('show')) {
+        this.set('show', false);
+        return;
+      }
+      this.set('show', true);
     },
 
     removeDocument (file) {
