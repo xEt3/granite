@@ -9,8 +9,9 @@ export default Model.extend({
   sharable:    attr('boolean'),
   attributes:  attr('array'),
 
-  creator: belongsTo('company-user'),
-  company: belongsTo('company'),
+  creator:   belongsTo('company-user'),
+  company:   belongsTo('company'),
+  documents: belongsTo('file'),
 
   created: attr('date', {
     defaultValue () {

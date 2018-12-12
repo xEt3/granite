@@ -23,6 +23,22 @@
       <label for="asset-description">Description</label>
       {{input type="text" value=model.description id="asset-description" placeholder="All the keycards for our employees"}}
     </div>
+    <div class="field">
+      <label for="asset-description">Documents</label>
+      {{#input/document-selection-modal
+        title="Select Asset Documents"
+        selected=model.document
+        onSelected=(action (mut model.documents))
+        as |execute|}}
+        <button class="ui basic button" {{action execute 'selectDocuments'}}>
+          <i class="folder icon"></i>
+          Assign Asset documents
+          {{#if model.documents.length}}
+            <span class="ui label">{{model.documents.length}} Assigned</span>
+          {{/if}}
+        </button>
+      {{/input/document-selection-modal}}
+    </div>
     <div class="field center aligned text">
       <div class="ui toggle checkbox">
         <input type="checkbox">
@@ -31,6 +47,6 @@
     </div>
     <div class="ui divider"></div>
 
-    <button class="ui huge fluid positive huge button"type="submit">Save</button>
+    <button class="ui huge fluid positive huge button" type="submit">Save</button>
   </form>
 </div>
