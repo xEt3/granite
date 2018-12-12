@@ -1,6 +1,6 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 
 export default Model.extend({
   name:        attr('string'),
@@ -11,7 +11,10 @@ export default Model.extend({
 
   creator:   belongsTo('company-user'),
   company:   belongsTo('company'),
-  documents: belongsTo('file'),
+  documents: hasMany('file', {
+    inverse: null,
+    async:   true
+  }),
 
   created: attr('date', {
     defaultValue () {
