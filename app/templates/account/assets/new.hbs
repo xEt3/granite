@@ -27,7 +27,7 @@
       <label for="asset-description">Documents</label>
       {{#input/document-selection-modal
         title="Select Asset Documents"
-        selected=model.document
+        selected=model.documents
         onSelected=(action (mut model.documents))
         as |execute|}}
         <button class="ui basic button" {{action execute 'selectDocuments'}}>

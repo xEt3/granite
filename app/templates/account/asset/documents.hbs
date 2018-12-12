@@ -1,1 +1,39 @@
-{{outlet}}
+<div class="ui relaxed divided list">
+  {{#each model.documents as |file|}}
+    <div class="content clearfix">
+      <span>
+        {{#link-to 'account.document' file.id class="item"}}
+          {{list-item/document-item file}}
+        {{/link-to}}
+      </span>
+
+      <span class="right floated">
+        {{#ui-popup content="Remove Document"}}
+          <a href="#" class="text-danger" {{action "removeDocument" file}}>
+            <i class="trash icon"></i>
+          </a>
+        {{/ui-popup}}
+      </span>
+    </div>
+  {{else}}
+    <h2 class="ui center aligned header">No Documents available.</h2>
+  {{/each}}
+</div>
+<div class="field">
+  <label for="asset-description">Documents</label>
+  {{#input/document-selection-modal
+    title="Select Asset Documents"
+    selected=model.documents
+    onSelected=(pipe (action (mut model.documents)) (action 'save' model))
+    as |execute|}}
+    <button class="ui basic button" {{action execute 'selectDocuments'}}>
+      <i class="folder icon"></i>
+      Assign Asset documents
+      {{#if model.documents.length}}
+        <span class="ui label">{{model.documents.length}} Assigned</span>
+      {{/if}}
+    </button>
+  {{/input/document-selection-modal}}
+</div>
+
+{{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}
