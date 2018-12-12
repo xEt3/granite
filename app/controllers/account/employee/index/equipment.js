@@ -7,6 +7,24 @@ import $ from 'jquery';
 export default Controller.extend(ajaxStatus, {
   auth: service(),
 
+  newAssetItem:  null,
+  suggestedDocs: [],
+
+  async getSuggestedDocs (assetItem, employee) {
+    this.set('suggestedDocs', []);
+    let assetDocs = (await assetItem.get('asset.documents')).toArray();
+    let assetItemDocs = (await assetItem.get('documents')).toArray();
+    let alreadyAssignedDocs = (await this.store.query('fileAssignment', { employee: employee.id })).toArray();
+    //USE THIS SOMEHOW
+
+    this.set('suggestedDocs', assetDocs);
+    assetItemDocs.forEach(doc => {
+      if (!this.get('suggestedDocs').includes(doc)) {
+        this.get('suggestedDocs').push(doc);
+      }
+    });
+  },
+
   actions: {
     createAsset (category) {
       let user = this.get('auth.user');
@@ -41,7 +59,7 @@ export default Controller.extend(ajaxStatus, {
     },
 
     selectAsset (asset) {
-      this.set('assigningAsset', asset);//BROCK ADDED THIS 12/11, MIGHT NOT BE NECESSARY
+      this.get('model').addObject(asset);//adds so its instant on UI
       this.ajaxStart();
 
       let user = this.get('auth.user'),
@@ -61,9 +79,23 @@ export default Controller.extend(ajaxStatus, {
 
       asset.save()
       .then(assetItem => {
-        this.get('model').addObject(assetItem);
+        //remove ghost assignment
+        assetItem.assignments.forEach(a => {
+          if (!a.id) {
+            assetItem.assignments.removeObject(a);
+          }
+        });
+
+        this.set('newAssetItem', assetItem);//for modal display usage
+        this.getSuggestedDocs(assetItem, employee)
+        .then(() => {
+          if (this.get('suggestedDocs').length) {
+            $('.asset-documents').modal('show');
+          }
+        });
+
+        this.send('refresh');
         this.ajaxSuccess(null, true);
-        $('.asset-documents').modal('show');//ONLY DO THIS IF THE ASSET OR ASSET ITEM HAS DOCS ASSIGNED
       })
       .catch(this.ajaxError.bind(this));
     },
@@ -77,7 +109,10 @@ export default Controller.extend(ajaxStatus, {
         this.ajaxStart();
         asset.get('assignments').removeObject(assignment);
         asset.save()
-        .then(() => this.ajaxSuccess(null, true))
+        .then(() => {
+          this.ajaxSuccess(null, true);
+          this.send('refresh');
+        })
         .catch(this.ajaxError.bind(this));
       }
     },
@@ -88,12 +123,10 @@ export default Controller.extend(ajaxStatus, {
 
     assignDocs () {
       console.log('inside assignDocs');
-      this.set('assigningAsset', null);//BROCK ADDED THIS 12/11, MIGHT NOT BE NECESSARY
     },
 
     abortDocs () {
       console.log('inside abortDocs');
-      this.set('assigningAsset', null);//BROCK ADDED THIS 12/11, MIGHT NOT BE NECESSARY
     }
   }
 });

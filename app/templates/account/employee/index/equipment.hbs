@@ -61,13 +61,16 @@
   </div>
 {{/ui-modal}}
 
-{{#ui-modal name="asset-documents" class="asset-documents" detachable=true onApprove=(action 'assignDocs') onDeny=(action 'abortDocs')}}
-  <i class="cancel close icon"></i>
+{{#ui-modal name="asset-documents" class="asset-documents" detachable=true closable=false onApprove=(action 'assignDocs') onDeny=(action 'abortDocs')}}
   <div class="header">
-    Assign Documents related to {{assigningAsset.identifier}}
+    Assign Documents related to {{newAssetItem.identifier}}?
   </div>
   <div class="content">
-    CONTENT
+    <ul>
+      {{#each suggestedDocs as |doc|}}
+        <li>{{doc.title}}</li>
+      {{/each}}
+    </ul>
   </div>
   <div class="actions">
     <div class="ui negative deny button">

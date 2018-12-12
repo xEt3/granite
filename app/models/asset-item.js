@@ -8,9 +8,10 @@ export default Model.extend({
   assignments:  hasMany('asset-assignment'),
   customFields: attr(),
 
-  asset:   belongsTo('asset'),
-  creator: belongsTo('company-user'),
-  company: belongsTo('company'),
+  asset:     belongsTo('asset'),
+  creator:   belongsTo('company-user'),
+  company:   belongsTo('company'),
+  documents: hasMany('file'),
 
   created: attr('date', { defaultValue: () => new Date() }),
 
