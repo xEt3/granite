@@ -17,6 +17,49 @@
       </a>
     {{/modals/add-asset-category}}
 
+    {{#if suggestedAssets}}
+      <div class="header">Assets Commonly Used By Job</div>
+
+      {{#each suggestedAssets as |assetGroup|}}
+        <div class="item">
+          <i class="left dropdown icon"></i>
+          <span class="text">
+            {{#if assetGroup.asset.icon}}
+              <i class="{{assetGroup.asset.icon}} icon"></i>
+            {{/if}}
+            {{assetGroup.asset.name}}
+          </span>
+          <div class="left menu">
+            <div class="center aligned header">
+              {{assetGroup.asset.name}}
+            </div>
+            {{#link-to 'account.asset' assetGroup.asset.id class="item"}}<i class="settings icon"></i>Configure {{assetGroup.asset.name}}{{/link-to}}
+            <div class="divider"></div>
+            <a href="#" class="item" {{action "create" assetGroup.asset}}>
+              <i class="asterisk icon"></i> New Stock Item
+            </a>
+            <div class="divider"></div>
+            {{#each assetGroup.stock as |asset|}}
+              <a href="#" class="item" {{action "select" asset}}>
+                {{asset.identifier}}
+              </a>
+            {{else}}
+              <div class="center aligned header">
+                No available stock for {{assetGroup.asset.name}}.
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      {{else}}
+        <div class="item">
+          <span class="text">
+            No Asset Categories
+          </span>
+        </div>
+      {{/each}}
+      <div class="header">Other Assets</div>
+    {{/if}}
+
     {{#each assignableAssets as |assetGroup|}}
       <div class="item">
         <i class="left dropdown icon"></i>
