@@ -1,0 +1,14 @@
+{{or model.title model.file.title}}
+({{or model.extension model.file.extension}})
+<span class="right floated">
+  <a href="#" {{action addAssignment (or model.file model)}}>Assign</a>
+</span>
+{{#if model.reason}}
+  {{#ui-popup
+    tagName='span'
+    position="right center"
+    content=model.reason
+  }}
+    <i class="blue text question circle icon"></i>
+  {{/ui-popup}}
+{{/if}}

@@ -3,8 +3,7 @@ import { inject as service } from '@ember/service';
 import { hash } from 'rsvp';
 
 export default Route.extend({
-  ajax: service(),
-
+  ajax:       service(),
   titleToken: 'Document Assignments',
 
   model () {
@@ -16,7 +15,27 @@ export default Route.extend({
       onboardingDocuments: this.store.query('file', {
         tags: { $in: [ 'Onboarding' ] },
         sort: { title: 1 }
+      }),
+      assignments: this.store.query('file-assignment', {
+        employee: employee.get('id'),
+        sort:     { created: 1 }
       })
+    });
+  },
+
+  setupController (controller, model) {
+    const {
+      employee,
+      suggestedDocuments,
+      onboardingDocuments,
+      assignments
+    } = model;
+
+    controller.setProperties({
+      employee,
+      suggestedDocuments,
+      onboardingDocuments,
+      assignments: assignments.toArray()
     });
   }
 });
