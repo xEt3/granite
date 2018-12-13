@@ -61,12 +61,11 @@
   </div>
 {{/ui-modal}}
 
-{{#ui-modal name="asset-documents" class="asset-documents" detachable=true closable=false onApprove=(action 'assignDocs') onDeny=(action 'abortDocs')}}
+{{#ui-modal name="asset-documents" class="asset-documents"}}
   <div class="header">
     Assign Documents related to {{newAssetItem.identifier}}?
   </div>
   <div class="content">
-    {{log 'suggestedDocs in template' suggestedDocs}}
     {{#if suggestedDocs}}
       <ul>
         {{#each suggestedDocs as |doc|}}
@@ -74,16 +73,15 @@
         {{/each}}
       </ul>
     {{else}}
-      LOADING
+      <i class="large spinner loading icon"></i>
     {{/if}}
   </div>
   <div class="actions">
-    <div class="ui negative deny button">
+    <<button class="ui red button" {{action 'respondAssignment' false}}>
       Cancel
-    </div>
-    <div class="ui positive right labeled icon button">
-      Assign Documents
-      <i class="check icon"></i>
-    </div>
+    </button>
+    <<button class="ui primary right labeled icon {{if working 'loading'}} button" {{action 'respondAssignment' true}} disabled={{lt fileAssignment.employees.length 1}}>
+      Assign Documents <i class="add user icon"></i>
+    </button>
   </div>
 {{/ui-modal}}

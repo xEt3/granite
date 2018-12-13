@@ -7,31 +7,40 @@ import $ from 'jquery';
 
 export default Controller.extend(ajaxStatus, {
   auth: service(),
+  ajax: service(),
 
   newAssetItem:  null,
-  suggestedDocs: [],
+  suggestedDocs: A(),
 
   async getSuggestedDocs (assetItem, employee) {
-    this.set('suggestedDocs', A());
+    // this.set('suggestedDocs', A());
     let assetDocs = (await assetItem.get('asset.documents')).toArray();
     let assetItemDocs = (await assetItem.get('documents')).toArray();
-    let alreadyAssignedDocs = (await this.store.query('fileAssignment', { employee: employee.id })).map(assignment => assignment.file);
+    let combinedDocs = A([ ...assetItemDocs, ...assetDocs ]).uniq().toArray();
 
-    //loops through asset category's docs and pushes to suggested if the employee isn't already assigned to it
-    assetDocs.forEach(doc => {
-      if (!alreadyAssignedDocs.includes(doc)) {
-        this.get('suggestedDocs').addObject(doc);
+    let idsAssigned = (await this.ajax.request('/api/v1/file-assignments', {
+      data: {
+        employee: employee.get('id'),
+        file:     { $in: combinedDocs.map(({ id }) => id) },
+        select:   'file'
       }
-    });
+    })).fileAssignment;
 
-    //loops through assetItem's docs and adds them if not already suggested and not already assigned to employee
-    assetItemDocs.forEach(doc => {
-      if (!this.get('suggestedDocs').includes(doc) && !alreadyAssignedDocs.includes(doc)) {
-        this.get('suggestedDocs').addObject(doc);
-      }
-    });
+    let filesWithoutAssignment = combinedDocs.filter(doc => !idsAssigned.find(({ file }) => file === doc.get('id')));
+    // this.set('suggestedDocs', filesWithoutAssignment);
+    return filesWithoutAssignment;
+  },
 
-    console.log('suggestedDocs at the end of getSuggestedDocs():', this.get('suggestedDocs'));
+  createFileAssignment () {
+    console.log('would create the file assignment here');
+    // will need to create multiple file assigments here
+    // this.set('fileAssignment', somethinghere)
+  },
+
+  afterSave () {
+    console.log('inside after save');
+    // this.set('fileAssignment', null);
+    // this.send('refresh');
   },
 
   actions: {
@@ -97,11 +106,9 @@ export default Controller.extend(ajaxStatus, {
 
         this.set('newAssetItem', assetItem);//for modal display usage
         this.getSuggestedDocs(assetItem, employee)
-        .then(() => {
-          console.log('suggestedDocs before showing modal:', this.get('suggestedDocs'));
-          if (this.get('suggestedDocs').length) {
-            console.log('showing modal right now');
-            $('.asset-documents').modal('show');
+        .then(suggestedDocs => {
+          if (suggestedDocs.length) {
+            this.send('openAssignmentModal', suggestedDocs);
           }
         });
 
@@ -132,12 +139,39 @@ export default Controller.extend(ajaxStatus, {
       this.send('refresh');
     },
 
-    assignDocs () {
-      console.log('inside assignDocs');
+    openAssignmentModal (suggestedDocs) {
+      this.setProperties({
+        respondedAssignment: false,
+        suggestedDocs:       suggestedDocs
+      });
+
+      this.createFileAssignment();
+
+      $('.asset-documents').modal({
+        detachable: true,
+        closable:   false,
+        onHidden:   () => {
+          if (!this.get('respondedAssignment')) {
+            this.send('respondAssignment', false);
+          }
+        }
+      }).modal('show');
+
+      return new Promise((resolveAssignment, rejectAssignment) => this.setProperties({
+        resolveAssignment,
+        rejectAssignment
+      }));
     },
 
-    abortDocs () {
-      console.log('inside abortDocs');
+    respondAssignment (response) {
+      // may need to tweak this functionality to create and save multiple file assignments
+      this.get(response ? 'resolveAssignment' : 'rejectAssignment')(response ? this.get('fileAssignment') : null);
+      this.set('respondedAssignment', true);
+      this.send('closeAssignmentModal');
+    },
+
+    closeAssignmentModal () {
+      $('.asset-documents').modal('hide');
     }
   }
 });
