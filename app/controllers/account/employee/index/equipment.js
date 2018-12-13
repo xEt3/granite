@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import ajaxStatus from 'granite/mixins/ajax-status';
 import { singularize } from 'ember-inflector';
+import { A } from '@ember/array';
 import { inject as service } from '@ember/service';
 import $ from 'jquery';
 
@@ -11,7 +12,7 @@ export default Controller.extend(ajaxStatus, {
   suggestedDocs: [],
 
   async getSuggestedDocs (assetItem, employee) {
-    this.set('suggestedDocs', []);
+    this.set('suggestedDocs', A());
     let assetDocs = (await assetItem.get('asset.documents')).toArray();
     let assetItemDocs = (await assetItem.get('documents')).toArray();
     let alreadyAssignedDocs = (await this.store.query('fileAssignment', { employee: employee.id })).map(assignment => assignment.file);
@@ -19,14 +20,14 @@ export default Controller.extend(ajaxStatus, {
     //loops through asset category's docs and pushes to suggested if the employee isn't already assigned to it
     assetDocs.forEach(doc => {
       if (!alreadyAssignedDocs.includes(doc)) {
-        this.get('suggestedDocs').push(doc);
+        this.get('suggestedDocs').addObject(doc);
       }
     });
 
     //loops through assetItem's docs and adds them if not already suggested and not already assigned to employee
     assetItemDocs.forEach(doc => {
       if (!this.get('suggestedDocs').includes(doc) && !alreadyAssignedDocs.includes(doc)) {
-        this.get('suggestedDocs').push(doc);
+        this.get('suggestedDocs').addObject(doc);
       }
     });
 
