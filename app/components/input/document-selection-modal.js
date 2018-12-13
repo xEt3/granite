@@ -6,9 +6,11 @@ import { run } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import { Promise } from 'rsvp';
 import $ from 'jquery';
+import ajaxStatus from 'granite/mixins/ajax-status';
 import pagination from 'granite/mixins/controller-abstractions/pagination';
+import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-export default Component.extend(pagination, {
+export default Component.extend(pagination, addEdit, ajaxStatus, {
   ajax:              service(),
   store:             service(),
   classNames:        [ 'document__selector' ],
@@ -18,6 +20,7 @@ export default Component.extend(pagination, {
   searchText:        '',
   selectedDocuments: A(),
   show:              false,
+  enableNotify:      true,
 
   didReceiveAttrs () {
     this._super(...arguments);
@@ -52,7 +55,7 @@ export default Component.extend(pagination, {
     }, this.get('debounceSearches')));
   }),
 
-  model: computed('selectedTag', '_searchText', 'page', 'limit', function () {
+  model: computed('selectedTag', '_searchText', 'page', 'limit', 'fileIsAdded', function () {
     let page = this.get('page') - 1 || 0,
         limit = this.get('limit'),
         search = this.get('_searchText'),
@@ -99,7 +102,7 @@ export default Component.extend(pagination, {
   }),
 
   refreshModal () {
-    run.scheduleOnce('afterRender', () => {
+    run('afterRender', () => {
       $('#modal__document-selection').modal('refresh');
     });
   },
@@ -131,6 +134,10 @@ export default Component.extend(pagination, {
       .modal('show');
     },
 
+    notify (type, msg) {
+      this.get('onNotify')(type, msg);
+    },
+
     addedFile (file) {
       if (this.get('fileIsAdded')) {
         this.send('removeFile', this.get('fileIsAdded'));
@@ -156,14 +163,10 @@ export default Component.extend(pagination, {
       this.set('fileIsAdded', false);
     },
 
-    leaveUpload () {
-      this.send('removeFile', this.get('fileIsAdded'));
-      this.set('fileIsAdded', false);
-      this.transitionToRoute('account.document.index');
-    },
-
     uploadFile () {
       this.ajaxStart();
+
+      let regexTag = /Select (\w+)/.exec(this.title)[1];
       let promise = new Promise(resolve => this.set('resolveUpload', resolve));
       this.send('processQueue');
 
@@ -171,14 +174,24 @@ export default Component.extend(pagination, {
         let properties = [ 'title', 'description', 'tags' ];
 
         properties.forEach(prop => {
-          file.set(prop, this.get(prop));
-          this.set(prop, null);
+          if (prop === 'title') {
+            file.set(prop, this.get('fileName'));
+          } else {
+            file.set(prop, this.get(prop));
+          }
         });
 
+        file.set('tags', regexTag);
         return file;
       })
-      .then(this.saveModel.bind(this))
-      .catch(this.ajaxError.bind(this));
+      .then(()=>{
+        this.saveModel.bind(this);
+        this.ajaxSuccess('Uploaded Documents successfully');
+      })
+      .catch(()=>{
+        this.ajaxError.bind(this);
+        this.ajaxError();
+      });
     }
   }
 });

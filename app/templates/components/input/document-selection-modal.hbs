@@ -6,23 +6,43 @@
     <a href="#" {{action (toggle "show" this)}}><i class="cloud upload icon"></i> Upload a file...</a>
   </div>
 
-  {{#if show}}
-    {{drop-zone
-    id='input__dropzone--document'
-    class='input__dropzone'
-    url='/api/v1/file'
-    uploadMultiple=false
-    autoProcessQueue=false
-    dictDefaultMessage='Drop or Click to Select a File'
-    thumbnailWidth='175'
-    headers=(hash X-API-Token=auth.token)
-    addedfile=(action 'addedFile')
-    success=(action 'uploadedFile')
-    capture='camera'}}
-    <div class="ui divider"></div>
-  {{/if}}
 
   <div class="content ui form">
+    {{#if show}}
+      {{drop-zone
+      id='input__dropzone--document'
+      class='input__dropzone'
+      url='/api/v1/file'
+      uploadMultiple=false
+      maxFiles=1
+      autoProcessQueue=false
+      dictDefaultMessage='Drop or Click to Select a File'
+      thumbnailWidth='175'
+      headers=(hash X-API-Token=ajax.auth.token)
+      addedfile=(action 'addedFile')
+      success=(action 'uploadedFile')
+      capture='camera'}}
+      <div class="ui divider"></div>
+      {{input/ui-input type="text" inputId="file-title" placeholder="File Title" value=fileName}}
+
+      {{#if showDescription}}
+        <div class="field animated fadeInUp">
+          <label for="file-description">Description</label>
+          {{textarea id="file-description" rows='3' placeholder='Description' value=description}}
+        </div>
+      {{/if}}
+
+      <div class="field center aligned text">
+        <a href="#" {{action (toggle 'showDescription' this)}}>
+          <i class="angle {{if showDescription 'up' 'down'}} icon"></i>{{if showDescription 'Hide' 'Show'}} Description
+        </a>
+      </div>
+
+      <form {{action "uploadFile" on="submit"}}>
+        {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=disableSubmit}}Save document{{/form/action-button}}
+      </form>
+    {{/if}}
+
     <div class="ui two column grid">
       <div class="ui field column">
         <label>Search by text</label>
