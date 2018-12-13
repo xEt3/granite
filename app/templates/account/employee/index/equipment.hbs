@@ -66,11 +66,16 @@
     Assign Documents related to {{newAssetItem.identifier}}?
   </div>
   <div class="content">
-    <ul>
-      {{#each suggestedDocs as |doc|}}
-        <li>{{doc.title}}</li>
-      {{/each}}
-    </ul>
+    {{log 'suggestedDocs in template' suggestedDocs}}
+    {{#if suggestedDocs}}
+      <ul>
+        {{#each suggestedDocs as |doc|}}
+          <li>{{doc.title}}</li>
+        {{/each}}
+      </ul>
+    {{else}}
+      LOADING
+    {{/if}}
   </div>
   <div class="actions">
     <div class="ui negative deny button">

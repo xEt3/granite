@@ -14,15 +14,23 @@ export default Controller.extend(ajaxStatus, {
     this.set('suggestedDocs', []);
     let assetDocs = (await assetItem.get('asset.documents')).toArray();
     let assetItemDocs = (await assetItem.get('documents')).toArray();
-    let alreadyAssignedDocs = (await this.store.query('fileAssignment', { employee: employee.id })).toArray();
-    //USE THIS SOMEHOW
+    let alreadyAssignedDocs = (await this.store.query('fileAssignment', { employee: employee.id })).map(assignment => assignment.file);
 
-    this.set('suggestedDocs', assetDocs);
-    assetItemDocs.forEach(doc => {
-      if (!this.get('suggestedDocs').includes(doc)) {
+    //loops through asset category's docs and pushes to suggested if the employee isn't already assigned to it
+    assetDocs.forEach(doc => {
+      if (!alreadyAssignedDocs.includes(doc)) {
         this.get('suggestedDocs').push(doc);
       }
     });
+
+    //loops through assetItem's docs and adds them if not already suggested and not already assigned to employee
+    assetItemDocs.forEach(doc => {
+      if (!this.get('suggestedDocs').includes(doc) && !alreadyAssignedDocs.includes(doc)) {
+        this.get('suggestedDocs').push(doc);
+      }
+    });
+
+    console.log('suggestedDocs at the end of getSuggestedDocs():', this.get('suggestedDocs'));
   },
 
   actions: {
@@ -79,7 +87,7 @@ export default Controller.extend(ajaxStatus, {
 
       asset.save()
       .then(assetItem => {
-        //remove ghost assignment
+        // remove ghost assignment
         assetItem.assignments.forEach(a => {
           if (!a.id) {
             assetItem.assignments.removeObject(a);
@@ -89,7 +97,9 @@ export default Controller.extend(ajaxStatus, {
         this.set('newAssetItem', assetItem);//for modal display usage
         this.getSuggestedDocs(assetItem, employee)
         .then(() => {
+          console.log('suggestedDocs before showing modal:', this.get('suggestedDocs'));
           if (this.get('suggestedDocs').length) {
+            console.log('showing modal right now');
             $('.asset-documents').modal('show');
           }
         });
