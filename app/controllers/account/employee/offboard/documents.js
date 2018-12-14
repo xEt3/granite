@@ -19,11 +19,6 @@ export default Controller.extend(addEdit, {
       const makeAssignment = (inputFile) => {
         let file = inputFile;
 
-        if (!(file instanceof Model)) {
-          this.store.pushPayload('file', { file });
-          file = this.store.peekRecord('file', file.id);
-        }
-
         let assignment = this.store.createRecord('file-assignment', {
           file,
           employee:          this.get('employee'),
