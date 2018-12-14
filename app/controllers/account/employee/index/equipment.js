@@ -64,7 +64,7 @@ export default Controller.extend(ajaxStatus, addEdit, {
     },
 
     selectAsset (asset) {
-      this.get('model').addObject(asset);//adds so its instant on UI
+      this.get('model').addObject(asset);
       this.ajaxStart();
 
       let user = this.get('auth.user'),
@@ -91,7 +91,7 @@ export default Controller.extend(ajaxStatus, addEdit, {
           }
         });
 
-        this.set('newAssetItem', assetItem);//for modal display usage
+        this.set('newAssetItem', assetItem);
         this.getSuggestedDocs(assetItem, employee)
         .then(suggestedDocs => {
           if (suggestedDocs.length) {
@@ -150,7 +150,6 @@ export default Controller.extend(ajaxStatus, addEdit, {
     },
 
     createAssignment (file) {
-      // creates new file assignments, passed to document-suggestion component
       let newAssignment = this.store.createRecord('file-assignment', {
         file,
         employee:          this.get('employee'),
@@ -162,24 +161,20 @@ export default Controller.extend(ajaxStatus, addEdit, {
 
     saveAssignments () {
       this.get('fileAssignments').forEach(fa => {
-        // will save all assignments in array
         this.saveModel(fa);
       });
       this.send('closeAssignmentModal');
     },
 
     cancelAssignments () {
-      // simply closes modal
       this.send('closeAssignmentModal');
     },
 
     updateAssignment (fileAssignment) {
-      // gets response from document-assignment component and updates that specific file assignment in array
       this.get('fileAssignments').addObject(fileAssignment);
     },
 
     removeAssignment (fileAssignment) {
-      // used to remove assignment on modal
       this.get('fileAssignments').removeObject(fileAssignment);
       this.get('suggestedDocs').addObject(fileAssignment.file);
     }
