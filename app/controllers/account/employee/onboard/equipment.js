@@ -131,6 +131,12 @@ export default Controller.extend(ajaxStatus, {
 
     newAssetCategory () {
       this.send('refresh');
+    },
+
+    closeAssetModalAndTransition (link, id) {
+      this.send('abortAsset');
+      $('.new-asset').modal('hide');
+      this.transitionToRoute(link, id);
     }
   }
 });

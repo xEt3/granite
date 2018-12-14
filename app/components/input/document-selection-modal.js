@@ -22,6 +22,22 @@ export default Component.extend(pagination, addEdit, ajaxStatus, {
   show:              false,
   enableNotify:      false,
 
+  sansHashModalId: computed('elementId', function () {
+    return `modal__document-selection-${this.elementId}`;
+  }),
+
+  modalId: computed('sansHashModalId', function () {
+    return `#${this.get('sansHashModalId')}`;
+  }),
+
+  sansHashDropzoneId: computed('elementId', function () {
+    return `input__dropzone--document-${this.elementId}`;
+  }),
+
+  dropzoneId: computed('sansHashDropzoneId', function () {
+    return `#${this.get('sansHashDropzoneId')}`;
+  }),
+
   didReceiveAttrs () {
     this._super(...arguments);
     let selection = A();
@@ -103,7 +119,7 @@ export default Component.extend(pagination, addEdit, ajaxStatus, {
 
   refreshModal () {
     run('afterRender', () => {
-      $('#modal__document-selection').modal('refresh');
+      $(this.get('modalId')).modal('refresh');
     });
   },
 
@@ -124,12 +140,12 @@ export default Component.extend(pagination, addEdit, ajaxStatus, {
     },
 
     assign () {
-      $('#modal__document-selection').modal('hide');
+      $(this.get('modalId')).modal('hide');
       this.get('onSelected')(this.get('selectedDocuments'));
     },
 
     selectDocuments () {
-      $('#modal__document-selection')
+      $(this.get('modalId'))
       .modal({ detachable: true })
       .modal('show');
     },
@@ -147,7 +163,7 @@ export default Component.extend(pagination, addEdit, ajaxStatus, {
     },
 
     processQueue () {
-      Dropzone.forElement('#input__dropzone--document').processQueue();
+      Dropzone.forElement(this.get('dropzoneId')).processQueue();
     },
 
     uploadedFile (file, res) {
@@ -159,7 +175,7 @@ export default Component.extend(pagination, addEdit, ajaxStatus, {
     },
 
     removeFile (file) {
-      Dropzone.forElement('#input__dropzone--document').removeFile(file);
+      Dropzone.forElement(this.get('dropzoneId')).removeFile(file);
       this.set('fileIsAdded', false);
     },
 

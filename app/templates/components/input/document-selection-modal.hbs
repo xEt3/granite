@@ -1,6 +1,6 @@
 {{yield (action 'selectDocuments')}}
 
-{{#ui-modal name='modal__document-selection' id='modal__document-selection' class='ui long modal'}}
+{{#ui-modal name='modal__document-selection' id=sansHashModalId class='ui long modal'}}
   <h1 class="ui header">{{if title title 'Select Documents'}}</h1>
 
   <div class="content ui form">
@@ -16,18 +16,18 @@
 
     {{#if showDocumentUpload}}
       {{drop-zone
-      id='input__dropzone--document'
-      class='input__dropzone'
-      url='/api/v1/file'
-      uploadMultiple=false
-      maxFiles=1
-      autoProcessQueue=false
-      dictDefaultMessage='Drop or Click to Select a File'
-      thumbnailWidth='175'
-      headers=(hash X-API-Token=ajax.auth.token)
-      addedfile=(action 'addedFile')
-      success=(action 'uploadedFile')
-      capture='camera'}}
+        id=sansHashDropzoneId
+        class='input__dropzone'
+        url='/api/v1/file'
+        uploadMultiple=false
+        maxFiles=1
+        autoProcessQueue=false
+        dictDefaultMessage='Drop or Click to Select a File'
+        thumbnailWidth='175'
+        headers=(hash X-API-Token=ajax.auth.token)
+        addedfile=(action 'addedFile')
+        success=(action 'uploadedFile')
+        capture='camera'}}
       <div class="ui divider"></div>
       {{input/ui-input type="text" inputId="file-title" placeholder="File Title" value=fileName}}
 
