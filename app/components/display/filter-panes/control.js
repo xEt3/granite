@@ -21,10 +21,8 @@ const ControlComponent = Component.extend({
 
     let classText = 'selection';
 
-    let modelName = this.get('targetObject').model.modelName;
-
-    if (this.controlName === 'tags' && modelName === 'file') {
-      classText += 'fluid multiple selection';
+    if (this.get('multi')) {
+      classText = `multiple ${classText}`;
     }
 
     if (this.get('searchable')) {
