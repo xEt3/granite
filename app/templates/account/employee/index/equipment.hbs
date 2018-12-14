@@ -66,22 +66,51 @@
     Assign Documents related to {{newAssetItem.identifier}}?
   </div>
   <div class="content">
-    {{#if suggestedDocs}}
-      <ul>
-        {{#each suggestedDocs as |doc|}}
-          <li>{{doc.title}}</li>
+
+
+    <form class="ui form">
+      {{#if suggestedDocs}}
+        <h3 class="ui header">
+          Suggested Documents
+          <div class="small light text">
+            Here are some documents that {{employee.firstName}} might need.
+          </div>
+        </h3>
+
+        <div class="ui divided list">
+          {{#each suggestedDocs as |doc|}}
+            {{list-item/document-suggestion
+              doc
+              class="item"
+              addAssignment=(action "createAssignment")}}
+          {{/each}}
+        </div>
+      {{/if}}
+
+      <h3>
+        Assignments
+      </h3>
+      <div class="ui divided list">
+        {{#each fileAssignments as |assignment|}}
+          {{list-item/document-assignment
+            assignment
+            class="item"
+            onRemove=(action "removeAssignment")
+            onChange=(action "updateAssignment")}}
+        {{else}}
+          <h3 class="center aligned light text">Nothing assigned, yet.</h3>
         {{/each}}
-      </ul>
-    {{else}}
-      <i class="large spinner loading icon"></i>
-    {{/if}}
+      </div>
+    </form>
+
+
   </div>
   <div class="actions">
-    <<button class="ui red button" {{action 'respondAssignment' false}}>
+    <<button class="ui red button" {{action 'cancelAssignments'}}>
       Cancel
     </button>
-    <<button class="ui primary right labeled icon {{if working 'loading'}} button" {{action 'respondAssignment' true}} disabled={{lt fileAssignment.employees.length 1}}>
-      Assign Documents <i class="add user icon"></i>
+    <<button class="ui primary right labeled icon {{if working 'loading'}} button" {{action 'saveAssignments'}}>
+      Assign <i class="add user icon"></i>
     </button>
   </div>
 {{/ui-modal}}

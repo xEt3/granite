@@ -1,19 +1,20 @@
 import Controller from '@ember/controller';
 import ajaxStatus from 'granite/mixins/ajax-status';
+import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import { singularize } from 'ember-inflector';
 import { A } from '@ember/array';
 import { inject as service } from '@ember/service';
 import $ from 'jquery';
 
-export default Controller.extend(ajaxStatus, {
+export default Controller.extend(ajaxStatus, addEdit, {
   auth: service(),
   ajax: service(),
 
-  newAssetItem:  null,
-  suggestedDocs: A(),
+  newAssetItem:    null,
+  suggestedDocs:   A(),
+  fileAssignments: A(),
 
   async getSuggestedDocs (assetItem, employee) {
-    // this.set('suggestedDocs', A());
     let assetDocs = (await assetItem.get('asset.documents')).toArray();
     let assetItemDocs = (await assetItem.get('documents')).toArray();
     let combinedDocs = A([ ...assetItemDocs, ...assetDocs ]).uniq().toArray();
@@ -26,21 +27,7 @@ export default Controller.extend(ajaxStatus, {
       }
     })).fileAssignment;
 
-    let filesWithoutAssignment = combinedDocs.filter(doc => !idsAssigned.find(({ file }) => file === doc.get('id')));
-    // this.set('suggestedDocs', filesWithoutAssignment);
-    return filesWithoutAssignment;
-  },
-
-  createFileAssignment () {
-    console.log('would create the file assignment here');
-    // will need to create multiple file assigments here
-    // this.set('fileAssignment', somethinghere)
-  },
-
-  afterSave () {
-    console.log('inside after save');
-    // this.set('fileAssignment', null);
-    // this.send('refresh');
+    return combinedDocs.filter(doc => !idsAssigned.find(({ file }) => file === doc.get('id')));
   },
 
   actions: {
@@ -108,7 +95,7 @@ export default Controller.extend(ajaxStatus, {
         this.getSuggestedDocs(assetItem, employee)
         .then(suggestedDocs => {
           if (suggestedDocs.length) {
-            this.send('openAssignmentModal', suggestedDocs);
+            this.send('openAssignmentModal', suggestedDocs, employee);
           }
         });
 
@@ -139,39 +126,62 @@ export default Controller.extend(ajaxStatus, {
       this.send('refresh');
     },
 
-    openAssignmentModal (suggestedDocs) {
+    openAssignmentModal (suggestedDocs, employee) {
       this.setProperties({
-        respondedAssignment: false,
-        suggestedDocs:       suggestedDocs
+        suggestedDocs: suggestedDocs,
+        employee
       });
-
-      this.createFileAssignment();
 
       $('.asset-documents').modal({
         detachable: true,
         closable:   false,
         onHidden:   () => {
-          if (!this.get('respondedAssignment')) {
-            this.send('respondAssignment', false);
-          }
+          this.setProperties({
+            suggestedDocs:   A(),
+            fileAssignments: A(),
+            newAssetItem:    null
+          });
         }
       }).modal('show');
-
-      return new Promise((resolveAssignment, rejectAssignment) => this.setProperties({
-        resolveAssignment,
-        rejectAssignment
-      }));
-    },
-
-    respondAssignment (response) {
-      // may need to tweak this functionality to create and save multiple file assignments
-      this.get(response ? 'resolveAssignment' : 'rejectAssignment')(response ? this.get('fileAssignment') : null);
-      this.set('respondedAssignment', true);
-      this.send('closeAssignmentModal');
     },
 
     closeAssignmentModal () {
       $('.asset-documents').modal('hide');
+    },
+
+    createAssignment (file) {
+      // creates new file assignments, passed to document-suggestion component
+      let newAssignment = this.store.createRecord('file-assignment', {
+        file,
+        employee:          this.get('employee'),
+        visibleToEmployee: true
+      });
+      this.get('fileAssignments').addObject(newAssignment);
+      this.get('suggestedDocs').removeObject(file);
+    },
+
+    saveAssignments () {
+      this.get('fileAssignments').forEach(fa => {
+        // will save all assignments in array
+        this.saveModel(fa);
+      });
+      this.send('closeAssignmentModal');
+    },
+
+    cancelAssignments () {
+      // simply closes modal
+      this.send('closeAssignmentModal');
+    },
+
+    updateAssignment (fileAssignment) {
+      // gets response from document-assignment component and updates that specific file assignment in array
+      this.get('fileAssignments').addObject(fileAssignment);
+    },
+
+    removeAssignment (fileAssignment) {
+      // used to remove assignment on modal
+      this.get('fileAssignments').removeObject(fileAssignment);
+      this.get('suggestedDocs').addObject(fileAssignment.file);
     }
   }
 });
