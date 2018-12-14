@@ -72,6 +72,11 @@ export default Component.extend(ajaxStatus, {
 
   actions: {
     addedFile (file) {
+      let  $dropzone = Dropzone.forElement('.input__dropzone');
+
+      if (this.get('fileIsAdded')) {
+        $dropzone.removeFile(this.get('fileIsAdded'));
+      }
       this.set('fileIsAdded', file);
     },
 
@@ -89,7 +94,6 @@ export default Component.extend(ajaxStatus, {
       }
 
       $dropzone.removeFile(this.get('fileIsAdded'));
-      this.set('fileIsAdded', false);
     },
 
     uploadError (err) {
