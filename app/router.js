@@ -102,6 +102,7 @@ Router.map(function () {
         this.route('options');
         this.route('assets');
         this.route('reorganization');
+        this.route('documents');
       });
       this.route('complete-offboarding');
     });
