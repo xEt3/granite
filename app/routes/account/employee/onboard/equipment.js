@@ -39,5 +39,15 @@ export default Route.extend(refreshable, {
       assignedAssets:     model.assignedAssets,
       jobSuggestedAssets: model.jobSuggestedAssets
     });
+  },
+
+  actions: {
+    willTransition () {
+      let modalNode = document.querySelector('.ui.modal.new-asset');
+
+      if (modalNode && modalNode.remove) {
+        modalNode.remove();
+      }
+    }
   }
 });
