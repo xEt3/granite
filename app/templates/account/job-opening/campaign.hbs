@@ -6,6 +6,9 @@
     {{#link-to 'account.job-opening.campaign.applicant-tracking' class="item"}}
       <i class="users icon"></i>Applicants
     {{/link-to}}
+    {{#link-to 'account.job-opening.campaign.talent-pool' class="item"}}
+      <i class="archive icon"></i>Talent Pool
+    {{/link-to}}
     <div class="right menu">
       {{#if (and model.completedOn (not model.closed))}}
         {{#modals/ats-close-job-opening class="item" sourcesToClose=model.manualApplicantSources as |confirm|}}

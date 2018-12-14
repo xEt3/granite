@@ -19,7 +19,7 @@ export default Mixin.create({
     });
   },
 
-  model (params) {
+  async model (params) {
     let query = {
       page:  params.page - 1 || 0,
       limit: params.limit
@@ -45,7 +45,11 @@ export default Mixin.create({
     }
 
     if (mutate && typeof mutate === 'function') {
-      mutate.call(this, query, params);
+      let result = mutate.call(this, query, params);
+
+      if (result && result.then) {
+        await result;
+      }
     }
 
     if (sorter && typeof sorter === 'function') {
