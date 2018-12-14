@@ -26,14 +26,15 @@
     <div class="field">
       <label for="asset-description">Documents</label>
       {{#input/document-selection-modal
-        title="Select Asset Documents"
+        title="Assign asset documents"
         selected=model.documents
-        autoTag='asset'
+        autoTag='Asset'
         onSelected=(action (mut model.documents))
-        as |execute|}}
+        as |execute|
+      }}
         <button class="ui basic button" {{action execute 'selectDocuments'}}>
           <i class="folder icon"></i>
-          Assign Asset documents
+          Add asset documents
           {{#if model.documents.length}}
             <span class="ui label">{{model.documents.length}} Assigned</span>
           {{/if}}
