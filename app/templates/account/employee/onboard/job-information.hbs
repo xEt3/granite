@@ -53,6 +53,21 @@
     </div>
   </div>
   <div class="field">
+    <label for="job-description">Job Description</label>
+    {{#ui-dropdown class="selection" selected=model.jobDescription onChange=(action (mut model.jobDescription)) as |execute mapper|}}
+      <div class="default text">Job Description</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        <div class="item" data-value="">No Job Description</div>
+        {{#each jobDescriptions as |jobDescription|}}
+          <div class="item" data-value="{{map-value mapper jobDescription}}">
+            {{jobDescription.title}}
+          </div>
+        {{/each}}
+      </div>
+    {{/ui-dropdown}}
+  </div>
+  <div class="field">
     <label for="job-location">Location</label>
     {{#ui-dropdown class="selection" selected=model.location onChange=(action (mut model.location)) as |execute mapper|}}
       <div class="default text">Location</div>

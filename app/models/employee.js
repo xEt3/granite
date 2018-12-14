@@ -105,6 +105,10 @@ export default Model.extend(Validations, {
     async:   true,
     inverse: 'employee'
   }),
+  jobDescription: belongsTo('job', {
+    async:   true,
+    inverse: null
+  }),
   creator: belongsTo('company-user', {
     async:   true,
     inverse: null

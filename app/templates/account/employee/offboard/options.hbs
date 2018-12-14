@@ -61,6 +61,7 @@
       title="Select Offboarding Documents"
       selected=model.offboardingDocuments
       onSelected=(pipe (action (mut model.offboardingDocuments)) (action 'save' model))
+      onNotify= (action 'onNotify')
       as |execute|}}
       <button class="ui basic button" {{action execute 'selectDocuments'}}>
         <i class="folder icon"></i>

@@ -1,0 +1,72 @@
+<h2 class="ui horizontal divider header">
+  Documents
+</h2>
+
+<form class="ui form" {{action "saveAndContinue" on="submit"}}>
+  {{#if suggestedDocumentsFiltered}}
+    <h3 class="ui header">
+      Suggested Documents
+      <div class="small light text">
+        Here are some documents that {{employee.firstName}} might need.
+      </div>
+    </h3>
+
+    <div class="ui divided list">
+      {{#each suggestedDocumentsFiltered as |docSug|}}
+        {{list-item/document-suggestion
+          docSug
+          class="item"
+          addAssignment=(action "addAssignment")}}
+      {{/each}}
+    </div>
+  {{/if}}
+
+  {{#if onboardingDocumentsFiltered}}
+    <h3 class="ui header">
+      Onboarding Documents
+      <div class="small light text">
+        These documents have been tagged with <i>Onboarding</i> and might be applicable.
+      </div>
+    </h3>
+
+    <div class="ui divided list">
+      {{#each onboardingDocumentsFiltered as |docSug|}}
+        {{list-item/document-suggestion
+          docSug
+          class="item"
+          addAssignment=(action "addAssignment")}}
+      {{/each}}
+    </div>
+  {{/if}}
+
+  <h3>
+    Assignments
+    <span class="small text">
+      {{#input/document-selection-modal
+        title="Add a file"
+        selection=docModalSelection
+        autoTag="Onboarding"
+        onSelected=(action "addAssignment")
+        as |execute|}}
+        <a href="#" {{action execute}}>Assign another file...</a>
+      {{/input/document-selection-modal}}
+    </span>
+  </h3>
+  <div class="ui divided list">
+    {{#each assignments as |assignment|}}
+      {{list-item/document-assignment
+        assignment
+        class="item"
+        onRemove=(action "removeAssignment")
+        onChange=(action "saveAssignmentChanges")}}
+    {{else}}
+      <h3 class="center aligned light text">Nothing assigned, yet.</h3>
+    {{/each}}
+  </div>
+
+  <div class="ui divider"></div>
+
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}
+    Next
+  {{/form/action-button}}
+</form>

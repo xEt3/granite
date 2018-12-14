@@ -19,19 +19,21 @@ export default Route.extend(addEdit, {
         'company': companyId,
         _id:       { $ne: employeeId }
       }),
-      departments: this.store.query('department', { 'company': companyId }),
-      locations:   this.store.query('location', { 'company': companyId }),
+      departments:     this.store.query('department', { 'company': companyId }),
+      locations:       this.store.query('location', { 'company': companyId }),
+      jobDescriptions: this.store.query('job', { 'company': companyId }),
       company
     });
   },
 
   setupController (controller, model) {
     controller.setProperties({
-      model:       model.employee,
-      employees:   model.employees,
-      company:     model.company,
-      departments: model.departments,
-      locations:   model.locations
+      model:           model.employee,
+      employees:       model.employees,
+      company:         model.company,
+      departments:     model.departments,
+      locations:       model.locations,
+      jobDescriptions: model.jobDescriptions
     });
   }
 });
