@@ -128,7 +128,7 @@ export default Controller.extend(ajaxStatus, addEdit, {
 
     openAssignmentModal (suggestedDocs, employee) {
       this.setProperties({
-        suggestedDocs: suggestedDocs,
+        suggestedDocs,
         employee
       });
 
