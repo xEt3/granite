@@ -20,7 +20,7 @@ export default Component.extend(pagination, addEdit, ajaxStatus, {
   searchText:        '',
   selectedDocuments: A(),
   show:              false,
-  enableNotify:      true,
+  enableNotify:      false,
 
   didReceiveAttrs () {
     this._super(...arguments);
@@ -163,35 +163,39 @@ export default Component.extend(pagination, addEdit, ajaxStatus, {
       this.set('fileIsAdded', false);
     },
 
-    uploadFile () {
+    async uploadFile () {
       this.ajaxStart();
 
-      let regexTag = /Select (\w+)/.exec(this.title)[1];
-      let promise = new Promise(resolve => this.set('resolveUpload', resolve));
+      let autoTag = this.get('autoTag'),
+          promise = new Promise(resolve => this.set('resolveUpload', resolve));
+
       this.send('processQueue');
 
-      promise.then(file => {
-        let properties = [ 'title', 'description', 'tags' ];
+      let file = await promise,
+          properties = [ 'title', 'description', 'tags' ];
 
-        properties.forEach(prop => {
-          if (prop === 'title') {
-            file.set(prop, this.get('fileName'));
-          } else {
-            file.set(prop, this.get(prop));
-          }
-        });
-
-        file.set('tags', regexTag);
-        return file;
-      })
-      .then(()=>{
-        this.saveModel.bind(this);
-        this.ajaxSuccess('Uploaded Documents successfully');
-      })
-      .catch(()=>{
-        this.ajaxError.bind(this);
-        this.ajaxError();
+      properties.forEach(prop => {
+        if (prop === 'title') {
+          file.set(prop, this.get('fileName'));
+        } else {
+          file.set(prop, this.get(prop));
+        }
       });
+
+      if (autoTag) {
+        file.set('tags', Array.isArray(autoTag) ? autoTag : [ autoTag ]);
+      }
+
+      try {
+        await file.save();
+      } catch (e) {
+        this.ajaxError(e);
+        return;
+      }
+
+      this.ajaxSuccess('Succesfully uploaded document.');
+      this.send('addDocument', file);
+      this.set('showDocumentUpload', false);
     }
   }
 });

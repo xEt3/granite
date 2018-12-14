@@ -2,13 +2,19 @@
 
 {{#ui-modal name='modal__document-selection' id='modal__document-selection' class='ui long modal'}}
   <h1 class="ui header">{{if title title 'Select Documents'}}</h1>
-  <div class='ui center aligned text'>
-    <a href="#" {{action (toggle "show" this)}}><i class="cloud upload icon"></i> Upload a file...</a>
-  </div>
-
 
   <div class="content ui form">
-    {{#if show}}
+    <p class='ui center aligned text'>
+      <a href="#" class="{{if showDocumentUpload 'text-danger'}}" {{action (toggle "showDocumentUpload" this)}}>
+        {{#if showDocumentUpload}}
+          <i class="close icon"></i> Close document upload
+        {{else}}
+          <i class="cloud upload icon"></i> Upload a file...
+        {{/if}}
+      </a>
+    </p>
+
+    {{#if showDocumentUpload}}
       {{drop-zone
       id='input__dropzone--document'
       class='input__dropzone'
@@ -41,6 +47,7 @@
       <form {{action "uploadFile" on="submit"}}>
         {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=disableSubmit}}Save document{{/form/action-button}}
       </form>
+      <div class="ui divider"></div>
     {{/if}}
 
     <div class="ui two column grid">
@@ -86,8 +93,8 @@
     <div class="clearfix">
       {{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}
     </div>
-    <div class="ui divider"></div>
     {{#if selectedDocuments}}
+      <div class="ui divider"></div>
       <h3 class="ui header">Selected Documents</h3>
       <div class="ui divided list">
         {{#each selectedDocuments as |selectedDocument|}}
