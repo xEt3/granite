@@ -93,6 +93,7 @@ Router.map(function () {
         this.route('equipment');
         this.route('custom-fields');
         this.route('picture');
+        this.route('documents');
       });
       this.route('onboard-complete');
       this.route('offboard', function () {
