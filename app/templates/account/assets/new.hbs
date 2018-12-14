@@ -28,6 +28,7 @@
       {{#input/document-selection-modal
         title="Select Asset Documents"
         selected=model.documents
+        autoTag='asset'
         onSelected=(action (mut model.documents))
         as |execute|}}
         <button class="ui basic button" {{action execute 'selectDocuments'}}>
