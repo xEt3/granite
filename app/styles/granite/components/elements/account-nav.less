@@ -71,18 +71,6 @@ nav.ui.menu.account__navigation {
   }
 }
 
-.ui.main > .container.main__dark-text {
-  .account__breadcrumb.breadcrumb,
-  .application__outlet-wrapper,
-  div.section {
-    color: @granite-grey !important;
-
-    > a {
-      color: @granite-grey !important;
-    }
-  }
-}
-
 .account__navigation.menu > .menu__search-input {
   padding: 0 .5em;
   flex: 1 0 auto;
@@ -93,12 +81,14 @@ nav.ui.menu.account__navigation {
     background: none;
 
     &.focus {
-      .input, input::placeholder {
+      .input,
+      input::placeholder {
         color: @granite-green;
       }
     }
 
-    input, .input {
+    .input,
+    input {
       background: none;
     }
 
@@ -115,7 +105,7 @@ nav.ui.menu.account__navigation {
       font-size: 1.2em;
       border: none;
       border-radius: 0;
-      transition: all 0.4s ease-in-out;
+      transition: all .4s ease-in-out;
 
       &::placeholder {
         color: @gray;

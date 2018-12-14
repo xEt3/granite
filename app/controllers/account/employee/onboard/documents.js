@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
+import Model from 'ember-data/model';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default Controller.extend(addEdit, {
@@ -8,9 +9,14 @@ export default Controller.extend(addEdit, {
   suggestedDocumentsFiltered: computed('suggestedDocuments', 'assignments.[]', function () {
     let assignments = this.get('assignments');
 
-    return this.get('suggestedDocuments').filter((sug) =>
-      !assignments.find(assignment =>
-        assignment.belongsTo('file').id() === sug.file._id));
+    return this.get('suggestedDocuments').filter((sug) => {
+      let sugId = sug.file.id || sug.file._id;
+
+      return !assignments.find(assignment => {
+        let fileId = assignment.belongsTo('file').id();
+        return fileId && fileId === sugId;
+      });
+    });
   }),
 
   onboardingDocumentsFiltered: computed('onboardingDocuments', 'assignments.[]', function () {
@@ -23,7 +29,14 @@ export default Controller.extend(addEdit, {
 
   actions: {
     async addAssignment (files) {
-      const makeAssignment = (file) => {
+      const makeAssignment = (inputFile) => {
+        let file = inputFile;
+
+        if (!(file instanceof Model)) {
+          this.store.pushPayload('file', { file });
+          file = this.store.peekRecord('file', file.id);
+        }
+
         let assignment = this.store.createRecord('file-assignment', {
           file,
           employee:          this.get('employee'),

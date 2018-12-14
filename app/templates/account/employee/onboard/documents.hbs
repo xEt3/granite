@@ -45,6 +45,7 @@
       {{#input/document-selection-modal
         title="Add a file"
         selection=docModalSelection
+        autoTag="Onboarding"
         onSelected=(action "addAssignment")
         as |execute|}}
         <a href="#" {{action execute}}>Assign another file...</a>

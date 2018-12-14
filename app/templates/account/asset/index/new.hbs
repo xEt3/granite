@@ -1,7 +1,25 @@
-<form class="ui form container" {{action "save" on="submit"}}>
+<form class="ui form container liquid-padded" {{action "save" on="submit"}}>
   <div class="field">
     <label for="asset-identifier">Asset Identifier</label>
     {{input type="text" value=model.identifier id="asset-identifier" placeholder="Unique identifier (VIN, Stock #, RFID)"}}
+  </div>
+  <div class="field">
+    <label for="asset-description">Documents</label>
+    {{#input/document-selection-modal
+      title="Assign asset documents"
+      selected=model.documents
+      autoTag='Asset'
+      onSelected=(action (mut model.documents))
+      as |execute|
+    }}
+      <button class="ui basic button" {{action execute 'selectDocuments'}}>
+        <i class="folder icon"></i>
+        Add asset documents
+        {{#if model.documents.length}}
+          <span class="ui label">{{model.documents.length}} Assigned</span>
+        {{/if}}
+      </button>
+    {{/input/document-selection-modal}}
   </div>
   <div class="ui divider"></div>
 

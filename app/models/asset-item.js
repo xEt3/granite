@@ -11,7 +11,10 @@ export default Model.extend({
   asset:     belongsTo('asset'),
   creator:   belongsTo('company-user'),
   company:   belongsTo('company'),
-  documents: hasMany('file'),
+  documents: hasMany('file', {
+    inverse: null,
+    async:   true
+  }),
 
   created: attr('date', { defaultValue: () => new Date() }),
 
