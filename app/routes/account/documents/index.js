@@ -4,7 +4,6 @@ import { hash } from 'rsvp';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 
-
 export default Route.extend({
   titleToken: 'Documents',
   auth:       service(),
@@ -18,14 +17,11 @@ export default Route.extend({
     page:      { refreshModel: true }
   },
 
-  sort: { created: -1 },
-
-
+  sort:    { created: -1 },
   filters: [
     'tags',
     'extension'
   ],
-
 
   beforeModel () {
     let hints = this.get('auth.user.shownHints');
