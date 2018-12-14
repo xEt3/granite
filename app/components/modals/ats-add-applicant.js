@@ -5,7 +5,6 @@ import { inject as service } from '@ember/service';
 import ajaxStatus from 'granite/mixins/ajax-status';
 import $ from 'jquery';
 
-
 export default Component.extend(ajaxStatus, {
   store:                   service(),
   applicantRequiredFields: [ 'firstName', 'lastName', 'phone', 'email' ],
@@ -70,8 +69,6 @@ export default Component.extend(ajaxStatus, {
     }
     return true;
   },
-
-
 
   actions: {
     addedFile (file) {
