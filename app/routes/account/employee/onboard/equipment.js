@@ -27,15 +27,17 @@ export default Route.extend(refreshable, {
         });
       }),
 
-      assignedAssets: this.store.query('asset-item', { 'assignments.employee': employee.get('id') }).then(assets => assets.toArray())
+      assignedAssets:     this.store.query('asset-item', { 'assignments.employee': employee.get('id') }).then(assets => assets.toArray()),
+      jobSuggestedAssets: employee.get('jobDescription.assets') ? employee.get('jobDescription').then(job => job.assets.toArray()) : []
     });
   },
 
   setupController (controller, model) {
     controller.setProperties({
-      model:            model.employee,
-      assignableAssets: model.assignableAssets,
-      assignedAssets:   model.assignedAssets
+      model:              model.employee,
+      assignableAssets:   model.assignableAssets,
+      assignedAssets:     model.assignedAssets,
+      jobSuggestedAssets: model.jobSuggestedAssets
     });
   }
 });

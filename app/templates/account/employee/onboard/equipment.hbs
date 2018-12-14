@@ -6,7 +6,8 @@
   <div class="ui basic segment">
     <div class="right aligned text">
       {{#input/equipment-picker
-        assignableAssets=assignableAssets
+        assignableAssets=splitAssets.remainingAssets
+        suggestedAssets=splitAssets.suggestedAssets
         onSelect=(action 'selectAsset')
         onCreate=(action 'createAsset')
         newAssetCategory=(action 'newAssetCategory')}}
