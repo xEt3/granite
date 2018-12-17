@@ -2505,6 +2505,7 @@ body-parser@1.18.3:
   version "1.18.3"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.18.3.tgz#5b292198ffdd553b3a0f20ded0592b956955c8b4"
   integrity sha1-WykhmP/dVTs6DyDe0FkrlWlVyLQ=
+
   dependencies:
     bytes "3.0.0"
     content-type "~1.0.4"
@@ -4802,14 +4803,6 @@ ember-ajax@^3.0.0:
     ember-cli-babel "^6.16.0"
     najax "^1.0.3"
 
-ember-assign-polyfill@~2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/ember-assign-polyfill/-/ember-assign-polyfill-2.4.0.tgz#acb00466f7d674b3e6b030acfe255b3b1f6472e1"
-  integrity sha512-0SnGQb9CenRqbZdIa1KFsEjT+1ijGWfAbCSaDbg5uVa5l6HPdppuTzOXK6sfEQMsd2nbrp27QWFy7W5VX6l4Ag==
-  dependencies:
-    ember-cli-babel "^6.6.0"
-    ember-cli-version-checker "^2.0.0"
-
 ember-ast-helpers@0.3.5:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/ember-ast-helpers/-/ember-ast-helpers-0.3.5.tgz#db72afd9bc3de03759720ff7b03d4e3b2c7f2351"
@@ -5819,7 +5812,7 @@ ember-get-config@^0.2.2, ember-get-config@^0.2.3, ember-get-config@^0.2.4:
     broccoli-file-creator "^1.1.1"
     ember-cli-babel "^6.3.0"
 
-ember-getowner-polyfill@^2.0.0, ember-getowner-polyfill@^2.0.1:
+ember-getowner-polyfill@^2.0.1:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/ember-getowner-polyfill/-/ember-getowner-polyfill-2.2.0.tgz#38e7dccbcac69d5ec694000329ec0b2be651d2b2"
   integrity sha512-rwGMJgbGzxIAiWYjdpAh04Abvt0s3HuS/VjHzUFhVyVg2pzAuz45B9AzOxYXzkp88vFC7FPaiA4kE8NxNk4A4Q==
@@ -6074,14 +6067,6 @@ ember-rollbar-client@^0.7.0:
     ember-lodash "4.18.0"
     git-repo-version "1.0.2"
     rollbar "~2.3.1"
-
-ember-route-action-helper@2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/ember-route-action-helper/-/ember-route-action-helper-2.0.6.tgz#1d50454350d7112be326ab44058f06cf291d5fd9"
-  integrity sha1-HVBFQ1DXESvjJqtEBY8GzykdX9k=
-  dependencies:
-    ember-cli-babel "^6.8.1"
-    ember-getowner-polyfill "^2.0.0"
 
 ember-router-generator@^1.0.0, ember-router-generator@^1.2.3:
   version "1.2.3"
@@ -6849,6 +6834,14 @@ expand-tilde@^2.0.0, expand-tilde@^2.0.2:
   integrity sha1-l+gBqgUt8CRU3kawK/YhZCzchQI=
   dependencies:
     homedir-polyfill "^1.0.1"
+
+expired-sauce@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/expired-sauce/-/expired-sauce-0.0.3.tgz#745e2e5c6d2ef2a8ed5e2d4dd273e49c6744444b"
+  integrity sha512-4nu5rjWHFipbrC8bmSCQACOe6+Uhlhp83csVAyybidaP6E2lvjoiAOhRxkB2ueOhBe8R4/oMaz1AVJHiSMge/w==
+  dependencies:
+    bluebird "^3.5.2"
+    saucelabs "^1.5.0"
 
 express@^4.10.7, express@^4.12.3:
   version "4.16.4"

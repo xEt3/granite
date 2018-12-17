@@ -84,7 +84,7 @@ export default function () {
     return { subscription: null }; //works for now
   });
 
-  let array = [ 'files', 'recruiting-pipelines', 'recruiting-pipelines/:id', 'employees', 'company-users/:id',
+  let array = [ 'files', 'files/:id', 'file-assignments', 'recruiting-pipelines', 'recruiting-pipelines/:id', 'employees', 'company-users/:id',
     'company-users', 'employees/:id', 'companies', 'companies/:id', 'permissions', 'action-items', 'asset-items',
     'action-items/:id', 'assets', 'changes', 'histories', 'employee-issues', 'departments', 'locations',
     'payment-methods', 'comments', 'comments/:id', 'job-openings', 'jobs', 'jobs/:id', 'job-openings/:id', 'job-applications',
