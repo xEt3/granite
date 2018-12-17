@@ -69,6 +69,18 @@ export default Controller.extend({
     }
   })),
 
+  randomColorText: computed('backdrop', 'currentPath', function () {
+    let background = this.get('backdrop') + '';
+    if (background) {
+      let filterNumbers = /([\d]{2,3})/g;
+      let backgroundRGB = background.match(filterNumbers);
+      let r =  Number(backgroundRGB[0]),
+          g =  Number(backgroundRGB[1]),
+          b =  Number(backgroundRGB[2]);
+      return (r * 299 + g * 587 + b * 114) / 1000 > 123 ? true : false;
+    }
+  }),
+
   backdrop: computed('auth.user.company.rgbPalette', function () {
     const palette = this.get('auth.user.company.rgbPalette');
     const grad = palette ? `

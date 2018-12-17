@@ -23,7 +23,7 @@ module('Acceptance | company assets', function (hooks) {
   });
 
   test('list of assets', async function (assert) {
-    await server.createList('asset-items', 7);
+    await server.createList('asset-item', 7);
     await authenticate.call(this, server);
     await visit('/account/assets');
     assert.equal(currentURL(), '/account/assets', 'on assets page');
@@ -33,7 +33,7 @@ module('Acceptance | company assets', function (hooks) {
     await authenticate.call(this, server);
     let myAssetCategory = server.create('asset', { name: 'apple' });
 
-    await server.createList('asset-items', 7);
+    await server.createList('asset-item', 7);
     await visit('/account/assets');
     await settled();
     assert.equal(currentURL(), '/account/assets');
@@ -53,7 +53,7 @@ module('Acceptance | company assets', function (hooks) {
       attributes: [ 'blue' ]
     });
 
-    await server.createList('asset-items', 7);
+    await server.createList('asset-item', 7);
     await authenticate.call(this, server);
     await visit('/account/assets');
     await settled();
@@ -73,7 +73,7 @@ module('Acceptance | company assets', function (hooks) {
       attributes: [ 'blue' ]
     });
 
-    await server.createList('asset-items', 7);
+    await server.createList('asset-item', 7);
     await authenticate.call(this, server);
     await visit('/account/assets');
     await settled();

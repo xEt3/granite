@@ -116,7 +116,10 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
 
     let wasNew = employee.get('isNew');
 
-    employee.set('jobTitle', job.get('title'));
+    employee.setProperties({
+      jobTitle:       job.get('title'),
+      jobDescription: job
+    });
 
     return jobApplication.save()
     .then(() => employee.save())

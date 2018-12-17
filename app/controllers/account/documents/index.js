@@ -7,10 +7,10 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 export default Controller.extend(ajaxStatus, pagination, addEdit, {
   auth: service(),
 
-  queryParams: [ 'page', 'asc', 'sortProp' ],
-  limit: 20,
-  page: 1,
-  asc: true,
-  sortProp: 'created',
+  queryParams:  [ 'page', 'asc', 'sortProp' ],
+  limit:        20,
+  page:         1,
+  asc:          true,
+  sortProp:     'created',
   enableNotify: true
 });

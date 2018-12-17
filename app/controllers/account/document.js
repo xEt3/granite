@@ -82,6 +82,7 @@ export default Controller.extend(addEdit, {
 
       $('#modal__file-assignment').modal({
         detachable: true,
+        context:    '.ember-application',
         onHidden:   () => {
           if (!this.get('respondedAssignment')) {
             this.send('respondedAssignment', false);

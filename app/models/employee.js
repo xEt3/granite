@@ -85,7 +85,6 @@ export default Model.extend(Validations, {
   externalLinkAutomaticSync: attr('boolean'),
   externalLinkLastSync:      attr('date'),
 
-
   company: belongsTo('company', {
     async:   true,
     inverse: null
@@ -105,6 +104,10 @@ export default Model.extend(Validations, {
   companyUser: belongsTo('company-user', {
     async:   true,
     inverse: 'employee'
+  }),
+  jobDescription: belongsTo('job', {
+    async:   true,
+    inverse: null
   }),
   creator: belongsTo('company-user', {
     async:   true,
