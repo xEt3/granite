@@ -1,6 +1,5 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
-import Model from 'ember-data/model';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default Controller.extend(addEdit, {
@@ -16,9 +15,7 @@ export default Controller.extend(addEdit, {
 
   actions: {
     async addAssignment (files) {
-      const makeAssignment = (inputFile) => {
-        let file = inputFile;
-
+      const makeAssignment = (file) => {
         let assignment = this.store.createRecord('file-assignment', {
           file,
           employee:          this.get('employee'),
