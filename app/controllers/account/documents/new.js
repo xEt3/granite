@@ -6,7 +6,7 @@ export default Controller.extend(addEdit, {
   fileIsAdded:         false,
   transitionAfterSave: 'account.documents.index',
   transitionWithModel: false,
-  tagSuggestions:      [ 'Reference', 'Employee Specific', 'Company Wide' ],
+  tagSuggestions:      [ 'Reference', 'Employee Specific', 'Company Wide', 'Onboarding', 'Offboarding' ],
 
   actions: {
     addedFile (file) {

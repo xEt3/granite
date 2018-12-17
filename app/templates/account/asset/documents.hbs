@@ -1,1 +1,23 @@
-{{outlet}}
+<div class="ui relaxed divided list">
+  {{#each model.documents as |file|}}
+    <div class="content clearfix">
+      <span>
+        {{#link-to 'account.document' file.id class="item"}}
+          {{list-item/document-item file}}
+        {{/link-to}}
+      </span>
+
+      <span class="right floated">
+        {{#ui-popup content="Remove Document"}}
+          <a href="#" class="text-danger" {{action "removeDocument" file}}>
+            <i class="trash icon"></i>
+          </a>
+        {{/ui-popup}}
+      </span>
+    </div>
+  {{else}}
+    <h2 class="ui center aligned header">No documents available.</h2>
+  {{/each}}
+</div>
+
+{{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}

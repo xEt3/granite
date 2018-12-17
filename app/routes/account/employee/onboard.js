@@ -21,6 +21,10 @@ export default Route.extend(wizard, {
     title: 'Assets',
     link:  'equipment'
   }, {
+    icon:  'file',
+    title: 'Documents',
+    link:  'documents'
+  }, {
     icon:  'photo',
     title: 'Picture',
     link:  'picture'

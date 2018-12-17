@@ -35,6 +35,26 @@ export default Controller.extend(ajaxStatus, {
     return groups;
   }),
 
+  splitAssets: computed('assignableAssets.[]', 'jobSuggestedAssets', function () {
+    let jobSuggestedAssets = this.get('jobSuggestedAssets'),
+        assignableAssets = this.get('assignableAssets'),
+        suggestedAssets = A(),
+        remainingAssets = A();
+
+    assignableAssets.forEach(asset => {
+      if (jobSuggestedAssets.includes(asset.asset)) {
+        suggestedAssets.push(asset);
+      } else {
+        remainingAssets.push(asset);
+      }
+    });
+
+    return {
+      suggestedAssets,
+      remainingAssets
+    };
+  }),
+
   actions: {
     createAsset (category) {
       let user = this.get('auth.user');
@@ -111,6 +131,12 @@ export default Controller.extend(ajaxStatus, {
 
     newAssetCategory () {
       this.send('refresh');
+    },
+
+    closeAssetModalAndTransition (link, id) {
+      this.send('abortAsset');
+      $('.new-asset').modal('hide');
+      this.transitionToRoute(link, id);
     }
   }
 });

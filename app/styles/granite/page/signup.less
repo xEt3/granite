@@ -3,13 +3,15 @@
   float: right;
   margin-top: 50px;
 
-  .step, .step.active, .step.completed {
+  .step,
+  .step.active,
+  .step.completed {
     background: none !important;
     border: none !important;
     text-align: right;
     padding-right: 0 !important;
     padding-left: 0 !important;
-    transition: all 0.35s ease-in-out;
+    transition: all .35s ease-in-out;
 
     &:after {
       display: none !important;
@@ -18,17 +20,21 @@
 
     &.active {
       a {
-        transition: all 0.35s ease-in-out;
+        transition: all .35s ease-in-out;
         color: darken(@granite-blue, 20%);
 
-        .description, .title, .icon {
+        .description,
+        .icon,
+        .title {
           color: darken(@granite-blue, 20%) !important;
         }
 
         &:hover {
           color: @granite-blue !important;
 
-          .description, .title, .icon {
+          .description,
+          .icon,
+          .title {
             color: @granite-blue !important;
           }
         }
@@ -40,17 +46,30 @@
       color: white !important;
       width: 100%;
 
-      .description, .title, .icon {
+      .description,
+      .icon,
+      .title {
         color: white !important;
       }
 
       &:hover {
         color: @granite-offwhite !important;
 
-        .description, .title, .icon {
+        .description,
+        .icon,
+        .title {
           color: @granite-offwhite !important;
         }
       }
     }
+  }
+}
+
+.prefix-error {
+  borderRadius: 5px;
+  border: @granite-red 4px solid;
+
+  .close.icon {
+    color: @granite-red !important;
   }
 }

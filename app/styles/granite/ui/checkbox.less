@@ -1,0 +1,27 @@
+@checkbox-sm-sz: 12px;
+
+.ui.checkbox.small {
+  min-height: @checkbox-sm-sz;
+  line-height: @checkbox-sm-sz;
+  min-width: @checkbox-sm-sz;
+
+  label {
+    font-size: @checkbox-sm-sz;
+    padding-left: calc(12px + .5em);
+
+    &::before {
+      width: @checkbox-sm-sz;
+      height: @checkbox-sm-sz;
+    }
+
+    &::after {
+      font-size: @checkbox-sm-sz;
+      width: @checkbox-sm-sz;
+      height: @checkbox-sm-sz;
+    }
+  }
+}
+
+.ui.form .small.field {
+  margin-bottom: .3em;
+}

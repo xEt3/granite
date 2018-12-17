@@ -35,6 +35,15 @@ module.exports = function (environment) {
         javascript: true,
         fonts:      false
       }
+    },
+    'ember-cli-notifications': {
+      iconClasses: {
+        close:   'close icon',
+        info:    'info circle icon',
+        success: 'check icon',
+        warning: 'warning icon',
+        error:   'exclamation circle icon'
+      }
     }
   };
 

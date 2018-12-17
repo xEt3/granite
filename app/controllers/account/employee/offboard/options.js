@@ -5,5 +5,11 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default Controller.extend(addEdit, {
   states,
-  stateIsMontana: computed.equal('model.addressState', 'MT')
+  stateIsMontana: computed.equal('model.addressState', 'MT'),
+
+  actions: {
+    onNotify (type, msg) {
+      this.send('notify', type, msg);
+    }
+  }
 });

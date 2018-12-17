@@ -6,7 +6,8 @@
   <div class="ui basic segment">
     <div class="right aligned text">
       {{#input/equipment-picker
-        assignableAssets=assignableAssets
+        assignableAssets=splitAssets.remainingAssets
+        suggestedAssets=splitAssets.suggestedAssets
         onSelect=(action 'selectAsset')
         onCreate=(action 'createAsset')
         newAssetCategory=(action 'newAssetCategory')}}
@@ -56,6 +57,15 @@
         {{input type="text" value=pendingAssetItem.identifier id="asset-identifier" placeholder="Unique identifier (VIN, Stock #, RFID)"}}
       </div>
 
+      <div class="field">
+        <label for="asset-description">Documents</label>
+        <p class="light text">
+          Document upload is only available in category view.
+          <a href="#" {{action "closeAssetModalAndTransition" 'account.asset.index.new' pendingAssetItem.asset.id}}>
+            Go to asset category
+          </a>
+        </p>
+      </div>
       {{#if pendingAssetItem.asset.attributes}}
         <div class="ui divider"></div>
         {{#each pendingAssetItem.asset.attributes as |attribute|}}
