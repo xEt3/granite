@@ -3,9 +3,13 @@
     Recent Activity
   </h2>
 
-  {{ember-chart
-    type='line'
-    data=model
-    options=summaryOpts
-  }}
+  {{#if model.length}}
+    {{ember-chart
+      type='line'
+      data=model
+      options=summaryOpts
+    }}
+  {{else}}
+    <h2 class="light text center aligned">Not enough recent data to show your summary.</h2>
+  {{/if}}
 </div>

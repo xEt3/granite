@@ -5,20 +5,20 @@
 
   <div class="ui divider"></div>
 
-  {{#if model}}
-    {{display/resource-list
-      model
-      "list-item/talent-pool-applicant"
-      class="ui divided link items"}}
-  {{else}}
-    <hgroup class="center aligned text">
-      <h2>No applicants found.</h2>
-      <h4 class="light text">
-        No applicants were found in your talent pool. If you close a campaign with a unrejected applicants,
-        and "Add Unrejected Applicants To Talent Pool" is enabled, applicants will show up in your talent pool.
-      </h4>
-    </hgroup>
-  {{/if}}
+  <div class="ui divided list items">
+    {{#each model as |applicant|}}
+      {{list-item/talent-pool-applicant
+        applicant}}
+    {{else}}
+      <hgroup class="center aligned text">
+        <h2>No applicants found.</h2>
+        <h4 class="light text">
+          No applicants were found in your talent pool. If you close a campaign with a unrejected applicants,
+          and "Add Unrejected Applicants To Talent Pool" is enabled, applicants will show up in your talent pool.
+        </h4>
+      </hgroup>
+    {{/each}}
+  </div>
 
   <div class="ui divider"></div>
 

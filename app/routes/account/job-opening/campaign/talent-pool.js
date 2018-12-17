@@ -2,14 +2,14 @@ import Route from '@ember/routing/route';
 import resource from 'granite/mixins/route-abstractions/resource';
 
 export default Route.extend(resource, {
-  titleToken: 'Talent Pool',
-  modelName:  'applicant',
+  titleToken:  'Talent Pool',
+  modelName:   'applicant',
+  resourceUrl: '/api/v1/applicants',
 
-  async mutateQuery (q) {
-    console.log('mutate query has been called');
-    let company = (await this.auth.get('user.company')).get('id');
-    console.log(company);
+  query: { '$report': 'talentPoolSummary' },
 
-    q['talentPools.company'] = company;
+  mutateQuery (q) {
+    let jobOpening = this.modelFor('account.job-opening');
+    q['talentPools.job'] = jobOpening && jobOpening.belongsTo('job').id();
   }
 });
