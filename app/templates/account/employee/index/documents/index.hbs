@@ -1,0 +1,27 @@
+<div class="ui raised padded segment container clearfix animated fadeInUp">
+  <hgroup class="clearfix">
+    <h1 class="ui header left floated">
+      Documents
+    </h1>
+
+    <div class="right aligned text floated menu__actions">
+      <h3 class="ui inline header">
+        {{#link-to 'account.employee.index.documents.new'}}
+          <i id="add-document" class="plus icon"></i>
+        {{/link-to}}
+      </h3>
+    </div>
+  </hgroup>
+  <div class="ui divider"></div>
+
+  <div class="ui divided link items">
+    {{#each model as |model|}}
+      {{list-item/employee-document-item model=model}}
+    {{/each}}
+  </div>
+
+  {{elements/x-pagination
+    page=(readonly page)
+    pages=(readonly pages)
+    onchange=(action (mut page))}}
+</div>
