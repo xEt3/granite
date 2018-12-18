@@ -4,9 +4,15 @@ import { inject as service } from '@ember/service';
 import ajaxStatus from 'granite/mixins/ajax-status';
 import titleCase from 'granite/utils/title-case';
 import { decamelize } from '@ember/string';
+import { states } from 'granite/config/statics';
+import $ from 'jquery';
 
 export default Controller.extend(ajaxStatus, {
+  states,
+
   ajax: service(),
+
+  stateIsMontana: computed.equal('newLocation.addressState', 'MT'),
 
   intros: computed(function () {
     return [{
@@ -49,31 +55,34 @@ export default Controller.extend(ajaxStatus, {
     return (this.get('model.data') || []).slice(2);
   }),
 
-
   availableFields: computed('model.availableFields.[]', function () {
     return (this.get('model.availableFields') || []).map(({ path, format }) => ({
       path,
-      label: `${this.convertPathToLabel(path)} - ${format}`
+      label:          `${this.convertPathToLabel(path)} - ${format}`,
+      isRelationship: format === 'lookup or id' ? true : false
     }));
   }),
 
   actions: {
-    doDryRun () {
+    doDryRun (displayDryRunResults = false) {
       const headerMap = this.get('model.data')[0],
             uploadId = this.get('model.uploadId');
 
-      this.set('dryrun', true);
+      this.set('doingDryRun', true);
       this.ajaxStart();
 
       return this.get('ajax').post(`/api/v1/employee/census/${uploadId}/dryrun`, { data: { headerMap } }).then(dryrunResult => {
-        this.set('dryrun', null);
-        this.set('dryrunResult', dryrunResult);
+        this.setProperties({
+          displayDryRunResults,
+          doingDryRun:   null,
+          potentialData: dryrunResult
+        });
         this.ajaxSuccess(null, true);
       }).catch(this.ajaxError.bind(this));
     },
 
     dumpDryRun () {
-      this.set('dryrunResult', null);
+      this.set('displayDryRunResults', null);
     },
 
     mutateGuess (index, val) {
@@ -92,6 +101,79 @@ export default Controller.extend(ajaxStatus, {
         this.transitionToRoute('account.employees');
       })
       .catch(this.ajaxError.bind(this));
+    },
+
+    showLocationModal (locationName) {
+      this.setProperties({
+        newLocation:       this.get('store').createRecord('location', { name: locationName }),
+        respondedLocation: false
+      });
+
+      $('#modal__add-location').modal({
+        detachable: true,
+        closable:   false,
+        onHidden:   () => {
+          if (!this.get('respondedLocation')) {
+            this.send('respondLocationModal', false);
+          }
+        }
+      }).modal('show');
+
+      return new Promise((resolveLocation, rejectLocation) => this.setProperties({
+        resolveLocation,
+        rejectLocation
+      }));
+    },
+
+    showDepartmentModal (departmentName) {
+      this.setProperties({
+        newDepartment:     this.get('store').createRecord('department', { name: departmentName }),
+        respondedLocation: false
+      });
+
+      $('#modal__add-department').modal({
+        detachable: true,
+        closable:   false,
+        onHidden:   () => {
+          if (!this.get('respondedDepartment')) {
+            this.send('respondDepartmentModal', false);
+          }
+        }
+      }).modal('show');
+
+      return new Promise((resolveDepartment, rejectDepartment) => this.setProperties({
+        resolveDepartment,
+        rejectDepartment
+      }));
+    },
+
+    respondLocationModal (response) {
+      if (!response) {
+        this.get('newLocation').destroyRecord();
+      }
+
+      this.get(response ? 'resolveLocation' : 'rejectLocation')(response ? this.get('newLocation') : null);
+      this.set('respondedLocation', true);
+      $('#modal__add-location').modal('hide');
+    },
+
+    respondDepartmentModal (response) {
+      if (!response) {
+        this.get('newDepartment').destroyRecord();
+        this.set('newDepartment', null);
+      }
+
+      this.get(response ? 'resolveDepartment' : 'rejectDepartment')(response ? this.get('newDepartment') : null);
+      this.set('respondedDepartment', true);
+      $('#modal__add-department').modal('hide');
+    },
+
+    onNotify (type, msg) {
+      this.send('notify', type, msg);
+    },
+
+    onRefresh () {
+      this.send('refresh');
     },
 
     quickScroll () {
