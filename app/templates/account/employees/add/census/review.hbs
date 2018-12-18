@@ -93,6 +93,13 @@
             <tr>
               {{#each row as |column columnIndex|}}
                 <td>
+                  {{#if (array-index ava columnIndex)}}
+                    {{#if (not (array-contains (array-index ava columnIndex) column))}}
+                      <div class="tooltip"> <i class="yellow exclamation triangle icon"></i>
+                        <span class="tooltiptext">{{array-index ava columnIndex}}</span>
+                      </div>
+                    {{/if}}
+                  {{/if}}
                   {{census/table-cell
                     column
                     rowIndex
