@@ -103,9 +103,9 @@ export default Controller.extend(ajaxStatus, {
       .catch(this.ajaxError.bind(this));
     },
 
-    showLocationModal () {
+    showLocationModal (locationName) {
       this.setProperties({
-        newLocation:       this.get('store').createRecord('location'),
+        newLocation:       this.get('store').createRecord('location', { name: locationName }),
         respondedLocation: false
       });
 
@@ -125,9 +125,9 @@ export default Controller.extend(ajaxStatus, {
       }));
     },
 
-    showDepartmentModal () {
+    showDepartmentModal (departmentName) {
       this.setProperties({
-        newDepartment:     this.get('store').createRecord('department'),
+        newDepartment:     this.get('store').createRecord('department', { name: departmentName }),
         respondedLocation: false
       });
 

@@ -27,6 +27,7 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
   actions: {
     addAction () {
       let field = this.get('guessedField'),
+          column = this.get('column'),
           actionToCall;
 
       if (field.path === 'department') {
@@ -37,7 +38,7 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
         return;
       }
 
-      actionToCall()
+      actionToCall(column)
       .then(newRelationshipModel => this.send('save', newRelationshipModel))
       .then(() => this.get('onRefresh')());
     },
