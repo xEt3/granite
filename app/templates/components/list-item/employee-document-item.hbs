@@ -1,4 +1,84 @@
-{{#link-to 'account.document' model.file.id}}
-  {{model.file.title}}
-  {{!-- KEEP DESIGNING THE LIST-ITEM --}}
-{{/link-to}}
+{{log 'assignment' assignment}}
+{{#if imagePreview}}
+  <div class="ui tiny rounded image">
+    <img src="{{file.url}}" alt="">
+  </div>
+{{else}}
+  {{display/icon-for-file file class="huge"}}
+{{/if}}
+<div class="clearing content">
+  <div class="header">
+    {{#link-to 'account.document' file.id}}
+      {{file.title}}
+      <span class="light text">{{file.extension}}</span>
+    {{/link-to}}
+  </div>
+
+  <div class="right floated">
+    PUT FOLLOWUP AND REMOVE ICONS HERE
+    <a href="#" {{action 'openFollowupModal'}}>
+      <i class="upload icon"></i>
+    </a>
+  </div>
+
+  <div class="meta">
+    <div class="ui small text">
+      <p>Assigned {{time assignment.created}} by {{assignment.creator.fullName}}</p>
+      {{#if assignment.readOn}}
+        <p>Viewed: {{time assignment.readOn}}</p>
+      {{/if}}
+      {{#if assignment.signatureRequired}}
+        <p>
+          {{#if assignment.signedOn}}
+            Signed:
+            {{#ui-popup tagName="span" html=signature position="right center"}}
+              <a href="#" class="gray-icon" {{action 'openSignatureModal'}}>
+                {{time assignment.signedOn}}
+              </a>
+            {{/ui-popup}}
+          {{else}}
+            {{assignment.employee.firstName}} has not signed this document yet.
+          {{/if}}
+        </p>
+      {{/if}}
+      PUT FOLLOWUP INFO HERE
+    </div>
+    {{#each file.tags as |tag|}}
+      <span class="ui tiny label">{{tag}}</span>
+    {{/each}}
+    <span class="ui small text right floated">Created {{time file.created}}</span>
+  </div>
+</div>
+
+{{#ui-modal name='modal__file-assignment-signature' id=signatureModalId}}
+  <div class="header">
+    {{assignment.file.title}} signature for {{assignment.employee.fullName}}
+  </div>
+  <div class="content">
+    <img src={{assignment.signature}} alt="">
+  </div>
+  <div class="actions">
+    <button class="ui red button" {{action 'closeSignatureModal'}}>
+      Close
+    </button>
+  </div>
+{{/ui-modal}}
+
+
+{{!-- NEED TO MAKE THIS A GENERIC FILE UPLOAD COMPONENT --}}
+{{#ui-modal name='modal__followup-upload' id=followupModalId}}
+  <div class="header">
+    Followup Modal
+  </div>
+  <div class="content">
+    DROPZONE WILL GO HERE
+  </div>
+  <div class="actions">
+    <button class="ui red button" {{action 'closeFollowupModal'}}>
+      Close
+    </button>
+    <button class="ui green labeled icon button" {{action 'uploadFollowup'}}>
+      Upload Followup<i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}
