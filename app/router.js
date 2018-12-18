@@ -180,6 +180,7 @@ Router.map(function () {
             this.route('event', { path: '/event/:event_id' });
           }
         );
+        this.route('talent-pool');
       });
       this.route('setup', function () {
         this.route('settings');

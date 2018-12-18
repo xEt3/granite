@@ -1,4 +1,6 @@
 <div class="ui container">
+  <h1 class="text-white">{{model.name}}</h1>
+  <div class="ui divider"></div>
   {{#ui-menu menuClass="pointing"}}
     {{#link-to 'account.job-opening.campaign.index' class="item"}}
       <i class="square icon"></i>Summary
@@ -6,6 +8,11 @@
     {{#link-to 'account.job-opening.campaign.applicant-tracking' class="item"}}
       <i class="users icon"></i>Applicants
     {{/link-to}}
+    {{#if (not model.closed)}}
+      {{#link-to 'account.job-opening.campaign.talent-pool' class="item"}}
+        <i class="archive icon"></i>Talent Pool
+      {{/link-to}}
+    {{/if}}
     <div class="right menu">
       {{#if (and model.completedOn (not model.closed))}}
         {{#modals/ats-close-job-opening class="item" sourcesToClose=model.manualApplicantSources as |confirm|}}
