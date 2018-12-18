@@ -8,10 +8,12 @@ export default Model.extend({
   signature:         attr('string'),
   readOn:            attr('date'),
   signedOn:          attr('date'),
-  creator:           belongsTo('employee'),
-  company:           belongsTo('company'),
-  employee:          belongsTo('employee'),
-  file:              belongsTo('file'),
+  visibleToEmployee: attr('boolean'),
+
+  creator:  belongsTo('employee'),
+  company:  belongsTo('company'),
+  employee: belongsTo('employee'),
+  file:     belongsTo('file'),
 
   created: attr('date', {
     defaultValue () {

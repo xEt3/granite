@@ -1,0 +1,54 @@
+<h2 class="ui horizontal divider header">
+  Documents
+</h2>
+
+<form class="ui form" {{action "saveAndContinue" on="submit"}}>
+  {{#if offboardingDocumentsFiltered}}
+    <h3 class="ui header">
+      Offboarding Documents
+      <div class="small light text">
+        These documents have been tagged with <i>Offboarding</i> and might be applicable.
+      </div>
+    </h3>
+
+    <div class="ui divided list">
+      {{#each offboardingDocumentsFiltered as |docSug|}}
+        {{list-item/document-suggestion
+          docSug
+          class="item"
+          addAssignment=(action "addAssignment")}}
+      {{/each}}
+    </div>
+  {{/if}}
+
+  <h3>
+    Assignments
+    <span class="small text">
+      {{#input/document-selection-modal
+        title="Add a file"
+        selection=docModalSelection
+        autoTag="Offboarding"
+        onSelected=(action "addAssignment")
+        as |execute|}}
+        <a href="#" {{action execute}}>Assign another file...</a>
+      {{/input/document-selection-modal}}
+    </span>
+  </h3>
+  <div class="ui divided list">
+    {{#each assignments as |assignment|}}
+      {{list-item/document-assignment
+        assignment
+        class="item"
+        onRemove=(action "removeAssignment")
+        onChange=(action "saveAssignmentChanges")}}
+    {{else}}
+      <h3 class="center aligned light text">Nothing assigned, yet.</h3>
+    {{/each}}
+  </div>
+
+  <div class="ui divider"></div>
+
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}
+    Next
+  {{/form/action-button}}
+</form>

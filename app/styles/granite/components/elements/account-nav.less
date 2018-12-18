@@ -4,7 +4,7 @@ nav.ui.menu.account__navigation {
   .item {
     > a {
       color: @granite-grey;
-      transition: all 0.35s ease-in-out;
+      transition: all .35s ease-in-out;
     }
 
     &:hover > a {
@@ -22,9 +22,9 @@ nav.ui.menu.account__navigation {
     &:after {
       content: 'Menu';
       display: inline-block;
-      width: 0px;
+      width: 0;
       overflow: hidden;
-      transition: all 0.35s ease-in-out;
+      transition: all .35s ease-in-out;
       line-height: 1;
       vertical-align: middle;
       font-size: 1.3em;
@@ -60,10 +60,56 @@ nav.ui.menu.account__navigation {
 }
 
 .account__breadcrumb {
-  margin: 0.3em 1.6em 3em 1.6em !important;
-  color: white;
+  margin: .3em 1.6em 3em 1.6em !important;
+
+  .divider {
+    color: white !important;
+  }
 
   a {
     color: white !important;
+  }
+}
+
+.account__navigation.menu > .menu__search-input {
+  padding: 0 .5em;
+  flex: 1 0 auto;
+  background: @gray-lighter;
+
+  > .ui.search {
+    width: 100%;
+    background: none;
+
+    &.focus {
+      .input,
+      input::placeholder {
+        color: @granite-green;
+      }
+    }
+
+    .input,
+    input {
+      background: none;
+    }
+
+    .input {
+      width: 100%;
+      font-size: 1.2em;
+    }
+
+    i.icon {
+      font-size: 1.5em;
+    }
+
+    input {
+      font-size: 1.2em;
+      border: none;
+      border-radius: 0;
+      transition: all .4s ease-in-out;
+
+      &::placeholder {
+        color: @gray;
+      }
+    }
   }
 }

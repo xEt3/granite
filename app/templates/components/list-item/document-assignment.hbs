@@ -1,0 +1,45 @@
+<strong>{{model.file.title}} ({{model.file.extension}})</strong>
+
+<div class="ui mini form right floated">
+  {{#if isPendingState}}
+    <div class="ui mini active inline loader"></div> Saving...
+  {{else}}
+    <div class="small field">
+      {{#ui-checkbox
+        class="small"
+        checked=model.visibleToEmployee
+        onChange=(action
+          (pipe
+            (action (mut model.visibleToEmployee))
+            (action onChange model)
+          )
+        )
+      }}
+        <label>
+          Visible To Employee
+        </label>
+      {{/ui-checkbox}}
+    </div>
+    <div class="small field">
+      {{#ui-checkbox
+        class="small"
+        disabled=(not model.visibleToEmployee)
+        checked=model.signatureRequired
+        onChange=(action
+          (pipe
+            (action (mut model.signatureRequired))
+            (action onChange model)
+          )
+        )
+      }}
+        <label>
+          Require Signature
+        </label>
+      {{/ui-checkbox}}
+    </div>
+  {{/if}}
+</div>
+
+<div class="small text">
+  <a href="#" class="text-danger" {{action onRemove model}}><i class="minus icon"></i>Remove Assignment</a>
+</div>

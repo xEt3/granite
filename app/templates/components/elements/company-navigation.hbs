@@ -1,11 +1,8 @@
 <a href="#" class="item" {{action "toggle"}}><i class="large sidebar icon"></i></a>
+{{search/suggestion-input
+  class="item menu__search-input"
+  placeholder="Search Granite HR..."}}
 <div class="right menu">
-  {{!-- {{! TODO: Hook this up to actual notifications ;) }}
-  <a href="#" class="item">
-    <i class="fitted bell icon"></i>
-    <div class="ui red left pointing label">2</div>
-  </a> --}}
-
   {{#ui-dropdown class="item company-logo-dropdown"}}
     <div class="company-logo" style={{logoUrl}}>
     </div>

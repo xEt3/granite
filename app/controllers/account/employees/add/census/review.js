@@ -174,6 +174,11 @@ export default Controller.extend(ajaxStatus, {
 
     onRefresh () {
       this.send('refresh');
+    },
+
+    quickScroll () {
+      let table = document.getElementsByClassName('responsive-table')[0];
+      table.scrollLeft = table.scrollWidth;
     }
   }
 });

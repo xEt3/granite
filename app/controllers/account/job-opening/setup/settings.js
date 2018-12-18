@@ -1,9 +1,13 @@
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import { computed, set } from '@ember/object';
 import { jobTypes } from 'granite/config/statics';
+import { inject as service } from '@ember/service';
+import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import $ from 'jquery';
 
-export default Controller.extend({
+export default Controller.extend(addEdit, {
   jobTypes,
+  auth: service(),
 
   campaignSettingsForm: computed(() => [{
     label:       'Send notifications to',
@@ -103,5 +107,99 @@ export default Controller.extend({
     inputClass:  'toggle',
     path:        'supervisoryRequirements',
     parentClass: 'sixteen wide column'
-  }])
+  }]),
+
+  stageForm: computed(() => [{
+    label:       'Name of stage',
+    type:        'text',
+    path:        'name',
+    placeholder: 'ex. Interview'
+  }]),
+
+  canAddStages: computed('customPipeline.stages.length', function () {
+    return this.get('customPipeline.stages.length') < 5 ? true : false;
+  }),
+
+  actions: {
+    toggleCustomPipeline () {
+      if (this.get('customPipeline')) {
+        this.get('customPipeline').destroyRecord()
+        .then(() => {
+          this.set('customPipeline', null);
+        });
+      } else {
+        this.set('customPipeline', this.store.createRecord('recruiting-pipeline', {
+          company:     this.get('auth.user.company.id'),
+          jobOpenings: [ this.get('model') ],
+          stages:      this.get('defaultPipeline.stages')
+        }));
+      }
+    },
+
+    saveCustomPipeline () {
+      if (this.get('customPipeline')) {
+        this.get('customPipeline').save();
+      }
+    },
+
+    reorderItems (items) {
+      let customPipeline = this.get('customPipeline');
+      items.map((stage, i) => {
+        const prevIndex = stage.order;
+        if (prevIndex !== i) {
+          set(stage, 'order', i);
+        }
+      });
+      customPipeline.set('stages', items);
+    },
+
+    openStageModal () {
+      this.set('respondedStageAddition', false);
+      if (!this.get('editingStage')) {
+        this.send('addStage');
+      }
+      $('#modal__add-stage').modal({
+        context:    '.ember-application',
+        detachable: true,
+        onHidden:   () => {
+          if (!this.get('respondedStageAddition')) {
+            this.send('respondStageAddition', false);
+          }
+        }
+      }).modal('show');
+      return new Promise((resolveStage, rejectStage) => this.setProperties({
+        resolveStage,
+        rejectStage
+      }));
+    },
+
+    addStage () {
+      let stage = { order: this.get('customPipeline.stages').length };
+      this.set('currentStage', stage);
+      this.get('customPipeline.stages').addObject(stage);
+    },
+
+    removeStage (stage) {
+      this.get('customPipeline.stages').removeObject(stage);
+    },
+
+    beginStageEdit (currentStage) {
+      this.setProperties({
+        currentStage,
+        editingStage: true
+      });
+      this.send('openStageModal');
+    },
+
+    respondStageAddition (response) {
+      this.get(response ? 'resolveStage' : 'rejectStage')(response);
+      this.set('respondedStageAddition', true);
+      $('#modal__add-stage').modal('hide');
+      let currentStage = this.get('currentStage');
+      if (!response && !this.get('editingStage')) {
+        this.send('removeStage', currentStage);
+      }
+      this.set('editingStage', false);
+    }
+  }
 });

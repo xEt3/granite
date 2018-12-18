@@ -9,7 +9,7 @@ module('Acceptance | edit action items', function (hooks) {
   test('getting to the action item edit page', async function (assert) {
     let { employee } = await authenticate.call(this, server);
 
-    let action = await server.create('action-items', {
+    let action = await server.create('action-item', {
       title:         'apples',
       prerequisites: [],
       owner:         employee
@@ -25,7 +25,7 @@ module('Acceptance | edit action items', function (hooks) {
   test('elements on action item edit page', async function (assert) {
     let { employee } = await authenticate.call(this, server);
 
-    let action = await server.create('action-items', {
+    let action = await server.create('action-item', {
       title:         'apples',
       prerequisites: [],
       owner:         employee
@@ -52,7 +52,7 @@ module('Acceptance | edit action items', function (hooks) {
   test('edit action item', async function (assert) {
     let { employee, company } = await authenticate.call(this, server);
 
-    let action = await server.create('action-items', {
+    let action = await server.create('action-item', {
       title:         'apples',
       prerequisites: [],
       owner:         employee,

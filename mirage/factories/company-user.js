@@ -2,8 +2,8 @@ import { Factory, faker } from 'ember-cli-mirage';
 
 export default Factory.extend({
   id:         faker.random.number(),
-  firstName:  faker.company.companyName(),
-  lastName:   faker.company.companyName(),
+  firstName:  faker.name.firstName(),
+  lastName:   faker.name.lastName(),
   email:      faker.internet.email(),
   password:   faker.random.number(),
   shownHints: [
