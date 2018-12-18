@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import moment from 'moment';
 
 export default BaseLiComponent.extend({
-  classNames:     [ 'item' ],
+  classNames:     [ 'item', 'talent-pool__applicant' ],
   _model:         computed.or('model.record', 'model'),
   _meta:          computed.reads('model.meta.meta'),
   firstIsLastApp: computed.equal('_meta.timesApplied', 1),
