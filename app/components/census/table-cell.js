@@ -19,6 +19,17 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
     return field.isRelationship && column && !potentialDataForCell ? field.path : null;
   }),
 
+  hasEnumInvalidation: computed('availableFields.[]', 'column', 'columnIndex', function () {
+    if (this.guessedField.enums) {
+      let enums = this.guessedField.enums;
+      enums.push(' or leave it blank ');
+      enums = enums.filter(Boolean).join(', ');
+
+      let enumError = `Please use one of these: ${enums}`;
+      return enums  ? enumError : false;
+    }
+  }),
+
   popupMessage: computed('hasRelationship', function () {
     let relationship = this.get('hasRelationship');
     return htmlSafe(`Could not find this ${relationship},  click to create.`);

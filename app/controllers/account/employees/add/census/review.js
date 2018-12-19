@@ -55,30 +55,6 @@ export default Controller.extend(ajaxStatus, {
     return (this.get('model.data') || []).slice(2);
   }),
 
-  ava: computed('model.availableFields.[]', function () {
-    let orgData = this.get('model.data')[0];
-    let newArray = [];
-    let availableFields = this.get('model.availableFields');
-    let enumPath = [];
-
-    availableFields.forEach(field=>{
-      enumPath.push(field.path);
-      return;
-    });
-
-    orgData.forEach(data=>{
-      newArray.push(availableFields[enumPath.indexOf(data)]);
-    });
-    newArray.forEach(array=>{
-      if (array.enums && array.enums.includes(null)) {
-        let index = array.enums.indexOf(null);
-        array.enums.splice(index, 1);
-        return array.enums;
-      }
-    });
-    return newArray;
-  }),
-
   availableFields: computed('model.availableFields.[]', function () {
     return (this.get('model.availableFields') || []).map(({ path, format }) => {
       let label = `${this.convertPathToLabel(path)}${format ? ' - ' + format : ''}`;
