@@ -1,11 +1,13 @@
 import EmberRouter from '@ember/routing/router';
 import { inject as service } from '@ember/service';
 import config from './config/environment';
+import RouterScroll from 'ember-router-scroll';
 
-const Router = EmberRouter.extend({
-  location: config.locationType,
-  rootURL:  config.rootURL,
-  headData: service(),
+const Router = EmberRouter.extend(RouterScroll, {
+  location:                 'router-scroll',
+  rootURL:                  config.rootURL,
+  headData:                 service(),
+  historySupportMiddleware: true,
 
   setTitle (title) {
     this.get('headData').set('title', title);
