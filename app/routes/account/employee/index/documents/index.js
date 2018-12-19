@@ -7,6 +7,7 @@ export default Route.extend(resource, {
 
   mutateQuery (q) {
     q.employee = this.modelFor('account.employee').get('id');
+    q.sort = { created: -1 };
   }
 
   //HOOK UP FILTERING

@@ -1,9 +1,11 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
+import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import del from 'granite/mixins/controller-abstractions/delete';
 import $ from 'jquery';
 
-export default Component.extend({
+export default Component.extend(addEdit, del, {
   classNames:   [ 'item' ],
   tagName:      'div',
   imagePreview: computed.match('assignment.file.extension', /je?pg|png|gif/i),
@@ -11,13 +13,8 @@ export default Component.extend({
     return this.get('assignment.file');
   }),
 
-  signatureModalId: computed('', function () {
+  modalId: computed('', function () {
     return `modal__file-assignment-signature-${this.get('assignment.id')}`;
-  }),
-
-  followupModalId: computed('', function () {
-    //will get moved to component
-    return `modal__followup-upload-${this.get('assignment.id')}`;
   }),
 
   signature: computed('assignment.signature', function () {
@@ -25,41 +22,22 @@ export default Component.extend({
   }),
 
   actions: {
-    openSignatureModal () {
-      $(`#${this.get('signatureModalId')}`).modal({ detachable: true }).modal('show');
+    openModal () {
+      $(`#${this.get('modalId')}`).modal({ detachable: true }).modal('show');
     },
 
-    closeSignatureModal () {
-      $(`#${this.get('signatureModalId')}`).modal('hide');
+    closeModal () {
+      $(`#${this.get('modalId')}`).modal('hide');
     },
 
-    openFollowupModal () {
-      //pieces will get moved to component
-      $(`#${this.get('followupModalId')}`).modal({
-        detachable: true,
-        closable:   false,
-        onHidden:   () => {
-          console.log('resetting all properties');
-          this.setProperties({
-            //delete file and fileAssignment that are created here
-          });
-        }
-      }).modal('show');
+    uploadFollowup (file) {
+      let assignment = this.get('assignment');
+      assignment.get('followups').pushObject(file);
+      this.saveModel(assignment);
     },
 
-    closeFollowupModal () {
-      //will get moved to component
-      $(`#${this.get('followupModalId')}`).modal('hide');
-    },
-
-    uploadFollowup () {
-      //will get moved to component
-      console.log('inside uploadFollowup');
-      //launch modal here
-      //modal will have dropzone and save/cancel buttons
-      //modal will send back file to add to followups array on assignent record
-      //file needs to be marked systemUse=true
-      this.send('closeFollowupModal');
+    notify (type, msg) {
+      this.get('onNotify')(type, msg);
     }
   }
 });

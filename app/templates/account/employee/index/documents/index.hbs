@@ -16,7 +16,10 @@
 
   <div class="ui divided link items">
     {{#each model as |assignment|}}
-      {{list-item/employee-document-item assignment=assignment}}
+      {{list-item/employee-document-item
+        assignment=assignment
+        onNotify=(route-action 'notify')
+      }}
     {{/each}}
   </div>
 
