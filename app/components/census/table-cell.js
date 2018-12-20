@@ -19,14 +19,14 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
     return field.isRelationship && column && !potentialDataForCell ? field.path : null;
   }),
 
-  hasEnumInvalidation: computed('availableFields.[]', 'column', 'columnIndex', function () {
+  hasEnumInvalidation: computed('guessField.enums.[]', function () {
     if (this.guessedField.enums) {
-      let enums = this.guessedField.enums;
-      enums.push(' or leave it blank ');
-      enums = enums.filter(Boolean).join(', ');
+      const enums = this.guessedField.enums,
+            enumStr = [ ...enums, enums.indexOf(null) > -1 ? 'or leave this field blank' : null ].filter(Boolean).join(', ');
 
-      let enumError = `Please use one of these: ${enums}`;
-      return enums  ? enumError : false;
+      let matchingEnum = enums.includes(this.get('column'));
+
+      return matchingEnum ? false : `Please use one of these: ${enumStr}`;
     }
   }),
 
