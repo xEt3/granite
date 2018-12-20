@@ -5,9 +5,10 @@ export default Route.extend(resource, {
   titleToken: 'Documents',
   modelName:  'file-assignment',
 
+  sort: { created: -1 },
+
   mutateQuery (q) {
     q.employee = this.modelFor('account.employee').get('id');
-    q.sort = { created: -1 };
   }
 
   //HOOK UP FILTERING

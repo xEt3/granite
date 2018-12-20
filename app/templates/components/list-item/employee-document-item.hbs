@@ -21,7 +21,7 @@
 
     {{#if (not assignment.visibleToEmployee)}}
       {{#modals/upload-document
-        assignment=assignment
+        systemUse=true
         uploadComplete=(action 'uploadFollowup') as |openUploadModal|
       }}
         {{#ui-popup content="Upload a followup document" class="right floated"}}

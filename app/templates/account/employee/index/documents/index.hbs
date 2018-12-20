@@ -1,7 +1,7 @@
 <div class="ui raised padded segment container clearfix animated fadeInUp">
   <hgroup class="clearfix">
     <h1 class="ui header left floated">
-      Documents
+      Assigned Documents
     </h1>
 
     <div class="right aligned text floated menu__actions">
@@ -9,6 +9,11 @@
         {{#link-to 'account.employee.index.documents.new'}}
           <i id="add-document" class="plus icon"></i>
         {{/link-to}}
+        {{#ui-popup position="left center" content="Filters" tagName="span"}}
+          <a href="#" class="{{if showFilters 'text-red'}}" {{action toggleProperty 'showFilters'}}>
+            <i class="{{if showFilters 'remove' 'filter'}} icon"></i>
+          </a>
+        {{/ui-popup}}
       </h3>
     </div>
   </hgroup>
