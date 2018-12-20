@@ -66,8 +66,7 @@ export default Controller.extend(ajaxStatus, {
       return {
         path,
         label,
-        isCustomFieldOption: path === 'customFields',
-        isRelationship:      format === 'lookup or id' ? true : false
+        isRelationship: format === 'lookup or id' ? true : false
       };
     }).sortBy('label');
   }),
