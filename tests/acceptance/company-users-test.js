@@ -34,9 +34,9 @@ module('Acceptance | company users', function (hooks) {
     await server.create('employee');
     await server.createList('permission', 8);
     await authenticate.call(this, server);
-    await visit('account/anatomy/company-users');
+    await visit('/account/anatomy/company-users');
 
-    assert.equal(currentURL(), 'account/anatomy/company-users');
+    assert.equal(currentURL(), '/account/anatomy/company-users');
     await click('.plus');
     await settled();
     assert.equal(currentURL(), '/account/anatomy/company-users/new');
@@ -62,9 +62,9 @@ module('Acceptance | company users', function (hooks) {
 
     let companyUser = await authenticate.call(this, server, { companyUser: { permissions } });
 
-    await visit('account/anatomy/company-users');
+    await visit('/account/anatomy/company-users');
 
-    assert.equal(currentURL(), 'account/anatomy/company-users');
+    assert.equal(currentURL(), '/account/anatomy/company-users');
     await click('i[class="edit icon"]');
     assert.equal(currentURL(), `/account/anatomy/company-users/edit/${companyUser.employee.companyUser}`);
     assert.ok(find('h1[class="ui header left floated"]'), 'Header on page on page');

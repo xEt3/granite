@@ -10,8 +10,8 @@ module('Acceptance | document', function (hooks) {
     await authenticate.call(this, server);
     let doc = await server.create('file');
 
-    await visit(`account/document/${doc.id}`);
-    assert.equal(currentURL(), `account/document/${doc.id}`);
+    await visit(`/account/document/${doc.id}`);
+    assert.equal(currentURL(), `/account/document/${doc.id}`);
 
     assert.dom('hgroup > h2 > i.icon').hasClass('image', 'image icon is displayed');
     assert.dom('hgroup > h2').includesText(doc.title, 'document title is displayed on page');
@@ -24,7 +24,7 @@ module('Acceptance | document', function (hooks) {
     await authenticate.call(this, server);
     let doc = await server.create('file', { extension: 'docx' });
 
-    await visit(`account/document/${doc.id}`);
+    await visit(`/account/document/${doc.id}`);
 
     assert.dom('hgroup > h2 > i.icon').hasClass('word', 'word icon is displayed');
     assert.dom('div.content > div.clearfix > img').isNotVisible('no picture is displayed because its a word doc');
@@ -40,7 +40,7 @@ module('Acceptance | document', function (hooks) {
       readOn:   null
     });
 
-    await visit(`account/document/${doc.id}`);
+    await visit(`/account/document/${doc.id}`);
 
     assert.dom('div.file-assignment-item > div.label > a').includesText(employee.firstName, 'assignment label has first name');
     assert.dom('div.file-assignment-item > div.label > a').includesText(employee.lastName, 'assignment label has last name');
@@ -54,7 +54,7 @@ module('Acceptance | document', function (hooks) {
     let { employee } = await authenticate.call(this, server);
     let doc = await server.create('file');
 
-    await visit(`account/document/${doc.id}`);
+    await visit(`/account/document/${doc.id}`);
 
     assert.equal(findAll('div.file-assignment-item').length, 0, 'no assignments listed');
 
@@ -74,7 +74,7 @@ module('Acceptance | document', function (hooks) {
 
     assert.equal(server.db.files.length, 1, '1 file in db');
 
-    await visit(`account/document/${doc.id}`);
+    await visit(`/account/document/${doc.id}`);
     await click('div.right.menu > div.pointing.ui.dropdown');
     await click('div.ui.dropdown > div.menu > div:nth-child(3) > div > a[href="#"]');
     await click('button.green');

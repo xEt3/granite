@@ -4,7 +4,7 @@ import config from './config/environment';
 import RouterScroll from 'ember-router-scroll';
 
 const Router = EmberRouter.extend(RouterScroll, {
-  location:                 'router-scroll',
+  location:                 config.locationType,
   rootURL:                  config.rootURL,
   headData:                 service(),
   historySupportMiddleware: true,
