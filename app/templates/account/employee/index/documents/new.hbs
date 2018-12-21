@@ -8,8 +8,6 @@
     <div class="ui divider"></div>
 
     <div class="field">
-
-
       {{#input/document-selection-modal
         title="New Document"
         selected=model.file
@@ -26,8 +24,6 @@
           {{/if}}
         </button>
       {{/input/document-selection-modal}}
-
-
     </div>
 
     <div class="field">
@@ -53,8 +49,7 @@
         </label>
       {{/ui-checkbox}}
     </div>
-
-
+    
     <div class="ui divider"></div>
     <form {{action "save" on="submit"}}>
       {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=(not model.file)}}Assign Document{{/form/action-button}}
