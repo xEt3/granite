@@ -5,11 +5,25 @@ export default Route.extend(resource, {
   titleToken: 'Documents',
   modelName:  'file-assignment',
 
+  queryParams: {
+    visibleToEmployee: { refreshModel: true },
+    readOn:            { refreshModel: true },
+    signedOn:          { refreshModel: true }
+  },
+
   sort: { created: -1 },
 
-  mutateQuery (q) {
-    q.employee = this.modelFor('account.employee').get('id');
-  }
+  mutateQuery (query, params) {
+    query.employee = this.modelFor('account.employee').get('id');
 
-  //HOOK UP FILTERING
+    if (params.visibleToEmployee) {
+      query.visibleToEmployee = params.visibleToEmployee;
+    }
+
+    [ 'readOn', 'signedOn' ].forEach(param => {
+      if (params[param]) {
+        query[param] = { $ne: null };
+      }
+    });
+  }
 });
