@@ -103,33 +103,36 @@ export default Component.extend({
     });
 
     return run.next(() => {
-      let margin = this.get('margin'),
-          width  = this.$().width() - margin.right - margin.left,
-          height = this.$().height() - margin.top - margin.bottom;
+      run.scheduleOnce('afterRender', () => {
+        let margin = this.get('margin'),
+            width  =  margin.right - margin.left,
+            height =  margin.top - margin.bottom;
 
-      let zoom = d3Zoom.zoom();
+        let zoom = d3Zoom.zoom();
 
-      let svg = d3.select('#' + this.get('elementId'))
-          .call(zoom.on('zoom', () => {
-            svg.attr('transform', d3.event.transform);
-          }))
-          .append('g'),
-          g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`),
-          t = tree().size([ width, height ]);
+        let svg = d3.select('#' + this.get('elementId'))
+            .attr('minwidth', width)
+            .attr('minheight', height)
+            .call(zoom.on('zoom', () => {
+              svg.attr('transform', d3.event.transform);
+            }))
+            .append('g'),
+            g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
 
-      this.setProperties({
-        svg,
-        tree: t,
-        g,
-        width,
-        height
+        this.setProperties({
+          svg,
+          g
+        });
+
+        return this.get('_dataUpdate');
       });
-
-      return this.get('_dataUpdate');
     });
   }),
 
+
   _dataUpdate: computed('_simulation', 'nodeRadius', 'baseNodeRadius', function () {
+    const minimumXSpacing = 135;
+
     return this.get('_simulation')
     .then(data => {
       run.scheduleOnce('afterRender', () => {
@@ -138,27 +141,34 @@ export default Component.extend({
             baseNodeId = this.get('baseNode._id'),
             nr = this.get('nodeRadius'),
             bnr = this.get('baseNodeRadius'),
-            treemap = this.get('tree')(root);
+            width = this.get('width'),
+            height = this.get('height');
+
+        if (width / root.height > minimumXSpacing) {
+          width = minimumXSpacing * root.height;
+        }
+
+        let clust = tree().size([ height, width ])(root);
 
         g.selectAll('.link').remove();
         g.selectAll('.node').remove();
 
         let link = g.selectAll('.link')
-        .data(treemap.descendants().slice(1));
+        .data(clust.descendants().slice(1));
 
         link.exit().remove();
         link.enter().append('path')
         .attr('class', 'link')
         .merge(link)
         .attr('d', d => {
-          return 'M' + d.x + ',' + d.y
-                + 'C' + d.x + ',' + (d.y + d.parent.y) / 2
-                + ' ' + d.parent.x + ',' +  (d.y + d.parent.y) / 2
-                + ' ' + d.parent.x + ',' + d.parent.y;
+          return 'M' + d.y + ',' + d.x
+                + 'C' + (d.parent.y + 100) + ',' + d.x
+                + ' ' + (d.parent.y + 100) + ',' +  d.parent.x
+                + ' ' + d.parent.y + ',' + d.parent.x;
         });
 
         let nodes = g.selectAll('.node')
-        .data(treemap.descendants());
+        .data(clust.descendants());
 
         nodes.exit().remove();
         let node = nodes.enter().append('g');
@@ -177,7 +187,7 @@ export default Component.extend({
 
           return c;
         })
-        .attr('transform', d => 'translate(' + d.x + ',' + d.y + ')');
+        .attr('transform', d => 'translate(' + d.y + ',' + d.x + ')');
 
         // The data DOES get passed down to the circles, and the enter() statement
         // will create a circle child for each data entry
@@ -186,13 +196,25 @@ export default Component.extend({
         .exit().remove();
 
         node.append('text')
-        .attr('dy', '.35em')
-        .attr('y', d => {
-          let xW = (d.data._id === baseNodeId ? bnr : nr) * 1.5;
-          return d.children ? 0 - xW : xW;
+        .attr('x', '1.5em')
+        .attr('dy', d => {
+          return (d.data._id === baseNodeId ? bnr : nr) / 3;
         })
-        .style('text-anchor', 'middle')
-        .text(d => d.data.name.first + ' ' + d.data.name.last)
+        .style('text-anchor', 'start')
+        .text(d => {
+          let n = [],
+              { first, last } = d.data.name || {};
+
+          if (first) {
+            n.push(first);
+          }
+
+          if (last) {
+            n.push(last);
+          }
+
+          return n.join(' ');
+        })
         .exit().remove();
       });
     });
