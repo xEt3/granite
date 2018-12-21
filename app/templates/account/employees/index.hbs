@@ -19,7 +19,7 @@
         'supervisor'
         supervisor
         searchable=true
-        model=filterModels.employees as |item|
+        model=filterModels.supervisors as |item|
       }}
         {{item.fullName}}{{#if item.jobTitle}} - <span class="light text">{{item.jobTitle}}</span>{{/if}}
       {{/filter.selectControl}}
