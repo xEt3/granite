@@ -38,12 +38,16 @@
 
 <form {{action "importRecords" on="submit"}}>
   <div class="ui raised very padded fluid container">
-    <div class="responsive-table census__table">
+    <div class="responsive-table census__table text-box text-box-shadow">
       <table class="ui striped celled table">
         <div class='arrow-overflow'>
           <a href="#"> <i class="huge angle right icon" {{action 'quickScroll'}}></i> </a>
         </div>
         <thead>
+          <div class='arrow-overflow'>
+            {{census/over-flow-indicator}}
+          </div>
+
           <tr class="guess-fields-row overflow">
             <th>
               <div class="ui red ribbon label">
