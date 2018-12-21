@@ -16,19 +16,19 @@ export default Controller.extend(ajaxStatus, {
 
   intros: computed(function () {
     return [{
-      element:  '.guess-fields-row',
+      element:  '.guess-fields-row > th:first-child',
       intro:    'We\'ve attempted to guess the columns that you uploaded. This row represents our guesses.',
       position: 'top'
     }, {
-      element:  '.guess-fields-row .field input',
+      element:  '.guess-fields-ro > th.field:first-child input',
       intro:    'Use a select box to change the field if our guess was incorrect.',
       position: 'top'
     }, {
-      element:  '.client-fields-row',
+      element:  '.client-fields-row > th:first-child',
       intro:    'We show the column labels you originally uploaded here for reference.',
       position: 'top'
     }, {
-      element:  '.data-rows > tr',
+      element:  '.data-rows',
       intro:    'Review this section before continuing to make sure your data is imported correctly.',
       position: 'top'
     }, {
@@ -56,16 +56,32 @@ export default Controller.extend(ajaxStatus, {
   }),
 
   availableFields: computed('model.availableFields.[]', function () {
-    return (this.get('model.availableFields') || []).map(({ path, format }) => ({
-      path,
-      label:          `${this.convertPathToLabel(path)} - ${format}`,
-      isRelationship: format === 'lookup or id' ? true : false
-    }));
+    return (this.get('model.availableFields') || []).map(({ path, format }) => {
+      let label = `${this.convertPathToLabel(path)}${format ? ' - ' + format : ''}`;
+
+      if (path === 'customFields') {
+        label = 'Assign a custom field';
+      }
+
+      return {
+        path,
+        label,
+        isRelationship: format === 'lookup or id' ? true : false
+      };
+    }).sortBy('label');
   }),
+
+  headerMap: computed('model.data.0.[]', function () {
+    const data = this.get('model.data'),
+          [ guesses, orig ] = data;
+
+    return guesses.map((path = '', i) =>
+      path.indexOf('customFields') < 0 ? path : `${path}.${orig[i]}`);
+  }).volatile(),
 
   actions: {
     doDryRun (displayDryRunResults = false) {
-      const headerMap = this.get('model.data')[0],
+      const headerMap = this.get('headerMap'),
             uploadId = this.get('model.uploadId');
 
       this.set('doingDryRun', true);
@@ -92,7 +108,7 @@ export default Controller.extend(ajaxStatus, {
     importRecords () {
       this.ajaxStart();
 
-      const headerMap = this.get('model.data')[0],
+      const headerMap = this.get('headerMap'),
             uploadId = this.get('model.uploadId');
 
       this.get('ajax').post('/api/v1/employee/census/' + uploadId + '/process', { data: { headerMap } })
@@ -174,11 +190,6 @@ export default Controller.extend(ajaxStatus, {
 
     onRefresh () {
       this.send('refresh');
-    },
-
-    quickScroll () {
-      let table = document.getElementsByClassName('responsive-table')[0];
-      table.scrollLeft = table.scrollWidth;
     }
   }
 });
