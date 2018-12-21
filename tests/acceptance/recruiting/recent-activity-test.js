@@ -20,7 +20,7 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
       }
     });
     let job = await server.create('job');
-    await server.create('job-openings', {
+    await server.create('job-opening', {
       job,
       title: job.title
     });
@@ -29,7 +29,6 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
     assert.equal(currentURL(), `/account/recruiting/job-opening/${job.id}`);
     assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Recruiting/Job Opening/Campaign');
     assert.dom('div.raised > .header').hasText('Recent Activity');
-    assert.dom('.chartjs-render-monitor').isVisible();
     assert.dom('div.menu__container-responsive div > a.text-blue').hasText('Continue Setup');
   });
 

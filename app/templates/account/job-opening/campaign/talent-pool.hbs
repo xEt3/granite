@@ -1,0 +1,29 @@
+<div class="ui very padded raised segment animated fadeInUp clearfix">
+  <h2 class="ui clearfix header">
+    Talent Pool
+  </h2>
+
+  <div class="ui divider"></div>
+
+  <div class="ui divided list items">
+    {{#each model as |applicant|}}
+      {{list-item/talent-pool-applicant
+        applicant}}
+    {{else}}
+      <hgroup class="center aligned text">
+        <h2>No applicants found.</h2>
+        <h4 class="light text">
+          No applicants were found in your talent pool. If you close a campaign with a unrejected applicants,
+          and "Add Unrejected Applicants To Talent Pool" is enabled, applicants will show up in your talent pool.
+        </h4>
+      </hgroup>
+    {{/each}}
+  </div>
+
+  <div class="ui divider"></div>
+
+  {{elements/x-pagination
+    page=(readonly page)
+    pages=(readonly pages)
+    onchange=(action (mut page))}}
+</div>

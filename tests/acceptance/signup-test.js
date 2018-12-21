@@ -100,4 +100,42 @@ module('Acceptance | signup', function (hooks) {
     await settled();
     assert.equal(currentURL(), '/', 'brought you back to the index page');
   });
+
+  test('field errors implemented in signup (for urlPrefix)', async function (assert) {
+    await visit('/signup');
+    assert.equal(currentURL(), '/signup');
+
+    const controller = this.owner.lookup('controller:signup/index');
+
+    const fakeData = {
+      name:      faker.company.companyName(),
+      urlPrefix: 'abc'
+    };
+
+    let model = controller.get('model');
+
+    // Assure that all fields are undefined
+    Object.keys(fieldMap).forEach(key =>
+      assert.ok(!model.get(key), `model.${key} is undefined before fillIn`));
+
+    // Fill in fields
+    for (let key in fieldMap) {
+      if (!fieldMap.hasOwnProperty(key) || !fakeData[key]) {
+        continue;
+      }
+
+      await fillIn(fieldMap[key], fakeData[key]);
+    }
+
+    // Assure filled in fields are set on the model
+    Object.keys(fieldMap).forEach(key =>
+      assert.equal(model.get(key), fakeData[key], `model.${key} is "${fakeData[key]}" after fillIn`));
+
+    controller.set('fieldErrors', { urlPrefix: 'URL Prefix "abc" has already been taken.' });
+
+    await settled();
+    assert.dom('#url-prefix input + .check').doesNotExist();
+    assert.dom('#url-prefix input + .input-error').exists();
+    assert.dom('#url-prefix input + .input-error > .error').includesText(controller.get('fieldErrors.urlPrefix'));
+  });
 });

@@ -1,9 +1,55 @@
 {{yield (action 'selectDocuments')}}
 
-{{#ui-modal name='modal__document-selection' id='modal__document-selection' class='ui long modal'}}
+{{#ui-modal name='modal__document-selection' id=sansHashModalId class='ui long modal'}}
   <h1 class="ui header">{{if title title 'Select Documents'}}</h1>
 
   <div class="content ui form">
+    <p class='ui center aligned text'>
+      <a href="#" class="{{if showDocumentUpload 'text-danger'}}" {{action (toggle "showDocumentUpload" this)}}>
+        {{#if showDocumentUpload}}
+          <i class="close icon"></i> Close document upload
+        {{else}}
+          <i class="cloud upload icon"></i> Upload a file...
+        {{/if}}
+      </a>
+    </p>
+
+    {{#if showDocumentUpload}}
+      {{drop-zone
+        id=sansHashDropzoneId
+        class='input__dropzone'
+        url='/api/v1/file'
+        uploadMultiple=false
+        maxFiles=1
+        autoProcessQueue=false
+        dictDefaultMessage='Drop or Click to Select a File'
+        thumbnailWidth='175'
+        headers=(hash X-API-Token=ajax.auth.token)
+        addedfile=(action 'addedFile')
+        success=(action 'uploadedFile')
+        capture='camera'}}
+      <div class="ui divider"></div>
+      {{input/ui-input type="text" inputId="file-title" placeholder="File Title" value=fileName}}
+
+      {{#if showDescription}}
+        <div class="field animated fadeInUp">
+          <label for="file-description">Description</label>
+          {{textarea id="file-description" rows='3' placeholder='Description' value=description}}
+        </div>
+      {{/if}}
+
+      <div class="field center aligned text">
+        <a href="#" {{action (toggle 'showDescription' this)}}>
+          <i class="angle {{if showDescription 'up' 'down'}} icon"></i>{{if showDescription 'Hide' 'Show'}} Description
+        </a>
+      </div>
+
+      <form {{action "uploadFile" on="submit"}}>
+        {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=disableSubmit}}Save document{{/form/action-button}}
+      </form>
+      <div class="ui divider"></div>
+    {{/if}}
+
     <div class="ui two column grid">
       <div class="ui field column">
         <label>Search by text</label>
@@ -47,8 +93,8 @@
     <div class="clearfix">
       {{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}
     </div>
-    <div class="ui divider"></div>
     {{#if selectedDocuments}}
+      <div class="ui divider"></div>
       <h3 class="ui header">Selected Documents</h3>
       <div class="ui divided list">
         {{#each selectedDocuments as |selectedDocument|}}

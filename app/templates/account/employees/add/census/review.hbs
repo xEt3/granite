@@ -1,18 +1,23 @@
-{{intro-js steps=intros start-if=model.data}}
-{{#link-to 'account.employees.add.census.index' class="text-danger"}}
+{{stateful-intro-js
+  user=auth.user
+  steps=intros
+  start-if=model.data
+  hintKey='employees-census'}}
+
+{{#link-to 'account.employees.add.census.index' class="item text-danger"}}
   <i class="fa fa-fw fa-refresh"></i>
   Reupload census
 {{/link-to}}
 
-{{#if dryrun}}
+{{#if doingDryRun}}
   <i class="pull-right text-green spinner loading icon"></i>
 {{else}}
-  <a href="#" class="pull-right text-green btn__dry-run" {{action "doDryRun"}}>
-    {{if dryrunResult 'Regenerate' 'Generate'}} dry run data
+  <a href="#" class="pull-right text-green btn__dry-run" {{action "doDryRun" true}}>
+    {{if displayDryRunResults 'Regenerate' 'Generate'}} dry run data
   </a>
 {{/if}}
 
-{{#if dryrunResult}}
+{{#if displayDryRunResults}}
   <p class="text-center text-white">
     The following would be created as a result of this import:
     <a href="#" class="text-muted pull-right" {{action "dumpDryRun"}}>
@@ -20,8 +25,12 @@
     </a>
   </p>
 
-  {{#each dryrunResult as |dryRunRecord index|}}
-    {{list-item/dry-run-employee dryRunRecord=dryRunRecord index=index}}
+  {{#each potentialData as |potentialDataRecord index|}}
+    {{list-item/dry-run-employee
+      dryRunRecord=potentialDataRecord
+      index=index
+      availableFields=availableFields
+    }}
   {{/each}}
 {{/if}}
 
@@ -48,7 +57,7 @@
                     direction="downward"
                     name="guess-column"
                     selected=guesses
-                    onChange=(action 'mutateGuess' index)}}
+                    onChange=(pipe-action (action 'mutateGuess' index)(action 'doDryRun'))}}
                     <div class="default text">Select field for column</div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
@@ -82,12 +91,20 @@
         <tbody class="monospaced data-rows">
           {{#each rows as |row rowIndex|}}
             <tr>
-              <td>
-                {{add-one rowIndex}}
-              </td>
-              {{#each row as |column|}}
+              {{#each row as |column columnIndex|}}
                 <td>
-                  {{column}}
+                  {{census/table-cell
+                    column
+                    rowIndex
+                    columnIndex
+                    potentialData
+                    availableFields
+                    model.data.[0]
+                    addDepartment = (action 'showDepartmentModal')
+                    addLocation = (action 'showLocationModal')
+                    onRefresh = (action 'onRefresh')
+                    onNotify = (action 'onNotify')
+                  }}
                 </td>
               {{/each}}
             </tr>
@@ -103,3 +120,88 @@
     {{/form/action-button}}
   </div>
 </form>
+
+{{#ui-modal id='modal__add-location' class='small form'}}
+  <div class="header">
+    Add Location
+  </div>
+  <div class="content">
+    <div class="field">
+      <label for="location-name">Name</label>
+      {{input type="text" value=newLocation.name id="location-name" placeholder="Location Name"}}
+    </div>
+    <div class="field">
+      <label for="location-code">Code</label>
+      {{input type="text" value=newLocation.code id="location-code" placeholder="Location Code"}}
+    </div>
+    <div class="field">
+      <label for="location-phone">Telephone Number</label>
+      {{input type="tel" value=newLocation.phone id="location-phone" placeholder="Location Telephone Number"}}
+    </div>
+    <div class="field">
+      <label for="address-line-1">Address Line 1</label>
+      {{validated-input type="text" model=newLocation valuePath="addressLine1" placeholder="Address Line 1" id="address-line-1"}}
+    </div>
+    <div class="field">
+      <label for="address-line-2">Address Line 2</label>
+      {{input type="text" value=newLocation.addressLine2 placeholder="Address Line 2" id="address-line-2"}}
+    </div>
+    <div class="three fields">
+      <div class="field">
+        <label for="address-city">City</label>
+        {{input type="text" value=newLocation.addressCity placeholder="City" id="address-city"}}
+      </div>
+      <div class="field">
+        <label for="state-name">State</label>
+        {{#ui-dropdown class="search selection" selected=newLocation.addressState onChange=(action (mut newLocation.addressState))}}
+          {{#if stateIsMontana}}<i class="text-danger heart icon"></i>{{/if}}
+          <div class="default text">State</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            {{#each states as |state|}}
+              <div class="item" data-value="{{state.value}}">
+                {{state.label}}
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      </div>
+      <div class="field">
+        <label for="address-zip">Zip</label>
+        {{input type="text" value=newLocation.addressZipcode placeholder="Zip" id="address-zip"}}
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="ui red button" {{action 'respondLocationModal' false}}>
+      Cancel
+    </button>
+    <button class="ui green right labeled icon button" {{action 'respondLocationModal' true}}>
+      Create Location<i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}
+
+{{#ui-modal id='modal__add-department' class='small form'}}
+  <div class="header">
+    Add Department
+  </div>
+  <div class="content">
+    <div class="field">
+      <label for="department-name">Name</label>
+      {{input type="text" value=newDepartment.name id="department-name" placeholder="Department Name"}}
+    </div>
+    <div class="field">
+      <label for="department-code">Code</label>
+      {{input type="text" value=newDepartment.code id="department-code" placeholder="Department Code"}}
+    </div>
+  </div>
+  <div class="actions">
+    <button class="ui red button" {{action 'respondDepartmentModal' false}}>
+      Cancel
+    </button>
+    <button class="ui green right labeled icon button" {{action 'respondDepartmentModal' true}}>
+      Create Department<i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}

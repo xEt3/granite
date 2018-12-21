@@ -16,7 +16,6 @@ module('Acceptance | documents', function (hooks) {
 
   test('elements on documents page', async function (assert) {
     await authenticate.call(this, server);
-    await server.create('company');
 
     await visit('/account/documents');
     await click('.huge.blue.button');
@@ -29,7 +28,6 @@ module('Acceptance | documents', function (hooks) {
 
   test('adding a new document', async function (assert) {
     await authenticate.call(this, server);
-    await server.create('company');
 
     await visit('/account/documents');
     await click('.huge.blue.button');
@@ -58,7 +56,6 @@ module('Acceptance | documents', function (hooks) {
 
   test('document is on page', async function (assert) {
     await authenticate.call(this, server);
-    await server.create('company');
     let file = await server.create('file');
 
     await visit('/account/documents');

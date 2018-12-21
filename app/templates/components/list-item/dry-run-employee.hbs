@@ -10,18 +10,7 @@
     </h3>
     <ul>
       {{#each-in dryRunRecord as |key value|}}
-        <li>
-          <strong>{{key}}:</strong>
-          {{#if value.firstObject}}
-            <ul>
-              {{#each value as |subValue|}}
-                <li>{{to-string subValue}}</li>
-              {{/each}}
-            </ul>
-          {{else}}
-            {{to-string value}}
-          {{/if}}
-        </li>
+        {{census/dry-run-employee-relationship key=key value=value availableFields=availableFields}}
       {{/each-in}}
     </ul>
   </div>

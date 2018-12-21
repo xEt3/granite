@@ -6,34 +6,35 @@ module.exports = function (environment) {
     modulePrefix: 'granite',
     environment,
     rootURL:      '/',
-    locationType: 'auto',
+    locationType: 'router-scroll',
     EmberENV:     {
-      FEATURES: {
-        // Here you can enable experimental features on an ember canary build
-        // e.g. 'with-controller': true
-      },
-      EXTEND_PROTOTYPES: {
-        // Prevent Ember Data from overriding Date.parse.
-        Date: false
-      }
+      FEATURES:          {},
+      EXTEND_PROTOTYPES: { Date: false }
     },
 
-    APP: {
-      // Here you can pass flags/options to your application instance
-      // when it is created
-    },
-
+    APP:    {},
     moment: { includeTimezone: 'all' },
 
     emberRollbarClient: {
       enabled:     environment === 'production',
       accessToken: '6f016ff3c5ef495b9c894871857aefd4'
     },
+
     SemanticUI: {
       import: {
         css:        false,
         javascript: true,
         fonts:      false
+      }
+    },
+
+    'ember-cli-notifications': {
+      iconClasses: {
+        close:   'close icon',
+        info:    'info circle icon',
+        success: 'check icon',
+        warning: 'warning icon',
+        error:   'exclamation circle icon'
       }
     }
   };

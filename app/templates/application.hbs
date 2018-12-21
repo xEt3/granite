@@ -9,8 +9,7 @@
   {{#unless topLevel}}
     {{elements/account-navigation links=accountNavigationItems ui_context='body .ember-view .main'}}
   {{/unless}}
-
-  <div class="ember-view ui fluid container {{unless topLevel 'in__application pusher'}}" style={{backdrop}}>
+  <div class="ember-view ui fluid container {{unless topLevel 'in__application pusher'}} {{if randomColorText 'main__dark-text'}}" style={{backdrop}}>
     {{#if topLevel}}
       {{elements/x-navigation transparent=navTransparent topLevel=topLevel}}
     {{/if}}

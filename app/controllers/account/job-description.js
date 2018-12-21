@@ -13,10 +13,11 @@ export default Controller.extend(addEdit, del, {
       this.ajaxStart();
 
       let job = this.get('model'),
-          creator = this.get('auth.user'),
+          creator = this.get('auth.user.employee'),
           jobOpening = this.store.createRecord('job-opening', {
             job,
-            creator
+            creator,
+            name: `${job.get('title')} Recruiting Campaign`
           });
 
       jobOpening.save()

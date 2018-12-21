@@ -30,3 +30,4 @@ package.json.ember-try
 .DS_Store
 # We are using yarn.lock, remove this non-essential file
 package-lock.json
+bower_components

@@ -1,0 +1,10 @@
+{{#if hasRelationship}}
+  {{#ui-popup tagName='span' content=popupMessage position="right center"}}
+    {{column}}
+    <a href='#' {{action 'addAction'}}>
+      <i class="exclamation circle icon text-red"></i>
+    </a>
+  {{/ui-popup}}
+{{else}}
+  {{column}}
+{{/if}}

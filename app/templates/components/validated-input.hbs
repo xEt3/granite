@@ -18,10 +18,17 @@
     <i class="check icon"></i>
   {{/if}}
 
-  {{#if showMessage}}
+  {{#if (or showErrorMessage showWarningMessage showFieldError)}}
     <div class="input-error animated fadeIn">
       <div class="error">
-        {{v-get model valuePath 'message'}}
+        {{#if showFieldError}}
+          {{showFieldError}}
+        {{else}}
+          {{v-get
+            model
+            valuePath
+            (if showWarningMessage 'warningMessage' 'message')}}
+        {{/if}}
       </div>
     </div>
   {{/if}}

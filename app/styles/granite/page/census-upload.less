@@ -1,5 +1,13 @@
 .census__table {
   min-height: 326px;
+
+  > .table {
+    border: 0 !important;
+
+    thead tr:first-child > th:last-child {
+      border-radius: 0 0;
+    }
+  }
 }
 
 .census__field-selection > .default.text {

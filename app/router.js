@@ -1,11 +1,13 @@
 import EmberRouter from '@ember/routing/router';
 import { inject as service } from '@ember/service';
 import config from './config/environment';
+import RouterScroll from 'ember-router-scroll';
 
-const Router = EmberRouter.extend({
-  location: config.locationType,
-  rootURL:  config.rootURL,
-  headData: service(),
+const Router = EmberRouter.extend(RouterScroll, {
+  location:                 config.locationType,
+  rootURL:                  config.rootURL,
+  headData:                 service(),
+  historySupportMiddleware: true,
 
   setTitle (title) {
     this.get('headData').set('title', title);
@@ -93,6 +95,7 @@ Router.map(function () {
         this.route('equipment');
         this.route('custom-fields');
         this.route('picture');
+        this.route('documents');
       });
       this.route('onboard-complete');
       this.route('offboard', function () {
@@ -101,6 +104,7 @@ Router.map(function () {
         this.route('options');
         this.route('assets');
         this.route('reorganization');
+        this.route('documents');
       });
       this.route('complete-offboarding');
     });
@@ -178,6 +182,7 @@ Router.map(function () {
             this.route('event', { path: '/event/:event_id' });
           }
         );
+        this.route('talent-pool');
       });
       this.route('setup', function () {
         this.route('settings');
