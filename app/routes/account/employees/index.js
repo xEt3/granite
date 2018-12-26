@@ -73,7 +73,7 @@ export default Route.extend(resource, {
   },
 
   supervisors: computed(function () {
-    return this.ajax.request('/api/v1/employees', { data: { $report: 'supervisors' } });
+    return this.ajax.request('/api/v1/employees', { data: { $report: 'supervisors' } }).then(response => response.employee);
   }),
 
   setupController (controller, model) {
