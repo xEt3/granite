@@ -4,10 +4,9 @@ import config from './config/environment';
 import RouterScroll from 'ember-router-scroll';
 
 const Router = EmberRouter.extend(RouterScroll, {
-  location:                 config.locationType,
-  rootURL:                  config.rootURL,
-  headData:                 service(),
-  historySupportMiddleware: true,
+  location: config.locationType,
+  rootURL:  config.rootURL,
+  headData: service(),
 
   setTitle (title) {
     this.get('headData').set('title', title);
@@ -39,6 +38,7 @@ Router.map(function () {
     this.route('settings', function () {
       this.route('index', { path: '/general' }, function () {
         this.route('processes');
+        this.route('features');
       });
       this.route('billing', function () {
         this.route('invoices');
@@ -186,6 +186,7 @@ Router.map(function () {
           }
         );
         this.route('talent-pool');
+        this.route('eeo-reporting');
       });
       this.route('setup', function () {
         this.route('settings');

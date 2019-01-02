@@ -13,6 +13,11 @@
         <i class="archive icon"></i>Talent Pool
       {{/link-to}}
     {{/if}}
+    {{#if EEOEnabled}}
+      {{#link-to 'account.job-opening.campaign.eeo-reporting' class="item"}}
+        <i class="file alternate icon"></i>EEO Reports
+      {{/link-to}}
+    {{/if}}
     <div class="right menu">
       {{#if (and model.completedOn (not model.closed))}}
         {{#modals/ats-close-job-opening class="item" sourcesToClose=model.manualApplicantSources as |confirm|}}

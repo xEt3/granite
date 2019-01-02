@@ -1,0 +1,23 @@
+<div class="ui form">
+  <h3 class="ui header">
+    Features
+  </h3>
+  <p>This section allows you to toggle granite features on and off, depending on what your company needs.</p>
+  <div class="ui divider"></div>
+
+  <div class="field">
+    <label for="eeoc">
+      Collect EEO Data<br />
+      <small class="light text">
+        You should only enable this feature if you an EEO applicable employer.
+        Verify that you are an EEO applicable employer by contacting us or visiting <a href="https://www.eeoc.gov" target="_blank">eeoc.gov</a>
+      </small>
+    </label>
+    Off
+    {{ui-checkbox
+      class="toggle"
+      label="On"
+      checked=model.collectEEO
+      onChange=(pipe-action (action (mut model.collectEEO)) (action "save"))}}
+  </div>
+</div>
