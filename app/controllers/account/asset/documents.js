@@ -5,10 +5,11 @@ export default Controller.extend(addEdit, {
 
   actions: {
     removeDocument (doc) {
-      let model = this.get('model');
-
-      model.get('documents').removeObject(doc);
-      this.send('save', model);
+      console.log('inside removeDocument, doc:', doc);
+      // let model = this.get('model');
+      //
+      // model.get('documents').removeObject(doc);
+      // this.send('save', model);
     }
   }
 });

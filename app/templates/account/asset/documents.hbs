@@ -1,20 +1,12 @@
-<div class="ui relaxed divided list">
+<div class="ui divided items">
   {{#each model.documents as |file|}}
-    <div class="content clearfix">
-      <span>
-        {{#link-to 'account.document' file.id class="item"}}
-          {{list-item/document-item file}}
-        {{/link-to}}
-      </span>
-
-      <span class="right floated">
-        {{#ui-popup content="Remove Document"}}
-          <a href="#" class="text-danger" {{action "removeDocument" file}}>
-            <i class="trash icon"></i>
-          </a>
-        {{/ui-popup}}
-      </span>
-    </div>
+    <span class="item">
+      {{list-item/document-item
+        file
+        deleteAction=(action 'removeDocument')
+        confirmDeleteContent="Are you sure you want to remove this document?"
+      }}
+    </span>
   {{else}}
     <h2 class="ui center aligned header">No documents available.</h2>
   {{/each}}
