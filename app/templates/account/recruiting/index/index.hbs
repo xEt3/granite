@@ -11,7 +11,16 @@
   }}
     <h2>
       <i class="filter icon"></i> Filters
-      <a href="#" class="ui small text right floated text-red" {{action "resetFilters"}}>Reset All</a>
+      <div class="ui horizontal list right floated">
+        <div class="item">
+          <button class="negative ui button small text" {{action "resetFilters"}}>Reset All</button>
+        </div>
+        <div class="item">
+          <a href="#" class="light text" {{action toggleProperty 'showFilters'}}>
+            <i class="remove icon"></i>
+          </a>
+        </div>
+      </div>
     </h2>
 
     {{#filter.section 'Job Description'}}
