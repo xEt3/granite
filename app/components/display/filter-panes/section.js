@@ -5,11 +5,21 @@ const SectionComponent = Component.extend({
   classNameBindings: [ 'active::fade-unless-hovered' ],
 
   toggleActive () {
+    const activeState = this.get('activeState'),
+          active = this.get('active'),
+          resets = this.get('resets');
+
     this.toggleProperty('active');
 
-    if (!this.get('active')) {
-      let resets = this.get('resets');
+    if (active && activeState) {
+      for (let controlName in activeState) {
+        if (!activeState.hasOwnProperty(controlName)) {
+          continue;
+        }
 
+        this.sendComponentUpdate(controlName, activeState[controlName]);
+      }
+    } else if (!active) {
       if (resets && resets.length > 0) {
         return resets.map(reset => this.resetFilter(reset));
       }
