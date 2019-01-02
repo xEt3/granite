@@ -4,15 +4,15 @@ import resource from 'granite/mixins/controller-abstractions/resource';
 export default Controller.extend(resource, {
   queryParams: [
     'showFilters',
-    'visibleToEmployee',
-    'readOn',
-    'signedOn'
+    { visibleToEmployee: { type: 'boolean' } },
+    { readOn: { type: 'boolean' } },
+    { signedOn: { type: 'boolean' } }
   ],
 
   showFilters:       false,
   visibleToEmployee: null,
   readOn:            null,
-  signedOn:          false,
+  signedOn:          null,
 
   actions: {
     updateFilter (filter, value) {
@@ -21,9 +21,9 @@ export default Controller.extend(resource, {
 
     resetFilters () {
       this.setProperties({
-        visibleToEmployee: false,
-        readOn:            false,
-        signedOn:          false
+        visibleToEmployee: null,
+        readOn:            null,
+        signedOn:          null
       });
     }
   }

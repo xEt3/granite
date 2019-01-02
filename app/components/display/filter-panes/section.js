@@ -5,11 +5,11 @@ const SectionComponent = Component.extend({
   classNameBindings: [ 'active::fade-unless-hovered' ],
 
   toggleActive () {
-    const activeState = this.get('activeState'),
+    this.toggleProperty('active');
+
+    const activeState = Object.assign({}, this.get('activeState')),
           active = this.get('active'),
           resets = this.get('resets');
-
-    this.toggleProperty('active');
 
     if (active && activeState) {
       for (let controlName in activeState) {

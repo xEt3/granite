@@ -16,17 +16,17 @@ export default Route.extend(resource, {
   mutateQuery (query, params) {
     query.employee = this.modelFor('account.employee').get('id');
 
-    if (params.visibleToEmployee) {
+    if (typeof params.visibleToEmployee === 'boolean') {
       query.visibleToEmployee = params.visibleToEmployee;
     }
 
-    if (params.notVisibleToEmployee) {
-      query.visibleToEmployee = !params.notVisibleToEmployee;
-    }
-
     [ 'readOn', 'signedOn' ].forEach(param => {
-      if (params[param]) {
-        query[param] = { $ne: null };
+      if (typeof params[param] === 'boolean') {
+        if (params[param]) {
+          query[param] = { $ne: null };
+        } else {
+          query[param] = null;
+        }
       }
     });
   }

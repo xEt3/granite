@@ -8,28 +8,21 @@
       <a href="#" class="ui small text right floated text-red" {{action "resetFilters"}}>Reset All</a>
     </h2>
 
-    {{#filter.section 'Visibility'}}
-      {{filter.radioControl
+    {{#filter.section 'Visibility' activeState=(hash visibleToEmployee=false)}}
+      {{filter.toggleControl
         'visibleToEmployee'
         visibleToEmployee
-        name='test'
         label='Visible To Employee'}}
-
-      {{filter.radioControl
-        'notVisibleToEmployee'
-        notVisibleToEmployee
-        name='test'
-        label='Not Visible To Employee'}}
     {{/filter.section}}
 
-    {{#filter.section 'Viewed'}}
+    {{#filter.section 'Viewed by Employee' activeState=(hash readOn=false)}}
       {{filter.toggleControl
         'readOn'
         readOn
         label='Viewed'}}
     {{/filter.section}}
 
-    {{#filter.section 'Signature'}}
+    {{#filter.section 'Signed by Employee' activeState=(hash signedOn=false)}}
       {{filter.toggleControl
         'signedOn'
         signedOn
