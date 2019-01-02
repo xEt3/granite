@@ -31,6 +31,13 @@
     label=(or label 'controlName')
     checked=state
     onChange=(action __update)}}
+{{else if (eq type 'radio')}}
+  {{ui-radio
+    class='toggle'
+    name=name
+    label=(or label 'controlName')
+    checked=state
+    onChange=(action __update)}}
 {{else}}
   {{yield
     (action __update)

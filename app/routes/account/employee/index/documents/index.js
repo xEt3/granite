@@ -20,6 +20,10 @@ export default Route.extend(resource, {
       query.visibleToEmployee = params.visibleToEmployee;
     }
 
+    if (params.notVisibleToEmployee) {
+      query.visibleToEmployee = !params.notVisibleToEmployee;
+    }
+
     [ 'readOn', 'signedOn' ].forEach(param => {
       if (params[param]) {
         query[param] = { $ne: null };

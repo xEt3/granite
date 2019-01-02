@@ -10,8 +10,8 @@ export default Controller.extend(resource, {
   ],
 
   showFilters:       false,
-  visibleToEmployee: false,
-  readOn:            false,
+  visibleToEmployee: null,
+  readOn:            null,
   signedOn:          false,
 
   actions: {

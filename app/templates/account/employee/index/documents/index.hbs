@@ -8,26 +8,34 @@
       <a href="#" class="ui small text right floated text-red" {{action "resetFilters"}}>Reset All</a>
     </h2>
 
-    <div class="ui three fields">
-      {{filter.toggleControl
+    {{#filter.section 'Visibility'}}
+      {{filter.radioControl
         'visibleToEmployee'
         visibleToEmployee
-        label='Visible To Employee'
-        class='center aligned text field'}}
+        name='test'
+        label='Visible To Employee'}}
 
+      {{filter.radioControl
+        'notVisibleToEmployee'
+        notVisibleToEmployee
+        name='test'
+        label='Not Visible To Employee'}}
+    {{/filter.section}}
+
+    {{#filter.section 'Viewed'}}
       {{filter.toggleControl
         'readOn'
         readOn
-        label='Viewed'
-        class='center aligned text field'}}
+        label='Viewed'}}
+    {{/filter.section}}
 
+    {{#filter.section 'Signature'}}
       {{filter.toggleControl
         'signedOn'
         signedOn
-        label='Signed'
-        class='center aligned text field'}}
+        label='Signed'}}
+    {{/filter.section}}
 
-    </div>
   {{/display/filter-pane}}
 {{/if}}
 
