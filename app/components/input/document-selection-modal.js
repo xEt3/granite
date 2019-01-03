@@ -78,7 +78,8 @@ export default Component.extend(pagination, addEdit, ajaxStatus, {
         tag = this.get('selectedTag'),
         query = {
           limit,
-          page
+          page,
+          systemUse: false
         },
         previousSearch = this.get('previousSearch'),
         previousTag = this.get('previousTag');

@@ -20,7 +20,7 @@
     {{#if deleteAction}}
       <div class="right floated">
         {{#confirm-modal confirmContent=confirmDeleteContent as |confirm|}}
-          <a href="#" id="asset-doc__action--delete" {{action (pipe confirm (action deleteAction file))}}>
+          <a href="#" class="text-danger" id="asset-doc__action--delete" {{action (pipe confirm (action deleteAction file))}}>
             <i class="trash icon"></i>
           </a>
         {{/confirm-modal}}

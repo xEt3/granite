@@ -1,3 +1,23 @@
+<div class="right aligned text floated menu__actions">
+  <h3 class="ui header">
+    {{#input/document-selection-modal
+      title="Assign asset documents"
+      selected=model.documents
+      autoTag='Asset'
+      onSelected=(pipe-action
+        (action (mut model.documents))
+        (action 'save'))
+      as |execute|
+    }}
+      {{#ui-popup position="left center" tagName='span' content="Add a document"}}
+        <a href='#' {{action execute 'selectDocuments'}}>
+          <i class="plus icon"></i>
+        </a>
+      {{/ui-popup}}
+    {{/input/document-selection-modal}}
+  </h3>
+</div>
+
 <div class="ui divided items">
   {{#each model.documents as |file|}}
     <span class="item">
