@@ -3,12 +3,6 @@
     Company Anatomy
   </h1>
 </hgroup>
-<div class="ui divider"></div>
-
-{{#if baseNode}}
-  {{visualizations/organization-tree baseNode=baseNode}}
-{{/if}}
-
 <div class="ui form">
   <div class="field">
     <label for="basenode-selection">Select a supervisor</label>
@@ -25,3 +19,7 @@
     {{/ui-dropdown}}
   </div>
 </div>
+<div class="ui divider"></div>
+{{#if baseNode}}
+  {{visualizations/organization-tree baseNode=baseNode}}
+{{/if}}
