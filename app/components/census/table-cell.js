@@ -15,8 +15,12 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
   missingRequiredFields: computed.reads('validation.isRequired'),
   highlightCell:         computed.or('missingRelationship', 'missingRequiredFields'),
 
-  popupMessage: computed('missingRelationship', function () {
-    let relationship = this.get('missingRelationship');
+    // if cell is a relationship cell, and cell has a value in it, and the potentialDataForCell is undefined
+    return field.isRelationship && column && !potentialDataForCell ? field.path : null;
+  }),
+
+  popupMessage: computed('hasRelationship', function () {
+    let relationship = this.get('hasRelationship');
     return htmlSafe(`Could not find this ${relationship},  click to create.`);
   }),
 

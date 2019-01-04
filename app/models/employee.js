@@ -22,6 +22,7 @@ export default Model.extend(Validations, {
   middleName: attr('string'),
   lastName:   attr('string'),
   suffixName: attr('string'),
+  gender:     attr('string'),
 
   addressLine1:              attr('string'),
   addressLine2:              attr('string'),
@@ -36,6 +37,7 @@ export default Model.extend(Validations, {
   phone:                     attr('string'),
   ssn:                       attr('string'),
   workersCompClassCode:      attr('string'),
+  employeeNumber:            attr('string'),
 
   ssnMasked: computed('ssn', function () {
     var ssn = this.get('ssn');

@@ -5,7 +5,7 @@
 
   <div class="ui divider"></div>
 
-  <form class="ui form"  {{action "save" on="submit"}}>
+  <form class="ui form" {{action "save" on="submit"}}>
     <div class="fields">
       <div class="five wide field">
         <label for="first-name">First Name</label>
@@ -35,6 +35,20 @@
           </div>
         {{/ui-dropdown}}
       </div>
+      <div class="two wide field">
+        <label for="suffix-name">Gender</label>
+        {{#ui-dropdown class="selection" selected=model.gender onChange=(action (mut model.gender))}}
+          <div class="default text">Gender</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            {{#each gender as |gender|}}
+              <div class="item" data-value="{{gender}}">
+                {{gender}}
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      </div>
     </div>
     <div class="three fields">
       <div class="field">
@@ -47,6 +61,10 @@
       <div class="field">
         <label for="email">Email</label>
         {{validated-input type="email" model=model valuePath="email" placeholder="Email" id="email"}}
+      </div>
+      <div class="field">
+        <label for="employeeNumber">Employee Number</label>
+        {{validated-input model=model valuePath='employeeNumber' placeholder="Employee Number" id="employee-number"}}
       </div>
     </div>
 
