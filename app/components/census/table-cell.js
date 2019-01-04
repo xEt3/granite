@@ -16,7 +16,12 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
         column = this.get('column');
 
     //if cell is a relationship cell, and cell has a value in it, and the potentialDataForCell is undefined
-    return field.isRelationship && column && !potentialDataForCell ? field.path : null;
+    let errorFlagOn = field.isRelationship && column && !potentialDataForCell ? field.path : null;
+
+    if (errorFlagOn) {
+      document.getElementById(this.get('rowIndex')).classList.add('census__highlight-row');
+    }
+    return errorFlagOn;
   }),
 
   popupMessage: computed('hasRelationship', function () {

@@ -90,7 +90,10 @@
         </thead>
         <tbody class="monospaced data-rows">
           {{#each rows as |row rowIndex|}}
-            <tr>
+            <tr id="{{rowIndex}}">
+              <td>
+                {{add-one rowIndex}}
+              </td>
               {{#each row as |column columnIndex|}}
                 <td>
                   {{census/table-cell
@@ -100,10 +103,10 @@
                     potentialData
                     availableFields
                     model.data.[0]
-                    addDepartment = (action 'showDepartmentModal')
-                    addLocation = (action 'showLocationModal')
-                    onRefresh = (action 'onRefresh')
-                    onNotify = (action 'onNotify')
+                    addDepartment=(action 'showDepartmentModal')
+                    addLocation=(action 'showLocationModal')
+                    onRefresh=(action 'onRefresh')
+                    onNotify=(action 'onNotify')
                   }}
                 </td>
               {{/each}}

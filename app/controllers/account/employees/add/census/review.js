@@ -56,7 +56,7 @@ export default Controller.extend(ajaxStatus, {
   }),
 
   availableFields: computed('model.availableFields.[]', function () {
-    return (this.get('model.availableFields') || []).map(({ path, format }) => {
+    return (this.get('model.availableFields') || []).map(({ path, format, required }) => {
       let label = `${this.convertPathToLabel(path)}${format ? ' - ' + format : ''}`;
 
       if (path === 'customFields') {
@@ -66,6 +66,7 @@ export default Controller.extend(ajaxStatus, {
       return {
         path,
         label,
+        required,
         isRelationship: format === 'lookup or id' ? true : false
       };
     }).sortBy('label');
