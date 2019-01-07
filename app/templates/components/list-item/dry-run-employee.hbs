@@ -2,8 +2,8 @@
   <div class="content">
     <h3>
       Employee record #{{x-inc index}}
-      {{#if (or (not dryRunRecord.name.first) (not dryRunRecord.name.last))}}
-        {{#ui-popup tagName="span" position="right center" content="First and last name are required."}}
+      {{#if missingRequiredFields}}
+        {{#ui-popup tagName="span" position="right center" content=missingRequiredFields}}
           <i class="exclamation circle icon text-red"></i>
         {{/ui-popup}}
       {{/if}}
@@ -15,5 +15,3 @@
     </ul>
   </div>
 </div>
-
-{{test}}

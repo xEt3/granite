@@ -1,25 +1,22 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
 
 export default Component.extend({
-  test: computed('dryRunRecord', 'availableFields', function () {
+  missingRequiredFields: computed('dryRunRecord', 'availableFields', function () {
     let availableFields = this.get('availableFields'),
-        dryRunRecord = this.get('dryRunRecord');
+        dryRunRecord = this.get('dryRunRecord'),
+        missingField = null;
 
     availableFields.forEach(field => {
-      console.log('on field:', field.path);
+      let [ path, nestedPath ] = field.path.split('.'),
+          pathValue = dryRunRecord[path] || undefined,
+          nestedPathValue = pathValue ? dryRunRecord[path][nestedPath] : undefined;
 
-      //ACOUNT FOR OBJECTS HERE TOO - IE NAME IS AN OBJECT SO THE PATH DOESN'T CALCULATE CORRECTLY IN THE BELOW BRACKET NOTATION
-
-      if (field.required && !dryRunRecord[field.path]) {
-        // console.log('dryRunRecord', dryRunRecord);
-        // console.log('field:', field);
-        console.log('field is required and the record is missing field path');
+      if (field.required && (!pathValue || !nestedPathValue)) {
+        missingField = field.path;
       }
     });
+    return missingField ? htmlSafe(`Required field ${missingField} is missing.`) : null;
   })
 });
-
-//dryRunRecord
-//index
-//availableFields

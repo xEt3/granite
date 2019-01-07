@@ -24,6 +24,21 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
     return errorFlagOn;
   }),
 
+  missingRequiredFields: computed('availableFields.[],', 'guesses', 'columnIndex', 'column', function () {
+    let guessForCell = this.get('guesses')[this.get('columnIndex')],
+        column = this.get('column'),
+        missingFields = false;
+
+    this.get('availableFields').forEach(field => {
+      if (field.required && !column && field.path === guessForCell) {
+        document.getElementById(this.get('rowIndex')).classList.add('census__highlight-row');
+        missingFields = true;
+      }
+    });
+
+    return missingFields;
+  }),
+
   popupMessage: computed('hasRelationship', function () {
     let relationship = this.get('hasRelationship');
     return htmlSafe(`Could not find this ${relationship},  click to create.`);
