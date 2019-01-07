@@ -7,9 +7,9 @@
 
   <div class="field">
     <label for="eeoc">
-      Collect EEO Data<br />
+      Collect EEO data<br />
       <small class="light text">
-        You should only enable this feature if you an EEO applicable employer.
+        Enabling this will collect data required for EEOC filings (race &amp; gender). You should only enable this feature if you an EEO applicable employer.
         Verify that you are an EEO applicable employer by contacting us or visiting <a href="https://www.eeoc.gov" target="_blank">eeoc.gov</a>
       </small>
     </label>
@@ -20,4 +20,23 @@
       checked=model.collectEEO
       onChange=(pipe-action (action (mut model.collectEEO)) (action "save"))}}
   </div>
+
+
+  {{#if model.collectEEO}}
+    <div class="field">
+      <label for="aa">
+        Collect additional Affirmative Action data<br />
+        <small class="light text">
+          Enabling this will collect additional information needed for affirmative action (veteran &amp; disability status). You should only enable this feature if you an applicable employer.
+          Verify that you are an applicable employer by contacting us or visiting <a href="https://www.eeoc.gov" target="_blank">eeoc.gov</a>
+        </small>
+      </label>
+      Off
+      {{ui-checkbox
+        class="toggle"
+        label="On"
+        checked=model.collectAA
+        onChange=(pipe-action (action (mut model.collectAA)) (action "save"))}}
+    </div>
+  {{/if}}
 </div>
