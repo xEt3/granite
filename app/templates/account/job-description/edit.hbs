@@ -1,0 +1,20 @@
+<div class="ui raised padded segment container clearfix animated fadeInUp">
+  <hgroup class="clearfix">
+    <h1 class="ui header left floated">
+      Edit Job Description
+    </h1>
+  </hgroup>
+  <div class="ui divider"></div>
+
+  {{#quick-form
+    form
+    model
+    this
+    working=working
+    submitClass="huge fluid green"
+    onsubmit=(action 'save' model)
+    disabled=(or (not model.category) (not model.title))
+  }}
+    Update Job
+  {{/quick-form}}
+</div>
