@@ -1,0 +1,7 @@
+{{yield
+  (hash
+  cell=(component 'census/table-cell' onValidationChange=(action 'onChildValidationChange'))
+  )
+}}
+
+{{log 'row invalid?' isInvalid}}

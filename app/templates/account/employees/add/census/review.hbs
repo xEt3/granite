@@ -90,13 +90,13 @@
         </thead>
         <tbody class="monospaced data-rows">
           {{#each rows as |row rowIndex|}}
-            <tr id="{{rowIndex}}">
+            {{#census/table-row as |components|}}
               <td>
                 {{add-one rowIndex}}
               </td>
               {{#each row as |column columnIndex|}}
                 <td>
-                  {{census/table-cell
+                  {{components.cell
                     column
                     rowIndex
                     columnIndex
@@ -110,7 +110,7 @@
                   }}
                 </td>
               {{/each}}
-            </tr>
+            {{/census/table-row}}
           {{/each}}
         </tbody>
       </table>
