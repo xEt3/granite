@@ -5,43 +5,16 @@ import ajaxStatus from 'granite/mixins/ajax-status';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
-  didReceiveAttrs () {
-    let validity = this.get('missingRelationship') || this.get('missingRequiredFields') ? true : false;
-
-    if (validity !== this.get('isInvalid') && this.get('onValidationChange')) {
-      this.get('onValidationChange')(this.get('columnIndex'), validity);
-    }
-
-    this.set('isInvalid', validity);
-  },
-
   guessedField: computed('availableFields', 'guesses', 'columnIndex', function () {
     return this.get('availableFields').findBy('path', this.get('guesses')[this.get('columnIndex')]);
   }),
 
-  missingRelationship: computed('availableFields.[],', 'guesses.[],', 'columnIndex', 'rowIndex', 'potentialData', 'column', function () {
-    let guessForCell = this.get('guesses')[this.get('columnIndex')],
-        potentialDataForCell = this.get('potentialData')[this.get('rowIndex')][guessForCell],
-        field = this.get('guessedField'),
-        column = this.get('column');
+  // validationState: computed('validation.[]', 'columnIndex', 'rowIndex', function () {
+  //   return this.get(`validation.${this.get('rowIndex')}.${this.get('columnIndex')}`) || {};
+  // }),
 
-    //if cell is a relationship cell, and cell has a value in it, and the potentialDataForCell is undefined
-    return field.isRelationship && column && !potentialDataForCell ? field.path : null;
-  }),
-
-  missingRequiredFields: computed('availableFields.[],', 'guesses', 'columnIndex', 'column', function () {
-    let guessForCell = this.get('guesses')[this.get('columnIndex')],
-        column = this.get('column'),
-        missingFields = false;
-
-    this.get('availableFields').forEach(field => {
-      if (field.required && !column && field.path === guessForCell) {
-        missingFields = true;
-      }
-    });
-
-    return missingFields;
-  }),
+  missingRelationship:   computed.reads('validation.missingRelationship'),
+  missingRequiredFields: computed.reads('validation.isRequired'),
 
   popupMessage: computed('missingRelationship', function () {
     let relationship = this.get('missingRelationship');
@@ -73,6 +46,6 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
   }
 });
 
-CensusTableCellComponent.reopenClass({ positionalParams: [ 'column', 'rowIndex', 'columnIndex', 'potentialData', 'availableFields', 'guesses' ] });
+CensusTableCellComponent.reopenClass({ positionalParams: [ 'column', 'rowIndex', 'columnIndex', 'potentialData', 'availableFields', 'guesses', 'validation' ] });
 
 export default CensusTableCellComponent;

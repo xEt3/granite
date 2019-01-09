@@ -90,19 +90,20 @@
         </thead>
         <tbody class="monospaced data-rows">
           {{#each rows as |row rowIndex|}}
-            {{#census/table-row as |components|}}
+            {{#census/table-row validation=(object-at rowIndex dataValidation)}}
               <td>
                 {{add-one rowIndex}}
               </td>
               {{#each row as |column columnIndex|}}
                 <td>
-                  {{components.cell
+                  {{census/table-cell
                     column
                     rowIndex
                     columnIndex
                     potentialData
                     availableFields
-                    model.data.[0]
+                    guesses
+                    (object-at columnIndex (object-at rowIndex dataValidation))
                     addDepartment=(action 'showDepartmentModal')
                     addLocation=(action 'showLocationModal')
                     onRefresh=(action 'onRefresh')
