@@ -5,7 +5,9 @@ import ajaxStatus from 'granite/mixins/ajax-status';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
-  guessedField: computed('availableFields', 'guesses', 'columnIndex', function () {
+  classNameBindings: [ 'highlightCell:census__highlight-cell' ],
+  tagName:           'td',
+  guessedField:      computed('availableFields', 'guesses', 'columnIndex', function () {
     return this.get('availableFields').findBy('path', this.get('guesses')[this.get('columnIndex')]);
   }),
 
@@ -15,6 +17,7 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
 
   missingRelationship:   computed.reads('validation.missingRelationship'),
   missingRequiredFields: computed.reads('validation.isRequired'),
+  highlightCell:         computed.or('missingRelationship', 'missingRequiredFields'),
 
   popupMessage: computed('missingRelationship', function () {
     let relationship = this.get('missingRelationship');
