@@ -32,7 +32,7 @@ module('Acceptance | job-description-edit', function (hooks) {
     assert.dom('h1').hasText('Edit Job Description');
     assert.dom('#job-title  > .field > input').exists();
     assert.dom('#job-title  > .field > input').hasValue(`${job.title}`);
-    assert.dom('.field.job-description').hasText('Job Description');
+    assert.dom('.field.job-description').includesText('Job Description');
     assert.dom('.field.category').exists();
     assert.dom('.field.department').exists();
     assert.dom('.field.equipment').exists();
@@ -46,7 +46,7 @@ module('Acceptance | job-description-edit', function (hooks) {
     await settled();
     assert.equal(currentURL(), `/account/recruiting/job/${job.id}/edit`);
     assert.dom('#job-title  > .field > input').hasValue(`${job.title}`);
-    assert.dom('.field.job-description').hasText('Job Description');
+    assert.dom('.field.job-description').includesText('Job Description');
     await fillIn('#job-title  > .field > input', 'Test Title');
     await fillIn('textarea[id="job-description"]', 'New Description');
     await click('div#ember-testing form > button');
