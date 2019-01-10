@@ -11,10 +11,6 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
     return this.get('availableFields').findBy('path', this.get('guesses')[this.get('columnIndex')]);
   }),
 
-  // validationState: computed('validation.[]', 'columnIndex', 'rowIndex', function () {
-  //   return this.get(`validation.${this.get('rowIndex')}.${this.get('columnIndex')}`) || {};
-  // }),
-
   missingRelationship:   computed.reads('validation.missingRelationship'),
   missingRequiredFields: computed.reads('validation.isRequired'),
   highlightCell:         computed.or('missingRelationship', 'missingRequiredFields'),
