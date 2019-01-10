@@ -68,6 +68,10 @@ export default Controller.extend(ajaxStatus, {
             potentialDataForCell = potentialData[rIdx][guessForCell],
             field = availableFields.findBy('path', guessForCell);
 
+        if (!field) {
+          return { invalid: false };
+        }
+
         // if cell is a relationship cell, and cell has a value in it, and the potentialDataForCell is undefined
         if (field.isRelationship && column && !potentialDataForCell ? field.path : null) {
           return {
