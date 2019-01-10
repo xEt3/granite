@@ -28,5 +28,11 @@ export default Controller.extend(modalSupport, {
       step,
       response: responses.findBy('step', step.get('id'))
     })) : false;
-  })
+  }),
+
+  actions: {
+    refreshModel () {
+      this.send('refresh');
+    }
+  }
 });

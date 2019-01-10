@@ -19,6 +19,29 @@
     </div>
     <div class="ui divider"></div>
 
+    {{#modals/add-notes
+      model=model
+      refresh=(action "refreshModel") as |openAddModal|
+    }}
+      {{#ui-popup position="bottom left" content="add notes"}}
+        <div class="content clearfix">
+          <span class="left floated">
+            <a href="#" {{action openAddModal}}>
+              <i class="edit icon"></i>
+            </a>
+          </span>
+          <span>
+            <h3 class="header">Notes</h3>
+          </span>
+        </div>
+      {{/ui-popup}}
+    {{/modals/add-notes}}
+
+    {{#if model.notes}}
+      {{model.notes}}
+    {{/if}}
+    <div class="ui divider"></div>
+
     {{#if opening.screening}}
       <h3>Screening</h3>
       <p>
@@ -26,8 +49,36 @@
         <a href="#" {{action openModal responsesModalId 'responses'}}>View responses</a>
       </p>
     {{/if}}
-
   </div>
+
+
+
+
+
+
+
+
+
+
+  {{!-- {{#modals/add-notes
+    refresh=(action "refreshModel") as |openAddModal|
+  }}
+    {{#ui-popup position="bottom center" content="Manually add applicant"}}
+      <a href="#" class="smaller text" {{action openAddModal}}>
+        <i class="edit icon"></i> Notes
+      </a>
+    {{/ui-popup}}
+  {{/modals/add-notes}} --}}
+
+
+
+
+
+
+
+
+
+
   <div class="ui six wide column">
     {{#if upcomingEvents}}
       <h3>Upcoming Events</h3>
