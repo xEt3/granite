@@ -18,10 +18,6 @@ module('Acceptance | document', function (hooks) {
     assert.dom('div.content > div.clearfix > h4').includesText(doc.description, 'description displayed on page');
     assert.dom('div.content > div.clearfix > img.ui.small.rounded.image').isVisible('document picture is displayed');
     assert.dom('div.container.clearfix > span.ui.small.text').includesText(moment(doc.created).format('M/DD/YY'), 'created date is displayed correctly');
-    let done = assert.async();
-    setTimeout(() =>{
-      done();
-    }, 10000);
   });
 
   test('word icon is displayed on word doc', async function (assert) {
