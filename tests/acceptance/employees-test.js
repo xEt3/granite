@@ -68,10 +68,19 @@ module('Acceptance | employees', function (hooks) {
 
   test('filter employees', async function (assert) {
     let { employee, company } = await authenticate.call(this, server);
+
+    let supervisor2 = await server.create('employee', { company: company.id });
+
     await server.create('employee', {
       supervisor: employee.id,
       company:    company.id
     });
+
+    await server.create('employee', {
+      supervisor: supervisor2.id,
+      company:    company.id
+    });
+
     await server.create('department');
     await server.create('location');
     await visit('/account/employees');

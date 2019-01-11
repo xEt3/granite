@@ -17,6 +17,8 @@ export default Factory.extend({
   customFields:              { [faker.hacker.noun]: faker.random.word },
   ssn:                       '123-12-4444',
   dateOfBirth:               faker.date.past,
-  id:                        faker.random.number,
-  jobTitle:                  faker.name.jobTitle
+  jobTitle:                  faker.name.jobTitle,
+  fullName () {
+    return this.firstName + ' ' + this.lastName;
+  }
 });
