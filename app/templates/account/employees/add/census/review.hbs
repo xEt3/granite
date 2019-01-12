@@ -38,16 +38,9 @@
 
 <form {{action "importRecords" on="submit"}}>
   <div class="ui raised very padded fluid container">
-    <div class="responsive-table census__table text-box text-box-shadow">
+    {{#display/visual-overflow-table class="responsive-table census__table"}}
       <table class="ui striped celled table">
-        <div class='arrow-overflow'>
-          <a href="#"> <i class="huge angle right icon" {{action 'quickScroll'}}></i> </a>
-        </div>
         <thead>
-          <div class='arrow-overflow'>
-            {{census/over-flow-indicator}}
-          </div>
-
           <tr class="guess-fields-row overflow">
             <th>
               <div class="ui red ribbon label">
@@ -98,6 +91,9 @@
         <tbody class="monospaced data-rows">
           {{#each rows as |row rowIndex|}}
             <tr>
+              <td class="overflow">
+                {{add-one rowIndex}}
+              </td>
               {{#each row as |column columnIndex|}}
                 <td>
                   {{census/table-cell
@@ -118,7 +114,7 @@
           {{/each}}
         </tbody>
       </table>
-    </div>
+    {{/display/visual-overflow-table}}
 
     <div class="ui divider"></div>
 

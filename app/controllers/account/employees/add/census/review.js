@@ -5,8 +5,6 @@ import ajaxStatus from 'granite/mixins/ajax-status';
 import titleCase from 'granite/utils/title-case';
 import { decamelize } from '@ember/string';
 import { states } from 'granite/config/statics';
-import { run } from '@ember/runloop';
-import { on } from '@ember/object/evented';
 import $ from 'jquery';
 
 export default Controller.extend(ajaxStatus, {
