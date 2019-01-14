@@ -90,24 +90,26 @@
         </thead>
         <tbody class="monospaced data-rows">
           {{#each rows as |row rowIndex|}}
-            <tr>
+            {{#census/table-row validation=(object-at rowIndex dataValidation)}}
+              <td>
+                {{add-one rowIndex}}
+              </td>
               {{#each row as |column columnIndex|}}
-                <td>
-                  {{census/table-cell
-                    column
-                    rowIndex
-                    columnIndex
-                    potentialData
-                    availableFields
-                    model.data.[0]
-                    addDepartment = (action 'showDepartmentModal')
-                    addLocation = (action 'showLocationModal')
-                    onRefresh = (action 'onRefresh')
-                    onNotify = (action 'onNotify')
-                  }}
-                </td>
+                {{census/table-cell
+                  column
+                  rowIndex
+                  columnIndex
+                  potentialData
+                  availableFields
+                  guesses
+                  (object-at columnIndex (object-at rowIndex dataValidation))
+                  addDepartment=(action 'showDepartmentModal')
+                  addLocation=(action 'showLocationModal')
+                  onRefresh=(action 'onRefresh')
+                  onNotify=(action 'onNotify')
+                }}
               {{/each}}
-            </tr>
+            {{/census/table-row}}
           {{/each}}
         </tbody>
       </table>
