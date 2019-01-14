@@ -15,7 +15,7 @@
         </div>
       {{/if}}
       {{#each model as |item|}}
-        <div class="item" data-value="{{map-value mapper item.id}}">
+        <div class="item" data-value="{{map-value mapper (if itemValuePath (get item itemValuePath) item)}}">
           {{#if hasBlock}}
             {{yield item}}
           {{else}}
