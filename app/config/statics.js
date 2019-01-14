@@ -244,7 +244,8 @@ const jobTypes = [
   'Internship',
   'Temporary',
   'Seasonal',
-  'Commission'
+  'Commission',
+  null
 ];
 
 const formTypes = [{
