@@ -2,7 +2,7 @@ import UiSidebar from 'semantic-ui-ember/components/ui-sidebar';
 import $ from 'jquery';
 
 export default UiSidebar.extend({
-  'ui_context': 'body.ember-application > div.ember-view',
+  'ui_context': '.ember-application > div.ember-view',
 
   didInsertElement () {
     let context = this.get('ui_context');
