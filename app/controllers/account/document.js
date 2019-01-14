@@ -22,6 +22,10 @@ export default Controller.extend(addEdit, {
     rows:  '6',
     path:  'message'
   }, {
+    label: 'Visible to employee',
+    type:  'checkbox',
+    path:  'visibleToEmployee'
+  }, {
     label: 'Require a signature',
     type:  'checkbox',
     path:  'signatureRequired'
