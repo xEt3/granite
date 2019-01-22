@@ -48,6 +48,11 @@
     id=computedClassName
     rows=rows
     spellcheck="true"}}
+  {{else if (eq field.type 'richtext')}}
+    {{input/rich-text
+      value=value
+      onChange=(action (mut value))
+    }}
 {{else if (or (eq field.type 'checkbox') (eq field.type 'toggle'))}}
   {{ui-checkbox
     id=computedClassName
