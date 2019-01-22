@@ -6,15 +6,14 @@
   </hgroup>
   <div class="ui divider"></div>
 
-  {{#quick-form
-    form
-    model
-    this
-    working=working
-    submitClass="huge fluid green"
-    onsubmit=(action 'save' model)
-    disabled=(or (not model.category) (not model.title))
+  {{input/rich-text
+    value=model.description
+    onChange=(action (mut model.description))
   }}
-    Save
-  {{/quick-form}}
+
+  <div class="ui divider"></div>
+
+  <form {{action "save" model on="submit"}}>
+    {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=disableSubmit}}Save{{/form/action-button}}
+  </form>
 </div>
