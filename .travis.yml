@@ -5,7 +5,8 @@ sudo: false
 dist: trusty
 addons:
   chrome: stable
-cache: yarn
+cache:
+  yarn: true
 env:
   global:
   - JOBS=1

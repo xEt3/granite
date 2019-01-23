@@ -1,14 +1,9 @@
-{{#if missingRelationship}}
+{{#if hasRelationship}}
   {{#ui-popup tagName='span' content=popupMessage position="right center"}}
     {{column}}
     <a href='#' {{action 'addAction'}}>
-      <i class="exclamation circle icon"></i>
+      <i class="exclamation circle icon text-red"></i>
     </a>
-  {{/ui-popup}}
-{{else if missingRequiredFields}}
-  {{#ui-popup tagName='span' content='This is a required field' position="right center"}}
-    {{column}}
-    <i class="exclamation circle icon"></i>
   {{/ui-popup}}
 {{else}}
   {{#if hasEnumInvalidation}}

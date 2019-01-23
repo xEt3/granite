@@ -7,19 +7,9 @@ const SectionComponent = Component.extend({
   toggleActive () {
     this.toggleProperty('active');
 
-    const activeState = Object.assign({}, this.get('activeState')),
-          active = this.get('active'),
-          resets = this.get('resets');
+    if (!this.get('active')) {
+      let resets = this.get('resets');
 
-    if (active && activeState) {
-      for (let controlName in activeState) {
-        if (!activeState.hasOwnProperty(controlName)) {
-          continue;
-        }
-
-        this.sendComponentUpdate(controlName, activeState[controlName]);
-      }
-    } else if (!active) {
       if (resets && resets.length > 0) {
         return resets.map(reset => this.resetFilter(reset));
       }

@@ -5,16 +5,16 @@ import ajaxStatus from 'granite/mixins/ajax-status';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
-  classNameBindings: [ 'highlightCell:census__highlight-cell' ],
-  tagName:           'td',
-  guessedField:      computed('availableFields', 'guesses', 'columnIndex', function () {
+  guessedField: computed('availableFields', 'guesses', 'columnIndex', function () {
     return this.get('availableFields').findBy('path', this.get('guesses')[this.get('columnIndex')]);
   }),
 
-  missingRelationship:   computed.reads('validation.missingRelationship'),
-  missingRequiredFields: computed.reads('validation.isRequired'),
-  highlightCell:         computed.or('missingRelationship', 'missingRequiredFields'),
-  
+  hasRelationship: computed('availableFields.[],', 'guesses.[],', 'columnIndex', 'rowIndex', 'potentialData', 'column', function () {
+    let guessForCell = this.get('guesses')[this.get('columnIndex')],
+        potentialDataForCell = this.get('potentialData')[this.get('rowIndex')][guessForCell],
+        field = this.get('guessedField'),
+        column = this.get('column');
+
     //if cell is a relationship cell, and cell has a value in it, and the potentialDataForCell is undefined
     return field.isRelationship && column && !potentialDataForCell ? field.path : null;
   }),
@@ -30,9 +30,8 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
     }
   }),
 
-  popupMessage: computed('missingRelationship', function () {
-    let relationship = this.get('missingRelationship');
-
+  popupMessage: computed('hasRelationship', function () {
+    let relationship = this.get('hasRelationship');
     return htmlSafe(`Could not find this ${relationship},  click to create.`);
   }),
 
@@ -61,6 +60,6 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
   }
 });
 
-CensusTableCellComponent.reopenClass({ positionalParams: [ 'column', 'rowIndex', 'columnIndex', 'potentialData', 'availableFields', 'guesses', 'validation' ] });
+CensusTableCellComponent.reopenClass({ positionalParams: [ 'column', 'rowIndex', 'columnIndex', 'potentialData', 'availableFields', 'guesses' ] });
 
 export default CensusTableCellComponent;

@@ -36,12 +36,12 @@ export default Controller.extend(addEdit, {
     valuePath:   'id',
     selectText:  'Select Option'
   }, {
-    label:       'Exclude Users From Issue',
-    helpText:    'Excluding users will block selected users from seeing the issue. This is useful for conflicts of interest.',
+    label:       'Exclude Employees From Issue',
+    helpText:    'Excluding employees will block employees selected from seeing the issue.',
     type:        'select',
     inputClass:  'multiple search',
-    path:        'excludedUsers',
-    contentPath: 'controller.users',
+    path:        'excludedEmployees',
+    contentPath: 'controller.employees',
     displayKey:  'fullName',
     selectText:  'Select one or multiple'
   }])

@@ -3,7 +3,6 @@
     section=(component
       'display/filter-panes/section'
       resetFilter=(action resetFilter)
-      sendComponentUpdate=(action sendComponentUpdate)
     )
     control=(component
       'display/filter-panes/control'
@@ -17,11 +16,6 @@
     toggleControl=(component
       'display/filter-panes/control'
       type='toggle'
-      update=(action sendComponentUpdate)
-    )
-    radioControl=(component
-      'display/filter-panes/control'
-      type='radio'
       update=(action sendComponentUpdate)
     )
   )
