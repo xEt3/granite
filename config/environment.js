@@ -3,11 +3,12 @@
 
 module.exports = function (environment) {
   let ENV = {
-    modulePrefix: 'granite',
+    modulePrefix:             'granite',
     environment,
-    rootURL:      '/',
-    locationType: 'router-scroll',
-    EmberENV:     {
+    rootURL:                  '/',
+    locationType:             'router-scroll',
+    historySupportMiddleware: true,
+    EmberENV:                 {
       FEATURES:          {},
       EXTEND_PROTOTYPES: { Date: false }
     },

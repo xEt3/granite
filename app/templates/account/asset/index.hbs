@@ -17,7 +17,12 @@
 
 <div class="ui relaxed divided list">
   {{#each model as |asset|}}
-    {{list-item/asset-stock-item asset=asset showAttributes=expandAttributes onDelete=(action 'delete')}}
+    {{list-item/asset-stock-item
+      asset=asset
+      showAttributes=expandAttributes
+      addDocuments=true
+      saveStockItem=(action 'save' asset)
+      onDelete=(action 'delete')}}
   {{else}}
     <h2 class="ui center aligned header">No assets available. {{#link-to 'account.asset.index.new'}}Add one?{{/link-to}}</h2>
   {{/each}}

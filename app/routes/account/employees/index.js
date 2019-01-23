@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
+import { computed } from '@ember/object';
 import resource from 'granite/mixins/route-abstractions/resource';
 // import moment from 'moment';
 
@@ -58,10 +59,7 @@ export default Route.extend(resource, {
     return hash({
       employees:    this._super(...arguments),
       filterModels: hash({
-        employees: this.store.query('employee', {
-          select: '_id name jobTitle',
-          sort:   { 'name.last': 1 }
-        }),
+        supervisors: this.get('supervisors'),
         departments: this.store.query('department', {
           select: '_id name',
           sort:   { name: 1 }
@@ -73,6 +71,10 @@ export default Route.extend(resource, {
       })
     });
   },
+
+  supervisors: computed(function () {
+    return this.ajax.request('/api/v1/employees', { data: { $report: 'supervisors' } }).then(response => response.employee);
+  }),
 
   setupController (controller, model) {
     controller.setProperties({
