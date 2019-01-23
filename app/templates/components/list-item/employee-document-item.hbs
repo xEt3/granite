@@ -1,0 +1,98 @@
+{{#if imagePreview}}
+  <div class="ui tiny rounded image">
+    <img src="{{file.url}}" alt="">
+  </div>
+{{else}}
+  {{display/icon-for-file file class="huge"}}
+{{/if}}
+<div class="clearing content">
+  <div class="header">
+    {{#link-to 'account.document' file.id}}
+      {{file.title}}
+      <span class="light text">{{file.extension}}</span>
+    {{/link-to}}
+  </div>
+  <div class="right floated">
+    {{#confirm-modal deleteContext=file.title tagName='span' class="right floated" as |confirm|}}
+      <a href="#" id="action-item__action--delete" {{action (pipe confirm (action 'delete' assignment))}}>
+        <i class="trash icon"></i>
+      </a>
+    {{/confirm-modal}}
+
+    {{#if (not assignment.visibleToEmployee)}}
+      {{#modals/upload-document
+        systemUse=true
+        uploadComplete=(action 'uploadFollowup') as |openUploadModal|
+      }}
+        {{#ui-popup content="Upload a followup document" class="right floated"}}
+          <a href="#" {{action openUploadModal}}>
+            <i class="upload icon"></i>
+          </a>
+        {{/ui-popup}}
+      {{/modals/upload-document}}
+    {{/if}}
+  </div>
+
+  <div class="meta">
+    <div class="ui equal width stackable grid">
+      <div class="left aligned column">
+        <div class="ui small text">
+          <p>Assigned {{time assignment.created}} by {{assignment.creator.fullName}}</p>
+          {{#if assignment.readOn}}
+            <p>Viewed: {{time assignment.readOn}}</p>
+          {{/if}}
+          {{#if assignment.signatureRequired}}
+            <p>
+              {{#if assignment.signedOn}}
+                Signed:
+                {{#ui-popup tagName="span" html=signature position="right center"}}
+                  <a href="#" class="gray-icon" {{action 'openModal'}}>
+                    {{time assignment.signedOn}}
+                  </a>
+                {{/ui-popup}}
+              {{else}}
+                {{assignment.employee.firstName}} has not signed this document yet.
+              {{/if}}
+            </p>
+          {{/if}}
+          {{#each file.tags as |tag|}}
+            <span class="ui tiny label">{{tag}}</span>
+          {{/each}}
+        </div>
+      </div>
+
+      {{#if assignment.followups.length}}
+        <div class="left aligned column">
+          <div class="ui small text">
+            Followed up:
+            <ul>
+              {{#each assignment.followups as |followup|}}
+                <li>
+                  <a href={{followup.url}} target="_blank" rel="noopener" download>
+                    {{time followup.created}}
+                  </a>
+                  by {{followup.creator.fullName}}
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+    <span class="ui small text right floated">Created {{time file.created}}</span>
+  </div>
+</div>
+
+{{#ui-modal name='modal__file-assignment-signature' id=modalId}}
+  <div class="header">
+    {{assignment.employee.fullName}} signature {{#if assignment.file.title}}for {{assignment.file.title}}{{/if}}
+  </div>
+  <div class="content">
+    <img src={{assignment.signature}} alt="">
+  </div>
+  <div class="actions">
+    <button class="ui red button" {{action 'closeModal'}}>
+      Close
+    </button>
+  </div>
+{{/ui-modal}}
