@@ -40,10 +40,11 @@ export default Component.extend(pagination, addEdit, ajaxStatus, {
 
   didReceiveAttrs () {
     this._super(...arguments);
-    let selection = A();
+    let selected = this.get('selected'),
+        selection = A();
 
-    if (this.get('selected')) {
-      selection.addObjects(this.get('selected'));
+    if (selected && !this.get('singleDoc')) {
+      selection.addObjects(selected);
     }
 
     this.set('selectedDocuments', selection);
@@ -78,7 +79,8 @@ export default Component.extend(pagination, addEdit, ajaxStatus, {
         tag = this.get('selectedTag'),
         query = {
           limit,
-          page
+          page,
+          systemUse: false
         },
         previousSearch = this.get('previousSearch'),
         previousTag = this.get('previousTag');
@@ -130,17 +132,29 @@ export default Component.extend(pagination, addEdit, ajaxStatus, {
 
   actions: {
     addDocument (file) {
+      if (this.get('singleDoc')) {
+        this.set('selectedDocument', file);
+        return;
+      }
       this.get('selectedDocuments').addObject(file);
       this.refreshModal();
     },
 
     removeDocument (file) {
+      if (this.get('singleDoc')) {
+        this.set('selectedDocument', null);
+        return;
+      }
       this.get('selectedDocuments').removeObject(file);
       this.refreshModal();
     },
 
     assign () {
       $(this.get('modalId')).modal('hide');
+      if (this.get('singleDoc')) {
+        this.get('onSelected')(this.get('selectedDocument'));
+        return;
+      }
       this.get('onSelected')(this.get('selectedDocuments'));
     },
 
@@ -200,6 +214,8 @@ export default Component.extend(pagination, addEdit, ajaxStatus, {
 
       if (autoTag) {
         file.set('tags', Array.isArray(autoTag) ? autoTag : [ autoTag ]);
+      } else {
+        file.set('tags', []);
       }
 
       try {

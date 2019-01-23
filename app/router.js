@@ -88,6 +88,9 @@ Router.map(function () {
           this.route('settings');
         });
         this.route('edit-picture');
+        this.route('documents', function() {
+          this.route('new');
+        });
       });
       this.route('onboard', function () {
         this.route('index', { path: '/start' });

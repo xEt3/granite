@@ -18,7 +18,7 @@
       <div class="menu">
         {{#each model as |employee|}}
           <div class="item" data-value="{{map-value mapper employee}}">
-            {{employee.fullName}} - <span class="light text">{{employee.jobTitle}}</span>
+            {{employee.fullName}}{{#if employee.jobTitle}} - <span class="light text">{{employee.jobTitle}}</span>{{/if}}
           </div>
         {{/each}}
       </div>

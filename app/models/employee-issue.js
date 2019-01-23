@@ -12,11 +12,11 @@ export default Model.extend({
     async:   false,
     inverse: null
   }),
-  employee:          belongsTo('employee', { inverse: null }),
-  excludedEmployees: hasMany('employee', { inverse: null }),
-  severity:          attr('string'),
-  resolvedOn:        attr('date'),
-  type:              attr('string'),
+  employee:      belongsTo('employee', { inverse: null }),
+  excludedUsers: hasMany('company-user', { inverse: null }),
+  severity:      attr('string'),
+  resolvedOn:    attr('date'),
+  type:          attr('string'),
 
   created: attr('date', { defaultValue: () => new Date() }),
 

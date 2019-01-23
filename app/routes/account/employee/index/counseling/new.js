@@ -16,7 +16,7 @@ export default Route.extend(add, {
     return RSVP.hash({
       issue:      this._super(...arguments),
       issueTypes: this.getIssueTypes(),
-      employees:  this.get('employees')
+      users:      this.get('users')
     });
   },
 
@@ -31,7 +31,7 @@ export default Route.extend(add, {
     controller.setProperties({
       model:      model.issue,
       issueTypes: model.issueTypes,
-      employees:  model.employees
+      users:      model.users
     });
   },
 
@@ -45,14 +45,9 @@ export default Route.extend(add, {
     .then(res => A(issueTypes.concat(res)).uniq());
   },
 
-  employees: computed(function () {
-    let $nin = [ this.modelFor('account.employee').get('id') ],
-        user = this.get('auth.user');
-
-    if (user.get('employee.id')) {
-      $nin.push(user.get('employee.id'));
-    }
-
-    return this.store.query('employee', { _id: { $nin } });
+  users: computed(function () {
+    // users cannot exclude themselves
+    let $nin = [ this.get('auth.user.id') ];
+    return this.store.query('company-user', { _id: { $nin } });
   })
 });
