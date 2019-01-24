@@ -14,10 +14,6 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
   missingRelationship:   computed.reads('validation.missingRelationship'),
   missingRequiredFields: computed.reads('validation.isRequired'),
   highlightCell:         computed.or('missingRelationship', 'missingRequiredFields'),
-  
-    //if cell is a relationship cell, and cell has a value in it, and the potentialDataForCell is undefined
-    return field.isRelationship && column && !potentialDataForCell ? field.path : null;
-  }),
 
   hasEnumInvalidation: computed('guessField.enums.[]', function () {
     if (this.guessedField.enums) {
