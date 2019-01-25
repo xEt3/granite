@@ -140,6 +140,7 @@ Router.map(function () {
     this.route('asset', { path: '/asset/:id' }, function () {
       this.route('index', { path: '/stock' }, function () {
         this.route('new');
+        this.route('edit', { path: 'edit/:asset_item_id' });
       });
       this.route('information');
       this.route('documents');
