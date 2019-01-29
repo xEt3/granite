@@ -14,7 +14,7 @@ export default Route.extend({
     return ajax.request(`/api/v1/job-openings/${jobOpening.get('id')}?$report=summary`)
     .then(results => {
       const _results = A(results);
-      return {
+      return _results && _results.length > 0 ? {
         labels:   _results.map(x => moment(x._id).format('M/D/YY')),
         datasets: [{
           label:           'Total Applied',
@@ -29,7 +29,7 @@ export default Route.extend({
           backgroundColor: 'rgb(44, 195, 147)',
           borderColor:     'rgb(44, 195, 147)'
         }].toArray()
-      };
+      } : false;
     });
   },
 
