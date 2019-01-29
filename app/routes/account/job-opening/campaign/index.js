@@ -28,8 +28,13 @@ export default Route.extend({
           fill:            false,
           backgroundColor: 'rgb(44, 195, 147)',
           borderColor:     'rgb(44, 195, 147)'
-        }]
+        }].toArray()
       };
     });
+  },
+
+  setupController (controller, model) {
+    console.log(model);
+    controller.set('model', model);
   }
 });
