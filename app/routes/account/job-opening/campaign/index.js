@@ -34,7 +34,6 @@ export default Route.extend({
   },
 
   setupController (controller, model) {
-    console.log(model);
     controller.set('model', model);
   }
 });
