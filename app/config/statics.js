@@ -248,6 +248,8 @@ const jobTypes = [
   null
 ];
 
+const gender = [ 'Male', 'Female', 'Other' ];
+
 const formTypes = [{
   display: 'Freeform Input',
   icon:    'text cursor',
@@ -305,6 +307,7 @@ const recordDisplayPropertyMap = {
 };
 
 export {
+  gender,
   issueTypes,
   suffixes,
   states,
