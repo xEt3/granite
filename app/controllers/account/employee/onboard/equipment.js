@@ -35,7 +35,7 @@ export default Controller.extend(ajaxStatus, {
     return groups;
   }),
 
-  splitAssets: computed('assignableAssets.[]', 'jobSuggestedAssets', function () {
+  splitAssets: computed('assignableAssets.[]', 'jobSuggestedAssets.[]', function () {
     let jobSuggestedAssets = this.get('jobSuggestedAssets'),
         assignableAssets = this.get('assignableAssets'),
         suggestedAssets = A(),
@@ -129,8 +129,11 @@ export default Controller.extend(ajaxStatus, {
       }
     },
 
-    newAssetCategory () {
-      this.send('refresh');
+    newAssetCategory (asset) {
+      this.get('assignableAssets').addObject({
+        asset,
+        stock: null
+      });
     },
 
     closeAssetModalAndTransition (link, id) {
