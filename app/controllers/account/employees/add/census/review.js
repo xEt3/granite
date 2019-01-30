@@ -117,8 +117,8 @@ export default Controller.extend(ajaxStatus, {
     const data = this.get('model.data'),
           [ guesses, orig ] = data;
 
-    return guesses.map((path = '', i) =>
-      path.indexOf('customFields') < 0 ? path : `${path}.${orig[i]}`);
+    return guesses.map((path, i) =>
+      (path || '').indexOf('customFields') < 0 ? path : `${path}.${orig[i]}`);
   }).volatile(),
 
   actions: {
