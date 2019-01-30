@@ -5,6 +5,7 @@
 </hgroup>
 <div class="ui form">
   <div class="field">
+    <div class="ui divider"></div>
     <label for="basenode-selection">Select a supervisor</label>
     {{#ui-dropdown id='basenode-selection' class='search selection' selected=selectedNode forceSelection=false onChange=(action (mut selectedNode)) as |execute mapper|}}
       <div class="default text">Select an employee</div>
@@ -19,7 +20,6 @@
     {{/ui-dropdown}}
   </div>
 </div>
-<div class="ui divider"></div>
 {{#if baseNode}}
   {{visualizations/organization-tree baseNode=baseNode}}
 {{/if}}
