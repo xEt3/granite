@@ -6,7 +6,7 @@ import { computed } from '@ember/object';
 export default Model.extend({
   identifier:   attr('string'),
   assignments:  hasMany('asset-assignment'),
-  customFields: attr(),
+  customFields: attr({ defaultValue: () => ({}) }),
 
   asset:     belongsTo('asset'),
   creator:   belongsTo('company-user'),

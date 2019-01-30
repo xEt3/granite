@@ -1,15 +1,16 @@
 import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
-import add from 'granite/mixins/route-abstractions/add';
+import edit from 'granite/mixins/route-abstractions/edit';
 
-export default Route.extend(add, {
+export default Route.extend(edit, {
   titleToken: 'Edit Asset',
   modelName:  'asset-item',
+  segmentKey: 'asset_item_id',
 
-  model (params) {
+  model () {
     return RSVP.hash({
-      item:   this.store.find('asset-item', params.asset_item_id),
-      assest: this.modelFor('account.asset')
+      item:  this._super(...arguments),
+      asset: this.modelFor('account.asset')
     });
   },
 
