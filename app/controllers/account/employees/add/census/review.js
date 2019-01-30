@@ -97,7 +97,7 @@ export default Controller.extend(ajaxStatus, {
   }),
 
   availableFields: computed('model.availableFields.[]', function () {
-    return (this.get('model.availableFields') || []).map(({ path, format, required }) => {
+    return (this.get('model.availableFields') || []).map(({ path, format, enums, required }) => {
       let label = `${this.convertPathToLabel(path)}${format ? ' - ' + format : ''}`;
 
       if (path === 'customFields') {
@@ -108,6 +108,7 @@ export default Controller.extend(ajaxStatus, {
         path,
         label,
         required,
+        enums,
         isRelationship: format === 'lookup or id' ? true : false
       };
     }).sortBy('label');

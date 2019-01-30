@@ -13,17 +13,21 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
 
   missingRelationship:   computed.reads('validation.missingRelationship'),
   missingRequiredFields: computed.reads('validation.isRequired'),
-  highlightCell:         computed.or('missingRelationship', 'missingRequiredFields'),
+  highlightCell:         computed.or('missingRelationship', 'missingRequiredFields', 'hasEnumInvalidation'),
 
-  hasEnumInvalidation: computed('guessField.enums.[]', function () {
-    if (this.guessedField.enums) {
-      const enums = this.guessedField.enums,
-            enumStr = [ ...enums, enums.indexOf(null) > -1 ? 'or leave this field blank' : null ].filter(Boolean).join(', ');
+  hasEnumInvalidation: computed('guessedField.enums.[]', function () {
+    let guessedField = this.get('guessedField');
 
-      let matchingEnum = enums.includes(this.get('column'));
-
-      return matchingEnum ? false : `Please use one of these: ${enumStr}`;
+    if (!guessedField || !guessedField.enums) {
+      return false;
     }
+
+    const enums = guessedField.enums,
+          enumStr = [ ...enums, enums.indexOf(null) > -1 ? 'or leave this field blank' : null ].filter(Boolean).join(', ');
+
+    let matchingEnum = enums.includes(this.get('column'));
+
+    return matchingEnum ? false : `Please use one of these: ${enumStr}`;
   }),
 
   popupMessage: computed('missingRelationship', function () {
