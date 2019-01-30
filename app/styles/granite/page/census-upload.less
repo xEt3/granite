@@ -18,6 +18,43 @@
   color: @granite-grey !important;
 }
 
+
+.arrow-overflow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: .7;
+  cursor: pointer;
+  width: 5em;
+  box-shadow: inset -40px 0 40px -29px @granite-grey;
+}
+
+.ui.raised.very.padded.fluid.container {
+  position: relative;
+}
+
+.census__table > table.ui.table {
+  margin: 0;
+}
+
+.ui.table thead tr > th:last-child {
+  background-color: #fafafb;
+  position: relative;
+  z-index: 3;
+}
+
+.ui.table tr:nth-child(odd) td:last-child {
+  background-color: white;
+  position: relative;
+  z-index: 3;
+}
+
+.ui.table tr:nth-child(even) td:last-child {
+  background-color: #fafafb;
+  position: relative;
+  z-index: 3;
+}
+
 .census__highlight-row {
   background: lighten(@granite-red, 15%) !important;
 }
@@ -26,7 +63,6 @@
   background: @granite-red !important;
   color: white !important;
 
-  a {
+ a {
     color: white !important;
   }
-}
