@@ -11,5 +11,10 @@
     <i class="exclamation circle icon"></i>
   {{/ui-popup}}
 {{else}}
+  {{#if hasEnumInvalidation}}
+    {{#ui-popup tagName='span' content=hasEnumInvalidation position="right center"}}
+      <i class="exclamation circle icon"></i>
+    {{/ui-popup}}
+  {{/if}}
   {{column}}
 {{/if}}
