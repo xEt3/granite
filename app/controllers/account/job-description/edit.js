@@ -3,7 +3,6 @@ import { computed } from '@ember/object';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import { jobCategories } from 'granite/config/statics';
 
-
 export default Controller.extend(addEdit, {
   jobCategories,
   transitionWithModel: true,

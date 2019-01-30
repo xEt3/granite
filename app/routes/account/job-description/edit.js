@@ -2,17 +2,17 @@ import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import add from 'granite/mixins/route-abstractions/add';
+import edit from 'granite/mixins/route-abstractions/edit';
 
-export default Route.extend(add, {
-  titleToken: 'Edit Description',
-  auth:       service(),
+export default Route.extend(edit, {
+  titleToken:      'Edit Description',
+  auth:            service(),
+  bypassModelHook: true,
+
 
   model () {
-    let jobDescription = this.modelFor('account.job-description');
-
     return RSVP.hash({
-      job:         this.store.find('job', jobDescription.id),
+      job:         this._super(...arguments),
       assets:      this.store.findAll('asset'), // not so cached
       departments: this.get('departments') // cached
     });
