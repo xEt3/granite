@@ -38,10 +38,10 @@
 
 <form {{action "importRecords" on="submit"}}>
   <div class="ui raised very padded fluid container">
-    <div class="responsive-table census__table">
+    {{#display/visual-overflow-table class="responsive-table census__table"}}
       <table class="ui striped celled table">
         <thead>
-          <tr class="guess-fields-row">
+          <tr class="guess-fields-row overflow">
             <th>
               <div class="ui red ribbon label">
                 {{#ui-popup content='We have attempted to guess the columns that you uploaded. This row represents our guesses.'}}
@@ -113,7 +113,7 @@
           {{/each}}
         </tbody>
       </table>
-    </div>
+    {{/display/visual-overflow-table}}
 
     <div class="ui divider"></div>
 

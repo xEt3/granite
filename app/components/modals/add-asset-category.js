@@ -38,10 +38,10 @@ export default Component.extend({
 
   actions: {
     save () {
-      this.get('newAsset').save().then(() => {
+      this.get('newAsset').save().then(asset => {
         this.setProperties({ newAsset: null });
         this.closeModal();
-        this.get('newAssetCategory')();
+        this.get('newAssetCategory')(asset);
       });
     },
 

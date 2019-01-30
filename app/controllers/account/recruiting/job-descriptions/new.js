@@ -30,7 +30,7 @@ export default Controller.extend(addEdit, {
     path:       'title'
   }, {
     label: 'Job Description',
-    type:  'textarea',
+    type:  'richtext',
     path:  'description'
   }, {
     label:       'Category',

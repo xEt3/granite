@@ -88,7 +88,7 @@ Router.map(function () {
           this.route('settings');
         });
         this.route('edit-picture');
-        this.route('documents', function() {
+        this.route('documents', function () {
           this.route('new');
         });
       });
