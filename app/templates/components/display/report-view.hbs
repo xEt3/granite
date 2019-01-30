@@ -1,15 +1,12 @@
 <thead>
   <tr>
-    {{!-- {{#each data[0] as |header|}}
+    {{#each headers as |header|}}
       <th>{{header}}</th>
-    {{/each}} --}}
-    <th>Name</th>
-    <th>Age</th>
+    {{/each}}
   </tr>
 </thead>
 <tbody>
-  {{!-- EACH HERE TO PASS DATA TO ROW COMPONENT --}}
-  {{!-- {{#each data as |row|}} --}}
-    {{display/report-view-row row}}
-  {{!-- {{/each}} --}}
+  {{#each bodyData as |row|}}
+    {{display/report-view-row row headers.length}}
+  {{/each}}
 </tbody>

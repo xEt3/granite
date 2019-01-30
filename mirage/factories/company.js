@@ -13,6 +13,7 @@ export default Factory.extend({
   addressState:          faker.address.state(),
   addressZipCode:        faker.address.zipCode(),
   urlPrefix:             faker.random.word,
+  collectEEO:            true,
   firstStepsCompletedOn: moment().subtract(1, 'hour').toISOString(),
 
   firstStepsCompleted: [
