@@ -134,7 +134,7 @@ export default Controller.extend(addEdit, {
         });
       } else {
         this.set('customPipeline', this.store.createRecord('recruiting-pipeline', {
-          company:     this.get('auth.user.company.id'),
+          company:     this.get('auth.user.company'),
           jobOpenings: [ this.get('model') ],
           stages:      this.get('defaultPipeline.stages')
         }));

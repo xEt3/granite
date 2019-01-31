@@ -38,7 +38,7 @@ module('Acceptance | employee', function (hooks) {
     assert.equal(findAll('.transition div.item').length, 2, 'resend and edit are on page');
     assert.dom('div.text-danger').exists();
     assert.dom('div.ui.pointing.menu').exists();
-    assert.equal(findAll('div.ui.pointing.menu > a.item').length, [ 4 ], 'all the menu items are on page ');
+    assert.equal(findAll('div.ui.pointing.menu > a.item').length, 5, 'all the menu items are on page ');
     assert.dom('div.center.text-white > div').hasText('Edit Picture');
     assert.dom(`a[href="tel:${employee.phone}"]`).exists();
     assert.dom(`a[href="mailto:${employee.email}"]`).exists();

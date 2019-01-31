@@ -7,7 +7,7 @@ module('Acceptance | custom pipeline settings', function (hooks) {
   setupApplicationTest(hooks);
 
   test('toggling custom pipeline displays default stages/ removes stages', async function (assert) {
-    let { company, companyUser } = await authenticate.call(this, server),
+    let { company } = await authenticate.call(this, server),
         defaultPipeline = server.create('recruiting-pipeline', { company: company.id }),
         job = server.create('job', { company: company.id }),
         jobOpening = server.create('job-opening', {
@@ -17,29 +17,22 @@ module('Acceptance | custom pipeline settings', function (hooks) {
 
     await visit(`/account/recruiting/job-opening/${jobOpening.id}/settings`);
 
-    let done = assert.async();
-    setTimeout(() => {
-      done();
-    }, 10000);
+    assert.equal(currentURL(), `/account/recruiting/job-opening/${jobOpening.id}/settings`, 'on settings page for campaign');
+    assert.notOk(find('div.custom-pipeline-toggle > div.toggle.checkbox.checked'), 'custom pipeline toggle is not checked before clicking');
 
-    assert.equal(1, 1, 'test assertion');
+    await click('div.custom-pipeline-toggle > div.toggle.checkbox');
 
-    // assert.equal(currentURL(), `/account/recruiting/job-opening/${jobOpening.id}/settings`, 'on settings page for campaign');
-    // assert.notOk(find('div.custom-pipeline-toggle > div.toggle.checkbox.checked'), 'custom pipeline toggle is not checked before clicking');
-    //
-    // await click('div.custom-pipeline-toggle > div.toggle.checkbox');
-    //
-    // let stagesDisplayed = findAll('li.stage-list__card');
-    // assert.ok(find('div.custom-pipeline-toggle > div.toggle.checkbox.checked'), 'custom pipeline toggle is checked after clicking');
-    // assert.equal(stagesDisplayed.length, defaultPipeline.stages.length, 'correct number of stages are shown initially');
-    // defaultPipeline.stages.forEach((stage, i) => {
-    //   assert.dom(stagesDisplayed[i]).includesText(stage.name, `Stage with name ${stage.name} is displayed`);
-    // });
-    //
-    // await click('div.custom-pipeline-toggle > div.toggle.checkbox');
-    //
-    // assert.notOk(find('div.custom-pipeline-toggle > div.toggle.checkbox.checked'), 'custom pipeline toggle is not checked anymore');
-    // assert.equal(findAll('li.stage-list__card').length, 0, 'no stages displayed any more');
+    let stagesDisplayed = findAll('li.stage-list__card');
+    assert.ok(find('div.custom-pipeline-toggle > div.toggle.checkbox.checked'), 'custom pipeline toggle is checked after clicking');
+    assert.equal(stagesDisplayed.length, defaultPipeline.stages.length, 'correct number of stages are shown initially');
+    defaultPipeline.stages.forEach((stage, i) => {
+      assert.dom(stagesDisplayed[i]).includesText(stage.name, `Stage with name ${stage.name} is displayed`);
+    });
+
+    await click('div.custom-pipeline-toggle > div.toggle.checkbox');
+
+    assert.notOk(find('div.custom-pipeline-toggle > div.toggle.checkbox.checked'), 'custom pipeline toggle is not checked anymore');
+    assert.equal(findAll('li.stage-list__card').length, 0, 'no stages displayed any more');
   });
 
   test('saving custom pipeline works', async function (assert) {

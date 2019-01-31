@@ -1,14 +1,17 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import { hash } from 'rsvp';
+import { resolve } from 'rsvp';
 
 export default Route.extend({
   auth: service(),
 
   model () {
-    return hash({
-      parentModel: this._super(...arguments),
-      company:     this.auth.get('user.company')
+    return resolve(this.get('auth.user'))
+    .then(user => {
+      return {
+        company:     user.company,
+        parentModel: this._super(...arguments)
+      };
     });
   },
 
