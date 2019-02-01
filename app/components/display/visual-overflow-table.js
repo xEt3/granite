@@ -8,7 +8,7 @@ export default Component.extend({
   },
 
   setOverflow () {
-    let table = this.$()[0];
+    let table = document.querySelector('.ui.striped.celled.table');
     let view = table.scrollHeight + 'px';
 
     this.set('overflow', `height:${view}`);
