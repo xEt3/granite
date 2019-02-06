@@ -2,14 +2,15 @@
 {{notification-container notifications=notifications position="bottom"}}
 
 {{display/subscription-banner
-  transitionToSubscription=(action 'transitionToSubscription')
+  transitionToSubscription=(action "transitionToSubscription")
   accountLocked=subscription.accountLocked}}
 
 <div class="ui main">
   {{#unless topLevel}}
-    {{elements/account-navigation links=accountNavigationItems ui_context='body .ember-view .main'}}
+    {{elements/account-navigation links=accountNavigationItems ui_context="body .ember-view .main"}}
   {{/unless}}
-  <div class="ember-view ui fluid container {{unless topLevel 'in__application pusher'}} {{if randomColorText 'main__dark-text'}}" style={{backdrop}}>
+  {{! template-lint-disable no-inline-styles }}
+  <div class="ember-view ui fluid container {{unless topLevel "in__application pusher"}} {{if randomColorText "main__dark-text"}}" style={{backdrop}}>
     {{#if topLevel}}
       {{elements/x-navigation transparent=navTransparent topLevel=topLevel}}
     {{/if}}
@@ -22,5 +23,5 @@
   </div>
 </div>
 {{#if (and auth.isExpiring (not auth.isExpired))}}
-  {{confirm-modal confirmOnRender=true confirmContent='Your session is expiring. Would you like to continue?' onResponse=(action "authResponse")}}
+  {{confirm-modal confirmOnRender=true confirmContent="Your session is expiring. Would you like to continue?" onResponse=(action "authResponse")}}
 {{/if}}

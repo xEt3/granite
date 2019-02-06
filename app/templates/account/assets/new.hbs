@@ -9,7 +9,7 @@
           <i class="dropdown icon"></i>
           <div class="menu">
             {{#each icons as |icon|}}
-              <div class="item" data-value="{{icon}}">
+              <div class="item" data-value={{icon}}>
                 <i class="{{icon}} icon"></i>
               </div>
             {{/each}}
@@ -28,11 +28,11 @@
       {{#input/document-selection-modal
         title="Assign asset documents"
         selected=model.documents
-        autoTag='Asset'
+        autoTag="Asset"
         onSelected=(action (mut model.documents))
         as |execute|
       }}
-        <button class="ui basic button" {{action execute 'selectDocuments'}}>
+        <button class="ui basic button" {{action execute "selectDocuments"}}>
           <i class="folder icon"></i>
           Add asset documents
           {{#if model.documents.length}}
@@ -44,7 +44,7 @@
     <div class="field center aligned text">
       <div class="ui toggle checkbox">
         <input type="checkbox">
-        <label>Can {{if model.name model.name 'these assets'}} be shared by employees?</label>
+        <label>Can {{if model.name model.name "these assets"}} be shared by employees?</label>
       </div>
     </div>
     <div class="ui divider"></div>

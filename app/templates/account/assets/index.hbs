@@ -5,13 +5,13 @@
       Company Assets
     </h1>
 
-    <h3>{{#link-to 'account.assets.new' class="right floated"}}<i class="plus icon"></i>{{/link-to}}</h3>
+    <h3>{{#link-to "account.assets.new" class="right floated"}}<i class="plus icon"></i>{{/link-to}}</h3>
   </hgroup>
   <div class="ui divider"></div>
 
   <div class="ui divided link items">
     {{#each model as |asset|}}
-      {{#link-to 'account.asset' asset class="item"}}
+      {{#link-to "account.asset" asset class="item"}}
         {{list-item/asset-item asset=asset}}
       {{/link-to}}
     {{else}}

@@ -1,5 +1,5 @@
-{{#if (not (and (not field.showLabel) (or (eq field.type 'checkbox') (eq field.type 'toggle'))))}}
-  <label for="{{computedClassName}}" class="{{field.labelClass}}">
+{{#if (not (and (not field.showLabel) (or (eq field.type "checkbox") (eq field.type "toggle"))))}}
+  <label for={{computedClassName}} class={{field.labelClass}}>
     {{field.label}}
     {{#if (and field.helpText field.indirectHelp)}}
       {{#ui-popup content=field.helpText class="right floated"}}
@@ -13,7 +13,7 @@
   {{/if}}
 {{/if}}
 
-{{#if (eq field.type 'select')}}
+{{#if (eq field.type "select")}}
   {{#ui-dropdown
     id=computedClassName
     class=inputClass
@@ -32,7 +32,7 @@
     <i class="dropdown icon"></i>
     <div class="menu">
       {{#each (get this field.contentPath) as |item|}}
-        <div class="item" data-value="{{map-value mapper (if field.valuePath (get item field.valuePath) item)}}">
+        <div class="item" data-value={{map-value mapper (if field.valuePath (get item field.valuePath) item)}}>
           {{#if field.displayKey}}
             {{get item field.displayKey}}
           {{else}}
@@ -42,33 +42,33 @@
       {{/each}}
     </div>
   {{/ui-dropdown}}
-{{else if (eq field.type 'textarea')}}
+{{else if (eq field.type "textarea")}}
   {{textarea
     value=value
     id=computedClassName
     rows=rows
     spellcheck="true"}}
-{{else if (eq field.type 'richtext')}}
+{{else if (eq field.type "richtext")}}
   {{input/rich-text
     value=value
     onChange=(action (mut value))
   }}
 
-{{else if (or (eq field.type 'checkbox') (eq field.type 'toggle'))}}
+{{else if (or (eq field.type "checkbox") (eq field.type "toggle"))}}
   {{ui-checkbox
     id=computedClassName
     class=inputClass
     label=(or field.placeholder field.label)
     checked=(readonly value)
     onChange=(action (mut value))}}
-{{else if (eq field.type 'date')}}
+{{else if (eq field.type "date")}}
   {{#if field.inputAttrs.inline}}
     {{#ui-calendar
-      class=inputClass type='date' inline=true onChange=(action (mut value))}}
+      class=inputClass type="date" inline=true onChange=(action (mut value))}}
     {{/ui-calendar}}
   {{else}}
     {{#ui-calendar
-      type='date'
+      type="date"
       class=inputClass
       onChange=(action (mut value))}}
       <div class="ui calendar" id={{computedClassName}}>
@@ -79,7 +79,7 @@
       </div>
     {{/ui-calendar}}
   {{/if}}
-{{else if (eq field.type 'radio')}}
+{{else if (eq field.type "radio")}}
   <div class="grouped inline fields">
     {{#each (get this field.contentPath) as |item|}}
       <div class="field">

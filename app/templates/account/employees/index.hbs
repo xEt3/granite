@@ -2,7 +2,7 @@
   user=auth.user
   steps=intros
   start-if=true
-  hintKey='employees-index'}}
+  hintKey="employees-index"}}
 
 {{#if showFilters}}
   {{#display/filter-pane
@@ -16,16 +16,16 @@
           <button class="negative ui button small text" {{action "resetFilters"}}>Reset All</button>
         </div>
         <div class="item">
-          <a href="#" class="light text" {{action toggleProperty 'showFilters'}}>
+          <a href="#" class="light text" {{action toggleProperty "showFilters"}}>
             <i class="remove icon"></i>
           </a>
         </div>
       </div>
     </h2>
 
-    {{#filter.section 'Supervisor'}}
+    {{#filter.section "Supervisor"}}
       {{#filter.selectControl
-        'supervisor'
+        "supervisor"
         supervisor
         searchable=true
         model=filterModels.supervisors as |item|
@@ -34,32 +34,32 @@
       {{/filter.selectControl}}
     {{/filter.section}}
 
-    {{#filter.section 'Department'}}
+    {{#filter.section "Department"}}
       {{filter.selectControl
-        'department'
+        "department"
         department
         searchable=true
         model=filterModels.departments
-        itemTextPath='name'}}
+        itemTextPath="name"}}
     {{/filter.section}}
 
-    {{#filter.section 'Location'}}
+    {{#filter.section "Location"}}
       {{filter.selectControl
-        'location'
+        "location"
         location
         searchable=true
         model=filterModels.locations
-        itemTextPath='name'}}
+        itemTextPath="name"}}
     {{/filter.section}}
 
-    {{#filter.section 'Hire Date' resets=(array 'hireDateStart' 'hireDateEnd')}}
-      {{#filter.control 'hireDate' (or hireDateStart hireDateEnd) class="two fields"}}
+    {{#filter.section "Hire Date" resets=(array "hireDateStart" "hireDateEnd")}}
+      {{#filter.control "hireDate" (or hireDateStart hireDateEnd) class="two fields"}}
         {{#ui-calendar class="ui field" type="date" container="body" startMode="year" onChange=(action (mut hireDateStart))}}
           <label for="ui-calendar-date-only">Start Date</label>
           <div class="ui calendar" id="ui-calendar-date-only">
             <div class="ui input left icon">
               <i class="calendar icon"></i>
-              <input type="text" value={{if hireDateStart (time hireDateStart 'MMMM D, YYYY') hireDateStart}} placeholder="Select or type a date">
+              <input type="text" value={{if hireDateStart (time hireDateStart "MMMM D, YYYY") hireDateStart}} placeholder="Select or type a date">
             </div>
           </div>
         {{/ui-calendar}}
@@ -68,32 +68,32 @@
           <div class="ui calendar" id="ui-calendar-date-only">
             <div class="ui input left icon">
               <i class="calendar icon"></i>
-              <input type="text" value={{if hireDateEnd (time hireDateEnd 'MMMM D, YYYY') hireDateEnd}} placeholder="Select or type a date">
+              <input type="text" value={{if hireDateEnd (time hireDateEnd "MMMM D, YYYY") hireDateEnd}} placeholder="Select or type a date">
             </div>
           </div>
         {{/ui-calendar}}
       {{/filter.control}}
     {{/filter.section}}
 
-    {{#filter.section 'Additional Filters'}}
+    {{#filter.section "Additional Filters"}}
       <div class="ui three fields">
         {{filter.toggleControl
-          'onboarding'
+          "onboarding"
           onboarding
-          label='Is Onboarding'
-          class='center aligned text field'}}
+          label="Is Onboarding"
+          class="center aligned text field"}}
 
         {{filter.toggleControl
-          'offboarding'
+          "offboarding"
           offboarding
-          label='Is Offboarding'
-          class='center aligned text field'}}
+          label="Is Offboarding"
+          class="center aligned text field"}}
 
         {{filter.toggleControl
-          'terminated'
+          "terminated"
           terminated
-          label='Is Terminated'
-          class='center aligned text field'}}
+          label="Is Terminated"
+          class="center aligned text field"}}
       </div>
     {{/filter.section}}
   {{/display/filter-pane}}
@@ -108,16 +108,16 @@
     <div class="right aligned text floated menu__actions">
       <h3 class="ui right floated header">
         {{#ui-popup position="left center" content="Filters"}}
-          <a href="#" class="{{if showFilters 'text-red'}}" {{action toggleProperty 'showFilters'}}>
-            <i class="{{if showFilters 'remove' 'filter'}} icon"></i>
+          <a href="#" class={{if showFilters "text-red"}} {{action toggleProperty "showFilters"}}>
+            <i class="{{if showFilters "remove" "filter"}} icon"></i>
           </a>
         {{/ui-popup}}
       </h3>
       {{#ui-dropdown class="right floated top pointing inline"}}
         <h3 class="ui inline header"><a href="#" id="add-employee-trigger"><i class="plus icon"></i></a></h3>
         <div class="menu">
-          {{#link-to 'account.employees.add.new' class="item"}}<i class="user icon"></i>One Employee{{/link-to}}
-          {{#link-to 'account.employees.add.census' class="item"}}<i class="users icon"></i>Multiple Employees{{/link-to}}
+          {{#link-to "account.employees.add.new" class="item"}}<i class="user icon"></i>One Employee{{/link-to}}
+          {{#link-to "account.employees.add.census" class="item"}}<i class="users icon"></i>Multiple Employees{{/link-to}}
         </div>
       {{/ui-dropdown}}
     </div>

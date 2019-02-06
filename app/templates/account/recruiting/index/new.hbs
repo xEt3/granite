@@ -3,7 +3,7 @@
     <h1 class="ui header left floated">
       New Position
     </h1>
-    <h4 class="right floated">{{#link-to 'account.recruiting.job-descriptions.new'}}Add a job description...{{/link-to}}</h4>
+    <h4 class="right floated">{{#link-to "account.recruiting.job-descriptions.new"}}Add a job description...{{/link-to}}</h4>
   </hgroup>
   <div class="ui divider"></div>
 
@@ -13,7 +13,7 @@
     this
     working=working
     submitClass="huge fluid green"
-    onsubmit=(action 'save' model)
+    onsubmit=(action "save" model)
     disabled=(or (not model.name) (not model.job))
   }}
     Save and Continue

@@ -12,7 +12,7 @@
       </thead>
       <tbody>
         {{#each-in model.customFields as |key value|}}
-          {{tables/custom-field key=key value=value onValueChange=(action 'editValue') onDelete=(action 'deleteCustomField')}}
+          {{tables/custom-field key=key value=value onValueChange=(action "editValue") onDelete=(action "deleteCustomField")}}
         {{/each-in}}
 
         {{#if adding}}

@@ -28,7 +28,7 @@
           <i class="dropdown icon"></i>
           <div class="menu">
             {{#each suffixes as |suffix|}}
-              <div class="item" data-value="{{suffix}}">
+              <div class="item" data-value={{suffix}}>
                 {{suffix}}
               </div>
             {{/each}}
@@ -42,7 +42,7 @@
           <i class="dropdown icon"></i>
           <div class="menu">
             {{#each gender as |gender|}}
-              <div class="item" data-value="{{gender}}">
+              <div class="item" data-value={{gender}}>
                 {{gender}}
               </div>
             {{/each}}
@@ -56,7 +56,7 @@
       </div>
       <div class="field">
         <label for="employee-phone">Phone Number</label>
-        {{masked-input type="tel" placeholder="Employee Phone #" id="employee-phone" mask="(111) 111-1111" on-change=(action (mut model.phone) value='target.value')}}
+        {{masked-input type="tel" placeholder="Employee Phone #" id="employee-phone" mask="(111) 111-1111" on-change=(action (mut model.phone) value="target.value")}}
       </div>
       <div class="field">
         <label for="email">Email</label>
@@ -64,7 +64,7 @@
       </div>
       <div class="field">
         <label for="employeeNumber">Employee Number</label>
-        {{validated-input model=model valuePath='employeeNumber' placeholder="Employee Number" id="employee-number"}}
+        {{validated-input model=model valuePath="employeeNumber" placeholder="Employee Number" id="employee-number"}}
       </div>
     </div>
 

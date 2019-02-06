@@ -2,7 +2,7 @@
   <h2 class="ui header">History Report</h2>
   <h4 class="ui center aligned header">
     {{#ui-popup content="Switch to timeline view" position="top center"}}
-      {{#link-to 'account.employee.index.history'}}<i class="circle icon"></i>Timeline View{{/link-to}}
+      {{#link-to "account.employee.index.history"}}<i class="circle icon"></i>Timeline View{{/link-to}}
     {{/ui-popup}}
   </h4>
 
@@ -10,12 +10,12 @@
     <div class="two fields">
       <div class="field">
         <label>Filter by Field</label>
-        {{#ui-dropdown class="multiple selection" selected=field onChange=(pipe-action (action 'setReset') (action (mut field))) as |execute mapper|}}
+        {{#ui-dropdown class="multiple selection" selected=field onChange=(pipe-action (action "setReset") (action (mut field))) as |execute mapper|}}
           <div class="default text">Click to select</div>
           <i class="dropdown icon"></i>
           <div class="menu">
             {{#each fields as |f|}}
-              <div class="item" data-value="{{map-value mapper f.value}}">
+              <div class="item" data-value={{map-value mapper f.value}}>
                 {{f.display}}
               </div>
             {{/each}}
@@ -25,12 +25,12 @@
 
       <div class="field">
         <label>Filter by Creator</label>
-        {{#ui-dropdown class="multiple selection" selected=creator onChange=(pipe-action (action 'setReset') (action (mut creator))) as |execute mapper|}}
+        {{#ui-dropdown class="multiple selection" selected=creator onChange=(pipe-action (action "setReset") (action (mut creator))) as |execute mapper|}}
           <div class="default text">Click to select</div>
           <i class="dropdown icon"></i>
           <div class="menu">
             {{#each creators as |c|}}
-              <div class="item" data-value="{{map-value mapper c.id}}">
+              <div class="item" data-value={{map-value mapper c.id}}>
                 {{c.fullName}}
               </div>
             {{/each}}
@@ -42,19 +42,19 @@
 
   <div class="ui divider"></div>
 
-  {{#light-table table height='90vh' class='ui celled striped table' as |t|}}
+  {{#light-table table height="90vh" class="ui celled striped table" as |t|}}
     {{t.head
-      onColumnClick=(action 'onColumnClick')
-      iconAscending='up arrow icon'
-      iconDescending='down arrow icon'
+      onColumnClick=(action "onColumnClick")
+      iconAscending="up arrow icon"
+      iconDescending="down arrow icon"
       fixed=true
     }}
 
     {{#t.body
-      class='light-table__word-break'
+      class="light-table__word-break"
       scrollBuffer=20
       canSelect=false
-      onScrolledToBottom=(action 'onScrolledToBottom')
+      onScrolledToBottom=(action "onScrolledToBottom")
       as |body|
     }}
       {{#if isLoading}}

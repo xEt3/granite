@@ -41,25 +41,25 @@
 
   <div class="card-content__next-schedule">
     {{#if (await nextMeeting)}}
-      Next meeting is {{time-ago (get (await nextMeeting) 'start')}}
+      Next meeting is {{time-ago (get (await nextMeeting) "start")}}
     {{else}}
       Nothing scheduled
     {{/if}}
   </div>
 
   <div class="card-content__application-link card-content__score-container">
-    {{#link-to 'account.job-opening.campaign.job-application' application.id}}Open Application{{/link-to}}
+    {{#link-to "account.job-opening.campaign.job-application" application.id}}Open Application{{/link-to}}
     {{#if application.isScored}}
       {{#display/calc-color application.scoreAbs as |red green|}}
         {{! template-lint-disable }}
-        <span style='color: rgb({{red}}, {{green}}, 0)' class="card-content__score">
+        <span style="color: rgb({{red}}, {{green}}, 0)" class="card-content__score">
           {{application.scoreAbs}}%
         {{! template-lint-enable }}
         </span>
       {{/display/calc-color}}
     {{/if}}
     <span class="card-content__entry-method">
-      {{if application.manualEntry 'Manual Entry' 'From Quartz'}}
+      {{if application.manualEntry "Manual Entry" "From Quartz"}}
     </span>
   </div>
 </div>
@@ -74,7 +74,7 @@
 {{#if application.hired}}
   <div class="ui bottom attached green label">
     <i class="fitted check icon"></i>
-    Marked as hired on {{time application.hiredSetOn 'M/D/YY'}}
+    Marked as hired on {{time application.hiredSetOn "M/D/YY"}}
     {{#if application.hiredSetBy.firstName}}
       by {{application.hiredSetBy.firstName}}
     {{/if}}

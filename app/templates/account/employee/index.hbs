@@ -1,40 +1,40 @@
 <div class="ui container basic segment">
   {{#ui-menu menuClass="pointing"}}
-    {{#link-to 'account.employee.index.index' class="item"}}
+    {{#link-to "account.employee.index.index" class="item"}}
       <i class="list icon"></i>Summary
     {{/link-to}}
-    {{#link-to 'account.employee.index.equipment' class="item"}}
+    {{#link-to "account.employee.index.equipment" class="item"}}
       <i class="mobile icon"></i>Equipment
     {{/link-to}}
-    {{#link-to 'account.employee.index.documents' class="item"}}
+    {{#link-to "account.employee.index.documents" class="item"}}
       <i class="file icon"></i>Documents
     {{/link-to}}
-    {{#link-to 'account.employee.index.history' class="item"}}
+    {{#link-to "account.employee.index.history" class="item"}}
       <i class="history icon"></i>Changes
     {{/link-to}}
-    {{#link-to 'account.employee.index.counseling' class="item"}}
+    {{#link-to "account.employee.index.counseling" class="item"}}
       <i class="folder open icon"></i>Counseling
     {{/link-to}}
     <div class="right menu">
       {{#if model.onboarding}}
-        {{#link-to 'account.employee.onboard' model.id class="item text-blue"}}<i class="wizard icon"></i>Continue Onboarding{{/link-to}}
+        {{#link-to "account.employee.onboard" model.id class="item text-blue"}}<i class="wizard icon"></i>Continue Onboarding{{/link-to}}
       {{/if}}
       {{#if model.offboarding}}
-        {{#link-to 'account.employee.offboard' class="item text-red"}}<i class="wizard icon"></i>Continue Offboarding{{/link-to}}
+        {{#link-to "account.employee.offboard" class="item text-red"}}<i class="wizard icon"></i>Continue Offboarding{{/link-to}}
       {{/if}}
 
       {{#ui-dropdown class="item icon top right pointing"}}
 
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
-          {{#link-to 'account.employee.index.edit' class='item'}}<i class="edit icon"></i>Edit{{/link-to}}
+          {{#link-to "account.employee.index.edit" class="item"}}<i class="edit icon"></i>Edit{{/link-to}}
           {{#unless model.onboarding}}
-            {{#link-to 'account.employee.offboard.index' class='item'}}<i class="cut icon"></i>Offboard Employee...{{/link-to}}
+            {{#link-to "account.employee.offboard.index" class="item"}}<i class="cut icon"></i>Offboard Employee...{{/link-to}}
           {{/unless}}
           {{#if (not model.activatedOn)}}
             <div class="item">
               {{#confirm-modal as |confirmActivation|}}
-                <a href="#" {{action (pipe confirmActivation (action 'resend'))}}>
+                <a href="#" {{action (pipe confirmActivation (action "resend"))}}>
                   <i class="envelope icon"></i>Resend Activation Email...
                   {{#if working}}
                     <div class="ui active dimmer">
@@ -48,7 +48,7 @@
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
             {{#confirm-modal as deleteContext=model.fullName as |confirm|}}
-              <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}><i class="trash icon"></i>Delete Record</a>
+              <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}><i class="trash icon"></i>Delete Record</a>
             {{/confirm-modal}}
           </div>
         </div>
@@ -56,12 +56,12 @@
     </div>
   {{/ui-menu}}
 
-  <div class="ui basic container segment text-white employee-index-container {{unless onSummary 'employee__index-container--minimal'}}">
+  <div class="ui basic container segment text-white employee-index-container {{unless onSummary "employee__index-container--minimal"}}">
     <div class="ui equal width stackable grid container">
       <div class="twelve wide column">
         <h1 class="ui left floated center aligned header employee-header-group">
           {{#ui-dimmer class="ui circular image" onElement=".ui.segment" variation="inverted" duration=(hash show=1500) on="hover"}}
-            {{#link-to 'account.employee.index.edit-picture' class="ui circular segment dimmer hover-circular"}}
+            {{#link-to "account.employee.index.edit-picture" class="ui circular segment dimmer hover-circular"}}
               <div class="content">
                 <div class="center text-white">
                   <div>Edit Picture</div>
@@ -77,7 +77,7 @@
             <div class="sub header text-white">
               {{model.jobTitle}} <br />
               {{#if model.hireDate}}
-                Since {{time model.hireDate 'MMMM YYYY'}}
+                Since {{time model.hireDate "MMMM YYYY"}}
               {{/if}}
             </div>
           </div>

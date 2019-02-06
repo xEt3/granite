@@ -12,8 +12,8 @@
 
   <h3 class="ui header clearfix">
     Slate Payroll Exchange
-    {{#if (contains 'slate' model.linkedServices)}}
-      {{#link-to 'account.import' class="right floated"}}
+    {{#if (contains "slate" model.linkedServices)}}
+      {{#link-to "account.import" class="right floated"}}
         <small><i class="sign in alternate icon"></i>Import data from Slate Payroll...</small>
       {{/link-to}}
     {{/if}}
@@ -31,7 +31,7 @@
       as |alreadyLinked|
     }}
       <span class="vertically centered">
-        {{if alreadyLinked 'Connected To Slate Payroll' 'Connect To Slate Payroll'}}
+        {{if alreadyLinked "Connected To Slate Payroll" "Connect To Slate Payroll"}}
       </span> <span class="icon__slate"></span> <i class="random icon"></i>
     {{/form/integration-button}}
   </div>

@@ -1,9 +1,9 @@
 <h3 class="sg__section-title">
   {{name}}
-  {{#link-to 'vogue' (query-params focus=(if focus 'null' name)) class="pull-right"}}
+  {{#link-to "vogue" (query-params focus=(if focus "null" name)) class="pull-right"}}
     <i class="fa fa-fw fa-expand"></i>
   {{/link-to}}
 </h3>
-<div class="sg__section-content {{if squeeze 'sg__squeeze-content'}}">
+<div class="sg__section-content {{if squeeze "sg__squeeze-content"}}">
   {{yield}}
 </div>

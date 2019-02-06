@@ -32,7 +32,7 @@
         <i class="dropdown icon"></i>
         <div class="menu">
           {{#each states as |state|}}
-            <div class="item" data-value="{{state.value}}">
+            <div class="item" data-value={{state.value}}>
               {{state.label}}
             </div>
           {{/each}}
@@ -46,7 +46,7 @@
   </div>
   <div class="ui divider"></div>
   {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Add Location{{/form/action-button}}
-  {{#link-to 'account.anatomy.locations.index'}}
+  {{#link-to "account.anatomy.locations.index"}}
     <div class="ui huge fluid orange button">Cancel</div>
   {{/link-to}}
 </form>

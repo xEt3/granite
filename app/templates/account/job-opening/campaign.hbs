@@ -2,19 +2,19 @@
   <h1 class="text-white">{{model.name}}</h1>
   <div class="ui divider"></div>
   {{#ui-menu menuClass="pointing"}}
-    {{#link-to 'account.job-opening.campaign.index' class="item"}}
+    {{#link-to "account.job-opening.campaign.index" class="item"}}
       <i class="square icon"></i>Summary
     {{/link-to}}
-    {{#link-to 'account.job-opening.campaign.applicant-tracking' class="item"}}
+    {{#link-to "account.job-opening.campaign.applicant-tracking" class="item"}}
       <i class="users icon"></i>Applicants
     {{/link-to}}
     {{#if (not model.closed)}}
-      {{#link-to 'account.job-opening.campaign.talent-pool' class="item"}}
+      {{#link-to "account.job-opening.campaign.talent-pool" class="item"}}
         <i class="archive icon"></i>Talent Pool
       {{/link-to}}
     {{/if}}
     {{#if EEOEnabled}}
-      {{#link-to 'account.job-opening.campaign.eeo-reporting' class="item"}}
+      {{#link-to "account.job-opening.campaign.eeo-reporting" class="item"}}
         <i class="file alternate icon"></i>EEO Reports
       {{/link-to}}
     {{/if}}
@@ -25,7 +25,7 @@
             content="This job opening meets your requirements for closure. The appropriate number of candidates were hired and you can now close this opening."
             position="bottom center"
           }}
-            <a href="#" class="text-green" {{action (pipe confirm (action 'close'))}}>
+            <a href="#" class="text-green" {{action (pipe confirm (action "close"))}}>
               <i class="check icon"></i>Close Job Opening...
             </a>
           {{/ui-popup}}
@@ -33,16 +33,16 @@
       {{/if}}
 
       {{#unless model.completedSetup}}
-        {{#link-to 'account.job-opening.setup' class="item text-blue"}}<i class="wizard icon"></i>Continue Setup{{/link-to}}
+        {{#link-to "account.job-opening.setup" class="item text-blue"}}<i class="wizard icon"></i>Continue Setup{{/link-to}}
       {{/unless}}
       {{#ui-dropdown class="item icon top right pointing"}}
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
           <div class="header">Actions</div>
-          {{#link-to 'account.job-opening.campaign.settings' class="item"}}<i class="settings icon"></i> Settings{{/link-to}}
+          {{#link-to "account.job-opening.campaign.settings" class="item"}}<i class="settings icon"></i> Settings{{/link-to}}
           <div class="text-danger header">Danger Zone</div>
           {{#confirm-modal deleteContext=model.name class="item" as |confirm|}}
-            <a href="#" id="job__action--delete" class="text-danger" {{action (pipe confirm (action 'delete'))}}>
+            <a href="#" id="job__action--delete" class="text-danger" {{action (pipe confirm (action "delete"))}}>
               <i class="trash icon"></i>Delete Record
             </a>
           {{/confirm-modal}}

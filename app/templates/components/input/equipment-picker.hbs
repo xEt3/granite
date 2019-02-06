@@ -33,7 +33,7 @@
             <div class="center aligned header">
               {{assetGroup.asset.name}}
             </div>
-            {{#link-to 'account.asset' assetGroup.asset.id class="item"}}<i class="settings icon"></i>Configure {{assetGroup.asset.name}}{{/link-to}}
+            {{#link-to "account.asset" assetGroup.asset.id class="item"}}<i class="settings icon"></i>Configure {{assetGroup.asset.name}}{{/link-to}}
             <div class="divider"></div>
             <a href="#" class="item" {{action "create" assetGroup.asset}}>
               <i class="asterisk icon"></i> New Stock Item
@@ -73,7 +73,7 @@
           <div class="center aligned header">
             {{assetGroup.asset.name}}
           </div>
-          {{#link-to 'account.asset' assetGroup.asset.id class="item"}}<i class="settings icon"></i>Configure {{assetGroup.asset.name}}{{/link-to}}
+          {{#link-to "account.asset" assetGroup.asset.id class="item"}}<i class="settings icon"></i>Configure {{assetGroup.asset.name}}{{/link-to}}
           <div class="divider"></div>
           <a href="#" class="item" {{action "create" assetGroup.asset}}>
             <i class="asterisk icon"></i> New Stock Item

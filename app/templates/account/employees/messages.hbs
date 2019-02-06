@@ -17,7 +17,7 @@
             <div class="default text">Search or select people to message</div>
             <div class="menu">
               {{#each allEmployees as |employee|}}
-                <div class="item" data-value="{{map-value mapper employee}}">
+                <div class="item" data-value={{map-value mapper employee}}>
                   {{employee.fullName}}
                 </div>
               {{/each}}
@@ -28,7 +28,7 @@
         {{#liquid-if messageParticipantTargets.length}}
           {{#form/action-button type="submit" class="ui fluid green button"}}
             Start
-            {{if (gt messageParticipantTargets.length 1) 'Group'}}
+            {{if (gt messageParticipantTargets.length 1) "Group"}}
             Chat
           {{/form/action-button}}
         {{/liquid-if}}

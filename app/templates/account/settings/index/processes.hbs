@@ -60,7 +60,7 @@
   <form {{action "save" on="submit"}}>
     {{#form/action-button
       type="submit"
-      class='ui positive fluid huge button'
+      class="ui positive fluid huge button"
       disabled=disableSave
       loading=working}}
       Save Changes
@@ -68,48 +68,48 @@
   </form>
 </div>
 
-{{#ui-modal id='modal__add-cas' class='small form'}}
+{{#ui-modal id="modal__add-cas" class="small form"}}
   <div class="header">
-    <i class="plus icon"></i>{{if editingCas 'Edit' 'Add'}} corrective action option
+    <i class="plus icon"></i>{{if editingCas "Edit" "Add"}} corrective action option
   </div>
   <div class="content">
     {{quick-form
       severityForm
       currentSeverity
       this
-      tagName='div'}}
+      tagName="div"}}
   </div>
   <div class="actions">
     {{#unless editingCas}}
-      <button class="ui red button" {{action 'respondSeverityAddition' false}}>
+      <button class="ui red button" {{action "respondSeverityAddition" false}}>
         Cancel
       </button>
     {{/unless}}
-    <button class="ui primary right labeled icon button" {{action 'respondSeverityAddition' true}}>
+    <button class="ui primary right labeled icon button" {{action "respondSeverityAddition" true}}>
       Done
       <i class="check icon"></i>
     </button>
   </div>
 {{/ui-modal}}
 
-{{#ui-modal id='modal__add-stage' class='small form'}}
+{{#ui-modal id="modal__add-stage" class="small form"}}
   <div class="header">
-    <i class="plus icon"></i>{{if editingStage 'Edit' 'Add'}} recruiting pipeline stage
+    <i class="plus icon"></i>{{if editingStage "Edit" "Add"}} recruiting pipeline stage
   </div>
   <div class="content">
     {{quick-form
       stageForm
       currentStage
       this
-      tagName='div'}}
+      tagName="div"}}
   </div>
   <div class="actions">
     {{#unless editingStage}}
-      <button class="ui red button" {{action 'respondStageAddition' false}}>
+      <button class="ui red button" {{action "respondStageAddition" false}}>
         Cancel
       </button>
     {{/unless}}
-    <button class="ui primary right labeled confirm-add-stage icon button" {{action 'respondStageAddition' true}}>
+    <button class="ui primary right labeled confirm-add-stage icon button" {{action "respondStageAddition" true}}>
       Done
       <i class="check icon"></i>
     </button>

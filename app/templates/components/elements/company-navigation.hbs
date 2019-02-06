@@ -4,12 +4,13 @@
   placeholder="Search Granite HR..."}}
 <div class="right menu">
   {{#ui-dropdown class="item company-logo-dropdown"}}
+    {{! template-lint-disable no-inline-styles }}
     <div class="company-logo" style={{logoUrl}}>
     </div>
     <i class="dropdown icon"></i>
     <div class="menu">
       <div class="header">Signed in as {{auth.user.firstName}}</div>
-      {{#link-to 'account.settings' class="item"}}<i class="settings icon"></i>Settings{{/link-to}}
+      {{#link-to "account.settings" class="item"}}<i class="settings icon"></i>Settings{{/link-to}}
       <a href="#" class="item" {{action "logout"}}><i class="sign out alternate icon"></i>Sign Out</a>
     </div>
   {{/ui-dropdown}}

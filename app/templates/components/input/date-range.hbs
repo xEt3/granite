@@ -31,7 +31,7 @@
           <div class="menu">
             <div class="item" data-value="">No End Time</div>
             {{#each endOptions as |opt|}}
-              <div class="item" data-value="{{map-value mapper opt.value}}">
+              <div class="item" data-value={{map-value mapper opt.value}}>
                 {{opt.label}}
               </div>
             {{/each}}

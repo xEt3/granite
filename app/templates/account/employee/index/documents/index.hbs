@@ -8,25 +8,25 @@
       <a href="#" class="ui small text right floated text-red" {{action "resetFilters"}}>Reset All</a>
     </h2>
 
-    {{#filter.section 'Visibility' activeState=(hash visibleToEmployee=false)}}
+    {{#filter.section "Visibility" activeState=(hash visibleToEmployee=false)}}
       {{filter.toggleControl
-        'visibleToEmployee'
+        "visibleToEmployee"
         visibleToEmployee
-        label='Visible To Employee'}}
+        label="Visible To Employee"}}
     {{/filter.section}}
 
-    {{#filter.section 'Viewed by Employee' activeState=(hash readOn=false)}}
+    {{#filter.section "Viewed by Employee" activeState=(hash readOn=false)}}
       {{filter.toggleControl
-        'readOn'
+        "readOn"
         readOn
-        label='Viewed'}}
+        label="Viewed"}}
     {{/filter.section}}
 
-    {{#filter.section 'Signed by Employee' activeState=(hash signedOn=false)}}
+    {{#filter.section "Signed by Employee" activeState=(hash signedOn=false)}}
       {{filter.toggleControl
-        'signedOn'
+        "signedOn"
         signedOn
-        label='Signed'}}
+        label="Signed"}}
     {{/filter.section}}
 
   {{/display/filter-pane}}
@@ -40,12 +40,12 @@
 
     <div class="right aligned text floated menu__actions">
       <h3 class="ui inline header">
-        {{#link-to 'account.employee.index.documents.new'}}
+        {{#link-to "account.employee.index.documents.new"}}
           <i id="add-document" class="plus icon"></i>
         {{/link-to}}
         {{#ui-popup position="left center" content="Filters" tagName="span"}}
-          <a href="#" class="{{if showFilters 'text-red'}}" {{action toggleProperty 'showFilters'}}>
-            <i class="{{if showFilters 'remove' 'filter'}} icon"></i>
+          <a href="#" class={{if showFilters "text-red"}} {{action toggleProperty "showFilters"}}>
+            <i class="{{if showFilters "remove" "filter"}} icon"></i>
           </a>
         {{/ui-popup}}
       </h3>
@@ -57,7 +57,7 @@
     {{#each model as |assignment|}}
       {{list-item/employee-document-item
         assignment=assignment
-        onNotify=(route-action 'notify')
+        onNotify=(route-action "notify")
       }}
     {{/each}}
   </div>

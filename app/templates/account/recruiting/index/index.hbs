@@ -2,7 +2,7 @@
   user=auth.user
   steps=intros
   start-if=true
-  hintKey='recruiting-campaigns-index'}}
+  hintKey="recruiting-campaigns-index"}}
 
 {{#if showFilters}}
   {{#display/filter-pane
@@ -16,16 +16,16 @@
           <button class="negative ui button small text" {{action "resetFilters"}}>Reset All</button>
         </div>
         <div class="item">
-          <a href="#" class="light text" {{action toggleProperty 'showFilters'}}>
+          <a href="#" class="light text" {{action toggleProperty "showFilters"}}>
             <i class="remove icon"></i>
           </a>
         </div>
       </div>
     </h2>
 
-    {{#filter.section 'Job Description'}}
+    {{#filter.section "Job Description"}}
       {{#filter.selectControl
-        'job'
+        "job"
         job
         searchable=true
         model=jobs as |item|
@@ -34,19 +34,19 @@
       {{/filter.selectControl}}
     {{/filter.section}}
 
-    {{#filter.section 'Additional Filters'}}
+    {{#filter.section "Additional Filters"}}
       <div class="ui two fields">
         {{filter.toggleControl
-          'closed'
+          "closed"
           closed
-          label='Is Closed'
-          class='center aligned text field'}}
+          label="Is Closed"
+          class="center aligned text field"}}
 
         {{filter.toggleControl
-          'setup'
+          "setup"
           setup
-          label='Needs Setup'
-          class='center aligned text field'}}
+          label="Needs Setup"
+          class="center aligned text field"}}
       </div>
     {{/filter.section}}
   {{/display/filter-pane}}
@@ -60,12 +60,12 @@
 
     <div class="right aligned text floated menu__actions">
       <h3 class="ui inline header">
-        {{#link-to 'account.recruiting.index.new'}}
+        {{#link-to "account.recruiting.index.new"}}
           <i id="add-job-opening" class="plus icon"></i>
         {{/link-to}}
         {{#ui-popup position="left center" content="Filters" tagName="span"}}
-          <a href="#" class="{{if showFilters 'text-red'}}" {{action toggleProperty 'showFilters'}}>
-            <i class="{{if showFilters 'remove' 'filter'}} icon"></i>
+          <a href="#" class={{if showFilters "text-red"}} {{action toggleProperty "showFilters"}}>
+            <i class="{{if showFilters "remove" "filter"}} icon"></i>
           </a>
         {{/ui-popup}}
       </h3>

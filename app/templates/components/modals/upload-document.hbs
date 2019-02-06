@@ -2,7 +2,7 @@
   {{yield startApplication}}
 {{/if}}
 
-{{#ui-modal name='modal__file-upload' id=modalId}}
+{{#ui-modal name="modal__file-upload" id=modalId}}
   <div class="header">
     Upload a File
   </div>
@@ -10,17 +10,17 @@
     {{drop-zone
       url=fileEndpoint
       id=dropzoneId
-      class='input__dropzone'
-      method='put'
+      class="input__dropzone"
+      method="put"
       uploadMultiple=false
       maxFiles=1
       autoProcessQueue=false
-      dictDefaultMessage='Drop or Click to Select a File'
-      thumbnailWidth='175'
+      dictDefaultMessage="Drop or Click to Select a File"
+      thumbnailWidth="175"
       headers=(hash X-API-Token=auth.token)
-      addedfile=(action 'addedFile')
-      success=(action 'uploadedFile')
-      capture='camera'}}
+      addedfile=(action "addedFile")
+      success=(action "uploadedFile")
+      capture="camera"}}
   </div>
   <div class="actions">
     <button class="ui red button" {{action closeModal}}>

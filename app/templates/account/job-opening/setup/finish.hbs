@@ -4,8 +4,8 @@
     You are hiring <strong>{{model.positions}} {{inflect-text model.job.title model.positions}}</strong> for your <strong>{{model.location.name}}</strong> location.
     {{#if model.applicantSources.length}}
       After launching your campaign, Granite will post your job to
-      {{#ui-popup html=sourcesList tagName='span'}}
-        <strong>{{model.applicantSources.length}} {{inflect-text 'source' model.applicantSources.length}}</strong>
+      {{#ui-popup html=sourcesList tagName="span"}}
+        <strong>{{model.applicantSources.length}} {{inflect-text "source" model.applicantSources.length}}</strong>
       {{/ui-popup}}
       beginning
       <strong>

@@ -15,8 +15,8 @@
       </div>
     </h6>
     <div class="header">
-      {{#link-to 'account.action-item' actionItem.slug}}{{actionItem.title}}{{/link-to}}
-      <a href="#" class="right floated" title="Toggle subscription" {{action "toggleSubscription"}}><i class="{{if (contains userId subscriberIds) 'hide' 'unhide'}} fitted icon"></i></a>
+      {{#link-to "account.action-item" actionItem.slug}}{{actionItem.title}}{{/link-to}}
+      <a href="#" class="right floated" title="Toggle subscription" {{action "toggleSubscription"}}><i class="{{if (contains userId subscriberIds) "hide" "unhide"}} fitted icon"></i></a>
     </div>
   </div>
   <div class="content">
@@ -39,12 +39,12 @@
             <i class="check icon"></i>All todos complete
           </strong>
         {{else}}
-          {{#link-to 'account.action-item.todo' actionItem.slug}}{{actionItem.incompleteTodos.length}} {{inflect-text 'Todos' actionItem.incompleteTodos.length}} Left{{/link-to}}
+          {{#link-to "account.action-item.todo" actionItem.slug}}{{actionItem.incompleteTodos.length}} {{inflect-text "Todos" actionItem.incompleteTodos.length}} Left{{/link-to}}
         {{/if}}
       {{/if}}
       <span class="right floated meta">
         {{#if actionItem.participants}}{{actionItem.participants.length}}{{else}}No{{/if}}
-        {{inflect-text 'Participants' actionItem.participants.length}}
+        {{inflect-text "Participants" actionItem.participants.length}}
       </span>
     </h4>
 
@@ -57,6 +57,6 @@
     {{/if}}
   </div>
   <div class="extra content">
-    {{#link-to 'account.action-item' actionItem.slug class="ui fluid primary button"}}View Item{{/link-to}}
+    {{#link-to "account.action-item" actionItem.slug class="ui fluid primary button"}}View Item{{/link-to}}
   </div>
 </div>

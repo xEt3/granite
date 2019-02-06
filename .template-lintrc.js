@@ -1,7 +1,5 @@
 module.exports = {
   extends: 'recommended',
 
-  rules: {
-    'self-closing-void-elements': false
-  }
-}
+  rules: { 'self-closing-void-elements': false }
+};
