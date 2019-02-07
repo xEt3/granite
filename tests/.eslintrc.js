@@ -40,19 +40,19 @@ module.exports = {
     }],
     'object-curly-newline':                       [ 'error', { 'multiline': true }],
     'array-bracket-spacing':                      [ 'error', 'always', { 'objectsInArrays': false }],
-    'space-in-brackets':                          [ 'error', 'always' ],
+    // 'space-in-brackets':                          [ 'error', 'always' ],
     'object-curly-spacing':                       [ 'error', 'always', { 'arraysInObjects': true }],
     'space-in-parens':                            [ 'error', 'never' ],
     'space-before-function-paren':                [ 'error', 'always' ],
     'ember/avoid-leaking-state-in-ember-objects': 0,
     'ember/routes-segments-snake-case':           0,
-    'semi':                                       [ 'error', 'always' ],
+    // 'semi':                                       [ 'error', 'always' ],
     'semi-spacing':                               [ 2, {
       'before': false,
       'after':  true
     }],
     'no-trailing-spaces':  [ 'error', { 'ignoreComments': true }],
-    'keyword-spacing':     [ 'error', 'never' ],
+    // 'keyword-spacing':     [ 'error', 'never' ],
     'space-before-blocks': [ 'error' ],
     'indent':              [ 2, 2, {
       'VariableDeclarator': {
