@@ -25,11 +25,14 @@ module('Acceptance | eeo-report', function (hooks) {
     assert.dom('table.eeo-table tbody > tr:first-child > td').hasAttribute('colspan', '8');
 
     findAll('table.eeo-table > thead > tr > th').forEach(header => {
-      assert.dom(header).hasStyle({ 'font-weight': '700' }, 'header is bolded');
+      let fontWeight = window.getComputedStyle(header).getPropertyValue('font-weight');
+      assert.ok(fontWeight === 'bold' || '700', 'header is bolded');
     });
 
     for (let i = 1; i <= 6; i++) {
-      assert.dom(`table.eeo-table tbody > tr:nth-child(${i}) > td:first-child`).hasStyle({ 'font-weight': '700' }, 'first column cell is bolded');
+      let cell = document.querySelector(`table.eeo-table tbody > tr:nth-child(${i}) > td:first-child`);
+      let fontWeight = window.getComputedStyle(cell).getPropertyValue('font-weight');
+      assert.ok(fontWeight === 'bold' || '700', 'first column cell is bolded');
     }
   });
 });
