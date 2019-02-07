@@ -1,10 +1,10 @@
 {
   "https_only": true,
-  "client_max_body_size": "20M",
+  "max_body_size": "20M",
   "proxies": {
     "/api/v1/": {
       "origin": "${API_URL}",
-      "websocket": true
+      "allow_websocket_upgrade": true
     }
   }
 }
