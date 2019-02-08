@@ -8,7 +8,6 @@ export default Route.extend({
   model () {
     const jobOpening = this.modelFor('account.job-opening');
 
-
     return this.ajax.request('/api/v1/job-applications/', {
       data: {
         $report:    'eeo',
