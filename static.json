@@ -1,5 +1,6 @@
 {
   "https_only": true,
+  "debug": true,
   "max_body_size": "20M",
   "proxies": {
     "/api/v1/": {
