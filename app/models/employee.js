@@ -45,12 +45,13 @@ export default Model.extend(Validations, {
   }),
 
   // Company and Position Information
-  activatedOn: attr('date'),
-  hireDate:    attr('date'),
-  jobTitle:    attr('string'),
-  payRate:     attr('number'),
-  exempt:      attr('boolean', { defaultValue: false }),
-  payRateType: attr('string', { defaultValue: 'hourly' }),
+  activatedOn:    attr('date'),
+  hireDate:       attr('date'),
+  jobTitle:       attr('string'),
+  payRate:        attr('number'),
+  exempt:         attr('boolean', { defaultValue: false }),
+  payRateType:    attr('string', { defaultValue: 'hourly' }),
+  eeoJobCategory: attr('string'),
 
   onboarding:     attr('boolean'),
   onboardingStep: attr('number'),

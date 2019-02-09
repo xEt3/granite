@@ -56,6 +56,27 @@
     {{input type="text" id="workers-comp" value=model.workersCompClassCode}}
   </div>
 </div>
+{{#if auth.user.company.collectEEO}}
+  <div class="field">
+    <label for="eeo-job-category">EEO Job Category</label>
+    {{#ui-dropdown
+      class="selection"
+      selected=model.eeoJobCategory
+      onChange=(action (mut model.eeoJobCategory))
+      as |execute mapper|
+    }}
+      <div class="default text">-- Select EEO Job Category --</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each eeoJobCategories as |category|}}
+          <div class="item" data-value="{{category}}">
+            {{category}}
+          </div>
+        {{/each}}
+      </div>
+    {{/ui-dropdown}}
+  </div>
+{{/if}}
 <div class="field">
   <label for="job-location">Location</label>
   {{#ui-dropdown class="selection" selected=model.location onChange=(action (mut model.location)) as |execute mapper|}}
