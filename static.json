@@ -4,8 +4,7 @@
   "max_body_size": "20M",
   "proxies": {
     "/api/v1/": {
-      "origin": "${API_URL}",
-      "allow_websocket_upgrade": true
+      "origin": "${API_URL}"
     }
   }
 }
