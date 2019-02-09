@@ -5,6 +5,10 @@
   "proxies": {
     "/api/v1/": {
       "origin": "${API_URL}"
+    },
+    "/socket.io/": {
+      "origin": "${WS_URL}",
+      "allow_websocket_upgrade": true
     }
   }
 }
