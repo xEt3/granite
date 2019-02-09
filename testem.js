@@ -5,7 +5,7 @@ module.exports = {
   test_page:                  'tests/index.html?hidepassed',
   disable_watching:           true,
   browser_disconnect_timeout: 120,
-  browser_start_timeout:      120,
+  browser_start_timeout:      160,
 
   launch_in_ci: [
     'bs_win10_edge16',

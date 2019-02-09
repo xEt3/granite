@@ -19,6 +19,7 @@ export default Model.extend({
   closed:                    attr('boolean'),
 
   jobType:                 attr('string'),
+  eeoCategory:             attr('string'),
   supervisoryRequirements: attr('boolean'),
 
   setup:          attr('boolean', { defaultValue: true }),
