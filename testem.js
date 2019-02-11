@@ -12,7 +12,8 @@ module.exports = {
     'bs_win10_chromelatest',
     'bs_osxmojave_chromelatest',
     'bs_osxmojave_safari12',
-    'bs_win10_firefoxlatest'
+    'bs_win10_firefox64pinned'
+    // 'bs_win10_firefoxlatest'
   ],
 
   launch_in_dev: [
@@ -59,6 +60,11 @@ module.exports = {
     bs_win10_firefoxlatest: {
       exe:      'node_modules/.bin/browserstack-launch',
       args:     [ '--os', 'Windows', '--osv', '10', '--b', 'firefox', '--bv', 'latest', '-t', '600', '--u' ],
+      protocol: 'browser'
+    },
+    bs_win10_firefox64pinned: {
+      exe:      'node_modules/.bin/browserstack-launch',
+      args:     [ '--os', 'Windows', '--osv', '10', '--b', 'firefox', '--bv', '64', '-t', '600', '--u' ],
       protocol: 'browser'
     }
   }
