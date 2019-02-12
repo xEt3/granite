@@ -118,9 +118,10 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     let wasNew = employee.get('isNew');
 
     employee.setProperties({
-      jobTitle:       job.get('title'),
-      jobDescription: job,
-      eeoJobCategory: jobOpening.get('eeoCategory')
+      jobTitle:        job.get('title'),
+      jobDescription:  job,
+      eeoJobCategory:  jobOpening.get('eeoCategory'),
+      hiredFromJobApp: jobApplication
     });
 
     return jobApplication.save()

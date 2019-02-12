@@ -112,6 +112,10 @@ export default Model.extend(Validations, {
     async:   true,
     inverse: null
   }),
+  hiredFromJobApp: belongsTo('job-application', {
+    async:   true,
+    inverse: null
+  }),
   creator: belongsTo('company-user', {
     async:   true,
     inverse: null
