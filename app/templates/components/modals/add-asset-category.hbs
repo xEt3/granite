@@ -32,10 +32,11 @@
         {{input type="text" value=newAsset.description id="asset-description" placeholder="All the keycards for our employees"}}
       </div>
       <div class="field center aligned text">
-        <div class="ui toggle checkbox">
-          <input type="checkbox">
-          <label>Can {{if newAsset.name newAsset.name 'these assets'}} be shared by employees?</label>
-        </div>
+        {{ui-checkbox
+          class="toggle"
+          label=sharableLabel
+          checked=newAsset.sharable
+          onChange=(action (mut newAsset.sharable))}}
       </div>
     </form>
   </div>

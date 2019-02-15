@@ -119,7 +119,9 @@ export default Mixin.create({
       this.__ajaxSuccess(null, true);
 
       if (this.uploadComplete) {
-        this.uploadComplete();
+        let fileId = response.file._id;
+        this.store.pushPayload('file', { file: [ response.file ] });
+        this.uploadComplete(this.store.peekRecord('file', fileId));
       }
     },
 

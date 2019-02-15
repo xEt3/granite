@@ -9,9 +9,7 @@ import $ from 'jquery';
 
 export default Controller.extend(ajaxStatus, {
   states,
-
-  ajax: service(),
-
+  ajax:           service(),
   stateIsMontana: computed.equal('newLocation.addressState', 'MT'),
 
   intros: computed(function () {
@@ -51,12 +49,55 @@ export default Controller.extend(ajaxStatus, {
     return titleCase([ decamelizedPath ]);
   },
 
+  guesses: computed.reads('model.data.0'),
+
+  dataValidation: computed('rows.[]', 'guesses.[]', 'availableFields.[]', 'potentialData.[]', function () {
+    const {
+      guesses,
+      availableFields,
+      potentialData
+    } = this.getProperties('guesses', 'availableFields', 'potentialData');
+
+    if (!guesses || !availableFields) {
+      return [];
+    }
+
+    return this.get('rows').map((row, rIdx) => {
+      return row.map((column, cIdx) => {
+        let guessForCell = guesses[cIdx],
+            potentialDataForCell = potentialData[rIdx][guessForCell],
+            field = availableFields.findBy('path', guessForCell);
+
+        if (!field) {
+          return { invalid: false };
+        }
+
+        // if cell is a relationship cell, and cell has a value in it, and the potentialDataForCell is undefined
+        if (field.isRelationship && column && !potentialDataForCell ? field.path : null) {
+          return {
+            invalid:             true,
+            missingRelationship: field.path
+          };
+        }
+
+        if ((availableFields.findBy('path', guessForCell) || {}).required && !column) {
+          return {
+            invalid:    true,
+            isRequired: true
+          };
+        }
+
+        return { invalid: false };
+      });
+    });
+  }),
+
   rows: computed('model.data.[]', function () {
     return (this.get('model.data') || []).slice(2);
   }),
 
   availableFields: computed('model.availableFields.[]', function () {
-    return (this.get('model.availableFields') || []).map(({ path, format }) => {
+    return (this.get('model.availableFields') || []).map(({ path, format, enums, required }) => {
       let label = `${this.convertPathToLabel(path)}${format ? ' - ' + format : ''}`;
 
       if (path === 'customFields') {
@@ -66,6 +107,8 @@ export default Controller.extend(ajaxStatus, {
       return {
         path,
         label,
+        required,
+        enums,
         isRelationship: format === 'lookup or id' ? true : false
       };
     }).sortBy('label');
@@ -75,8 +118,8 @@ export default Controller.extend(ajaxStatus, {
     const data = this.get('model.data'),
           [ guesses, orig ] = data;
 
-    return guesses.map((path = '', i) =>
-      path.indexOf('customFields') < 0 ? path : `${path}.${orig[i]}`);
+    return guesses.map((path, i) =>
+      (path || '').indexOf('customFields') < 0 ? path : `${path}.${orig[i]}`);
   }).volatile(),
 
   actions: {

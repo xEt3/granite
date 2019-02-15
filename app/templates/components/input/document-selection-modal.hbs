@@ -82,7 +82,7 @@
 
     <div class="ui divided list raised segment document-selection__results">
       {{#each results as |document|}}
-        {{list-item/document-option file=document remove=(contains document selectedDocuments) onRemove=(action "removeDocument") onAddition=(action "addDocument")}}
+        {{list-item/document-option file=document remove=(or (contains document selectedDocuments) (eq document selectedDocument)) onRemove=(action "removeDocument") onAddition=(action "addDocument")}}
       {{else}}
         <h3 class="ui center aligned light text header">No documents found.</h3>
       {{/each}}
@@ -105,10 +105,22 @@
       </div>
       <button class="ui huge fluid positive button" {{action "assign"}}>{{if assignText assignText 'Assign Documents'}}</button>
     {{/if}}
+
+    {{#if selectedDocument}}
+      <div class="ui divider"></div>
+      <h3 class="ui header">Selected Document</h3>
+      <div class="ui divided list">
+        <div class="item">
+          {{list-item/document-option file=selectedDocument remove=true onRemove=(action "removeDocument")}}
+        </div>
+      </div>
+      <button class="ui huge fluid positive button" {{action "assign"}}>{{if assignText assignText 'Assign Document'}}</button>
+    {{/if}}
   </div>
 {{/ui-modal}}
 
-{{!-- Usage:  pass the component these three optional things:
+{{!-- Usage:  pass the component these four optional things:
  title(the title of the modal),
+ singleDoc(opt in if you only want one doc)
  selectText(the text you want on the dropdown),
- buttonText(the text you want on the modal launch button). --}}
+ assignText(the text you want on the modal launch button). --}}

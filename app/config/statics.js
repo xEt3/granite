@@ -244,8 +244,11 @@ const jobTypes = [
   'Internship',
   'Temporary',
   'Seasonal',
-  'Commission'
+  'Commission',
+  null
 ];
+
+const gender = [ 'Male', 'Female', 'Other' ];
 
 const formTypes = [{
   display: 'Freeform Input',
@@ -304,6 +307,7 @@ const recordDisplayPropertyMap = {
 };
 
 export {
+  gender,
   issueTypes,
   suffixes,
   states,

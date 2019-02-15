@@ -15,7 +15,7 @@
         </div>
       {{/if}}
       {{#each model as |item|}}
-        <div class="item" data-value="{{map-value mapper item.id}}">
+        <div class="item" data-value="{{map-value mapper (if itemValuePath (get item itemValuePath) item)}}">
           {{#if hasBlock}}
             {{yield item}}
           {{else}}
@@ -30,6 +30,14 @@
     class='toggle'
     label=(or label 'controlName')
     checked=state
+    onChange=(action __update)}}
+{{else if (eq type 'radio')}}
+  {{ui-radio
+    class='toggle'
+    name=name
+    label=(or label 'controlName')
+    value=value
+    current=state
     onChange=(action __update)}}
 {{else}}
   {{yield
