@@ -120,6 +120,7 @@ Router.map(function () {
     });
     this.route('job-description', { path: '/recruiting/job/:id' }, function () {
       this.route('settings');
+      this.route('edit');
     });
     this.route('recruiting', function () {
       this.route('settings');
