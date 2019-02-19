@@ -38,7 +38,6 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
     }
 
     return htmlSafe(`Could not find this ${relationship}.`);
-
   }),
 
   actions: {
