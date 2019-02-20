@@ -3,7 +3,7 @@
     <i class="ui check icon"></i> Successfully imported records.
   </h2>
   <div class="center aligned text">
-    {{#link-to 'account.index'}}Back to Dashboard{{/link-to}}
+    {{#link-to "account.index"}}Back to Dashboard{{/link-to}}
   </div>
   {{#each importResult as |importGroup|}}
     {{#if importGroup.records}}
@@ -35,8 +35,8 @@
       confirmContent="Are you sure you want to import these records?"
       as |confirm|
     }}
-      <button class="ui massive fluid green button" {{action (pipe confirm (action 'import'))}}>
-        <i class="play icon"></i> Import {{totalSelected}} {{inflect-text 'Record' totalSelected}}
+      <button class="ui massive fluid green button" {{action (pipe confirm (action "import"))}}>
+        <i class="play icon"></i> Import {{totalSelected}} {{inflect-text "Record" totalSelected}}
       </button>
       <div class="ui divider"></div>
     {{/confirm-modal}}

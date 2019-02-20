@@ -29,7 +29,7 @@
       {{subscription.currentPaymentMethod.email}}
     {{else if subscription.currentPaymentMethod.maskedNumber}}
       {{subscription.currentPaymentMethod.maskedNumber}}
-      <span class="ui small text {{if subscription.cardExpiresSoon 'text-danger'}}">(Exp: {{subscription.currentPaymentMethod.expirationDate}})</span>
+      <span class="ui small text {{if subscription.cardExpiresSoon "text-danger"}}">(Exp: {{subscription.currentPaymentMethod.expirationDate}})</span>
     {{/if}}
 
   {{else}}
@@ -38,8 +38,8 @@
   <a href="#" class="ui right floated small text"
     {{action
       (pipe
-        (action 'getToken')
-        (action openModal 'modal_update-payment-method' 'paymentMethod')
+        (action "getToken")
+        (action openModal "modal_update-payment-method" "paymentMethod")
       )
     }}>
     <i class="edit icon"></i>Edit Payment Method
@@ -62,11 +62,11 @@
 
 {{#if subscription.isCancelled}}
   {{#confirm-modal confirmContent="Are you sure you want to activate your account?" as |confirm|}}
-    <button class="ui positive fluid button" {{action (pipe confirm (action 'activateSubscription'))}}><i class="check circle icon"></i>Activate Subscription</button>
+    <button class="ui positive fluid button" {{action (pipe confirm (action "activateSubscription"))}}><i class="check circle icon"></i>Activate Subscription</button>
   {{/confirm-modal}}
 {{else if (not subscription.accountSuspended)}}
   {{#confirm-modal confirmContent="Are you sure you want to cancel your account? You will immediately lose access until reactivated." as |confirm|}}
-    <button class="ui red fluid button" {{action (pipe confirm (action 'cancelSubscription'))}}>
+    <button class="ui red fluid button" {{action (pipe confirm (action "cancelSubscription"))}}>
       {{#ui-popup tagName="span" position="top center" content=cancelDescription}}
         <i class="exclamation circle icon"></i>Cancel Subscription
       {{/ui-popup}}
@@ -80,7 +80,7 @@
   braintreeToken=braintreeToken
   working=working
   onResponse=(pipe-action
-    (action 'savePaymentMethod')
-    (action modalResponse 'paymentMethod')
+    (action "savePaymentMethod")
+    (action modalResponse "paymentMethod")
   )
 }}

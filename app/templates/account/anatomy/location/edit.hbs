@@ -35,7 +35,7 @@
         <i class="dropdown icon"></i>
         <div class="menu">
           {{#each states as |state|}}
-            <div class="item" data-value="{{state.value}}">
+            <div class="item" data-value={{state.value}}>
               {{state.label}}
             </div>
           {{/each}}
@@ -49,7 +49,7 @@
   </div>
   <div class="ui divider"></div>
   {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=(not model.hasDirtyAttributes)}}Save Location{{/form/action-button}}
-  <a href="#" {{action 'cancel'}}>
+  <a href="#" {{action "cancel"}}>
     <div class="ui large fluid danger button">Cancel</div>
   </a>
 </form>

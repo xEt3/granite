@@ -11,12 +11,12 @@
         (hash
           label=label
           type=model.type
-          placeholder=(or model.label ' ')
+          placeholder=(or model.label " ")
           showLabel=true
-          contentPath='controller.options'
-          displayKey='text'
+          contentPath="controller.options"
+          displayKey="text"
           class=positionInForm
-          inputClass=(if (and (eq model.type 'select') (or model.multiple model.allowAdditions)) 'search multiple')
+          inputClass=(if (and (eq model.type "select") (or model.multiple model.allowAdditions)) "search multiple")
           inputAttrs=(hash allowAdditions=model.allowAdditions)
         )
         emptyObject
@@ -39,7 +39,7 @@
       <div class="field">
         <label>How should they answer?</label>
         {{#ui-dropdown
-          class='selection'
+          class="selection"
           selected=model.type
           forceSelection=false
           onChange=(action (mut model.type))}}
@@ -49,7 +49,7 @@
           <i class="dropdown icon"></i>
           <div class="menu">
             {{#each formTypes as |formType|}}
-              <div class="item" data-value="{{formType.use}}">
+              <div class="item" data-value={{formType.use}}>
                 {{#if formType.icon}}
                   <i class="{{formType.icon}} icon"></i>
                 {{/if}}
@@ -61,20 +61,20 @@
       </div>
     </div>
 
-    {{#if (eq model.type 'select')}}
+    {{#if (eq model.type "select")}}
       <div class="two fields">
         <div class="field">
           {{ui-checkbox
-            class='toggle'
-            label='Allow multiple selections'
+            class="toggle"
+            label="Allow multiple selections"
             checked=(readonly model.multiple)
             onChange=(action (mut model.multiple))}}
         </div>
         <div class="field">
           {{#ui-popup content="This option allows users to select from your list of options or add selection(s) of their own."}}
             {{ui-checkbox
-              class='toggle'
-              label='Allow additions to options'
+              class="toggle"
+              label="Allow additions to options"
               checked=(readonly model.allowAdditions)
               onChange=(action (mut model.allowAdditions))}}
           {{/ui-popup}}
@@ -83,12 +83,12 @@
     {{/if}}
 
     <div class="field">
-      {{#liquid-if (and (or (eq model.type 'checkbox') (eq model.type 'toggle')) model.required)}}
+      {{#liquid-if (and (or (eq model.type "checkbox") (eq model.type "toggle")) model.required)}}
         <p class="center aligned text text-danger">Note: Requiring this field requires the applicant to select "Yes" to proceed.</p>
       {{/liquid-if}}
 
       {{ui-checkbox
-        label='This question is required'
+        label="This question is required"
         checked=(readonly model.required)
         onChange=(action (mut model.required))}}
     </div>
@@ -101,7 +101,7 @@
         <div class="ui vertically divided vertically padded unpadded grid form-element__options-grid">
           {{#each model.options as |option|}}
             <div class="row">
-              <div class="{{if scoring 'eight' 'sixteen'}} wide column">
+              <div class="{{if scoring "eight" "sixteen"}} wide column">
                 <div class="ui field">
                   {{input
                     type="text"
@@ -125,12 +125,12 @@
                       value=option.weight}}
                   </div>
                   {{ui-checkbox
-                    label='Exclude applicants with this answer'
+                    label="Exclude applicants with this answer"
                     checked=(readonly option.disqualifier)
                     onChange=(action (mut option.disqualifier))}}
                 </div>
               {{/if}}
-              {{!-- <div class="{{if scoring 'four' 'eight'}} wide column options-grid__option-controls">
+              {{!-- <div class="{{if scoring "four" "eight"}} wide column options-grid__option-controls">
               </div> --}}
             </div>
           {{/each}}
@@ -171,13 +171,13 @@
       <div class="two fields">
         <div class="field">
           {{ui-checkbox
-            label='Exclude applicants with "Yes" answer'
+            label="Exclude applicants with 'Yes' answer"
             checked=(readonly model.trueDisqualifies)
             onChange=(action (mut model.trueDisqualifies))}}
         </div>
         <div class="field">
           {{ui-checkbox
-            label='Exclude applicants with "No" answer'
+            label="Exclude applicants with 'No' answer"
             checked=(readonly model.falseDisqualifies)
             onChange=(action (mut model.falseDisqualifies))}}
         </div>

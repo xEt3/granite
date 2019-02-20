@@ -1,5 +1,5 @@
 <h2 class="ui right aligned header">
-  {{#link-to 'account.action-items.new' class="text-white sub header"}}<i class="plus icon"></i>{{/link-to}}
+  {{#link-to "account.action-items.new" class="text-white sub header"}}<i class="plus icon"></i>{{/link-to}}
 </h2>
 <div class="ui divider"></div>
 
@@ -32,7 +32,7 @@
 {{#if model}}
   <div class="ui cards">
     {{#each model as |actionItem|}}
-      {{list-item/action-item actionItem=actionItem class="ui link fluid raised card" onToggleSubscription=(action 'toggleSubscription')}}
+      {{list-item/action-item actionItem=actionItem class="ui link fluid raised card" onToggleSubscription=(action "toggleSubscription")}}
     {{/each}}
   </div>
 {{else}}

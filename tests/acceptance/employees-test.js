@@ -90,7 +90,7 @@ module('Acceptance | employees', function (hooks) {
     let filters = findAll('div.ui > .segment.vertical').length;
     assert.equal(filters, 5, '5 filters showen');
     assert.dom('i.icon.remove');
-    assert.dom('a.small.text-red').hasText('Reset All');
+    assert.dom('.negative.ui.button.small.text').hasText('Reset All');
 
     for (let i = 2; i <= filters + 1; i++) {
       assert.dom(`div:nth-child(${i}) > h4 > i.down`).exists();

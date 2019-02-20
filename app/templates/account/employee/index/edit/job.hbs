@@ -17,13 +17,13 @@
   <div class="field">
     <label for="exemption-status">Exemption Status</label>
     {{#ui-dropdown class="selection" selected=model.exempt onChange=(action (mut model.exempt)) as |execute mapper|}}
-      <div class="default text" value=model.exempt></div>
+      <div class="default text" value={{model.exempt}}></div>
       <i class="dropdown icon"></i>
       <div class="menu">
-        <div class="item" data-value='{{map-value mapper false}}'>
+        <div class="item" data-value={{map-value mapper false}}>
           Non-exempt
         </div>
-        <div class="item" data-value='{{map-value mapper true}}'>
+        <div class="item" data-value={{map-value mapper true}}>
           Exempt
         </div>
       </div>
@@ -56,6 +56,26 @@
     {{input type="text" id="workers-comp" value=model.workersCompClassCode}}
   </div>
 </div>
+{{#if auth.user.company.collectEEO}}
+  <div class="field">
+    <label for="eeo-job-category">EEO Job Category</label>
+    {{#ui-dropdown
+      class="selection"
+      selected=model.eeoJobCategory
+      onChange=(action (mut model.eeoJobCategory))
+    }}
+      <div class="default text">-- Select EEO Job Category --</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each eeoJobCategories as |category|}}
+          <div class="item" data-value={{category}}>
+            {{category}}
+          </div>
+        {{/each}}
+      </div>
+    {{/ui-dropdown}}
+  </div>
+{{/if}}
 <div class="field">
   <label for="job-location">Location</label>
   {{#ui-dropdown class="selection" selected=model.location onChange=(action (mut model.location)) as |execute mapper|}}
@@ -63,7 +83,7 @@
     <i class="dropdown icon"></i>
     <div class="menu">
       {{#each locations as |location|}}
-        <div class="item" data-value="{{map-value mapper location}}">
+        <div class="item" data-value={{map-value mapper location}}>
           {{location.name}}
         </div>
       {{/each}}
@@ -77,7 +97,7 @@
     <i class="dropdown icon"></i>
     <div class="menu">
       {{#each departments as |department|}}
-        <div class="item" data-value="{{map-value mapper department}}">
+        <div class="item" data-value={{map-value mapper department}}>
           {{department.name}}
         </div>
       {{/each}}
@@ -91,7 +111,7 @@
     <i class="dropdown icon"></i>
     <div class="menu">
       {{#each employees as |supervisor|}}
-        <div class="item" data-value="{{map-value mapper supervisor}}">
+        <div class="item" data-value={{map-value mapper supervisor}}>
           {{supervisor.fullName}}
         </div>
       {{/each}}

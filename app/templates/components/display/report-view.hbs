@@ -1,0 +1,12 @@
+<thead>
+  <tr>
+    {{#each headers as |header|}}
+      <th>{{header}}</th>
+    {{/each}}
+  </tr>
+</thead>
+<tbody>
+  {{#each bodyData as |row|}}
+    {{display/report-view-row row headers.length}}
+  {{/each}}
+</tbody>

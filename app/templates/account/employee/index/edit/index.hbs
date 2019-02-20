@@ -18,7 +18,7 @@
       <i class="dropdown icon"></i>
       <div class="menu">
         {{#each suffixes as |suffix|}}
-          <div class="item" data-value="{{suffix}}">
+          <div class="item" data-value={{suffix}}>
             {{suffix}}
           </div>
         {{/each}}
@@ -32,7 +32,7 @@
       <i class="dropdown icon"></i>
       <div class="menu">
         {{#each gender as |gender|}}
-          <div class="item" data-value="{{gender}}">
+          <div class="item" data-value={{gender}}>
             {{gender}}
           </div>
         {{/each}}
@@ -51,7 +51,7 @@
   </div>
   <div class="field">
     <label for="employeeNumber">Employee Number</label>
-    {{validated-input model=model valuePath='employeeNumber' placeholder="Employee Number" id="employee-number"}}
+    {{validated-input model=model valuePath="employeeNumber" placeholder="Employee Number" id="employee-number"}}
   </div>
 </div>
 
@@ -95,7 +95,7 @@
       <i class="dropdown icon"></i>
       <div class="menu">
         {{#each states as |state|}}
-          <div class="item" data-value="{{state.value}}">
+          <div class="item" data-value={{state.value}}>
             {{state.label}}
           </div>
         {{/each}}

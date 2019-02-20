@@ -2,8 +2,8 @@
   <span class="header clearfix">
     {{asset.identifier}}
     {{#if attributes.length}}
-      {{#ui-popup tagName='span' content="View attributes"}}
-        <a href="#" {{action "toggleProperty" "details"}}><i class="{{if details 'up' 'down'}} angle icon"></i></a>
+      {{#ui-popup tagName="span" content="View attributes"}}
+        <a href="#" {{action "toggleProperty" "details"}}><i class="{{if details "up" "down"}} angle icon"></i></a>
       {{/ui-popup}}
     {{/if}}
     <div class="right floated">
@@ -12,14 +12,14 @@
           title="Assign asset stock item documents"
           tagName="span"
           selected=asset.documents
-          autoTag='Stock Asset'
+          autoTag="Stock Asset"
           onSelected=(pipe-action
             (action (mut asset.documents))
             (action saveStockItem))
           as |execute|
         }}
-          {{#ui-popup position="left center" tagName='span' content="Add a document to stock item"}}
-            <a href='#' {{action execute 'selectDocuments'}}>
+          {{#ui-popup position="left center" tagName="span" content="Add a document to stock item"}}
+            <a href="#" {{action execute "selectDocuments"}}>
               <i class="file outline icon"></i>
             </a>
           {{/ui-popup}}
@@ -39,8 +39,8 @@
     </div>
   </span>
   <div class="description text small">
-    Assigned to <a href="#" {{action toggleProperty 'showAssignments'}}>{{asset.assignments.length}} {{inflect-text 'employee' asset.assignments.length}}</a>
-    - Has <a href="#" {{action toggleProperty 'showDocuments'}}>{{asset.documents.length}} {{inflect-text 'document' asset.documents.length}}</a>
+    Assigned to <a href="#" {{action toggleProperty "showAssignments"}}>{{asset.assignments.length}} {{inflect-text "employee" asset.assignments.length}}</a>
+    - Has <a href="#" {{action toggleProperty "showDocuments"}}>{{asset.documents.length}} {{inflect-text "document" asset.documents.length}}</a>
     - Created {{time-ago asset.created}}{{#if asset.creator}} by {{asset.creator.fullName}}{{/if}}
     {{#liquid-if showAssignments}}
       <ul>
@@ -55,7 +55,7 @@
           <li>
             {{document.title}}.{{document.extension}}
             {{#ui-popup position="right center" tagName="span" content="Remove document from stock item"}}
-              <a href="#" class="text-danger" {{action 'removeDocument' document}}>
+              <a href="#" class="text-danger" {{action "removeDocument" document}}>
                 <i class="times icon"></i>
               </a>
             {{/ui-popup}}

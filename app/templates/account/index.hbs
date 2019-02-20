@@ -9,7 +9,7 @@
         <div class="default text">Select Filters</div>
         <div class="menu">
           {{#each tags as |tag|}}
-            <div class="item segment__activity" data-value="{{tag}}">
+            <div class="item segment__activity" data-value={{tag}}>
               {{tag}}
             </div>
           {{/each}}
@@ -19,9 +19,9 @@
   </hgroup>
   <div class="ui large feed">
     {{#each model as |activity|}}
-      {{list-item/activity-item activity=activity onNotify=(action 'onNotify')}}
+      {{list-item/activity-item activity=activity onNotify=(action "onNotify")}}
     {{/each}}
     <div class="ui divider"></div>
-    <button class="fluid ui button" disabled={{disabled}} {{action 'loadMoreActivities'}}>Load More...</button>
+    <button class="fluid ui button" disabled={{disabled}} {{action "loadMoreActivities"}}>Load More...</button>
   </div>
 </div>

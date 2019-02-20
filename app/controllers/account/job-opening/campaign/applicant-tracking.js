@@ -97,6 +97,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
 
   beginOnboarding (jobApplication) {
     const job = this.get('model.job'),
+          jobOpening = this.get('model.jobOpening'),
           applicant = jobApplication.get('applicant');
 
     let employee = jobApplication.get('employee');
@@ -117,8 +118,10 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     let wasNew = employee.get('isNew');
 
     employee.setProperties({
-      jobTitle:       job.get('title'),
-      jobDescription: job
+      jobTitle:        job.get('title'),
+      jobDescription:  job,
+      eeoJobCategory:  jobOpening.get('eeoCategory'),
+      hiredFromJobApp: jobApplication
     });
 
     return jobApplication.save()

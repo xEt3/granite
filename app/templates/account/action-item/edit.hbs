@@ -12,12 +12,12 @@
     <div class="field">
       <label for="action-item-priority"><i class="exclamation icon"></i> Priority</label>
       <div class="range-label"><i>Low</i><i>High</i></div>
-      {{ember-range-slider id="action-item-priority" keyboard=true keyboard_step=20 grid=true min=1 max=5 step=1 from=model.priority slideStop=(action 'updatePriority')}}
+      {{ember-range-slider id="action-item-priority" keyboard=true keyboard_step=20 grid=true min=1 max=5 step=1 from=model.priority slideStop=(action "updatePriority")}}
     </div>
 
     <div class="field">
       <label for="action-item-prerequisites">
-        {{#ui-popup tagName='span' content='Prerequisites indicate which action items need to be completed before this action item can be completed.'}}
+        {{#ui-popup tagName="span" content="Prerequisites indicate which action items need to be completed before this action item can be completed."}}
           Prerequisites
           <i class="right floated info icon"></i>
         {{/ui-popup}}
@@ -28,7 +28,7 @@
           <div class="default text">Type or select to assign prerequisites</div>
           <div class="menu">
             {{#each actionItems as |item|}}
-              <div class="item" data-value="{{map-value mapper item}}">
+              <div class="item" data-value={{map-value mapper item}}>
                 {{item.title}}
               </div>
             {{/each}}

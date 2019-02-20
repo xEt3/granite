@@ -2,7 +2,7 @@
   <p class="right aligned text">If you need assistance call: <span class="strong"><a href="tel:(406)248-6178">(406) 248-6178</a></span></p>
   <h2 class="ui header">
     New Corrective Action For Issue
-    {{#link-to 'account.employee.index.counseling.issue' class="right floated text text-danger"}}
+    {{#link-to "account.employee.index.counseling.issue" class="right floated text text-danger"}}
       <i class="remove icon"></i>
     {{/link-to}}
   </h2>
@@ -13,9 +13,9 @@
   form
   model
   this
-  tagName='div'}}
+  tagName="div"}}
 
 <div class="ui divider"></div>
 <form {{action "save" model on="submit"}}>
-  {{#form/action-button type="submit" class='ui positive fluid huge button' loading=working}}Save Corrective Action{{/form/action-button}}
+  {{#form/action-button type="submit" class="ui positive fluid huge button" loading=working}}Save Corrective Action{{/form/action-button}}
 </form>

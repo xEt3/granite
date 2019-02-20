@@ -3,14 +3,14 @@
     {{#input/document-selection-modal
       title="Assign asset documents"
       selected=model.documents
-      autoTag='Asset'
+      autoTag="Asset"
       onSelected=(pipe-action
         (action (mut model.documents))
-        (action 'save'))
+        (action "save"))
       as |execute|
     }}
-      {{#ui-popup position="left center" tagName='span' content="Add a document"}}
-        <a href='#' {{action execute 'selectDocuments'}}>
+      {{#ui-popup position="left center" tagName="span" content="Add a document"}}
+        <a href="#" {{action execute "selectDocuments"}}>
           <i class="plus icon"></i>
         </a>
       {{/ui-popup}}
@@ -23,7 +23,7 @@
     <span class="item">
       {{list-item/document-item
         file
-        deleteAction=(action 'removeDocument')
+        deleteAction=(action "removeDocument")
         confirmDeleteContent="Are you sure you want to remove this document?"
       }}
     </span>

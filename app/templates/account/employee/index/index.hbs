@@ -4,7 +4,7 @@
       <div class="center aligned column">
         <div class="ui mini statistic statistic-item">
           <div class="value">
-            {{#link-to 'account.employee' model.supervisor.id class="statistic-value"}}
+            {{#link-to "account.employee" model.supervisor.id class="statistic-value"}}
               {{model.supervisor.fullName}}
             {{/link-to}}
           </div>
@@ -45,7 +45,7 @@
   <div class="column">
     <div class="ui raised segment">
       <span class="ui blue ribbon label"><i class="announcement icon"></i>Direct Contact</span>
-      {{#link-to 'account.employee.index.edit.index' class='ui right corner blue label'}}
+      {{#link-to "account.employee.index.edit.index" class="ui right corner blue label"}}
         <i class="pencil icon"></i>
       {{/link-to}}
       <div class="ui basic segment">
@@ -69,7 +69,7 @@
     </div>
     <div class="ui raised segment">
       <span class="ui teal ribbon label"><i class="mail icon"></i>Mailing Address</span>
-      {{#link-to 'account.employee.index.edit.index' class='ui right corner teal label'}}
+      {{#link-to "account.employee.index.edit.index" class="ui right corner teal label"}}
         <i class="pencil icon"></i>
       {{/link-to}}
       <div class="ui basic segment">
@@ -88,7 +88,7 @@
     </div>
     <div class="ui raised segment">
       <span class="ui orange ribbon label"><i class="book icon"></i>Custom Fields</span>
-      {{#link-to 'account.employee.index.edit.custom-fields' class='ui right corner orange label'}}
+      {{#link-to "account.employee.index.edit.custom-fields" class="ui right corner orange label"}}
         <i class="pencil icon"></i>
       {{/link-to}}
       <div class="ui basic segment">
@@ -114,7 +114,7 @@
   <div class="column">
     <div class="ui raised segment">
       <span class="ui green left ribbon label"><i class="info icon"></i>Additional Information</span>
-      {{#link-to 'account.employee.index.edit.index' class='ui right corner green label'}}
+      {{#link-to "account.employee.index.edit.index" class="ui right corner green label"}}
         <i class="pencil icon"></i>
       {{/link-to}}
       <div class="ui basic segment">
@@ -130,7 +130,7 @@
                 {{else}}
                   {{model.ssnMasked}}
                 {{/if}}
-                <a href="#" class="right floated"{{action (toggle "showSSN" this)}}><i class="{{if showSSN 'hide' 'unhide'}} icon"></i></a>
+                <a href="#" class="right floated"{{action (toggle "showSSN" this)}}><i class="{{if showSSN "hide" "unhide"}} icon"></i></a>
               </u>
             </div>
           {{else}}
@@ -141,7 +141,7 @@
     </div>
     <div class="ui raised segment">
       <span class="ui grey left ribbon label"><i class="birthday icon"></i>Anniversaries</span>
-      {{#link-to 'account.employee.index.edit.index' class='ui right corner grey label'}}
+      {{#link-to "account.employee.index.edit.index" class="ui right corner grey label"}}
         <i class="pencil icon"></i>
       {{/link-to}}
       <div class="ui basic segment">
@@ -161,7 +161,7 @@
     </div>
     <div class="ui raised segment">
       <span class="ui red left ribbon label"><i class="emergency icon"></i>Emergency Contact</span>
-      {{#link-to 'account.employee.index.edit.index' class='ui right corner red label'}}
+      {{#link-to "account.employee.index.edit.index" class="ui right corner red label"}}
         <i class="pencil icon"></i>
       {{/link-to}}
       <div class="ui basic segment">
@@ -189,20 +189,20 @@
           </div>
         {{/if}}
         <span class="ui basic ribbon label"><i class="download icon"></i>Imported</span>
-        {{#link-to 'account.employee.index.edit.settings' class='ui right corner label'}}
+        {{#link-to "account.employee.index.edit.settings" class="ui right corner label"}}
           <i class="pencil icon"></i>
         {{/link-to}}
         <div class="ui basic segment">
           Source: {{capitalize model.externalLinkService}}<br />
-          Imported On: {{time model.created 'h:mma M/D/YY'}}<br />
+          Imported On: {{time model.created "h:mma M/D/YY"}}<br />
           Last Change Sync:
           {{if
             model.externalLinkLastSync
-            (time model.externalLinkLastSync 'h:mm:ssa M/D/YY')
-            'Never'}}
-          <a href="#" {{action 'forceSync'}}>Force sync from {{model.externalLinkService}}</a>
+            (time model.externalLinkLastSync "h:mm:ssa M/D/YY")
+            "Never"}}
+          <a href="#" {{action "forceSync"}}>Force sync from {{model.externalLinkService}}</a>
           <br />
-          Automatic Change Syncing: {{if model.externalLinkAutomaticSync 'Enabled' 'Disabled'}}
+          Automatic Change Syncing: {{if model.externalLinkAutomaticSync "Enabled" "Disabled"}}
           {{#if model.externalLinkDocumentLink}}
             <a class="right floated text" href={{model.externalLinkDocumentLink}}>
               Visit record on Slate <i class="external alternate icon"></i>

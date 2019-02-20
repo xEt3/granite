@@ -4,7 +4,7 @@
   </h2>
   <p>Edit the title and description of your job listing</p>
 
-  {{#input/ui-input value=model.title placeholder='What shows as the job name on the listing?'}}
+  {{#input/ui-input value=model.title placeholder="What shows as the job name on the listing?"}}
     Title
   {{/input/ui-input}}
 
@@ -20,8 +20,8 @@
     <a href="#" {{action
       (pipe
         (action "addManualSource")
-        (action 'save')
-        (action 'addToSelection')
+        (action "save")
+        (action "addToSelection")
       )
     }}>
       <i class="plus icon"></i>
@@ -63,7 +63,7 @@
   </form>
 </div>
 
-{{#ui-modal id='modal__add--manual-source' class='small form'}}
+{{#ui-modal id="modal__add--manual-source" class="small form"}}
   <i class="close icon"></i>
   <div class="header">
     Create a new manual source
@@ -76,10 +76,10 @@
     {{/input/ui-input}}
   </div>
   <div class="actions">
-    <button type="button" class="ui red button" {{action 'respondManualSource' false}}>
+    <button type="button" class="ui red button" {{action "respondManualSource" false}}>
       Cancel
     </button>
-    <button type="button" class="ui green right labeled icon button" disabled={{not manualSource.name}} {{action 'respondManualSource' true}}>
+    <button type="button" class="ui green right labeled icon button" disabled={{not manualSource.name}} {{action "respondManualSource" true}}>
       Save Manual Source
       <i class="check icon"></i>
     </button>

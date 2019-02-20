@@ -1,7 +1,7 @@
 <p>
   Templates allow you to customize the behavior and content of Granite.
   {{#unless model}}
-    {{#link-to 'account.settings.templates.add'}}Add a new template to get started.{{/link-to}}
+    {{#link-to "account.settings.templates.add"}}Add a new template to get started.{{/link-to}}
   {{/unless}}
 </p>
 
@@ -18,12 +18,12 @@
       <div class="ui small text right floated">
         {{#if group.template}}
           {{#ui-popup content="Edit current template..."}}
-            {{#link-to 'account.settings.templates.edit' group.template.id}}
+            {{#link-to "account.settings.templates.edit" group.template.id}}
               <i class="edit icon"></i>Edit
             {{/link-to}}
           {{/ui-popup}}
         {{else}}
-          {{#link-to 'account.settings.templates.add' group.definition.key}}
+          {{#link-to "account.settings.templates.add" group.definition.key}}
             <i class="asterisk icon"></i>New Customized Template
           {{/link-to}}
         {{/if}}

@@ -27,7 +27,7 @@
       <div class="two fields">
         <div class="field">
           <label for="employee-phone">Phone Number*</label>
-          {{masked-input type="tel" placeholder="Employee Phone #" id="employee-phone" mask="(111) 111-1111" value=newApplicant.phone on-change=(action (mut newApplicant.phone) value='target.value')}}
+          {{masked-input type="tel" placeholder="Employee Phone #" id="employee-phone" mask="(111) 111-1111" value=newApplicant.phone on-change=(action (mut newApplicant.phone) value="target.value")}}
         </div>
         <div class="field">
           <label for="email">Email*</label>
@@ -40,11 +40,11 @@
           <i class="dropdown icon"></i>
           <div class="default text">No stage</div>
           <div class="menu">
-            <div class="item" data-value="{{map-value mapper null}}">
+            <div class="item" data-value={{map-value mapper null}}>
               No stage
             </div>
             {{#each model.pipeline.stages as |stage|}}
-              <div class="item" data-value="{{map-value mapper stage.id}}">
+              <div class="item" data-value={{map-value mapper stage.id}}>
                 {{stage.name}}
               </div>
             {{/each}}
@@ -70,28 +70,28 @@
           {{/if}}
         </label>
         {{drop-zone
-          class='input__dropzone'
+          class="input__dropzone"
           url=resumeEndpoint
           uploadMultiple=false
-          acceptedFiles='.doc,.docx,.pdf,.rtf,.txt'
+          acceptedFiles=".doc,.docx,.pdf,.rtf,.txt"
           maxFiles=1
           autoProcessQueue=false
-          dictDefaultMessage='Drop or Click to Add Resume'
-          thumbnailWidth='175'
+          dictDefaultMessage="Drop or Click to Add Resume"
+          thumbnailWidth="175"
           headers=(hash X-API-Token=auth.token)
-          addedfile=(action 'addedFile')
-          error=(action 'uploadError')
-          uploadprogress=(action 'uploadProgressUpdate')
-          success=(action 'uploadedFile')
-          capture='camera'}}
+          addedfile=(action "addedFile")
+          error=(action "uploadError")
+          uploadprogress=(action "uploadProgressUpdate")
+          success=(action "uploadedFile")
+          capture="camera"}}
       </div>
     </form>
   </div>
   <div class="actions">
-    <button class="ui inverted red button" {{action 'cancel'}}>
+    <button class="ui inverted red button" {{action "cancel"}}>
       Cancel
     </button>
-    <button class="ui green right labeled icon button" {{action 'save'}}>
+    <button class="ui green right labeled icon button" {{action "save"}}>
       Add Application
       <i class="check icon"></i>
     </button>

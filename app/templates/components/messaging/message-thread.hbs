@@ -31,9 +31,9 @@
     <div class="twelve wide column field">
       <div class="ui icon input">
         {{input
-          type='text'
+          type="text"
           value=message
-          placeholder=(if fileIsAdded 'Add a comment to this file...' 'Type a message...')
+          placeholder=(if fileIsAdded "Add a comment to this file..." "Type a message...")
         }}
 
         <i class="paperclip icon dropzone__attach-trigger" role="button" {{action "removeFile"}}></i>
@@ -41,7 +41,7 @@
     </div>
     <div class="four wide column field">
       {{#form/action-button type="submit" disabled=(not (or message fileIsAdded)) class="ui fluid green button"}}
-        Send{{if fileIsAdded ' file'}}
+        Send{{if fileIsAdded " file"}}
       {{/form/action-button}}
     </div>
   </div>
@@ -49,23 +49,23 @@
   {{drop-zone
     id=dropzoneId
     url=fileEndpoint
-    class='dropzone__messaging'
+    class="dropzone__messaging"
     uploadMultiple=false
-    acceptedFiles='.doc,.docx,.pdf,.rtf,.txt,.jpg,.png,.gif,.xls,.xlsx'
+    acceptedFiles=".doc,.docx,.pdf,.rtf,.txt,.jpg,.png,.gif,.xls,.xlsx"
     maxFiles=1
-    method='put'
+    method="put"
     autoProcessQueue=false
-    dictDefaultMessage=''
+    dictDefaultMessage=""
     thumbnailHeight=100
     thumbnailWidth=100
-    thumbnailMethod='contain'
+    thumbnailMethod="contain"
     headers=(hash X-API-Token=auth.token)
-    addedfile=(action 'addedFile')
-    error=(action 'uploadError')
-    removedfile=(action 'didRemoveFile')
-    uploadprogress=(action 'uploadProgressUpdate')
-    success=(action 'uploadedFile')
-    capture='camera'
+    addedfile=(action "addedFile")
+    error=(action "uploadError")
+    removedfile=(action "didRemoveFile")
+    uploadprogress=(action "uploadProgressUpdate")
+    success=(action "uploadedFile")
+    capture="camera"
     addRemoveLinks=true
-    clickable='.dropzone__attach-trigger'}}
+    clickable=".dropzone__attach-trigger"}}
 </form>

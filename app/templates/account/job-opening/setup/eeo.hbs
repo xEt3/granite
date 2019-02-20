@@ -1,22 +1,31 @@
-<form {{action "saveAndContinue" on="submit"}}>
-  <h2 class="ui horizontal divider header">Equal Employment Opportunity</h2>
+<h2 class="ui horizontal divider header">Equal Employment Opportunity</h2>
 
-  <h3 class="center aligned light text header">
-    {{#if auth.user.company.collectEEO}}
-      <i class="check icon"></i>
-      Your company has elected to collect Equal Employment Opportunity data, so Granite will attempt to collect this information during the application process.
-    {{else}}
-      <i class="remove circle outline icon"></i>
-      We will not collect Equal Employment Opportunity data for this job. If your company is an applicable employer, you may adjust your EEO settings in {{#link-to 'account.settings'}}General Settings{{/link-to}}.
-    {{/if}}
-  </h3>
+<h3 class="center aligned light text header">
+  {{#if collectEEO}}
+    <i class="check icon"></i>
+    Your company has elected to collect Equal Employment Opportunity data, so Granite will attempt to collect this information during the application process.
+  {{else}}
+    <i class="remove circle outline icon"></i>
+    We will not collect Equal Employment Opportunity data for this job. If your company is an applicable employer, you may adjust your EEO settings in {{#link-to "account.settings"}}General Settings{{/link-to}}.
+  {{/if}}
+</h3>
+<div class="ui divider"></div>
 
-  <div class="ui divider"></div>
+{{#if collectEEO}}
+  {{quick-form
+    eeoSettingsForm
+    model
+    this
+    tagName="div"}}
+{{/if}}
 
+<div class="ui divider"></div>
+<form {{action (route-action "saveAndContinue") on="submit"}}>
   {{#form/action-button
-     type="submit"
-     class="ui huge fluid green button"
-     loading=working}}
+    type="submit"
+    class="ui huge fluid green button"
+    loading=working
+  }}
     Next
   {{/form/action-button}}
 </form>

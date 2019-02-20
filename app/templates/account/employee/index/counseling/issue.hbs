@@ -2,7 +2,7 @@
   {{#confirm-modal deleteContext=model.title as |confirmDelete|}}
     <hgroup class="clearfix">
       <h2 class="ui left floated header">
-        {{#link-to 'account.employee.index.counseling.issue'}}
+        {{#link-to "account.employee.index.counseling.issue"}}
           {{model.title}}
         {{/link-to}}
 
@@ -11,7 +11,7 @@
         </div>
         <div class="sub header">
           {{#if (await model.actionSeverity)}}
-            This issue started at <strong>{{get (await model.actionSeverity) 'title'}}</strong>
+            This issue started at <strong>{{get (await model.actionSeverity) "title"}}</strong>
           {{/if}}
         </div>
       </h2>
@@ -21,7 +21,7 @@
           <i class="wrench icon"></i><i class="dropdown icon"></i>
           <div class="menu">
             <div class="text-danger header">Danger Zone</div>
-            <a href="#" class="text-danger item" {{action (pipe confirmDelete (action 'delete'))}}>
+            <a href="#" class="text-danger item" {{action (pipe confirmDelete (action "delete"))}}>
               <i class="trash icon"></i>Delete Record
             </a>
           </div>

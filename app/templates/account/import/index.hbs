@@ -12,7 +12,7 @@
       <div class="default text">Select an external source</div>
       <div class="menu">
         {{#each model.linkedServices as |service|}}
-          <div class="item" data-value="{{map-value mapper service}}">
+          <div class="item" data-value={{map-value mapper service}}>
             {{service}}
           </div>
         {{/each}}
