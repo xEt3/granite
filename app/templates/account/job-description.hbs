@@ -1,6 +1,6 @@
 <div class="ui container">
   {{#ui-menu menuClass="pointing"}}
-    {{#link-to 'account.job-description.index' class="item"}}
+    {{#link-to "account.job-description.index" class="item"}}
       <i class="square icon"></i>Summary
     {{/link-to}}
     <div class="right menu">
@@ -9,9 +9,10 @@
         <div class="menu">
           <div class="header">Actions</div>
           <a href="#" class="item" {{action "createCampaign"}}><i class="wizard icon"></i>Hire for this job</a>
+          {{#link-to 'account.job-description.edit' model.id class="item"}}<i class="edit icon"></i> Edit{{/link-to}}
           <div class="text-danger header">Danger Zone</div>
           {{#confirm-modal deleteContext=model.title class="item" as |confirm|}}
-            <a href="#" id="job__action--delete" class="text-danger" {{action (pipe confirm (action 'delete'))}}>
+            <a href="#" id="job__action--delete" class="text-danger" {{action (pipe confirm (action "delete"))}}>
               <i class="trash icon"></i>Delete Record
             </a>
           {{/confirm-modal}}

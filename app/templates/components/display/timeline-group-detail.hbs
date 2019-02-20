@@ -1,6 +1,6 @@
 <div class="timeline-detail__content">
   {{#liquid-if group}}
-    <h2 class="ui center aligned header">{{group.history.length}} {{inflect-text 'Changes' group.history.length}} on {{time group.date 'MMMM Do'}}</h2>
+    <h2 class="ui center aligned header">{{group.history.length}} {{inflect-text "Changes" group.history.length}} on {{time group.date "MMMM Do"}}</h2>
     {{#each group.history as |history|}}
       {{list-item/history-item history=history}}
     {{/each}}

@@ -244,8 +244,24 @@ const jobTypes = [
   'Internship',
   'Temporary',
   'Seasonal',
-  'Commission'
+  'Commission',
+  null
 ];
+
+const eeoJobCategories = [
+  'Executive/Senior Level Officials and Managers',
+  'First/Mid Level Officials and Managers',
+  'Professionals',
+  'Technicians',
+  'Sales Workers',
+  'Administrative Support Workers',
+  'Craft Workers',
+  'Operatives',
+  'Laborers and Helpers',
+  'Service Workers'
+];
+
+const gender = [ 'Male', 'Female', 'Other' ];
 
 const formTypes = [{
   display: 'Freeform Input',
@@ -304,11 +320,13 @@ const recordDisplayPropertyMap = {
 };
 
 export {
+  gender,
   issueTypes,
   suffixes,
   states,
   jobCategories,
   jobTypes,
+  eeoJobCategories,
   formTypes,
   closeMessageMap,
   modelPageMap,

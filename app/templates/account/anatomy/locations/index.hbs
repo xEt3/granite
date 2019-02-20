@@ -6,10 +6,10 @@
   <div class="right aligned text floated menu__actions">
     <h3 class="ui header">
       {{#liquid-if addingLocation}}
-        {{#link-to 'account.anatomy.locations.index' class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
+        {{#link-to "account.anatomy.locations.index" class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
       {{else}}
-        {{#link-to 'account.anatomy.locations.index.new' class="right floated"}}
-          {{#ui-popup tagName='span' content="Add a location"}}
+        {{#link-to "account.anatomy.locations.index.new" class="right floated"}}
+          {{#ui-popup tagName="span" content="Add a location"}}
             <i class="plus icon"></i>
           {{/ui-popup}}
         {{/link-to}}
@@ -24,7 +24,7 @@
 
 <div class="ui divided items">
   {{#each model as |location|}}
-    {{list-item/location-item location=location onDelete=(action 'delete' )}}
+    {{list-item/location-item location=location onDelete=(action "delete" )}}
   {{else}}
     <h2 class="ui center aligned header">No locations available.</h2>
   {{/each}}

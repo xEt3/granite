@@ -1,5 +1,5 @@
 <td>
-  {{#ui-popup content='Delete custom field' position='bottom left' tagName='span'}}
+  {{#ui-popup content="Delete custom field" position="bottom left" tagName="span"}}
     <a href="#" class="text-danger" {{action "delete"}}>
       <i class="trash icon"></i>
     </a>
@@ -15,7 +15,7 @@
           <div class="ten wide column">
             <label for="new-custom-value" class="sr-only">New {{key}} value</label>
             {{#auto-focus}}
-              {{input type='text' name='new-custom-value' class="ui transparent input" value=newValue placeholder='Field value'}}
+              {{input type="text" name="new-custom-value" class="ui transparent input" value=newValue placeholder="Field value"}}
             {{/auto-focus}}
           </div>
           <div class="six wide center middle aligned center aligned column">
@@ -26,7 +26,7 @@
       </div>
     </form>
   {{else}}
-    {{#ui-popup content='Click to edit value' position='bottom left'}}
+    {{#ui-popup content="Click to edit value" position="bottom left"}}
       <a href="#" {{action "editValue"}}>
         {{value}}
         <i class="edit icon"></i>

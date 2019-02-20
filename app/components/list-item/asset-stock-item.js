@@ -32,6 +32,12 @@ export default Component.extend({
       this.get('onDelete')(this.get('asset'));
     },
 
+    removeDocument (document) {
+      let asset = this.get('asset');
+      asset.documents.removeObject(document);
+      this.get('saveStockItem')();
+    },
+
     toggleProperty (prop) {
       this.toggleProperty(prop);
     }

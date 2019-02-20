@@ -8,9 +8,9 @@
       {{#input/equipment-picker
         assignableAssets=splitAssets.remainingAssets
         suggestedAssets=splitAssets.suggestedAssets
-        onSelect=(action 'selectAsset')
-        onCreate=(action 'createAsset')
-        newAssetCategory=(action 'newAssetCategory')}}
+        onSelect=(action "selectAsset")
+        onCreate=(action "createAsset")
+        newAssetCategory=(action "newAssetCategory")}}
         <h3 class="ui header"><a href="#"><i class="plus icon"></i></a></h3>
       {{/input/equipment-picker}}
     </div>
@@ -27,7 +27,7 @@
           <div class="item">
             {{asset.identifier}}
             <span class="right floated">
-              {{#ui-popup content='Unassign asset'}}
+              {{#ui-popup content="Unassign asset"}}
                 <a href="#" class="text-danger" {{action "unassignAsset" asset}}><i class="minus icon"></i></a>
               {{/ui-popup}}
             </span>
@@ -45,7 +45,7 @@
   {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
 </form>
 
-{{#ui-modal name="new-asset" class="new-asset" detachable=true onApprove=(action 'saveAsset') onDeny=(action 'abortAsset')}}
+{{#ui-modal name="new-asset" class="new-asset" detachable=true onApprove=(action "saveAsset") onDeny=(action "abortAsset")}}
   <i class="cancel close icon"></i>
   <div class="header">
     Creating a new item in "{{pendingAssetItem.asset.name}}" for {{model.firstName}}
@@ -61,7 +61,7 @@
         <label for="asset-description">Documents</label>
         <p class="light text">
           Document upload is only available in category view.
-          <a href="#" {{action "closeAssetModalAndTransition" 'account.asset.index.new' pendingAssetItem.asset.id}}>
+          <a href="#" {{action "closeAssetModalAndTransition" "account.asset.index.new" pendingAssetItem.asset.id}}>
             Go to asset category
           </a>
         </p>

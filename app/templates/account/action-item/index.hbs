@@ -10,7 +10,7 @@
 
   <h2 class="ui clearfix header">
     {{#if (eq model.owner.id auth.user.employee.id)}}
-      {{#link-to 'account.action-item.edit'}}
+      {{#link-to "account.action-item.edit"}}
         <i class="edit fitted icon"></i>
       {{/link-to}}
     {{/if}}
@@ -75,7 +75,7 @@
   {{#if (and dependents (not model.completedOn))}}
     <div class="ui divider"></div>
     <h3 class="header">
-      {{dependents.length}} {{inflect-text 'Project' dependents.length}} Waiting
+      {{dependents.length}} {{inflect-text "Project" dependents.length}} Waiting
     </h3>
     <div class="ui selection list action-item__prerequisites">
       {{#each dependents as |dependent|}}

@@ -4,26 +4,26 @@
   <div class="content clearfix">
     <div class="header">
       {{#ui-popup
-        tagName='span'
-        content=(if model.didResolve 'This follow up marked the issue as resolved.' 'This follow up did not resolve the issue.')
-        class=(if model.didResolve 'text-green' 'light text')}}
-        <i class="{{if model.didResolve 'check' 'ellipsis horizontal'}} icon"></i>
+        tagName="span"
+        content=(if model.didResolve "This follow up marked the issue as resolved." "This follow up did not resolve the issue.")
+        class=(if model.didResolve "text-green" "light text")}}
+        <i class="{{if model.didResolve "check" "ellipsis horizontal"}} icon"></i>
       {{/ui-popup}}
-      {{time model.created 'MMMM Do YYYY'}}
+      {{time model.created "MMMM Do YYYY"}}
       {{#if model.creator}}
         by {{model.creator.firstName}}
       {{/if}}
     </div>
 
     {{#if model.notes}}
-      <a href="#" class="right floated" {{action (toggle 'isExpanded' this)}}>
-        {{#ui-popup content="Toggle notes" position='left center'}}
-          <i class="eye {{if isExpanded 'slash'}} icon"></i>
+      <a href="#" class="right floated" {{action (toggle "isExpanded" this)}}>
+        {{#ui-popup content="Toggle notes" position="left center"}}
+          <i class="eye {{if isExpanded "slash"}} icon"></i>
         {{/ui-popup}}
       </a>
     {{/if}}
 
-    {{#liquid-if isExpanded class='meta'}}
+    {{#liquid-if isExpanded class="meta"}}
       <p>{{long-text model.notes}}</p>
     {{/liquid-if}}
   </div>

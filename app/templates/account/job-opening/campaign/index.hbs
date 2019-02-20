@@ -3,9 +3,9 @@
     Recent Activity
   </h2>
 
-  {{#if model.length}}
+  {{#if model}}
     {{ember-chart
-      type='line'
+      type="line"
       data=model
       options=summaryOpts
     }}

@@ -1,13 +1,15 @@
 {{#if imagePreview}}
   <div class="ui tiny rounded image">
-    <img src="{{file.url}}" alt="">
+    <img src={{file.url}} alt="">
   </div>
 {{else}}
   {{display/icon-for-file file class="huge"}}
 {{/if}}
 <div class="clearing content">
   <div class="header">
-    {{file.title}}
+    {{#link-to "account.document" file.id}}
+      {{file.title}}
+    {{/link-to}}
     <span class="light text">{{file.extension}}</span>
   </div>
 
@@ -15,6 +17,15 @@
     {{#each file.tags as |tag|}}
       <span class="ui tiny label">{{tag}}</span>
     {{/each}}
+    {{#if deleteAction}}
+      <div class="right floated">
+        {{#confirm-modal confirmContent=confirmDeleteContent as |confirm|}}
+          <a href="#" class="text-danger" id="asset-doc__action--delete" {{action (pipe confirm (action deleteAction file))}}>
+            <i class="trash icon"></i>
+          </a>
+        {{/confirm-modal}}
+      </div>
+    {{/if}}
     <span class="ui small text right floated">Created {{time file.created}}</span>
   </div>
 </div>

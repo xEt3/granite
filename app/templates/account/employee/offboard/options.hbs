@@ -29,7 +29,7 @@
             <i class="dropdown icon"></i>
             <div class="menu">
               {{#each states as |state|}}
-                <div class="item" data-value="{{state.value}}">
+                <div class="item" data-value={{state.value}}>
                   {{state.label}}
                 </div>
               {{/each}}
@@ -60,10 +60,10 @@
     {{#input/document-selection-modal
       title="Select Offboarding Documents"
       selected=model.offboardingDocuments
-      onSelected=(pipe (action (mut model.offboardingDocuments)) (action 'save' model))
-      onNotify= (action 'onNotify')
+      onSelected=(pipe (action (mut model.offboardingDocuments)) (action "save" model))
+      onNotify= (action "onNotify")
       as |execute|}}
-      <button class="ui basic button" {{action execute 'selectDocuments'}}>
+      <button class="ui basic button" {{action execute "selectDocuments"}}>
         <i class="folder icon"></i>
         Assign offboarding documents
         {{#if model.offboardingDocuments.length}}

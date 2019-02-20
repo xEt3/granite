@@ -7,14 +7,14 @@
     <h3 class="ui right floated header">
       {{#if auth.user.company.linkedToSlate}}
         <a href="#">
-          {{#ui-popup tagName='span' position="left center" content="Import from Slate Payroll..."}}
+          {{#ui-popup tagName="span" position="left center" content="Import from Slate Payroll..."}}
             <i class="sign in alternate icon"></i>
           {{/ui-popup}}
         </a>
       {{/if}}
 
-      {{#link-to 'account.anatomy.company-users.new' class="right floated"}}
-        {{#ui-popup tagName='span' position="left center" content="Add a user"}}
+      {{#link-to "account.anatomy.company-users.new" class="right floated"}}
+        {{#ui-popup tagName="span" position="left center" content="Add a user"}}
           <i class="plus icon"></i>
         {{/ui-popup}}
       {{/link-to}}
@@ -24,7 +24,7 @@
 <div class="ui divider"></div>
   <div class="ui divided items">
     {{#each model as |user|}}
-      {{list-item/user-item user onDelete=(action 'delete')}}
+      {{list-item/user-item user onDelete=(action "delete")}}
     {{else}}
       <h2 class="ui center aligned header">No users available.</h2>
     {{/each}}

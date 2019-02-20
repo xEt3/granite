@@ -1,0 +1,37 @@
+{{#if hasBlock}}
+  {{yield startApplication}}
+{{/if}}
+
+{{#ui-modal name="modal__file-upload" id=modalId}}
+  <div class="header">
+    Upload a File
+  </div>
+  <div class="content">
+    {{drop-zone
+      url=fileEndpoint
+      id=dropzoneId
+      class="input__dropzone"
+      method="put"
+      uploadMultiple=false
+      maxFiles=1
+      autoProcessQueue=false
+      dictDefaultMessage="Drop or Click to Select a File"
+      thumbnailWidth="175"
+      headers=(hash X-API-Token=auth.token)
+      addedfile=(action "addedFile")
+      success=(action "uploadedFile")
+      capture="camera"}}
+  </div>
+  <div class="actions">
+    <button class="ui red button" {{action closeModal}}>
+      Close
+    </button>
+    <button class="ui green right labeled icon button" {{action
+      (pipe
+      (action upload)
+      (action closeModal))
+    }}>
+      Upload File<i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}

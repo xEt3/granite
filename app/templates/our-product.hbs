@@ -1,29 +1,29 @@
 <div class="our-product">
   {{display/scroll-reveal
-    '.product__section:not(.product__section--img-reverse-rotate) h1'
-    origin='top'
+    ".product__section:not(.product__section--img-reverse-rotate) h1"
+    origin="top"
     mobile=false
   }}
   {{display/scroll-reveal
-    '.product__section:not(.product__section--img-reverse-rotate) .section-content__tagline'
-    useDelay='once'
+    ".product__section:not(.product__section--img-reverse-rotate) .section-content__tagline"
+    useDelay="once"
     delay=500
     viewFactor=0.1
-    origin='bottom'
+    origin="bottom"
   }}
   {{display/scroll-reveal
-    '.product__section:not(.product__section--img-reverse-rotate) .section-content__features'
-    useDelay='once'
+    ".product__section:not(.product__section--img-reverse-rotate) .section-content__features"
+    useDelay="once"
     delay=500
     viewFactor=0.1
-    origin='bottom'
+    origin="bottom"
   }}
   <div class="product__section product__section--img product__section--top">
     <div class="product-section__content">
       <h1 class="product-section__content--granite">Granite HR</h1>
       {{#display/scroll-reveal
         delay=500
-        origin='left'
+        origin="left"
         mobile=false
       }}
         simplifies the monumental task of managing Human Resources
@@ -69,7 +69,7 @@
           <h1><i class="power off icon"></i> Like what you see?</h1>
           <h2>Start a free 14-day trial and see what Granite can do for your business.</h2>
 
-          {{#link-to 'signup' class="ui massive green button"}}
+          {{#link-to "signup" class="ui massive green button"}}
             Get Started
           {{/link-to}}
         </div>

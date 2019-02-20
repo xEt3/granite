@@ -1,14 +1,14 @@
 <h3 class="ui header">
   {{#liquid-if addingAsset}}
-    {{#link-to 'account.asset.index' class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
+    {{#link-to "account.asset.index" class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
   {{else}}
     <div class="right floated">
       {{#if model}}
         {{#ui-popup tagName="span" content=popupContent}}
-          <a href="#" {{action 'toggleProperty' 'expandAttributes'}}><i class="eye {{if expandAttributes 'slash'}} icon"></i></a>
+          <a href="#" {{action "toggleProperty" "expandAttributes"}}><i class="eye {{if expandAttributes "slash"}} icon"></i></a>
         {{/ui-popup}}
       {{/if}}
-      {{#link-to 'account.asset.index.new'}}<i class="plus icon"></i>{{/link-to}}
+      {{#link-to "account.asset.index.new"}}<i class="plus icon"></i>{{/link-to}}
     </div>
   {{/liquid-if}}
 </h3>
@@ -17,9 +17,14 @@
 
 <div class="ui relaxed divided list">
   {{#each model as |asset|}}
-    {{list-item/asset-stock-item asset=asset showAttributes=expandAttributes onDelete=(action 'delete')}}
+    {{list-item/asset-stock-item
+      asset=asset
+      showAttributes=expandAttributes
+      addDocuments=true
+      saveStockItem=(action "save" asset)
+      onDelete=(action "delete")}}
   {{else}}
-    <h2 class="ui center aligned header">No assets available. {{#link-to 'account.asset.index.new'}}Add one?{{/link-to}}</h2>
+    <h2 class="ui center aligned header">No assets available. {{#link-to "account.asset.index.new"}}Add one?{{/link-to}}</h2>
   {{/each}}
 </div>
 {{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}

@@ -1,24 +1,24 @@
 <div class="ui container">
   <div class="ui pointing menu">
-    {{#link-to 'account.asset.index' class="item"}}
+    {{#link-to "account.asset.index" class="item"}}
       <i class="list icon"></i>Stock
     {{/link-to}}
-    {{#link-to 'account.asset.information' class="item"}}
+    {{#link-to "account.asset.information" class="item"}}
       <i class="info icon"></i>Attributes
     {{/link-to}}
-    {{#link-to 'account.asset.documents' class="item"}}
+    {{#link-to "account.asset.documents" class="item"}}
       <i class="file icon"></i>Associated Documents
     {{/link-to}}
     <div class="right menu">
       {{#ui-dropdown class="item icon top right pointing"}}
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
-          {{#link-to 'account.asset.edit' class="item"}}<i class="edit icon"></i>Edit{{/link-to}}
-          {{#link-to 'account.asset.settings' class="item"}}<i class="settings icon"></i>Settings{{/link-to}}
+          {{#link-to "account.asset.edit" class="item"}}<i class="edit icon"></i>Edit{{/link-to}}
+          {{#link-to "account.asset.settings" class="item"}}<i class="settings icon"></i>Settings{{/link-to}}
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
             {{#confirm-modal as deleteContext=model.name as |confirm|}}
-              <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}><i class="trash icon"></i>Delete Record</a>
+              <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}><i class="trash icon"></i>Delete Record</a>
             {{/confirm-modal}}
           </div>
         </div>

@@ -1,8 +1,8 @@
 <div class="ui header clearfix">
   <div class="right floated">
     {{#ui-popup content=attributeHelper}}
-      <a href="#" class="{{if addingAttribute 'text-danger'}}" {{action "toggleProperty" "addingAttribute"}}>
-        <i class="{{if addingAttribute 'remove' 'plus'}} icon"></i>
+      <a href="#" class={{if addingAttribute "text-danger"}} {{action "toggleProperty" "addingAttribute"}}>
+        <i class="{{if addingAttribute "remove" "plus"}} icon"></i>
       </a>
     {{/ui-popup}}
   </div>

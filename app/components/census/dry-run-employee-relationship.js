@@ -11,7 +11,12 @@ export default Component.extend({
         field = this.get('availableFields').findBy('path', key) || {};
 
     if (field.isRelationship) {
-      return this.get('store').findRecord(key, value);
+      if (key === 'supervisor') {
+        //change to employee because no supervisor model
+        key = 'employee';
+      }
+      //if value is object, return value because its a supervisor in the local upload
+      return typeof value === 'object' ? value : this.get('store').findRecord(key, value);
     }
   })
 });

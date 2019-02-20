@@ -63,7 +63,7 @@
             <i class="dropdown icon"></i>
             <div class="menu">
               {{#each stateOptions as |state|}}
-                <div class="item select-address-state__item" data-id="{{state}}" data-value="{{map-value mapper state}}">
+                <div class="item select-address-state__item" data-id={{state}} data-value={{map-value mapper state}}>
                   {{state}}
                 </div>
               {{/each}}
@@ -88,7 +88,7 @@
         placeholder="Employee Access URL (generally your company's abbreviation)"
         id="url-prefix"}}
     </div>
-    {{#display/preview-browser}}{{if model.urlPrefix model.urlPrefix 'portal'}}{{/display/preview-browser}}
+    {{#display/preview-browser}}{{if model.urlPrefix model.urlPrefix "portal"}}{{/display/preview-browser}}
     <div class="ui divider"></div>
     {{#form/action-button type="submit" class="ui massive fluid green button" loading=working}}Next: Billing{{/form/action-button}}
   </form>

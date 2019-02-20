@@ -6,18 +6,18 @@
     {{drop-zone
       url=fileEndpoint
       id=dropzoneId
-      class='input__dropzone'
-      method='put'
+      class="input__dropzone"
+      method="put"
       uploadMultiple=false
-      acceptedFiles='image/*'
+      acceptedFiles="image/*"
       maxFiles=1
       autoProcessQueue=false
-      dictDefaultMessage='Drop Files or Click to Replace/Add Picture'
-      thumbnailWidth='175'
+      dictDefaultMessage="Drop Files or Click to Replace/Add Picture"
+      thumbnailWidth="175"
       headers=(hash X-API-Token=auth.token)
-      addedfile=(action 'addedFile')
-      success=(action 'uploadedFile')
-      capture='camera'}}
+      addedfile=(action "addedFile")
+      success=(action "uploadedFile")
+      capture="camera"}}
   </div>
 
   <div class="ui divider"></div>
@@ -27,14 +27,14 @@
     model
     this
     class="ui grid"
-    tagName='div'}}
+    tagName="div"}}
 
   <div class="ui divider"></div>
 
   <form {{action "saveSettings" on="submit"}}>
     {{#form/action-button
       type="submit"
-      class='ui positive fluid huge button'
+      class="ui positive fluid huge button"
       loading=working}}
       Save Changes
     {{/form/action-button}}

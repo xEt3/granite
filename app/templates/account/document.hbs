@@ -1,6 +1,6 @@
 <div class="ui container basic segment">
   {{#ui-menu menuClass="pointing"}}
-    {{#link-to 'account.document.index' class="item"}}
+    {{#link-to "account.document.index" class="item"}}
       <i class="list icon"></i>Summary
     {{/link-to}}
     <div class="right menu">
@@ -9,10 +9,10 @@
         <div class="menu">
           <div class="item">
             <a href="#" {{action (pipe
-              (action 'openAssignmentModal' file)
+              (action "openAssignmentModal" file)
               (action remapToModels)
-              (action 'save')
-              (action 'closeAssignmentModal')
+              (action "save")
+              (action "closeAssignmentModal")
             )}}>
               <i class="add user icon"></i> Assign (send) to
             </a>
@@ -20,7 +20,7 @@
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
             {{#confirm-modal deleteContext=(concat model.title " - " model.mimeType) as |confirm|}}
-              <a href="#" class="text-danger" {{action (pipe confirm (action 'delete'))}}><i class="trash icon"></i>Delete File</a>
+              <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}><i class="trash icon"></i>Delete File</a>
             {{/confirm-modal}}
           </div>
         </div>
@@ -32,13 +32,13 @@
     <hgroup>
       <h2>
         {{display/icon-for-file model}}
-        {{if model.title model.title 'Document'}}
+        {{if model.title model.title "Document"}}
         {{#if model.tags}}
           {{#each model.tags as |tag|}}
             <span class="ui tiny label">{{tag}}</span>
           {{/each}}
         {{/if}}
-        <a href="{{model.url}}" target="_blank" rel="noopener" class="right floated" download><i class="download fitted icon"></i></a>
+        <a href={{model.url}} target="_blank" rel="noopener" class="right floated" download><i class="download fitted icon"></i></a>
       </h2>
     </hgroup>
 
@@ -52,7 +52,7 @@
   </div>
 </div>
 
-{{#ui-modal name='modal__file-assignment' id='modal__file-assignment' class='small form'}}
+{{#ui-modal name="modal__file-assignment" id="modal__file-assignment" class="small form"}}
   <div class="header">
     Assign {{model.title}}
   </div>
@@ -61,13 +61,13 @@
       fileAssignmentForm
       fileAssignment
       this
-      tagName='div'}}
+      tagName="div"}}
   </div>
   <div class="actions">
-    <button class="ui red button" {{action 'respondAssignment' false}}>
+    <button class="ui red button" {{action "respondAssignment" false}}>
       Cancel
     </button>
-    <button class="ui primary right labeled icon {{if working 'loading'}} button" {{action 'respondAssignment' true}} disabled={{lt fileAssignment.employees.length 1}}>
+    <button class="ui primary right labeled icon {{if working "loading"}} button" {{action "respondAssignment" true}} disabled={{lt fileAssignment.employees.length 1}}>
       Assign
       {{#if (gte fileAssignment.employees.length 2)}}
         To {{fileAssignment.employees.length}} Employees

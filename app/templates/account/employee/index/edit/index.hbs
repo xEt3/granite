@@ -18,15 +18,29 @@
       <i class="dropdown icon"></i>
       <div class="menu">
         {{#each suffixes as |suffix|}}
-          <div class="item" data-value="{{suffix}}">
+          <div class="item" data-value={{suffix}}>
             {{suffix}}
           </div>
         {{/each}}
       </div>
     {{/ui-dropdown}}
   </div>
+  <div class="two wide field">
+    <label for="suffix-name">Gender</label>
+    {{#ui-dropdown class="selection" selected=model.gender onChange=(action (mut model.gender))}}
+      <div class="default text">Gender</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each gender as |gender|}}
+          <div class="item" data-value={{gender}}>
+            {{gender}}
+          </div>
+        {{/each}}
+      </div>
+    {{/ui-dropdown}}
+  </div>
 </div>
-<div class="two fields">
+<div class="three fields">
   <div class="field">
     <label for="employee-phone">Phone Number</label>
     {{masked-input type="tel" value=model.phone placeholder="Employee Phone #" id="employee-phone" mask="(111) 111-1111"}}
@@ -34,6 +48,10 @@
   <div class="field">
     <label for="email">Email</label>
     {{validated-input type="email" model=model valuePath="email" placeholder="Email" id="email"}}
+  </div>
+  <div class="field">
+    <label for="employeeNumber">Employee Number</label>
+    {{validated-input model=model valuePath="employeeNumber" placeholder="Employee Number" id="employee-number"}}
   </div>
 </div>
 
@@ -77,7 +95,7 @@
       <i class="dropdown icon"></i>
       <div class="menu">
         {{#each states as |state|}}
-          <div class="item" data-value="{{state.value}}">
+          <div class="item" data-value={{state.value}}>
             {{state.label}}
           </div>
         {{/each}}

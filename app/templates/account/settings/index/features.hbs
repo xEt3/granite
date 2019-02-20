@@ -1,0 +1,39 @@
+<div class="ui form">
+  <h3 class="ui header">
+    Features
+  </h3>
+  <p>This section allows you to toggle granite features on and off, depending on what your company needs.</p>
+  <div class="ui divider"></div>
+
+  <div class="field">
+    <label for="eeoc">
+      Collect EEO data<br />
+      <small class="light text">
+        Enabling this feature will collect data required for the EEO-1 report (race & gender). You should only enable this feature if you are required to file an annual EEO-1 Report. To find out if you are required to file an EEO-1 report, contact AE or visit <a href="https://www.eeoc.gov/employers/eeo1survey/faq.cfm" rel="noopener">EEOC FAQ</a>.
+      </small>
+    </label>
+    Off
+    {{ui-checkbox
+      class="toggle"
+      label="On"
+      checked=model.collectEEO
+      onChange=(pipe-action (action (mut model.collectEEO)) (action "save"))}}
+  </div>
+
+  {{#if model.collectEEO}}
+    <div class="field">
+      <label for="aa">
+        Collect additional Affirmative Action data<br />
+        <small class="light text">
+          Enabling this feature will collect data required for an Affirmative Action Plan (race, gender, veteran’s status and disabled status). You should only enable this feature if you are subject to Executive Order 11246 and required to develop an annual Affirmative Action Plan. To find out if you are subject to Executive Order 11246, contact AE or visit <a href="https://www.dol.gov/ofccp/taguides/sbguide.htm">Guide for Small Businesses with Federal Contracts</a>.
+        </small>
+      </label>
+      Off
+      {{ui-checkbox
+        class="toggle"
+        label="On"
+        checked=model.collectAA
+        onChange=(pipe-action (action (mut model.collectAA)) (action "save"))}}
+    </div>
+  {{/if}}
+</div>

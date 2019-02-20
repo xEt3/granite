@@ -32,8 +32,8 @@ module('Integration | Component | search/suggestion-input', function (hooks) {
 
     assert.dom('.ui.search').exists();
 
-    await focus('.ui.search input');
     await fillIn('.ui.search input', 'richard');
+    await focus('.ui.search input');
     await new Promise(done => setTimeout(done, 1000));
     await settled();
     await blur('.ui.search input');

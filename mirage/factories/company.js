@@ -2,7 +2,6 @@ import { Factory, faker } from 'ember-cli-mirage';
 import moment from 'moment';
 
 export default Factory.extend({
-  id:                    1,
   name:                  faker.company.companyName,
   contactPhone:          faker.phone.phoneNumber(),
   contactFirstName:      faker.name.firstName(),
@@ -13,6 +12,7 @@ export default Factory.extend({
   addressState:          faker.address.state(),
   addressZipCode:        faker.address.zipCode(),
   urlPrefix:             faker.random.word,
+  collectEEO:            true,
   firstStepsCompletedOn: moment().subtract(1, 'hour').toISOString(),
 
   firstStepsCompleted: [

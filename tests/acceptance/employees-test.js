@@ -67,12 +67,20 @@ module('Acceptance | employees', function (hooks) {
   });
 
   test('filter employees', async function (assert) {
-    await authenticate.call(this, server, {
-      employee: {
-        name:    { firstName: faker.name.firstName() },
-        picture: null
-      }
+    let { employee, company } = await authenticate.call(this, server);
+
+    let supervisor2 = await server.create('employee', { company: company.id });
+
+    await server.create('employee', {
+      supervisor: employee.id,
+      company:    company.id
     });
+
+    await server.create('employee', {
+      supervisor: supervisor2.id,
+      company:    company.id
+    });
+
     await server.create('department');
     await server.create('location');
     await visit('/account/employees');
@@ -82,7 +90,7 @@ module('Acceptance | employees', function (hooks) {
     let filters = findAll('div.ui > .segment.vertical').length;
     assert.equal(filters, 5, '5 filters showen');
     assert.dom('i.icon.remove');
-    assert.dom('a.small.text-red').hasText('Reset All');
+    assert.dom('.negative.ui.button.small.text').hasText('Reset All');
 
     for (let i = 2; i <= filters + 1; i++) {
       assert.dom(`div:nth-child(${i}) > h4 > i.down`).exists();
@@ -92,7 +100,7 @@ module('Acceptance | employees', function (hooks) {
 
     [ 'Select a Supervisor', 'Select a Department', 'Select a Location' ].forEach((filter, i) => {
       assert.dom(`div:nth-child(${i + 2}) > div > div > div > div.default.text`).hasText(filter);
-      assert.equal(findAll(`div:nth-child(${i + 2}) > div > div > div > div > div.item`).length > 1, true, `${filter} dropdows have more than one option`);
+      assert.equal(findAll(`div:nth-child(${i + 2}) > div > div > div > div > div.item`).length > 1, true, `${filter} dropdown has more than one option`);
     });
 
     for (let i = 1; i <= 2; i++) {

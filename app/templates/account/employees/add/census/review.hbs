@@ -2,9 +2,9 @@
   user=auth.user
   steps=intros
   start-if=model.data
-  hintKey='employees-census'}}
+  hintKey="employees-census"}}
 
-{{#link-to 'account.employees.add.census.index' class="item text-danger"}}
+{{#link-to "account.employees.add.census.index" class="item text-danger"}}
   <i class="fa fa-fw fa-refresh"></i>
   Reupload census
 {{/link-to}}
@@ -13,7 +13,7 @@
   <i class="pull-right text-green spinner loading icon"></i>
 {{else}}
   <a href="#" class="pull-right text-green btn__dry-run" {{action "doDryRun" true}}>
-    {{if displayDryRunResults 'Regenerate' 'Generate'}} dry run data
+    {{if displayDryRunResults "Regenerate" "Generate"}} dry run data
   </a>
 {{/if}}
 
@@ -38,13 +38,13 @@
 
 <form {{action "importRecords" on="submit"}}>
   <div class="ui raised very padded fluid container">
-    <div class="responsive-table census__table">
+    {{#display/visual-overflow-table class="responsive-table census__table"}}
       <table class="ui striped celled table">
         <thead>
-          <tr class="guess-fields-row">
+          <tr class="guess-fields-row overflow">
             <th>
               <div class="ui red ribbon label">
-                {{#ui-popup content='We have attempted to guess the columns that you uploaded. This row represents our guesses.'}}
+                {{#ui-popup content="We have attempted to guess the columns that you uploaded. This row represents our guesses."}}
                   Guessed Fields
                 {{/ui-popup}}
               </div>
@@ -57,16 +57,16 @@
                     direction="downward"
                     name="guess-column"
                     selected=guesses
-                    onChange=(pipe-action (action 'mutateGuess' index)(action 'doDryRun'))}}
+                    onChange=(pipe-action (action "mutateGuess" index)(action "doDryRun"))}}
                     <div class="default text">Select field for column</div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
                       {{#each availableFields as |availableField|}}
-                        <div class="item" data-value="{{availableField.path}}">
+                        <div class="item" data-value={{availableField.path}}>
                           {{availableField.label}}
                         </div>
                       {{/each}}
-                      <div class="item text-danger" data-value=null>
+                      <div class="item text-danger" data-value={{null}}>
                         Disregard
                       </div>
                     </div>
@@ -78,7 +78,7 @@
           <tr class="client-fields-row">
             <th>
               <div class="ui blue ribbon label">
-                {{#ui-popup content='We show the column labels you originally uploaded here for reference.'}}
+                {{#ui-popup content="We show the column labels you originally uploaded here for reference."}}
                   Your Columns
                 {{/ui-popup}}
               </div>
@@ -90,28 +90,30 @@
         </thead>
         <tbody class="monospaced data-rows">
           {{#each rows as |row rowIndex|}}
-            <tr>
+            {{#census/table-row validation=(object-at rowIndex dataValidation)}}
+              <td>
+                {{add-one rowIndex}}
+              </td>
               {{#each row as |column columnIndex|}}
-                <td>
-                  {{census/table-cell
-                    column
-                    rowIndex
-                    columnIndex
-                    potentialData
-                    availableFields
-                    model.data.[0]
-                    addDepartment = (action 'showDepartmentModal')
-                    addLocation = (action 'showLocationModal')
-                    onRefresh = (action 'onRefresh')
-                    onNotify = (action 'onNotify')
-                  }}
-                </td>
+                {{census/table-cell
+                  column
+                  rowIndex
+                  columnIndex
+                  potentialData
+                  availableFields
+                  guesses
+                  (object-at columnIndex (object-at rowIndex dataValidation))
+                  addDepartment=(action "showDepartmentModal")
+                  addLocation=(action "showLocationModal")
+                  onRefresh=(action "onRefresh")
+                  onNotify=(action "onNotify")
+                }}
               {{/each}}
-            </tr>
+            {{/census/table-row}}
           {{/each}}
         </tbody>
       </table>
-    </div>
+    {{/display/visual-overflow-table}}
 
     <div class="ui divider"></div>
 
@@ -121,7 +123,7 @@
   </div>
 </form>
 
-{{#ui-modal id='modal__add-location' class='small form'}}
+{{#ui-modal id="modal__add-location" class="small form"}}
   <div class="header">
     Add Location
   </div>
@@ -159,7 +161,7 @@
           <i class="dropdown icon"></i>
           <div class="menu">
             {{#each states as |state|}}
-              <div class="item" data-value="{{state.value}}">
+              <div class="item" data-value={{state.value}}>
                 {{state.label}}
               </div>
             {{/each}}
@@ -173,16 +175,16 @@
     </div>
   </div>
   <div class="actions">
-    <button class="ui red button" {{action 'respondLocationModal' false}}>
+    <button class="ui red button" {{action "respondLocationModal" false}}>
       Cancel
     </button>
-    <button class="ui green right labeled icon button" {{action 'respondLocationModal' true}}>
+    <button class="ui green right labeled icon button" {{action "respondLocationModal" true}}>
       Create Location<i class="check icon"></i>
     </button>
   </div>
 {{/ui-modal}}
 
-{{#ui-modal id='modal__add-department' class='small form'}}
+{{#ui-modal id="modal__add-department" class="small form"}}
   <div class="header">
     Add Department
   </div>
@@ -197,10 +199,10 @@
     </div>
   </div>
   <div class="actions">
-    <button class="ui red button" {{action 'respondDepartmentModal' false}}>
+    <button class="ui red button" {{action "respondDepartmentModal" false}}>
       Cancel
     </button>
-    <button class="ui green right labeled icon button" {{action 'respondDepartmentModal' true}}>
+    <button class="ui green right labeled icon button" {{action "respondDepartmentModal" true}}>
       Create Department<i class="check icon"></i>
     </button>
   </div>

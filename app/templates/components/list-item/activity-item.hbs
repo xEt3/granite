@@ -22,12 +22,12 @@
 
     {{#if enableLikes}}
       {{#ui-popup tagName="span" position="top center" title="Thumbs up"}}
-        <a href="#" class="like {{if likeByCurrentUser 'text-red'}}" {{action "like"}}>
+        <a href="#" class="like {{if likeByCurrentUser "text-red"}}" {{action "like"}}>
           <i class="thumbs up icon"></i>
           {{#if likeByCurrentUser}}
             You
             {{#if likesMinusOne}}
-              and {{likesMinusOne}} {{inflect-text 'other' likesMinusOne}}
+              and {{likesMinusOne}} {{inflect-text "other" likesMinusOne}}
             {{/if}}
             like this
           {{else}}
@@ -38,7 +38,7 @@
     {{/if}}
 
     <div class="right floated date">
-      {{time-ago activity.created}} on {{time activity.created 'M/D/YY'}}
+      {{time-ago activity.created}} on {{time activity.created "M/D/YY"}}
     </div>
   </div>
 

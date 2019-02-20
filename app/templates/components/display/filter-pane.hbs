@@ -1,21 +1,27 @@
 {{yield
   (hash
     section=(component
-      'display/filter-panes/section'
+      "display/filter-panes/section"
       resetFilter=(action resetFilter)
+      sendComponentUpdate=(action sendComponentUpdate)
     )
     control=(component
-      'display/filter-panes/control'
+      "display/filter-panes/control"
       update=(action sendComponentUpdate)
     )
     selectControl=(component
-      'display/filter-panes/control'
-      type='select'
+      "display/filter-panes/control"
+      type="select"
       update=(action sendComponentUpdate)
     )
     toggleControl=(component
-      'display/filter-panes/control'
-      type='toggle'
+      "display/filter-panes/control"
+      type="toggle"
+      update=(action sendComponentUpdate)
+    )
+    radioControl=(component
+      "display/filter-panes/control"
+      type="radio"
       update=(action sendComponentUpdate)
     )
   )

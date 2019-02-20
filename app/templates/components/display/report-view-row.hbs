@@ -1,0 +1,9 @@
+{{#if rowData.section}}
+  <td colspan={{numColumns}}>
+    {{rowData.section}}
+  </td>
+{{else}}
+  {{#each rowData as |cell|}}
+    {{display/report-view-cell cell}}
+  {{/each}}
+{{/if}}

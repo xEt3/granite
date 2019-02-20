@@ -1,7 +1,6 @@
 import { Factory, faker } from 'ember-cli-mirage';
 
 export default Factory.extend({
-
   coverLetter:           null,
   stageOrder:            0,
   manualEntry:           true,

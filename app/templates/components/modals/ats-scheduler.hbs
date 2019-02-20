@@ -27,7 +27,7 @@
           <div class="default text">Meeting Organizer</div>
           <div class="menu">
             {{#each availableOrganizers as |organizer|}}
-              <div class="item" data-value="{{map-value mapper organizer}}">
+              <div class="item" data-value={{map-value mapper organizer}}>
                 {{organizer.fullName}}
               </div>
             {{/each}}
@@ -41,7 +41,7 @@
           <div class="default text">Meeting Facilitator</div>
           <div class="menu">
             {{#each availableOrganizers as |facilitator|}}
-              <div class="item" data-value="{{map-value mapper facilitator}}">
+              <div class="item" data-value={{map-value mapper facilitator}}>
                 {{facilitator.fullName}}
               </div>
             {{/each}}
@@ -57,7 +57,7 @@
         <div class="default text">Additional Attendees</div>
         <div class="menu">
           {{#each availableOrganizers as |attendee|}}
-            <div class="item" data-value="{{map-value mapper attendee}}">
+            <div class="item" data-value={{map-value mapper attendee}}>
               {{attendee.fullName}}
             </div>
           {{/each}}
@@ -66,10 +66,10 @@
     </div>
   </div>
   <div class="actions">
-    <button class="ui inverted red button" {{action 'respond' false}}>
+    <button class="ui inverted red button" {{action "respond" false}}>
       Cancel
     </button>
-    <button class="ui inverted green right labeled icon button" {{action 'respond' meeting}}>
+    <button class="ui inverted green right labeled icon button" {{action "respond" meeting}}>
       Schedule
       <i class="check icon"></i>
     </button>

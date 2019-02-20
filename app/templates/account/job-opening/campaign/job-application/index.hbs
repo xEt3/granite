@@ -4,14 +4,14 @@
     <div class="ui horizontal list">
       {{#if model.resume}}
         <div class="item">
-          <a href="{{model.resume.url}}" rel="noopener" target="_blank">
+          <a href={{model.resume.url}} rel="noopener" target="_blank">
             <i class="external link icon"></i>Resume/CV
           </a>
         </div>
       {{/if}}
       {{#if model.coverLetter}}
         <div class="item">
-          <a href="#" {{action openModal coverLetterModalId 'coverLetter'}}>
+          <a href="#" {{action openModal coverLetterModalId "coverLetter"}}>
             <i class="file icon"></i>Cover Letter
           </a>
         </div>
@@ -46,7 +46,7 @@
       <h3>Screening</h3>
       <p>
         {{#if model.scoreRelative}}This applicant is a <strong>{{model.scoreRelative}}% match</strong> based on their responses to your screening.{{/if}}
-        <a href="#" {{action openModal responsesModalId 'responses'}}>View responses</a>
+        <a href="#" {{action openModal responsesModalId "responses"}}>View responses</a>
       </p>
     {{/if}}
   </div>
@@ -57,18 +57,18 @@
     {{/if}}
 
     {{#if pastEvents}}
-      <h3 class="{{unless showingPastEvents 'ui light text'}}">
+      <h3 class={{unless showingPastEvents "ui light text"}}>
         Past Events
         <small class="right floated">
           <a href="#" {{action (toggle "showingPastEvents" this)}}>
-            {{if showingPastEvents 'Hide' 'Show'}}
+            {{if showingPastEvents "Hide" "Show"}}
           </a>
         </small>
       </h3>
       {{#liquid-if showingPastEvents}}
         {{timeline/event-timeline
           pastEvents
-          linkItemsTo='account.job-opening.campaign.job-application.event'
+          linkItemsTo="account.job-opening.campaign.job-application.event"
         }}
       {{/liquid-if}}
     {{/if}}
@@ -77,7 +77,7 @@
 
 {{#modals/static-content
   modalId=responsesModalId
-  onResponse=(action 'modalResponse' 'responses')
+  onResponse=(action "modalResponse" "responses")
   title="Screening responses"
   hideActions=true
 }}
@@ -86,10 +86,23 @@
       <div class="item content">
         <h4>{{group.step.label}}</h4>
         <p>
-          {{#if group.response.value.weight}}
-            <span class="ui label">{{group.response.value.weight}}</span>
+          {{#if group.response.value.length}}
+            <ul>
+              {{#each group.response.value as |value|}}
+                <li>
+                  {{#if value.weight}}
+                    <span class="ui label">{{value.weight}}</span>
+                  {{/if}}
+                  {{or value.text value}}
+                </li>
+              {{/each}}
+            </ul>
+          {{else}}
+            {{#if group.response.value.weight}}
+              <span class="ui label">{{group.response.value.weight}}</span>
+            {{/if}}
+            {{or group.response.value.text group.response.value}}
           {{/if}}
-          {{or group.response.value.text group.response.value}}
         </p>
       </div>
     {{/each}}
@@ -98,7 +111,7 @@
 
 {{#modals/static-content
   modalId=coverLetterModalId
-  onResponse=(action 'modalResponse' 'coverLetter')
+  onResponse=(action "modalResponse" "coverLetter")
   title=coverLetterTitle
   hideActions=true
 }}

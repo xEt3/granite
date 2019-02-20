@@ -1,0 +1,58 @@
+<div class="ui raised padded segment container clearfix animated fadeInUp">
+  <div class="ui form">
+    <hgroup class="clearfix">
+      <h1 class="ui header left floated">
+        Assign New Document to {{model.employee.fullName}}
+      </h1>
+    </hgroup>
+    <div class="ui divider"></div>
+
+    <div class="field">
+      {{#input/document-selection-modal
+        title="New Document"
+        selected=model.file
+        assignText="Use Document"
+        singleDoc=true
+        onSelected=(action (mut model.file))
+        as |execute|
+      }}
+        <button class="ui basic button" {{action execute "selectDocuments"}}>
+          <i class="folder icon"></i>
+          Add document
+          {{#if model.file}}
+            <span class="ui label">{{model.file.title}}</span>
+          {{/if}}
+        </button>
+      {{/input/document-selection-modal}}
+    </div>
+
+    <div class="field">
+      {{#ui-checkbox
+        class="small"
+        checked=model.visibleToEmployee
+        onChange=(action (mut model.visibleToEmployee))
+      }}
+        <label>
+          Visible To Employee
+        </label>
+      {{/ui-checkbox}}
+    </div>
+    <div class="field">
+      {{#ui-checkbox
+        class="small"
+        disabled=(not model.visibleToEmployee)
+        checked=model.signatureRequired
+        onChange=(action (mut model.signatureRequired))
+      }}
+        <label>
+          Require Signature
+        </label>
+      {{/ui-checkbox}}
+    </div>
+
+    <div class="ui divider"></div>
+    <form {{action "save" on="submit"}}>
+      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=(not model.file)}}Assign Document{{/form/action-button}}
+    </form>
+  </div>
+</div>
