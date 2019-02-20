@@ -42,10 +42,11 @@
       {{/input/document-selection-modal}}
     </div>
     <div class="field center aligned text">
-      <div class="ui toggle checkbox">
-        <input type="checkbox">
-        <label>Can {{if model.name model.name "these assets"}} be shared by employees?</label>
-      </div>
+      {{ui-checkbox
+        class="toggle"
+        label=sharableLabel
+        checked=model.sharable
+        onChange=(action (mut model.sharable))}}
     </div>
     <div class="ui divider"></div>
 

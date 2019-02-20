@@ -33,7 +33,11 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
   popupMessage: computed('missingRelationship', function () {
     let relationship = this.get('missingRelationship');
 
-    return htmlSafe(`Could not find this ${relationship},  click to create.`);
+    if (relationship === 'department' || relationship === 'location') {
+      return htmlSafe(`Could not find this ${relationship},  click to create.`);
+    }
+
+    return htmlSafe(`Could not find this ${relationship}.`);
   }),
 
   actions: {
