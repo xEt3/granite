@@ -13,9 +13,9 @@ export default Controller.extend(addEdit, {
 
   actions: {
     async save () {
-      let model = this.get('model');
-      let employee = await this.get('model.employee');
-      let user = await this.saveModel(model);
+      let model = this.get('model'),
+          employee = await this.get('model.employee'),
+          user = await this.saveModel(model);
 
       employee.set('companyUser', user);
       await this.saveModel(employee);
