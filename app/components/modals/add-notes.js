@@ -16,7 +16,7 @@ export default Component.extend(ajaxStatus, {
     $('#' + this.get('modalId')).modal({
       detachable: true,
       closable:   false,
-      context:    'body.ember-application'
+      context:    '.ember-application'
     }).modal('show');
   },
 
