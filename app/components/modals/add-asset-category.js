@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { htmlSafe } from '@ember/string';
 import $ from 'jquery';
 
 export default Component.extend({
@@ -9,6 +10,10 @@ export default Component.extend({
 
   modalId: computed('elementId', function () {
     return this.get('elementId') + '-modal';
+  }),
+
+  sharableLabel: computed('newAsset.name', function () {
+    return this.get('newAsset.name') ? htmlSafe(`Can ${this.get('newAsset.name')} be shared by employees`) : htmlSafe('Can these assets be shared by employees');
   }),
 
   createConfirm () {
