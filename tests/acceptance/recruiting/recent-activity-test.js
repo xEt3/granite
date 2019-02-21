@@ -86,7 +86,6 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
     await settled();
     assert.dom('label[for="number-of-days-to-delay-outside-sources"]').isVisible();
     assert.dom('#number-of-days-to-delay-outside-sources input').isVisible();
-    assert.dom('#send-confirmation-email-to-applicants label').isVisible();
     assert.dom('#send-job-close-notice-to-unrejected-applicants label').isVisible();
     assert.dom('#add-unrejected-applicants-to-talent-pool-after-filled label').isVisible();
     assert.dom(findAll('div > h2')[1]).hasText('Job Settings');

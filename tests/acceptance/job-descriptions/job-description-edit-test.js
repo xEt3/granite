@@ -48,7 +48,7 @@ module('Acceptance | job-description-edit', function (hooks) {
     assert.dom('#job-title  > .field > input').hasValue(`${job.title}`);
     assert.dom('.field.job-description').includesText('Job Description');
     await fillIn('#job-title  > .field > input', 'Test Title');
-    await fillIn('textarea[id="job-description"]', 'New Description');
+    await fillIn('div.ql-editor', 'New Description');
     await click('div#ember-testing form > button');
 
     assert.equal(currentURL(), `/account/recruiting/job/${job.id}`);
