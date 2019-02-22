@@ -10,7 +10,7 @@ export default Route.extend({
     .then(user => {
       return {
         company:     user.company,
-        parentModel: this._super(...arguments)
+        parentModel: this.modelFor('account.job-opening')
       };
     });
   },
