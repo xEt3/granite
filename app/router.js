@@ -91,6 +91,7 @@ Router.map(function () {
         this.route('documents', function () {
           this.route('new');
         });
+        this.route('visual-id');
       });
       this.route('onboard', function () {
         this.route('index', { path: '/start' });

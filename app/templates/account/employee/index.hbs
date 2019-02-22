@@ -16,6 +16,9 @@
       <i class="folder open icon"></i>Counseling
     {{/link-to}}
     <div class="right menu">
+      {{#if visualIdRequired}}
+        {{#link-to "account.employee.index.visual-id" model.id class="item text-red"}}<i class="exclamation icon"></i>Requires Visual ID{{/link-to}}
+      {{/if}}
       {{#if model.onboarding}}
         {{#link-to "account.employee.onboard" model.id class="item text-blue"}}<i class="wizard icon"></i>Continue Onboarding{{/link-to}}
       {{/if}}
