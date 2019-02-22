@@ -40,21 +40,23 @@ module('Acceptance | job-description-edit', function (hooks) {
 
   test('edit job-description', async function (assert) {
     await authenticate.call(this, server);
-    let job = await server.create('job');
+    let job = await server.create('job'),
+        initialJobDescription = job.description,
+        initialJobTitle = job.title;
 
     await visit(`/account/recruiting/job/${job.id}/edit`);
     await settled();
     assert.equal(currentURL(), `/account/recruiting/job/${job.id}/edit`);
     assert.dom('#job-title  > .field > input').hasValue(`${job.title}`);
     assert.dom('.field.job-description').includesText('Job Description');
-    await fillIn('#job-title  > .field > input', 'Test Title');
-    await fillIn('div.ql-editor', 'New Description');
-    await click('div#ember-testing form > button');
+    await fillIn('#job-title > .field > input', 'Test Title');
+    await fillIn('div.ql-editor > p', 'New Description');
+    await click('button[type="submit"]');
 
     assert.equal(currentURL(), `/account/recruiting/job/${job.id}`);
-    assert.dom('h2.header').doesNotIncludeText(`${job.title}`);
+    assert.dom('h2.header').doesNotIncludeText(`${initialJobTitle}`);
     assert.dom('h2.header').hasText('Test Title');
-    assert.dom('.ui.raised.animated p').doesNotIncludeText(`${job.description}`);
+    assert.dom('.ui.raised.animated > p').doesNotIncludeText(`${initialJobDescription}`);
     assert.dom('.ui.raised.animated > p').hasText('New Description');
   });
 });
