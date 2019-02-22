@@ -8,28 +8,24 @@ export default Route.extend(refreshable, {
 
   async model () {
     let employee = this.modelFor('account.employee'),
-        company = await this.get('auth.user.company') || {},
-        visualIdRequired;
+        company = await this.get('auth.user.company') || {};
 
     if (company.collectEEO) {
       try {
         let visualId = await this.get('ajax').request(`/api/v1/eeo/visual-id/${employee.get('id')}`);
-        visualIdRequired = visualId.visualIdRequired;
+        this.set('visualIdRequired', visualId.visualIdRequired);
       } catch (e) {
-        visualIdRequired = false;
+        this.set('visualIdRequired', false);
       }
     }
 
-    return {
-      employee,
-      visualIdRequired
-    };
+    return employee;
   },
 
   setupController (controller, model) {
     controller.setProperties({
-      model:            model.employee,
-      visualIdRequired: model.visualIdRequired
+      model:            model,
+      visualIdRequired: this.get('visualIdRequired')
     });
   }
 });
