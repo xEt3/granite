@@ -230,7 +230,9 @@ export default function () {
     }
 
     return db.jobApplications.all();
+  });
 
-
+  this.get('/eeo/visual-id/:id', () => {
+    return null;
   });
 }

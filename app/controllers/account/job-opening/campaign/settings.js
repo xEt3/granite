@@ -72,12 +72,6 @@ export default Controller.extend(addEdit, {
     path:        'positions',
     parentClass: 'sixteen wide column'
   }, {
-    label:       'Send confirmation email to applicants',
-    type:        'checkbox',
-    inputClass:  'toggle',
-    path:        'sendApplicantConfirmation',
-    parentClass: 'sixteen wide column'
-  }, {
     label:       'Send job close notice to unrejected applicants',
     type:        'checkbox',
     inputClass:  'toggle',

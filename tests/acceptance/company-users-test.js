@@ -48,11 +48,12 @@ module('Acceptance | company users', function (hooks) {
     assert.equal(findAll('.node').length, 5, '5 permissions are shown');
     assert.equal(findAll('.toggle-icon').length, 5, '5 permissions have dropdowns');
 
+    await click('div.menu.transition > div.item');
     await click('span[class="toggle-icon"]');
     await click('input[type="checkbox"]');
     await click('button[type="submit"]');
 
-    assert.equal(currentURL(), '/account/anatomy/company-users');
+    assert.equal(currentURL(), '/account/anatomy/company-users', 'current url is /account/anatomy/company-users');
   });
 
   test('editing user\'s permissions', async function (assert) {
