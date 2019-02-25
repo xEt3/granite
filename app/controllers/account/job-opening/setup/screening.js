@@ -44,7 +44,7 @@ export default Controller.extend(addEdit, {
 
       this.saveModel(f)
       .then(form => {
-        this.set('model.screening', form);
+        this.set('model.screening', form.elements.length ? form : null);
         this.get('target').send('saveAndContinue');
       });
     }
