@@ -18,19 +18,21 @@ export default Route.extend({
         'company': companyId,
         _id:       { $ne: employeeId }
       }),
-      departments: this.store.query('department', { 'company': companyId }),
-      locations:   this.store.query('location', { 'company': companyId }),
+      departments:     this.store.query('department', { 'company': companyId }),
+      locations:       this.store.query('location', { 'company': companyId }),
+      jobDescriptions: this.store.query('job', { 'company': companyId }),
       company
     });
   },
 
   setupController (controller, model) {
     controller.setProperties({
-      model:       model.employee,
-      employees:   model.employees,
-      departments: model.departments,
-      locations:   model.locations,
-      company:     model.company
+      model:           model.employee,
+      employees:       model.employees,
+      departments:     model.departments,
+      locations:       model.locations,
+      company:         model.company,
+      jobDescriptions: model.jobDescriptions
     });
   }
 });
