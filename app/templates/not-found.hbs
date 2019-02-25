@@ -1,14 +1,20 @@
-<h1 class="text-center text-danger">404 Not Found</h1>
-<hr />
-<p class="text-danger text-center">
-  We could not find that page.<br />
-  {{#if fromError.responseText}}
-    <small>
-      <code>{{fromError.responseText}}</code> That's all we know.
-    </small>
-  {{/if}}
-</p>
+<div class="ui hero cover grey overlay hero__404">
+  <div class="hero__content">
+    <h3 class="ui header hero__title">
+      404 Not Found
+    </h3>
 
-<p class="text-center text-sm">
-  {{#link-to "index"}}Back to index{{/link-to}}
-</p>
+    <p class="hero__subcontent">
+      We could not find that page.<br />
+      {{#if fromError.responseText}}
+        <small>
+          <code>{{fromError.responseText}}</code> That's all we know.
+        </small>
+      {{/if}}
+    </p>
+
+    <p class="text-center text-sm hero__subcontent">
+      {{#link-to "index"}}Back to index{{/link-to}}
+    </p>
+  </div>
+</div>
