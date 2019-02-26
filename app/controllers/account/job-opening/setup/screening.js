@@ -37,6 +37,13 @@ export default Controller.extend(addEdit, {
     saveAndContinue () {
       let f = this.get('form');
 
+      if (!f.elements.length) {
+        f.destroyRecord();
+        this.set('model.screening', null);
+        this.get('target').send('saveAndContinue');
+        return;
+      }
+
       f.setProperties({
         targetType: 'JobOpening',
         targetId:   this.get('model.id')
