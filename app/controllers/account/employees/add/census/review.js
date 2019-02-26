@@ -5,7 +5,6 @@ import ajaxStatus from 'granite/mixins/ajax-status';
 import titleCase from 'granite/utils/title-case';
 import { decamelize } from '@ember/string';
 import { states } from 'granite/config/statics';
-import { scheduleOnce, later } from '@ember/runloop';
 import $ from 'jquery';
 
 export default Controller.extend(ajaxStatus, {
@@ -51,15 +50,6 @@ export default Controller.extend(ajaxStatus, {
   },
 
   guesses: computed.reads('model.data.0'),
-
-  init () {
-    this._super(...arguments);
-    later(() => {
-      scheduleOnce('afterRender', () => {
-        this.set('$dropdownContext', $('.census__table'));
-      });
-    }, 2000);
-  },
 
   dataValidation: computed('rows.[]', 'guesses.[]', 'availableFields.[]', 'potentialData.[]', function () {
     const {

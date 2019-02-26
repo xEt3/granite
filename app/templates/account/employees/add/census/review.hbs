@@ -53,11 +53,9 @@
               <th>
                 <div class="field">
                   {{#ui-dropdown
-                    class="top right scrolling census__field-selection"
-                    direction="auto"
+                    class="scrolling census__field-selection"
                     name="guess-column"
                     selected=guesses
-                    keepOnScreen=true
                     context="table"
                     onChange=(pipe-action (action 'mutateGuess' index)(action 'doDryRun'))}}
                     <div class="default text">Select field for column</div>
