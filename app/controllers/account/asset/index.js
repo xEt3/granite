@@ -9,6 +9,7 @@ export default Controller.extend(del, pagination, addEdit, {
   queryParams:  [ 'page' ],
   application:  controller(),
   addingAsset:  computed.equal('application.currentPath', 'account.asset.index.new'),
+  editAsset:    computed.equal('application.currentPath', 'account.asset.index.edit'),
   popupContent: computed('expandAttributes', function () {
     return this.get('expandAttributes') ? 'Hide all stock attributes' : 'Show all stock attributes';
   }),
