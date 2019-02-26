@@ -17,16 +17,31 @@
         </div>
       {{/if}}
     </div>
+
     <div class="ui divider"></div>
 
+    {{#modals/add-notes
+      model=model
+      refresh=(action "refreshModel") as |openAddModal|
+    }}
+      <h3 class="dividing header">
+        Notes
+      </h3>
+      {{#if model.notes}}
+        <a href="#" {{action openAddModal}}><i class="edit icon"></i></a> {{model.notes}}
+      {{else}}
+        <span class="light text">No notes available.</span> <a href="#" {{action openAddModal}}>Add notes</a>
+      {{/if}}
+    {{/modals/add-notes}}
+
     {{#if opening.screening}}
+      <div class="ui divider"></div>
       <h3>Screening</h3>
       <p>
         {{#if model.scoreRelative}}This applicant is a <strong>{{model.scoreRelative}}% match</strong> based on their responses to your screening.{{/if}}
         <a href="#" {{action openModal responsesModalId "responses"}}>View responses</a>
       </p>
     {{/if}}
-
   </div>
   <div class="ui six wide column">
     {{#if upcomingEvents}}
