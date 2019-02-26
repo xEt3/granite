@@ -17,32 +17,25 @@
         </div>
       {{/if}}
     </div>
+
     <div class="ui divider"></div>
 
     {{#modals/add-notes
       model=model
       refresh=(action "refreshModel") as |openAddModal|
     }}
-      {{#ui-popup position="bottom left" content="add notes"}}
-        <div class="content clearfix">
-          <span class="left floated">
-            <a href="#" {{action openAddModal}}>
-              <i class="edit icon"></i>
-            </a>
-          </span>
-          <span>
-            <h3>Notes</h3>
-          </span>
-        </div>
-      {{/ui-popup}}
+      <h3 class="dividing header">
+        Notes
+      </h3>
+      {{#if model.notes}}
+        <a href="#" {{action openAddModal}}><i class="edit icon"></i></a> {{model.notes}}
+      {{else}}
+        <span class="light text">No notes available.</span> <a href="#" {{action openAddModal}}>Add notes</a>
+      {{/if}}
     {{/modals/add-notes}}
 
-    {{#if model.notes}}
-      {{model.notes}}
-    {{/if}}
-    <div class="ui divider"></div>
-
     {{#if opening.screening}}
+      <div class="ui divider"></div>
       <h3>Screening</h3>
       <p>
         {{#if model.scoreRelative}}This applicant is a <strong>{{model.scoreRelative}}% match</strong> based on their responses to your screening.{{/if}}

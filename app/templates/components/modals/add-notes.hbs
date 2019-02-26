@@ -1,14 +1,14 @@
 {{#if hasBlock}}
-  {{yield startApplication}}
+  {{yield openModalAction}}
 {{/if}}
 
 {{#ui-modal name="notes" id=modalId}}
   <div class="header">
-    Add Notes
+    Notes
   </div>
   <div class="scrolling content">
     <form class="ui form" {{action "save" on="submit"}}>
-      <label for="notes">Notes</label>
+      <label for="notes">Notes for this application</label>
       {{textarea
         name="note-text"
         value=model.notes

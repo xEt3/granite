@@ -12,7 +12,7 @@ export default Component.extend(ajaxStatus, {
     return this.get('elementId') + '-modal';
   }),
 
-  createConfirm () {
+  openModal () {
     $('#' + this.get('modalId')).modal({
       detachable: true,
       closable:   false,
@@ -24,8 +24,8 @@ export default Component.extend(ajaxStatus, {
     $('#' + this.get('modalId')).modal('hide');
   },
 
-  startApplication: computed('modalId', function () {
-    return this.createConfirm.bind(this);
+  openModalAction: computed('modalId', function () {
+    return this.openModal.bind(this);
   }),
 
   actions: {
@@ -40,7 +40,7 @@ export default Component.extend(ajaxStatus, {
 
       application.save()
       .then(() => {
-        this.ajaxSuccess('Saved application successfully');
+        this.ajaxSuccess('Saved notes');
         this.closeModal();
       });
     }
