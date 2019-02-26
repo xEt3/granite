@@ -9,7 +9,7 @@
       </thead>
       <tbody>
         {{#each customFieldArray as |field|}}
-          {{tables/custom-field key=field.key value=field.value onValueChange=(action 'editValue') onDelete=(action 'deleteCustomField')}}
+          {{tables/custom-field key=field.key value=field.value onValueChange=(action "editValue") onDelete=(action "deleteCustomField")}}
         {{/each}}
 
         {{#if adding}}

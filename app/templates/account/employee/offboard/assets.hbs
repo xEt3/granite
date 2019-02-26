@@ -2,7 +2,7 @@
   <h2 class="ui horizontal divider header">Company Assets</h2>
 
   <div class="ui relaxed divided list">
-    {{#each-in (group-by 'assetId' model) as |asset assets|}}
+    {{#each-in (group-by "assetId" model) as |asset assets|}}
       <h4 class="header">
         {{#if assets.firstObject.asset.icon}}
           <i class="{{assets.firstObject.asset.icon}} icon"></i>
@@ -13,7 +13,7 @@
         <div class="item">
           {{item.identifier}}
           <span class="right floated">
-            {{#ui-popup content='Mark as collected & unassign asset from employee'}}
+            {{#ui-popup content="Mark as collected & unassign asset from employee"}}
               <a href="#" class="text-green" {{action "unassignAsset" item}}><i class="check icon"></i>Mark as Collected</a>
             {{/ui-popup}}
           </span>

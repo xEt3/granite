@@ -1,9 +1,9 @@
 <div class="right aligned text">
   {{#input/equipment-picker
     assignableAssets=assignableAssets
-    onSelect=(action 'selectAsset')
-    onCreate=(action 'createAsset')
-    newAssetCategory=(action 'newAssetCategory')}}
+    onSelect=(action "selectAsset")
+    onCreate=(action "createAsset")
+    newAssetCategory=(action "newAssetCategory")}}
     <h3 class="ui header"><a href="#"><i class="plus icon text-white"></i></a></h3>
   {{/input/equipment-picker}}
 </div>
@@ -15,7 +15,7 @@
         {{list-item/assigned-asset-item
           asset=asset
           employee=employee
-          onUnassign=(action 'unassignAsset')}}
+          onUnassign=(action "unassignAsset")}}
       {{/each}}
     </div>
     {{#if working}}
@@ -30,7 +30,7 @@
   </h2>
 {{/if}}
 
-{{#ui-modal name="new-asset" class="new-asset" detachable=true onApprove=(action 'saveAsset') onDeny=(action 'abortAsset')}}
+{{#ui-modal name="new-asset" class="new-asset" detachable=true onApprove=(action "saveAsset") onDeny=(action "abortAsset")}}
   <i class="cancel close icon"></i>
   <div class="header">
     Creating a new item in "{{pendingAssetItem.asset.name}}" for {{employee.firstName}}
@@ -101,10 +101,10 @@
     </form>
   </div>
   <div class="actions">
-    <<button class="ui red button" {{action 'cancelAssignments'}}>
+    <<button class="ui red button" {{action "cancelAssignments"}}>
       Cancel
     </button>
-    <<button class="ui primary right labeled icon {{if working 'loading'}} button" {{action 'saveAssignments'}}>
+    <<button class="ui primary right labeled icon {{if working "loading"}} button" {{action "saveAssignments"}}>
       Assign <i class="add user icon"></i>
     </button>
   </div>

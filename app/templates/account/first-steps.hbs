@@ -9,11 +9,11 @@
 
     <div class="ui divider"></div>
 
-    <div class="first-steps__container {{if model.company.firstStepsCompletedOn 'first-steps__container--animating'}}">
+    <div class="first-steps__container {{if model.company.firstStepsCompletedOn "first-steps__container--animating"}}">
       {{#if model.company.firstStepsCompletedOn}}
         <div class="first-steps-container__message">
           <div class="content">
-            {{emoji-icon 'tada'}} Great job completing the first steps! We'll take you to your activity feed now.
+            {{emoji-icon "tada"}} Great job completing the first steps! We'll take you to your activity feed now.
           </div>
         </div>
       {{/if}}

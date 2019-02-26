@@ -1,20 +1,20 @@
 {{#if imagePreview}}
   <div class="ui tiny rounded image">
-    <img src="{{file.url}}" alt="">
+    <img src={{file.url}} alt="">
   </div>
 {{else}}
   {{display/icon-for-file file class="huge"}}
 {{/if}}
 <div class="clearing content">
   <div class="header">
-    {{#link-to 'account.document' file.id}}
+    {{#link-to "account.document" file.id}}
       {{file.title}}
       <span class="light text">{{file.extension}}</span>
     {{/link-to}}
   </div>
   <div class="right floated">
-    {{#confirm-modal deleteContext=file.title tagName='span' class="right floated" as |confirm|}}
-      <a href="#" id="action-item__action--delete" {{action (pipe confirm (action 'delete' assignment))}}>
+    {{#confirm-modal deleteContext=file.title tagName="span" class="right floated" as |confirm|}}
+      <a href="#" id="action-item__action--delete" {{action (pipe confirm (action "delete" assignment))}}>
         <i class="trash icon"></i>
       </a>
     {{/confirm-modal}}
@@ -22,7 +22,7 @@
     {{#if (not assignment.visibleToEmployee)}}
       {{#modals/upload-document
         systemUse=true
-        uploadComplete=(action 'uploadFollowup') as |openUploadModal|
+        uploadComplete=(action "uploadFollowup") as |openUploadModal|
       }}
         {{#ui-popup content="Upload a followup document" class="right floated"}}
           <a href="#" {{action openUploadModal}}>
@@ -46,7 +46,7 @@
               {{#if assignment.signedOn}}
                 Signed:
                 {{#ui-popup tagName="span" html=signature position="right center"}}
-                  <a href="#" class="gray-icon" {{action 'openModal'}}>
+                  <a href="#" class="gray-icon" {{action "openModal"}}>
                     {{time assignment.signedOn}}
                   </a>
                 {{/ui-popup}}
@@ -83,7 +83,7 @@
   </div>
 </div>
 
-{{#ui-modal name='modal__file-assignment-signature' id=modalId}}
+{{#ui-modal name="modal__file-assignment-signature" id=modalId}}
   <div class="header">
     {{assignment.employee.fullName}} signature {{#if assignment.file.title}}for {{assignment.file.title}}{{/if}}
   </div>
@@ -91,7 +91,7 @@
     <img src={{assignment.signature}} alt="">
   </div>
   <div class="actions">
-    <button class="ui red button" {{action 'closeModal'}}>
+    <button class="ui red button" {{action "closeModal"}}>
       Close
     </button>
   </div>

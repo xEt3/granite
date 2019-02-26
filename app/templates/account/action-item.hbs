@@ -7,10 +7,10 @@
   {{/if}}
 
   {{#ui-menu menuClass="pointing"}}
-    {{#link-to 'account.action-item.index' class="item"}}
+    {{#link-to "account.action-item.index" class="item"}}
       <i class="square icon"></i>Summary
     {{/link-to}}
-    {{#link-to 'account.action-item.todo' class="item"}}
+    {{#link-to "account.action-item.todo" class="item"}}
       <i class="check square icon"></i>Todos
       {{#if model.checklist}}
         <label class="ui left pointing label">
@@ -18,7 +18,7 @@
         </label>
       {{/if}}
     {{/link-to}}
-    {{#link-to 'account.action-item.discussion' class="item"}}
+    {{#link-to "account.action-item.discussion" class="item"}}
       <i class="comments icon"></i>Discussion
     {{/link-to}}
     {{#if (eq model.owner.id auth.user.employee.id)}}
@@ -29,36 +29,36 @@
             <div class="header">Actions</div>
             <a href="#" id="action-item__action--mark-complete" class="item"
               {{action (pipe
-                (action 'confirmCompletion')
-                (action 'toggleComplete')
-                (action 'save')
+                (action "confirmCompletion")
+                (action "toggleComplete")
+                (action "save")
             )}}>
-              <i class="check icon"></i>Mark as {{if model.completedOn 'Incomplete' 'Complete'}}
+              <i class="check icon"></i>Mark as {{if model.completedOn "Incomplete" "Complete"}}
             </a>
             <a href="#" id="action-item__action--transfer" class="item"
               {{action (pipe
-                (action 'selectTransferTarget')
-                (action 'transfer')
-                (action 'save')
+                (action "selectTransferTarget")
+                (action "transfer")
+                (action "save")
             )}}>
               <i class="random icon"></i>Transfer to New Owner
             </a>
             <a href="#" id="action-item__action--delay" class="item"
               {{action (pipe
-                (action 'selectDelay')
-                (action 'save')
+                (action "selectDelay")
+                (action "save")
             )}}>
               <i class="ellipsis horizontal icon"></i>Delay
             </a>
 
             <div class="text-danger header">Danger Zone</div>
             {{#confirm-modal class="item" as |confirm|}}
-              <a href="#" id="action-item__action--cancel" {{action (pipe confirm (action 'cancelActionItem'))}}>
+              <a href="#" id="action-item__action--cancel" {{action (pipe confirm (action "cancelActionItem"))}}>
                 <i class="close icon"></i>Cancel Action Item
               </a>
             {{/confirm-modal}}
             {{#confirm-modal as deleteContext=model.title class="item" as |confirm|}}
-              <a href="#" id="action-item__action--delete" {{action (pipe confirm (action 'delete'))}}>
+              <a href="#" id="action-item__action--delete" {{action (pipe confirm (action "delete"))}}>
                 <i class="trash icon"></i>Delete Record
               </a>
             {{/confirm-modal}}
@@ -71,7 +71,7 @@
   {{outlet}}
 </div>
 
-{{#ui-modal name='modal__action-item--transfer' id='modal__action-item--transfer' class='small form'}}
+{{#ui-modal name="modal__action-item--transfer" id="modal__action-item--transfer" class="small form"}}
   <i class="close icon"></i>
   <div class="header">
     <i class="random icon"></i>Transfer action item to new owner
@@ -84,7 +84,7 @@
           <div class="default text">Select a new owner</div>
           <div class="menu">
             {{#each transferableTargets as |item|}}
-              <div class="item" data-value="{{map-value mapper item.employee}}">
+              <div class="item" data-value={{map-value mapper item.employee}}>
                 {{item.employee.fullName}}
               </div>
             {{/each}}
@@ -96,10 +96,10 @@
     </div>
   </div>
   <div class="actions">
-    <button class="ui red button" {{action 'respondTransferModal' false}}>
+    <button class="ui red button" {{action "respondTransferModal" false}}>
       Cancel
     </button>
-    <button class="ui primary right labeled icon button" disabled={{if transferTarget false true}} {{action 'respondTransferModal' true}}>
+    <button class="ui primary right labeled icon button" disabled={{if transferTarget false true}} {{action "respondTransferModal" true}}>
       Transfer
       {{#if transferTarget}}
         to {{transferTarget.fullName}}
@@ -109,7 +109,7 @@
   </div>
 {{/ui-modal}}
 
-{{#ui-modal name='modal__action-item--confirm-complete' id='modal__action-item--confirm-complete' class='basic'}}
+{{#ui-modal name="modal__action-item--confirm-complete" id="modal__action-item--confirm-complete" class="basic"}}
   <i class="close icon"></i>
   <div class="header">
     Heads up!
@@ -117,21 +117,21 @@
   <div class="content">
     Are you sure want to do that?
     {{#if (and model.incompleteTodos.length (not model.completedOn))}}
-      <p><strong>There's still {{model.incompleteTodos.length}} {{inflect-text 'todos' model.incompleteTodos.length}} left to complete!</strong></p>
+      <p><strong>There's still {{model.incompleteTodos.length}} {{inflect-text "todos" model.incompleteTodos.length}} left to complete!</strong></p>
     {{/if}}
   </div>
   <div class="actions">
-    <button class="ui inverted red button" {{action 'respondConfirmCompleteModal' false}}>
+    <button class="ui inverted red button" {{action "respondConfirmCompleteModal" false}}>
       Cancel
     </button>
-    <button class="ui inverted green right labeled icon button" {{action 'respondConfirmCompleteModal' true}}>
-      Mark {{if model.completedOn 'Incomplete' 'Complete'}}
+    <button class="ui inverted green right labeled icon button" {{action "respondConfirmCompleteModal" true}}>
+      Mark {{if model.completedOn "Incomplete" "Complete"}}
       <i class="check icon"></i>
     </button>
   </div>
 {{/ui-modal}}
 
-{{#ui-modal id='modal__action-item--delay' class='small form'}}
+{{#ui-modal id="modal__action-item--delay" class="small form"}}
   <i class="close icon"></i>
   <div class="header">
     When should "{{model.title}}" be due?
@@ -141,14 +141,14 @@
     {{/ui-calendar}}
   </div>
   <div class="actions">
-    <button class="ui red button" {{action 'respondDelayModal' false}}>
+    <button class="ui red button" {{action "respondDelayModal" false}}>
       Cancel
     </button>
-    <button class="ui green right labeled icon button" {{action 'respondDelayModal' true}}>
+    <button class="ui green right labeled icon button" {{action "respondDelayModal" true}}>
       Delay
       {{#if model.delayedUntil}}
         until
-        {{time model.delayedUntil 'M/D/YY'}}
+        {{time model.delayedUntil "M/D/YY"}}
       {{/if}}
       <i class="ellipsis horizontal icon"></i>
     </button>

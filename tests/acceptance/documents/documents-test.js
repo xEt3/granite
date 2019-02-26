@@ -22,7 +22,7 @@ module('Acceptance | documents', function (hooks) {
 
     assert.dom('.ui.header.left').hasText('Documents');
     assert.dom('.plus.icon').isVisible();
-    assert.dom('h2.ui.center.aligned.header').hasText('No documents available.');
+    assert.dom('h2.ui.center.aligned.header').hasText('No files available.');
     assert.dom('.ui.pagination.menu').isVisible();
   });
 

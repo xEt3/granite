@@ -2,16 +2,16 @@
   <div class="header">{{_model.fullName}}</div>
   <div class="meta">
     {{#unless firstIsLastApp}}
-      First Applied {{time-ago _meta.lastApplication}} on {{time _meta.lastApplication 'M/D/YY'}},
+      First Applied {{time-ago _meta.lastApplication}} on {{time _meta.lastApplication "M/D/YY"}},
     {{/unless}}
-    Last Applied {{time-ago _meta.lastApplication}} on {{time _meta.lastApplication 'M/D/YY'}}
+    Last Applied {{time-ago _meta.lastApplication}} on {{time _meta.lastApplication "M/D/YY"}}
     ({{activeTime}} days since first application)
   </div>
 
   {{#if _meta.avgScore}}
     <div class="extra">
       {{#display/calc-color scoreAbs as |red green|}}
-        {{! template-lint-disable style-concatenation }}
+        {{! template-lint-disable style-concatenation no-inline-styles }}
         <span style="color: rgb({{red}}, {{green}}, 0)" class="card-content__score ui label">
           Average Score: {{scoreAbs}}%
         </span>
@@ -23,7 +23,7 @@
 <div class="right floated right aligned text content">
   {{#if _meta.lastApplicationId}}
     {{#link-to
-      'account.job-opening.campaign.job-application'
+      "account.job-opening.campaign.job-application"
       _meta.lastApplicationListing
       _meta.lastApplicationId
     }}

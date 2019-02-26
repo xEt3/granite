@@ -9,16 +9,16 @@ export default Model.extend({
   title:       attr('string'),
   description: attr('string'),
 
-  availableInternally:       attr('boolean'),
-  internalDuration:          attr('number'), // number of days that this job is internally available before posting to outside sources
-  positions:                 attr('number', { defaultValue: 1 }), // number of positions to fill
-  sendApplicantConfirmation: attr('boolean'),
-  sendCloseNotice:           attr('boolean'), // send an email to unrejected talent when job closes
-  allocateTalentPool:        attr('boolean'), // allocate unrejected, not hired talent to the pool
-  applicantScoring:          attr('boolean'),
-  closed:                    attr('boolean'),
+  availableInternally: attr('boolean'),
+  internalDuration:    attr('number'), // number of days that this job is internally available before posting to outside sources
+  positions:           attr('number', { defaultValue: 1 }), // number of positions to fill
+  sendCloseNotice:     attr('boolean'), // send an email to unrejected talent when job closes
+  allocateTalentPool:  attr('boolean'), // allocate unrejected, not hired talent to the pool
+  applicantScoring:    attr('boolean'),
+  closed:              attr('boolean'),
 
   jobType:                 attr('string'),
+  eeoCategory:             attr('string'),
   supervisoryRequirements: attr('boolean'),
 
   setup:          attr('boolean', { defaultValue: true }),

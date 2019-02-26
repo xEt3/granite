@@ -13,7 +13,7 @@
     {{#if model.assets}}
       <p class="pull-left light text">
         Usually uses:
-        {{join-array (map-by 'name' model.assets) ', '}}
+        {{join-array (map-by "name" model.assets) ", "}}
       </p>
     {{/if}}
     <p class="pull-right light text">Created on {{time model.created}}</p>

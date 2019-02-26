@@ -7,6 +7,6 @@
       {{/each}}
     </ul>
   {{else}}
-    {{to-string (or relationship.name value)}}
+    {{to-string (or (or relationship.fullName relationship.name) value)}}
   {{/if}}
 </li>

@@ -1,13 +1,13 @@
 {{#if imagePreview}}
   <div class="ui tiny rounded image">
-    <img src="{{file.url}}" alt="">
+    <img src={{file.url}} alt="">
   </div>
 {{else}}
   {{display/icon-for-file file class="huge"}}
 {{/if}}
 <div class="clearing content">
   <div class="header">
-    {{#link-to 'account.document' file.id}}
+    {{#link-to "account.document" file.id}}
       {{file.title}}
     {{/link-to}}
     <span class="light text">{{file.extension}}</span>

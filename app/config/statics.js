@@ -248,6 +248,19 @@ const jobTypes = [
   null
 ];
 
+const eeoJobCategories = [
+  'Executive/Senior Level Officials and Managers',
+  'First/Mid Level Officials and Managers',
+  'Professionals',
+  'Technicians',
+  'Sales Workers',
+  'Administrative Support Workers',
+  'Craft Workers',
+  'Operatives',
+  'Laborers and Helpers',
+  'Service Workers'
+];
+
 const gender = [ 'Male', 'Female', 'Other' ];
 
 const formTypes = [{
@@ -313,6 +326,7 @@ export {
   states,
   jobCategories,
   jobTypes,
+  eeoJobCategories,
   formTypes,
   closeMessageMap,
   modelPageMap,

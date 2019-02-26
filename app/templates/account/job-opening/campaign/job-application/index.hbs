@@ -4,29 +4,44 @@
     <div class="ui horizontal list">
       {{#if model.resume}}
         <div class="item">
-          <a href="{{model.resume.url}}" rel="noopener" target="_blank">
+          <a href={{model.resume.url}} rel="noopener" target="_blank">
             <i class="external link icon"></i>Resume/CV
           </a>
         </div>
       {{/if}}
       {{#if model.coverLetter}}
         <div class="item">
-          <a href="#" {{action openModal coverLetterModalId 'coverLetter'}}>
+          <a href="#" {{action openModal coverLetterModalId "coverLetter"}}>
             <i class="file icon"></i>Cover Letter
           </a>
         </div>
       {{/if}}
     </div>
+
     <div class="ui divider"></div>
 
+    {{#modals/add-notes
+      model=model
+      refresh=(action "refreshModel") as |openAddModal|
+    }}
+      <h3 class="dividing header">
+        Notes
+      </h3>
+      {{#if model.notes}}
+        <a href="#" {{action openAddModal}}><i class="edit icon"></i></a> {{model.notes}}
+      {{else}}
+        <span class="light text">No notes available.</span> <a href="#" {{action openAddModal}}>Add notes</a>
+      {{/if}}
+    {{/modals/add-notes}}
+
     {{#if opening.screening}}
+      <div class="ui divider"></div>
       <h3>Screening</h3>
       <p>
         {{#if model.scoreRelative}}This applicant is a <strong>{{model.scoreRelative}}% match</strong> based on their responses to your screening.{{/if}}
-        <a href="#" {{action openModal responsesModalId 'responses'}}>View responses</a>
+        <a href="#" {{action openModal responsesModalId "responses"}}>View responses</a>
       </p>
     {{/if}}
-
   </div>
   <div class="ui six wide column">
     {{#if upcomingEvents}}
@@ -35,18 +50,18 @@
     {{/if}}
 
     {{#if pastEvents}}
-      <h3 class="{{unless showingPastEvents 'ui light text'}}">
+      <h3 class={{unless showingPastEvents "ui light text"}}>
         Past Events
         <small class="right floated">
           <a href="#" {{action (toggle "showingPastEvents" this)}}>
-            {{if showingPastEvents 'Hide' 'Show'}}
+            {{if showingPastEvents "Hide" "Show"}}
           </a>
         </small>
       </h3>
       {{#liquid-if showingPastEvents}}
         {{timeline/event-timeline
           pastEvents
-          linkItemsTo='account.job-opening.campaign.job-application.event'
+          linkItemsTo="account.job-opening.campaign.job-application.event"
         }}
       {{/liquid-if}}
     {{/if}}
@@ -55,7 +70,7 @@
 
 {{#modals/static-content
   modalId=responsesModalId
-  onResponse=(action 'modalResponse' 'responses')
+  onResponse=(action "modalResponse" "responses")
   title="Screening responses"
   hideActions=true
 }}
@@ -89,7 +104,7 @@
 
 {{#modals/static-content
   modalId=coverLetterModalId
-  onResponse=(action 'modalResponse' 'coverLetter')
+  onResponse=(action "modalResponse" "coverLetter")
   title=coverLetterTitle
   hideActions=true
 }}

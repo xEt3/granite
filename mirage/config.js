@@ -215,4 +215,24 @@ export default function () {
 
     return employees;
   });
+
+  this.get('job-applications', (db, request) => {
+    if (request.queryParams.$report) {
+      return [
+        [ 'Type', 'All', 'Reviewed', 'Not Reviewed', 'Disqualified', 'Sample Stage 1', 'Sample Stage 2', 'Hired' ],
+        { section: 'Race/Gender EEO Data' },
+        [ 'Male', 5, 2, 3, 1, 0, 2, 1 ],
+        [ 'Female', 5, 2, 3, 1, 0, 2, 1 ],
+        [ 'White', 1, 2, 3, 4, 5, 6, 7 ],
+        { section: 'Section Two' },
+        [ 'A', 1, 2, 3, 4, 5, 6, 7 ]
+      ];
+    }
+
+    return db.jobApplications.all();
+  });
+
+  this.get('/eeo/visual-id/:id', () => {
+    return null;
+  });
 }

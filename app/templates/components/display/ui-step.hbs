@@ -13,17 +13,15 @@
     </div>
   {{/link-to}}
 {{else}}
-  <a href="#">
-    <div class="content">
-      <div class="title">
-        {{step.title}}
-        {{#if step.completed}}
-          <i class="check icon"></i>
-        {{else}}
-          {{#if step.icon}}<i class="{{step.icon}} icon"></i>{{/if}}
-        {{/if}}
-      </div>
-      <div class="description">{{step.description}}</div>
+  <div class="content">
+    <div class="title">
+      {{step.title}}
+      {{#if step.completed}}
+        <i class="check icon"></i>
+      {{else}}
+        {{#if step.icon}}<i class="{{step.icon}} icon"></i>{{/if}}
+      {{/if}}
     </div>
-  </a>
+    <div class="description">{{step.description}}</div>
+  </div>
 {{/if}}

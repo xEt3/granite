@@ -1,0 +1,29 @@
+{{#if hasBlock}}
+  {{yield openModalAction}}
+{{/if}}
+
+{{#ui-modal name="notes" id=modalId}}
+  <div class="header">
+    Notes
+  </div>
+  <div class="scrolling content">
+    <form class="ui form" {{action "save" on="submit"}}>
+      <label for="notes">Notes for this application</label>
+      {{textarea
+        name="note-text"
+        value=model.notes
+        spellcheck="true"
+        rows=6
+        placeholder="Add notes"}}
+    </form>
+  </div>
+  <div class="actions">
+    <button class="ui inverted red button" {{action 'cancel'}}>
+      Discard Changes
+    </button>
+    <button class="ui green right labeled icon {{if working 'loading'}} button" {{action 'save'}}>
+      Save Notes
+      <i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}

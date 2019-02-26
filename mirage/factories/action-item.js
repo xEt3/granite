@@ -3,7 +3,6 @@ import { Factory, faker } from 'ember-cli-mirage';
 const priorityNumbers = [ 1, 2, 3, 4, 5 ];
 
 export default Factory.extend({
-  _id:         faker.random.number(),
   title:       faker.hacker.noun(),
   description: faker.lorem.sentence(),
   priority (i) {

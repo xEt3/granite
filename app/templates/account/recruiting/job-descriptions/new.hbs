@@ -2,7 +2,7 @@
   user=auth.user
   steps=intros
   start-if=true
-  hintKey='job-description-new'}}
+  hintKey="job-description-new"}}
 
 <div class="ui raised padded segment container clearfix animated fadeInUp">
   <hgroup class="clearfix">
@@ -18,7 +18,7 @@
     this
     working=working
     submitClass="huge fluid green"
-    onsubmit=(action 'save' model)
+    onsubmit=(action "save" model)
     disabled=(or (not model.category) (not model.title))
   }}
     Save Job

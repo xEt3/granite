@@ -1,4 +1,4 @@
-<span role="button" class="toggle-icon" {{action 'toggleExpand' bubbles=false}}>
+<span role="button" class="toggle-icon" {{action "toggleExpand" bubbles=false}}>
   {{#if model.children.length}}
     {{#if model.isExpanded}}
       &#x25BC;
@@ -10,13 +10,13 @@
   {{/if}}
 </span>
 {{#if checkable}}
-  <div preventsDefault=false class="ui checkbox {{if model.isIndeterminate 'indeterminate' (if model.isChecked 'checked')}}">
+  <div preventsDefault={{false}} class="ui checkbox {{if model.isIndeterminate "indeterminate" (if model.isChecked "checked")}}">
     {{input
       type="checkbox"
       checked=model.isChecked
       change=(pipe-action
-        (action toggleProperty 'model.isChecked')
-        (action 'toggleCheck')
+        (action toggleProperty "model.isChecked")
+        (action "toggleCheck")
       )
       indeterminate=model.isIndeterminate}}
     <label class="node">
@@ -25,7 +25,7 @@
   </div>
 {{/if}}
 
-<span role="button" onclick={{action 'toggleCheck'}}>
+<span role="button" onclick={{action "toggleCheck"}}>
   {{#if hasBlock}}
     {{yield model}}
   {{else}}

@@ -3,13 +3,13 @@
 {{else}}
   <div class="content">
     {{#if onStatusChange}}
-      <a href="#" {{action "changeStatus"}}><i class="{{if todo.completedOn 'checkmark box' 'square outline'}} icon"></i></a>
+      <a href="#" {{action "changeStatus"}}><i class="{{if todo.completedOn "checkmark box" "square outline"}} icon"></i></a>
     {{else}}
-      <i class="{{if todo.completedOn 'checkmark box' 'square outline'}} icon"></i>
+      <i class="{{if todo.completedOn "checkmark box" "square outline"}} icon"></i>
     {{/if}}
     {{#if todo.completedOn}}
       <s>{{todo.title}}</s>
-      <small class="meta">Completed by {{todo.completedBy.firstName}} {{time-ago todo.completedOn}} on {{time todo.completedOn 'M/D/YY [at] h:mma'}}</small>
+      <small class="meta">Completed by {{todo.completedBy.firstName}} {{time-ago todo.completedOn}} on {{time todo.completedOn "M/D/YY [at] h:mma"}}</small>
     {{else}}
       {{todo.title}}
     {{/if}}
@@ -21,12 +21,12 @@
       {{/if}}
 
       {{#if onAssigneeChange}}
-        <a href="#" {{action (pipe (action 'selectAssignee') (action 'changeAssignee'))}}><i class="setting icon"></i></a>
+        <a href="#" {{action (pipe (action "selectAssignee") (action "changeAssignee"))}}><i class="setting icon"></i></a>
       {{/if}}
     </small>
   </div>
 
-  {{#ui-modal id=modalId class='small form'}}
+  {{#ui-modal id=modalId class="small form"}}
     <i class="close icon"></i>
     <div class="header">
       <i class="setting icon"></i>Edit todo's assignee
@@ -42,7 +42,7 @@
                 No Assignee
               </div>
               {{#each assignableTo as |item|}}
-                <div class="item" data-value="{{map-value mapper item}}">
+                <div class="item" data-value={{map-value mapper item}}>
                   {{item.fullName}}
                 </div>
               {{/each}}
@@ -54,10 +54,10 @@
       </div>
     </div>
     <div class="actions">
-      <button class="ui red button" {{action 'respondAssignee' false}}>
+      <button class="ui red button" {{action "respondAssignee" false}}>
         Cancel
       </button>
-      <button class="ui primary right labeled icon button" {{action 'respondAssignee' newAssignee}}>
+      <button class="ui primary right labeled icon button" {{action "respondAssignee" newAssignee}}>
         {{#if newAssignee}}
           Assign to {{newAssignee.fullName}}
         {{else}}

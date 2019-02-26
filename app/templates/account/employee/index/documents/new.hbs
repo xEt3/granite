@@ -11,12 +11,12 @@
       {{#input/document-selection-modal
         title="New Document"
         selected=model.file
-        assignText='Use Document'
+        assignText="Use Document"
         singleDoc=true
         onSelected=(action (mut model.file))
         as |execute|
       }}
-        <button class="ui basic button" {{action execute 'selectDocuments'}}>
+        <button class="ui basic button" {{action execute "selectDocuments"}}>
           <i class="folder icon"></i>
           Add document
           {{#if model.file}}
@@ -49,7 +49,7 @@
         </label>
       {{/ui-checkbox}}
     </div>
-    
+
     <div class="ui divider"></div>
     <form {{action "save" on="submit"}}>
       {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=(not model.file)}}Assign Document{{/form/action-button}}

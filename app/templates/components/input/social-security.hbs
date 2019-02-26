@@ -2,6 +2,6 @@
 <div class="right-input-icon" id="ssn">
   {{masked-input type=ssnInputType value=value placeholder="XXX-XX-XXXX" id="social-security" mask="111-11-1111"}}
   <a href="#" {{action (toggle "showSsn" this) }}>
-    <i class="{{if showSsn 'hide' 'unhide'}} icon"></i>
+    <i class="{{if showSsn "hide" "unhide"}} icon"></i>
   </a>
 </div>

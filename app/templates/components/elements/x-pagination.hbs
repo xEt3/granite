@@ -1,19 +1,19 @@
-<a href="#" class="icon item {{if onFirstPage 'disabled'}}" {{action "decrementPage" 20}}>
+<a href="#" class="icon item {{if onFirstPage "disabled"}}" {{action "decrementPage" 20}}>
   <i class="left double angle icon"></i>
 </a>
 
-<a href="#" class="icon item {{if onFirstPage 'disabled'}}" {{action "decrementPage"}}>
+<a href="#" class="icon item {{if onFirstPage "disabled"}}" {{action "decrementPage"}}>
   <i class="left angle icon"></i>
 </a>
 
 {{#each _buttons as |page|}}
-  <a href="#" class="item {{if page.active 'active'}}" {{action "setPage" page.n}}>{{page.n}}</a>
+  <a href="#" class="item {{if page.active "active"}}" {{action "setPage" page.n}}>{{page.n}}</a>
 {{/each}}
 
-<a href="#" class="icon item {{if onLastPage 'disabled'}}" {{action "incrementPage"}}>
+<a href="#" class="icon item {{if onLastPage "disabled"}}" {{action "incrementPage"}}>
   <i class="right angle icon"></i>
 </a>
 
-<a href="#" class="icon item {{if onLastPage 'disabled'}}" {{action "incrementPage" 20}}>
+<a href="#" class="icon item {{if onLastPage "disabled"}}" {{action "incrementPage" 20}}>
   <i class="right double angle icon"></i>
 </a>

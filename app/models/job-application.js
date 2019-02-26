@@ -13,6 +13,7 @@ export default Model.extend({
   disqualificationEmail: attr('boolean'),
   scoreAdditive:         attr('number'),
   scoreRelative:         attr('number'),
+  notes:                 attr('string'),
 
   resume: belongsTo('file', {
     async:   true,

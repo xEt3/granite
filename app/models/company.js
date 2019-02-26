@@ -49,6 +49,7 @@ export default Model.extend(Validations,  {
 
   urlPrefix:  attr('string'),
   collectEEO: attr('boolean'),
+  collectAA:  attr('boolean'),
 
   linkedToSlate: computed('linkedServices.[]', function () {
     let services = this.get('linkedServices');

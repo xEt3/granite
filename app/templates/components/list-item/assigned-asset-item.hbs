@@ -12,7 +12,7 @@
       <div class="content">
         <div class="summary">
           {{#if assignment.assigner}}
-            {{#link-to 'account.employee' assignment.assigner.id}}
+            {{#link-to "account.employee" assignment.assigner.id}}
               {{assignment.assigner.fullName}}
             {{/link-to}}
             assigned
@@ -20,7 +20,7 @@
             Assigned
           {{/if}}
           from
-          {{#link-to 'account.asset' asset.asset.id}}
+          {{#link-to "account.asset" asset.asset.id}}
             {{asset.asset.name}}
           {{/link-to}}
           on {{time asset.created}}
@@ -28,7 +28,7 @@
       </div>
     </div>
     {{#if attributes.length}}
-      {{#ui-popup tagName='span' content="View attributes"}}
+      {{#ui-popup tagName="span" content="View attributes"}}
         <a href="#" {{action "toggleProperty" "details"}}><i class="info circle icon"></i></a>
       {{/ui-popup}}
     {{/if}}
@@ -48,8 +48,8 @@
     {{/if}}
   </div>
 </div>
-{{#confirm-modal confirmContent='Are you sure you want to unassign this item and return it to your stock?' as |confirm|}}
-  <button class="ui bottom attached button" role="button" {{action (pipe confirm (action 'unassign'))}}>
+{{#confirm-modal confirmContent="Are you sure you want to unassign this item and return it to your stock?" as |confirm|}}
+  <button class="ui bottom attached button" role="button" {{action (pipe confirm (action "unassign"))}}>
     <i class="remove user icon"></i>
     Unassign asset
   </button>

@@ -16,27 +16,27 @@ export default Controller.extend(addEdit, fileSupport, {
     label:       'Company Name',
     type:        'text',
     path:        'name',
-    parentClass: 'sixteen wide column'
+    parentClass: 'sixteen wide'
   }, {
     label:       'Email',
     type:        'text',
     path:        'email',
-    parentClass: 'sixteen wide column'
+    parentClass: 'sixteen wide'
   }, {
     label:       'Address Line 1',
     type:        'text',
     path:        'addressLine1',
-    parentClass: 'sixteen wide column'
+    parentClass: 'sixteen wide'
   }, {
     label:       'Address Line 2',
     type:        'text',
     path:        'addressLine2',
-    parentClass: 'sixteen wide column'
+    parentClass: 'sixteen wide'
   }, {
     label:       'City',
     type:        'text',
     path:        'addressCity',
-    parentClass: 'six wide column'
+    parentClass: 'six wide'
   }, {
     label:       'State',
     type:        'select',
@@ -45,13 +45,13 @@ export default Controller.extend(addEdit, fileSupport, {
     contentPath: 'controller.states',
     displayKey:  'label',
     valuePath:   'value',
-    parentClass: 'six wide column',
+    parentClass: 'six wide',
     selectText:  'Select a State'
   }, {
     label:       'Zipcode',
     type:        'text',
     path:        'addressZipCode',
-    parentClass: 'four wide column'
+    parentClass: 'four wide'
   }, {
     label:       'Timezone',
     type:        'select',
@@ -59,7 +59,7 @@ export default Controller.extend(addEdit, fileSupport, {
     path:        'tz',
     contentPath: 'controller.timezones',
     selectText:  'Select a Time Zone',
-    parentClass: 'sixteen wide column'
+    parentClass: 'sixteen wide'
   }]),
 
   /* File settings */

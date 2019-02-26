@@ -1,7 +1,7 @@
 <h1 class="ui header">
   Granite Living Style Guide
-  {{#if focus tagName='small'}}
-    {{#link-to 'beyonce' (query-params focus='null') class="text-sm"}}<i class="fa fa-fw fa-eye-slash"></i> Clear Focus{{/link-to}}
+  {{#if focus tagName="small"}}
+    {{#link-to "beyonce" (query-params focus="null") class="text-sm"}}<i class="fa fa-fw fa-eye-slash"></i> Clear Focus{{/link-to}}
   {{/if}}
 </h1>
 <hr />
@@ -44,7 +44,7 @@
       <h2 class="ui header">ui {{#if size}}{{size}}{{/if}}</h2>
     </div>
     {{#each btnColors as |color|}}
-      <button type="button" class="ui button {{if color color}} {{if size size}} {{if toggleLoading 'loading'}}">{{if color color 'default'}}</button>
+      <button type="button" class="ui button {{if color color}} {{if size size}} {{if toggleLoading "loading"}}">{{if color color "default"}}</button>
     {{/each}}
 
     <div class="sg__spacer"></div>
@@ -56,7 +56,7 @@
       <h2 class="ui header">ui {{#if size}}{{size}}{{/if}}</h2>
     </div>
     {{#each btnColors as |color|}}
-      <button class="facebook inverted ui button {{if color color}} {{if size size}}">{{if color color 'default'}}</button>
+      <button class="facebook inverted ui button {{if color color}} {{if size size}}">{{if color color "default"}}</button>
     {{/each}}
 
     <div class="sg__spacer"></div>
