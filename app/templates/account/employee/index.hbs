@@ -78,7 +78,13 @@
           <div class="inverted content text-white employee-basic-meta">
             {{model.fullName}}
             <div class="sub header text-white">
-              {{model.jobTitle}} <br />
+              {{#if model.jobDescription}}
+                {{#link-to "account.job-description" model.jobDescription.id}}
+                  {{model.jobTitle}} <br />
+                {{/link-to}}
+              {{else}}
+                {{model.jobTitle}} <br />
+              {{/if}}
               {{#if model.hireDate}}
                 Since {{time model.hireDate "MMMM YYYY"}}
               {{/if}}
