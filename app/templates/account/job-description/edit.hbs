@@ -7,14 +7,14 @@
   <div class="ui divider"></div>
 
   {{#quick-form
-     form
-     model
-     this
-     working=working
-     submitClass="huge fluid green"
-     onsubmit=(action 'save' model)
-     disabled=(or (not model.category) (not model.title))
-   }}
-     Save
-   {{/quick-form}}
- </div>
+    form
+    model
+    this
+    working=working
+    submitClass="huge fluid green"
+    onsubmit=(action "save" model)
+    disabled=(or (not model.category) (not model.title))
+  }}
+    Save
+  {{/quick-form}}
+</div>

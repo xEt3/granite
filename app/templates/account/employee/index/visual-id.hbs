@@ -1,0 +1,19 @@
+<div class="ui raised padded segment container clearfix animated fadeInUp">
+  <h1 class="ui header">
+    Submit A Visual ID
+  </h1>
+  <p class="light text">
+    To account for every employee in your company, the EEOC recommends visual survey for categories declined by the employee. Please complete a visual survey below.
+  </p>
+  <div class="ui divider"></div>
+
+  {{#quick-form
+    visualIdForm
+    visualId
+    this
+    submitClass="large fluid positive"
+    onsubmit=(action "submitVisualId")
+  }}
+    Complete Visual ID <i class="fitted check icon"></i>
+  {{/quick-form}}
+</div>
