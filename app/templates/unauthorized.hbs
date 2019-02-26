@@ -1,13 +1,18 @@
-<h1 class="text-center text-danger">401 Unauthorized</h1>
-<hr />
+<div class="ui hero cover grey overlay hero__401">
+  <div class="hero__content">
+    <h3 class="ui header hero__title">
+      401 Unauthorized
+    </h3>
 
-<p class="text-danger text-center">
-  You were unauthorized to access that resource.<br />
-  <small>
-    <code>{{unauthorizedReason}}</code> That's all we know.
-  </small>
-</p>
+    <p class="hero__subcontent">
+      You were unauthorized to access that resource.<br />
+      <small>
+        <code>{{unauthorizedReason}}</code> That's all we know.
+      </small>
+    </p>
 
-<p class="text-center text-sm">
-  {{#link-to "index"}}Back to index{{/link-to}}
-</p>
+    <p class="text-center text-sm hero__subcontent">
+      {{#link-to "index"}}Back to index{{/link-to}}
+    </p>
+  </div>
+</div>

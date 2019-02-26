@@ -16,6 +16,9 @@
   .makeHeroImage(~'granite-cover');
   .makeHeroImage(~'lift-cover');
   .makeHeroImage(~'first-steps-cover');
+  .makeHeroImage(~'401');
+  .makeHeroImage(~'404');
+  .makeHeroImage(~'500');
 
   &.grey.overlay {
     background-color: @granite-grey;
@@ -25,6 +28,13 @@
   .hero__title {
     text-align: center;
     font-size: 3.5em;
+    color: white;
+    text-shadow: 1px 1px 2px fade(@black, 80%);
+  }
+
+  .hero__subcontent {
+    text-align: center;
+    font-size: 1em;
     color: white;
     text-shadow: 1px 1px 2px fade(@black, 80%);
   }
