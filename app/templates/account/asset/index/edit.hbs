@@ -8,11 +8,11 @@
     {{#input/document-selection-modal
       title="Assign asset documents"
       selected=model.documents
-      autoTag='Asset'
+      autoTag="Asset"
       onSelected=(action (mut model.documents))
       as |execute|
     }}
-      <button class="ui basic button" {{action execute 'selectDocuments'}}>
+      <button class="ui basic button" {{action execute "selectDocuments"}}>
         <i class="folder icon"></i>
         Add asset documents
         {{#if model.documents.length}}
@@ -27,7 +27,7 @@
     {{input/custom-field object=model.customFields attribute=attribute}}
   {{/each}}
 
-  <p class="text center aligned">Add custom attributes in the {{#link-to 'account.asset.information'}}attributes tab{{/link-to}}</p>
+  <p class="text center aligned">Add custom attributes in the {{#link-to "account.asset.information"}}attributes tab{{/link-to}}</p>
 
   {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Save{{/form/action-button}}
 </form>

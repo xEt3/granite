@@ -8,7 +8,7 @@ export default Component.extend({
   },
 
   setOverflow () {
-    let table = this.$()[0];
+    let table = this.$('table')[0];
     let view = table.scrollHeight + 'px';
 
     this.set('overflow', `height:${view}`);

@@ -36,22 +36,27 @@
   margin: 0;
 }
 
-.census__table > .ui.table thead tr > th:last-child {
-  background-color: #fafafb;
-  position: relative;
-  z-index: 3;
-}
+.ui.table {
 
-.census__table > .ui.table tr:nth-child(odd) td:last-child {
-  background-color: white;
-  position: relative;
-  z-index: 3;
-}
+  thead tr > th:last-child {
+    position: relative;
+  }
 
-.census__table > .ui.table tr:nth-child(even) td:last-child {
-  background-color: #fafafb;
-  position: relative;
-  z-index: 3;
+  tr.census__highlight-row td:last-child {
+     background: lighten(@granite-red, 15%) !important;
+  }
+
+  tr:nth-child(odd) td:last-child {
+    background: fade(@invertedStripedBackground, 100%);
+    position: relative;
+    z-index: 1;
+  }
+
+  tr:nth-child(even) td:last-child {
+    background: @census-offwhite;
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .census__highlight-row {
