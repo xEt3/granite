@@ -17,11 +17,21 @@ export default Route.extend(addEdit, {
       employee,
       employees: this.store.query('employee', {
         'company': companyId,
-        _id:       { $ne: employeeId }
+        _id:       { $ne: employeeId },
+        sort:      { 'name.last': 1 }
       }),
-      departments:     this.store.query('department', { 'company': companyId }),
-      locations:       this.store.query('location', { 'company': companyId }),
-      jobDescriptions: this.store.query('job', { 'company': companyId }),
+      departments: this.store.query('department', {
+        'company': companyId,
+        sort:      { name: 1 }
+      }),
+      locations: this.store.query('location', {
+        'company': companyId,
+        sort:      { name: 1 }
+      }),
+      jobDescriptions: this.store.query('job', {
+        'company': companyId,
+        sort:      { name: 1 }
+      }),
       company
     });
   },
