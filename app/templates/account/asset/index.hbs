@@ -1,6 +1,6 @@
 <h3 class="ui header">
   {{#liquid-if (or addingAsset editAsset)}}
-    {{#link-to 'account.asset.index' class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
+    {{#link-to "account.asset.index" class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
   {{else}}
     <div class="right floated">
       {{#if model}}
