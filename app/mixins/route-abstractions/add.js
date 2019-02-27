@@ -1,12 +1,11 @@
 import Mixin from '@ember/object/mixin';
 import { assert } from '@ember/debug';
 import { resolve } from 'rsvp';
-import $ from 'jquery';
 
 export default Mixin.create({
   modelDefaults: {},
 
-  model (params) {
+  async model (params) {
     const modelName = this.get('modelName'),
           defaults = this.get('modelDefaults'),
           getDefaults = this.getModelDefaults;
@@ -19,11 +18,8 @@ export default Mixin.create({
 
     assert('You must specify a modelName.', modelName);
 
-    return resolve(defaultPromise)
-    .then(resolvedDefaults => {
-      $.extend(defaults, resolvedDefaults);
-      return this.store.createRecord(modelName, defaults);
-    });
+    let resolvedDefaults = await resolve(defaultPromise);
+    return await this.store.createRecord(modelName, Object.assign({}, defaults, resolvedDefaults));
   },
 
   actions: {
