@@ -29,11 +29,4 @@ module('Acceptance | contact page', function (hooks) {
     await visit('/contact');
     assert.ok(find('a[href="mailto:hello@granitehr.com"]'), 'Email link shown on page');
   });
-
-  test('Contact Social media is there and link works', async function (assert) {
-    await visit('/contact');
-    assert.ok(find('a[href="http://twitter.com/user/granitehr"]'), 'Twitter link shown on page');
-    assert.ok(find('a[href="http://facebook.com/granitehr"]'), 'Facebook link shown on page');
-    assert.ok(find('a[href="http://linkedin.com/granitehr"]'), 'Linkedin link shown on page');
-  });
 });
