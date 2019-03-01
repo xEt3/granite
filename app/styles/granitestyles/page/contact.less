@@ -1,3 +1,59 @@
-.contact.container {
-  font-size: 1.4em;
+/* background */
+.contact__backplane {
+  position: relative;
+  overflow: hidden;
+  height: 95vh;
+  min-height: 500px;
+  width: 100%;
+  backface-visibility: hidden;
+
+  &:after {
+    .three-point-gradient(fade(@granite-green, 90%), fade(lighten(@granite-blue, 10%), 90%), fade(lighten(@granite-green, 15%), 90%));
+
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: -50%;
+    bottom: -50%;
+    background: @gradient;
+    background-color: @granite-grey;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center -250px;
+    background-blend-mode: overlay;
+    z-index: -2;
+  }
+
+  .contact-backplane__content {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-70%) rotateX(15deg);
+    text-align: center;
+    color: white;
+    padding: 20%;
+
+    h1 {
+      font-size: 3em;
+    }
+
+    a, p {
+      font-size: 1.5em;
+    }
+  }
+
+  @media screen and (max-width: @screen-md) {
+    .about-backplane__content {
+      h1 {
+        font-size: 2.5em;
+      }
+
+      a, p {
+        font-size: 1em;
+      }
+    }
+  }
 }
