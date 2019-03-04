@@ -73,6 +73,12 @@ module.exports = function (environment) {
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
+    // Heroku Git Hash support
+    if (process.env.SOURCE_VERSION) {
+      let packageJson = require('../package.json');
+      let gitHash = process.env.SOURCE_VERSION.substr(0, 7);
+      ENV.emberRollbarClient.payload = { client: { javascript: { code_version: `${packageJson.version}+${gitHash}` } } };
+    }
   }
 
   return ENV;

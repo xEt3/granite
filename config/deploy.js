@@ -1,18 +1,24 @@
 'use strict';
 
-module.exports = function (environment) {
-  let ENV = Object.assign({}, environment);
+module.exports = function (/* targetEnv */) {
+  let ENV = {};
 
-  ENV['revision-data'] = { type: 'file-hash' };
-  ENV.rollbar = {
-    accessToken:       ENV.emberRollbarClient.accessToken,
-    serverAccessToken: process.env.ROLLBAR_SERVER_TOKEN,
-    minifiedPrependUrl (context) {
-      return 'https://www.granitehr.com/' + context.revisionData.revisionKey + '/';
-    }
+  ENV['revision-data'] = {
+    type: 'file-hash',
+    scm:  false
   };
 
-  console.log('Deploy environment is', ENV);
+  let packageJson = require('../package.json'),
+      gitHash = (process.env.SOURCE_VERSION || '').substr(0, 7);
+
+  ENV.rollbar = {
+    accessToken:        '6f016ff3c5ef495b9c894871857aefd4',
+    accessServerToken:  process.env.ROLLBAR_SERVER_TOKEN,
+    revisionKey:        `${packageJson.version}+${gitHash}`,
+    minifiedPrependUrl: 'https://www.granitehr.com/'
+  };
+
+  console.log('Deploy environment is', ENV); /* eslint-disable-line */
 
   return ENV;
 };
