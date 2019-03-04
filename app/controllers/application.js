@@ -52,6 +52,10 @@ export default Controller.extend({
     icon:  'sitemap',
     title: 'Company Anatomy',
     link:  'anatomy'
+  }, {
+    icon:  'life ring outline',
+    title: 'Help',
+    link:  'help'
   }],
 
   navTransparent: computed.equal('currentPath', 'index'),

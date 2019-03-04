@@ -207,6 +207,9 @@ Router.map(function () {
 
     this.route('first-steps');
     this.route('search');
+    this.route('help', function () {
+      this.route('topic', { path: '/:topic_slug' });
+    });
   });
 
   this.route('error');

@@ -1,0 +1,19 @@
+<div class="ui raised padded segment container clearfix">
+  <hgroup class="clearfix">
+    <h1 class="ui header left floated">
+      Help & Support
+    </h1>
+  </hgroup>
+
+  <div class="ui divider"></div>
+
+  <h3>Knowledgebase</h3>
+
+  <div class="ui list">
+    {{#each-in model as |key value|}}
+      {{#link-to "account.help.topic" key class="item"}}
+        {{value.title}}
+      {{/link-to}}
+    {{/each-in}}
+  </div>
+</div>
