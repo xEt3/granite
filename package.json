@@ -61,6 +61,7 @@
     "ember-cli-browserstack": "^0.0.6",
     "ember-cli-chart": "3.4.0",
     "ember-cli-dependency-checker": "^3.1.0",
+    "ember-cli-deploy": "^1.0.2",
     "ember-cli-deploy-build": "^1.1.1",
     "ember-cli-deploy-revision-data": "^1.0.0",
     "ember-cli-deploy-rollbar": "^1.4.0",
