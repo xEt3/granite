@@ -11,7 +11,7 @@ export default Route.extend({
   model () {
     let actionItem = this.modelFor('account.action-item');
 
-    window._rb = this.get('rollbar');
+    this.get('rollbar').critical(new Error('I should be an error in action-item/index!'));
 
     return RSVP.hash({
       actionItem,
