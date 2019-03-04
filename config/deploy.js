@@ -4,7 +4,7 @@ module.exports = function (/* targetEnv */) {
   let ENV = {};
 
   ENV['revision-data'] = {
-    type: 'version-commit',
+    type: 'file-hash',
     scm:  false
   };
   ENV.rollbar = {
