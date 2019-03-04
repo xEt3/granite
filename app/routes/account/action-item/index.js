@@ -1,13 +1,17 @@
 import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
+import { inject as service } from '@ember/service';
 
 export default Route.extend({
+  rollbar: service(),
   titleToken () {
     return 'Action Item';
   },
 
   model () {
     let actionItem = this.modelFor('account.action-item');
+
+    window._rb = this.get('rollbar');
 
     return RSVP.hash({
       actionItem,
