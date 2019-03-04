@@ -77,7 +77,7 @@ module.exports = function (environment) {
     if (process.env.SOURCE_VERSION) {
       let packageJson = require('../package.json');
       let gitHash = process.env.SOURCE_VERSION.substr(0, 7);
-      ENV.emberRollbarClient.payload.client.javascript.code_version = `${packageJson.version}+${gitHash}`;
+      ENV.emberRollbarClient.payload = { client: { javascript: { code_version: `${packageJson.version}+${gitHash}` } } };
     }
   }
 
