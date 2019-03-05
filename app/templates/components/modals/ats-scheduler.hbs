@@ -69,7 +69,7 @@
     <button class="ui inverted red button" {{action "respond" false}}>
       Cancel
     </button>
-    <button class="ui inverted green right labeled icon button" {{action "respond" meeting}}>
+    <button class="ui inverted green right labeled icon button" {{action "respond" meeting}} disabled={{if (and meeting.start meeting.end) false true}}>
       Schedule
       <i class="check icon"></i>
     </button>
