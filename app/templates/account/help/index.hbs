@@ -3,6 +3,16 @@
     <h1 class="ui header left floated">
       Help & Support
     </h1>
+    <div class="right aligned text menu">
+      {{#ui-dropdown class="item icon top right pointing"}}
+        <i class="wrench icon"></i><i class="dropdown icon"></i>
+        <div class="menu">
+          {{#confirm-modal class="item" as |confirm|}}
+            <a href="#" class="text-black" {{action (pipe confirm (action "resetIntros"))}}><i class="undo icon"></i>Reset Help Tutorials</a>
+          {{/confirm-modal}}
+        </div>
+      {{/ui-dropdown}}
+    </div>
   </hgroup>
 
   <div class="ui divider"></div>
@@ -15,5 +25,10 @@
         {{value.title}}
       {{/link-to}}
     {{/each-in}}
+  </div>
+
+  <div class="center aligned text">
+    <h4>Still need help?</h4>
+    Email us at <a href="mailto:getsupport@granitehr.com" class="email-link">getsupport@granitehr.com</a>
   </div>
 </div>

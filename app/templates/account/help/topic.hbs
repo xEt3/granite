@@ -1,5 +1,5 @@
 <div class="ui raised padded segment container clearfix">
-  {{#link-to 'account.help.index'}}
+  {{#link-to "account.help.index"}}
     Back to knowledgebase
   {{/link-to}}
   <hgroup class="clearfix">
@@ -9,6 +9,7 @@
   </hgroup>
 
   <div class="ui divider"></div>
-
+  {{! template-lint-disable }}
   {{{model.body}}}
+  {{! template-lint-enable }}
 </div>

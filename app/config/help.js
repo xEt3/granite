@@ -26,7 +26,20 @@ let articles = {
 <p>One of the many settings of a campaign are the campaign stages.  The default stages may be used, or custom stages may be setup up for the specific campaign.  By clicking the toggle labeled “Use custom recruiting stages”, the default stages will appear.  The stages can be dragged to reorder, stages can be removed entirely, and new stages can be added.</p>
 <p>Another feature that needs setup is screening.  Screening questions can be created to grade applicants by clicking the button labeled “Applicant Scoring On/Off”.  Questions can be created for all types of user input, including freeform inputs, dropdowns, radios, checkboxes, data entries, and toggles.  Created questions can be reordered in whatever order is wanted.</p>
 <h5><a id="Navigating_9"></a>Navigating</h5>
-<p>Upon arrival to the campaign page, a chart of recent applicant activity can be seen.  Navigating to the “Applicants” tab will show all applicants for the campaign, with either the company’s default stages, or the custom stages created during the campaign setup.  Applicants not yet in a stage will appear at the top, and these applicants can be added to the pipeline by clicking them, and then clicking “Move Selected to Pipeline”.  Applicants can be moved through the various pipeline stages with the mouse via drag and drop, or by clicking the icon with two arrows in the top right corner of their applicant card.  The talent pool tab of the campaign will show non-rejected applicants of a closed campaign if setting was toggled on during setup.  The EEO Reports tab will show the EEO report for the applicants of the campaign.</p>`
+<p>Upon arrival to the campaign page, a chart of recent applicant activity can be seen.  Navigating to the “Applicants” tab will show all applicants for the campaign, with either the company’s default stages, or the custom stages created during the campaign setup.  Applicants not yet in a stage will appear at the top, and these applicants can be added to the pipeline by clicking them, and then clicking “Move Selected to Pipeline”.  Applicants can be moved through the various pipeline stages with the mouse via drag and drop, or by clicking the icon with two arrows in the top right corner of their applicant card.  The talent pool tab of the campaign will show non-rejected applicants of a closed campaign if that setting was toggled on during setup.  The EEO Reports tab will show the EEO report for the applicants of the campaign.</p>`
+  },
+
+  'employee-counseling': {
+    title: 'Employee Counseling',
+    body:  `<h3><a id="Starting_an_Employee_Issue_0"></a>Starting an Employee Issue</h3>
+<p>Employee counseling can be seen by navigating to an employee’s page, and then by clicking on the tab labeled “Counseling”.  To add a new issue for the employee, click the plus button in the upper righthand corner.  When creating an employee issue, specific users can be excluded from seeing the issue process by selecting their name in the dropdown for that setting.</p>
+<h3><a id="Issuing_Corrective_Action_2"></a>Issuing Corrective Action</h3>
+<p>To issue a corrective action for an employee issue, navigate to the Counseling tab for the employee and click the button labeled “Issue a New Corrective Action”, for the appropriate issue.  Creating a formal corrective action will have more options than one that is informal.  Formal corrective actions can easily be printed for presentation with the print link in the top right corner of the corrective action’s summary page.  Corrective actions can be followed up, edited, or deleted by clicking the wrench icon to the right of the corrective action’s name.</p>`
+  },
+
+  'eeo-affirmative-action': {
+    title: 'EEO & Affirmative Action',
+    body:  'James, please do this.'
   }
 };
 
