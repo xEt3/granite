@@ -220,6 +220,7 @@ Router.map(function () {
   this.route('setup-account', { path: '/setup/account/:user_id' });
   this.route('recover', { path: '/recover/:recovery_id' });
   this.route('our-product');
+  this.route('terms-of-service');
 });
 
 export default Router;

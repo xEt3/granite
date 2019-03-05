@@ -25,6 +25,7 @@ module.exports = function (defaults) {
 
     'ember-cli-range-slider': { skin: 'flat' },
 
+    sourcemaps:  { enabled: true },
     fingerprint: { exclude: [ 'product-screenshots/', 'documents/' ] },
 
     babel: {
