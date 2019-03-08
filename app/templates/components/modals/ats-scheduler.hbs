@@ -1,4 +1,4 @@
-{{#ui-modal id=modalId observeChanges=true}}
+{{#ui-modal id=modalId observeChanges=true context=".ember-application"}}
   <i class="close icon"></i>
   <div class="header">
     Schedule a meeting with {{model.person.firstName}}<br />
@@ -22,7 +22,7 @@
     <div class="ui two column grid">
       <div class="ui field column">
         <label for="meeting-organizer">Organizer</label>
-        {{#ui-dropdown class="fluid search selection" id="meeting-organizer" onChange=(action (mut meeting.organizer)) as |execute mapper|}}
+        {{#ui-dropdown class="fluid search selection" id="meeting-organizer" selected=meeting.organizer onChange=(action (mut meeting.organizer)) as |execute mapper|}}
           <i class="dropdown icon"></i>
           <div class="default text">Meeting Organizer</div>
           <div class="menu">
@@ -36,7 +36,7 @@
       </div>
       <div class="ui field column">
         <label for="meeting-facilitator">Facilitator</label>
-        {{#ui-dropdown class="fluid search selection" id="meeting-facilitator" onChange=(action (mut meeting.facilitator)) as |execute mapper|}}
+        {{#ui-dropdown class="fluid search selection" id="meeting-facilitator" selected=meeting.facilitator onChange=(action (mut meeting.facilitator)) as |execute mapper|}}
           <i class="dropdown icon"></i>
           <div class="default text">Meeting Facilitator</div>
           <div class="menu">
@@ -52,7 +52,7 @@
 
     <div class="field">
       <label for="meeting-attendees">Additional Attendees</label>
-      {{#ui-dropdown class="fluid multiple search selection" id="meeting-attendees" forceSelection=false onChange=(action (mut meeting.attendees)) as |execute mapper|}}
+      {{#ui-dropdown class="fluid multiple search selection" id="meeting-attendees" selected=meeting.attendees forceSelection=false onChange=(action (mut meeting.attendees)) as |execute mapper|}}
         <i class="dropdown icon"></i>
         <div class="default text">Additional Attendees</div>
         <div class="menu">
@@ -69,7 +69,7 @@
     <button class="ui inverted red button" {{action "respond" false}}>
       Cancel
     </button>
-    <button class="ui inverted green right labeled icon button" {{action "respond" meeting}}>
+    <button class="ui inverted green right labeled icon button" {{action "respond" meeting}} disabled={{if (and meeting.start meeting.end) false true}}>
       Schedule
       <i class="check icon"></i>
     </button>
