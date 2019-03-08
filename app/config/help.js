@@ -35,11 +35,6 @@ let articles = {
 <p>Employee counseling can be seen by navigating to an employee’s page, and then by clicking on the tab labeled “Counseling”.  To add a new issue for the employee, click the plus button in the upper righthand corner.  When creating an employee issue, specific users can be excluded from seeing the issue process by selecting their name in the dropdown for that setting.</p>
 <h3><a id="Issuing_Corrective_Action_2"></a>Issuing Corrective Action</h3>
 <p>To issue a corrective action for an employee issue, navigate to the Counseling tab for the employee and click the button labeled “Issue a New Corrective Action”, for the appropriate issue.  Creating a formal corrective action will have more options than one that is informal.  Formal corrective actions can easily be printed for presentation with the print link in the top right corner of the corrective action’s summary page.  Corrective actions can be followed up, edited, or deleted by clicking the wrench icon to the right of the corrective action’s name.</p>`
-  },
-
-  'eeo-affirmative-action': {
-    title: 'EEO & Affirmative Action',
-    body:  'James, please do this.'
   }
 };
 
