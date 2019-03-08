@@ -6,9 +6,9 @@
       {{model.name}}
     {{/link-to}}
   </div>
-
+{{#if model.hiring }}
   <span class="ui right floated"><a href="http://localhost:4201/careers/{{quartzLink}}" target="_blank">View careers link <i class="external alternate fitted icon"></i></a></span>
-
+{{/if}}
   <div class="meta">
     Hiring for <strong>{{model.job.title}}</strong> position
     <span class="ui small text right floated">Created: {{time model.created}}{{#if model.creator}} by {{model.creator.fullName}}{{/if}}</span>
