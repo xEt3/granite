@@ -1,0 +1,37 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "https://codon-buildpacks.s3.amazonaws.com/buildpacks/aedev/emberjs.tgz"
+    }
+  ],
+  "description": "",
+  "env": {
+    "API_URL": {
+      "required": true
+    },
+    "NODE_VERBOSE": {
+      "required": true
+    },
+    "ROLLBAR_SERVER_TOKEN": {
+      "required": true
+    },
+    "STATIC_DEBUG": {
+      "required": true
+    },
+    "WS_URL": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "name": "granite",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
