@@ -94,6 +94,7 @@ export default Component.extend(ajaxStatus, {
       }
 
       $dropzone.removeFile(this.get('fileIsAdded'));
+      this.set('fileIsAdded', false);
     },
 
     uploadError (err) {
