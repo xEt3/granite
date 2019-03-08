@@ -4,7 +4,7 @@ import RSVP from 'rsvp';
 import add from 'granite/mixins/route-abstractions/add';
 
 export default Route.extend(add, {
-  titleToken: 'New Action Item',
+  titleToken: 'New Project',
   auth:       service(),
   modelName:  'action-item',
 

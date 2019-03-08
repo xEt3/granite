@@ -33,7 +33,7 @@ const categoryMap = {
   location:    'Locations',
   companyuser: 'Users',
   jobopening:  'Job Openings',
-  actionitem:  'Action Items'
+  actionitem:  'Projects'
 };
 
 const createSerializer = (serializerOptions) => {

@@ -1,5 +1,5 @@
 <div class="ui padded raised segment animated fadeInUp">
-  <h2 class="ui dividing header">Create a New Action Item</h2>
+  <h2 class="ui dividing header">Create a New Project</h2>
 
   <div class="ui form">
     {{input/ui-input type="text" inputId="action-item-title" placeholder="Title" value=model.title}}
@@ -29,7 +29,7 @@
 
     <div class="field">
       <label for="action-item-prerequisites">
-        {{#ui-popup tagName="span" content="Prerequisites indicate which action items need to be completed before this action item can be completed."}}
+        {{#ui-popup tagName="span" content="Prerequisites indicate which projects need to be completed before this project can be completed."}}
           Prerequisites
           <i class="right floated info icon"></i>
         {{/ui-popup}}
@@ -51,7 +51,7 @@
           </div>
         {{/ui-dropdown}}
       {{else}}
-        <p>No other action items are available.</p>
+        <p>No other projects are available.</p>
       {{/if}}
     </div>
 
@@ -105,7 +105,7 @@
 
     <div class="ui divider"></div>
     <form {{action "save" on="submit"}}>
-      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Save action item{{/form/action-button}}
+      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Save project{{/form/action-button}}
     </form>
   </div>
 </div>

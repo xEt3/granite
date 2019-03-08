@@ -26,7 +26,7 @@ export default Controller.extend({
     link:  'index'
   }, {
     icon:  'check',
-    title: 'Action Items',
+    title: 'Projects',
     link:  'action-items'
   }, {
     icon:  'users',
