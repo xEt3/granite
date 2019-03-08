@@ -2,8 +2,13 @@
   {{yield model}}
 {{else}}
   <div class="header">
-    {{model.name}}
+    {{#link-to "account.job-opening" model.id}}
+      {{model.name}}
+    {{/link-to}}
   </div>
+
+  <span class="ui right floated"><a href="http://localhost:4201/careers/{{quartzLink}}" target="_blank">View careers link <i class="external alternate fitted icon"></i></a></span>
+
   <div class="meta">
     Hiring for <strong>{{model.job.title}}</strong> position
     <span class="ui small text right floated">Created: {{time model.created}}{{#if model.creator}} by {{model.creator.fullName}}{{/if}}</span>
