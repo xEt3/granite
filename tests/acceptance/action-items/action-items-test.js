@@ -8,16 +8,16 @@ module('Acceptance | action items', function (hooks) {
 
   test('getting to the action items', async function (assert) {
     await authenticate.call(this, server);
-    await visit('/account/action-items');
-    assert.equal(currentURL(), '/account/action-items', 'on Action Items page');
+    await visit('/account/projects');
+    assert.equal(currentURL(), '/account/projects', 'on Action Items page');
   });
 
   test('action items elements show on page', async function (assert) {
     await authenticate.call(this, server);
     let firstItem = await server.create('action-item');
-    await visit('/account/action-items');
-    assert.equal(currentURL(), '/account/action-items', 'on Action Items page');
-    assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Action Items');
+    await visit('/account/projects');
+    assert.equal(currentURL(), '/account/projects', 'on Action Items page');
+    assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Projects');
     assert.dom('div.ui.cards > div > div').exists();
     assert.dom('i.large.filter.icon').exists();
     assert.dom('i.plus.icon').exists();
@@ -37,7 +37,7 @@ module('Acceptance | action items', function (hooks) {
   test('filter by priority', async function (assert) {
     await authenticate.call(this, server);
     await server.createList('action-item', 5);
-    await visit('/account/action-items');
+    await visit('/account/projects');
     await click('i.large.filter.icon');
     assert.dom('.five.ui.buttons').isVisible();
 

@@ -15,11 +15,11 @@ module('Acceptance | edit action items', function (hooks) {
       owner:         employee
     });
 
-    await visit(`/account/action-item/${action.title}`);
-    assert.equal(currentURL(), `/account/action-item/${action.title}`);
+    await visit(`/account/project/${action.title}`);
+    assert.equal(currentURL(), `/account/project/${action.title}`);
     await click('h2 > a > i.edit.fitted.icon');
     await settled();
-    assert.equal(currentURL(), `/account/action-item/${action.title}/edit`);
+    assert.equal(currentURL(), `/account/project/${action.title}/edit`);
   });
 
   test('elements on action item edit page', async function (assert) {
@@ -31,8 +31,8 @@ module('Acceptance | edit action items', function (hooks) {
       owner:         employee
     });
 
-    await visit(`/account/action-item/${action.title}/edit`);
-    assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Action Items/Action Item/Edit');
+    await visit(`/account/project/${action.title}/edit`);
+    assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Projects/Project/Edit');
     assert.dom('div.field.ember-view > label').hasText('Title');
     assert.dom('input#action-item-title').hasValue(action.title);
     assert.dom('div:nth-child(2) > label').hasText('Description');
@@ -59,7 +59,7 @@ module('Acceptance | edit action items', function (hooks) {
       company:       company
     });
 
-    await visit(`/account/action-item/${action.title}/edit`);
+    await visit(`/account/project/${action.title}/edit`);
     await fillIn('input#action-item-title', `${action.title}`);
     await fillIn('div:nth-child(2) > textarea', `${action.description} testing this`);
     assert.dom('input#action-item-title').hasValue(`${action.title}`);
@@ -71,6 +71,6 @@ module('Acceptance | edit action items', function (hooks) {
     await settled();
     assert.dom('div#action-item-prerequisites > a.ui.label').hasText(`${action.title}`);
     await click('form > button');
-    assert.equal(currentURL(), `/account/action-item/${action.title}`);
+    assert.equal(currentURL(), `/account/project/${action.title}`);
   });
 });

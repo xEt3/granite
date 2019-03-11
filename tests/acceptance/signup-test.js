@@ -21,7 +21,7 @@ const fieldMap = {
 module('Acceptance | signup', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('filling in signup form', async function (assert) {
+  test('signup through test', async function (assert) {
     await visit('/signup');
     assert.equal(currentURL(), '/signup');
 
@@ -79,6 +79,20 @@ module('Acceptance | signup', function (hooks) {
     await new Promise(resolve => setTimeout(resolve, 5000));
 
     const billingController = this.owner.lookup('controller:signup/billing');
+
+    let discount = server.create('discount', {
+      code:   'ABC',
+      type:   'percent',
+      amount: 100
+    });
+
+    await click('a.link__promo-toggle');
+    assert.dom('.container__promo-code').exists();
+    await fillIn('.promo-code__input', discount.code);
+    await click('button.promo-code__apply');
+    await settled();
+    assert.dom('.promo-code__applied').includesText('"ABC" for 100% off');
+    assert.equal(billingController.get('model.accountBillingPromo'), 'ABC');
 
     assert.ok(find('button[type="submit"]').disabled, 'Submit is disabled');
     billingController.set('nonce', 'fake-valid-nonce');

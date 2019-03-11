@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 export default Route.extend({
   rollbar: service(),
   titleToken () {
-    return 'Action Item';
+    return 'Project';
   },
 
   model () {
