@@ -8,15 +8,15 @@ module('Acceptance | new action items', function (hooks) {
 
   test('adding a new action item', async function (assert) {
     await authenticate.call(this, server);
-    await visit('/account/action-items');
+    await visit('/account/projects');
     await click('h2 > a > i.plus');
-    assert.equal(currentURL(), '/account/action-items/new');
+    assert.equal(currentURL(), '/account/projects/new');
   });
 
   test('elements show on page', async function (assert) {
     await authenticate.call(this, server);
-    await visit('/account/action-items/new');
-    assert.dom('div > h2.header').hasText('Create a New Action Item');
+    await visit('/account/projects/new');
+    assert.dom('div > h2.header').hasText('Create a New Project');
     assert.dom('div > div:nth-child(1) > label').hasText('Title');
     assert.dom('div > div:nth-child(2) > label').hasText('Description');
     assert.dom('input#action-item-title').isVisible();
@@ -27,7 +27,7 @@ module('Acceptance | new action items', function (hooks) {
     assert.dom('label > span').hasText('Prerequisites');
     assert.dom('span > span.irs').isVisible();
     assert.dom('span.irs > span.irs-single').hasText('1');
-    assert.dom('div div:nth-child(6) > p').hasText('No other action items are available.');
+    assert.dom('div div:nth-child(6) > p').hasText('No other projects are available.');
     assert.dom('div.ui.basic.text.segment.container > div > div > h4').hasText('Build a todo');
     assert.dom('div#new-todo-assigned-to > input').isVisible();
     assert.dom('div#new-todo-assigned-to > div.menu.transition.visible').isNotVisible();
@@ -41,7 +41,7 @@ module('Acceptance | new action items', function (hooks) {
 
   test('adding new item', async function (assert) {
     await authenticate.call(this, server);
-    await visit('/account/action-items/new');
+    await visit('/account/projects/new');
     await fillIn('input#action-item-title', 'check the fridge');
     await fillIn('div:nth-child(2) > textarea', 'oh snap I am full');
     await fillIn('div#action-item-due-date input[type="text"]', 'September 18, 2178');
@@ -50,6 +50,6 @@ module('Acceptance | new action items', function (hooks) {
     assert.dom('div#action-item-due-date input[type="text"]').hasValue('September 18, 2178');
     await click('form:nth-child(12) > button');
     await settled();
-    assert.equal(currentURL(), '/account/action-item/check-the-fridge');
+    assert.equal(currentURL(), '/account/project/check-the-fridge');
   });
 });
