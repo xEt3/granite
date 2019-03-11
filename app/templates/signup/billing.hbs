@@ -11,9 +11,10 @@
       )
       authorization=braintreeToken.token
       onNonce=(action (mut nonce))}}
+
     <div>
       {{#unless showPromo}}
-        <a href="#" class="link__promo-toggle"{{action toggleProperty "showPromo"}}>Have a promo code?</a>
+        <a href="#" class="link__promo-toggle" {{action toggleProperty "showPromo"}}>Have a promo code?</a>
       {{/unless}}
       <p class="right aligned very small text"><i class="lock icon"></i>Powered by Braintree Payments</p>
     </div>
