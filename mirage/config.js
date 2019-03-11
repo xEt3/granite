@@ -44,6 +44,7 @@ export default function () {
   this.passthrough('https://api.sandbox.braintreegateway.com:443/**');
   this.passthrough('https://client-analytics.sandbox.braintreegateway.com/**');
   this.passthrough('https://origin-analytics-sand.sandbox.braintree-api.com/**');
+  this.passthrough('https://www.paypal.com/**');
 
   // Simulate login actions
 

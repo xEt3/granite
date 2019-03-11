@@ -1,0 +1,14 @@
+<div class="ui raised padded segment container clearfix">
+  {{#link-to "account.help.index"}}
+    Back to knowledgebase
+  {{/link-to}}
+  <hgroup class="clearfix">
+    <h1 class="ui header left floated">
+      {{model.title}}
+    </h1>
+  </hgroup>
+
+  <div class="ui divider"></div>
+  {{! template-lint-disable no-triple-curlies }}
+  {{{model.body}}}
+</div>

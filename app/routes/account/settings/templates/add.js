@@ -27,7 +27,7 @@ export default Route.extend(add, {
 
     return this.store.query('template-definition', { key: params.template_key })
     .then(definition => {
-      this.set('definition', definition);
+      this.set('definition', definition.get('firstObject'));
       return hash({
         definition,
         template: mixin(params)
