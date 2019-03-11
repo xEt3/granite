@@ -20,6 +20,8 @@ export default Model.extend({
   contextType:   attr('string'),
   contextId:     attr('string'),
 
+  sendNotificationToApplicant: attr('boolean', { defaultValue: true }),
+
   created: {
     type:    Date,
     default: Date.now,

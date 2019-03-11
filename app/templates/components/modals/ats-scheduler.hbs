@@ -3,7 +3,7 @@
   <div class="header">
     Schedule a meeting with {{model.person.firstName}}<br />
     <small class="text-yellow">
-      <strong>{{model.person.firstName}} will be notified of this meeting</strong>
+      <strong>{{model.person.firstName}} {{if meeting.sendNotificationToApplicant "will" "will not"}} be notified of this meeting</strong>
     </small>
   </div>
   <div class="content ui form">
@@ -49,7 +49,6 @@
         {{/ui-dropdown}}
       </div>
     </div>
-
     <div class="field">
       <label for="meeting-attendees">Additional Attendees</label>
       {{#ui-dropdown class="fluid multiple search selection" id="meeting-attendees" selected=meeting.attendees forceSelection=false onChange=(action (mut meeting.attendees)) as |execute mapper|}}
@@ -66,10 +65,17 @@
     </div>
   </div>
   <div class="actions">
+    {{ui-checkbox
+      class="left floated toggle"
+      label="Notify applicant"
+      checked=meeting.sendNotificationToApplicant
+      onChange=(action (mut meeting.sendNotificationToApplicant))
+    }}
+
     <button class="ui inverted red button" {{action "respond" false}}>
       Cancel
     </button>
-    <button class="ui inverted green right labeled icon button" {{action "respond" meeting}} disabled={{if (and meeting.start meeting.end) false true}}>
+    <button class="ui green right labeled icon button" {{action "respond" meeting}} disabled={{if (and meeting.start meeting.end) false true}}>
       Schedule
       <i class="check icon"></i>
     </button>
