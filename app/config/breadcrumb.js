@@ -17,12 +17,6 @@ export default [{
     link:    'account.assets'
   }
 }, {
-  when:    'action-item',
-  prepend: {
-    segment: 'action items',
-    link:    'account.action-items'
-  }
-}, {
   when:    'job-description',
   prepend: {
     segment: 'recruiting',
@@ -43,4 +37,14 @@ export default [{
 }, {
   when:         'eeo',
   overrideName: 'Equal Employment Opportunity'
+}, {
+  when:         'action-items',
+  overrideName: 'Projects'
+}, {
+  when:         'action-item',
+  overrideName: 'Project',
+  prepend:      {
+    segment: 'projects',
+    link:    'account.action-items'
+  }
 }];

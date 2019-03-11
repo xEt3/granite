@@ -112,7 +112,7 @@ Router.map(function () {
       });
       this.route('complete-offboarding');
     });
-    this.route('action-items', function () {
+    this.route('action-items', { path: '/projects' }, function () {
       this.route('new');
     });
     this.route('documents', function () {
@@ -170,7 +170,7 @@ Router.map(function () {
         this.route('edit', { path: '/:department_id/edit' });
       });
     });
-    this.route('action-item', { path: '/action-item/:slug' }, function () {
+    this.route('action-item', { path: '/project/:slug' }, function () {
       this.route('todo');
       this.route('discussion');
       this.route('edit');

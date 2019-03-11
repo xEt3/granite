@@ -11,10 +11,10 @@ module('Acceptance | action item', function (hooks) {
     await authenticate.call(this, server);
     let action = await server.create('action-item', { title: 'apples' });
 
-    await visit('/account/action-items');
+    await visit('/account/projects');
     await click('div.extra.content > a.primary.button');
     await settled();
-    assert.equal(currentURL(), `/account/action-item/${action.title}`);
+    assert.equal(currentURL(), `/account/project/${action.title}`);
     assert.dom('.ui.point.menu > .right.menu').doesNotExist();
   });
 
@@ -26,8 +26,8 @@ module('Acceptance | action item', function (hooks) {
       owner:         employee
     });
 
-    await visit(`/account/action-item/${action.title}`);
-    assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Action Items/Action Item');
+    await visit(`/account/project/${action.title}`);
+    assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Projects/Project');
     assert.dom('.ui.pointing.menu > a').exists({ count: 3 });
     assert.dom('div.item.icon > div').hasClass('menu');
     assert.dom('div.item.icon > div.menu.transition.visible').isNotVisible();
@@ -41,7 +41,7 @@ module('Acceptance | action item', function (hooks) {
     assert.dom('div.ui.very.padded.raised.segment').isVisible();
     assert.dom('div.ui.green.label').hasText(`Started on ${moment(action.created).format('M/D/YY')}`);
     assert.dom('h2.clearfix.header').hasText(`${action.title} No due date`);
-    assert.dom(`h2 > a[href="/account/action-item/${action.title}/edit"]`).exists();
+    assert.dom(`h2 > a[href="/account/project/${action.title}/edit"]`).exists();
     assert.dom('h2.clearfix.header > span').hasText('No due date');
     assert.dom('div.ui.very.padded.raised.segment > p').hasText(action.description);
     assert.dom('div.divider.ui').isVisible();
@@ -53,11 +53,11 @@ module('Acceptance | action item', function (hooks) {
     await authenticate.call(this, server);
     let action = await server.create('action-item', { title: 'apples' });
 
-    await visit('/account/action-items');
+    await visit('/account/projects');
     await click('div.extra.content > a.primary.button');
     await settled();
     await click('div.menu__container-responsive > div > a:nth-child(2)');
-    assert.equal(currentURL(), `/account/action-item/${action.title}/todo`);
+    assert.equal(currentURL(), `/account/project/${action.title}/todo`);
     assert.dom('div.ui.padded.green.segment > h2.header').hasText('Your Todo Items');
     assert.dom('h2 > div.content').hasText('All up to date!');
     assert.dom('h2 > span.emoji').hasClass('emoji-tada');
@@ -67,12 +67,12 @@ module('Acceptance | action item', function (hooks) {
     await authenticate.call(this, server);
     let action = await server.create('action-item', { title: 'apples' });
 
-    await visit('/account/action-items');
+    await visit('/account/projects');
     await click('div.extra.content > a.primary.button');
     await settled();
     await click('div.menu__container-responsive > div > a:nth-child(3)');
-    assert.equal(currentURL(), `/account/action-item/${action.title}/discussion`);
-    assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Action Items/Action Item/Discussion');
+    assert.equal(currentURL(), `/account/project/${action.title}/discussion`);
+    assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Projects/Project/Discussion');
     assert.dom('div > a.item.active').hasText('Discussion');
     assert.dom('div > textarea').doesNotIncludeText();
     assert.dom('div.field.text > button[type="submit"]').isVisible();
