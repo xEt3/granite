@@ -3,7 +3,7 @@
   <div class="header">
     Schedule a meeting with {{model.person.firstName}}<br />
     <small class="text-yellow">
-      <strong>{{model.person.firstName}} {{if meeting.sendNotificationToApplicant "will" "will not"}} be notified of this meeting</strong>
+      <strong>{{model.person.firstName}} {{if meeting.skipAttendeeNotification "will not" "will"}} be notified of this meeting</strong>
     </small>
   </div>
   <div class="content ui form">
@@ -67,9 +67,9 @@
   <div class="actions">
     {{ui-checkbox
       class="left floated toggle"
-      label="Notify applicant"
-      checked=meeting.sendNotificationToApplicant
-      onChange=(action (mut meeting.sendNotificationToApplicant))
+      label="Do not notify applicant"
+      checked=meeting.skipAttendeeNotification
+      onChange=(action (mut meeting.skipAttendeeNotification))
     }}
 
     <button class="ui inverted red button" {{action "respond" false}}>

@@ -20,7 +20,7 @@ export default Model.extend({
   contextType:   attr('string'),
   contextId:     attr('string'),
 
-  sendNotificationToApplicant: attr('boolean', { defaultValue: true }),
+  skipAttendeeNotification: attr('boolean', { defaultValue: false }),
 
   created: {
     type:    Date,
