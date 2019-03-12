@@ -48,5 +48,10 @@ export default Model.extend({
         props = this.getProperties('completedSetup', 'completedOn', 'startOn', 'endOn');
 
     return !!(props.completedSetup && !props.completedOn && (!props.endOn || now.isBefore(props.endOn)) && (!props.startOn || now.isAfter(props.startOn)));
+  }),
+
+  slug: computed('id', 'title', function () {
+    let title = this.get('title') || '';
+    return `${title.replace(/[\s\_]/g, '-')}_${this.get('id')}`;
   })
 });

@@ -1,30 +1,33 @@
 {{#if hasBlock}}
   {{yield model}}
 {{else}}
-  <div class="header">
-    {{#link-to "account.job-opening" model.id}}
-      {{model.name}}
-    {{/link-to}}
-  </div>
-  {{#if model.hiring}}
-    <span class="ui right floated"><a href="https://{{companyPrefix}}.granitehr/careers/{{quartzLink}}" target="_blank" rel="noopener">View careers link <i class="external alternate fitted icon"></i></a></span>
-  {{/if}}
-  <div class="meta">
-    Hiring for <strong>{{model.job.title}}</strong> position
-    <span class="ui small text right floated">Created: {{time model.created}}{{#if model.creator}} by {{model.creator.fullName}}{{/if}}</span>
-  </div>
-  <div class="extra">
-    {{#if model.completedSetup}}
-      {{#if model.completedOn}}
-        <span class="ui label"><i class="check icon"></i>Completed on {{time model.completedOn}}</span>
-      {{else if model.hiring}}
-        <span class="ui green label"><i class="add user icon"></i>Hiring</span>
-        <span class="ui blue label"><i class="check icon"></i>Completed setup {{time-ago model.completedSetup}}</span>
-      {{else}}
-        <span class="ui label"><i class="hourglass empty icon"></i>Ended</span>
-      {{/if}}
-    {{else}}
-      <span class="ui orange label">Needs Setup</span>
+  <div class="content">
+    <div class="header">
+      {{#link-to "account.job-opening" model.id}}
+        {{model.name}}
+      {{/link-to}}
+    </div>
+    {{#if model.hiring}}
+      <span class="ui right floated"><a href="https://{{auth.user.company.urlPrefix}}.granitehr.com/careers/{{model.slug}}" target="_blank" rel="noopener">View careers link <i class="external alternate fitted icon"></i></a></span>
     {{/if}}
+    <div class="meta">
+      Hiring for <strong>{{model.job.title}}</strong> position
+      <span class="ui small text right floated">Created: {{time model.created}}{{#if model.creator}} by {{model.creator.fullName}}{{/if}}</span>
+    </div>
+    <div class="extra">
+      {{#if model.completedSetup}}
+        {{#if model.completedOn}}
+          <span class="ui label"><i class="check icon"></i>Completed on {{time model.completedOn}}</span>
+        {{else if model.hiring}}
+          <span class="ui green label"><i class="add user icon"></i>Hiring</span>
+          <span class="ui blue label"><i class="check icon"></i>Completed setup {{time-ago model.completedSetup}}</span>
+        {{else}}
+          <span class="ui label"><i class="hourglass empty icon"></i>Ended</span>
+        {{/if}}
+      {{else}}
+        <span class="ui orange label">Needs Setup</span>
+      {{/if}}
+    </div>
+  </div>
   </div>
 {{/if}}
