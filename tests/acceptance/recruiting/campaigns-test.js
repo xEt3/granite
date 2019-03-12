@@ -36,7 +36,7 @@ module('Acceptance | recruiting', function (hooks) {
     await visit('/account/recruiting/campaigns');
     assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Recruiting');
     assert.dom('hgroup > h1').hasText('Recruiting Campaigns');
-    assert.dom('a div.header').hasText(campaign.name);
+    assert.dom('.content > div.header').hasText(campaign.name);
     assert.dom('div > div.meta').includesText(`Hiring for ${job.title}`);
     assert.dom('div.extra > span.green').hasText('Hiring');
     assert.dom('span.blue > span').includesText('ago');
