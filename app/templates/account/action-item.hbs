@@ -54,7 +54,7 @@
             <div class="text-danger header">Danger Zone</div>
             {{#confirm-modal class="item" as |confirm|}}
               <a href="#" id="action-item__action--cancel" {{action (pipe confirm (action "cancelActionItem"))}}>
-                <i class="close icon"></i>Cancel Action Item
+                <i class="close icon"></i>Cancel Project
               </a>
             {{/confirm-modal}}
             {{#confirm-modal as deleteContext=model.title class="item" as |confirm|}}
@@ -74,7 +74,7 @@
 {{#ui-modal name="modal__action-item--transfer" id="modal__action-item--transfer" class="small form"}}
   <i class="close icon"></i>
   <div class="header">
-    <i class="random icon"></i>Transfer action item to new owner
+    <i class="random icon"></i>Transfer project to new owner
   </div>
   <div class="content">
     <div class="field">

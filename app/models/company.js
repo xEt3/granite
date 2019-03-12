@@ -51,6 +51,8 @@ export default Model.extend(Validations,  {
   collectEEO: attr('boolean'),
   collectAA:  attr('boolean'),
 
+  accountBillingPromo: attr('string'),
+
   linkedToSlate: computed('linkedServices.[]', function () {
     let services = this.get('linkedServices');
     return services ? services.includes('slate') : false;
