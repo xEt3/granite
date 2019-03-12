@@ -52,6 +52,6 @@ export default Model.extend({
 
   slug: computed('id', 'title', function () {
     let title = this.get('title') || '';
-    return `${title.replace(/[\s\_]/g, '-')}_${this.get('id')}`;
+    return `${title.replace(/[\s]/g, '-')}_${this.get('id')}`;
   })
 });
