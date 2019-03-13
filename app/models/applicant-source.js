@@ -7,7 +7,7 @@ export default DS.Model.extend({
   description: attr('string'),
   logo:        attr('string'),
 
-  costPerDay: attr('number'),
+  costPerCycle: attr('number'),
 
   created: attr('date', { defaultValue: () => new Date() })
 });
