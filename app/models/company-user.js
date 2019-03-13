@@ -10,6 +10,7 @@ export default Model.extend({
 
   email:    attr('string'),
   password: attr('string'),
+  inactive: attr('boolean'),
 
   shownHints: attr('array'),
 

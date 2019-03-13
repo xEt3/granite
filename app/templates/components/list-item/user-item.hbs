@@ -4,23 +4,30 @@
 <div class="content">
   <div class="header">
     {{user.fullName}}
+    {{#if user.inactive}}
+      <label class="ui red label">Deactivated</label>
+    {{/if}}
   </div>
-  {{#if onDelete}}
-    <div class="right floated">
-      {{#link-to "account.anatomy.company-users.edit" user.id}}
-        {{#ui-popup tagName="span" position="left center" content="Edit user"}}
-          <i class="edit icon"></i>
-        {{/ui-popup}}
-      {{/link-to}}
-      {{#confirm-modal deleteContext=user.fullName tagName="span" as |confirm|}}
-        {{#ui-popup tagName="span" position="left center" content="Delete user"}}
-          <a href="#" class="text-danger" {{action (pipe confirm (action "deleteUser"))}}>
-            <i class="trash icon"></i>
-          </a>
-        {{/ui-popup}}
-      {{/confirm-modal}}
-    </div>
-  {{/if}}
+  <div class="right floated">
+    {{#link-to "account.anatomy.company-users.edit" user.id}}
+      {{#ui-popup tagName="span" position="left center" content="Edit user"}}
+        <i class="edit icon"></i>
+      {{/ui-popup}}
+    {{/link-to}}
+    {{#if user.inactive}}
+      {{#ui-popup tagName="span" position="left center" content="Activate user"}}
+        <a href="#" {{action "reactivateUser"}}>
+          <i class="{{if working "loading spinner" "undo"}} icon"></i>
+        </a>
+      {{/ui-popup}}
+    {{else}}
+      {{#ui-popup tagName="span" position="left center" content="Deactivate user"}}
+        <a href="#" class="text-danger" {{action "transferProjects"}}>
+          <i class="{{if working "loading spinner" "times"}} icon"></i>
+        </a>
+      {{/ui-popup}}
+    {{/if}}
+  </div>
   <div class="meta">
     <span>{{user.email}}</span>
     <span class="ui small text right floated">Created {{time-ago user.created}} on {{time user.created}}</span>
@@ -33,3 +40,18 @@
     {{/if}}
   </div>
 </div>
+
+
+
+{{#ui-modal name="modal__transfer-projects" id="modal__transfer-projects" class="small form"}}
+  <div class="header">
+    {{user.fullName}} has projects that need to be transfered
+  </div>
+  <div class="content">
+    PROJECTS NEEDING TRANSFER
+  </div>
+  <div class="actions">
+    <button class="ui inverted red button" {{action 'cancel'}}>Cancel</button>
+    <button class="ui primary button" {{action "deactivateUser"}}>Confirm deactivation</button>
+  </div>
+{{/ui-modal}}

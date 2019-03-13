@@ -24,7 +24,7 @@
 <div class="ui divider"></div>
   <div class="ui divided items">
     {{#each model as |user|}}
-      {{list-item/user-item user onDelete=(action "delete")}}
+      {{list-item/user-item user onNotify=(route-action "notify")}}
     {{else}}
       <h2 class="ui center aligned header">No users available.</h2>
     {{/each}}
