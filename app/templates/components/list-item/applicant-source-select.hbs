@@ -8,11 +8,11 @@
       checked=(readonly selected)
       label=model.name}}
   </div>
+  {{#if model.costPerCycle}}
+    <div class="ui orange right floated horizontal label">${{model.costPerCycle}}/Billing Cycle</div>
+  {{/if}}
   <div class="meta">
     <span>{{model.description}}</span>
-    {{#if model.costPerDay}}
-      <div class="ui orange right floated horizontal label">${{model.costPerDay}}/Day</div>
-    {{/if}}
   </div>
 
   <div class="extra">
