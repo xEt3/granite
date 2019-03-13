@@ -20,6 +20,8 @@ export default Model.extend({
   contextType:   attr('string'),
   contextId:     attr('string'),
 
+  skipAttendeeNotification: attr('boolean', { defaultValue: false }),
+
   created: {
     type:    Date,
     default: Date.now,
