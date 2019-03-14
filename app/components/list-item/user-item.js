@@ -1,63 +1,52 @@
 import Component from '@ember/component';
 import { htmlSafe } from '@ember/string';
 import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import ajaxStatus from 'granite/mixins/ajax-status';
-// import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import $ from 'jquery';
 
-let UserItemComponent = Component.extend(ajaxStatus, /*addEdit,*/ {
+let UserItemComponent = Component.extend(ajaxStatus, addEdit, {
+  store: service(),
+
   classNames: [ 'item', 'users__user--item' ],
+  projects:   null,
 
   confirmDeactivateText: computed('user.fullName', function () {
     return htmlSafe(`Are you sure you want to deactivate ${this.get('user.fullName')}`);
   }),
 
   closeTransferModal () {
-    console.log('inside closeTransferModal');
     $('#modal__transfer-projects').modal('hide');
   },
 
   actions: {
-    transferProjects () {
+    async transferProjects () {
+      this.ajaxStart();
+      this.set('projects', await this.store.query('action-item', { owner: this.get('user.employee.id') }));
+      this.ajaxSuccess('', true);
+
       $('#modal__transfer-projects').modal({
         detachable: true,
         closable:   false,
         onHidden:   () => {
-          //needed?
+          this.setProperties({ projects: null });
         }
       }).modal('show');
     },
 
-    //COMBINE DE/REACTIVATION METHODS
-    async deactivateUser () {
-      console.log('inside deactivateUser');
+    async toggleInactiveState (val) {
       let user = this.get('user');
-      user.set('inactive', true);
+      user.set('inactive', val);
 
-      this.ajaxStart();
-      let savedUser = await user.save()
-      .catch(e => {
-        console.log('error:', e);
-      });
+      await this.saveModel(user);
 
-      this.ajaxSuccess(`Successfully deactivated ${savedUser.fullName}`);
-
-      this.closeTransferModal();
-    },
-
-    async reactivateUser () {
-      console.log('inside reactivateUser');
-      let user = this.get('user');
-
-      user.set('inactive', false);
-
-      this.ajaxStart();
-      let savedUser = await user.save();
-      this.ajaxSuccess(`Successfully reactivated ${savedUser.fullName}`);
+      if (val) {
+        this.closeTransferModal();
+      }
     },
 
     cancel () {
-      console.log('inside cancel');
       this.closeTransferModal();
     },
 

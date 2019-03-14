@@ -16,7 +16,7 @@
     {{/link-to}}
     {{#if user.inactive}}
       {{#ui-popup tagName="span" position="left center" content="Activate user"}}
-        <a href="#" {{action "reactivateUser"}}>
+        <a href="#" {{action "toggleInactiveState" false}}>
           <i class="{{if working "loading spinner" "undo"}} icon"></i>
         </a>
       {{/ui-popup}}
@@ -41,17 +41,19 @@
   </div>
 </div>
 
-
-
 {{#ui-modal name="modal__transfer-projects" id="modal__transfer-projects" class="small form"}}
   <div class="header">
     {{user.fullName}} has projects that need to be transfered
   </div>
   <div class="content">
-    PROJECTS NEEDING TRANSFER
+    <div class="ui relaxed divided list">
+      {{#each projects as |project|}}
+        {{list-item/transfer-project-item project}}
+      {{/each}}
+    </div>
   </div>
   <div class="actions">
     <button class="ui inverted red button" {{action 'cancel'}}>Cancel</button>
-    <button class="ui primary button" {{action "deactivateUser"}}>Confirm deactivation</button>
+    <button class="ui primary button" {{action "toggleInactiveState" true}}>Confirm deactivation</button>
   </div>
 {{/ui-modal}}
