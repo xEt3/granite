@@ -8,6 +8,11 @@ export default Controller.extend(pagination, {
   actions: {
     toggleProperty (prop) {
       this.toggleProperty(prop);
+    },
+
+    transitionToProject (title) {
+      // IF LINK IS STRIPPED IN COMPONENT, THIS IS NOT NEEDED
+      this.transitionToRoute('account.action-item', title);
     }
   }
 });

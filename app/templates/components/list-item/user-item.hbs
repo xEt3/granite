@@ -41,19 +41,49 @@
   </div>
 </div>
 
-{{#ui-modal name="modal__transfer-projects" id="modal__transfer-projects" class="small form"}}
+{{#ui-modal name="modal__transfer-projects" id=modalId class="small form"}}
   <div class="header">
-    {{user.fullName}} has projects that need to be transfered
+    {{user.fullName}} has projects that need to be transferred
   </div>
   <div class="content">
     <div class="ui relaxed divided list">
       {{#each projects as |project|}}
-        {{list-item/transfer-project-item project}}
+        {{!-- {{#link-to 'account.action-item' project.title class="item"}} --}}
+        {{!-- LINKING MIGHT NOT WORK BC OF MODAL CLOSING, RESETTING PROPERTIES ON MODAL CLOSE --}}
+        <a href="#" class="item" {{action 'transition' project.title}}>
+          <div class="content">
+            <div class="header">
+              {{project.title}}
+              <label class="ui tiny left floated red label">{{project.priority}}</label>
+            </div>
+            {{#if project.description}}
+              <div class="description">
+                {{project.description}}
+              </div>
+            {{/if}}
+          </div>
+        </a>
+        {{!-- {{/link-to}} --}}
       {{/each}}
     </div>
+
+    <label for={{test}}>Transfer to</label>
+    {{#ui-dropdown class="fluid selection" id=test selected=newOwner onChange=(action (mut newOwner)) as |execute mapper|}}
+      <div class="default text">New Owner</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each users as |user|}}
+          <div data-value={{map-value mapper user.id}} class="item">
+            {{user.fullName}}
+          </div>
+        {{/each}}
+      </div>
+    {{/ui-dropdown}}
+
   </div>
   <div class="actions">
     <button class="ui inverted red button" {{action 'cancel'}}>Cancel</button>
-    <button class="ui primary button" {{action "toggleInactiveState" true}}>Confirm deactivation</button>
+    {{!-- PIPE ACTION WITH SAVING PROJECTS --}}
+    <button class="ui primary button" {{action "toggleInactiveState" true}}>Confirm transfer &amp; deactivation</button>
   </div>
 {{/ui-modal}}

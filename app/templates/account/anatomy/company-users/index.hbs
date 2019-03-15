@@ -24,7 +24,8 @@
 <div class="ui divider"></div>
   <div class="ui divided items">
     {{#each model as |user|}}
-      {{list-item/user-item user onNotify=(route-action "notify")}}
+      {{!-- MAY NEED TO REMOVE TRANSITION FUNCTION SENT THROUGH --}}
+      {{list-item/user-item user allUsers onNotify=(route-action "notify") transitionToProject=(action 'transitionToProject')}}
     {{else}}
       <h2 class="ui center aligned header">No users available.</h2>
     {{/each}}
