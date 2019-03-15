@@ -186,6 +186,7 @@ Router.map(function () {
           { path: '/application/:application_id/view' },
           function () {
             this.route('event', { path: '/event/:event_id' });
+            this.route('edit');
           }
         );
         this.route('talent-pool');

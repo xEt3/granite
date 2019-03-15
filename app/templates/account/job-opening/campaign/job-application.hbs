@@ -12,9 +12,23 @@
     </div>
   </div>
 
-  <h2 class="ui clearfix header">
-    Job Application for {{model.person.firstName}} {{model.person.lastName}}
-  </h2>
+  <hgroup class="clearfix">
+    <span class="ui large header">
+      Job Application for {{model.person.firstName}} {{model.person.lastName}}
+    </span>
+
+    {{#ui-dropdown class="item icon top right floated right pointing"}}
+      <i class="wrench icon"></i><i class="dropdown fitted icon"></i>
+      <div class="menu">
+        <div class="header">Actions</div>
+        {{#link-to "account.job-opening.campaign.job-application.edit" model.id class="item"}}
+          <i class="edit icon"></i>Edit Application
+        {{/link-to}}
+      </div>
+    {{/ui-dropdown}}
+  </hgroup>
+
+  <div class="ui divider"></div>
 
   {{outlet}}
 </div>

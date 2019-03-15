@@ -1,0 +1,96 @@
+<form class="ui form" {{action "save" on="submit"}}>
+  <div class="fields">
+    <div class="six wide field">
+      <label for="first-name">First Name*</label>
+      {{#auto-focus}}
+        {{validated-input type="text" model=model.applicant valuePath="firstName" placeholder="name" id="first-name" on-change=(action (mut model.applicant.firstName)value="target.value") }}
+      {{/auto-focus}}
+    </div>
+    <div class="four wide field">
+      <label for="middle-name">Middle Name</label>
+      {{input type="text" value=model.applicant.middleName placeholder="Middle" id="middle-name" on-change=(action (mut model.applicant.middleName)value="target.value")}}
+    </div>
+    <div class="six wide field">
+      <label for="last-name">Last Name*</label>
+      {{validated-input type="text" model=model.applicant valuePath="lastName" placeholder="Last Name" id="last-name" on-change=(action (mut model.applicant.lastName) value="target.value")}}
+    </div>
+  </div>
+  <div class="two fields">
+    <div class="field">
+      <label for="employee-phone">Phone Number*</label>
+      {{masked-input type="tel" placeholder="Employee Phone #" id="employee-phone" mask="(111) 111-1111" value=model.applicant.phone on-change=(action (mut model.applicant.phone) value="target.value")}}
+    </div>
+    <div class="field">
+      <label for="email">Email*</label>
+      {{validated-input type="email" model=model.applicant valuePath="email" placeholder="Email" id="email" on-change=(action (mut model.applicant.email) value="target.value")}}
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="stage-selector">Application Stage</label>
+    {{#ui-dropdown
+        class="selection"
+        id="stage-selector"
+        selected=model.jobApplication.stage
+        onChange=(action (mut model.jobApplication.stage))
+      }}
+      <div class="default text">No Stage</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each pipeline.stages as |stage|}}
+          <div class="item" data-value={{stage.id}}>
+            {{stage.name}}
+          </div>
+        {{/each}}
+      </div>
+    {{/ui-dropdown}}
+  </div>
+
+  <div class="field">
+    <label for="cover-letter">Cover Letter</label>
+    {{textarea rows="5" placeholder="Cover Letter" value=model.jobApplication.coverLetter on-change=(action (mut model.jobApplication.coverLetter) value="target.value")}}
+  </div>
+
+  <div class="field">
+    <label>
+      {{#if fileIsAdded}}
+        <div class="ui large header text-green clearfix">
+          <span><i class="check icon"></i>Resume/CV Added.</span>
+          <a href="#" class="text-red right floated" {{action "removeFile"}}>Remove</a>
+        </div>
+      {{else}}
+        <i class="attach icon"></i>
+        Resume
+      {{/if}}
+    </label>
+    {{drop-zone
+        class="input__dropzone"
+        url=resumeEndpoint
+        uploadMultiple=false
+        acceptedFiles=".doc,.docx,.pdf,.rtf,.txt"
+        maxFiles=1
+        autoProcessQueue=false
+        dictDefaultMessage=(if model.jobApplication.resume
+          "Drop or Click to Replace Resume"
+          "Drop or Click to Add Resume"
+        )
+        thumbnailWidth="175"
+        headers=(hash X-API-Token=auth.token)
+        addedfile=(action "addedFile")
+        error=(action "uploadError")
+        uploadprogress=(action "uploadProgressUpdate")
+        success=(action "uploadedFile")
+        capture="camera"}}
+  </div>
+  <div class="ui divider"></div>
+  {{#form/action-button
+    type="submit"
+    class="ui huge fluid green button"
+    loading=working
+  }}
+    Update Application
+  {{/form/action-button}}
+  <button class="ui large fluid inverted red button" {{action "cancel"}}>
+    Cancel
+  </button>
+</form>
