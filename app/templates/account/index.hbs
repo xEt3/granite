@@ -1,27 +1,114 @@
-<div class="ui raised very padded text segment container">
-  <hgroup class="clearfix">
-    <h2 class="left floated ui header">
-      Recent Activity
-    </h2>
-    <div class="right floated">
-      {{#ui-dropdown class="fluid multiple selection" selected=tag onChange=(action (mut tag))}}
-        <i class="dropdown icon"></i>
-        <div class="default text">Select Filters</div>
-        <div class="menu">
-          {{#each tags as |tag|}}
-            <div class="item segment__activity" data-value={{tag}}>
-              {{tag}}
+<div class="dashboard ui container">
+  <div class="dashboard__statistics ui three stackable statistics">
+    {{#link-to "account.recruiting" class="ui inverted statistic"}}
+      <div class="value">
+        {{analytics.stats.unreviewedApplications}}
+      </div>
+      <div class="label">
+        New Job {{inflect-text "Application" analytics.stats.unreviewedApplications}}
+      </div>
+    {{/link-to}}
+    {{#link-to "account.employees.changes" class="ui inverted statistic"}}
+      <div class="value">
+        {{analytics.stats.changes}}
+      </div>
+      <div class="label">
+        Unreviewed {{inflect-text "Change" analytics.stats.changes}}
+      </div>
+    {{/link-to}}
+    {{#link-to "account.action-items" class="ui inverted statistic"}}
+      <div class="value">
+        {{analytics.stats.projectsDue}}
+      </div>
+      <div class="label">
+        {{inflect-text "Project" analytics.stats.projectsDue}} Due
+      </div>
+    {{/link-to}}
+  </div>
+
+  <div class="ui stackable grid">
+    <div class="sixteen wide column">
+      <div class="ui raised padded text segment">
+        <div class="dashboard__actions ui stackable grid">
+          <div class="eight wide column">
+            <h2 class="dashboard-actions__label"><i class="play fitted icon"></i> Pick Up Where You Left Off</h2>
+            <div class="dashboard-actions__continue ui list">
+              {{#each (if
+                analytics.continueActions
+                (if
+                  expanded
+                  analytics.continueActions
+                  (take 5 analytics.continueActions)
+                )
+              ) as |continue|}}
+                {{list-item/dashboard/continue-action continue}}
+              {{/each}}
             </div>
+            {{#if (gt analytics.continueActions.length 5)}}
+              <a href="#" {{action toggleProperty "expanded"}}>
+                Show {{if expanded "less" "more"}}...
+              </a>
+            {{/if}}
+          </div>
+          <div class="eight wide column">
+            <h2 class="dashboard-actions__label"><i class="clipboard fitted icon"></i> Common Actions</h2>
+            <div class="dashboard-actions__common ui list">
+              {{#each commonActions as |act|}}
+                <div class="item">
+                  {{#link-to act.link}}{{act.text}}{{/link-to}}
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dashboard__todos-sum ui eight wide column">
+      <div class="ui raised very padded text segment">
+        <h2>Your Todos &amp; Action Items</h2>
+
+        <div class="ui relaxed list">
+          {{#each analytics.todos as |actionItemTodo|}}
+            {{list-item/dashboard/todo-item actionItemTodo}}
           {{/each}}
         </div>
-      {{/ui-dropdown}}
+
+        <div class="ui divider"></div>
+        <div class="dashboard-todos-sum__project-activity ui relaxed list">
+          {{#each analytics.actionItemActivity as |projectAct|}}
+            {{list-item/dashboard/project-activity projectAct}}
+          {{/each}}
+        </div>
+      </div>
     </div>
-  </hgroup>
-  <div class="ui large feed">
-    {{#each model as |activity|}}
-      {{list-item/activity-item activity=activity onNotify=(action "onNotify")}}
-    {{/each}}
-    <div class="ui divider"></div>
-    <button class="fluid ui button" disabled={{disabled}} {{action "loadMoreActivities"}}>Load More...</button>
+    <div class="ui eight wide column">
+      <div class="dashboard__activity-feed ui raised very padded text segment">
+        <hgroup class="clearfix">
+          <h2 class="left floated ui header">
+            Recent Activity
+          </h2>
+          <div class="right floated">
+            {{#ui-dropdown class="fluid multiple selection" selected=tag onChange=(action (mut tag))}}
+              <i class="dropdown icon"></i>
+              <div class="default text">Select Filters</div>
+              <div class="menu">
+                {{#each tags as |tag|}}
+                  <div class="item segment__activity" data-value={{tag}}>
+                    {{tag}}
+                  </div>
+                {{/each}}
+              </div>
+            {{/ui-dropdown}}
+          </div>
+        </hgroup>
+        <div class="ui large feed">
+          {{#each model as |activity|}}
+            {{list-item/activity-item activity=activity onNotify=(action "onNotify")}}
+          {{/each}}
+          <div class="ui divider"></div>
+          <button class="fluid ui button" disabled={{disabled}} {{action "loadMoreActivities"}}>Load More...</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

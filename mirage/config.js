@@ -81,7 +81,7 @@ export default function () {
     return { activity: activities };
   });
 
-  this.get('/api/v1/company/dashboard-analytics', () => {
+  this.get('/company/dashboard-analytics', () => {
     return {};
   });
 
