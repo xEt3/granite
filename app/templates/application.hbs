@@ -6,11 +6,11 @@
   accountLocked=subscription.accountLocked}}
 
 <div class="ui main">
-  {{#unless topLevel}}
+  {{#unless (or topLevel noNav)}}
     {{elements/account-navigation links=accountNavigationItems ui_context="body .ember-view .main"}}
   {{/unless}}
   {{! template-lint-disable no-inline-styles }}
-  <div class="ember-view ui fluid container {{unless topLevel "in__application pusher"}} {{if randomColorText "main__dark-text"}}" style={{backdrop}}>
+  <div class="ember-view ui fluid container {{unless topLevel "in__application pusher"}} {{if increaseReadability "main__dark-text"}}" style={{if backdrop backdrop}}>
     {{#if topLevel}}
       {{elements/x-navigation transparent=navTransparent topLevel=topLevel}}
     {{/if}}
