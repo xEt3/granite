@@ -1,0 +1,84 @@
+{{#ui-modal id=modalId observeChanges=true context=".ember-application"}}
+  <i class="close icon"></i>
+  <div class="header">
+    Sharing Configuration<br>
+    <small class="light text">
+      Manage link sharing of this job application
+    </small>
+  </div>
+  <div class="content ui form">
+    {{#if working}}
+      <div class="ui active inverted dimmer">
+        <div class="ui text loader">Hang on...</div>
+      </div>
+    {{/if}}
+    <div class="field">
+      <label for="link-sharing">
+        Link Sharing<br>
+        <p class="light text">
+          Use link sharing to enable a publicly accessible page for this application, so you can share it with collegues that don't have a Granite HR account.
+        </p>
+      </label>
+      {{ui-checkbox
+        id="link-sharing"
+        class="toggle"
+        label=(if publicLink
+          "Link sharing is enabled. Click to turn off link sharing."
+          "Link sharing is disabled. Click to turn on link sharing."
+        )
+        checked=publicLink
+        onChange=(action "toggleSharedLink")}}
+    </div>
+
+    {{#if publicLink}}
+      <p>
+        Public application link for {{model.applicant.firstName}}<br>
+        <a href={{publicLink}} target="_blank" rel="noopener">{{publicLink}}</a><br>
+        <strong>
+          Treat this link like a password for the job application.
+        </strong>
+      </p>
+
+      <div class="ui divider"></div>
+      <div class="field">
+        <label>Send public link to emails</label>
+        {{#ui-dropdown
+          class="fluid search multiple selection"
+          selected=sendTo
+          allowAdditions=true
+          onChange=(action (mut sendTo)) as |execute mapper|}}
+          <i class="dropdown icon"></i>
+          <div class="default text">Add emails to send link</div>
+          <div class="menu">
+            {{#each prevEmails as |item|}}
+              <div class="item" data-value={{map-value mapper item}}>
+                {{item}}
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      </div>
+      <div class="field">
+        <label>Note to recipients (optional)</label>
+        {{textarea rows="3" placeholder="Note" value=linkNote}}
+      </div>
+
+      <button class="ui fluid primary {{if sendingLink "loading"}} button" disabled={{or working (not sendTo.length)}} {{action "sendLink"}}>
+        Send Link
+      </button>
+    {{/if}}
+  </div>
+  <div class="actions">
+    <p class="left floated">
+      {{#if errorMessage}}
+        <p class="text-red">{{errorMessage}}</p>
+      {{/if}}
+      {{#if successMessage}}
+        <p class="text-green">{{successMessage}}</p>
+      {{/if}}
+    </p>
+    <button class="ui right button" disabled={{working}} {{action "respond" model}}>
+      Close
+    </button>
+  </div>
+{{/ui-modal}}

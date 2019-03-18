@@ -213,6 +213,10 @@ Router.map(function () {
     });
   });
 
+  this.route('shared', function () {
+    this.route('job-application', { path: '/job-application/:sharing_id' });
+  });
+
   this.route('error');
   this.route('not-found');
   this.route('unauthorized');

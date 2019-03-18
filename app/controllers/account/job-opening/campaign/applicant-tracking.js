@@ -23,6 +23,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
   confirmInjectModalId:     'modal__ats-confirm-inject',
   confirmDisqualifyModalId: 'modal__ats-confirm-disqualify',
   schedulerModalId:         'modal__ats-scheduler',
+  linkSharingModalId:       'model__ats-link-sharing',
   showDisqualified:         false,
 
   pendingApplications: computed.filter('model.applications', function (app) {
