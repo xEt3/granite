@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { htmlSafe } from '@ember/string';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import ajaxStatus from 'granite/mixins/ajax-status';
@@ -18,17 +17,24 @@ let UserItemComponent = Component.extend(ajaxStatus, addEdit, {
     return this.get('elementId') + '-modal';
   }),
 
-  test: computed('elementId', function () {
+  dropdownId: computed('elementId', function () {
     return this.get('elementId') + '-dropdown';
   }),
 
-  confirmDeactivateText: computed('user.fullName', function () {
-    return htmlSafe(`Are you sure you want to deactivate ${this.get('user.fullName')}`);
+  disableDeactivate: computed('newOwner', 'projects', function () {
+    let projects = this.get('projects');
+
+    if (!projects || !projects.length) {
+      return false;
+    }
+
+    return this.get('newOwner') ? false : true;
   }),
 
-  users: computed('allUsers', 'user.id', function () {
-    let userId = this.get('user.id');
-    let allUsers = this.get('allUsers');
+  users: computed('user.id', 'allUsers', function () {
+    let userId = this.get('user.id'),
+        allUsers = this.get('allUsers');
+
     return allUsers.reduce((userArray, user) => {
       if (user.id !== userId) {
         let { first, middle, last, suffix } = user.name,
@@ -40,9 +46,9 @@ let UserItemComponent = Component.extend(ajaxStatus, addEdit, {
         fullName += suffix ? ' ' + suffix : '';
 
         userArray.push({
-          //FIND EMPLOYEE FOR USER?
           fullName,
-          id: user.id
+          employee: user.employee,
+          id:       user.id
         });
       }
       return userArray;
@@ -54,11 +60,16 @@ let UserItemComponent = Component.extend(ajaxStatus, addEdit, {
   },
 
   actions: {
-    async transferProjects () {
-      //CHANGE TO AJAX.REQUEST INSTEAD OF USING STORE
+    async openTransferModal () {
       this.ajaxStart();
-      this.set('projects', await this.store.query('action-item', { owner: this.get('user.employee.id') }));
-      this.ajaxSuccess('', true);
+      let { actionItem } = await this.ajax.request('/api/v1/action-items', {
+        data: {
+          owner:       this.get('user.employee.id'),
+          completedOn: null
+        }
+      });
+      this.set('projects', actionItem);
+      this.ajaxSuccess(null, true);
 
       $(`#${this.get('modalId')}`).modal({
         detachable:  true,
@@ -73,23 +84,47 @@ let UserItemComponent = Component.extend(ajaxStatus, addEdit, {
       }).modal('show');
     },
 
-    // MAKE FUNCTION FOR SAVING PROJECTS W/ API CALL
+    async transferProjects () {
+      if (this.get('projects.length') === 0) {
+        return;
+      }
+
+      this.ajaxStart();
+      try {
+        await this.ajax.post('/api/v1/action-item/bulk-transfer', {
+          data: {
+            currentOwner: this.get('user.employee.id'),
+            newOwner:     this.get('newOwner')
+          }
+        });
+      } catch (e) {
+        this.ajaxError(e);
+        this.closeTransferModal();
+        throw e;
+      }
+
+      this.ajaxSuccess('Successfully transferred projects');
+    },
 
     async toggleInactiveState (val) {
       let user = this.get('user');
       user.set('inactive', val);
 
-      await this.saveModel(user);
+      this.ajaxStart();
+      try {
+        await user.save();
+      } catch (e) {
+        return this.ajaxError(e);
+      }
 
       if (val) {
         this.closeTransferModal();
+        this.ajaxSuccess('Successfully deactivated user');
+      } else {
+        this.ajaxSuccess('Successfully reactivated user');
       }
-    },
 
-    transition (title) {
-      //NEEDS WORK
-      this.closeTransferModal();
-      this.get('transitionToProject')(title);
+      this.send('refresh');
     },
 
     cancel () {
@@ -98,6 +133,10 @@ let UserItemComponent = Component.extend(ajaxStatus, addEdit, {
 
     notify (type, msg) {
       this.get('onNotify')(type, msg);
+    },
+
+    refresh () {
+      this.get('onRefresh')();
     }
   }
 });
@@ -107,5 +146,5 @@ UserItemComponent.reopenClass({ positionalParams: [ 'user', 'allUsers' ] });
 export default UserItemComponent;
 
 /* Usage
-  {{list-item/user-item user}}
+  {{list-item/user-item user allUsers}}
 */

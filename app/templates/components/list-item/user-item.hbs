@@ -5,7 +5,7 @@
   <div class="header">
     {{user.fullName}}
     {{#if user.inactive}}
-      <label class="ui red label">Deactivated</label>
+      <label class="ui red label">Inactive</label>
     {{/if}}
   </div>
   <div class="right floated">
@@ -15,14 +15,14 @@
       {{/ui-popup}}
     {{/link-to}}
     {{#if user.inactive}}
-      {{#ui-popup tagName="span" position="left center" content="Activate user"}}
+      {{#ui-popup tagName="span" position="left center" content="Reactivate user"}}
         <a href="#" {{action "toggleInactiveState" false}}>
           <i class="{{if working "loading spinner" "undo"}} icon"></i>
         </a>
       {{/ui-popup}}
     {{else}}
       {{#ui-popup tagName="span" position="left center" content="Deactivate user"}}
-        <a href="#" class="text-danger" {{action "transferProjects"}}>
+        <a href="#" class="text-danger" {{action "openTransferModal"}}>
           <i class="{{if working "loading spinner" "times"}} icon"></i>
         </a>
       {{/ui-popup}}
@@ -43,14 +43,12 @@
 
 {{#ui-modal name="modal__transfer-projects" id=modalId class="small form"}}
   <div class="header">
-    {{user.fullName}} has projects that need to be transferred
+    Transfer {{user.fullName}}'s projects
   </div>
   <div class="content">
     <div class="ui relaxed divided list">
       {{#each projects as |project|}}
-        {{!-- {{#link-to 'account.action-item' project.title class="item"}} --}}
-        {{!-- LINKING MIGHT NOT WORK BC OF MODAL CLOSING, RESETTING PROPERTIES ON MODAL CLOSE --}}
-        <a href="#" class="item" {{action 'transition' project.title}}>
+        <div class="item">
           <div class="content">
             <div class="header">
               {{project.title}}
@@ -62,28 +60,29 @@
               </div>
             {{/if}}
           </div>
-        </a>
-        {{!-- {{/link-to}} --}}
+        </div>
+      {{else}}
+        {{user.firstName}} has no outstanding projects.
       {{/each}}
     </div>
 
-    <label for={{test}}>Transfer to</label>
-    {{#ui-dropdown class="fluid selection" id=test selected=newOwner onChange=(action (mut newOwner)) as |execute mapper|}}
-      <div class="default text">New Owner</div>
-      <i class="dropdown icon"></i>
-      <div class="menu">
-        {{#each users as |user|}}
-          <div data-value={{map-value mapper user.id}} class="item">
-            {{user.fullName}}
-          </div>
-        {{/each}}
-      </div>
-    {{/ui-dropdown}}
-
+    {{#if projects.length}}
+      <label for={{dropdownId}}>Transfer to</label>
+      {{#ui-dropdown class="fluid selection" id=dropdownId selected=newOwner onChange=(action (mut newOwner)) as |execute mapper|}}
+        <div class="default text">New Owner</div>
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          {{#each users as |user|}}
+            <div data-value={{map-value mapper user.employee}} class="item">
+              {{user.fullName}}
+            </div>
+          {{/each}}
+        </div>
+      {{/ui-dropdown}}
+    {{/if}}
   </div>
   <div class="actions">
     <button class="ui inverted red button" {{action 'cancel'}}>Cancel</button>
-    {{!-- PIPE ACTION WITH SAVING PROJECTS --}}
-    <button class="ui primary button" {{action "toggleInactiveState" true}}>Confirm transfer &amp; deactivation</button>
+    <button class="ui primary button" {{action (pipe (action "transferProjects")(action "toggleInactiveState" true))}} disabled={{disableDeactivate}}>Confirm Deactivation</button>
   </div>
 {{/ui-modal}}
