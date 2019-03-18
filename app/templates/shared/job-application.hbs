@@ -1,0 +1,61 @@
+<div class="ui very padded raised text segment container">
+  <h2>
+    {{or model.applicant.firstName model.applicant.name.first}}
+    {{or model.applicant.lastName model.applicant.name.last}}
+    applied for the "{{model.jobOpening.title}}" position on {{time model.jobApplication.created 'M/D/YY'}}
+  </h2>
+
+  <h3>Cover Letter</h3>
+  {{#if model.jobApplication.coverLetter}}
+    <blockquote>{{model.jobApplication.coverLetter}}</blockquote>
+  {{else}}
+    <strong>No cover letter was supplied.</strong>
+  {{/if}}
+
+  <h3>Resumé</h3>
+  {{#if model.resume}}
+    <a href="{{model.resume.url}}" target="_blank">Download Resume <i class="external link icon"></i></a>
+  {{else}}
+    <strong>No resumé was supplied.</strong>
+  {{/if}}
+
+  {{#if model.jobOpening.screening}}
+    <div class="ui divider"></div>
+    <h3>Screening</h3>
+    <p>
+      {{#if model.jobApplication.scoreRelative}}This applicant is a <strong>{{model.jobApplication.scoreRelative}}% match</strong> based on their responses to pre-screening.{{/if}}
+    </p>
+    <p>
+      <a href="#" {{action toggleProperty "expandResponses"}}>{{if expandResponses 'Hide' 'Show'}} Responses</a>
+
+      {{#if expandResponses}}
+        <div class="ui very relaxed list">
+          {{#each responses as |group|}}
+            <div class="item content">
+              <h4>{{group.step.label}}</h4>
+              <p>
+                {{#if group.response.value.length}}
+                  <ul>
+                    {{#each group.response.value as |value|}}
+                      <li>
+                        {{#if value.weight}}
+                          <span class="ui label">{{value.weight}}</span>
+                        {{/if}}
+                        {{or value.text value}}
+                      </li>
+                    {{/each}}
+                  </ul>
+                {{else}}
+                  {{#if group.response.value.weight}}
+                    <span class="ui label">{{group.response.value.weight}}</span>
+                  {{/if}}
+                  {{or group.response.value.text group.response.value}}
+                {{/if}}
+              </p>
+            </div>
+          {{/each}}
+        </div>
+      {{/if}}
+    </p>
+  {{/if}}
+</div>

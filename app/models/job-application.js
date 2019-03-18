@@ -14,6 +14,7 @@ export default Model.extend({
   scoreAdditive:         attr('number'),
   scoreRelative:         attr('number'),
   notes:                 attr('string'),
+  publicLink:            attr('string'),
 
   resume: belongsTo('file', {
     async:   true,
