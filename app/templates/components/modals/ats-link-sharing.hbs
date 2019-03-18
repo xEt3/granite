@@ -33,7 +33,7 @@
     {{#if publicLink}}
       <p>
         Public application link for {{model.applicant.firstName}}<br>
-        <a href="{{publicLink}}" target="_blank">{{publicLink}}</a><br>
+        <a href={{publicLink}} target="_blank" rel="noopener">{{publicLink}}</a><br>
         <strong>
           Treat this link like a password for the job application.
         </strong>
@@ -63,7 +63,7 @@
         {{textarea rows="3" placeholder="Note" value=linkNote}}
       </div>
 
-      <button class="ui fluid primary {{if sendingLink 'loading'}} button" disabled={{or working (not sendTo.length)}} {{action "sendLink"}}>
+      <button class="ui fluid primary {{if sendingLink "loading"}} button" disabled={{or working (not sendTo.length)}} {{action "sendLink"}}>
         Send Link
       </button>
     {{/if}}
