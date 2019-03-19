@@ -82,7 +82,7 @@
     {{/if}}
   </div>
   <div class="actions">
-    <button class="ui inverted red button" {{action 'cancel'}}>Cancel</button>
+    <button class="ui inverted red button" {{action "cancel"}}>Cancel</button>
     <button class="ui primary button" {{action (pipe (action "transferProjects")(action "toggleInactiveState" true))}} disabled={{disableDeactivate}}>Confirm Deactivation</button>
   </div>
 {{/ui-modal}}
