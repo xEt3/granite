@@ -2,10 +2,9 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import ajaxStatus from 'granite/mixins/ajax-status';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import $ from 'jquery';
 
-let UserItemComponent = Component.extend(ajaxStatus, addEdit, {
+let UserItemComponent = Component.extend(ajaxStatus, {
   store: service(),
   ajax:  service(),
 
@@ -146,5 +145,10 @@ UserItemComponent.reopenClass({ positionalParams: [ 'user', 'allUsers' ] });
 export default UserItemComponent;
 
 /* Usage
-  {{list-item/user-item user allUsers}}
+  {{list-item/user-item
+  user
+  allUsers
+  onNotify=(route-action 'notify')
+  onRefresh=(route-action 'refresh')
+}}
 */
