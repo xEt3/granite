@@ -1,3 +1,4 @@
+{{! template-lint-disable no-triple-curlies}}
 {{#if activity.icon}}
   <div class="label">
     <i class="{{if contextColor contextColor}} {{activity.icon}} icon"></i>
@@ -5,13 +6,11 @@
 {{/if}}
 
 <div class="content">
-  {{#if activity.tag}}
-    <span class="ui right ribbon green label">{{activity.tag}}</span>
-  {{/if}}
-  <div class="summary">
-    {{! template-lint-disable }}
+  <div class="summary clearfix">
     {{{activity.descriptionHtml}}}
-    {{! template-lint-enable }}
+    {{#if activity.tag}}
+      <span class="ui right ribbon green label">{{activity.tag}}</span>
+    {{/if}}
   </div>
   <div class="meta">
     {{#ui-popup tagName="span" position="top center" title="Comments"}}

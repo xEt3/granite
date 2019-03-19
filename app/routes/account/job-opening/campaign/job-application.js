@@ -1,9 +1,10 @@
 import Route from '@ember/routing/route';
+import refreshable from 'granite/mixins/refreshable';
 import { Promise, hash } from 'rsvp';
 
 const modelKeys = [ 'model', 'events', 'stage', 'opening', 'screening' ];
 
-export default Route.extend({
+export default Route.extend(refreshable, {
   titleToken: 'Application',
 
   model (params) {

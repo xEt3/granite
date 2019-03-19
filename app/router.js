@@ -186,6 +186,7 @@ Router.map(function () {
           { path: '/application/:application_id/view' },
           function () {
             this.route('event', { path: '/event/:event_id' });
+            this.route('edit');
           }
         );
         this.route('talent-pool');
@@ -210,6 +211,10 @@ Router.map(function () {
     this.route('help', function () {
       this.route('topic', { path: '/:topic_slug' });
     });
+  });
+
+  this.route('shared', function () {
+    this.route('job-application', { path: '/job-application/:sharing_id' });
   });
 
   this.route('error');

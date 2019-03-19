@@ -81,6 +81,10 @@ export default function () {
     return { activity: activities };
   });
 
+  this.get('/company/dashboard-analytics', () => {
+    return {};
+  });
+
   this.get('/company/:id/billing', (/*db, request*/) => {
     return { subscription: null }; //works for now
   });

@@ -149,6 +149,7 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
     assert.dom('div.pipeline__stage:nth-child(3) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isNotVisible();
     await click('.exchange.icon');
     await new Promise(resolve => setTimeout(resolve, 500));
+
     await click('.title-bar__control .menu > .item:nth-child(3)');
 
     assert.dom('div.pipeline__stage:nth-child(1) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isNotVisible();
@@ -156,6 +157,6 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
     assert.dom('div.pipeline__stage:nth-child(3) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isVisible();
     await click('.title-bar__control i.setting.icon');
     await new Promise(resolve => setTimeout(resolve, 500));
-    assert.dom('.title-bar__control .setting.icon + .menu.transition.visible > a.item').exists({ count: 3 });
+    assert.dom('.title-bar__control .setting.icon + .menu.transition.visible > a.item').exists({ count: 4 });
   });
 });

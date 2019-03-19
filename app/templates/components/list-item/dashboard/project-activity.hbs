@@ -1,0 +1,11 @@
+{{#if actionString}}
+  <h3 class="project-activity__action {{actColor}}">{{model.title}} {{actionString}}.</h3>
+{{/if}}
+
+{{#if projectSlug}}
+  <p>
+    {{#link-to "account.action-item" projectSlug}}
+      Go to project
+    {{/link-to}}
+  </p>
+{{/if}}

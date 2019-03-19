@@ -114,6 +114,10 @@
         (action confirm)
         (action beginOnboarding)
       ))
+      onLinkSharing=(action (pipe
+        (action set "appInLinkSharing")
+        (action openModal linkSharingModalId "linkSharing")
+      ))
     }}
   {{/confirm-modal}}
 
@@ -133,4 +137,9 @@
     modalId=schedulerModalId
     availableOrganizers=model.employees
     onResponse=(action "modalResponse" "scheduler")}}
+
+  {{modals/ats-link-sharing
+    appInLinkSharing
+    modalId=linkSharingModalId
+    onResponse=(action "modalResponse" "linkSharing")}}
 </div>
