@@ -21,7 +21,6 @@ export default Service.extend({
 
     return new Promise((resv) => Notification.requestPermission((response) => {
       this.set('permission', response);
-      Notification.permission = response;
 
       if (response === 'granted') {
         return resv(true);
