@@ -5,8 +5,8 @@ import { computed } from '@ember/object';
 import moment from 'moment';
 
 export default Model.extend({
-  name:        attr('string'),
-  title:       attr('string'),
+  name:        attr('string', { defaultValue: '' }),
+  title:       attr('string', { defaultValue: '' }),
   description: attr('string'),
 
   availableInternally: attr('boolean'),
