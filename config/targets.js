@@ -10,8 +10,7 @@ const isProduction = process.env.EMBER_ENV === 'production';
 
 if (isCI || isProduction) {
   browsers.push('ie 11');
+  browsers.push('samsung 5'); // android 4.4 (older samsung galaxy devices)
 }
 
-module.exports = {
-  browsers
-};
+module.exports = { browsers };
