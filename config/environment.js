@@ -37,7 +37,25 @@ module.exports = function (environment) {
         warning: 'warning icon',
         error:   'exclamation circle icon'
       }
-    }
+    },
+
+    'ember-metrics': { includeAdapters: [ 'google-analytics' ] },
+
+    metricsAdapters: [{
+      name:         'GoogleAnalytics',
+      environments: [ 'development', 'production' ],
+      config:       {
+        id:          'UA-137570461-1',
+        // Use `analytics_debug.js` in development
+        debug:       environment === 'development',
+        // Use verbose tracing of GA events
+        trace:       environment === 'development',
+        // Ensure development env hits aren't sent to GA
+        sendHitTask: environment !== 'development',
+        // Specify Google Analytics plugins
+        require:     [ 'ecommerce' ]
+      }
+    }]
   };
 
   if (environment === 'development') {

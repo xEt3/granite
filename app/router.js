@@ -7,9 +7,27 @@ const Router = EmberRouter.extend(RouterScroll, {
   location: config.locationType,
   rootURL:  config.rootURL,
   headData: service(),
+  router:   service(),
+  metrics:  service(),
 
   setTitle (title) {
     this.get('headData').set('title', title);
+  },
+
+  didTransition () {
+    this._super(...arguments);
+
+    if (config.environment === 'test') {
+      return;
+    }
+
+    const page = this.router.currentURL,
+          title = this.router.currentRouteName || 'unknown';
+
+    this.metrics.trackPage({
+      page,
+      title
+    });
   }
 });
 
