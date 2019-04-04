@@ -28,6 +28,8 @@ module.exports = function (defaults) {
     sourcemaps:  { enabled: true },
     fingerprint: { exclude: [ 'product-screenshots/', 'documents/' ] },
 
+    'ember-cli-babel': { includePolyfill: true },
+
     babel: {
       plugins: [
         'transform-object-rest-spread'
