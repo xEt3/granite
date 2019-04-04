@@ -319,7 +319,47 @@ const recordDisplayPropertyMap = {
   employees:   [ 'name.first', 'name.last' ]
 };
 
+const accountNavigationItems = [{
+  icon:  'tachometer alternate',
+  title: 'Dashboard',
+  link:  'index'
+}, {
+  icon:  'check',
+  title: 'Projects',
+  link:  'action-items'
+}, {
+  icon:  'users',
+  title: 'Employees',
+  link:  'employees'
+}, {
+  icon:  'graduation cap',
+  title: 'Educate',
+  link:  'education',
+  beta:  true
+}, {
+  icon:  'user add',
+  title: 'Recruiting',
+  link:  'recruiting'
+}, {
+  icon:  'file',
+  title: 'Documents',
+  link:  'documents'
+}, {
+  icon:  'mobile',
+  title: 'Company Assets',
+  link:  'assets'
+}, {
+  icon:  'sitemap',
+  title: 'Company Anatomy',
+  link:  'anatomy'
+}, {
+  icon:  'life ring outline',
+  title: 'Help',
+  link:  'help'
+}];
+
 export {
+  accountNavigationItems,
   gender,
   issueTypes,
   suffixes,

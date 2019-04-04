@@ -229,6 +229,7 @@ Router.map(function () {
     this.route('help', function () {
       this.route('topic', { path: '/:topic_slug' });
     });
+    this.route('education');
   });
 
   this.route('shared', function () {

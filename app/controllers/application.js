@@ -5,6 +5,7 @@ import { on } from '@ember/object/evented';
 import { inject as service } from '@ember/service';
 import $ from 'jquery';
 import ENV from 'granite/config/environment';
+import { accountNavigationItems } from 'granite/config/statics';
 import fadeRgb from 'granite/utils/fade-rgb';
 import { darken, lighten } from 'granite/utils/mul-rgb';
 import { htmlSafe } from '@ember/string';
@@ -25,39 +26,10 @@ export default Controller.extend({
   notifications: service('notification-messages'),
   subscription:  service(),
 
-  accountNavigationItems: [{
-    icon:  'tachometer alternate',
-    title: 'Dashboard',
-    link:  'index'
-  }, {
-    icon:  'check',
-    title: 'Projects',
-    link:  'action-items'
-  }, {
-    icon:  'users',
-    title: 'Employees',
-    link:  'employees'
-  }, {
-    icon:  'user add',
-    title: 'Recruiting',
-    link:  'recruiting'
-  }, {
-    icon:  'file',
-    title: 'Documents',
-    link:  'documents'
-  }, {
-    icon:  'mobile',
-    title: 'Company Assets',
-    link:  'assets'
-  }, {
-    icon:  'sitemap',
-    title: 'Company Anatomy',
-    link:  'anatomy'
-  }, {
-    icon:  'life ring outline',
-    title: 'Help',
-    link:  'help'
-  }],
+  accountNavigationItems: computed('auth.user.company.exposeBetaModules', function () {
+    let showBetas = this.get('auth.user.company.exposeBetaModules');
+    return showBetas ? accountNavigationItems : accountNavigationItems.filter(item => !item.beta);
+  }),
 
   navTransparent: computed.equal('currentPath', 'index'),
 

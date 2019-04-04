@@ -47,9 +47,10 @@ export default Model.extend(Validations,  {
   firstStepsCompletedOn: attr('date'),
   firstStepsCompleted:   attr('array', { defaultValue: () => A() }),
 
-  urlPrefix:  attr('string'),
-  collectEEO: attr('boolean'),
-  collectAA:  attr('boolean'),
+  urlPrefix:         attr('string'),
+  collectEEO:        attr('boolean'),
+  collectAA:         attr('boolean'),
+  exposeBetaModules: attr('boolean'),
 
   accountBillingPromo: attr('string'),
 
