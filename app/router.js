@@ -110,6 +110,9 @@ Router.map(function () {
           this.route('new');
         });
         this.route('visual-id');
+        this.route('education', function() {
+          this.route('add');
+        });
       });
       this.route('onboard', function () {
         this.route('index', { path: '/start' });
