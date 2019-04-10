@@ -47,12 +47,12 @@
     value=value
     id=computedClassName
     rows=rows
+    placeholder=(or field.placeholder field.label)
     spellcheck="true"}}
 {{else if (eq field.type "richtext")}}
   {{input/rich-text
     value=value
-    onChange=(action (mut value))
-  }}
+    onChange=(action (mut value))}}
 {{else if (or (eq field.type "checkbox") (eq field.type "toggle"))}}
   {{ui-checkbox
     id=computedClassName
@@ -100,4 +100,8 @@
     inputAttrs=field.inputAttrs
     id=computedClassName
     inputClass=inputClass}}
+{{/if}}
+
+{{#if hasBlock}}
+  {{yield}}
 {{/if}}

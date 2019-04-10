@@ -9,6 +9,7 @@ export default Model.extend({
   renewalPeriodAmount: attr('number'), // 1
   renewalPeriodUnit:   attr('number'), // year
   nextRenewalDate:     attr('date'),
+  renews:              attr('boolean'),
   renewals:            attr('array'), // probably needs to be a relationship w/ embedded records
 
   document: belongsTo('file'),

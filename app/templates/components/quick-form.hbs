@@ -1,10 +1,25 @@
 {{#each form as |field|}}
   {{#if (not (and field.displayIf (not (get model field.displayIf))))}}
-    {{input/quick-form-input
-      field
-      model
-      controller
-      class=field.class}}
+    {{#if field.embeddedInput}}
+      {{#input/quick-form-input
+        field
+        model
+        controller
+        class=field.class
+      }}
+        {{input/quick-form-input
+          field.embeddedInput
+          model
+          controller
+          class=field.class}}
+      {{/input/quick-form-input}}
+    {{else}}
+      {{input/quick-form-input
+        field
+        model
+        controller
+        class=field.class}}
+    {{/if}}
   {{/if}}
 {{/each}}
 
