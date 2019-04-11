@@ -6,11 +6,12 @@ export default Model.extend({
   name: attr('string'),
   note: attr('string'),
 
-  renewalPeriodAmount: attr('number'), // 1
-  renewalPeriodUnit:   attr('number'), // year
+  renewalPeriodAmount: attr('number', { defaultValue: 1 }), // 1
+  renewalPeriodUnit:   attr('string', { defaultValue: 'years' }), // year
   nextRenewalDate:     attr('date'),
   renews:              attr('boolean'),
   renewals:            attr('array'), // probably needs to be a relationship w/ embedded records
+  requiresDocument:    attr('boolean'),
 
   document: belongsTo('file'),
   company:  belongsTo('company'),

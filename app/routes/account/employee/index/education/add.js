@@ -3,7 +3,7 @@ import add from 'granite/mixins/route-abstractions/add';
 
 const typeMap = {
   'certification':       'certification',
-  'training-assignment': 'trainingAssignment'
+  'training assignment': 'trainingAssignment'
 };
 
 export default Route.extend(add, {

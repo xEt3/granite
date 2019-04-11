@@ -91,6 +91,24 @@
       </div>
     {{/each}}
   </div>
+{{else if (eq field.type "file")}}
+  {{#input/document-selection-modal
+    title=(or field.placeholder field.label)
+    selected=value
+    assignText="Use Document"
+    singleDoc=field.singleDoc
+    autoTag=field.autoTag
+    onSelected=(action (mut value))
+    as |execute|
+  }}
+    <button class="ui basic button" {{action execute "selectDocuments"}}>
+      <i class="folder icon"></i>
+      {{or field.buttonText field.label}}
+      {{#if value}}
+        <span class="ui label">{{value.title}}</span>
+      {{/if}}
+    </button>
+  {{/input/document-selection-modal}}
 {{else}}
   {{validated-input
     type=field.type
