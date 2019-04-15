@@ -57,6 +57,7 @@ Router.map(function () {
       this.route('index', { path: '/general' }, function () {
         this.route('processes');
         this.route('features');
+        this.route('lists');
       });
       this.route('billing', function () {
         this.route('invoices');

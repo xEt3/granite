@@ -22,6 +22,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
   selectedApplications:     A(),
   confirmInjectModalId:     'modal__ats-confirm-inject',
   confirmDisqualifyModalId: 'modal__ats-confirm-disqualify',
+  disqualifyModalId:        'modal__ats-disqualify',
   schedulerModalId:         'modal__ats-scheduler',
   linkSharingModalId:       'model__ats-link-sharing',
   showDisqualified:         false,
@@ -174,7 +175,10 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     },
 
     unDisqualifyCandidate (jobApp) {
-      jobApp.set('disqualified', false);
+      jobApp.setProperties({
+        disqualificationReason: null,
+        disqualified:           false
+      });
       this.saveModel(jobApp);
     },
 

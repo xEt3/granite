@@ -47,6 +47,8 @@ export default Model.extend(Validations,  {
   firstStepsCompletedOn: attr('date'),
   firstStepsCompleted:   attr('array', { defaultValue: () => A() }),
 
+  disqualificationReasons: attr('array'),
+
   urlPrefix:         attr('string'),
   collectEEO:        attr('boolean'),
   collectAA:         attr('boolean'),
