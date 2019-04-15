@@ -32,13 +32,14 @@ module('Acceptance | employee', function (hooks) {
     await settled();
     assert.equal(currentURL(), `/account/employee/${employee.id}`);
     assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Employees/Employee', 'bread crumbs are there');
-    assert.dom('div.dropdown.ui.pointing').exists();
-    await click('div.dropdown.ui.pointing');
+    assert.dom('div.ui.pointing.menu').exists();
     assert.dom(`a[href="/account/employee/${employee.id}/edit/personal"]`).exists();
+    assert.dom('div.ui.right.dropdown').exists();
+    await click('div.ui.right.dropdown');
     assert.equal(findAll('.transition div.item').length, 2, 'resend and edit are on page');
     assert.dom('div.text-danger').exists();
-    assert.dom('div.ui.pointing.menu').exists();
-    assert.equal(findAll('div.ui.pointing.menu > a.item').length, 5, 'all the menu items are on page ');
+    assert.dom('div.ui.dropdown > div.menu').exists();
+    assert.equal(findAll('div.ui.pointing.menu > div.ui.dropdown > div.menu > a.item').length, 4, 'all the menu items are on page ');
     assert.dom('div.center.text-white > div').hasText('Edit Picture');
     assert.dom(`a[href="tel:${employee.phone}"]`).exists();
     assert.dom(`a[href="mailto:${employee.email}"]`).exists();

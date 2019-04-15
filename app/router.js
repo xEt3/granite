@@ -110,7 +110,7 @@ Router.map(function () {
           this.route('new');
         });
         this.route('visual-id');
-        this.route('education', function() {
+        this.route('education', function () {
           this.route('add');
         });
       });

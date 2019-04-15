@@ -1,7 +1,10 @@
 import Mixin from '@ember/object/mixin';
 import { assert } from '@ember/debug';
+import { inject as service } from '@ember/service';
 
 export default Mixin.create({
+  auth: service(),
+
   model (params) {
     if (this.get('bypassModelHook')) {
       return this._super(...arguments);
@@ -16,6 +19,10 @@ export default Mixin.create({
 
   actions: {
     willTransition (transition) {
+      if (this.auth.isExpired) {
+        return true;
+      }
+
       var model = this.controller.get('model'),
           hasChangedAttributes = Object.keys(model.changedAttributes()).length > 0;
 
