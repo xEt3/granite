@@ -9,6 +9,14 @@ const typeMap = {
 export default Route.extend(add, {
   queryParams: { type: { refreshModel: true } },
 
+  titleToken (model) {
+    return `Add a new ${model.constructor.modelName}`;
+  },
+
+  getModelDefaults () {
+    return { employee: this.modelFor('account.employee') };
+  },
+
   async model (params) {
     if (!typeMap[params.type]) {
       throw new Error(`${params.type} is not a supported education type`);
