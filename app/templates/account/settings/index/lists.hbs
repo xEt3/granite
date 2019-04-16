@@ -1,7 +1,23 @@
-<div class="ui form">
-  {{!-- {{editable-list
-    title="Disqualification Reasons"
-    list=disqualificationReasons
-  }} --}}
-  <h3>Disqualification Reasons</h3>
+<div class="ui grid">
+  <div class="four wide column">
+    <h3 class="ui header">Select a list</h3>
+    <div class="ui vertical fluid tabular menu">
+      <a href="#" class="{{if (eq list 'dqReasons') 'active'}} item" {{action "toggleList" 'dqReasons'}}>
+        Disqualification Reasons
+      </a>
+    </div>
+  </div>
+  <div class="twelve wide stretched column">
+    <div class="ui segment">
+      {{#each model as |item|}}
+        <div class="ui divided list">
+          {{list-item/settings-lists-item item}}
+          {{!-- GET BORDERS AROUND LIST ITEMS --}}
+        </div>
+      {{/each}}
+    </div>
+  </div>
 </div>
+
+
+{{!-- “ui vertical fluid tabular menu” --}}
