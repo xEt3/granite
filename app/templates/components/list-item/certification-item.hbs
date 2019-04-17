@@ -1,0 +1,22 @@
+{{#link-to "account.employee.index.education.certification" model.id class="item"}}
+  <div class="content">
+    <h3 class="header">
+      {{model.name}}
+    </h3>
+    {{#if model.requiresDocument}}
+      <span class="ui {{if model.document "green" "red"}} label">
+        {{#if model.document}}
+          Document Uploaded
+        {{else}}
+          Document Required
+        {{/if}}
+      </span>
+    {{/if}}
+    {{#if model.renews}}
+      Renewal in {{time-ago model.nextRenewalDate}} on {{time model.nextRenewalDate 'M/D/YY'}}
+    {{/if}}
+  </div>
+  <div class="right content">
+    <span class="ui small text">Added {{time-ago model.created}} by {{model.creator.fullName}}</span>
+  </div>
+{{/link-to}}

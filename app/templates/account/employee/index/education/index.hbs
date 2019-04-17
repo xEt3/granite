@@ -33,6 +33,30 @@
   </hgroup>
   <div class="ui divider"></div>
 
+  <h2>
+    <i class="id card icon"></i> Certifications
+  </h2>
+  <div class="ui relaxed flex link list">
+    {{#each model.certifications as |record|}}
+      {{list-item/certification-item record}}
+    {{else}}
+      <h3>No certifications available.</h3>
+    {{/each}}
+  </div>
+
+  <div class="ui divider"></div>
+
+  <h2>
+    <i class="graduation icon"></i> Training Assignments
+  </h2>
+  <div class="ui list">
+    {{#each model.trainingAssignments as |record|}}
+      {{list-item/training-assignment-item record}}
+    {{else}}
+      <h3>No training assignments available.</h3>
+    {{/each}}
+  </div>
+
   <div class="ui divided link items">
     {{!-- {{#each model as |assignment|}}
       {{list-item/employee-document-item
