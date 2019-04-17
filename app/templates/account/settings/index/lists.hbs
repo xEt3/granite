@@ -8,16 +8,25 @@
     </div>
   </div>
   <div class="twelve wide stretched column">
-    <div class="ui segment">
+    {{#if dirtyList}}
+      <button class="ui green fluid button" disabled={{working}} {{action 'saveList'}}>Save Changes</button>
+    {{/if}}
+    <div class="ui relaxed divided list">
+      <a href="#" class="item" {{action "openModal" "add"}}>
+        <i class="blue plus icon"></i> New item...
+      </a>
       {{#each model as |item|}}
-        <div class="ui divided list">
-          {{list-item/settings-lists-item item}}
-          {{!-- GET BORDERS AROUND LIST ITEMS --}}
-        </div>
+        {{list-item/settings-lists-item
+          item
+          addItem=(action "addItem")
+          deleteItem=(action "deleteItem")
+        }}
       {{/each}}
     </div>
   </div>
 </div>
 
+{{#ui-modal id="settings__add-edit-list-item" class="small form"}}
+  MODAL
 
-{{!-- “ui vertical fluid tabular menu” --}}
+{{/ui-modal}}

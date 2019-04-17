@@ -1,4 +1,5 @@
 import Route from '@ember/routing/route';
+import { hash } from 'rsvp';
 import { inject as service } from '@ember/service';
 
 export default Route.extend({
@@ -9,9 +10,22 @@ export default Route.extend({
   queryParams: { list: { refreshModel: true } },
 
   model (params) {
+    let list = [],
+        company = this.get('auth.user.company');
+
     if (params.list === 'dqReasons') {
-      return this.get('auth.user.company.disqualificationReasons');
+      list = company.get('disqualificationReasons');
     }
-    return [];
+    return hash({
+      list,
+      company
+    });
+  },
+
+  setupController (controller, model) {
+    controller.setProperties({
+      model:   model.list,
+      company: model.company
+    });
   }
 });
