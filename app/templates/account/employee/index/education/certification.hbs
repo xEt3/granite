@@ -1,6 +1,11 @@
 <div class="ui raised padded segment container clearfix animated fadeInUp">
   {{#link-to 'account.employee.index.education'}}Back to education{{/link-to}}
-  <h1>{{model.name}}</h1>
+  <h1>
+    {{model.name}}
+    <span class="right floated text">
+      {{#link-to 'account.employee.index.education.certification.edit'}}<i class="edit icon"></i>{{/link-to}}
+    </span>
+  </h1>
   <div class="ui divider"></div>
-
+  {{outlet}}
 </div>

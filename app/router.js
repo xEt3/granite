@@ -114,6 +114,7 @@ Router.map(function () {
         this.route('education', function () {
           this.route('add');
           this.route('certification', { path: '/certification/:certification_id' }, function () {
+            this.route('edit');
           });
         });
       });
