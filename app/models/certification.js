@@ -12,6 +12,7 @@ export default Model.extend({
   renews:              attr('boolean'),
   renewals:            attr('array'), // probably needs to be a relationship w/ embedded records
   requiresDocument:    attr('boolean'),
+  initialDate:         attr('date'),
 
   document: belongsTo('file'),
   company:  belongsTo('company'),

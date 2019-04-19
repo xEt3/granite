@@ -3,6 +3,8 @@ import edit from 'granite/mixins/route-abstractions/edit';
 const employeeBelongsTo = [ 'location', 'department', 'supervisor' ];
 
 export default Route.extend(edit, {
+  titleToken: 'Edit information',
+
   model () {
     return this.modelFor('account.employee');
   },

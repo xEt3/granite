@@ -10,6 +10,11 @@ export const forms = {
       rows:  '3',
       path:  'note'
     }, {
+      label:    'Initial Date',
+      helpText: 'Specify original date of certification. Useful especially for renewals.',
+      type:     'date',
+      path:     'initialDate'
+    }, {
       label: 'Renews',
       type:  'checkbox',
       path:  'renews'
@@ -34,7 +39,7 @@ export const forms = {
     }, {
       displayIf: 'requiresDocument',
       label:     'Upload a document',
-      autoTag:   'certification',
+      autoTag:   'Certification',
       singleDoc: true,
       helpText:  'Uploading a document bypasses the need for the employee to upload their certification. This is useful if you already have a copy and need no action from the employee. If you would rather the employee upload their own document, leave this blank.',
       type:      'file',

@@ -60,7 +60,7 @@
           {{/if}}
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
-            {{#confirm-modal as deleteContext=model.fullName as |confirm|}}
+            {{#confirm-modal deleteContext=model.fullName as |confirm|}}
               <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}><i class="trash icon"></i>Delete Record</a>
             {{/confirm-modal}}
           </div>
