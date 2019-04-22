@@ -26,7 +26,11 @@ export default Controller.extend(addEdit, {
         detachable: true,
         context:    '.ember-application',
         onHidden:   () => {
-          this.set('currentItem', null);
+          this.setProperties({
+            currentItem: null,
+            editingItem: false,
+            index:       null
+          });
           if (!this.get('respondedModal')) {
             this.send('respondModal', false);
           }

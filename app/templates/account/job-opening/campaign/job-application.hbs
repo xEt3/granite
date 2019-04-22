@@ -1,8 +1,10 @@
 <div class="ui very padded raised segment animated fadeInUp">
-  <div class="ui top attached green label">
+  <div class="ui top attached {{if model.disqualified "red" "green"}} label">
     <i class="info circle icon"></i>
     This application is currently
-    {{~#if stage}}
+    {{~#if model.disqualified}}
+      disqualifed{{#if model.disqualificationReason}} ({{model.disqualificationReason}}){{/if}}
+    {{~else if stage}}
       in the <strong>{{stage.name}}</strong> stage
     {{~else}}
       not in a stage

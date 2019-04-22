@@ -90,6 +90,9 @@
   <div class="ui bottom attached red label">
     <i class="fitted remove icon"></i>
     Candidate is disqualified
+    {{#if application.disqualificationReason}}
+      ({{application.disqualificationReason}})
+    {{/if}}
     {{#if application.disqualificationEmail}}<span class="card-content__notified">Notified</span>{{/if}}
     <a class="ui right floated" role="button" {{action onUnDisqualify application}}>
       <i class="history icon"></i>

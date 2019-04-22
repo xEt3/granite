@@ -2,14 +2,14 @@
   <div class="four wide column">
     <h3 class="ui header">Select a list</h3>
     <div class="ui vertical fluid tabular menu">
-      <a href="#" class="{{if (eq list 'dqReasons') 'active'}} item" {{action "toggleList" 'dqReasons'}}>
+      <a href="#" class="{{if (eq list "dqReasons") "active"}} item" {{action "toggleList" "dqReasons"}}>
         Disqualification Reasons
       </a>
     </div>
   </div>
   <div class="twelve wide stretched column">
     {{#if dirtyList}}
-      <button class="ui green fluid button" disabled={{working}} {{action 'saveList'}}>Save Changes</button>
+      <button class="ui green fluid button" disabled={{working}} {{action "saveList"}}>Save Changes</button>
     {{/if}}
     <div class="ui relaxed divided list">
       {{#if list}}
