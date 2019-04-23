@@ -1,8 +1,11 @@
 import Mixin from '@ember/object/mixin';
 import { assert } from '@ember/debug';
 import { resolve } from 'rsvp';
+import { inject as service } from '@ember/service';
 
 export default Mixin.create({
+  auth: service(),
+
   modelDefaults: {},
 
   async model (params) {
@@ -26,7 +29,7 @@ export default Mixin.create({
     willTransition (transition) {
       var model = this.controller.get('model');
 
-      if (!model || !model.get('isNew')) {
+      if (!model || !model.get('isNew') || this.auth.isExpired) {
         return true;
       }
 

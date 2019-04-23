@@ -5,7 +5,7 @@ export default Route.extend({
 
   },
 
-  setupController (controller, model) {
+  setupController (controller) {
     controller.setProperties({ employee: this.modelFor('account.employee') });
   }
 });
