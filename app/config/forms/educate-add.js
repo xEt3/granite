@@ -65,5 +65,20 @@ export const forms = {
       contentPath: 'controller.currentForm.selections.statuses'
     }],
     selections: { statuses: [ 'Assigned', 'Completed' ] }
+  },
+
+  'certificationRenewal': {
+    elements: [{
+      label:    'Completed On',
+      helpText: 'Specify date of renewal completion',
+      type:     'date',
+      path:     'completedOn'
+    }, {
+      label:     'Upload a document',
+      autoTag:   'Certification',
+      singleDoc: true,
+      type:      'file',
+      path:      'document'
+    }]
   }
 };

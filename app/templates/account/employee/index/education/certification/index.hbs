@@ -13,17 +13,16 @@
   <h3>
     Renewals
     <small>
-      <a href="#">
+      {{#link-to 'account.employee.index.education.certification.renewal'}}
         <i class="plus fitted icon"></i>
         Add renewal
-      </a>
+      {{/link-to}}
     </small>
     <small class="right floated light text">Next Renewal Due {{time-ago model.nextRenewalDate}} on {{time model.nextRenewalDate 'M/D/YY'}}</small>
   </h3>
 
   <div class="ui list">
     {{#each model.renewals as |renewal|}}
-
     {{else}}
       {{model.name}} hasn't been renewed, yet.
     {{/each}}
