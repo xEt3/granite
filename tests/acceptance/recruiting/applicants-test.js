@@ -159,4 +159,139 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
     await new Promise(resolve => setTimeout(resolve, 500));
     assert.dom('.title-bar__control .setting.icon + .menu.transition.visible > a.item').exists({ count: 4 });
   });
+
+  test('can disqualify and give a reason', async function (assert) {
+    let { company } = await authenticate.call(this, server);
+
+    let job = server.create('job');
+
+    let campaign = await server.create('job-opening', {
+      job,
+      title: job.title
+    });
+
+    let pipeline = await server.create('recruiting-pipeline', {
+      company: company.id,
+      stages:  [
+        {
+          _id:     '1',
+          order:   0,
+          name:    'Phone Screen',
+          created: faker.date.past
+        },
+        {
+          _id:     '2',
+          order:   1,
+          name:    'Interview',
+          created: faker.date.past
+        },
+        {
+          _id:     '3',
+          order:   2,
+          name:    'Offer',
+          created: faker.date.past
+        }
+      ],
+      created: faker.date.past
+    });
+
+    let applicant = await server.create('applicant');
+
+    let application = await server.create('job-application', {
+      jobOpening: campaign.id,
+      applicant:  applicant.id,
+      stage:      pipeline.stages[0]._id
+    });
+
+    assert.equal(application.disqualified, false, 'application is not yet disqualified');
+    assert.equal(application.disqualificationReason, null, 'no dq reason yet');
+    assert.dom('div.pipeline-card__content > div.ui.bottom.attached.red.label').isNotVisible();
+
+    await visit(`/account/recruiting/job-opening/${job.id}/applicant-tracking`);
+    await click('div.card-title-bar__controls > div.title-bar__control:nth-child(2) > i.setting.icon');
+    await click('div.card-title-bar__controls > div.title-bar__control:nth-child(2) > div.menu > a:nth-child(2)');
+    await click('div#dq-reason > div.menu > .item:nth-child(5)');
+    await click('div#modal__ats-disqualify div.actions > button.ui.green.button');
+
+    let applicationAfterDQ = server.db.jobApplications.find(application.id);
+    assert.equal(applicationAfterDQ.disqualified, true, 'app is now disqualified');
+    assert.equal(applicationAfterDQ.disqualificationReason, 'Failed test', 'dq reason was set accurately');
+
+    assert.dom('div.pipeline-card__content > div.ui.bottom.attached.red.label').isVisible();
+    assert.dom('div.pipeline-card__content > div.ui.bottom.attached.red.label').includesText('Failed test', 'button red label includes dq reason');
+
+    await click(`a[href="/account/recruiting/job-opening/${campaign.id}/application/${application.id}/view"]`);
+
+    assert.dom('div.container > div.padded.segment > div.top.label').isVisible();
+    assert.dom('div.container > div.padded.segment > div.top.label').hasClass('red');
+    assert.dom('div.container > div.padded.segment > div.top.label').includesText('Failed test');
+  });
+
+  test('undisqualifying candidate works as intended', async function (assert) {
+    let { company } = await authenticate.call(this, server);
+
+    let job = server.create('job');
+
+    let campaign = await server.create('job-opening', {
+      job,
+      title: job.title
+    });
+
+    let pipeline = await server.create('recruiting-pipeline', {
+      company: company.id,
+      stages:  [
+        {
+          _id:     '1',
+          order:   0,
+          name:    'Phone Screen',
+          created: faker.date.past
+        },
+        {
+          _id:     '2',
+          order:   1,
+          name:    'Interview',
+          created: faker.date.past
+        },
+        {
+          _id:     '3',
+          order:   2,
+          name:    'Offer',
+          created: faker.date.past
+        }
+      ],
+      created: faker.date.past
+    });
+
+    let applicant = await server.create('applicant');
+
+    let application = await server.create('job-application', {
+      jobOpening:             campaign.id,
+      applicant:              applicant.id,
+      stage:                  pipeline.stages[0]._id,
+      disqualified:           true,
+      disqualificationReason: 'Failed test'
+    });
+
+    assert.ok(application.disqualified, 'application is disqualified');
+    assert.ok(application.disqualificationReason, 'application has dq reason');
+
+    await visit(`/account/recruiting/job-opening/${job.id}/applicant-tracking`);
+
+    assert.dom('div.pipeline-card__content > div.ui.bottom.attached.red.label').isVisible();
+    assert.dom('div.pipeline-card__content > div.ui.bottom.attached.red.label').includesText('Failed test');
+
+    await click('div.pipeline-card__content > div.ui.bottom.attached.red.label > a.ui.right.floated');
+
+    assert.dom('div.pipeline-card__content > div.ui.bottom.attached.red.label').isNotVisible('bottom label gone after undo');
+    let { disqualified, disqualificationReason } = server.db.jobApplications.find(application.id);
+    assert.notOk(disqualified, 'app is no longer disqualified');
+    assert.notOk(disqualificationReason, 'no dq reason anymore');
+
+    await click(`a[href="/account/recruiting/job-opening/${campaign.id}/application/${application.id}/view"]`);
+
+    assert.dom('div.container > div.padded.segment > div.top.label').isVisible();
+    assert.dom('div.container > div.padded.segment > div.top.label').hasClass('green');
+    assert.dom('div.container > div.padded.segment > div.top.label').includesText(application.stage);
+    assert.dom('div.container > div.padded.segment > div.top.label').doesNotIncludeText('Failed test');
+  });
 });
