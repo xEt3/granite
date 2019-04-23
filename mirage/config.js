@@ -94,7 +94,7 @@ export default function () {
     'action-items/:id', 'assets', 'changes', 'histories', 'employee-issues', 'departments', 'locations',
     'payment-methods', 'comments', 'comments/:id', 'job-openings', 'jobs', 'jobs/:id', 'job-openings/:id', 'job-applications',
     'forms', 'applicant-sources', 'applicant-sources', 'manual-applicant-sources', 'applicants', 'applicants/:id',
-    'job-applications/:id', 'events' ];
+    'job-applications/:id', 'events', 'certifications', 'training-assignments' ];
   let verbs = [ 'get', 'put', 'post', 'del' ];
 
   array.forEach((route)=>{
