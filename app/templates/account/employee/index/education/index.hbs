@@ -6,7 +6,7 @@
 
     <div class="right aligned text floated menu__actions">
       {{#ui-dropdown class="right floated top pointing inline"}}
-        <h2 class="ui inline header"><a href="#" id="add-employee-trigger"><i class="plus icon"></i></a></h2>
+        <h2 class="ui inline header"><a href="#" id="add-education"><i class="plus icon"></i></a></h2>
         <div class="menu">
           <h6 class="header">Add a new...</h6>
           {{#link-to "account.employee.index.education.add" (query-params type="certification") class="item"}}
@@ -33,7 +33,7 @@
   </hgroup>
   <div class="ui divider"></div>
 
-  <h2>
+  <h2 class="header__list">
     <i class="id card icon"></i> Certifications
   </h2>
   <div class="ui relaxed flex link list">
@@ -46,7 +46,7 @@
 
   <div class="ui divider"></div>
 
-  <h2>
+  <h2 class="header__list">
     <i class="graduation icon"></i> Training Assignments
   </h2>
   <div class="ui list">
@@ -56,20 +56,4 @@
       <h3>No training assignments available.</h3>
     {{/each}}
   </div>
-
-  <div class="ui divided link items">
-    {{!-- {{#each model as |assignment|}}
-      {{list-item/employee-document-item
-        assignment=assignment
-        onNotify=(route-action "notify")
-      }}
-    {{else}}
-      <h2 class="ui center aligned header">No file assignments available.</h2>
-    {{/each}} --}}
-  </div>
-
-  {{!-- {{elements/x-pagination
-    page=(readonly page)
-    pages=(readonly pages)
-    onchange=(action (mut page))}} --}}
 </div>
