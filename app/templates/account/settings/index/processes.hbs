@@ -1,7 +1,35 @@
 <div class="ui form">
+  <h3 class="ui header ">Probationary Period</h3>
+  <p>
+    Adjust your company's probationary period in specified days, months, or years.
+  </p>
+  <div class="field">
+    <label class="sr-only" for="probationary-period">Probationary Period Length</label>
+    <div class="ui left icon input probationary-period-number">
+      {{input type="number" value=model.probationaryPeriodAmount id="probationary-period" onChange=(action (mut model.probationaryPeriodAmount))}}
+      <i class="calendar icon"></i>
+      {{#ui-dropdown class="inline inside-input probationary-period-unit" selected=model.probationaryPeriodUnit onChange=(action (mut model.probationaryPeriodUnit))}}
+        <div class="default text">Unit</div>
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          <div class="item" data-value="year">
+            years
+          </div>
+          <div class="item" data-value="month">
+            months
+          </div>
+          <div class="item" data-value="day">
+            days
+          </div>
+        </div>
+      {{/ui-dropdown}}
+    </div>
+  </div>
+  <div class="ui divider"></div>
   <h3 class="ui header">Corrective Action Options</h3>
   <p>
-    Options are severities of actions issued during counseling when using the employee counseling module. An example of a series of options is: "Counseling", "Written Warning", "Final Written Warning" with orders of 1 through 3 respectively. Please review your handbook to make sure your process is communicated to your employees. Consult us if you have questions about this setup.
+    Options are severities of actions issued during counseling when using the employee counseling module. An example of a series of options is: "Counseling", "Written Warning", "Final Written Warning" with orders of 1 through 3 respectively. Please
+    review your handbook to make sure your process is communicated to your employees. Consult us if you have questions about this setup.
   </p>
   <div class="ui divider"></div>
   <button type="button" id="add-cas" class="ui primary fluid button" {{action "openSeverityModal"}}>

@@ -119,18 +119,29 @@
       {{/link-to}}
       <div class="ui basic segment">
         <p class="text">
-          {{#if model.ssn}}
+          {{#if (or model.probationUntil model.ssn)}}
+            {{#if model.ssn}}
+              <div class="line-item-value">
+                <i>
+                  SSN
+                </i>
+                <u>
+                  {{#if showSSN}}
+                    {{model.ssn}}
+                  {{else}}
+                    {{model.ssnMasked}}
+                  {{/if}}
+                  <a href="#" class="right floated" {{action (toggle "showSSN" this)}}><i class="{{if showSSN "hide" "unhide"}} icon"></i></a>
+                </u>
+              </div>
+            {{/if}}
             <div class="line-item-value">
               <i>
-                SSN
+                Probation
+                {{if onProbation "Until" "Ended On"}}
               </i>
               <u>
-                {{#if showSSN}}
-                  {{model.ssn}}
-                {{else}}
-                  {{model.ssnMasked}}
-                {{/if}}
-                <a href="#" class="right floated"{{action (toggle "showSSN" this)}}><i class="{{if showSSN "hide" "unhide"}} icon"></i></a>
+                {{time model.probationUntil}}
               </u>
             </div>
           {{else}}
@@ -148,10 +159,24 @@
         {{#if hasAnniversaries}}
           <p class="text">
             {{#if model.hireDate}}
-              Date of Hire: {{time model.hireDate}} <br />
+              <div class="line-item-value">
+                <i>
+                  Date of Hire
+                </i>
+                <u>
+                  {{time model.hireDate}} <br />
+                </u>
+              </div>
             {{/if}}
             {{#if model.dateOfBirth}}
-              Date of Birth: {{time model.dateOfBirth}}
+              <div class="line-item-value">
+                <i>
+                  Date of Birth
+                </i>
+                <u>
+                  {{time model.dateOfBirth}}
+                </u>
+              </div>
             {{/if}}
           </p>
         {{else}}

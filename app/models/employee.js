@@ -52,6 +52,7 @@ export default Model.extend(Validations, {
   exempt:         attr('boolean', { defaultValue: false }),
   payRateType:    attr('string', { defaultValue: 'hourly' }),
   eeoJobCategory: attr('string'),
+  probationUntil: attr('date'),
 
   onboarding:     attr('boolean'),
   onboardingStep: attr('number'),
@@ -124,6 +125,10 @@ export default Model.extend(Validations, {
   dateOfBirth:  attr('date'),
   effectiveOn:  attr('date'), // Placeholder for effective dated changes. This field is only here to pass along to the api
   customFields: attr({ defaultValue: () => {} }),
+
+  onProbation: computed('probationUntil', function () {
+    return this.get('probationUntil') && moment(this.get('probationUntil')).isAfter(moment());
+  }),
 
   created: attr('date', {
     defaultValue () {

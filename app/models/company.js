@@ -39,6 +39,9 @@ export default Model.extend(Validations,  {
   logoDominantColor: attr('string'),
   logoPalette:       attr('array'),
 
+  probationaryPeriodUnit:   attr('string'),
+  probationaryPeriodAmount: attr('number'),
+
   rgbPalette: computed('logoPalette', function () {
     const palette = this.get('logoPalette');
     return palette && palette.length ? palette.map(hexToRgb) : false;

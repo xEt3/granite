@@ -44,6 +44,12 @@
         </div>
       {{/if}}
 
+      {{#if employee.onProbation}}
+        <div class="ui basic label">
+          In Probation Period
+        </div>
+      {{/if}}
+
       {{#if employee.terminatedOn}}
         <div class="ui red label">
           <i class="user times icon"></i>Terminated on {{time employee.terminatedOn}}

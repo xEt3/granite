@@ -18,6 +18,10 @@ export default Controller.extend(addEdit, {
     'model.{emergencyContactPhone,emergencyContactNameFirst,emergencyContactNameLast}'
   ),
 
+  onProbation: computed('model.probationUntil', function () {
+    return this.get('model.probationUntil') && moment(this.get('model.probationUntil')).isAfter(moment());
+  }),
+
   actions: {
     forceSync () {
       this.ajaxStart();

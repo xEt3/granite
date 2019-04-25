@@ -15,8 +15,8 @@ export default Controller.extend(addEdit, {
     return this.get('pipeline.stages.length') < 5 ? true : false;
   }),
 
-  disableSave: computed('correctiveActionsDirty', 'stagesDirty', function () {
-    return this.get('correctiveActionsDirty') || this.get('stagesDirty') ? false : true;
+  disableSave: computed('correctiveActionsDirty', 'stagesDirty', 'model.hasDirtyAttributes', function () {
+    return this.get('correctiveActionsDirty') || this.get('stagesDirty') || this.get('model.hasDirtyAttributes') ? false : true;
   }),
 
   severityForm: computed(() => [{
@@ -58,8 +58,10 @@ export default Controller.extend(addEdit, {
     }
 
     this.setProperties({
-      correctiveActionsDirty: false,
-      stagesDirty:            false
+      correctiveActionsDirty:        false,
+      stagesDirty:                   false,
+      probationaryPeriodUnitDirty:   false,
+      probationaryPeriodAmountDirty: false
     });
 
     this.send('refresh');
@@ -82,7 +84,7 @@ export default Controller.extend(addEdit, {
     },
 
     save () {
-      if (this.get('correctiveActionsDirty')) {
+      if (this.get('correctiveActionsDirty') || this.get('model.hasDirtyAttributes')) {
         this.saveModel(this.get('model'));
       }
 
