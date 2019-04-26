@@ -104,16 +104,18 @@
       </div>
       <div class="right aligned four wide column vertically-aligned contact-column">
         <div class="ui center aligned basic container text-white contact-container">
-          {{#if model.phone}}
-            <div class="phone-contact-icon">
-              <a href="tel:{{model.phone}}"><i class="big circular inverted green phone icon phone-contact-icon-hover"></i></a>
-            </div>
-          {{/if}}
-          {{#if model.email}}
-            <div class="item email-contact-icon">
-              <a href="mailto:{{model.email}}"><i class="big circular inverted grey mail icon email-contact-icon-hover"></i></a>
-            </div>
-          {{/if}}
+          <span class="right floated">
+            {{#if model.phone}}
+              <div class="phone-contact-icon">
+                <a href="tel:{{model.phone}}"><i class="big circular inverted green phone icon phone-contact-icon-hover"></i></a>
+              </div>
+            {{/if}}
+            {{#if model.email}}
+              <div class="item email-contact-icon">
+                <a href="mailto:{{model.email}}"><i class="big circular inverted grey mail icon email-contact-icon-hover"></i></a>
+              </div>
+            {{/if}}
+          </span>
         </div>
       </div>
     </div>
