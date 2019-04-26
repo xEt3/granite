@@ -1,7 +1,7 @@
 <h1 class="ui header titlecased text">
-  {{if renewal 'Editing' 'Adding'}} Renewal For {{model.certification.name}}
+  {{if renewal "Editing" "Adding"}} Renewal For {{model.certification.name}}
   <small class="right floated">
-    {{#link-to 'account.employee.index.education.certification' model.certification class="text-danger"}}
+    {{#link-to "account.employee.index.education.certification" model.certification class="text-danger"}}
       Cancel
     {{/link-to}}
   </small>

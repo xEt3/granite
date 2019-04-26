@@ -1,3 +1,3 @@
 import BaseLiComponent from './base';
 
-export default BaseLiComponent.extend({});
+export default BaseLiComponent.extend({ tagName: '' });
