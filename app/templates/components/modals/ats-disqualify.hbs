@@ -5,11 +5,6 @@
   <div class="content">
     <form class="ui form">
       <div class="field">
-        <span>
-          <i>*The disqualification reason may be used for EEO reporting.</i>
-        </span>
-      </div>
-      <div class="field">
         <label for="dq-reason">Reason for disqualification</label>
         {{#ui-dropdown class="selection" id="dq-reason" selected=model.disqualificationReason onChange=(action (mut model.disqualificationReason)) as |execute mapper|}}
           <i class="dropdown icon"></i>
@@ -26,6 +21,9 @@
           </div>
         {{/ui-dropdown}}
       </div>
+      <span>
+        <i>The disqualification reason may be used for EEO reporting.</i>
+      </span>
     </form>
   </div>
   <div class="actions">
