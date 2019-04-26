@@ -32,14 +32,15 @@ module('Acceptance | employee', function (hooks) {
     await settled();
     assert.equal(currentURL(), `/account/employee/${employee.id}`);
     assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Employees/Employee', 'bread crumbs are there');
-    assert.dom('div.ui.pointing.menu').exists();
+    assert.dom('div.ui.pointing').exists();
+    await click('div.item.icon.top.right.ui.dropdown');
     assert.dom(`a[href="/account/employee/${employee.id}/edit/personal"]`).exists();
     assert.dom('div.ui.right.dropdown').exists();
     await click('div.ui.right.dropdown');
     assert.equal(findAll('.transition div.item').length, 2, 'resend and edit are on page');
     assert.dom('div.text-danger').exists();
-    assert.dom('div.ui.dropdown > div.menu').exists();
-    assert.equal(findAll('div.ui.pointing.menu > div.ui.dropdown > div.menu > a.item').length, 4, 'all the menu items are on page ');
+    assert.dom('div.ui.pointing.menu').exists();
+    assert.equal(findAll('div.ui.pointing.menu > a.item').length, 1, 'all the menu items are on page ');
     assert.dom('div.center.text-white > div').hasText('Edit Picture');
     assert.dom(`a[href="tel:${employee.phone}"]`).exists();
     assert.dom(`a[href="mailto:${employee.email}"]`).exists();
@@ -59,7 +60,7 @@ module('Acceptance | employee', function (hooks) {
     await click('div.line-item-value u a i.icon');
     assert.dom('.segment.ui p.text div').hasText('SSN 123-12-4444');
     assert.dom('div.column:nth-child(1) .raised:nth-child(2) div.segment.basic').hasText(`${employee.addressLine1}, ${employee.addressCity}, ${employee.addressState} ${employee.addressZip}`);
-    assert.dom('.column .raised:nth-child(2) .basic p.text').hasText(`Date of Birth: ${moment(employee.dateOfBirth).format('M/D/YY')}`);
+    assert.dom('.column .raised:nth-child(2) .basic p.text').hasText(`Date of Birth ${moment(employee.dateOfBirth).format('M/D/YY')}`);
     assert.dom('div.list div.line-item-value u').hasText(Object.values(employee.customFields)[0]);
     assert.dom('div.column:nth-child(2) .raised:nth-child(3) div.segment.basic').includesText(`${employee.emergencyContactNameFirst} ${employee.emergencyContactNameLast}`);
     assert.dom('.employee-basic-meta').includesText(employee.firstName);
