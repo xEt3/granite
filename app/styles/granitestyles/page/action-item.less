@@ -2,10 +2,17 @@
   color: @granite-green !important;
 }
 
-#action-item__action--delete, #action-item__action--cancel {
+#action-item__action--cancel,
+#action-item__action--delete {
   color: @granite-red !important;
 }
 
 .action-items__action-item--card {
   cursor: default;
+}
+
+.project__sub-header {
+  @media screen and (max-width: @mobile-breakpoint) {
+    float: none !important;
+  }
 }

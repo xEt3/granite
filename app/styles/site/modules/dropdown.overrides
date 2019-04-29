@@ -14,3 +14,10 @@
   border: none !important;
   box-shadow: none !important;
 }
+
+.ui.multiple.search.dropdown > .text {
+  bottom: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}

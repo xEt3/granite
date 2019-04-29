@@ -28,10 +28,10 @@
 
   .ui.menu {
     @media screen and (max-width: @mobile-breakpoint) {
-      transition: all 0.6s ease-in-out;
+      transition: all .6s ease-in-out;
 
       > .item {
-        transition: all 0.6s ease-in-out;
+        transition: all .6s ease-in-out;
         overflow: hidden;
       }
 
@@ -44,8 +44,8 @@
         &:before {
           position: absolute;
           content: '';
-          top: 0%;
-          left: 0px;
+          top: 0;
+          left: 0;
           height: 100%;
 
           width: @dividerSize;
@@ -60,13 +60,12 @@
         padding-top: 56px;
 
         .item.active:not(.dropdown) {
-          position: absolute;
           top: 0;
           left: 0;
           right: 0;
           z-index: 1;
           background: @gray-lighter;
-          border-radius: 0.28571429rem 0.28571429rem 0 0;
+          border-radius: .28571429rem .28571429rem 0 0;
 
           &:after {
             background: @gray-lighter;
@@ -75,8 +74,8 @@
         }
 
         > .item:not(.active),
-        > .menu > .item:not(.active),
-        > .menu > div.item {
+         > .menu > div.item,
+        > .menu > .item:not(.active) {
           display: block;
           width: 100%;
           max-height: 100px;
@@ -100,12 +99,46 @@
         }
 
         > .item:not(.active),
-        > .menu > .item:not(.active),
-        > .menu > div.item {
-          max-height: 0px;
+         > .menu > div.item,
+        > .menu > .item:not(.active) {
+          max-height: 0;
           padding: 0;
           width: 0;
         }
+      }
+    }
+  }
+}
+
+.ui.stackable.buttons {
+  @media screen and (max-width: @mobile-breakpoint) {
+    display: inline-flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+
+    .ui.labeled.button {
+      width: 100%;
+    }
+  }
+}
+
+.pagination.menu {
+  @media screen and (max-width: @mobile-breakpoint) {
+    > a > span {
+      margin: 0 auto;
+    }
+  }
+}
+
+.ui.pointing.menu {
+  > .right.menu {
+    @media screen and (max-width: @mobile-breakpoint) {
+      display: block;
+
+      > a {
+        overflow: hidden;
       }
     }
   }
