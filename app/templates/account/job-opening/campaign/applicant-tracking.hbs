@@ -17,7 +17,7 @@
 
         <a href="#" class="ui small orange button"
           {{action (pipe
-            (action openModal confirmDisqualifyModalId "disqualify")
+            (action openModal disqualifyModalId "disqualify")
             (action "disqualifyCandidate" selectedApplications)
             (action "deselectAllApplications")
           )}}
@@ -99,7 +99,7 @@
       pipeline=model.pipeline
       onDisqualify=(action (pipe
         (action set "appInDisqualifyConfirm")
-        (action openModal confirmDisqualifyModalId "disqualify")
+        (action openModal disqualifyModalId "disqualify")
         (action "disqualifyCandidate" appInDisqualifyConfirm)
       ))
       onUnDisqualify=(action "unDisqualifyCandidate")
@@ -126,9 +126,9 @@
     modalId=confirmInjectModalId
     onResponse=(action "modalResponse" "inject")}}
 
-  {{modals/ats-confirm-disqualify
-    appInDisqualifyConfirm
-    modalId=confirmDisqualifyModalId
+  {{modals/ats-disqualify
+    model=appInDisqualifyConfirm
+    modalId=disqualifyModalId
     onResponse=(action "modalResponse" "disqualify")}}
 
   {{modals/ats-scheduler

@@ -7,6 +7,7 @@ export default Mixin.create({
     $(`#${id}`)
     .modal({
       detachable: true,
+      context:    '.ember-application',
       onHidden:   () => {
         if (!this.get(`${key}Responded`)) {
           this.get(`${key}Promise.reject`)();
