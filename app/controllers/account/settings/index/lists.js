@@ -3,10 +3,22 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import $ from 'jquery';
 
 export default Controller.extend(addEdit, {
-  queryParams: [ 'list' ],
-  list:        null,
-  dirtyList:   false,
-  currentItem: null,
+  queryParams:     [ 'list' ],
+  listItemModalId: 'settings__add-edit-list-item',
+  labelModalId:    'settings__add-edit-label-list',
+  list:            null,
+  dirtyList:       false,
+  currentItem:     null,
+
+  afterSave () {
+    if (this.get('list') === 'labels') {
+      this.get('model').forEach(item => {
+        if (!item.id) {
+          item.destroyRecord();
+        }
+      });
+    }
+  },
 
   actions: {
     async saveList () {
@@ -20,9 +32,14 @@ export default Controller.extend(addEdit, {
     },
 
     openModal () {
-      this.set('respondedModal', false);
+      this.setProperties({
+        respondedModal: false,
+        currentItem:    this.get('list') === 'labels' ? {} : ''
+      });
 
-      $('#settings__add-edit-list-item').modal({
+      let modalId = this.get('list') === 'labels' ? this.get('labelModalId') : this.get('listItemModalId');
+
+      $(`#${modalId}`).modal({
         detachable: true,
         context:    '.ember-application',
         onHidden:   () => {
@@ -31,6 +48,7 @@ export default Controller.extend(addEdit, {
             editingItem: false,
             index:       null
           });
+
           if (!this.get('respondedModal')) {
             this.send('respondModal', false);
           }
@@ -44,7 +62,9 @@ export default Controller.extend(addEdit, {
     },
 
     closeModal () {
-      $('#settings__add-edit-list-item').modal('hide');
+      let modalId = this.get('list') === 'labels' ? this.get('labelModalId') : this.get('listItemModalId');
+
+      $(`#${modalId}`).modal('hide');
     },
 
     respondModal (response) {
@@ -63,6 +83,13 @@ export default Controller.extend(addEdit, {
 
     addItem () {
       let currentItem = this.get('currentItem');
+
+      if (typeof currentItem === 'object') {
+        currentItem = this.store.createRecord('label', {
+          text:  currentItem.text,
+          color: currentItem.color
+        });
+      }
 
       this.get('model').addObject(currentItem);
       this.set('dirtyList', true);

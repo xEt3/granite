@@ -5,6 +5,9 @@
       <a href="#" class="{{if (eq list "dqReasons") "active"}} item" {{action "toggleList" "dqReasons"}}>
         Disqualification Reasons
       </a>
+      <a href="#" class="{{if (eq list "labels") "active"}} item" {{action "toggleList" "labels"}}>
+        Labels
+      </a>
     </div>
   </div>
   <div class="twelve wide stretched column">
@@ -18,12 +21,19 @@
         </a>
       {{/if}}
       {{#each model as |item index|}}
-        {{list-item/settings-lists-item
-          item
-          index
-          editItem=(action (pipe-action (action "beginEdit") (action "openModal") (action "editItem")))
-          deleteItem=(action "deleteItem")
-        }}
+        {{#if (eq list "dqReasons")}}
+          {{list-item/settings-lists-item
+            item
+            index
+            editItem=(action (pipe-action (action "beginEdit") (action "openModal") (action "editItem")))
+            deleteItem=(action "deleteItem")
+          }}
+        {{else if (eq list "labels")}}
+          {{list-item/settings-lists-label
+            item
+            index
+          }}
+        {{/if}}
       {{/each}}
     </div>
   </div>
@@ -48,3 +58,9 @@
     </button>
   </div>
 {{/ui-modal}}
+
+{{modals/custom-label
+  modalId=labelModalId
+  currentLabel=currentItem
+  respondModal=(action "respondModal")
+}}

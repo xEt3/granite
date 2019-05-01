@@ -1,0 +1,27 @@
+{{#ui-modal id=modalId class="small form"}}
+  <div class="header">
+    {{if editingItem "Edit" "Add"}} label
+  </div>
+  <div class="content">
+    <div class="field">
+      <label for="label-text">Label text</label>
+      {{input type="text" value=currentLabel.text id="label-text" placeholder="Label text"}}
+    </div>
+    
+    {{color-picker
+      components=colorPickerComponents
+      format="rgba"
+      onSave=(action "handleOnSave")
+    }}
+    {{!-- value=currentLabel.color --}}
+
+  </div>
+  <div class="actions">
+    <button class="ui red button" {{action respondModal false}}>
+      Cancel
+    </button>
+    <button class="ui green right labeled icon button" {{action respondModal true}}>
+      {{if editingItem "Edit" "Add"}} List Item<i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}
