@@ -1,29 +1,37 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 
 export default Component.extend({
   colorPickerComponents: {
-
-    palette: true,  // Will be overwritten with true if preview, opacity or hue are true
+    palette: true,
     preview: true,
-    opacity: true,
+    opacity: false,
     hue:     true,
 
     interaction: {
-      hex:   false,
+      hex:   true,
       rgba:  true,
-      hsva:  false,
+      hsva:  true,
       input: true,
-      clear: true,
-      save:  true
+      clear: false,
+      save:  false
     }
-
   },
 
+  labelForPreview: computed('currentLabel.{color.[],text}', function () {
+    let label = this.get('currentLabel');
+
+    return {
+      color: label && label.color ? label.color : [ 0, 0, 0 ],
+      text:  label && label.text ? label.text : 'No text yet'
+    };
+  }),
+
   actions: {
-    handleOnSave (hsva) {
-      this.set('currentLabel.color', hsva.toRGBA());
-      console.log('just set currentLabel', this.get('currentLabel'));
-      //CURRENTLY BEING SET AS ARRAY OF RGBA
+    handleOnChange (hsva) {
+      if (this.get('currentLabel')) {
+        this.set('currentLabel.color', hsva.toRGBA());
+      }
     }
   }
 });

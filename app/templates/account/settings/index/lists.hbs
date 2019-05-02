@@ -32,6 +32,8 @@
           {{list-item/settings-lists-label
             item
             index
+            editItem=(action (pipe-action (action "beginEdit") (action "openModal") (action "editItem")))
+            deleteItem=(action "deleteItem")
           }}
         {{/if}}
       {{/each}}
@@ -62,5 +64,6 @@
 {{modals/custom-label
   modalId=labelModalId
   currentLabel=currentItem
+  editingItem=editingItem
   respondModal=(action "respondModal")
 }}

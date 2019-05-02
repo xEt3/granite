@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { htmlSafe } from '@ember/string';
 import { computed } from '@ember/object';
 
 const CustomLabel = Component.extend({
@@ -7,12 +8,10 @@ const CustomLabel = Component.extend({
   attributeBindings: [ 'color:style' ],
 
   color: computed('label.color', function () {
-    //MIGHT BE ABLE TO JUST USE ARRAY ALL THE WAY
-    let rgb = this.get('label.color').replace(/[^\d,]/g, '').split(','),
-        [ r, g, b ] = rgb.map(Number),
+    let [ r, g, b ] = this.get('label.color'),
         textColor = (r * 299 + g * 587 + b * 114) / 1000 > 123 ? 'black' : 'white';
 
-    return `background-color: ${this.get('label.color')}; color: ${textColor}`;
+    return htmlSafe(`background-color: rgba(${r}, ${g}, ${b}); color: ${textColor}`);
   })
 });
 

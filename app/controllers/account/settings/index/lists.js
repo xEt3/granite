@@ -34,7 +34,7 @@ export default Controller.extend(addEdit, {
     openModal () {
       this.setProperties({
         respondedModal: false,
-        currentItem:    this.get('list') === 'labels' ? {} : ''
+        currentItem:    this.get('list') === 'labels' ? this.get('currentItem') || {} : ''
       });
 
       let modalId = this.get('list') === 'labels' ? this.get('labelModalId') : this.get('listItemModalId');
