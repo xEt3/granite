@@ -41,15 +41,14 @@
   </div>
 </div>
 
-{{#ui-modal id="settings__add-edit-list-item" class="small form"}}
+{{#ui-modal id=modalId class="small form"}}
   <div class="header">
     {{if editingItem "Edit" "Add"}} item
   </div>
   <div class="content">
-    {{!-- MAKE DYNAMIC --}}
     {{quick-form
-      lists.listItem.elements
-      this}}
+      currentForm.elements
+      modelForForm}}
   </div>
   <div class="actions">
     <button class="ui red button" {{action "respondModal" false}}>
@@ -61,31 +60,10 @@
   </div>
 {{/ui-modal}}
 
-{{!-- {{#ui-modal id="settings__add-edit-list-item" class="small form"}}
-  <div class="header">
-    {{if editingItem "Edit" "Add"}} item
-  </div>
-  <div class="content">
-    <div class="field">
-      <label for="list-item-name">List Item</label>
-      {{input type="text" value=currentItem id="list-item-name" placeholder="List Item"}}
-    </div>
-  </div>
-  <div class="actions">
-    <button class="ui red button" {{action "respondModal" false}}>
-      Cancel
-    </button>
-    <button class="ui green right labeled icon button" {{action "respondModal" true}}>
-      {{if editingItem "Edit" "Add"}} List Item<i class="check icon"></i>
-    </button>
-  </div>
-{{/ui-modal}} --}}
 
-{{!-- MAKE DYNAMIC ABOVE --}}
-
-{{modals/custom-label
+{{!-- {{modals/custom-label
   modalId=labelModalId
   currentLabel=currentItem
   editingItem=editingItem
   respondModal=(action "respondModal")
-}}
+}} --}}

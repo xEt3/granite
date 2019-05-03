@@ -1,13 +1,21 @@
 export const lists = {
-  'listItem': {
+  'dqReasons': {
     elements: [{
       label: 'List Item',
       type:  'text',
       path:  'currentItem'
-    }]
+    }],
+    listType: 'string'
+  },
+  'labels': {
+    elements: [{
+      label: 'Label Text',
+      type:  'text',
+      path:  'text'
+    }, {
+      type: 'color',
+      path: 'color'
+    }],
+    listType: 'object'
   }
-
-  // ADD FOR COLOR PICKER MODAL
-
-
 };

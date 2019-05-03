@@ -19,6 +19,7 @@ export default Component.extend({
   },
 
   labelForPreview: computed('currentLabel.{color.[],text}', function () {
+    // MOVE TO QUICK FORM -- ACTUALLY PROBABLY MOVE TO MODAL ON LISTS.HBS
     let label = this.get('currentLabel');
 
     return {

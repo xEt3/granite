@@ -5,14 +5,20 @@ import { computed } from '@ember/object';
 import $ from 'jquery';
 
 export default Controller.extend(addEdit, {
-  queryParams:     [ 'list' ],
-  listItemModalId: 'settings__add-edit-list-item',
-  labelModalId:    'settings__add-edit-label-list',
-  list:            null,
-  dirtyList:       false,
-  currentItem:     null,
+  queryParams: [ 'list' ],
+  modalId:     'settings__list-modal',
+  list:        null,
+  dirtyList:   false,
+  currentItem: null,
 
-  lists,
+  currentForm: computed('list', function () {
+    return lists[this.get('list')];
+  }),
+
+  modelForForm: computed('currentForm.listType', 'currentItem', function () {
+    //need this bc you have to pass a model object to quick-form
+    return this.get('currentForm.listType') === 'string' ? this : this.get('currentItem');
+  }),
 
   afterSave () {
     if (this.get('list') === 'labels') {
@@ -25,12 +31,6 @@ export default Controller.extend(addEdit, {
   },
 
   actions: {
-    iDidItMom () {
-      console.log('i did it mom');
-    },
-
-
-
     async saveList () {
       let company = this.get('company');
       await this.saveModel(company);
@@ -42,14 +42,14 @@ export default Controller.extend(addEdit, {
     },
 
     openModal () {
-      this.setProperties({
-        respondedModal: false,
-        currentItem:    this.get('list') === 'labels' ? this.get('currentItem') || {} : ''
-      });
+      this.set('respondedModal', false);
 
-      let modalId = this.get('list') === 'labels' ? this.get('labelModalId') : this.get('listItemModalId');
+      if (!this.get('currentItem')) {
+        //if we aren't editing, set initial currentItem value for modal usage
+        this.set('currentItem', this.get('currentForm.listType') === 'string' ? '' : {});
+      }
 
-      $(`#${modalId}`).modal({
+      $(`#${this.get('modalId')}`).modal({
         detachable: true,
         context:    '.ember-application',
         onHidden:   () => {
@@ -72,9 +72,7 @@ export default Controller.extend(addEdit, {
     },
 
     closeModal () {
-      let modalId = this.get('list') === 'labels' ? this.get('labelModalId') : this.get('listItemModalId');
-
-      $(`#${modalId}`).modal('hide');
+      $(`#${this.get('modalId')}`).modal('hide');
     },
 
     respondModal (response) {
