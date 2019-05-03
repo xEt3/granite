@@ -1,5 +1,7 @@
 import Controller from '@ember/controller';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { lists } from 'granite/config/forms/lists';
+import { computed } from '@ember/object';
 import $ from 'jquery';
 
 export default Controller.extend(addEdit, {
@@ -9,6 +11,8 @@ export default Controller.extend(addEdit, {
   list:            null,
   dirtyList:       false,
   currentItem:     null,
+
+  lists,
 
   afterSave () {
     if (this.get('list') === 'labels') {
@@ -21,6 +25,12 @@ export default Controller.extend(addEdit, {
   },
 
   actions: {
+    iDidItMom () {
+      console.log('i did it mom');
+    },
+
+
+
     async saveList () {
       let company = this.get('company');
       await this.saveModel(company);
