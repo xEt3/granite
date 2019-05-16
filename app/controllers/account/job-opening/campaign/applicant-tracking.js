@@ -2,8 +2,10 @@ import Controller from '@ember/controller';
 import { computed, get } from '@ember/object';
 import { A } from '@ember/array';
 import { inject as service } from '@ember/service';
+import { lists } from 'granite/config/forms/lists';
 import RSVP from 'rsvp';
 import moment from 'moment';
+import $ from 'jquery';
 import ajaxStatus from 'granite/mixins/ajax-status';
 import modalSupport from 'granite/mixins/modal-support';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
@@ -24,8 +26,10 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
   confirmDisqualifyModalId: 'modal__ats-confirm-disqualify',
   disqualifyModalId:        'modal__ats-disqualify',
   schedulerModalId:         'modal__ats-scheduler',
-  linkSharingModalId:       'model__ats-link-sharing',
+  linkSharingModalId:       'modal__ats-link-sharing',
+  labelsModalId:            'modal__ats-labels',
   showDisqualified:         false,
+  formForLabels:            lists.labels.elements,
 
   pendingApplications: computed.filter('model.applications', function (app) {
     return !get(app, 'stage') && !get(app, 'reviewedOn') && !get(app, 'disqualified');
@@ -193,6 +197,15 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
 
     refreshModel () {
       this.send('refresh');
+    },
+
+    respondLabelModal (response) {
+      this.send('closeModal', this.get('labelsModalId'));
+      return this.send('modalResponse', 'addLabel', response);
+    },
+
+    closeModal (modalId) {
+      $(`#${modalId}`).modal('hide');
     }
   }
 });
