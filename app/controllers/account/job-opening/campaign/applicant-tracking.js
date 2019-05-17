@@ -2,7 +2,6 @@ import Controller from '@ember/controller';
 import { computed, get } from '@ember/object';
 import { A } from '@ember/array';
 import { inject as service } from '@ember/service';
-import { lists } from 'granite/config/forms/lists';
 import RSVP from 'rsvp';
 import moment from 'moment';
 import $ from 'jquery';
@@ -29,7 +28,6 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
   linkSharingModalId:       'modal__ats-link-sharing',
   labelsModalId:            'modal__ats-labels',
   showDisqualified:         false,
-  formForLabels:            lists.labels.elements,
 
   pendingApplications: computed.filter('model.applications', function (app) {
     return !get(app, 'stage') && !get(app, 'reviewedOn') && !get(app, 'disqualified');

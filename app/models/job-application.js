@@ -1,6 +1,6 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 import { computed } from '@ember/object';
 
 export default Model.extend({
@@ -16,6 +16,7 @@ export default Model.extend({
   scoreRelative:          attr('number'),
   notes:                  attr('string'),
   publicLink:             attr('string'),
+  labels:                 hasMany('label'),
 
   resume: belongsTo('file', {
     async:   true,

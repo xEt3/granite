@@ -1,0 +1,47 @@
+{{#ui-modal id=modalId observeChanges=true}}
+  <div class="header">
+    Application Labels
+  </div>
+  <div class="content">
+    <label for="label-multi-select">Current labels for {{#if model.person.firstName}}{{model.person.firstName}}'s{{/if}} application</label>
+    {{!-- MAKE COMPUTED PROPERTY SO WHEN COMPANY IS SAVED WHEN A NEW LABEL IS CREATED THE LIST ISN'T WIPED --}}
+    {{#ui-dropdown class="fluid search multiple selection" id="label-multi-select" selected=model.labels onChange=(action (mut model.labels)) as |execute mapper|}}
+      <i class="dropdown icon"></i>
+      <div class="default text">Select labels for application</div>
+      <div class="menu">
+        {{#each auth.user.company.labels as |label|}}
+          <div class="item" data-value={{map-value mapper label}}>
+            {{custom-label label}}
+          </div>
+        {{/each}}
+      </div>
+    {{/ui-dropdown}}
+    {{#if currentLabel}}
+      <div class="ui divider"></div>
+      <button class="ui blue fluid button" {{action "saveNewLabel" currentLabel}}>Save New Label</button>
+      {{quick-form
+        newLabelForm
+        currentLabel}}
+    {{/if}}
+  </div>
+  <div class="actions">
+    {{#if (not currentLabel)}}
+      <button class="ui blue button left floated" {{action "startAddEditLabel"}}>
+        Create New Label
+      </button>
+    {{/if}}
+
+    <button class="ui inverted red button" {{action "respond" false}}>
+      Cancel
+    </button>
+    {{!-- SHOULD SAVE THE ENTIRE APPLICATION, PROBABLY PASS THROUGH TO ORIGINAL CONTROLLER WITH PIPE ACTION --}}
+    <button class="ui green right labeled icon button" {{action "respond" true}}>
+      Save Application Labels<i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}
+
+
+{{!-- currentLabel is label being added or edited --}}
+{{!-- model is application, which all of the labels will reside on --}}
+{{!-- will have company label list to pick labels from --}}

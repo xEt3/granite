@@ -147,26 +147,8 @@
     modalId=linkSharingModalId
     onResponse=(action "modalResponse" "linkSharing")}}
 
-
-  {{!-- ADD COMPONENT FOR THIS? --}}
-  {{#ui-modal id=labelsModalId class="small form"}}
-    <div class="header">
-      Add/Edit Labels
-      {{!-- CHANGE THIS TO BE DYNAMIC --}}
-    </div>
-    <div class="content">
-      {{!-- {{quick-form
-        formForLabels
-        modelForLabels}} --}}
-    </div>
-    <div class="actions">
-      <button class="ui red button" {{action "respondLabelModal" false}}>
-        Cancel
-      </button>
-      <button class="ui green right labeled icon button" {{action "respondLabelModal" true}}>
-        Add/Edit List Item<i class="check icon"></i>
-      </button>
-    </div>
-  {{/ui-modal}}
+  {{modals/ats-add-label
+    appInAddLabels
+    modalId=labelsModalId
+    onResponse=(action "modalResponse" "addLabel")}}
 </div>
-{{!-- have #appInAddLabels for use --}}
