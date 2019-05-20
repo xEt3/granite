@@ -121,6 +121,7 @@
       onAddLabel=(action (pipe
         (action set "appInAddLabels")
         (action openModal labelsModalId "addLabel")
+        (action "saveApplicationLabels")
       ))
     }}
   {{/confirm-modal}}

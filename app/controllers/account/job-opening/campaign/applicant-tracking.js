@@ -189,21 +189,16 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
       return;
     },
 
+    async saveApplicationLabels () {
+      this.saveModel(await this.get('appInAddLabels'));
+    },
+
     onNotify (type, msg) {
       this.send('notify', type, msg);
     },
 
     refreshModel () {
       this.send('refresh');
-    },
-
-    respondLabelModal (response) {
-      this.send('closeModal', this.get('labelsModalId'));
-      return this.send('modalResponse', 'addLabel', response);
-    },
-
-    closeModal (modalId) {
-      $(`#${modalId}`).modal('hide');
     }
   }
 });

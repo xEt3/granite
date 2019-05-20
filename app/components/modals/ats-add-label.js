@@ -1,57 +1,45 @@
-import Modal from '.';
+import Component from '@ember/component';
 import { lists } from 'granite/config/forms/lists';
 import { inject as service } from '@ember/service';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import $ from 'jquery';
 
-const AddLabelModalComponent = Modal.extend(addEdit, {
+const AddLabelModalComponent = Component.extend(addEdit, {
   auth:  service(),
   store: service(),
 
-  newLabelForm: lists.labels.elements,
   enableNotify: false,
   currentLabel: null,
-  editingLabel: false,
-  appLabels:    [],
+  newLabelForm: lists.labels.elements,
 
-  resetProperties () {
-    this.setProperties({
-      currentLabel: null,
-      editingLabel: false
-    });
+  resetCurrentLabel () {
+    this.set('currentLabel', null);
   },
 
   actions: {
-    async startAddEditLabel (label) {
-      if (!label) {
-        //adding new label
-        this.set('currentLabel', await this.store.createRecord('label'));
-      } else {
-        //editing current label
-        this.setProperties({
-          currentLabel: label,
-          editingLabel: true
-        });
-      }
+    async addLabel () {
+      this.set('currentLabel', await this.store.createRecord('label'));
     },
 
-    async saveNewLabel (label) {
-      // LIST DOESNT UPDATE AND SAVE CORRECTLY
+    async saveLabel (label) {
       let company = await this.get('auth.user.company'),
           companyLabels = await company.get('labels'),
           applicationLabels = await this.get('model.labels');
 
-      //add label to application's and company's labels
+      //add label to company, save, then remove phony label
       companyLabels.addObject(label);
-      applicationLabels.addObject(label);
-
-      //save company to save company label list, delete extra label
       await this.saveModel(company);
       companyLabels.filterBy('id', null).invoke('destroyRecord');
 
+      //add saved label to application labels array
+      let newSavedLabel = companyLabels.find(l => {
+        return l.id && l.text === label.text;
+      });
 
-      //reset properties
-      this.resetProperties();
+      applicationLabels.addObject(newSavedLabel);
+
+      //reset currentLabel so fields are blank to add another label
+      this.resetCurrentLabel();
     },
 
     respond (response) {
@@ -62,7 +50,7 @@ const AddLabelModalComponent = Modal.extend(addEdit, {
         this.get('currentLabel').destroyRecord();
       }
 
-      this.resetProperties();
+      this.resetCurrentLabel();
 
       $(`#${this.get('modalId')}`).modal('hide');
     }
