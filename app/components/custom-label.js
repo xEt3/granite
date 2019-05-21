@@ -6,6 +6,7 @@ const CustomLabel = Component.extend({
   tagName:           'div',
   classNames:        [ 'ui', 'label' ],
   attributeBindings: [ 'color:style' ],
+  classNameBindings: [ 'size' ],
 
   color: computed('label.color', function () {
     let [ r, g, b ] = this.get('label.color'),
@@ -18,3 +19,9 @@ const CustomLabel = Component.extend({
 CustomLabel.reopenClass({ positionalParams: [ 'label' ] });
 
 export default CustomLabel;
+
+/* Usage
+
+{{custom-label label size="mini"}}
+
+*/

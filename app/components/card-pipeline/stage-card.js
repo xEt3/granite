@@ -16,6 +16,16 @@ const PipelineCardComponent = Component.extend({
     'application.disqualified:pipeline-card__content--disqualified'
   ],
 
+  applicationLabels: computed('application.labels.[]', function () {
+    return this.get('application.labels').slice(0, 3);
+  }),
+
+  extraLabels: computed('application.labels.length', function () {
+    let x = this.get('application.labels.length') > 3 ? true : false;
+    console.log(x);
+    return x;
+  }),
+
   allExceptCurrentStage: computed('stages.[]', 'application.stage', function () {
     const stageId = this.get('application.stage');
     return (this.get('stages') || []).filter(stage => get(stage, '_id') !== stageId);

@@ -64,6 +64,16 @@
       {{if application.manualEntry "Manual Entry" "From Quartz"}}
     </span>
   </div>
+
+  {{#each applicationLabels as |label|}}
+    {{custom-label label size="mini"}}
+  {{/each}}
+  {{#if extraLabels}}
+    <i class="gray-icon ellipsis horizontal icon"></i>
+  {{/if}}
+</div>
+
+<div>
 </div>
 
 {{#if application.employee.id}}
