@@ -16,14 +16,20 @@ const PipelineCardComponent = Component.extend({
     'application.disqualified:pipeline-card__content--disqualified'
   ],
 
-  applicationLabels: computed('application.labels.[]', function () {
-    return this.get('application.labels').slice(0, 3);
+  popupId: computed('elementId', function () {
+    return `${this.get('elementId')}-popup`;
   }),
 
-  extraLabels: computed('application.labels.length', function () {
-    let x = this.get('application.labels.length') > 3 ? true : false;
-    console.log(x);
-    return x;
+  htmlForPopup: computed('popupId', function () {
+    return this.$(`#${this.get('popupId')}`)[0].innerHTML;
+  }),
+
+  popupIdSelector: computed('popupId', function () {
+    return `#${this.get('popupId')}`;
+  }),
+
+  applicationLabels: computed('application.labels.[]', function () {
+    return this.get('application.labels').slice(0, 3);
   }),
 
   allExceptCurrentStage: computed('stages.[]', 'application.stage', function () {

@@ -65,15 +65,21 @@
     </span>
   </div>
 
-  {{#each applicationLabels as |label|}}
-    {{custom-label label size="mini"}}
-  {{/each}}
-  {{#if extraLabels}}
-    <i class="gray-icon ellipsis horizontal icon"></i>
+  {{#if (gt application.labels.length 0)}}
+    <div class="card-content__labels">
+      {{#each (take 3 application.labels) as |label|}}
+        {{custom-label label size="mini"}}
+      {{/each}}
+      {{#if (gt application.labels.length 3)}}
+        <div class="ui custom popup top right" id={{popupId}} style="min-width: 100%;">
+          {{#each (drop 3 application.labels) as |label|}}
+            {{custom-label label tagName="span" size="mini"}}
+          {{/each}}
+        </div>
+        {{ui-popup html=htmlForPopup context=".ui.main" tagName="i" class="gray-icon ellipsis horizontal icon"}}
+      {{/if}}
+    </div>
   {{/if}}
-</div>
-
-<div>
 </div>
 
 {{#if application.employee.id}}

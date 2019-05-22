@@ -22,6 +22,6 @@ export default CustomLabel;
 
 /* Usage
 
-{{custom-label label size="mini"}}
+{{custom-label label tagName="span" size="mini"}}
 
 */
