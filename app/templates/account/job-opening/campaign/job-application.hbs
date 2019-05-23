@@ -30,6 +30,12 @@
     {{/ui-dropdown}}
   </hgroup>
 
+  <div class="job-application__labels">
+    {{#each model.labels as |label|}}
+      {{custom-label label size="small" tagName="span"}}
+    {{/each}}
+  </div>
+
   <div class="ui divider"></div>
 
   {{outlet}}

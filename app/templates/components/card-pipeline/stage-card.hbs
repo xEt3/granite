@@ -71,7 +71,8 @@
         {{custom-label label size="mini"}}
       {{/each}}
       {{#if (gt application.labels.length 3)}}
-        <div class="ui custom popup top right" id={{popupId}} style="min-width: 100%;">
+        <div class="ui custom popup top right card-content__popup-content" id={{popupId}}>
+          {{!-- THIS DIV IS HIDDEN UNTIL USED INSIDE POPUP BELOW --}}
           {{#each (drop 3 application.labels) as |label|}}
             {{custom-label label tagName="span" size="mini"}}
           {{/each}}
