@@ -15,7 +15,7 @@ export default Controller.extend({
     link: 'account.employees.add'
   }, {
     text: 'Start a new recruiting campaign',
-    link: 'account.recruiting.new'
+    link: 'account.recruiting.index.new'
   }, {
     text: 'Upload a company document',
     link: 'account.documents.new'
