@@ -28,7 +28,7 @@ export default Component.extend({
       p = t._pages - t.maxButtons + 1;
     }
 
-    if (p < 0) {
+    if (p <= 0) {
       p = 1;
     }
 

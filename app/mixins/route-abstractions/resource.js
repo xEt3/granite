@@ -41,6 +41,22 @@ export default Mixin.create({
     }));
   },
 
+  async afterModel () {
+    // MILDLY STUCK HERE!!
+    // trying to get page request to change if the current page has no records
+    let controller = this.controllerFor(this.routeName);
+
+    if (controller) {
+      console.log('inside if because controller exists:', controller);
+      console.log('controller.pages:', controller.pages);
+      if (controller.pages) {
+        console.log('inside second if because pages exists');
+        let { limit, pages, page, model } = controller;
+        // console.log(limit, page, pages);
+      }
+    }
+  },
+
   async model (params) {
     let query = {
       page:  params.page - 1 || 0,
