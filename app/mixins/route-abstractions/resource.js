@@ -41,19 +41,16 @@ export default Mixin.create({
     }));
   },
 
-  async afterModel () {
-    // MILDLY STUCK HERE!!
-    // trying to get page request to change if the current page has no records
-    let controller = this.controllerFor(this.routeName);
+  async afterModel (model, transition) {
+    let { totalRecords, requestedLimit, requestedPage } = this.getProperties('totalRecords', 'requestedLimit', 'requestedPage'),
+        maxPages = Math.ceil(totalRecords / requestedLimit);
 
-    if (controller) {
-      console.log('inside if because controller exists:', controller);
-      console.log('controller.pages:', controller.pages);
-      if (controller.pages) {
-        console.log('inside second if because pages exists');
-        let { limit, pages, page, model } = controller;
-        // console.log(limit, page, pages);
-      }
+    if (requestedPage > maxPages && totalRecords > 0) {
+      //set page to 1
+      let updatedQueryParams = transition.queryParams;
+      transition.abort();
+      updatedQueryParams.page = 1;
+      this.transitionTo(transition.targetName, { queryParams: updatedQueryParams });
     }
   },
 
@@ -102,12 +99,25 @@ export default Mixin.create({
     let resourceUrl = this.get('resourceUrl');
 
     if (!resourceUrl) {
+      console.log('HIT IF');
       // normal resource request
-      return this.store.query(this.get('modelName'), query);
+      let modelRecords = await this.store.query(this.get('modelName'), query);
+
+      this.setProperties({
+        totalRecords:   modelRecords.meta.totalRecords,
+        requestedLimit: query.limit,
+        requestedPage:  query.page + 1
+      });
+
+      return modelRecords;
     }
 
+    // CHECK HERE!!
+    console.log('DID NOT HIT IF');
     // begin resource url override mode
     let result = await this.ajax.request(resourceUrl, { data: query });
+
+    console.log('result:', result);
 
     // remap data into ED Models
     return this.get('resourceReturnsModel') ? this.__pushPayload(result) : result;
