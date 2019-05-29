@@ -16,7 +16,7 @@ export default Controller.extend(pagination, {
     'limit'
   ],
 
-  limit:         10,
+  limit:         20,
   showFilters:   false,
   onboarding:    false,
   offboarding:   false,
