@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://www.granitehr.com</loc>
+    <lastmod>2019-05-23T19:28:25+00:00</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://www.granitehr.com/about</loc>
+    <lastmod>2019-05-23T19:28:25+00:00</lastmod>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>http://www.granitehr.com/our-product</loc>
+    <lastmod>2019-05-23T19:28:25+00:00</lastmod>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>http://www.granitehr.com/pricing</loc>
+    <lastmod>2019-05-23T19:28:25+00:00</lastmod>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>http://www.granitehr.com/signup</loc>
+    <lastmod>2019-05-23T19:28:25+00:00</lastmod>
+    <priority>0.90</priority>
+  </url>
+</urlset>
