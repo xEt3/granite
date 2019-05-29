@@ -99,7 +99,6 @@ export default Mixin.create({
     let resourceUrl = this.get('resourceUrl');
 
     if (!resourceUrl) {
-      console.log('HIT IF');
       // normal resource request
       let modelRecords = await this.store.query(this.get('modelName'), query);
 
@@ -112,12 +111,8 @@ export default Mixin.create({
       return modelRecords;
     }
 
-    // CHECK HERE!!
-    console.log('DID NOT HIT IF');
     // begin resource url override mode
     let result = await this.ajax.request(resourceUrl, { data: query });
-
-    console.log('result:', result);
 
     // remap data into ED Models
     return this.get('resourceReturnsModel') ? this.__pushPayload(result) : result;
