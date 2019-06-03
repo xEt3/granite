@@ -6,7 +6,7 @@ import { computed } from '@ember/object';
 
 export default Model.extend(Validations, {
   // Personal Information
-  fullName: computed('firstName', 'lastName', 'middleInitial', 'suffix', function () {
+  fullName: computed('firstName', 'lastName', 'middleName', 'suffix', function () {
     var n = this.getProperties('firstName', 'lastName', 'middleName', 'suffixName'),
         fullName = '';
 
