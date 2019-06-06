@@ -23,7 +23,7 @@
   {{#if working}}
     <div class="ui active inverted dimmer">
       <div class="ui indeterminate massive text loader">
-        Importing Records
+        {{or status.status 'Importing Records'}}
         <div class="smaller text">This might take some time...</div>
       </div>
     </div>
