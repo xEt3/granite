@@ -22,6 +22,7 @@ export default Route.extend({
         'context.method':      'import',
         'context.resultSetId': resultSetId
       })).get('firstObject');
+
       if (!currentTask || currentTask.context.resultSetId === resultSetId) {
         this.set('matchedTask', currentTask);
         return;
