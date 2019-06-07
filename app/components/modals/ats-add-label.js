@@ -60,7 +60,3 @@ const AddLabelModalComponent = Component.extend(addEdit, {
 AddLabelModalComponent.reopenClass({ positionalParams: [ 'model' ] });
 
 export default AddLabelModalComponent;
-
-//create new labels that will add to list of company labels, and also to application
-//delete labels off of application
-//edit labels on application
