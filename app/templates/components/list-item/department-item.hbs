@@ -9,7 +9,7 @@
   </div>
   <div class="right floated">
     {{#link-to "account.anatomy.department.edit" department.id}}
-      {{#ui-popup tagName="span" position="left center" content="Edit user"}}
+      {{#ui-popup tagName="span" position="left center" content="Edit department"}}
         <i class="edit icon"></i>
       {{/ui-popup}}
     {{/link-to}}
@@ -22,6 +22,6 @@
     {{/confirm-modal}}
   </div>
   <div class="meta">
-    <span class="ui small text right floated">Created {{time-ago department.created}} by {{department.creator.fullName}}</span>
+    <span class="ui small text right floated">Created {{time-ago department.created}} {{#if department.creator.fullName}}by {{department.creator.fullName}}{{/if}}</span>
   </div>
 </div>

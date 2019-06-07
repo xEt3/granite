@@ -9,12 +9,12 @@
   </div>
   <div class="right floated">
     {{#link-to "account.anatomy.location.edit" location.id}}
-      {{#ui-popup tagName="span" position="left center" content="Edit user"}}
+      {{#ui-popup tagName="span" position="left center" content="Edit location"}}
         <i class="edit icon"></i>
       {{/ui-popup}}
     {{/link-to}}
     {{#confirm-modal deleteContext=location.name tagName="span" as |confirm|}}
-      {{#ui-popup tagName="span" position="left center" content="Delete user"}}
+      {{#ui-popup tagName="span" position="left center" content="Delete location"}}
         <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}>
           <i class="trash icon"></i>
         </a>
@@ -34,6 +34,6 @@
         {{location.phoneFormatted}}
       </div>
     {{/if}}
-    <span class="ui small text right floated">Created {{time-ago location.created}} by {{location.creator.fullName}}</span>
+    <span class="ui small text right floated">Created {{time-ago location.created}} {{#if location.creator.fullName}}by {{location.creator.fullName}}{{/if}}</span>
   </div>
 </div>

@@ -67,6 +67,10 @@
       <div class="ui raised very padded text segment">
         <h2>Your Todos &amp; Projects</h2>
 
+        {{#if (and (not analytics.todos.length) (not analytics.actionItemActivity))}}
+          <h3 class="center aligned light text">No project insights available.</h3>
+        {{/if}}
+
         <div class="ui relaxed list">
           {{#each analytics.todos as |actionItemTodo|}}
             {{list-item/dashboard/todo-item actionItemTodo}}

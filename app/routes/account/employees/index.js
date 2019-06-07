@@ -2,7 +2,6 @@ import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
 import { computed } from '@ember/object';
 import resource from 'granite/mixins/route-abstractions/resource';
-// import moment from 'moment';
 
 export default Route.extend(resource, {
   titleToken: 'Employees',

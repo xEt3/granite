@@ -41,6 +41,19 @@ export default Mixin.create({
     }));
   },
 
+  async afterModel (model, transition) {
+    let { totalRecords, requestedLimit, requestedPage } = this.getProperties('totalRecords', 'requestedLimit', 'requestedPage'),
+        maxPages = Math.ceil(totalRecords / requestedLimit);
+
+    if (requestedPage > maxPages && totalRecords > 0) {
+      //set page to 1
+      let updatedQueryParams = transition.queryParams;
+      transition.abort();
+      updatedQueryParams.page = 1;
+      this.transitionTo(transition.targetName, { queryParams: updatedQueryParams });
+    }
+  },
+
   async model (params) {
     let query = {
       page:  params.page - 1 || 0,
@@ -87,7 +100,15 @@ export default Mixin.create({
 
     if (!resourceUrl) {
       // normal resource request
-      return this.store.query(this.get('modelName'), query);
+      let modelRecords = await this.store.query(this.get('modelName'), query);
+
+      this.setProperties({
+        totalRecords:   modelRecords.meta.totalRecords,
+        requestedLimit: query.limit,
+        requestedPage:  query.page + 1
+      });
+
+      return modelRecords;
     }
 
     // begin resource url override mode
