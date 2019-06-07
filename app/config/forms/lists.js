@@ -1,5 +1,5 @@
 export const lists = {
-  'dqReasons': {
+  dqReasons: {
     elements: [{
       label: 'List Item',
       type:  'text',
@@ -7,7 +7,7 @@ export const lists = {
     }],
     listType: 'string'
   },
-  'labels': {
+  labels: {
     elements: [{
       label: 'Label Text',
       type:  'text',

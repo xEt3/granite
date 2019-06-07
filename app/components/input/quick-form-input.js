@@ -71,7 +71,7 @@ const QuickFormInputComponent = Component.extend({
     handleOnChange (hsva) {
       //used for color picker component if type=color
       if (this.get('model')) {
-        this.set('model.color', hsva.toRGBA());
+        this.set('model.color', hsva.toHEXA().toString());
       }
     }
   }

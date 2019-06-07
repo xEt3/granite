@@ -4,7 +4,6 @@ import { A } from '@ember/array';
 import { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
 import moment from 'moment';
-import $ from 'jquery';
 import ajaxStatus from 'granite/mixins/ajax-status';
 import modalSupport from 'granite/mixins/modal-support';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
