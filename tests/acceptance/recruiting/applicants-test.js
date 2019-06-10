@@ -157,7 +157,7 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
     assert.dom('div.pipeline__stage:nth-child(3) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isVisible();
     await click('.title-bar__control i.setting.icon');
     await new Promise(resolve => setTimeout(resolve, 500));
-    assert.dom('.title-bar__control .setting.icon + .menu.transition.visible > a.item').exists({ count: 4 });
+    assert.dom('.title-bar__control .setting.icon + .menu.transition.visible > a.item').exists({ count: 5 });
   });
 
   test('can disqualify and give a reason', async function (assert) {
@@ -205,11 +205,13 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
 
     assert.equal(application.disqualified, false, 'application is not yet disqualified');
     assert.equal(application.disqualificationReason, null, 'no dq reason yet');
-    assert.dom('div.pipeline-card__content > div.ui.bottom.attached.red.label').isNotVisible();
 
     await visit(`/account/recruiting/job-opening/${job.id}/applicant-tracking`);
+
+    assert.dom('div.pipeline-card__content > div.ui.bottom.attached.red.label').isNotVisible();
+
     await click('div.card-title-bar__controls > div.title-bar__control:nth-child(2) > i.setting.icon');
-    await click('div.card-title-bar__controls > div.title-bar__control:nth-child(2) > div.menu > a:nth-child(2)');
+    await click('div.card-title-bar__controls > div.title-bar__control:nth-child(2) > div.menu > a:nth-child(3)');
     await click('div#dq-reason > div.menu > .item:nth-child(5)');
     await click('div#modal__ats-disqualify div.actions > button.ui.green.button');
 
