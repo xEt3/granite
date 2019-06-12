@@ -3,11 +3,10 @@ import { setupApplicationTest } from 'ember-qunit';
 import authenticate from 'granite/tests/helpers/auth';
 import { visit, currentURL, click, settled, fillIn } from '@ember/test-helpers';
 
-module('Acceptance | edit company assets', function (hooks) {
+module('Acceptance | edit company asset-items', function (hooks) {
   setupApplicationTest(hooks);
 
-
-  test('editing an asset', async function (assert) {
+  test('editing an asset-item', async function (assert) {
     let myAssetCategory = server.create('asset');
     await authenticate.call(this, server);
     await visit('/account/assets');
