@@ -52,7 +52,7 @@
       </div>
     </div>
   </div>
-  <div class={{if auth.user.company.collectEEO "ui two fields"}}>
+  <div class={{if auth.user.company.collectEEO "ui two fields" "field"}}>
     <div class="field">
       <label for="job-description">Job Description</label>
       {{#ui-dropdown class="selection" selected=model.jobDescription onChange=(action (mut model.jobDescription)) as |execute mapper|}}
