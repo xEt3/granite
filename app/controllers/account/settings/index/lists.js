@@ -1,12 +1,34 @@
 import Controller from '@ember/controller';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { lists } from 'granite/config/forms/lists';
+import { computed } from '@ember/object';
 import $ from 'jquery';
 
 export default Controller.extend(addEdit, {
   queryParams: [ 'list' ],
+  modalId:     'settings__list-modal',
   list:        null,
   dirtyList:   false,
   currentItem: null,
+
+  currentForm: computed('list', function () {
+    return lists[this.get('list')];
+  }),
+
+  modelForForm: computed('currentForm.listType', 'currentItem', function () {
+    //need this bc you have to pass a model object to quick-form
+    return this.get('currentForm.listType') === 'string' ? this : this.get('currentItem');
+  }),
+
+  afterSave () {
+    if (this.get('list') === 'labels') {
+      this.get('model').forEach(item => {
+        if (!item.id) {
+          item.destroyRecord();
+        }
+      });
+    }
+  },
 
   actions: {
     async saveList () {
@@ -22,7 +44,12 @@ export default Controller.extend(addEdit, {
     openModal () {
       this.set('respondedModal', false);
 
-      $('#settings__add-edit-list-item').modal({
+      if (!this.get('currentItem')) {
+        //if we aren't editing, set initial currentItem value for modal usage
+        this.set('currentItem', this.get('currentForm.listType') === 'string' ? '' : {});
+      }
+
+      $(`#${this.get('modalId')}`).modal({
         detachable: true,
         context:    '.ember-application',
         onHidden:   () => {
@@ -31,6 +58,7 @@ export default Controller.extend(addEdit, {
             editingItem: false,
             index:       null
           });
+
           if (!this.get('respondedModal')) {
             this.send('respondModal', false);
           }
@@ -44,7 +72,7 @@ export default Controller.extend(addEdit, {
     },
 
     closeModal () {
-      $('#settings__add-edit-list-item').modal('hide');
+      $(`#${this.get('modalId')}`).modal('hide');
     },
 
     respondModal (response) {
@@ -63,6 +91,13 @@ export default Controller.extend(addEdit, {
 
     addItem () {
       let currentItem = this.get('currentItem');
+
+      if (typeof currentItem === 'object') {
+        currentItem = this.store.createRecord('label', {
+          text:  currentItem.text,
+          color: currentItem.color
+        });
+      }
 
       this.get('model').addObject(currentItem);
       this.set('dirtyList', true);

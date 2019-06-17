@@ -2,8 +2,23 @@ import Component from '@ember/component';
 import { computed, defineProperty } from '@ember/object';
 
 const QuickFormInputComponent = Component.extend({
-  classNames:        [ 'field' ],
-  classNameBindings: [ 'computedClassName', 'field.parentClass' ],
+  classNames:            [ 'field' ],
+  classNameBindings:     [ 'computedClassName', 'field.parentClass' ],
+  colorPickerComponents: {
+    palette: true,
+    preview: true,
+    opacity: false,
+    hue:     true,
+
+    interaction: {
+      hex:   true,
+      rgba:  true,
+      hsva:  true,
+      input: true,
+      clear: false,
+      save:  false
+    }
+  },
 
   init () {
     this._super(...arguments);
@@ -50,7 +65,16 @@ const QuickFormInputComponent = Component.extend({
 
   rows: computed('field.rows', function () {
     return this.get('field.rows') || '6';
-  })
+  }),
+
+  actions: {
+    handleOnChange (hsva) {
+      //used for color picker component if type=color
+      if (this.get('model')) {
+        this.set('model.color', hsva.toHEXA().toString());
+      }
+    }
+  }
 });
 
 QuickFormInputComponent.reopenClass({ positionalParams: [ 'field', 'model', 'controller' ] });

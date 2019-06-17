@@ -30,8 +30,7 @@ module('Acceptance | settings/lists', function (hooks) {
     await click('div.ui.relaxed.divided.list > a.item');
     assert.dom('div.modal > div.header').includesText('Add', 'Header says adding');
     assert.dom('div.modal button.ui.green.button').includesText('Add', 'Save button says add');
-
-    await fillIn('input#list-item-name', 'added item');
+    await fillIn('input[name="currentItem"]', 'added item');
     await click('button.ui.green.right.button');
     assert.equal(await findAll('div.ui.relaxed.divided.list > div.item').length, 13, 'Num of displayed is correct after adding');
     assert.dom('div.ui.relaxed.divided.list > .item:nth-child(14)').includesText('added item', 'newly added item is displayed');
@@ -54,11 +53,11 @@ module('Acceptance | settings/lists', function (hooks) {
 
     await visit('/account/settings/general/lists?list=dqReasons');
     await click('div.ui.relaxed.divided.list > .item:nth-child(5) > span.right.floated > a');
-    assert.dom('input#list-item-name').hasValue('Failed test', 'correct value filled in initially');
+    assert.dom('input[name="currentItem"]').hasValue('Failed test', 'correct value filled in initially');
     assert.dom('div.modal > div.header').includesText('Edit', 'Header says editing');
     assert.dom('div.modal button.ui.green.button').includesText('Edit', 'Save button says edit');
 
-    await fillIn('input#list-item-name', 'newly edited item');
+    await fillIn('input[name="currentItem"]', 'newly edited item');
     await click('div.modal button.ui.green.button');
 
     assert.dom('div.ui.relaxed.divided.list > .item:nth-child(5)').hasText('newly edited item', 'edited list item displays new text');

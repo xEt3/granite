@@ -118,6 +118,11 @@
         (action set "appInLinkSharing")
         (action openModal linkSharingModalId "linkSharing")
       ))
+      onAddLabel=(action (pipe
+        (action set "appInAddLabels")
+        (action openModal labelsModalId "addLabel")
+        (action "saveApplicationLabels")
+      ))
     }}
   {{/confirm-modal}}
 
@@ -142,4 +147,9 @@
     appInLinkSharing
     modalId=linkSharingModalId
     onResponse=(action "modalResponse" "linkSharing")}}
+
+  {{modals/ats-add-label
+    appInAddLabels
+    modalId=labelsModalId
+    onResponse=(action "modalResponse" "addLabel")}}
 </div>

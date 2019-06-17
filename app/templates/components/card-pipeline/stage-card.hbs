@@ -23,6 +23,7 @@
           <i class="setting icon"></i>
           <div class="menu">
             <a href="#" class="item" {{action onSchedule application}}><i class="calendar icon"></i> Schedule...</a>
+            <a href="#" class="item" {{action onAddLabel application}}><i class="plus icon"></i> Add/Remove labels</a>
             <a href="#" class="item" {{action onDisqualify application}}><i class="remove circle icon"></i> Disqualify candidate...</a>
             <a href="#" class="item" {{action onLinkSharing application}}><i class="globe icon"></i> Sharing...</a>
             {{#if onOnboardCandidate}}
@@ -63,6 +64,23 @@
       {{if application.manualEntry "Manual Entry" "From Quartz"}}
     </span>
   </div>
+
+  {{#if (gt application.labels.length 0)}}
+    <div class="card-content__labels">
+      {{#each (take 3 application.labels) as |label|}}
+        {{custom-label label size="mini"}}
+      {{/each}}
+      {{#if (gt application.labels.length 3)}}
+        <div class="ui custom popup top right card-content__popup-content" id={{popupId}}>
+          {{!-- THIS DIV IS HIDDEN UNTIL USED INSIDE POPUP BELOW --}}
+          {{#each (drop 3 application.labels) as |label|}}
+            {{custom-label label tagName="span" size="mini"}}
+          {{/each}}
+        </div>
+        {{ui-popup html=htmlForPopup context=".ui.main" tagName="i" class="gray-icon ellipsis horizontal icon"}}
+      {{/if}}
+    </div>
+  {{/if}}
 </div>
 
 {{#if application.employee.id}}
