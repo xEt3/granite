@@ -8,7 +8,7 @@ export default Controller.extend(addEdit, {
   transitionAfterSave: 'account.employee.index',
   transitionWithModel: true,
 
-  relationshipsChanged: computed('model.{location,department,supervisor}', 'initialRelationships.[]', function () {
+  relationshipsChanged: computed('model.{location,department,supervisor,jobDescription}', 'initialRelationships.[]', function () {
     const initialRelationships = this.get('initialRelationships');
     for (let i = 0; i < initialRelationships.length; i++) {
       if (this.get(`model.${initialRelationships[i].relationshipPath}.id`) !== initialRelationships[i].id) {

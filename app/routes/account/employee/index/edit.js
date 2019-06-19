@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 import edit from 'granite/mixins/route-abstractions/edit';
-const employeeBelongsTo = [ 'location', 'department', 'supervisor' ];
+const employeeBelongsTo = [ 'location', 'department', 'supervisor', 'jobDescription' ];
 
 export default Route.extend(edit, {
   titleToken: 'Edit information',
