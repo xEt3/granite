@@ -91,7 +91,7 @@ export default function () {
 
   let array = [ 'files', 'files/:id', 'file-assignments', 'recruiting-pipelines', 'recruiting-pipelines/:id', 'company-users/:id',
     'company-users', 'employees/:id', 'companies', 'companies/:id', 'permissions', 'action-items', 'asset-items', 'asset-items/:id',
-    'action-items/:id', 'assets', 'changes', 'histories', 'employee-issues', 'departments', 'locations',
+    'action-items/:id', 'assets', 'assets/:id', 'changes', 'histories', 'employee-issues', 'departments', 'locations',
     'payment-methods', 'comments', 'comments/:id', 'job-openings', 'jobs', 'jobs/:id', 'job-openings/:id', 'job-applications',
     'forms', 'applicant-sources', 'applicant-sources', 'manual-applicant-sources', 'applicants', 'applicants/:id',
     'job-applications/:id', 'events' ];
