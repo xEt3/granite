@@ -24,7 +24,8 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
   confirmDisqualifyModalId: 'modal__ats-confirm-disqualify',
   disqualifyModalId:        'modal__ats-disqualify',
   schedulerModalId:         'modal__ats-scheduler',
-  linkSharingModalId:       'model__ats-link-sharing',
+  linkSharingModalId:       'modal__ats-link-sharing',
+  labelsModalId:            'modal__ats-labels',
   showDisqualified:         false,
 
   pendingApplications: computed.filter('model.applications', function (app) {
@@ -185,6 +186,10 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     unSetHire () {
       // noop for now
       return;
+    },
+
+    async saveApplicationLabels () {
+      this.saveModel(await this.get('appInAddLabels'));
     },
 
     onNotify (type, msg) {

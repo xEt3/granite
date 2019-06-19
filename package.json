@@ -99,6 +99,7 @@
     "ember-localforage-adapter": "3.0.0-beta4",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-metrics": "^0.13.0",
+    "ember-pickr": "^1.2.3",
     "ember-promise-helpers": "1.0.6",
     "ember-quill": "0.0.15",
     "ember-qunit": "^3.4.1",

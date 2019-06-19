@@ -36,5 +36,15 @@ export default Route.extend(refreshable, {
       employee:         model.employee,
       assignableAssets: model.assignableAssets
     });
+  },
+
+  actions: {
+    willTransition () {
+      let modalNode = document.querySelector('.ui.modal.new-asset');
+
+      if (modalNode && modalNode.remove) {
+        modalNode.remove();
+      }
+    }
   }
 });

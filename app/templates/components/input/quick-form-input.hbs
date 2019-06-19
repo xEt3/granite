@@ -109,6 +109,13 @@
       {{/if}}
     </button>
   {{/input/document-selection-modal}}
+{{else if (eq field.type "color")}}
+  {{color-picker
+    components=colorPickerComponents
+    comparison=false
+    onChange=(action "handleOnChange")
+  }}
+  <span class="ui small text">(Pick a color)</span>
 {{else}}
   {{validated-input
     type=field.type

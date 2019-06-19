@@ -62,7 +62,7 @@ export default Controller.extend({
         backgroundRGB = backdrop.match(filterNumbers),
         [ r, g, b ] = backgroundRGB.map(Number);
 
-    return (r * 299 + g * 587 + b * 114) / 1000 > 150 ? true : false;
+    return (r * 299 + g * 587 + b * 114) / 1000 > 123 ? true : false;
   }),
 
   backdrop: computed('auth.user.company.rgbPalette', 'currentPath', function () {

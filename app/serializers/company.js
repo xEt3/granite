@@ -4,7 +4,10 @@ import serializeObject from '../utils/serialize-object';
 import expandObject from '../utils/expand-serialized-object';
 
 export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
-  attrs: { correctiveActionSeverities: { embedded: 'always' } },
+  attrs: {
+    correctiveActionSeverities: { embedded: 'always' },
+    labels:                     { embedded: 'always' }
+  },
 
   normalize (modelClass, hash) {
     if (modelClass.modelName === 'company') {

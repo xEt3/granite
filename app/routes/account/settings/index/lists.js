@@ -16,6 +16,11 @@ export default Route.extend({
     if (params.list === 'dqReasons') {
       list = company.get('disqualificationReasons');
     }
+
+    if (params.list === 'labels') {
+      list = company.get('labels');
+    }
+
     return hash({
       list,
       company

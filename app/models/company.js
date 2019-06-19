@@ -51,6 +51,7 @@ export default Model.extend(Validations,  {
   firstStepsCompleted:   attr('array', { defaultValue: () => A() }),
 
   disqualificationReasons: attr('array'),
+  labels:                  hasMany('label'),
 
   urlPrefix:         attr('string'),
   collectEEO:        attr('boolean'),
