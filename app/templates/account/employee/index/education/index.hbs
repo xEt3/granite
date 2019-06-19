@@ -6,7 +6,7 @@
 
     <div class="right aligned text floated menu__actions">
       {{#ui-dropdown class="right floated top pointing inline"}}
-        <h2 class="ui inline header"><a href="#" id="add-employee-trigger"><i class="plus icon"></i></a></h2>
+        <h2 class="ui inline header"><a href="#" id="add-education"><i class="plus icon"></i></a></h2>
         <div class="menu">
           <h6 class="header">Add a new...</h6>
           {{#link-to "account.employee.index.education.add" (query-params type="certification") class="item"}}
@@ -15,37 +15,45 @@
               <i class="corner add icon"></i>
             </i> Certification
           {{/link-to}}
-          {{#link-to "account.employee.index.education.add" (query-params type="training") class="item"}}
+          {{#link-to "account.employee.index.education.add" (query-params type="training assignment") class="item"}}
             <i class="icons">
               <i class="graduation cap icon"></i>
               <i class="corner add icon"></i>
             </i> Training Assignment
           {{/link-to}}
-          {{#link-to "account.employee.index.education.add" (query-params type="education") class="item"}}
+          {{!-- {{#link-to "account.employee.index.education.add" (query-params type="education") class="item"}}
             <i class="icons">
               <i class="text file icon"></i>
               <i class="corner add icon"></i>
             </i> Education Document
-          {{/link-to}}
+          {{/link-to}} --}}
         </div>
       {{/ui-dropdown}}
     </div>
   </hgroup>
   <div class="ui divider"></div>
 
-  <div class="ui divided link items">
-    {{!-- {{#each model as |assignment|}}
-      {{list-item/employee-document-item
-        assignment=assignment
-        onNotify=(route-action "notify")
-      }}
+  <h2 class="header__list">
+    <i class="id card icon"></i> Certifications
+  </h2>
+  <div class="ui relaxed flex link list">
+    {{#each model.certifications as |record|}}
+      {{list-item/certification-item record}}
     {{else}}
-      <h2 class="ui center aligned header">No file assignments available.</h2>
-    {{/each}} --}}
+      <h3>No certifications available.</h3>
+    {{/each}}
   </div>
 
-  {{!-- {{elements/x-pagination
-    page=(readonly page)
-    pages=(readonly pages)
-    onchange=(action (mut page))}} --}}
+  <div class="ui divider"></div>
+
+  <h2 class="header__list">
+    <i class="graduation icon"></i> Training Assignments
+  </h2>
+  <div class="ui list">
+    {{#each model.trainingAssignments as |record|}}
+      {{list-item/training-assignment record}}
+    {{else}}
+      <h3>No training assignments available.</h3>
+    {{/each}}
+  </div>
 </div>

@@ -113,6 +113,10 @@ Router.map(function () {
         this.route('visual-id');
         this.route('education', function () {
           this.route('add');
+          this.route('certification', { path: '/certification/:certification_id' }, function () {
+            this.route('edit');
+            this.route('renewal');
+          });
         });
       });
       this.route('onboard', function () {

@@ -34,9 +34,13 @@ const QuickFormInputComponent = Component.extend({
     return classN || (label || '').replace(/[^\s\w]/g, '').replace(/\s/g, '-').toLowerCase();
   }),
 
-  baseInputClass: computed('field.type', function () {
+  baseInputClass: computed('field.{removeBaseClass,type}', function () {
     let t = this.get('field.type'),
         ic;
+
+    if (this.get('field.removeBaseClass')) {
+      return '';
+    }
 
     switch (t) {
     case 'select':

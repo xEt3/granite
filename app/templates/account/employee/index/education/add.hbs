@@ -1,12 +1,17 @@
 <div class="ui raised padded segment container clearfix animated fadeInUp">
-  <h1 class="ui header">
-    Add {{type}} for {{employee.firstName}}
+  <h1 class="ui header titlecased text">
+    Add a new {{type}} for {{employee.firstName}}
   </h1>
 
   <div class="ui divider"></div>
 
-  {{!-- {{elements/x-pagination
-    page=(readonly page)
-    pages=(readonly pages)
-    onchange=(action (mut page))}} --}}
+  {{#quick-form
+    currentForm.elements
+    model
+    this
+    submitClass="large green fluid"
+    onsubmit=(action "save")
+  }}
+    Add {{type}}
+  {{/quick-form}}
 </div>
