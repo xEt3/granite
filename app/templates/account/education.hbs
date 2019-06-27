@@ -1,1 +1,37 @@
-{{outlet}}
+<div class="ui container">
+  <div class="ui very padded raised segment animated fadeInUp">
+    <h2 class="ui header">
+      Training Burndown
+      <div class="right floated">
+        <div class="field">
+          <label for="graph-granularity" class="sr-only">Amount of data to show on graph</label>
+          {{#ui-dropdown
+            id="graph-granularity"
+            class="selection"
+            selected=granularity
+            onChange=(action (mut granularity))
+            as |execute mapper|}}
+            <div class="default text">Granularity</div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              {{#each granularities as |granularityOption|}}
+                <div class="item" data-value={{map-value mapper granularityOption.value}}>
+                  {{granularityOption.label}}
+                </div>
+              {{/each}}
+            </div>
+          {{/ui-dropdown}}
+        </div>
+      </div>
+    </h2>
+
+    {{#if model}}
+      {{ember-chart
+        type="line"
+        data=model.data
+        options=model.options}}
+    {{else}}
+      <h2 class="light text center aligned">Not enough recent data to show your summary.</h2>
+    {{/if}}
+  </div>
+</div>
