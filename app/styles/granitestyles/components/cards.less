@@ -1,0 +1,15 @@
+.ui.cards > .card, .ui.card {
+  box-shadow: 2px 2px 6px fade(@gray-light, 80%);
+  border: none;
+
+  &:hover {
+    box-shadow:
+      3px 5px 8px fade(@gray-light, 60%),
+      0 0 0 1px @granite-blue;
+  }
+}
+
+.ui.card > .ui.bottom.attached.progress {
+  bottom: 0;
+  top: auto;
+}
