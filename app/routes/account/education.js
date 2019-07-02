@@ -8,7 +8,8 @@ export default Route.extend({
   queryParams: { granularity: { refreshModel: true } },
 
   async model (params) {
-    let range = params.granularity;
+    const range = params.granularity,
+          isShortRange = [ 'day', 'week' ].find(str => range.indexOf(str) > -1);
 
     let burndown = await this.ajax.request('/api/v1/training-assignments', {
       data: {
@@ -52,7 +53,7 @@ export default Route.extend({
             mode:      'index',
             callbacks: {
               title (set) {
-                return moment((set[0] || {}).xLabel).format('MMM YYYY');
+                return moment((set[0] || {}).xLabel).format(isShortRange ? 'M/D/YY' : 'MMM YYYY');
               }
             }
           },
@@ -67,7 +68,7 @@ export default Route.extend({
             xAxes: [{
               type:         'time',
               distribution: 'series',
-              time:         { unit: 'month' },
+              time:         { unit: isShortRange ? 'day' : 'month' },
               ticks:        {
                 source:   'data',
                 autoSkip: true
