@@ -3,24 +3,30 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | list-item/educate/employee-metric', function(hooks) {
+module('Integration | Component | list-item/educate/employee-metric', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  test('it displays properly', async function (assert) {
+    let fakeData = {
+      fullName:  'Bob Rossy',
+      jobTitle:  'Director of happy trees',
+      completed: 2,
+      assigned:  1,
+      total:     3
+    };
 
-    await render(hbs`{{list-item/educate/employee-metric}}`);
+    this.set('model', fakeData);
 
-    assert.equal(this.element.textContent.trim(), '');
+    await render(hbs`{{list-item/educate/employee-metric model}}`);
 
-    // Template block usage:
-    await render(hbs`
-      {{#list-item/educate/employee-metric}}
-        template block text
-      {{/list-item/educate/employee-metric}}
-    `);
+    assert.dom('.educate__employee-metric').exists();
+    assert.dom(this.element, '.content .employee-metric__name').includesText(fakeData.fullName);
+    assert.dom(this.element, '.content .employee-metric__job-title').includesText(fakeData.jobTitle);
+    assert.dom(this.element, '.content .employee-metric__job-completed').includesText('2 of 3');
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.dom('.employee-metric__prog').hasAttribute(
+      'data-percent',
+      `${Math.round(fakeData.completed / fakeData.total  * 100)}`
+    );
   });
 });
