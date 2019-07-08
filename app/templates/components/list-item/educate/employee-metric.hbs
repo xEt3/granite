@@ -1,0 +1,16 @@
+<div class="content">
+  {{#link-to "account.employee.index.education" model._id class="header employee-metric__name"}}
+    {{model.fullName}}
+  {{/link-to}}
+  <div class="meta">
+    <span class="employee-metric__job-title">{{model.jobTitle}}</span>
+  </div>
+</div>
+
+<div class="extra content employee-metric__completed">
+  <i class="check icon"></i>
+  {{model.completed}} of {{model.total}} assignments completed
+</div>
+{{#ui-progress percent=percentCompleted class="teal indicating bottom attached employee-metric__prog"}}
+  <div class="bar"></div>
+{{/ui-progress}}
