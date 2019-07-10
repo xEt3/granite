@@ -1,9 +1,10 @@
 workflow "ZH Automation - PR Manage" {
   on = "pull_request"
-  resolves = ["Call Zenhub Automations"]
+  resolves = ["call_zh_automations"]
 }
 
-action "Call Zenhub Automations" {
-  uses = "james1x0/zh-automations@master"
+action "call_zh_automations" {
+  uses = "james1x0/zenhub-automations@master"
   secrets = ["GITHUB_TOKEN"]
 }
+
