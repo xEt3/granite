@@ -11,5 +11,22 @@ action "call_zh_automations" {
   ]
   env = {
     PR_COLUMN = "5c92522983c46e630dc18373"
+    INPROG_COLUMN = "5c92522983c46e630dc18372"
+    REVIEW_COLUMN = "5c92522983c46e630dc18373"
+  }
+}
+
+workflow "ZH Automation - Branch Manage" {
+  on = "create"
+  resolves = ["james1x0/zenhub-automations@zh-gh-experimentation"]
+}
+
+action "james1x0/zenhub-automations@zh-gh-experimentation" {
+  uses = "james1x0/zenhub-automations@zh-gh-experimentation"
+  secrets = ["GITHUB_TOKEN", "ZENHUB_API_KEY"]
+  env = {
+    PR_COLUMN = "5c92522983c46e630dc18373"
+    REVIEW_COLUMN = "5c92522983c46e630dc18373"
+    INPROG_COLUMN = "5c92522983c46e630dc18372"
   }
 }
