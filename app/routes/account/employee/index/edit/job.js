@@ -42,7 +42,8 @@ export default Route.extend({
       departments:     model.departments,
       locations:       model.locations,
       company:         model.company,
-      jobDescriptions: model.jobDescriptions
+      jobDescriptions: model.jobDescriptions,
+      initialHireDate: model.employee.hireDate
     });
   }
 });
