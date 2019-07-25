@@ -54,18 +54,15 @@
     {{validated-input model=model valuePath="employeeNumber" placeholder="Employee Number" id="employee-number"}}
   </div>
 </div>
-
 <div class="two fields">
   <div class="field">
-    {{#ui-calendar class="field" type="date" startMode="year" onChange=(action (mut model.dateOfBirth))}}
-      <label for="ui-calendar-date-only">Birth Date</label>
-      <div class="ui calendar" id="ui-calendar-date-only">
-        <div class="ui input left icon">
-          <i class="calendar icon"></i>
-          <input type="text" value={{time initialDateOfBirth 'MMMM D, YYYY'}} placeholder="Select or type a date">
-        </div>
-      </div>
-    {{/ui-calendar}}
+    {{ui-calendar
+      class="field"
+      startMode="year"
+      type="date"
+      dateValue=model.dateOfBirth
+      label="Birth Date"
+      onChange=(action (mut model.dateOfBirth))}}
   </div>
   <div class="field">
     {{input/social-security value=model.ssn}}
