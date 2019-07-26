@@ -3,15 +3,13 @@
     <label for="job-title">Job Title</label>
     {{validated-input type="text" model=model valuePath="jobTitle" placeholder="Job Title" id="job-title"}}
   </div>
-  {{#ui-calendar class="field" type="date" startMode="year" onChange=(action (mut model.hireDate))}}
-    <label for="ui-calendar-date-only">Hire Date</label>
-    <div class="ui calendar" id="ui-calendar-date-only">
-      <div class="ui input left icon">
-        <i class="calendar icon"></i>
-        <input type="text" value={{time initialHireDate 'MMMM D, YYYY'}} placeholder="Select or type a date">
-      </div>
-    </div>
-  {{/ui-calendar}}
+  {{ui-calendar
+    class="field"
+    type="date"
+    startMode="year"
+    label="Hire Date"
+    dateValue=model.hireDate
+    onChange=(action (mut model.hireDate))}}
 </div>
 <div class="three fields">
   <div class="field">

@@ -1,12 +1,14 @@
 import Controller from '@ember/controller';
 import { A } from '@ember/array';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { htmlSafe } from '@ember/string';
 
 export default Controller.extend(addEdit, {
   addedTodos:          A(),
   transitionAfterSave: 'account.action-item',
   transitionWithModel: true,
   modelIdentifier:     'slug',
+  calendarLabel:       htmlSafe('<i class="clock icon"></i> Assign a Due Date'),
 
   _afterSave () {
     this.get('addedTodos').forEach(t => {

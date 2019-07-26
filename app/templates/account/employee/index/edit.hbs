@@ -24,8 +24,7 @@
     When would you like to date these changes?
   </div>
   <div class="content">
-    {{#ui-calendar class="field" type="date" inline=true onChange=(action (mut model.effectiveOn))}}
-    {{/ui-calendar}}
+    {{ui-calendar class="field" type="date" inline=true onChange=(action (mut model.effectiveOn))}}
   </div>
   <div class="actions">
     <button class="ui red button" {{action "respondEffectiveDateModal" false}}>

@@ -6,12 +6,11 @@
         <strong>Start</strong>
       </label>
     </p>
-    {{#ui-calendar
+    {{ui-calendar
       class="field"
       startMode="month"
       inline=true
       onChange=(action (pipe (action (mut start)) (action onStartChange start)))}}
-    {{/ui-calendar}}
   </div>
 
   <div class="ui column center aligned text">
