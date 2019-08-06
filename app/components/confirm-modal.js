@@ -27,6 +27,9 @@ export default Component.extend({
       context:    '.ember-application',
       detachable: true,
       onHidden:   () => {
+        if (this.get('isDestroyed')) {
+          return;
+        }
         if (!this.get('responded')) {
           this.send('respond', false);
         }
