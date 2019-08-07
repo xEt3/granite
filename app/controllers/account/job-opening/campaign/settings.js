@@ -166,10 +166,6 @@ export default Controller.extend(addEdit, {
           }
         }
       }).modal('show');
-      return new Promise((resolveStage, rejectStage) => this.setProperties({
-        resolveStage,
-        rejectStage
-      }));
     },
 
     addStage () {
@@ -191,7 +187,6 @@ export default Controller.extend(addEdit, {
     },
 
     respondStageAddition (response) {
-      this.get(response ? 'resolveStage' : 'rejectStage')(response);
       this.set('respondedStageAddition', true);
       $('#modal__add-stage').modal('hide');
       let currentStage = this.get('currentStage');

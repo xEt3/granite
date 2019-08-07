@@ -72,11 +72,9 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
     assert.dom('label[for="additional-emails-to-send-notifications"]').isVisible();
     assert.dom('#additional-emails-to-send-notifications > input').isVisible();
     assert.dom('label[for="start-date-optional-otherwise-immediate"]').isVisible();
-    assert.dom('#start-date-optional-otherwise-immediate input').isVisible();
+    assert.dom('div.ui.calendar.field > div > input').isVisible({ count: 3 }, 'All 3 calendar instances are visible');
     assert.dom('label[for="end-date-optional-otherwise-until-filled"]').isVisible();
-    assert.dom('#end-date-optional-otherwise-until-filled input').isVisible();
     assert.dom('label[for="due-on-optional"]').isVisible();
-    assert.dom('#due-on-optional input').isVisible();
     assert.dom('label[for="positions-to-fill"]').isVisible();
     assert.dom('#positions-to-fill input').hasValue(`${campaign.positions}`);
     assert.dom('label[for="number-of-days-to-delay-outside-sources"]').isNotVisible();
@@ -99,10 +97,10 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
     await click('#send-notifications-to > input');
     await click('#send-notifications-to div.item.selected');
     assert.dom('#send-notifications-to > a.ui.label').isVisible();
-    await click('#start-date-optional-otherwise-immediate input[type="text"]');
-    await click('#start-date-optional-otherwise-immediate td:nth-child(1)');
-    await click('#end-date-optional-otherwise-until-filled input[type="text"]');
-    await click('#end-date-optional-otherwise-until-filled td.link.today.focus');
+    await click('div.ui.calendar.field input[type="text"]', { count: 1 });
+    await click('div.ui.calendar.field td:nth-child(1)', { count: 1 });
+    await click('div.ui.calendar.field input[type="text"]', { count: 2 });
+    await click('div.ui.calendar.field td.link.today.focus', { count: 2 });
     await click('#job-type > input');
     await click('#job-type div.item.selected');
     assert.dom('#job-type > div.text').hasText('Full Time');
