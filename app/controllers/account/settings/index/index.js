@@ -50,7 +50,7 @@ export default Controller.extend(addEdit, fileSupport, {
   }, {
     label:       'Zipcode',
     type:        'text',
-    path:        'addressZipCode',
+    path:        'addressZipcode',
     parentClass: 'four wide'
   }, {
     label:       'Timezone',

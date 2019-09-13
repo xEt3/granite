@@ -14,7 +14,7 @@ const fieldMap = {
   addressLine1:      '#street-address input',
   addressLine2:      '#suite-number input',
   addressCity:       '#city input',
-  addressZipCode:    '#zipcode input',
+  addressZipcode:    '#zipcode input',
   urlPrefix:         '#url-prefix input'
 };
 
@@ -39,7 +39,7 @@ module('Acceptance | signup', function (hooks) {
       addressLine2:      faker.random.number(),
       addressCity:       faker.address.city(),
       state:             faker.address.state(),
-      addressZipCode:    faker.random.number({
+      addressZipcode:    faker.random.number({
         min: 11111,
         max: 99999
       }),

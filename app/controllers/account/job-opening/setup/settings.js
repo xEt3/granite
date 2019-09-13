@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 import { computed, set } from '@ember/object';
+import { Promise } from 'rsvp';
 import { jobTypes } from 'granite/config/statics';
 import { inject as service } from '@ember/service';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';

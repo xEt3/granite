@@ -91,10 +91,11 @@ export default function () {
 
   let array = [ 'files', 'files/:id', 'file-assignments', 'recruiting-pipelines', 'recruiting-pipelines/:id', 'company-users/:id',
     'company-users', 'employees/:id', 'companies', 'companies/:id', 'permissions', 'action-items', 'asset-items', 'asset-items/:id',
-    'action-items/:id', 'assets', 'assets/:id', 'changes', 'histories', 'employee-issues', 'departments', 'locations',
+    'action-items/:id', 'assets', 'assets/:id', 'changes', 'histories', 'departments', 'locations',
     'payment-methods', 'comments', 'comments/:id', 'job-openings', 'jobs', 'jobs/:id', 'job-openings/:id', 'job-applications',
     'forms', 'applicant-sources', 'applicant-sources', 'manual-applicant-sources', 'applicants', 'applicants/:id',
-    'job-applications/:id', 'events', 'certifications', 'training-assignments' ];
+    'job-applications/:id', 'events', 'certifications', 'training-assignments', 'corrective-actions', 'corrective-actions/:id',
+    'employee-issues/:id', 'employee-issues' ];
   let verbs = [ 'get', 'put', 'post', 'del' ];
 
   array.forEach((route)=>{
@@ -173,6 +174,10 @@ export default function () {
       return [];
     }
     return db.jobOpenings.find(request.params.id);
+  });
+
+  this.get('employee-issues', function (db, request) {
+    return request.queryParams.select === 'type' ? [ 'Performance' ] : db.employeeIssues.all();
   });
 
   this.get('applicants/', function (db, request) {
