@@ -10,6 +10,7 @@ export default Controller.extend(addEdit, del, {
   auth:                  service(),
   transitionAfterDelete: 'account.employee.index.counseling.issue',
   transitionAfterSave:   false,
+  transitionWithModel:   false,
 
   followupForm: computed(() => [{
     label: 'Is the issue resolved?',

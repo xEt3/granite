@@ -15,7 +15,7 @@ export default Model.extend(Validations,  {
   addressLine2:   attr('string'),
   addressCity:    attr('string'),
   addressState:   attr('string'),
-  addressZipCode: attr('string'),
+  addressZipcode: attr('string'),
 
   contactPhone:      attr('string'),
   contactExtension:  attr('string'),
