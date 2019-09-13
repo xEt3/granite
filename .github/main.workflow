@@ -4,7 +4,7 @@ workflow "ZH Automation - PR Manage" {
 }
 
 action "call_zh_automations" {
-  uses = "james1x0/zenhub-automations@zh-gh-experimentation"
+  uses = "james1x0/zenhub-automations@master"
   secrets = [
     "GITHUB_TOKEN",
     "ZENHUB_API_KEY",
@@ -18,11 +18,11 @@ action "call_zh_automations" {
 
 workflow "ZH Automation - Branch Manage" {
   on = "create"
-  resolves = ["james1x0/zenhub-automations@zh-gh-experimentation"]
+  resolves = ["james1x0/zenhub-automations@master"]
 }
 
-action "james1x0/zenhub-automations@zh-gh-experimentation" {
-  uses = "james1x0/zenhub-automations@zh-gh-experimentation"
+action "james1x0/zenhub-automations@master" {
+  uses = "james1x0/zenhub-automations@master"
   secrets = ["GITHUB_TOKEN", "ZENHUB_API_KEY"]
   env = {
     PR_COLUMN = "5c92522983c46e630dc18373"
