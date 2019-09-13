@@ -19,7 +19,8 @@ export default Model.extend({
   creator:  belongsTo('employee'),
   employee: belongsTo('employee'),
 
-  created: attr('date', {
+  documentUploadedOn: attr('date'),
+  created:            attr('date', {
     defaultValue () {
       return new Date();
     }
