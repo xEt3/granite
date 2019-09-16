@@ -104,13 +104,13 @@ module('Acceptance | employees', function (hooks) {
     });
 
     for (let i = 1; i <= 2; i++) {
-      await click(`div:nth-child(${i}) > div#ui-calendar-date-only > div > input`);
-      assert.dom(`div:nth-child(${i}) > div#ui-calendar-date-only > div > div`).hasClass('active');
+      await click(`div.ui.calendar.field:nth-child(${i}) > div.ui.input > input`);
+      assert.dom(`div.ui.calendar.field:nth-child(${i}) > div > div`).hasClass('active');
       await new Promise(resolve => setTimeout(resolve, 500));
-      await click(`div:nth-child(${i}) > div#ui-calendar-date-only > div > div > table > tbody > tr:nth-child(3) > td.link:nth-child(${i + 1})`);
-      await click(`div:nth-child(${i}) > div#ui-calendar-date-only tr:nth-child(1) > td.link:nth-child(${i + 1})`);
-      await click(`div:nth-child(${i}) > div#ui-calendar-date-only tr:nth-child(2) > td.link:nth-child(2)`);
-      assert.dom(`div:nth-child(${i}) > div#ui-calendar-date-only > div > input[type="text"]`).hasValue(`${i === 1 ? 'February 5, 2018' : 'March 4, 2019'}`);
+      await click(`div.ui.calendar.field:nth-child(${i}) > div > div > table > tbody > tr:nth-child(3) > td.link:nth-child(${i + 1})`);
+      await click(`div.ui.calendar.field:nth-child(${i}) tr:nth-child(1) > td.link:nth-child(${i + 1})`);
+      await click(`div.ui.calendar.field:nth-child(${i}) tr:nth-child(2) > td.link:nth-child(2)`);
+      assert.dom(`div.ui.calendar.field:nth-child(${i}) > div > input[type="text"]`).hasValue(`${i === 1 ? 'February 5, 2018' : 'March 4, 2019'}`);
     }
 
     await click('.remove.icon');

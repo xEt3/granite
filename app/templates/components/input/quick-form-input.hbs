@@ -62,21 +62,14 @@
     onChange=(action (mut value))}}
 {{else if (eq field.type "date")}}
   {{#if field.inputAttrs.inline}}
-    {{#ui-calendar
+    {{ui-calendar
       class=inputClass type="date" inline=true onChange=(action (mut value))}}
-    {{/ui-calendar}}
   {{else}}
-    {{#ui-calendar
+    {{ui-calendar
       type="date"
       class=inputClass
+      dateValue=initialValue
       onChange=(action (mut value))}}
-      <div class="ui calendar" id={{computedClassName}}>
-        <div class="ui input left icon">
-          <i class="calendar icon"></i>
-          <input type="text" value={{initialValue}} placeholder="Type In Or Select A Date">
-        </div>
-      </div>
-    {{/ui-calendar}}
   {{/if}}
 {{else if (eq field.type "radio")}}
   <div class="grouped inline fields">

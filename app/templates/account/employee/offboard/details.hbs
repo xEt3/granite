@@ -2,15 +2,12 @@
   <h2 class="ui horizontal divider header">Employee Details</h2>
   <div class="content">
     <div class="field">
-      {{#ui-calendar class="field" type="date" onChange=(action (mut model.terminatedOn))}}
-        <label for="termination-date-calendar">When will this employee be terminated?</label>
-        <div class="ui calendar" id="termination-date-calendar">
-          <div class="ui input left icon">
-            <i class="calendar icon"></i>
-            <input type="text" value={{model.terminatedOn}} placeholder="Type In Or Select A Date">
-          </div>
-        </div>
-      {{/ui-calendar}}
+      {{ui-calendar
+        class="field"
+        type="date"
+        label="When will this employee be terminated?"
+        dateValue=model.terminatedOn
+        onChange=(action (mut model.terminatedOn))}}      
     </div>
 
     <div class="two fields">

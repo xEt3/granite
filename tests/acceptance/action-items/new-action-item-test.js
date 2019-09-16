@@ -22,7 +22,7 @@ module('Acceptance | new action items', function (hooks) {
     assert.dom('input#action-item-title').isVisible();
     assert.dom('div:nth-child(2) > textarea').isVisible();
     assert.dom('div.field.ui.calendar.ember-view > label').hasText('Assign a Due Date');
-    assert.dom('div#action-item-due-date input[type="text"]').isVisible();
+    assert.dom('div.ui.calendar.field input[type="text"]').isVisible();
     assert.dom('div:nth-child(5) > label').hasText('Priority');
     assert.dom('label > span').hasText('Prerequisites');
     assert.dom('span > span.irs').isVisible();
@@ -44,10 +44,10 @@ module('Acceptance | new action items', function (hooks) {
     await visit('/account/projects/new');
     await fillIn('input#action-item-title', 'check the fridge');
     await fillIn('div:nth-child(2) > textarea', 'oh snap I am full');
-    await fillIn('div#action-item-due-date input[type="text"]', 'September 18, 2178');
+    await fillIn('div.ui.calendar.field input[type="text"]', 'September 18, 2178');
     assert.dom('input#action-item-title').hasValue('check the fridge');
     assert.dom('div:nth-child(2) > textarea').hasValue('oh snap I am full');
-    assert.dom('div#action-item-due-date input[type="text"]').hasValue('September 18, 2178');
+    assert.dom('div.ui.calendar.field input[type="text"]').hasValue('September 18, 2178');
     await click('form:nth-child(12) > button');
     await settled();
     assert.equal(currentURL(), '/account/project/check-the-fridge');

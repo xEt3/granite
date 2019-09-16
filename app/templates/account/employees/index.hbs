@@ -54,24 +54,23 @@
 
     {{#filter.section "Hire Date" resets=(array "hireDateStart" "hireDateEnd")}}
       {{#filter.control "hireDate" (or hireDateStart hireDateEnd) class="two fields"}}
-        {{#ui-calendar class="ui field" type="date" container="body" startMode="year" onChange=(action (mut hireDateStart))}}
-          <label for="ui-calendar-date-only">Start Date</label>
-          <div class="ui calendar" id="ui-calendar-date-only">
-            <div class="ui input left icon">
-              <i class="calendar icon"></i>
-              <input type="text" value={{if hireDateStart (time hireDateStart "MMMM D, YYYY") hireDateStart}} placeholder="Select or type a date">
-            </div>
-          </div>
-        {{/ui-calendar}}
-        {{#ui-calendar class="ui field" type="date" container="body" startMode="year" onChange=(action (mut hireDateEnd))}}
-          <label for="ui-calendar-date-only">End Date</label>
-          <div class="ui calendar" id="ui-calendar-date-only">
-            <div class="ui input left icon">
-              <i class="calendar icon"></i>
-              <input type="text" value={{if hireDateEnd (time hireDateEnd "MMMM D, YYYY") hireDateEnd}} placeholder="Select or type a date">
-            </div>
-          </div>
-        {{/ui-calendar}}
+        {{ui-calendar
+          class="ui field"
+          type="date"
+          container="body"
+          startMode="year"
+          label="Start Date"
+          dateValue=hireDateStart
+          onChange=(action (mut hireDateStart))}}
+
+        {{ui-calendar
+          class="ui field"
+          type="date"
+          container="body"
+          startMode="year"
+          label="End Date"
+          dateValue=hireDateEnd
+          onChange=(action (mut hireDateEnd))}}
       {{/filter.control}}
     {{/filter.section}}
 

@@ -137,8 +137,7 @@
     When should "{{model.title}}" be due?
   </div>
   <div class="content">
-    {{#ui-calendar class="field" type="date" inline=true onChange=(action (mut model.delayedUntil))}}
-    {{/ui-calendar}}
+    {{ui-calendar class="field" type="date" inline=true onChange=(action (mut model.delayedUntil))}}
   </div>
   <div class="actions">
     <button class="ui red button" {{action "respondDelayModal" false}}>

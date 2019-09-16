@@ -1,15 +1,13 @@
 <form class="ui form" {{action "saveAndContinue" on="submit"}}>
   <h2 class="ui horizontal divider header">Employee Information</h2>
   {{#auto-focus}}
-    {{#ui-calendar class="field" type="date" startMode="year" onChange=(action (mut model.dateOfBirth))}}
-      <label for="ui-calendar-date-only">Birth Date</label>
-      <div class="ui calendar" id="ui-calendar-date-only">
-        <div class="ui input left icon">
-          <i class="calendar icon"></i>
-          <input type="text" value={{model.dateOfBirth}} placeholder="Type In Or Select A Date">
-        </div>
-      </div>
-    {{/ui-calendar}}
+    {{ui-calendar
+      class="field"
+      type="date"
+      startMode="year"
+      label="Birth Date"
+      dateValue=model.dateOfBirth
+      onChange=(action (mut model.dateOfBirth))}}
   {{/auto-focus}}
   <h3 class="ui horizontal header divider section">
     <i class="grey marker icon"></i>
