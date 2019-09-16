@@ -9,9 +9,11 @@
         {{#link-to "account.anatomy.departments.index" class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
       {{else}}
         {{#link-to "account.anatomy.departments.index.new" class="right floated"}}
-          {{#ui-popup tagName="span" content="Add a department"}}
-            <i class="plus icon"></i>
-          {{/ui-popup}}
+          {{ember-tooltip
+            side="left"
+            popperContainer="body"
+            text="Add a department"}}
+          <i class="plus icon"></i>
         {{/link-to}}
       {{/liquid-if}}
     </h3>

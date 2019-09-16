@@ -1,14 +1,30 @@
 <h3 class="ui header">
   {{#liquid-if (or addingAsset editAsset)}}
-    {{#link-to "account.asset.index" class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
+    {{#link-to "account.asset.index" class="right floated text-danger"}}
+      {{ember-tooltip
+        side="left"
+        popperContainer="body"
+        text="Cancel"}}
+      <i class="remove icon"></i>
+    {{/link-to}}
   {{else}}
     <div class="right floated">
       {{#if model}}
-        {{#ui-popup tagName="span" content=popupContent}}
-          <a href="#" {{action "toggleProperty" "expandAttributes"}}><i class="eye {{if expandAttributes "slash"}} icon"></i></a>
-        {{/ui-popup}}
+        <a href="#" {{action "toggleProperty" "expandAttributes"}}>
+          {{ember-tooltip
+            side="left"
+            popperContainer="body"
+            text=(if expandAttributes "Hide all stock attributes" "Show all stock attributes")}}
+          <i class="eye {{if expandAttributes "slash"}} icon"></i>
+        </a>
       {{/if}}
-      {{#link-to "account.asset.index.new"}}<i class="plus icon"></i>{{/link-to}}
+      {{#link-to "account.asset.index.new"}}
+        {{ember-tooltip
+          side="left"
+          popperContainer="body"
+          text="Add an asset stock item"}}
+        <i class="plus icon"></i>
+      {{/link-to}}
     </div>
   {{/liquid-if}}
 </h3>

@@ -17,10 +17,13 @@
 
     <div class="field">
       <label for="action-item-prerequisites">
-        {{#ui-popup tagName="span" content="Prerequisites indicate which projects need to be completed before this project can be completed."}}
-          Prerequisites
-          <i class="right floated info icon"></i>
-        {{/ui-popup}}
+        {{ember-tooltip
+          targetId="it__prerequisites"
+          popperContainer="body"
+          side="left"
+          text="Prerequisites indicate which projects need to be completed before this project can be completed."}}
+        Prerequisites
+        <i class="right floated info icon" id="it__prerequisites"></i>
       </label>
       {{#if actionItems}}
         {{#ui-dropdown class="fluid search multiple selection" id="action-item-prerequisites" selected=model.prerequisites onChange=(action (mut model.prerequisites)) as |execute mapper|}}

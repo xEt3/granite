@@ -9,9 +9,11 @@
         {{#link-to "account.anatomy.locations.index" class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
       {{else}}
         {{#link-to "account.anatomy.locations.index.new" class="right floated"}}
-          {{#ui-popup tagName="span" content="Add a location"}}
-            <i class="plus icon"></i>
-          {{/ui-popup}}
+          {{ember-tooltip
+            side="left"
+            popperContainer="body"
+            text="Add a location"}}
+          <i class="plus icon"></i>
         {{/link-to}}
       {{/liquid-if}}
     </h3>

@@ -110,6 +110,7 @@
     "ember-router-scroll": "^1.0.2",
     "ember-sortable": "1.11.2",
     "ember-source": "~3.7.0",
+    "ember-tooltips": "^3.4.0",
     "ember-truth-helpers": "2.0.0",
     "emojify.js": "~1.1.0",
     "eslint": "^5.6.0",

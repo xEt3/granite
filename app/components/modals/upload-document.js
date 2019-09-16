@@ -5,11 +5,9 @@
     systemUse=true
     uploadComplete=(action 'uploadFollowup') as |openUploadModal|
   }}
-    {{#ui-popup content="Upload a followup document" class="right floated"}}
-      <a href="#" {{action openUploadModal}}>
-        <i class="upload icon"></i>
-      </a>
-    {{/ui-popup}}
+    <a href="#" {{action openUploadModal}}>
+      <i class="upload icon"></i>
+    </a>
   {{/modals/upload-document}}
 
   must pass in uploadComplete as function, param will be the file you uploaded --> uploadFollowup (file) {}

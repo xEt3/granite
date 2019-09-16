@@ -5,7 +5,6 @@ import { computed } from '@ember/object';
 import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { htmlSafe } from '@ember/string';
 
 const { Logger: { error } } = Ember;
 
@@ -16,16 +15,6 @@ const PipelineCardComponent = Component.extend({
     'application.hired:pipeline-card__content--hired',
     'application.disqualified:pipeline-card__content--disqualified'
   ],
-
-  popupId: computed('elementId', function () {
-    //this is the id for the hidden div that gets used in the label popup
-    return `${this.get('elementId')}-popup`;
-  }),
-
-  htmlForPopup: computed('popupId', 'application.labels.[]', function () {
-    //this gathers the hidden popup div, and sets the html content for the popup
-    return htmlSafe(this.$(`#${this.get('popupId')}`)[0].innerHTML);
-  }),
 
   allExceptCurrentStage: computed('stages.[]', 'application.stage', function () {
     const stageId = this.get('application.stage');

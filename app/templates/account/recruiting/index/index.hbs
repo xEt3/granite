@@ -61,13 +61,19 @@
     <div class="right aligned text floated menu__actions">
       <h3 class="ui inline header">
         {{#link-to "account.recruiting.index.new"}}
+        {{ember-tooltip
+          side="left"
+          popperContainer="body"
+          text="Start a campaign"}}
           <i id="add-job-opening" class="plus icon"></i>
         {{/link-to}}
-        {{#ui-popup position="left center" content="Filters" tagName="span"}}
-          <a href="#" class={{if showFilters "text-red"}} {{action toggleProperty "showFilters"}}>
-            <i class="{{if showFilters "remove" "filter"}} icon"></i>
-          </a>
-        {{/ui-popup}}
+        <a href="#" class={{if showFilters "text-red"}} {{action toggleProperty "showFilters"}}>
+          {{ember-tooltip
+            side="left"
+            popperContainer="body"
+            text="Filters"}}
+          <i class="{{if showFilters "remove" "filter"}} icon"></i>
+        </a>
       </h3>
     </div>
   </hgroup>

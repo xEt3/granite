@@ -5,9 +5,13 @@
   {{/link-to}}
 </h2>
 <h4 class="ui center aligned header">
-  {{#ui-popup content="Switch to report view" position="top center"}}
-    {{#link-to "account.employee.index.history-report" class="text-white"}}<i class="file icon"></i>Report View{{/link-to}}
-  {{/ui-popup}}
+  {{#link-to "account.employee.index.history-report" class="text-white"}}
+    {{ember-tooltip
+      side="top"
+      popperContainer="body"
+      text="Switch to report view"}}
+    <i class="file icon"></i>Report View
+  {{/link-to}}
 </h4>
 
 <div class="history__timeline clearfix">

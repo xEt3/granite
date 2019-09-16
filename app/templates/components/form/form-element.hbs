@@ -71,13 +71,15 @@
             onChange=(action (mut model.multiple))}}
         </div>
         <div class="field">
-          {{#ui-popup content="This option allows users to select from your list of options or add selection(s) of their own."}}
-            {{ui-checkbox
-              class="toggle"
-              label="Allow additions to options"
-              checked=(readonly model.allowAdditions)
-              onChange=(action (mut model.allowAdditions))}}
-          {{/ui-popup}}
+          {{ember-tooltip
+            side="top"
+            popperContainer="body"
+            text="This option allows users to select from your list of options or add selection(s) of their own."}}
+          {{ui-checkbox
+            class="toggle"
+            label="Allow additions to options"
+            checked=(readonly model.allowAdditions)
+            onChange=(action (mut model.allowAdditions))}}
         </div>
       </div>
     {{/if}}

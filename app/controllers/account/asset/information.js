@@ -1,13 +1,8 @@
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default Controller.extend(addEdit, {
   addingAttribute: false,
-
-  attributeHelper: computed('addingAttribute', function () {
-    return this.get('addingAttribute') ? 'Cancel' : 'Add a new attribute';
-  }),
 
   afterSave () {
     this.setProperties({

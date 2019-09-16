@@ -1,9 +1,13 @@
 <div class="ui rasied segment">
   <h2 class="ui header">History Report</h2>
   <h4 class="ui center aligned header">
-    {{#ui-popup content="Switch to timeline view" position="top center"}}
-      {{#link-to "account.employee.index.history"}}<i class="circle icon"></i>Timeline View{{/link-to}}
-    {{/ui-popup}}
+    {{#link-to "account.employee.index.history"}}
+      {{ember-tooltip
+        side="top"
+        popperContainer="body"
+        text="Switch to timeline view"}}
+      <i class="circle icon"></i>Timeline View
+    {{/link-to}}
   </h4>
 
   <div class="ui form">

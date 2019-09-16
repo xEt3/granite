@@ -5,14 +5,16 @@
 
 <div class="clearfix">
   <span class="right floated">
-    {{#ui-popup content="Sort according to due date"}}
-      <a href="#" class="text-white" {{action (toggle "isDsc" this)}}><i class="sort large numeric {{if isDsc "ascending icon" "descending icon"}}"></i></a>
-    {{/ui-popup}}
+    {{ember-tooltip
+      side="left"
+      text="Sort according to due date"}}
+    <a href="#" class="text-white" {{action (toggle "isDsc" this)}}><i class="sort large numeric {{if isDsc "ascending icon" "descending icon"}}"></i></a>
   </span>
   <span class="left floated">
-    {{#ui-popup content="Filter according to priority level"}}
-      <a href="#" class="text-white" {{action (toggle "expandFiltered" this)}}><i class="large filter icon"></i></a>
-    {{/ui-popup}}
+    {{ember-tooltip
+      side="right"
+      text="Filter according to priority level"}}
+    <a href="#" class="text-white" {{action (toggle "expandFiltered" this)}}><i class="large filter icon"></i></a>
   </span>
 </div>
 <div class="ui divider"></div>

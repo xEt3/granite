@@ -2,9 +2,13 @@
   <span class="header clearfix">
     {{asset.identifier}}
     {{#if attributes.length}}
-      {{#ui-popup tagName="span" content="View attributes"}}
-        <a href="#" {{action "toggleProperty" "details"}}><i class="{{if details "up" "down"}} angle icon"></i></a>
-      {{/ui-popup}}
+      <a href="#" {{action "toggleProperty" "details"}}>
+        {{ember-tooltip
+          side="top"
+          popperContainer="body"
+          text="View attributes"}}
+        <i class="{{if details "up" "down"}} angle icon"></i>
+      </a>
     {{/if}}
     <div class="right floated">
       {{#if addDocuments}}
@@ -18,17 +22,21 @@
             (action saveStockItem))
           as |execute|
         }}
-          {{#ui-popup position="left center" tagName="span" content="Add a document to stock item"}}
-            <a href="#" {{action execute "selectDocuments"}}>
-              <i class="file outline icon"></i>
-            </a>
-          {{/ui-popup}}
+          <a href="#" {{action execute "selectDocuments"}}>
+            {{ember-tooltip
+              side="left"
+              popperContainer="body"
+              text="Add a document to stock item"}}
+            <i class="file outline icon"></i>
+          </a>
         {{/input/document-selection-modal}}
       {{/if}}
       {{#link-to "account.asset.index.edit" asset.id}}
-        {{#ui-popup position="left center" tagName="span" content="Edit stock item"}}
-          <i class="edit icon"></i>
-        {{/ui-popup}}
+        {{ember-tooltip
+          side="left"
+          popperContainer="body"
+          text="Edit stock item"}}
+        <i class="edit icon"></i>
       {{/link-to}}
       {{#confirm-modal
         class="item"
@@ -37,6 +45,10 @@
         as |confirm|
       }}
         <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}>
+          {{ember-tooltip
+            side="left"
+            popperContainer="body"
+            text="Remove stock item"}}
           <i class="trash icon"></i>
         </a>
       {{/confirm-modal}}
@@ -58,11 +70,13 @@
         {{#each asset.documents as |document|}}
           <li>
             {{document.title}}.{{document.extension}}
-            {{#ui-popup position="right center" tagName="span" content="Remove document from stock item"}}
-              <a href="#" class="text-danger" {{action "removeDocument" document}}>
-                <i class="times icon"></i>
-              </a>
-            {{/ui-popup}}
+            <a href="#" class="text-danger" {{action "removeDocument" document}}>
+              {{ember-tooltip
+                side="right"
+                popperContainer="body"
+                text="Remove document from stock item"}}
+              <i class="times icon"></i>
+            </a>
           </li>
         {{/each}}
       </ul>
@@ -82,5 +96,4 @@
       </div>
     {{/liquid-if}}
   {{/if}}
-
 </div>
