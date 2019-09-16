@@ -12,7 +12,7 @@ export default Controller.extend({
 
   commonActions: [{
     text: 'Add a new employee',
-    link: 'account.employees.add'
+    link: 'account.employees.add.new'
   }, {
     text: 'Start a new recruiting campaign',
     link: 'account.recruiting.index.new'
