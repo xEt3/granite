@@ -22,7 +22,7 @@
             (action saveStockItem))
           as |execute|
         }}
-          <a href="#" {{action execute "selectDocuments"}}>
+          <a href="#" class="asset-item__action--select-document" {{action execute "selectDocuments"}}>
             {{ember-tooltip
               side="left"
               popperContainer="body"
@@ -31,7 +31,7 @@
           </a>
         {{/input/document-selection-modal}}
       {{/if}}
-      {{#link-to "account.asset.index.edit" asset.id}}
+      {{#link-to "account.asset.index.edit" asset.id class="asset-item__action--edit"}}
         {{ember-tooltip
           side="left"
           popperContainer="body"
@@ -44,7 +44,7 @@
         confirmContent="Are you sure you want to delete this stock item?"
         as |confirm|
       }}
-        <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}>
+        <a href="#" class="text-danger asset-item__action--delete" {{action (pipe confirm (action "delete"))}}>
           {{ember-tooltip
             side="left"
             popperContainer="body"

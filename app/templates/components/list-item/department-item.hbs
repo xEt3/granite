@@ -9,16 +9,20 @@
   </div>
   <div class="right floated">
     {{#link-to "account.anatomy.department.edit" department.id}}
-      {{#ui-popup tagName="span" position="left center" content="Edit department"}}
-        <i class="edit icon"></i>
-      {{/ui-popup}}
+      {{ember-tooltip
+        side="left"
+        popperContainer="body"
+        text="Edit department"}}
+      <i class="edit icon"></i>
     {{/link-to}}
     {{#confirm-modal deleteContext=department.name tagName="span" as |confirm|}}
-      {{#ui-popup tagName="span" position="left center" content="Delete department"}}
-        <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}>
-          <i class="trash icon"></i>
-        </a>
-      {{/ui-popup}}
+      <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}>
+        {{ember-tooltip
+          side="left"
+          popperContainer="body"
+          text="Delete department"}}
+        <i class="trash icon"></i>
+      </a>
     {{/confirm-modal}}
   </div>
   <div class="meta">

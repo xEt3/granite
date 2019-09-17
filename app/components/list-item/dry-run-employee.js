@@ -4,19 +4,21 @@ import { htmlSafe } from '@ember/string';
 
 export default Component.extend({
   missingRequiredFields: computed('dryRunRecord', 'availableFields', function () {
-    let availableFields = this.get('availableFields'),
-        dryRunRecord = this.get('dryRunRecord'),
-        missingField = null;
+    const availableFields = this.get('availableFields'),
+          dryRunRecord = this.get('dryRunRecord');
 
-    availableFields.forEach(field => {
+    let missingFields = availableFields.reduce((missingField, field) => {
       let [ path, nestedPath ] = field.path.split('.'),
           pathValue = dryRunRecord[path] || undefined,
           nestedPathValue = pathValue ? dryRunRecord[path][nestedPath] : undefined;
 
       if (field.required && (!pathValue || !nestedPathValue)) {
-        missingField = field.path;
+        missingField.push(field.path);
       }
-    });
-    return missingField ? htmlSafe(`Required field ${missingField} is missing.`) : null;
+
+      return missingField;
+    }, []);
+
+    return missingFields.length ? htmlSafe(`Required field${missingFields.length > 1 ? 's are' : ' is'} missing: ${missingFields.join(', ')}`) : null;
   })
 });

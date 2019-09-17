@@ -29,8 +29,10 @@
     model.id
     class="ui blue button list-item__button content__link"
   }}
-    {{#ui-popup content="Open Application" position="top left"}}
-      <i class="fitted external square icon content__link"></i>
-    {{/ui-popup}}
+    {{ember-tooltip
+      side="left"
+      popperContainer="body"
+      text="Open application"}}
+    <i class="fitted external square icon content__link"></i>
   {{/link-to}}
 </div>

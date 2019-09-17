@@ -10,22 +10,28 @@
   </div>
   <div class="right floated">
     {{#link-to "account.anatomy.company-users.edit" user.id}}
-      {{#ui-popup tagName="span" position="left center" content="Edit user"}}
-        <i class="edit icon"></i>
-      {{/ui-popup}}
+      {{ember-tooltip
+        side="left"
+        popperContainer="body"
+        text="Edit user"}}
+      <i class="edit icon"></i>
     {{/link-to}}
     {{#if user.inactive}}
-      {{#ui-popup tagName="span" position="left center" content="Reactivate user"}}
-        <a href="#" {{action "toggleInactiveState" false}}>
-          <i class="{{if working "loading spinner" "undo"}} icon"></i>
-        </a>
-      {{/ui-popup}}
+      <a href="#" {{action "toggleInactiveState" false}}>
+        {{ember-tooltip
+          side="left"
+          popperContainer="body"
+          text="Reactivate user"}}
+        <i class="{{if working "loading spinner" "undo"}} icon"></i>
+      </a>
     {{else}}
-      {{#ui-popup tagName="span" position="left center" content="Deactivate user"}}
-        <a href="#" class="text-danger" {{action "openTransferModal"}}>
-          <i class="{{if working "loading spinner" "times"}} icon"></i>
-        </a>
-      {{/ui-popup}}
+      <a href="#" class="text-danger" {{action "openTransferModal"}}>
+        {{ember-tooltip
+          side="left"
+          popperContainer="body"
+          text="Deactivate user"}}
+        <i class="{{if working "loading spinner" "times"}} icon"></i>
+      </a>
     {{/if}}
   </div>
   <div class="meta">

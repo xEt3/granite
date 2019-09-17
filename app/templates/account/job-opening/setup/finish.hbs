@@ -9,9 +9,9 @@
           popperContainer="body"
           text="Manually add applicant"
         }}
-            {{#each model.applicantSources as |source|}}
-              {{source.name}}<br>
-            {{/each}}
+          {{#each model.applicantSources as |source|}}
+            {{source.name}}<br>
+          {{/each}}
         {{/ember-tooltip}}
         {{model.applicantSources.length}} {{inflect-text "source" model.applicantSources.length}}
       </strong>
@@ -44,4 +44,3 @@
     <i class="rocket icon"></i> Launch Campaign
   {{/form/action-button}}
 </form>
-{{!-- {{inflect-text 'Employee' employees.length}}--}}

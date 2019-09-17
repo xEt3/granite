@@ -1,17 +1,16 @@
 <td>
   {{#if duplicate}}
     <div class="ui red ribbon label import__duplicate-label">
-      {{#ui-popup
-        content=(concat
-          matchReason
-          " match"
-        )
+      {{#ember-tooltip
+        side="right"
+        popperContainer="body"
       }}
-        Possible duplicate of
-        <a href="#" {{action "linkToDuplicate"}}>
-          {{duplicate.text}}
-        </a>
-      {{/ui-popup}}
+        {{matchReason}} match
+      {{/ember-tooltip}}
+      Possible duplicate of
+      <a href="#" {{action "linkToDuplicate"}}>
+        {{duplicate.text}}
+      </a>
     </div>
   {{/if}}
   <div>

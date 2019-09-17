@@ -24,11 +24,13 @@
         systemUse=true
         uploadComplete=(action "uploadFollowup") as |openUploadModal|
       }}
-        {{#ui-popup content="Upload a followup document" class="right floated"}}
-          <a href="#" {{action openUploadModal}}>
-            <i class="upload icon"></i>
-          </a>
-        {{/ui-popup}}
+        <a href="#" class="right floated" {{action openUploadModal}}>
+          {{ember-tooltip
+            side="left"
+            popperContainer="body"
+            text="Upload a followup document"}}
+          <i class="upload icon"></i>
+        </a>
       {{/modals/upload-document}}
     {{/if}}
   </div>
@@ -45,11 +47,13 @@
             <p>
               {{#if assignment.signedOn}}
                 Signed:
-                {{#ui-popup tagName="span" html=signature position="right center"}}
-                  <a href="#" class="gray-icon" {{action "openModal"}}>
-                    {{time assignment.signedOn}}
-                  </a>
-                {{/ui-popup}}
+                <a href="#" class="gray-icon" {{action "openModal"}}>
+                  {{ember-popover
+                    side="right"
+                    popperContainer="body"
+                    text=signature}}
+                  {{time assignment.signedOn}}
+                </a>
               {{else}}
                 {{assignment.employee.firstName}} has not signed this document yet.
               {{/if}}
