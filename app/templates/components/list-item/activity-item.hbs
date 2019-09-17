@@ -13,27 +13,31 @@
     {{/if}}
   </div>
   <div class="meta">
-    {{#ui-popup tagName="span" position="top center" title="Comments"}}
-      <a href="#" {{action "toggleComments"}}>
-        <i class="fitted comment icon"></i> {{if activity.comments.length activity.comments.length}}
-      </a>
-    {{/ui-popup}}
+    <a href="#" {{action "toggleComments"}}>
+      {{ember-tooltip
+        side="top"
+        popperContainer="body"
+        text="Comments"}}
+      <i class="fitted comment icon"></i> {{if activity.comments.length activity.comments.length}}
+    </a>
 
     {{#if enableLikes}}
-      {{#ui-popup tagName="span" position="top center" title="Thumbs up"}}
-        <a href="#" class="like {{if likeByCurrentUser "text-red"}}" {{action "like"}}>
-          <i class="thumbs up icon"></i>
-          {{#if likeByCurrentUser}}
-            You
-            {{#if likesMinusOne}}
-              and {{likesMinusOne}} {{inflect-text "other" likesMinusOne}}
-            {{/if}}
-            like this
-          {{else}}
-            {{if activity.likes.length activity.likes.length}}
+      <a href="#" class="like {{if likeByCurrentUser "text-red"}}" {{action "like"}}>
+        {{ember-tooltip
+          side="top"
+          popperContainer="body"
+          text="Thumbs up"}}
+        <i class="thumbs up icon"></i>
+        {{#if likeByCurrentUser}}
+          You
+          {{#if likesMinusOne}}
+            and {{likesMinusOne}} {{inflect-text "other" likesMinusOne}}
           {{/if}}
-        </a>
-      {{/ui-popup}}
+          like this
+        {{else}}
+          {{if activity.likes.length activity.likes.length}}
+        {{/if}}
+      </a>
     {{/if}}
 
     <div class="right floated date">

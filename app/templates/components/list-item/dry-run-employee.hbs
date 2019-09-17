@@ -3,9 +3,12 @@
     <h3>
       Employee record #{{x-inc index}}
       {{#if missingRequiredFields}}
-        {{#ui-popup tagName="span" position="right center" content=missingRequiredFields}}
-          <i class="exclamation circle icon text-red"></i>
-        {{/ui-popup}}
+        <i class="exclamation circle icon text-red">
+          {{ember-tooltip
+            side="right"
+            popperContainer="body"
+            text=missingRequiredFields}}
+        </i>
       {{/if}}
     </h3>
     <ul>

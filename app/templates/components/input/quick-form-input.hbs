@@ -2,9 +2,12 @@
   <label for={{computedClassName}} class={{field.labelClass}}>
     {{field.label}}
     {{#if (and field.helpText field.indirectHelp)}}
-      {{#ui-popup content=field.helpText class="right floated"}}
-        <i class="help circle icon"></i>
-      {{/ui-popup}}
+      <i class="help circle icon">
+        {{ember-tooltip
+          side="right"
+          popperContainer="body"
+          text=field.helpText}}
+      </i>
     {{/if}}
   </label>
 

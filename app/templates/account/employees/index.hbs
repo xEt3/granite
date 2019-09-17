@@ -106,14 +106,22 @@
 
     <div class="right aligned text floated menu__actions">
       <h3 class="ui right floated header">
-        {{#ui-popup position="left center" content="Filters"}}
-          <a href="#" class={{if showFilters "text-red"}} {{action toggleProperty "showFilters"}}>
-            <i class="{{if showFilters "remove" "filter"}} icon"></i>
-          </a>
-        {{/ui-popup}}
+        <a href="#" class={{if showFilters "text-red"}} {{action toggleProperty "showFilters"}}>
+          {{ember-tooltip
+            side="left"
+            popperContainer="body"
+            text="Filters"}}
+          <i class="{{if showFilters "remove" "filter"}} icon"></i>
+        </a>
       </h3>
       {{#ui-dropdown class="right floated top pointing inline"}}
-        <h3 class="ui inline header"><a href="#" id="add-employee-trigger"><i class="plus icon"></i></a></h3>
+        <h3 class="ui inline header">
+          {{ember-tooltip
+            side="left"
+            popperContainer="body"
+            text="Add an employee or multiple employees"}}
+          <a href="#" id="add-employee-trigger"><i class="plus icon"></i></a>
+        </h3>
         <div class="menu">
           {{#link-to "account.employees.add.new" class="item"}}<i class="user icon"></i>One Employee{{/link-to}}
           {{#link-to "account.employees.add.census" class="item"}}<i class="users icon"></i>Multiple Employees{{/link-to}}

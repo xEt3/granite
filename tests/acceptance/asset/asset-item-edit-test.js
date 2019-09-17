@@ -19,7 +19,7 @@ module('Acceptance | edit company asset-items', function (hooks) {
     await fillIn('#asset-identifier', 'text');
     await fillIn(`input[placeholder="${myAssetCategory.attributes} value"]`, 'header');
     await click('.ui.huge.green.button');
-    await click('span > .edit.icon');
+    await click('.asset-item__action--edit');
     await fillIn(`input[placeholder="${myAssetCategory.attributes} value"]`, 'updated attribute');
     await click('.ui.huge.green.button');
     await click('.down.angle.icon');

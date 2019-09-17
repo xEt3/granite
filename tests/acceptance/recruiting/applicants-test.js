@@ -58,7 +58,7 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
     await click('div.menu__container-responsive  div > a:nth-child(2)');
     assert.equal(currentURL(), `/account/recruiting/job-opening/${job.id}/applicant-tracking`);
     assert.dom('.ui.padded.fadeInUp').includesText('Your Recruiting Pipeline');
-    assert.dom('h2 > div > div:nth-child(1) > a').hasText('Add Applicant');
+    assert.dom('a.ats__action--add-applicant').hasText('Add Applicant');
     assert.dom('.plus.icon');
     assert.dom('small > a').hasText('Show Disqualified Applicants');
     await click('small > a');

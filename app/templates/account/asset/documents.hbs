@@ -9,11 +9,13 @@
         (action "save"))
       as |execute|
     }}
-      {{#ui-popup position="left center" tagName="span" content="Add a document"}}
-        <a href="#" {{action execute "selectDocuments"}}>
-          <i class="plus icon"></i>
-        </a>
-      {{/ui-popup}}
+      <a href="#" {{action execute "selectDocuments"}}>
+        {{ember-tooltip
+          side="left"
+          popperContainer="body"
+          text="Add a document"}}
+        <i class="plus icon"></i>
+      </a>
     {{/input/document-selection-modal}}
   </h3>
 </div>

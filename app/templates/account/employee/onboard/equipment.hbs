@@ -27,9 +27,13 @@
           <div class="item">
             {{asset.identifier}}
             <span class="right floated">
-              {{#ui-popup content="Unassign asset"}}
-                <a href="#" class="text-danger" {{action "unassignAsset" asset}}><i class="minus icon"></i></a>
-              {{/ui-popup}}
+              <a href="#" class="text-danger" {{action "unassignAsset" asset}}>
+                {{ember-tooltip
+                  side="top"
+                  popperContainer="body"
+                  text="Unassign asset"}}
+                <i class="minus icon"></i>
+              </a>
             </span>
           </div>
         {{/each}}

@@ -24,7 +24,7 @@ module('Acceptance | new action items', function (hooks) {
     assert.dom('div.field.ui.calendar.ember-view > label').hasText('Assign a Due Date');
     assert.dom('div.ui.calendar.field input[type="text"]').isVisible();
     assert.dom('div:nth-child(5) > label').hasText('Priority');
-    assert.dom('label > span').hasText('Prerequisites');
+    assert.dom('label[for="action-item-prerequisites"]').hasText('Prerequisites');
     assert.dom('span > span.irs').isVisible();
     assert.dom('span.irs > span.irs-single').hasText('1');
     assert.dom('div div:nth-child(6) > p').hasText('No other projects are available.');

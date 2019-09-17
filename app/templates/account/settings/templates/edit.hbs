@@ -11,12 +11,11 @@
     <div class="ui field">
       <label>
         {{contentKey.title}}
-        {{#ui-popup
-          content=contentKey.description
-          class="ui right floated"
-        }}
-          <i class="info circle icon"></i>
-        {{/ui-popup}}
+        {{ember-tooltip
+          side="top"
+          popperContainer="body"
+          text=contentKey.description}}
+        <i class="info circle icon"></i>
       </label>
       {{textarea
         value=(mut (get model.content contentKey.key))

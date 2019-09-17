@@ -13,9 +13,13 @@
         <div class="item">
           {{item.identifier}}
           <span class="right floated">
-            {{#ui-popup content="Mark as collected & unassign asset from employee"}}
-              <a href="#" class="text-green" {{action "unassignAsset" item}}><i class="check icon"></i>Mark as Collected</a>
-            {{/ui-popup}}
+            <a href="#" class="text-green" {{action "unassignAsset" item}}>
+              {{ember-tooltip
+                side="left"
+                popperContainer="body"
+                text="Mark as collected & unassign asset from employee"}}
+              <i class="check icon"></i>Mark as Collected
+            </a>
           </span>
         </div>
       {{/each}}

@@ -44,18 +44,22 @@
 
     <div class="right aligned text floated menu__actions">
       <h3 class="ui right floated header">
-        {{#ui-popup position="left center" content="Filters"}}
-          <a href="#" class={{if showFilters "text-red"}} {{action toggleProperty "showFilters"}}>
-            <i class="{{if showFilters "remove" "filter"}} icon"></i>
-          </a>
-        {{/ui-popup}}
+        <a href="#" class={{if showFilters "text-red"}} {{action toggleProperty "showFilters"}}>
+          {{ember-tooltip
+            side="left"
+            popperContainer="body"
+            text="Filters"}}
+          <i class="{{if showFilters "remove" "filter"}} icon"></i>
+        </a>
       </h3>
       {{#ui-dropdown class="right floated top pointing inline"}}
         {{#link-to "account.documents.new" class="right floated"}}
           <h3 class="ui inline header">
-            {{#ui-popup tagName="span" content="Add a document"}}
-              <a href="#"><i class="plus icon"></i></a>
-            {{/ui-popup}}
+            {{ember-tooltip
+              side="left"
+              popperContainer="body"
+              text="Add a document"}}
+            <a href="#"><i class="plus icon"></i></a>
           </h3>
         {{/link-to}}
       {{/ui-dropdown}}

@@ -1,10 +1,12 @@
 <div class="ui header clearfix">
   <div class="right floated">
-    {{#ui-popup content=attributeHelper}}
-      <a href="#" class={{if addingAttribute "text-danger"}} {{action "toggleProperty" "addingAttribute"}}>
-        <i class="{{if addingAttribute "remove" "plus"}} icon"></i>
-      </a>
-    {{/ui-popup}}
+    <a href="#" class={{if addingAttribute "text-danger"}} {{action "toggleProperty" "addingAttribute"}}>
+      {{ember-tooltip
+        side="left"
+        popperContainer="body"
+        text=(if addingAttribute "Cancel" "Add a new attribute")}}
+      <i class="{{if addingAttribute "remove" "plus"}} icon"></i>
+    </a>
   </div>
 </div>
 
@@ -30,11 +32,13 @@
         </span>
 
         <span class="right floated">
-          {{#ui-popup content="Remove attribute"}}
-            <a href="#" class="text-danger" {{action "removeAttribute" attribute}}>
-              <i class="trash icon"></i>
-            </a>
-          {{/ui-popup}}
+          <a href="#" class="text-danger" {{action "removeAttribute" attribute}}>
+            {{ember-tooltip
+              side="left"
+              popperContainer="body"
+              text="Remove attribute"}}
+            <i class="trash icon"></i>
+          </a>
         </span>
       </div>
     </div>

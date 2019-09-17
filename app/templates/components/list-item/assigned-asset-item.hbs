@@ -28,9 +28,13 @@
       </div>
     </div>
     {{#if attributes.length}}
-      {{#ui-popup tagName="span" content="View attributes"}}
-        <a href="#" {{action "toggleProperty" "details"}}><i class="info circle icon"></i></a>
-      {{/ui-popup}}
+      <a href="#" {{action "toggleProperty" "details"}}>
+        {{ember-tooltip
+          side="right"
+          popperContainer="body"
+          text="View attributes"}}
+        <i class="info circle icon"></i>
+      </a>
     {{/if}}
     {{#if attributes.length}}
       {{#liquid-if details}}
@@ -49,7 +53,7 @@
   </div>
 </div>
 {{#confirm-modal confirmContent="Are you sure you want to unassign this item and return it to your stock?" as |confirm|}}
-  <button class="ui bottom attached button" role="button" {{action (pipe confirm (action "unassign"))}}>
+  <button class="ui bottom attached fluid button" role="button" {{action (pipe confirm (action "unassign"))}}>
     <i class="remove user icon"></i>
     Unassign asset
   </button>

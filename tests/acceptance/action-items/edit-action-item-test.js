@@ -38,7 +38,7 @@ module('Acceptance | edit action items', function (hooks) {
     assert.dom('div:nth-child(2) > label').hasText('Description');
     assert.dom('div:nth-child(2) > textarea').hasValue(action.description);
     assert.dom('span.irs > span.irs-single').hasText(`${action.priority}`);
-    assert.dom('label > span').hasText('Prerequisites');
+    assert.dom('label[for="action-item-prerequisites"]').hasText('Prerequisites');
     assert.dom('#action-item-prerequisites > div.default.text').isVisible();
     await settled();
     await click('#action-item-prerequisites');
