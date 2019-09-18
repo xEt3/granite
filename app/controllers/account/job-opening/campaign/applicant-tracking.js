@@ -83,13 +83,13 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     const app = this.get('appInScheduler'),
           isEmployeeApplicant = app.get('isEmployee');
 
-    let perviousMeeting = await this.store.queryRecord('event', {
+    let previousMeeting = await this.store.queryRecord('event', {
       contextType: 'JobApplication',
       attendantId: get(isEmployeeApplicant ? app.get('employee') : app.get('applicant'), 'id')
     });
 
-    if (perviousMeeting) {
-      let pastMeeting = await this.store.findRecord('event', perviousMeeting.id, { backgroundReload: false });
+    if (previousMeeting) {
+      let pastMeeting = await this.store.findRecord('event', previousMeeting.id, { backgroundReload: false });
       await pastMeeting.destroyRecord();
     }
 
