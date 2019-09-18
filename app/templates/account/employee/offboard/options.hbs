@@ -1,6 +1,59 @@
 <form class="ui form" {{action "saveAndContinue" on="submit"}}>
   <h2 class="ui horizontal divider header">Offboarding Options</h2>
 
+  <div class="{{if model.autoExitInterview "three fields"}}">
+    <div class="field">
+      <label for="exit-interview">Automated exit interview</label>
+      {{ui-checkbox
+        id="exit-interview"
+        class="toggle"
+        label=(if model.autoExitInterview "Conduct exit interview" "Do not conduct exit interview")
+        checked=model.autoExitInterview
+        onChange=(action (mut model.autoExitInterview))}}
+    </div>
+
+    {{#if model.autoExitInterview}}
+      <div class="field">
+        {{ui-calendar
+          class="field"
+          type="date"
+          label="When should the exit interview become available?"
+          dateValue=model.autoExitInterviewDate
+          onChange=(action (mut model.autoExitInterviewDate))}}
+      </div>
+
+      <div class="field">
+        <label for="exit-interview-form">
+          Form to use*
+          {{#modals/form-creator
+            formType="exit-interview"
+            onNotify=(action "onNotify")
+            onCreateForm=(action "interimAddForm") as |openFormModal|
+          }}
+            <a href="#" class="right floated" {{action openFormModal}}>Create a new form...</a>
+          {{/modals/form-creator}}
+        </label>
+
+        {{#ui-dropdown
+          id="exit-interview-form"
+          class="search selection"
+          selected=model.autoExitInterviewForm
+          onChange=(action (mut model.terminationReason)) as |execute mapper|}}
+          <div class="default text">Select a form to use</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item" data-value="">Default Form</div>
+            {{#each availableExitForms as |exitForm|}}
+              <div class="item" data-value={{map-value mapper exitForm}}>
+                {{exitForm.name}}
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      </div>
+    {{/if}}
+  </div>
+
   <div class="field">
     <label for="final-address-ss">Final Address</label>
     {{ui-checkbox id="final-address-ss" class="toggle" label=(if model.finalAddressSelfService "Collect final address from employee" "Enter final address") checked=model.finalAddressSelfService onChange=(action (mut model.finalAddressSelfService))}}
@@ -51,11 +104,6 @@
     {{input type="email" value=model.finalEmail placeholder="Final Email" id="final-email"}}
   </div>
 
-  <div class="field">
-    <label for="exit-interview">Automated Exit Interview</label>
-    {{ui-checkbox id="exit-interview" class="toggle" label=(if model.autoExitInterview "Conduct exit interview" "Do not conduct exit interview") checked=model.autoExitInterview onChange=(action (mut model.autoExitInterview))}}
-    {{!TODO Spec this}}
-  </div>
   <div class="field">
     {{#input/document-selection-modal
       title="Select Offboarding Documents"
