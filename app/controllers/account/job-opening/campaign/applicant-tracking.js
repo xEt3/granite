@@ -27,7 +27,6 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
   linkSharingModalId:       'modal__ats-link-sharing',
   labelsModalId:            'modal__ats-labels',
   showDisqualified:         false,
-  newScheduledMeeting:      false,
 
   pendingApplications: computed.filter('model.applications', function (app) {
     return !get(app, 'stage') && !get(app, 'reviewedOn') && !get(app, 'disqualified');
@@ -107,9 +106,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
 
       this.ajaxSuccess(`Scheduled ${title} at ${start.format('h:mma [on] M/D/YY')}`);
 
-      if (this.get('newScheduledMeeting') !== app.get('id')) {
-        this.set('newScheduledMeeting', app.get('id'));
-      }
+      this.set('newScheduledMeeting', this.get('newScheduledMeeting') !== app.get('id') ? app.get('id') : false);
 
     } catch (e) {
       this.ajaxError(e);

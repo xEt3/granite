@@ -15,7 +15,6 @@ const PipelineCardComponent = Component.extend({
     'application.hired:pipeline-card__content--hired',
     'application.disqualified:pipeline-card__content--disqualified'
   ],
-  meetingFetched: false,
 
   allExceptCurrentStage: computed('stages.[]', 'application.stage', function () {
     const stageId = this.get('application.stage');
