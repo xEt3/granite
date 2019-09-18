@@ -27,6 +27,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
   linkSharingModalId:       'modal__ats-link-sharing',
   labelsModalId:            'modal__ats-labels',
   showDisqualified:         false,
+  newScheduledMeeting:      false,
 
   pendingApplications: computed.filter('model.applications', function (app) {
     return !get(app, 'stage') && !get(app, 'reviewedOn') && !get(app, 'disqualified');
@@ -38,7 +39,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
 
   resetMeeting () {
     if (this.get('currentMeeting')) {
-      this.get('currentMeeting').destroy();
+      this.set('currentMeeting', undefined);
     }
 
     this.set('currentMeeting', this.store.createRecord('event'));
@@ -76,11 +77,21 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     });
   },
 
-  saveMeeting (event) {
+  async saveMeeting (event) {
     this.ajaxStart();
 
     const app = this.get('appInScheduler'),
           isEmployeeApplicant = app.get('isEmployee');
+
+    let perviousMeeting = await this.store.queryRecord('event', {
+      contextType: 'JobApplication',
+      attendantId: get(isEmployeeApplicant ? app.get('employee') : app.get('applicant'), 'id')
+    });
+
+    if (perviousMeeting) {
+      let pastMeeting = await this.store.findRecord('event', perviousMeeting.id, { backgroundReload: false });
+      await pastMeeting.destroyRecord();
+    }
 
     event.setProperties({
       contextId:     app.get('id'),
@@ -88,14 +99,21 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
       attendantId:   get(isEmployeeApplicant ? app.get('employee') : app.get('applicant'), 'id'),
       attendantType: isEmployeeApplicant ? 'Employee' : 'Applicant'
     });
+    try {
+      let meeting = await event.save();
 
-    event.save()
-    .then(meeting => {
       const title = meeting.get('title') ? `"${meeting.get('title')}"` : 'meeting',
             start = moment(meeting.get('start'));
 
       this.ajaxSuccess(`Scheduled ${title} at ${start.format('h:mma [on] M/D/YY')}`);
-    });
+
+      if (this.get('newScheduledMeeting') !== app.get('id')) {
+        this.set('newScheduledMeeting', app.get('id'));
+      }
+
+    } catch (e) {
+      this.ajaxError(e);
+    }
   },
 
   beginOnboarding (jobApplication) {

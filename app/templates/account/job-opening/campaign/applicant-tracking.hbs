@@ -98,6 +98,7 @@
     as |confirm|}}
     {{card-pipeline
       activeCandidates
+      newScheduledMeeting=newScheduledMeeting
       pipeline=model.pipeline
       onDisqualify=(action (pipe
         (action set "appInDisqualifyConfirm")
@@ -141,6 +142,7 @@
   {{modals/ats-scheduler
     appInScheduler
     currentMeeting
+    reschedule
     modalId=schedulerModalId
     availableOrganizers=model.employees
     onResponse=(action "modalResponse" "scheduler")}}
