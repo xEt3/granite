@@ -21,9 +21,13 @@
       {{#if oneOperationInDay}}
         One change made to {{join-array shownKeys}}
         {{#if hiddenKeys.length}}
-          {{#ui-popup tagName="span" content=(join-array hiddenKeys)}}
-            <strong>and {{hiddenKeys.length}} {{inflect-text "other" hiddenKeys.length}}</strong>
-          {{/ui-popup}}
+          <strong>
+            and {{hiddenKeys.length}} {{inflect-text "other" hiddenKeys.length}}
+            {{ember-tooltip
+              side="top"
+              popperContainer="body"
+              text=(join-array hiddenKeys)}}
+          </strong>
         {{/if}}
         {{#if group.history.firstObject.creator}}
           by {{group.history.firstObject.creator.firstName}}
@@ -31,9 +35,13 @@
       {{else}}
         Changes made to {{join-array shownKeys}}
         {{#if hiddenKeys.length}}
-          {{#ui-popup tagName="span" content=(join-array hiddenKeys)}}
-            <strong>and {{hiddenKeys.length}} {{inflect-text "other" hiddenKeys.length}}</strong>
-          {{/ui-popup}}
+          <strong>
+            and {{hiddenKeys.length}} {{inflect-text "other" hiddenKeys.length}}
+            {{ember-tooltip
+              side="top"
+              popperContainer="body"
+              text=(join-array hiddenKeys)}}
+          </strong>
         {{/if}}
 
         {{#if group.history.firstObject.creator}}

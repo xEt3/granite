@@ -88,7 +88,7 @@ module('Acceptance | employees', function (hooks) {
     await click('.filter.icon');
     await settled();
     let filters = findAll('div.ui > .segment.vertical').length;
-    assert.equal(filters, 5, '5 filters showen');
+    assert.equal(filters, 5, '5 filters shown');
     assert.dom('i.icon.remove');
     assert.dom('.negative.ui.button.small.text').hasText('Reset All');
 
@@ -103,7 +103,7 @@ module('Acceptance | employees', function (hooks) {
       assert.equal(findAll(`div:nth-child(${i + 2}) > div > div > div > div > div.item`).length > 1, true, `${filter} dropdown has more than one option`);
     });
 
-    for (let i = 1; i <= 2; i++) {
+    for (let i = 1; i < 3; i++) {
       await click(`div.ui.calendar.field:nth-child(${i}) > div.ui.input > input`);
       assert.dom(`div.ui.calendar.field:nth-child(${i}) > div > div`).hasClass('active');
       await new Promise(resolve => setTimeout(resolve, 500));
@@ -115,7 +115,7 @@ module('Acceptance | employees', function (hooks) {
 
     await click('.remove.icon');
     await settled();
-    assert.dom('h3 > div > a > i.filter.icon').exists();
+    assert.dom('h3 > a > i.filter.icon').exists();
   });
 
 });

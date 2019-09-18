@@ -8,7 +8,7 @@ export default Component.extend({
     this.set('details', this.get('showAttributes'));
   },
 
-  attributes: computed('model.customFields', function () {
+  attributes: computed('asset.customFields', function () {
     let fields = this.get('asset.customFields'),
         attributes = A();
 

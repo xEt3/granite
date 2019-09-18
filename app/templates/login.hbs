@@ -52,9 +52,13 @@
     <div class="field">
       <label for="password">
         Password
-        {{#ui-popup tagName="span" class="right floated" position="left center" content="Rescue your account from a forgotten password"}}
-          <a href="#" {{action toggleProperty "recovery"}}><i class="life ring fitted icon"></i></a>
-        {{/ui-popup}}
+        <a href="#" class="right floated" {{action toggleProperty "recovery"}}>
+          {{ember-tooltip
+            side="left"
+            popperContainer="body"
+            text="Rescue your account from a forgotten password"}}
+          <i class="life ring fitted icon"></i>
+        </a>
       </label>
       {{input type="password" id="password" class="ui large fluid input" tabindex="2" placeholder="Your Account Password" value=password}}
     </div>

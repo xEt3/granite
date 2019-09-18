@@ -5,9 +5,8 @@ import modalSupport from 'granite/mixins/modal-support';
 import ajaxStatus from 'granite/mixins/ajax-status';
 
 export default Controller.extend(modalSupport, ajaxStatus, {
-  ajax:              service(),
-  subscription:      service(),
-  cancelDescription: 'Pushing this button will cancel your current subscription and you will lose access to your account until you reactivate.',
+  ajax:         service(),
+  subscription: service(),
 
   statusClass: computed('model.status', function () {
     return this.get('model.status') === 'Active' ? 'text-green' : 'text-danger';

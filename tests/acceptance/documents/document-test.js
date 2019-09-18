@@ -46,8 +46,8 @@ module('Acceptance | document', function (hooks) {
     assert.dom('div.file-assignment-item > div.label > a').includesText(employee.lastName, 'assignment label has last name');
     assert.dom('div.file-assignment-item > div.label > a').hasAttribute('href', `/account/employee/${employee.id}`, 'name is linked to employee\'s page');
     assert.equal(findAll('div.file-assignment-item').length, 2, 'two file assignments listed');
-    assert.equal(findAll('div.file-assignment-item > div.label > span > i.eye.gray-icon').length, 1, 'only one of the assignments says read');
-    assert.equal(findAll('div.file-assignment-item > div.label > span i.edit.icon').length, 1, 'only one of the assignments says signed');
+    assert.equal(findAll('div.file-assignment-item > div.label i.eye.gray-icon').length, 1, 'only one of the assignments says read');
+    assert.equal(findAll('div.file-assignment-item > div.label i.edit.icon').length, 1, 'only one of the assignments says signed');
   });
 
   test('can assign document to employee', async function (assert) {

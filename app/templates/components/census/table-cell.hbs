@@ -1,20 +1,26 @@
 {{#if missingRelationship}}
-  {{#ui-popup tagName="span" content=popupMessage position="right center"}}
-    {{column}}
-    <a href="#" {{action "addAction"}}>
-      <i class="exclamation circle icon"></i>
-    </a>
-  {{/ui-popup}}
-{{else if missingRequiredFields}}
-  {{#ui-popup tagName="span" content="This is a required field" position="right center"}}
-    {{column}}
+  {{column}}
+  {{ember-tooltip
+    side="top"
+    popperContainer="body"
+    text=popupMessage}}
+  <a href="#" {{action "addAction"}}>
     <i class="exclamation circle icon"></i>
-  {{/ui-popup}}
+  </a>
+{{else if missingRequiredFields}}
+  {{ember-tooltip
+    side="top"
+    popperContainer="body"
+    text="This is a required field"}}
+  {{column}}
+  <i class="exclamation circle icon"></i>
 {{else}}
   {{#if hasEnumInvalidation}}
-    {{#ui-popup tagName="span" content=hasEnumInvalidation position="right center"}}
-      <i class="exclamation circle icon"></i>
-    {{/ui-popup}}
+    {{ember-tooltip
+      side="top"
+      popperContainer="body"
+      text=hasEnumInvalidation}}
+    <i class="exclamation circle icon"></i>
   {{/if}}
   {{column}}
 {{/if}}

@@ -44,9 +44,11 @@
           <tr class="guess-fields-row overflow">
             <th>
               <div class="ui red ribbon label">
-                {{#ui-popup content="We have attempted to guess the columns that you uploaded. This row represents our guesses."}}
-                  Guessed Fields
-                {{/ui-popup}}
+                {{ember-tooltip
+                  side="right"
+                  popperContainer="body"
+                  text="We have attempted to guess the columns that you uploaded. This row represents our guesses."}}
+                Guessed Fields
               </div>
             </th>
             {{#each model.data.[0] as |guesses index|}}
@@ -78,9 +80,11 @@
           <tr class="client-fields-row">
             <th>
               <div class="ui blue ribbon label">
-                {{#ui-popup content="We show the column labels you originally uploaded here for reference."}}
-                  Your Columns
-                {{/ui-popup}}
+                {{ember-tooltip
+                  side="right"
+                  popperContainer="body"
+                  text="We show the column labels you originally uploaded here for reference."}}
+                Your Columns
               </div>
             </th>
             {{#each model.data.[1] as |clientDataNames|}}

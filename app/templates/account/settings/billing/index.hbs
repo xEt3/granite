@@ -67,9 +67,11 @@
 {{else if (not subscription.accountSuspended)}}
   {{#confirm-modal confirmContent="Are you sure you want to cancel your account? You will immediately lose access until reactivated." as |confirm|}}
     <button class="ui red fluid button" {{action (pipe confirm (action "cancelSubscription"))}}>
-      {{#ui-popup tagName="span" position="top center" content=cancelDescription}}
-        <i class="exclamation circle icon"></i>Cancel Subscription
-      {{/ui-popup}}
+      {{ember-tooltip
+        side="top"
+        popperContainer="body"
+        text="Pushing this button will cancel your current subscription and you will lose access to your account until you reactivate."}}
+      <i class="exclamation circle icon"></i>Cancel Subscription
     </button>
   {{/confirm-modal}}
 {{/if}}

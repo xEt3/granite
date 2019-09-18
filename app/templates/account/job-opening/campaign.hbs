@@ -21,14 +21,13 @@
     <div class="right menu">
       {{#if (and model.completedOn (not model.closed))}}
         {{#modals/ats-close-job-opening class="item" sourcesToClose=model.manualApplicantSources as |confirm|}}
-          {{#ui-popup
-            content="This job opening meets your requirements for closure. The appropriate number of candidates were hired and you can now close this opening."
-            position="bottom center"
-          }}
-            <a href="#" class="text-green" {{action (pipe confirm (action "close"))}}>
-              <i class="check icon"></i>Close Job Opening...
-            </a>
-          {{/ui-popup}}
+          <a href="#" class="text-green" {{action (pipe confirm (action "close"))}}>
+            {{ember-tooltip
+              side="bottom"
+              popperContainer="body"
+              text="This job opening meets your requirements for closure. The appropriate number of candidates were hired and you can now close this opening."}}
+            <i class="check icon"></i>Close Job Opening...
+          </a>
         {{/modals/ats-close-job-opening}}
       {{/if}}
 

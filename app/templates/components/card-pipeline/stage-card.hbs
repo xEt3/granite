@@ -71,13 +71,13 @@
         {{custom-label label size="mini"}}
       {{/each}}
       {{#if (gt application.labels.length 3)}}
-        <div class="ui custom popup top right card-content__popup-content" id={{popupId}}>
-          {{!-- THIS DIV IS HIDDEN UNTIL USED INSIDE POPUP BELOW --}}
-          {{#each (drop 3 application.labels) as |label|}}
-            {{custom-label label tagName="span" size="mini"}}
-          {{/each}}
-        </div>
-        {{ui-popup html=htmlForPopup context=".ui.main" tagName="i" class="gray-icon ellipsis horizontal icon"}}
+        <i class="gray-icon ellipsis horizontal icon">
+          {{#ember-tooltip side="top" popperContainer="body"}}
+            {{#each (drop 3 application.labels) as |label|}}
+              {{custom-label label tagName="span" size="mini"}}
+            {{/each}}
+          {{/ember-tooltip}}
+        </i>
       {{/if}}
     </div>
   {{/if}}

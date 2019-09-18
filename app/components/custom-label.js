@@ -10,6 +10,10 @@ const CustomLabel = Component.extend({
   classNameBindings: [ 'size' ],
 
   color: computed('label.color', function () {
+    if (!this.get('label.color')) {
+      return;
+    }
+
     let { r, g, b } = hexToRgb(this.get('label.color')),
         textColor = (r * 299 + g * 587 + b * 114) / 1000 > 123 ? 'black' : 'white';
 

@@ -1,9 +1,11 @@
 <td>
-  {{#ui-popup content="Delete custom field" position="bottom left" tagName="span"}}
-    <a href="#" class="text-danger" {{action "delete"}}>
-      <i class="trash icon"></i>
-    </a>
-  {{/ui-popup}}
+  <a href="#" class="text-danger" {{action "delete"}}>
+    <i class="trash icon"></i>
+    {{ember-tooltip
+      side="right"
+      popperContainer="body"
+      text="Delete custom field"}}
+  </a>
   {{key}}
 </td>
 
@@ -26,11 +28,13 @@
       </div>
     </form>
   {{else}}
-    {{#ui-popup content="Click to edit value" position="bottom left"}}
-      <a href="#" {{action "editValue"}}>
-        {{value}}
-        <i class="edit icon"></i>
-      </a>
-    {{/ui-popup}}
+    <a href="#" {{action "editValue"}}>
+      {{ember-tooltip
+        side="left"
+        popperContainer="body"
+        text="Click to edit value"}}
+      {{value}}
+      <i class="edit icon"></i>
+    </a>
   {{/if}}
 </td>

@@ -6,16 +6,29 @@
     {{assignment.employee.fullName}}
   {{/link-to}}
   {{#if assignment.readOn}}
-    {{#ui-popup tagName="span" content=viewedOn position="right center"}}
-      <i class="eye icon gray-icon"></i>
-    {{/ui-popup}}
+    &nbsp;
+    <i class="eye icon gray-icon">
+      {{#ember-tooltip
+        side="right"
+        popperContainer="body"
+      }}
+        Viewed on {{time assignment.readOn}}
+      {{/ember-tooltip}}
+    </i>
   {{/if}}
   {{#if assignment.signedOn}}
-    {{#ui-popup tagName="span" html=signedOn position="right center"}}
-      <a href="#" class="gray-icon" {{action "openSignatureModal"}}>
-        <i class="edit icon"></i>
-      </a>
-    {{/ui-popup}}
+    <a href="#" class="gray-icon" {{action "openSignatureModal"}}>
+      <i class="edit icon"></i>
+      {{#ember-popover
+        side="right"
+        popperContainer="body"
+      }}
+        <h4 class="center aligned text">
+          Signed on {{time assignment.signedOn}}
+        </h4>
+        <img src={{assignment.signature}} class="ui medium image" alt="Signature image">
+      {{/ember-popover}}
+    </a>
   {{/if}}
 </div>
 
