@@ -58,6 +58,7 @@ Router.map(function () {
         this.route('processes');
         this.route('features');
         this.route('lists');
+        this.route('forms');
       });
       this.route('billing', function () {
         this.route('invoices');
