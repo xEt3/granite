@@ -30,7 +30,7 @@
   <div class="field">
     <label for="pay-rate">Pay Rate</label>
     <div class="ui left icon input pay-rate-number">
-      {{input type="number" value=model.payRate id="pay-rate"}}
+      {{input type="number" step="0.01" value=model.payRate id="pay-rate"}}
       <i class="dollar icon"></i>
       {{#ui-dropdown class="inline pay-rate-unit" selected=model.payRateType onChange=(action (mut model.payRateType))}}
         <div class="default text">Unit</div>
