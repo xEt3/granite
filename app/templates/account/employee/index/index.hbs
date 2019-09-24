@@ -52,8 +52,28 @@
         {{#if hasDirectContact}}
           {{#if model.email}}
             <a href="mailto:{{model.email}}">
-              <i class="mail icon"></i>
+              {{ember-tooltip
+                side="right"
+                popperContainer="body"
+                text="Primary email"}}
+                <i class="large icons">
+                  <i class="mail icon"></i>
+                  <i class="bottom right corner building outline icon"></i>
+                </i>
               {{model.email}}
+            </a> <br />
+          {{/if}}
+          {{#if model.privateEmail}}
+            <a href="mailto:{{model.privateEmail}}">
+              {{ember-tooltip
+                side="right"
+                popperContainer="body"
+                text="Personal Email"}}
+                <i class="large icons">
+                  <i class="mail icon"></i>
+                  <i class="bottom right corner user icon"></i>
+                </i>
+              {{model.privateEmail}}
             </a> <br />
           {{/if}}
           {{#if model.phone}}

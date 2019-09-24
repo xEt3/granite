@@ -40,7 +40,7 @@
     {{/ui-dropdown}}
   </div>
 </div>
-<div class="three fields">
+<div class="four fields">
   <div class="field">
     <label for="employee-phone">Phone Number</label>
     {{masked-input type="tel" value=model.phone placeholder="Employee Phone #" id="employee-phone" mask="(111) 111-1111"}}
@@ -48,6 +48,10 @@
   <div class="field">
     <label for="email">Email</label>
     {{validated-input type="email" model=model valuePath="email" placeholder="Email" id="email"}}
+  </div>
+  <div class="field">
+    <label for="privateEmail">Private Email</label>
+    {{validated-input type="email" model=model valuePath="privateEmail" placeholder="Private Email" id="privateEmail"}}
   </div>
   <div class="field">
     <label for="employeeNumber">Employee Number</label>
