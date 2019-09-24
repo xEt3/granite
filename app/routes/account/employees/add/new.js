@@ -11,7 +11,8 @@ export default Route.extend(add, {
       onboarder:          this.get('auth.user'),
       onboarding:         true,
       onboardingStep:     0,
-      onboardingProgress: 0
+      onboardingProgress: 0,
+      addressState:       this.get('auth.user.company.addressState')
     };
   }
 });
