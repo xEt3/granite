@@ -22,7 +22,7 @@ const PipelineCardComponent = Component.extend({
   }),
 
   nextMeeting: computed('application.[]', 'newScheduledMeeting', function () {
-    if (!this.meetingFetched || this.application.id !== this.newScheduleMeeting) {
+    if (!this.meetingFetched || this.application.id !== this.newScheduledMeeting) {
       return this.get('getNextMeeting').perform();
     }
   }),
