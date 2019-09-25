@@ -5,8 +5,10 @@ import resolveForTypeKey from '../utils/resolve-for-type-key';
 import Validations from './validations/form';
 
 export default Model.extend({
-  name:     attr('string'),
-  formType: attr('string'),
+  name:        attr('string'),
+  formType:    attr('string'),
+  title:       attr('string'),
+  description: attr('string'),
 
   elements: hasMany('form-element'),
   company:  belongsTo('company'),

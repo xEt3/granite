@@ -1,6 +1,19 @@
 <form class="ui form" {{action "saveAndContinue" on="submit"}}>
   <h2 class="ui horizontal divider header">Offboarding Options</h2>
 
+  <div class="field">
+    <label for="final-email">
+      Final Email Address
+      <i class="ui question circle icon">
+        {{ember-tooltip
+          side="right"
+          popperContainer="body"
+          text="Used for automated exit interviews, final address collection, etc."}}
+      </i>
+    </label>
+    {{input type="email" value=model.finalEmail placeholder="Final Email" id="final-email"}}
+  </div>
+
   <div class="{{if model.autoExitInterview "three fields" "field"}}">
     <div class="field">
       <label for="exit-interview">
@@ -113,11 +126,6 @@
   {{/unless}}
 
   <div class="ui divider"></div>
-
-  <div class="field">
-    <label for="final-email">Final Email Address</label>
-    {{input type="email" value=model.finalEmail placeholder="Final Email" id="final-email"}}
-  </div>
 
   <div class="field">
     {{#input/document-selection-modal
