@@ -29,7 +29,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
   showDisqualified:         false,
 
   pendingApplications: computed.filter('model.applications', function (app) {
-    return !get(app, 'stage') && !get(app, 'reviewedOn') && !get(app, 'disqualified');
+    return !get(app, 'stage') && !get(app, 'reviewedOn');
   }),
 
   activeCandidates: computed.filter('model.applications', function (app) {
