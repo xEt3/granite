@@ -1,6 +1,6 @@
 <form class="ui form" {{action "saveAndContinue" on="submit"}}>
   <h2 class="ui horizontal divider header">Employee Information</h2>
-  <div class='field'>
+  <div class="field">
     {{#auto-focus}}
       {{ui-calendar
         class="field"
@@ -13,7 +13,7 @@
   </div>
   <div class="field">
     <label for="privateEmail">Personal Email</label>
-    {{validated-input type="text" model=model valuePath='privateEmail' placeholder="Personal Email" id="privateEmail"}}
+    {{validated-input type="text" model=model valuePath="privateEmail" placeholder="Personal Email" id="privateEmail"}}
   </div>
   <h3 class="ui horizontal header divider section">
     <i class="grey marker icon"></i>
