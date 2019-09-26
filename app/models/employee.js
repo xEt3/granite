@@ -71,6 +71,7 @@ export default Model.extend(Validations, {
     inverse: null
   }),
   offboardingProgress:     attr('number'),
+  offboardingCompleted:    attr('date'),
   offboardingDocuments:    hasMany('file', { defaultValue: [] }),
   terminatedOn:            attr('date'),
   terminationReason:       attr('string'),

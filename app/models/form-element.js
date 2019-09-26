@@ -15,6 +15,7 @@ export default Model.extend(Validations, {
   trueDisqualifies:  attr('boolean'),
   falseDisqualifies: attr('boolean'),
   allowAdditions:    attr('boolean'),
+  inlineInput:       attr('boolean'),
   multiple:          attr('boolean'),
 
   created: attr('date', { defaultValue: () => new Date() })
