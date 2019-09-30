@@ -94,6 +94,11 @@
             {{#if group.response.value.weight}}
               <span class="ui label">{{group.response.value.weight}}</span>
             {{/if}}
+            {{#if (not (or group.response.value.text group.response.value))}}
+              <div class="light text">
+                No response
+              </div>
+            {{/if}}
             {{or group.response.value.text group.response.value}}
           {{/if}}
         </p>
