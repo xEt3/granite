@@ -1,8 +1,10 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { A } from '@ember/array';
+import Validations from './validations/form-element';
 
-export default Model.extend({
+
+export default Model.extend(Validations, {
   label:   attr('string'),
   type:    attr('string'),
   options: attr('array', { defaultValue: () => A() }),

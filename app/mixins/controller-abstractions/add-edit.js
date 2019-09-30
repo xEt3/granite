@@ -4,6 +4,7 @@
   import addEdit from 'slate-payroll/mixins/controller-abstractions/add-edit'
 
   export default Ember.Controller.extend(addEdit, {
+    enableModelValidations: true, // if you want add-edit to check your validations
     transitionWithModel: true,
     transitionAfterSave: 'index',
 
@@ -16,12 +17,22 @@
  */
 import Mixin from '@ember/object/mixin';
 import { get } from '@ember/object';
-import { Promise, map } from 'rsvp';
+import { map } from 'rsvp';
 import AjaxHooks from '../ajax-status';
 
 export default Mixin.create(AjaxHooks, {
   enableNotify:        true,
   transitionWithModel: true,
+
+  getModelValidations (model) {
+    const validations = get(model, 'validations.messages');
+
+    if (!validations.length) {
+      return;
+    }
+
+    return validations.map(x => `\n\u2022 ${x}`);
+  },
 
   _validateModel (model) {
     const fields = this.get('requireFields');
@@ -55,11 +66,11 @@ export default Mixin.create(AjaxHooks, {
     }
   },
 
-  saveModel (model) {
+  async saveModel (model) {
     const _model = model || this.get('model');
 
     if (!_model) {
-      return Promise.resolve();
+      return;
     }
 
     if (get(_model, 'length')) {
@@ -70,17 +81,26 @@ export default Mixin.create(AjaxHooks, {
 
     let invalid = this._validateModel(_model);
 
+    let validationsError = this.get('enableModelValidations') && await this.getModelValidations(_model);
+
+    if (validationsError) {
+      throw validationsError;
+    }
+
     if (invalid) {
       let requireFieldDescriptors = get(this, 'requireFieldDescriptors'),
           invalidMessage = 'You must specify these fields: ' + invalid.map(field => {
             return requireFieldDescriptors ? requireFieldDescriptors[field] || field : field;
           }).join(', ');
 
-      this.ajaxError(invalidMessage, true);
-      return Promise.resolve();
+      throw invalidMessage;
     }
 
-    return _model.save().then(record => {
+    let record;
+
+    try {
+      record = await _model.save();
+
       this.ajaxSuccess('Successfully saved.');
 
       if (this.afterSave && typeof this.afterSave === 'function') {
@@ -88,8 +108,10 @@ export default Mixin.create(AjaxHooks, {
       }
 
       this._afterSave(record);
-      return record;
-    }).catch(this.ajaxError.bind(this));
+    } catch (e) {
+      this.ajaxError(e);
+    }
+    return record;
   },
 
   actions: {
