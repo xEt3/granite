@@ -30,6 +30,7 @@ export default Model.extend(Validations, {
   addressState:              attr('string'),
   addressZip:                attr('string'),
   email:                     attr('string'),
+  privateEmail:              attr('string'),
   emergencyContactNameFirst: attr('string'),
   emergencyContactNameLast:  attr('string'),
   emergencyContactPhone:     attr('string'),

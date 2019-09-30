@@ -29,6 +29,13 @@ export default buildValidations({
     validator('format', { type: 'email' })
   ],
 
+  privateEmail: [
+    validator('format', {
+      type:       'email',
+      allowBlank: true
+    })
+  ],
+
   addressLine1: [
     validator('presence', true),
     validator('length', { min: 2 })
