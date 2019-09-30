@@ -38,7 +38,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
 
   resetMeeting () {
     if (this.get('currentMeeting')) {
-      this.set('currentMeeting', undefined);
+      this.get('currentMeeting').destroy();
     }
 
     this.set('currentMeeting', this.store.createRecord('event'));
@@ -82,16 +82,6 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     const app = this.get('appInScheduler'),
           isEmployeeApplicant = app.get('isEmployee');
 
-    let previousMeeting = await this.store.queryRecord('event', {
-      contextType: 'JobApplication',
-      attendantId: get(isEmployeeApplicant ? app.get('employee') : app.get('applicant'), 'id')
-    });
-
-    if (previousMeeting) {
-      let pastMeeting = await this.store.findRecord('event', previousMeeting.id, { backgroundReload: false });
-      await pastMeeting.destroyRecord();
-    }
-
     event.setProperties({
       contextId:     app.get('id'),
       contextType:   'JobApplication',
@@ -106,7 +96,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
 
       this.ajaxSuccess(`Scheduled ${title} at ${start.format('h:mma [on] M/D/YY')}`);
 
-      this.set('newScheduledMeeting', this.get('newScheduledMeeting') !== app.get('id') ? app.get('id') : false);
+      this.set('newScheduledMeeting', meeting.get('id'));
 
     } catch (e) {
       this.ajaxError(e);

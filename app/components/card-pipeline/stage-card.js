@@ -22,7 +22,7 @@ const PipelineCardComponent = Component.extend({
   }),
 
   nextMeeting: computed('application.[]', 'newScheduledMeeting', function () {
-    if (!this.meetingFetched || this.application.id !== this.newScheduledMeeting) {
+    if (!this.meetingFetched || this.newScheduledMeeting) {
       return this.get('getNextMeeting').perform();
     }
   }),
@@ -34,6 +34,9 @@ const PipelineCardComponent = Component.extend({
   getNextMeeting: task(function*() {
     try {
       let results = yield this.get('store').query('event', {
+        limit:       1,
+        start:       { $gt: new Date() },
+        sort:        { start: 1 },
         contextType: 'JobApplication',
         contextId:   this.get('application.id')
       });
