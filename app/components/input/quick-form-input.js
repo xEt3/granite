@@ -25,6 +25,16 @@ const QuickFormInputComponent = Component.extend({
     let path = `model.${this.get('field.path')}`;
     defineProperty(this, 'value', computed.alias(path));
     this.set('initialValue', this.get(path));
+    this.set('model.color', this.randomColor());
+  },
+
+  randomColor () {
+    let hex = '0123456789ABCDEF',
+        color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += hex[Math.floor(Math.random() * hex.length)];
+    }
+    return color;
   },
 
   computedClassName: computed('field.{label,class}', function () {
@@ -41,6 +51,8 @@ const QuickFormInputComponent = Component.extend({
     if (this.get('field.removeBaseClass')) {
       return '';
     }
+
+
 
     switch (t) {
     case 'select':
@@ -77,6 +89,9 @@ const QuickFormInputComponent = Component.extend({
       if (this.get('model')) {
         this.set('model.color', hsva.toHEXA().toString());
       }
+    },
+    h () {
+      return '#e04e39';
     }
   }
 });
