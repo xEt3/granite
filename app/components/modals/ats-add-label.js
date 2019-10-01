@@ -16,9 +16,18 @@ const AddLabelModalComponent = Component.extend(addEdit, {
     this.set('currentLabel', null);
   },
 
+  randomColor () {
+    let hex = '0123456789ABCDEF',
+        color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += hex[Math.floor(Math.random() * hex.length)];
+    }
+    return color;
+  },
+
   actions: {
     async addLabel () {
-      this.set('currentLabel', await this.store.createRecord('label'));
+      this.set('currentLabel', await this.store.createRecord('label', { color: this.randomColor() }));
     },
 
     async saveLabel (label) {
