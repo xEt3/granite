@@ -42,8 +42,6 @@ const QuickFormInputComponent = Component.extend({
       return '';
     }
 
-
-
     switch (t) {
     case 'select':
       ic = 'selection';
