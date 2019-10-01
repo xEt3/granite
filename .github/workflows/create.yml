@@ -1,0 +1,16 @@
+on: create
+name: ZH Automation - Branch Manage
+jobs:
+  build:
+    name: james1x0/zenhub-automations@master
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: james1x0/zenhub-automations@master
+      uses: james1x0/zenhub-automations@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        INPROG_COLUMN: 5c92522983c46e630dc18372
+        PR_COLUMN: 5c92522983c46e630dc18373
+        REVIEW_COLUMN: 5c92522983c46e630dc18373
+        ZENHUB_API_KEY: ${{ secrets.ZENHUB_API_KEY }}
