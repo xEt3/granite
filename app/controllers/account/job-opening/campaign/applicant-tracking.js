@@ -96,7 +96,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
 
       this.ajaxSuccess(`Scheduled ${title} at ${start.format('h:mma [on] M/D/YY')}`);
 
-      this.set('newScheduledMeeting', meeting.get('id'));
+      this.set('newScheduledMeeting', app.get('id'));
     } catch (e) {
       this.ajaxError(e);
     }
