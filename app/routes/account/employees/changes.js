@@ -1,7 +1,6 @@
 import Route from '@ember/routing/route';
-import refreshable from 'granite/mixins/refreshable';
 
-export default Route.extend(refreshable, {
+export default Route.extend({
   titleToken: 'Changes',
 
   model () {
@@ -9,5 +8,11 @@ export default Route.extend(refreshable, {
       reviewedOn: { $not: { $type: 9 } },
       sort:       { created: -1 }
     });
+  },
+
+  actions: {
+    willTransition () {
+      this.send('refresh');
+    }
   }
 });
