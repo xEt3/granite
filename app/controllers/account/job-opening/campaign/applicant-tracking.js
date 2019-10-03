@@ -77,6 +77,8 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
   },
 
   async saveMeeting (event) {
+    this.set('newScheduledMeeting', null);
+
     this.ajaxStart();
 
     const app = this.get('appInScheduler'),
