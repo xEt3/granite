@@ -50,8 +50,9 @@ export default Route.extend(refreshable, {
       })),
       user:      this.get('auth.user.employee'),
       employees: this.store.query('employee', {
-        _id:  { $nin: [ this.get('auth.user.employee.id') ] },
-        sort: { 'name.last': 1 }
+        _id:          { $nin: [ this.get('auth.user.employee.id') ] },
+        terminatedOn: { $not: { $type: 9 } },
+        sort:         { 'name.first': 1 }
       })
     });
   },

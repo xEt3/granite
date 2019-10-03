@@ -22,8 +22,17 @@
   <div class="content">
     {{display/priority-label actionItem.priority}}
     <div class="right floated ui label">
-      <i class="calendar icon"></i>
-      Due on {{time actionItem.dueOn}}
+      <i class="clock icon"></i>
+      {{#if actionItem.dueOn}}
+        {{#if actionItem.delayedUntil}}
+          <span class="text-yellow">Delayed Until {{time actionItem.delayedUntil}}</span> - Originally
+        {{else}}
+          Due {{time-ago actionItem.dueOn}}
+        {{/if}}
+        Due on {{time actionItem.dueOn}}
+      {{else}}
+        No due date
+      {{/if}}
     </div>
   </div>
   <div class="content">

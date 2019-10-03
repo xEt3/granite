@@ -3,6 +3,8 @@ import { computed } from '@ember/object';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default Controller.extend(addEdit, {
+  enableModelValidations: true,
+
   sortGroupClass: computed('showingPreview', function () {
     return `ui middle aligned divided list screening__form-elements ${this.get('showingPreview') ? 'screening__form-elements--preview' : ''}`;
   }),
@@ -34,13 +36,19 @@ export default Controller.extend(addEdit, {
       this.get('form').set('elements', elements);
     },
 
-    saveAndContinue () {
-      let f = this.get('form');
+    async saveAndContinue () {
+      this.ajaxStart();
 
+      let f = await this.get('form');
       if (!f.elements.length) {
-        f.destroyRecord();
-        this.set('model.screening', null);
-        this.get('target').send('saveAndContinue');
+        try {
+          await f.destroyRecord();
+          this.set('model.screening', null);
+          await this.get('target').send('saveAndContinue');
+          this.ajaxSuccess();
+        } catch (e) {
+          this.ajaxError(e);
+        }
         return;
       }
 
@@ -49,11 +57,13 @@ export default Controller.extend(addEdit, {
         targetId:   this.get('model.id')
       });
 
-      this.saveModel(f)
-      .then(form => {
+      try {
+        let form = await this.saveModel(f);
         this.set('model.screening', form);
-        this.get('target').send('saveAndContinue');
-      });
+        await this.get('target').send('saveAndContinue');
+      } catch (e) {
+        this.ajaxError(e);
+      }
     }
   }
 });

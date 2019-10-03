@@ -29,7 +29,7 @@
   {{#unless showingPreview}}
     <div class="two fields">
       <div class="field">
-        <label>What would you like to ask for question #{{positionInForm}}?</label>
+        <label>What would you like to ask for question #{{positionInForm}}?*</label>
         {{input
           type="text"
           value=model.label
@@ -37,7 +37,7 @@
       </div>
 
       <div class="field">
-        <label>How should they answer?</label>
+        <label>How should they answer?*</label>
         {{#ui-dropdown
           class="selection"
           selected=model.type
