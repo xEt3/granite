@@ -82,6 +82,9 @@ Router.map(function () {
       this.route('messages', function () {
         this.route('thread', { path: '/thread/:thread_id' });
       });
+      this.route('forms', function() {
+        this.route('responses');
+      });
     });
     this.route('employee', { path: '/employee/:id' }, function () {
       this.route('index', { path: '/' }, function () {
