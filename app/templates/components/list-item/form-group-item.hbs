@@ -1,1 +1,27 @@
-{{yield}}
+{{#if hasBlock}}
+  {{yield model}}
+{{else}}
+  <div class="content clearfix">
+    <div class="header">
+      {{model.name}}
+      {{#if model.formType}}
+        <span class="ui blue label">{{model.formType}}</span>
+      {{/if}}
+      <div class="right floated">
+        {{#link-to 'account.employees.forms.responses' model._id}}
+          View Responses
+        {{/link-to}}
+      </div>
+    </div>
+
+    {{#if model.count}}
+      <div class="extra">
+        {{model.count}} {{inflect-text 'responses' model.count}} collected
+      </div>
+    {{else}}
+      <div class="meta">
+        <i>No responses to this form.</i>
+      </div>
+    {{/if}}
+  </div>
+{{/if}}

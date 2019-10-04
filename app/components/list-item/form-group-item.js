@@ -1,4 +1,3 @@
-import Component from '@ember/component';
+import BaseLiComponent from './base';
 
-export default Component.extend({
-});
+export default BaseLiComponent.extend({ classNames: [ 'item' ] });

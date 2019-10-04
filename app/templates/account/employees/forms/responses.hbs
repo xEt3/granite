@@ -1,1 +1,16 @@
-{{outlet}}
+<Modals::ViewFormResponse as |openResponseView|>
+  <div class="ui relaxed list">
+    {{#each model.responses as |response|}}
+      <div class="ui item">
+        <div class="content">
+          <div class="header">
+            Response by {{response.employee.fullName}} on {{time response.submittedOn 'M/D/YY [at] h:mma'}}
+          </div>
+          <div class="extra">
+            <a href="#" {{action openResponseView response model.form}}>View Responses</a>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</Modals::ViewFormResponse>

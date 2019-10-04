@@ -1,0 +1,44 @@
+{{yield openModalCb}}
+
+<UiModal @id=this.modalId @observeChanges=true>
+  <i class="close icon"></i>
+  <div class="header">
+    Viewing response by {{response.employee.fullName}} to {{response.form}}
+  </div>
+  <div class="content">
+    {{#each responses as |res|}}
+      <h4>{{res.question}}</h4>
+      <p>
+        {{#if res.response.value.length}}
+          <ul>
+            {{#each res.response.value as |value|}}
+              <li>
+                {{#if value.weight}}
+                  <span class="ui label">{{value.weight}}</span>
+                {{/if}}
+                {{or value.text value}}
+              </li>
+            {{/each}}
+          </ul>
+        {{else}}
+          {{#if res.response.value.weight}}
+            <span class="ui label">{{res.response.value.weight}}</span>
+          {{/if}}
+          {{#if (not (or res.response.value.text res.response.value))}}
+            <div class="light text">
+              No response
+            </div>
+          {{/if}}
+          {{or res.response.value.text res.response.value}}
+        {{/if}}
+      </p>
+    {{/each}}
+  </div>
+  {{#unless hideActions}}
+    <div class="actions">
+      <button class="ui button" {{action "respond" false}}>
+        Ok
+      </button>
+    </div>
+  {{/unless}}
+</UiModal>

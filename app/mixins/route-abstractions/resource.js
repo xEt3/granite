@@ -55,6 +55,7 @@ export default Mixin.create({
   },
 
   async model (params) {
+    console.log('test?');
     let query = {
       page:  params.page - 1 || 0,
       limit: params.limit
@@ -101,6 +102,7 @@ export default Mixin.create({
     if (!resourceUrl) {
       // normal resource request
       let modelRecords = await this.store.query(this.get('modelName'), query);
+      console.log('q');
 
       this.setProperties({
         totalRecords:   modelRecords.meta.totalRecords,
