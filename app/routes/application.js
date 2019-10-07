@@ -15,7 +15,7 @@ const errorRouteMap = {
   500: 'error',
   400: 'error'
 };
-import $ from 'jquery';
+
 export default Route.extend({
   title (tokens) {
     return [ ...tokens, 'Granite HR' ].join(' - ');
@@ -25,17 +25,6 @@ export default Route.extend({
 
   beforeModel () {
     return IS_TEST ? Promise.resolve() : this.get('auth').initializeExistingSession();
-  },
-
-  afterModel () {
-    setTimeout(() => {
-      $('p').addClass('pineapple');
-      console.log('pineapple');
-      setTimeout(() => {
-        console.log('pen');
-        $('p').removeClass('pineapple');
-      }, 3000);
-    }, 3000);
   },
 
   actions: {
