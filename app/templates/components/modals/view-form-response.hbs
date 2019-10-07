@@ -1,6 +1,6 @@
 {{yield openModalCb}}
 
-<UiModal @id=this.modalId @observeChanges=true>
+<UiModal @id={{this.modalId}} @observeChanges=true>
   <i class="close icon"></i>
   <div class="header">
     Viewing response by {{response.employee.fullName}} to {{response.form}}

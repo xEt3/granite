@@ -4,7 +4,7 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 import resolveForTypeKey from '../utils/resolve-for-type-key';
 import Validations from './validations/form';
 
-export default Model.extend({
+export default Model.extend(Validations, {
   name:        attr('string'),
   formType:    attr('string'),
   title:       attr('string'),

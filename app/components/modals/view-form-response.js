@@ -10,7 +10,7 @@ export default Modal.extend({
   }),
 
   responses: computed('response.responses.[]', 'form.elements.[]', function () {
-    return this.get('form.elements').map(element => {
+    return this.form?.elements && this.form.elements.map(element => {
       return {
         question: element.label,
         response: this.get('response.responses').findBy('step', element.id)
