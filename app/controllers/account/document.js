@@ -6,7 +6,8 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import $ from 'jquery';
 
 export default Controller.extend(addEdit, {
-  auth: service(),
+  auth:       service(),
+  isExpanded: false,
 
   fileAssignmentForm: computed(() => [{
     label:       'Assign to',
@@ -53,9 +54,11 @@ export default Controller.extend(addEdit, {
   },
 
   remapToModels (assignment) {
-    let employees = assignment.get('employees');
+    let employees = assignment.get('employees'),
+        model = this.get('model');
 
     assignment.set('employee', employees.get('firstObject'));
+    assignment.set('effectiveOn', model.get('effectiveOn'));
 
     if (employees.get('length') === 1) {
       return assignment;

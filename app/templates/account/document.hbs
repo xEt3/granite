@@ -63,6 +63,11 @@
       this
       tagName="div"}}
   </div>
+
+  {{#if isExpanded}}
+    {{ui-calendar class="field" type="date" inline=true onChange=(action (mut model.effectiveOn))}}
+  {{/if}}
+
   <div class="actions">
     <button class="ui red button" {{action "respondAssignment" false}}>
       Cancel
@@ -76,5 +81,10 @@
       {{/if}}
       <i class="add user icon"></i>
     </button>
+    {{ui-checkbox
+      class="ui right floated toggle"
+      label="Future Date"
+      checked=isExpanded
+      onChange=(action (toggle "isExpanded" this))}}
   </div>
 {{/ui-modal}}
