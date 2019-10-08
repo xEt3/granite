@@ -9,7 +9,7 @@
     {{#each responses as |res|}}
       <h4>{{res.question}}</h4>
       <p>
-        {{#if res.response.value.length}}
+        {{#if (is-array res.response.value)}}
           <ul>
             {{#each res.response.value as |value|}}
               <li>
