@@ -62,6 +62,14 @@
       fileAssignment
       this
       tagName="div"}}
+
+    <div class='field center aligned text'>
+      {{ui-checkbox
+        class="toggle"
+        label="Assign for a future Date"
+        checked=isExpanded
+        onChange=(action (toggle "isExpanded" this))}}
+    </div>
   </div>
 
   {{#if isExpanded}}
@@ -81,10 +89,5 @@
       {{/if}}
       <i class="add user icon"></i>
     </button>
-    {{ui-checkbox
-      class="ui right floated toggle"
-      label="Future Date"
-      checked=isExpanded
-      onChange=(action (toggle "isExpanded" this))}}
   </div>
 {{/ui-modal}}
