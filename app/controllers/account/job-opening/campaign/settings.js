@@ -161,6 +161,7 @@ export default Controller.extend(addEdit, {
       if (!this.get('editingStage')) {
         this.send('addStage');
       }
+
       $('#modal__add-stage').modal({
         context:    '.ember-application',
         detachable: true,
@@ -168,6 +169,8 @@ export default Controller.extend(addEdit, {
           if (!this.get('respondedStageAddition')) {
             this.send('respondStageAddition', false);
           }
+
+          $('#modal__add-stage').appendTo($('#modal__add-stage--placeholder'));
         }
       }).modal('show');
       return new Promise((resolveStage, rejectStage) => this.setProperties({

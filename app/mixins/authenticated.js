@@ -11,7 +11,8 @@ export default Mixin.create({
       return this.transitionTo('login');
     }
 
-    this.get('auth').addObserver('authenticated', this, this.__authenticationStateChanged);
+    this.addObserver('auth.authenticated', this, this.__authenticationStateChanged);
+
     this._super(...arguments);
   },
 
@@ -22,7 +23,12 @@ export default Mixin.create({
   },
 
   willDestroy () {
-    this.get('auth').removeObserver('authenticated', this, this.__authenticationStateChanged);
+    try {
+      this.removeObserver('auth.authenticated', this, this.__authenticationStateChanged);
+    } catch (e) {
+      // noop
+    }
+
     this._super(...arguments);
   }
 });

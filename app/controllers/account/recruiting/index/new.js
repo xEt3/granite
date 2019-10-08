@@ -28,6 +28,7 @@ export default Controller.extend(addEdit, {
     path:  'name'
   }]),
 
+  /* eslint-disable-next-line */
   jobDescriptionChanged: observer('model.job', function () {
     run.once(() => {
       let model = this.get('model'),

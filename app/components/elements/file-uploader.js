@@ -98,7 +98,7 @@ export default Component.extend(ajaxStatus, {
     };
 
     for (var i in files) {
-      if (!files.hasOwnProperty(i) || typeof files[ i ] !== 'object') {
+      if (!Object.prototype.hasOwnProperty.call(files, i) || typeof files[ i ] !== 'object') {
         continue;
       }
 
@@ -161,7 +161,7 @@ export default Component.extend(ajaxStatus, {
 
   shouldSetHasFiles: computed('files.[]', function () {
     // eslint-disable-next-line ember/no-side-effects
-    this.set('hasFiles', this.get('files') && this.get('files.length') > 0);
+    return this.set('hasFiles', this.get('files') && this.get('files.length') > 0);
   }),
 
 

@@ -13,7 +13,7 @@ export default Component.extend({
         attributes = A();
 
     for (let key in fields) {
-      if (!fields.hasOwnProperty(key)) {
+      if (!Object.prototype.hasOwnProperty.call(fields, key)) {
         continue;
       }
 

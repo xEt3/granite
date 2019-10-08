@@ -3,24 +3,17 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | list-item/form-group-item', function(hooks) {
+module('Integration | Component | list-item/form-group-item', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  test('it renders', async function (assert) {
+    this.set('model', {
+      name:  'test',
+      count: 1
+    });
+    await render(hbs`{{list-item/form-group-item model}}`);
 
-    await render(hbs`{{list-item/form-group-item}}`);
-
-    assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      {{#list-item/form-group-item}}
-        template block text
-      {{/list-item/form-group-item}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.dom(this.element).includesText('test');
+    assert.dom(this.element).includesText('1 response');
   });
 });
