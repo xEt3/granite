@@ -5,13 +5,15 @@
     <div class="header">
       {{model.name}}
       {{#if model.formType}}
-        <span class="ui blue label">{{model.formType}}</span>
+        <span class="ui tiny label">{{model.formType}}</span>
       {{/if}}
-      <div class="right floated">
-        {{#link-to 'account.employees.forms.responses' model._id}}
-          View Responses
-        {{/link-to}}
-      </div>
+      {{#if model.count}}
+        <div class="right floated">
+          {{#link-to 'account.employees.forms.responses' model._id}}
+            View Responses
+          {{/link-to}}
+        </div>
+      {{/if}}
     </div>
 
     {{#if model.count}}

@@ -11,5 +11,12 @@ export default Route.extend(resource, {
       responses,
       form: await this.store.find('form', form_id)
     };
+  },
+
+  setupController (controller, model) {
+    controller.setProperties({
+      model: model.responses,
+      form:  model.form
+    });
   }
 });
