@@ -1,10 +1,10 @@
-import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { htmlSafe } from '@ember/string';
+import Modal from '.';
 import $ from 'jquery';
 
-export default Component.extend({
+export default Modal.extend({
   store: service(),
   icons: 'mobile tablet desktop laptop car lab configure asterisk cube sound photo'.w(),
 
@@ -20,12 +20,7 @@ export default Component.extend({
     const store = this.get('store');
 
     this.setProperties({ newAsset: store.createRecord('asset', {}) });
-
-    $('#' + this.get('modalId')).modal({
-      detachable: true,
-      closable:   false,
-      context:    '.ember-application'
-    }).modal('show');
+    this.dispatchSemanticModal();
 
     return new Promise((resolve, reject) => this.setProperties({
       resolve,

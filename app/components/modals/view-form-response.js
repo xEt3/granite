@@ -5,10 +5,6 @@ import $ from 'jquery';
 export default Modal.extend({
   modalId: 'modal__view-form-response',
 
-  openModalCb: computed('modalId', function () {
-    return this.openModal.bind(this);
-  }),
-
   responses: computed('response.responses.[]', 'form.elements.[]', function () {
     return this.form?.elements && this.form.elements.map(element => {
       return {
@@ -24,11 +20,7 @@ export default Modal.extend({
       form
     });
 
-    $(`#${this.get('modalId')}`).modal({
-      detachable: true,
-      closable:   false,
-      context:    '.ember-application'
-    }).modal('show');
+    this.dispatchSemanticModal();
   },
 
   closeModal () {
