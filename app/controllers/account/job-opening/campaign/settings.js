@@ -170,6 +170,10 @@ export default Controller.extend(addEdit, {
             this.send('respondStageAddition', false);
           }
 
+          if (this.isDestroyed || this.isDestroying) {
+            $('#modal__add-stage').remove();
+          }
+
           $('#modal__add-stage').appendTo($('#modal__add-stage--placeholder'));
         }
       }).modal('show');

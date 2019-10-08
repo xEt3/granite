@@ -66,9 +66,13 @@ export default Controller.extend(ajaxStatus, {
         company:    user.get('company')
       }));
 
-      $('#modal__add-stage').modal({
+      $('#modal__new-asset').modal({
         onHidden: () => {
-          $('#modal__add-stage').appendTo($('#modal__add-stage--placeholder'));
+          if (this.isDestroyed || this.isDestroying) {
+            $('#modal__new-asset').remove();
+          }
+
+          $('#modal__new-asset').appendTo($('#modal__new-asset--placeholder'));
         }
       }).modal('show');
     },
@@ -142,7 +146,7 @@ export default Controller.extend(ajaxStatus, {
 
     closeAssetModalAndTransition (link, id) {
       this.send('abortAsset');
-      $('#modal__add-stage').modal('hide');
+      $('#modal__new-asset').modal('hide');
       this.transitionToRoute(link, id);
     }
   }
