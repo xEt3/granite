@@ -66,7 +66,11 @@ export default Controller.extend(ajaxStatus, {
         company:    user.get('company')
       }));
 
-      $('.new-asset').modal('show');
+      $('#modal__add-stage').modal({
+        onHidden: () => {
+          $('#modal__add-stage').appendTo($('#modal__add-stage--placeholder'));
+        }
+      }).modal('show');
     },
 
     saveAsset () {
@@ -138,7 +142,7 @@ export default Controller.extend(ajaxStatus, {
 
     closeAssetModalAndTransition (link, id) {
       this.send('abortAsset');
-      $('.new-asset').modal('hide');
+      $('#modal__add-stage').modal('hide');
       this.transitionToRoute(link, id);
     }
   }
