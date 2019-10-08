@@ -32,9 +32,12 @@ module.exports = {
     Dropzone:       true
   },
   rules: {
-    'key-spacing':             [ 'error', { align: { on: 'value' } }],
-    'object-property-newline': [ 'error', { allowAllPropertiesOnSameLine: false }],
-    'comma-spacing':           [ 'error', {
+    'ember/no-new-mixins':                                      0,
+    'ember/no-incorrect-calls-with-inline-anonymous-functions': 0,
+    'ember/no-arrow-function-computed-properties':              0,
+    'key-spacing':                                              [ 'error', { align: { on: 'value' } }],
+    'object-property-newline':                                  [ 'error', { allowAllPropertiesOnSameLine: false }],
+    'comma-spacing':                                            [ 'error', {
       before: false,
       after:  true
     }],
