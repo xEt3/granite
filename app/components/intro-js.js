@@ -32,6 +32,7 @@ var INTRO_JS_OPTIONS = [
 ];
 
 var IntroJSComponent = Component.extend({
+  /* eslint-disable-next-line */
   setupIntroJS: observer('start-if', function () {
     run.scheduleOnce('afterRender', this, this.startIntroJS);
   }).on('didInsertElement'),

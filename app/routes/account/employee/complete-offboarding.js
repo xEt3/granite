@@ -6,9 +6,10 @@ export default Route.extend({
 
   afterModel (model) {
     model.setProperties({
-      offboarding:         false,
-      offboardingStep:     null,
-      offboardingProgress: null
+      offboarding:          false,
+      offboardingStep:      null,
+      offboardingProgress:  null,
+      offboardingCompleted: new Date()
     });
 
     model.save().then(() => run.scheduleOnce('afterRender', () => run.later(() => {

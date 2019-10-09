@@ -61,6 +61,7 @@ export default Component.extend(pagination, addEdit, ajaxStatus, {
     });
   },
 
+  /* eslint-disable-next-line */
   searchTermChanged: observer('searchText', function () {
     if (this.get('_searchDebounce')) {
       run.cancel(this.get('_searchDebounce'));

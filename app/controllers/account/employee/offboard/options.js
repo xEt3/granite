@@ -10,6 +10,10 @@ export default Controller.extend(addEdit, {
   actions: {
     onNotify (type, msg) {
       this.send('notify', type, msg);
+    },
+
+    interimAddForm (form) {
+      this.availableExitForms.addObject(form);
     }
   }
 });

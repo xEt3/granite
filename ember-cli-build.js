@@ -30,9 +30,20 @@ module.exports = function (defaults) {
 
     'ember-cli-babel': { includePolyfill: true },
 
+    SemanticUI: {
+      source: {
+        css:        'node_modules/semantic-ui-less',
+        javascript: 'node_modules/semantic-ui-css',
+        images:     'node_modules/semantic-ui-less/themes/default/assets/images',
+        fonts:      'node_modules/semantic-ui-less/themes/default/assets/fonts'
+      }
+    },
+
     babel: {
       plugins: [
-        'transform-object-rest-spread'
+        'transform-object-rest-spread',
+        '@babel/plugin-proposal-nullish-coalescing-operator',
+        '@babel/plugin-proposal-optional-chaining'
       ]
     }
   });
@@ -42,7 +53,7 @@ module.exports = function (defaults) {
   let fontFiles = globSync('node_modules/semantic-ui-less/themes/default/assets/fonts/!(brand-icons).*');
 
   fontFiles.map(path =>
-    app.import(path, { destDir: 'assets/themes/default/assets/fonts' }));
+    app.import(path, { destDir: 'assets/themes/default/assets/fonts' }, { overwrite: true }));
 
   return app.toTree();
 };

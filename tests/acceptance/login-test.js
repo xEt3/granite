@@ -7,9 +7,9 @@ module('Acceptance | login behaviors', function (hooks) {
 
   test('failed logins', async function (assert) {
     await visit('/');
-    assert.equal(currentURL(), '/');
+    assert.equal(currentURL(), '/', 'on page index');
     await click('a[href="/login"]');
-    assert.equal(currentURL(), '/login');
+    assert.equal(currentURL(), '/login', 'on page login');
     assert.ok(find('input[type="email"]'), 'Email input on page');
     assert.ok(find('input[type="password"]'), 'Password input on page');
     assert.ok(find('button[type="submit"]'), 'Submit button on page');
@@ -19,6 +19,7 @@ module('Acceptance | login behaviors', function (hooks) {
     const controller = this.owner.lookup('controller:login');
     assert.equal(controller.get('errorMessage'), 'User not found', 'error message is "User not found"');
     assert.equal(currentURL(), '/login', 'Still on login page');
+    await settled();
   });
 
   test('correct login', async function (assert) {

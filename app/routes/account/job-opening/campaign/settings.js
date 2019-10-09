@@ -1,6 +1,7 @@
 import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
 import edit from 'granite/mixins/route-abstractions/edit';
+import $ from 'jquery';
 
 export default Route.extend(edit, {
   titleToken: 'Settings',
@@ -31,5 +32,11 @@ export default Route.extend(edit, {
       defaultPipeline: model.defaultPipeline,
       customPipeline:  model.customPipeline
     });
+  },
+
+  actions: {
+    willTransition () {
+      $('#modal__add-stage').modal('hide');
+    }
   }
 });

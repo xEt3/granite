@@ -1,27 +1,29 @@
-{{head-layout}}
-{{notification-container notifications=notifications position="bottom"}}
+<div class="ember-view">
+  {{head-layout}}
+  {{notification-container notifications=notifications position="bottom"}}
 
-{{display/subscription-banner
-  transitionToSubscription=(action "transitionToSubscription")
-  accountLocked=subscription.accountLocked}}
+  {{display/subscription-banner
+    transitionToSubscription=(action "transitionToSubscription")
+    accountLocked=subscription.accountLocked}}
 
-<div class="ui main">
-  {{#if (not (or topLevel noNav))}}
-    {{elements/account-navigation links=accountNavigationItems ui_context="body .ember-view .main"}}
-  {{/if}}
-  {{! template-lint-disable no-inline-styles }}
-  <div class="ember-view ui fluid container {{unless topLevel "in__application pusher"}} {{if increaseReadability "main__dark-text"}}" style={{if backdrop backdrop}}>
-    {{#if topLevel}}
-      {{elements/x-navigation transparent=navTransparent topLevel=topLevel}}
+  <div class="ui main">
+    {{#if (not (or topLevel noNav))}}
+      {{elements/account-navigation links=accountNavigationItems ui_context="body .ember-view .main"}}
     {{/if}}
+    {{! template-lint-disable no-inline-styles }}
+    <div class="ember-view ui fluid container {{unless topLevel "in__application pusher"}} {{if increaseReadability "main__dark-text"}}" style={{if backdrop backdrop}}>
+      {{#if topLevel}}
+        {{elements/x-navigation transparent=navTransparent topLevel=topLevel}}
+      {{/if}}
 
-    <div class="application__outlet-wrapper">
-      {{outlet}}
+      <div class="application__outlet-wrapper">
+        {{outlet}}
+      </div>
+
+      {{elements/x-footer}}
     </div>
-
-    {{elements/x-footer}}
   </div>
+  {{#if (and auth.isExpiring (not auth.isExpired))}}
+    {{confirm-modal confirmOnRender=true confirmContent="Your session is expiring. Would you like to continue?" onResponse=(action "authResponse")}}
+  {{/if}}
 </div>
-{{#if (and auth.isExpiring (not auth.isExpired))}}
-  {{confirm-modal confirmOnRender=true confirmContent="Your session is expiring. Would you like to continue?" onResponse=(action "authResponse")}}
-{{/if}}

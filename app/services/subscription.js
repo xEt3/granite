@@ -16,6 +16,7 @@ export default Service.extend({
     return this.get('auth.user.company');
   }),
 
+  /* eslint-disable-next-line */
   updateSubscription: observer('auth.authenticated', 'auth.user.company', function () {
     once(this, this.getSubscription);
   }),

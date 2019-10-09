@@ -46,9 +46,9 @@ const FormElementComponent = SortableItem.extend({
     return this.get('index') + 1;
   }),
 
-  labelSuggestion: computed(() =>
-    `ex. ${labelSuggestions[Math.floor(Math.random() * labelSuggestions.length)]}`
-  ),
+  labelSuggestion: computed(function () {
+    return `ex. ${labelSuggestions[Math.floor(Math.random() * labelSuggestions.length)]}`;
+  }),
 
   label: computed('model.{required,label}', 'positionInForm', function () {
     let l = this.get('model.label'),
@@ -62,6 +62,7 @@ const FormElementComponent = SortableItem.extend({
     return label;
   }),
 
+  /* eslint-disable-next-line */
   rerenderFormElement: observer('model.{allowAdditions,multiple}', function () {
     if (this.get('isDestroyed') || this.get('isDestroying')) {
       return;

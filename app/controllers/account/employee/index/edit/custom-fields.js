@@ -17,6 +17,7 @@ export default Controller.extend({
     return this.get('addingCustomFieldName') ? 'Cancel' : 'Add a new custom field';
   }),
 
+  /* eslint-disable-next-line */
   recreateCustomFields: on('init', observer('model', function () {
     this.updateCustomFields();
   })),
@@ -26,7 +27,7 @@ export default Controller.extend({
         fields = A();
 
     for (var key in customFields) {
-      if (!customFields.hasOwnProperty(key)) {
+      if (!Object.prototype.hasOwnProperty.call(customFields, key)) {
         continue;
       }
 
