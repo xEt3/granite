@@ -4,6 +4,10 @@ import resource from 'granite/mixins/route-abstractions/resource';
 export default Route.extend(resource, {
   modelName: 'form-response',
 
+  titleToken (model) {
+    return `Responses for ${model.form.name}`;
+  },
+
   async model ({ form_id }) {
     this.set('query', { form: form_id });
     const responses = await this._super(...arguments);
