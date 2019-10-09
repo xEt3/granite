@@ -5,6 +5,15 @@
   {{#link-to "account.employee" assignment.employee.id class="item text-black"}}
     {{assignment.employee.fullName}}
   {{/link-to}}
+  <div class="detail">
+    {{if pastAssignment 'Assigned' 'Pending'}}
+    {{#ember-tooltip
+      side="right"
+      popperContainer="body"
+    }}
+      Document {{if pastAssignment "was" "will be"}} assigned on {{time (or assignment.effectiveOn assignment.created)}} by {{assignment.creator.fullName}}
+    {{/ember-tooltip}}
+  </div>
   {{#if assignment.readOn}}
     &nbsp;
     <i class="eye icon gray-icon">
