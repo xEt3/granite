@@ -54,7 +54,7 @@ module('Acceptance | signup', function (hooks) {
 
     // Fill in fields
     for (let key in fieldMap) {
-      if (!fieldMap.hasOwnProperty(key)) {
+      if (!Object.prototype.hasOwnProperty.call(fieldMap, key)) {
         continue;
       }
 
@@ -101,15 +101,13 @@ module('Acceptance | signup', function (hooks) {
     let company = server.db.companies.where({ name: fakeData.name })[0];
     assert.ok(company, 'Company exists');
     assert.ok(!find('button[type="submit"]').disabled, 'Submit is enabled');
-
     click('button[type="submit"]');
-    await new Promise(resolve => setTimeout(resolve, 700));
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     let paymentMethod = server.db.paymentMethods.where({ company: company.id })[0];
 
     assert.ok(paymentMethod, 'Payment method exists');
     assert.equal(paymentMethod.nonce, 'fake-valid-nonce', 'Nonce is equal to the one set in billing controller');
-
     assert.equal(currentURL(), '/signup/finish', 'signup/finish is loaded');
     await settled();
     assert.equal(currentURL(), '/', 'brought you back to the index page');
@@ -134,7 +132,7 @@ module('Acceptance | signup', function (hooks) {
 
     // Fill in fields
     for (let key in fieldMap) {
-      if (!fieldMap.hasOwnProperty(key) || !fakeData[key]) {
+      if (!Object.prototype.hasOwnProperty.call(fieldMap, key) || !fakeData[key]) {
         continue;
       }
 

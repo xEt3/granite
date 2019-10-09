@@ -6,6 +6,8 @@ export default Route.extend(add, {
   titleToken: 'Screening',
   modelName:  'form',
 
+  modelDefaults: { formType: 'screening' },
+
   model () {
     let jobOpening = this.modelFor('account.job-opening'),
         makeNew = this._super.bind(this); // "add" mixin's model hook

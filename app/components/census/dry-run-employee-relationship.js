@@ -18,5 +18,7 @@ export default Component.extend({
       //if value is object, return value because its a supervisor in the local upload
       return typeof value === 'object' ? value : this.get('store').findRecord(key, value);
     }
+
+    return false;
   })
 });

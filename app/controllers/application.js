@@ -43,6 +43,7 @@ export default Controller.extend({
     return currentPath && noNavRoutes.find(r => currentPath.indexOf(r) > -1);
   }),
 
+  /* eslint-disable-next-line */
   updateBodyClass: on('init', observer('topLevel', function () {
     if (ENV.environment !== 'test') {
       run.scheduleOnce('afterRender', () => {
@@ -80,6 +81,7 @@ export default Controller.extend({
     return htmlSafe(grad ? `background: ${grad}` : '');
   }),
 
+  /* eslint-disable-next-line */
   transitionAfterExpiration: observer('auth.isExpired', function () {
     if (this.get('auth.isExpired')) {
       $('.ui.modal').modal('hide');

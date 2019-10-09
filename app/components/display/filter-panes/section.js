@@ -13,7 +13,7 @@ const SectionComponent = Component.extend({
 
     if (active && activeState) {
       for (let controlName in activeState) {
-        if (!activeState.hasOwnProperty(controlName)) {
+        if (!Object.prototype.hasOwnProperty.call(activeState, controlName)) {
           continue;
         }
 

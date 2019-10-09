@@ -2,6 +2,7 @@ import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
 import refreshable from 'granite/mixins/refreshable';
 import Object from '@ember/object';
+import $ from 'jquery';
 
 export default Route.extend(refreshable, {
   title: 'Equipment - Granite HR',
@@ -43,11 +44,7 @@ export default Route.extend(refreshable, {
 
   actions: {
     willTransition () {
-      let modalNode = document.querySelector('.ui.modal.new-asset');
-
-      if (modalNode && modalNode.remove) {
-        modalNode.remove();
-      }
+      $('#modal__new-asset').modal('hide');
     }
   }
 });

@@ -95,7 +95,7 @@ export default Service.extend({
   },
 
   performSearch (q, opts = {}) {
-    assert(q, 'search#performSearch requires a query argument.');
+    assert(!!q, true, 'search#performSearch requires a query argument.');
 
     let searchOptions = Object.assign({}, searchDefaults, opts);
 

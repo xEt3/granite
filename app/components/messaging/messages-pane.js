@@ -20,6 +20,7 @@ const MessagesPaneComponent = Component.extend({
     this._super(...arguments);
   },
 
+  /* eslint-disable-next-line */
   contentChanged: observer('messages.[]', function () {
     const bottomStuck = this.get('isBottomStuck'),
           topStuck = this.get('isTopStuck');
