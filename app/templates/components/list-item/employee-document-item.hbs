@@ -39,7 +39,7 @@
     <div class="ui equal width stackable grid">
       <div class="left aligned column">
         <div class="ui small text">
-          <p>Assigned {{time assignment.created}} by {{assignment.creator.fullName}}</p>
+          <p>Document {{if pastAssignment "was" "will be"}} assigned on {{time (or assignment.effectiveOn assignment.created)}} by {{assignment.creator.fullName}}</p>
           {{#if assignment.readOn}}
             <p>Viewed: {{time assignment.readOn}}</p>
           {{/if}}
