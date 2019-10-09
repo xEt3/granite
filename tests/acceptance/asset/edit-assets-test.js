@@ -67,9 +67,5 @@ module('Acceptance | company asset-category functionality', function (hooks) {
     assert.equal(currentURL(), '/account/assets', 'transitioned correctly after removal');
     assert.dom('div.ui.divided.link.items > h2.center.aligned.header').includesText('No assets available.');
     assert.equal(server.db.assets.length, 0, 'no assets in db after removal');
-
-    let done = assert.async();
-    setTimeout(() => done(), 10000);
-    assert.ok(1, 'token assertion');
   });
 });

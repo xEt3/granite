@@ -2,6 +2,87 @@
   <h2 class="ui horizontal divider header">Offboarding Options</h2>
 
   <div class="field">
+    <label for="final-email">
+      Final Email Address
+      <i class="ui question circle icon">
+        {{ember-tooltip
+          side="right"
+          popperContainer="body"
+          text="Used for automated exit interviews, final address collection, etc."}}
+      </i>
+    </label>
+    {{input type="email" value=model.finalEmail placeholder="Final Email" id="final-email"}}
+  </div>
+
+  <div class={{if model.autoExitInterview "three fields" "field"}}>
+    <div class="field">
+      <label for="exit-interview">
+        Automated exit interview
+        <i class="ui question circle icon">
+          {{ember-tooltip
+            side="right"
+            popperContainer="body"
+            text="Automated exit interviews allow you to select a time and form, and we take care of the rest. On the date selected, otherwise immediately, we'll send a link via email to a survey the employee can fill out. When they do, you'll be notified."}}
+        </i>
+      </label>
+      {{ui-checkbox
+        id="exit-interview"
+        class="toggle"
+        label=(if model.autoExitInterview "Conduct exit interview" "Do not conduct exit interview")
+        checked=model.autoExitInterview
+        onChange=(action (mut model.autoExitInterview))}}
+    </div>
+
+    {{#if model.autoExitInterview}}
+      <div class="field">
+        {{ui-calendar
+          class="field"
+          type="date"
+          label="When should the exit interview become available? (Otherwise, their termination date)"
+          dateValue=model.autoExitInterviewDate
+          onChange=(action (mut model.autoExitInterviewDate))}}
+      </div>
+
+      <div class="field">
+        <label for="exit-interview-form">
+          Form to use*
+          {{#link-to "account.settings.index.forms" target="_blank"}}
+            {{ember-tooltip
+              side="top"
+              popperContainer="body"
+              text="Manage your forms"}}
+            <i class="ui wrench icon"></i>
+          {{/link-to}}
+          {{#modals/form-creator
+            formType="exit-interview"
+            onNotify=(action "onNotify")
+            onCreateForm=(action "interimAddForm") as |openFormModal|
+          }}
+            <a href="#" class="right floated" {{action openFormModal}}>Create a new form...</a>
+          {{/modals/form-creator}}
+        </label>
+
+        {{#ui-dropdown
+          id="exit-interview-form"
+          class="search selection"
+          selected=model.autoExitInterviewForm
+          onChange=(action (mut model.terminationReason)) as |execute mapper|}}
+          <div class="default text">Select a form to use</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item" data-value="">Default Form</div>
+            {{#each availableExitForms as |exitForm|}}
+              <div class="item" data-value={{map-value mapper exitForm}}>
+                {{exitForm.name}}
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      </div>
+    {{/if}}
+  </div>
+
+  <div class="field">
     <label for="final-address-ss">Final Address</label>
     {{ui-checkbox id="final-address-ss" class="toggle" label=(if model.finalAddressSelfService "Collect final address from employee" "Enter final address") checked=model.finalAddressSelfService onChange=(action (mut model.finalAddressSelfService))}}
   </div>
@@ -46,16 +127,6 @@
 
   <div class="ui divider"></div>
 
-  <div class="field">
-    <label for="final-email">Final Email Address</label>
-    {{input type="email" value=model.finalEmail placeholder="Final Email" id="final-email"}}
-  </div>
-
-  <div class="field">
-    <label for="exit-interview">Automated Exit Interview</label>
-    {{ui-checkbox id="exit-interview" class="toggle" label=(if model.autoExitInterview "Conduct exit interview" "Do not conduct exit interview") checked=model.autoExitInterview onChange=(action (mut model.autoExitInterview))}}
-    {{!TODO Spec this}}
-  </div>
   <div class="field">
     {{#input/document-selection-modal
       title="Select Offboarding Documents"

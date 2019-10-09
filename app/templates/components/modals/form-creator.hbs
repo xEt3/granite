@@ -1,0 +1,85 @@
+{{#if hasBlock}}
+  {{yield openFormModal}}
+{{/if}}
+
+{{#ui-modal name="modal__form-creator" id=modalId}}
+  <div class="header">
+    {{if existingForm "Edit" "Create"}} Form
+  </div>
+  <div class="content ui form">
+    <div class="field">
+      <label for="form-name">Form Name* (for your use)</label>
+      {{input
+        type="text"
+        value=form.name
+        placeholder="Form Name"
+        id="form-name"
+      }}
+    </div>
+
+    <div class="field">
+      <label for="form-title">Form Title* (employee-facing)</label>
+      {{input
+        type="text"
+        value=form.title
+        placeholder="Form Title"
+        id="form-title"
+      }}
+    </div>
+
+    <div class="field">
+      <label for="form-description">Form Description (optional) (employee-facing)</label>
+      {{textarea
+        value=form.description
+        placeholder="Employee-facing description of your form"
+        id="form-description"
+      }}
+    </div>
+
+    <div class="ui divider"></div>
+
+    {{#if form.elements}}
+      <div class="field right aligned icon">
+        <button type="button" class="ui compact {{if showingPreview "green"}} button" {{action (toggle "showingPreview" this)}}>
+          <i class="{{if showingPreview "un"}}hide icon"></i>
+          {{if showingPreview "Hide "}}Preview Mode
+        </button>
+      </div>
+    {{/if}}
+
+    {{#sortable-group
+      tagName="ol"
+      class=sortGroupClass
+      onChange="reorderElements"
+      as |group|}}
+      {{#each form.elements as |element index|}}
+        {{form/form-element
+          element
+          group
+          index=index
+          tagName="li"
+          class="form-element__list-item"
+          showingPreview=showingPreview
+          scoring=model.applicantScoring
+          onRemove=(action "deleteFormElement")}}
+      {{/each}}
+    {{/sortable-group}}
+    {{#unless showingPreview}}
+      <button class="ui primary fluid button" type="button" {{action "addFormElement"}}><i class="plus icon"></i>Add a question</button>
+    {{/unless}}
+  </div>
+  <div class="actions">
+    <button class="ui red button" {{action closeModal}}>
+      Close
+    </button>
+    <button class="ui green right labeled icon button" {{action
+      (pipe
+        (action saveModel form)
+        (action closeModal)
+        (action onCreateForm form)
+      )
+    }}>
+      Save Form<i class="check icon"></i>
+    </button>
+  </div>
+{{/ui-modal}}

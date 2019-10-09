@@ -71,6 +71,7 @@ export default Model.extend(Validations, {
     inverse: null
   }),
   offboardingProgress:     attr('number'),
+  offboardingCompleted:    attr('date'),
   offboardingDocuments:    hasMany('file', { defaultValue: [] }),
   terminatedOn:            attr('date'),
   terminationReason:       attr('string'),
@@ -89,6 +90,13 @@ export default Model.extend(Validations, {
   externalLinkDocumentLink:  attr('string'),
   externalLinkAutomaticSync: attr('boolean'),
   externalLinkLastSync:      attr('date'),
+
+  autoExitInterview:     attr('boolean'),
+  autoExitInterviewDate: attr('date'),
+  autoExitInterviewForm: belongsTo('form', {
+    async:   true,
+    inverse: null
+  }),
 
   company: belongsTo('company', {
     async:   true,

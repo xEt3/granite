@@ -79,7 +79,7 @@
       <div class="item content">
         <h4>{{group.step.label}}</h4>
         <p>
-          {{#if group.response.value.length}}
+          {{#if (is-array group.response.value)}}
             <ul>
               {{#each group.response.value as |value|}}
                 <li>

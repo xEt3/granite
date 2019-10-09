@@ -58,6 +58,7 @@ Router.map(function () {
         this.route('processes');
         this.route('features');
         this.route('lists');
+        this.route('forms');
       });
       this.route('billing', function () {
         this.route('invoices');
@@ -80,6 +81,9 @@ Router.map(function () {
       this.route('changes');
       this.route('messages', function () {
         this.route('thread', { path: '/thread/:thread_id' });
+      });
+      this.route('forms', function () {
+        this.route('responses', { path: '/responses/:form_id' });
       });
     });
     this.route('employee', { path: '/employee/:id' }, function () {

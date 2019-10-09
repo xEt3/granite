@@ -1,0 +1,23 @@
+<h3>{{or form.name form.title}} Responses</h3>
+
+<Modals::ViewFormResponse as |openResponseView|>
+  <div class="ui relaxed list">
+    {{#each model as |response|}}
+      <div class="ui item">
+        <div class="content">
+          <div class="header">
+            Response by {{response.employee.fullName}} on {{time response.submittedOn "M/D/YY [at] h:mma"}}
+          </div>
+          <div class="extra">
+            <a href="#" {{action openResponseView response form}}>View Responses</a>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</Modals::ViewFormResponse>
+
+{{elements/x-pagination
+  page=(readonly page)
+  pages=(readonly pages)
+  onchange=(action (mut page))}}

@@ -13,7 +13,7 @@ export default function serializeObject (object, prefix) {
 
   var setInside = function (o, a) {
     for (var key in o) {
-      if (!o.hasOwnProperty(key)) {
+      if (!Object.prototype.hasOwnProperty.call(o, key)) {
         continue;
       }
 

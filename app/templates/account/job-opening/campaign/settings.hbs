@@ -69,26 +69,28 @@
   </div>
 </div>
 
-{{#ui-modal id="modal__add-stage" class="small form"}}
-  <div class="header">
-    <i class="plus icon"></i>{{if editingStage "Edit" "Add"}} recruiting pipeline stage
-  </div>
-  <div class="content">
-    {{quick-form
-      stageForm
-      currentStage
-      this
-      tagName="div"}}
-  </div>
-  <div class="actions">
-    {{#unless editingStage}}
-      <button class="ui red button" {{action "respondStageAddition" false}}>
-        Cancel
+<div id="modal__add-stage--placeholder">
+  {{#ui-modal id="modal__add-stage" class="small form"}}
+    <div class="header">
+      <i class="plus icon"></i>{{if editingStage "Edit" "Add"}} recruiting pipeline stage
+    </div>
+    <div class="content">
+      {{quick-form
+        stageForm
+        currentStage
+        this
+        tagName="div"}}
+    </div>
+    <div class="actions">
+      {{#unless editingStage}}
+        <button class="ui red button" {{action "respondStageAddition" false}}>
+          Cancel
+        </button>
+      {{/unless}}
+      <button class="ui primary right labeled confirm-add-stage icon button" {{action "respondStageAddition" true}}>
+        Done
+        <i class="check icon"></i>
       </button>
-    {{/unless}}
-    <button class="ui primary right labeled confirm-add-stage icon button" {{action "respondStageAddition" true}}>
-      Done
-      <i class="check icon"></i>
-    </button>
-  </div>
-{{/ui-modal}}
+    </div>
+  {{/ui-modal}}
+</div>

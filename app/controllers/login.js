@@ -10,7 +10,7 @@ export default Controller.extend(ajaxStatus, {
   recovery:    false,
 
   actions: {
-    login () {
+    async login () {
       const email = this.get('email'),
             password = this.get('password');
 
@@ -20,8 +20,9 @@ export default Controller.extend(ajaxStatus, {
         return this.ajaxError('Please complete all fields before submitting.');
       }
 
-      this.auth.login(email, password)
-      .then(() => {
+      try {
+        await this.auth.login(email, password);
+
         let previousTransition = this.get('previousTransition');
         this.ajaxSuccess('Successfully logged in.');
 
@@ -30,8 +31,9 @@ export default Controller.extend(ajaxStatus, {
         } else {
           this.transitionToRoute('account.index');
         }
-      })
-      .catch(this.ajaxError.bind(this));
+      } catch (e) {
+        this.ajaxError(e);
+      }
     },
 
     recover () {

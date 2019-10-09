@@ -17,7 +17,10 @@
           displayKey="text"
           class=positionInForm
           inputClass=(if (and (eq model.type "select") (or model.multiple model.allowAdditions)) "search multiple")
-          inputAttrs=(hash allowAdditions=model.allowAdditions)
+          inputAttrs=(hash
+            allowAdditions=model.allowAdditions
+            inline=model.inlineInput
+          )
         )
         emptyObject
         model
@@ -81,6 +84,16 @@
             checked=(readonly model.allowAdditions)
             onChange=(action (mut model.allowAdditions))}}
         </div>
+      </div>
+    {{/if}}
+
+    {{#if (eq model.type "radio")}}
+      <div class="field">
+        {{ui-checkbox
+          class="toggle"
+          label="Inline Input"
+          checked=(readonly model.inlineInput)
+          onChange=(action (mut model.inlineInput))}}
       </div>
     {{/if}}
 

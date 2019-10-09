@@ -75,7 +75,7 @@
       onChange=(action (mut value))}}
   {{/if}}
 {{else if (eq field.type "radio")}}
-  <div class="grouped inline fields">
+  <div class="{{if field.inputAttrs.inline "inline" "grouped"}} fields">
     {{#each (get this field.contentPath) as |item|}}
       <div class="field">
         {{ui-radio
