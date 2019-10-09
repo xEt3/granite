@@ -11,10 +11,8 @@ export default Route.extend({
   },
 
   actions: {
-    willTransition (transition) {
-      if (transition.targetName === 'account.employees.changes') {
-        this.send('refresh');
-      }
+    refresh () {
+      return true;
     }
   }
 });
