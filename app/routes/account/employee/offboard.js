@@ -56,11 +56,14 @@ export default Route.extend(wizard, {
 
       offboardProps.map(prop => model.set(prop, undefined));
 
+      this.analytics.trackEvent('Employees', 'offboarding_canceled', 'Canceled Offboarding');
+
       model.save()
       .then(() => this.transitionTo('account.employee.index.index'));
     },
 
     startOffboarding () {
+      this.analytics.trackEvent('Employees', 'offboarding_started', 'Started Offboarding');
       this.get('controller').set('model.offboarding', true);
       this.send('saveAndContinue');
     }
