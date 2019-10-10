@@ -18,6 +18,7 @@ export default Controller.extend(ajaxStatus, {
     },
 
     successHandler (response) {
+      this.analytics.trackEvent('Employees', 'census_uploaded', 'Census Uploaded');
       this.transitionToRoute('account.employees.add.census.review', response);
     },
 

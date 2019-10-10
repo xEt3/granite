@@ -12,6 +12,9 @@ export default Route.extend({
       offboardingCompleted: new Date()
     });
 
+    this.analytics.trackEvent('Employees', 'offboarding_completed', 'Completed Offboarding');
+    this.analytics.trackEvent('Features', 'automated_exit_interview', model.autoExitInterview ? 'Used' : 'Did not use');
+
     model.save().then(() => run.scheduleOnce('afterRender', () => run.later(() => {
       this.transitionTo('account.employees');
     }, 3000)));

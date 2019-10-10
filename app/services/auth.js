@@ -10,10 +10,11 @@ import ENV from 'granite/config/environment';
 const { Logger } = Ember;
 
 export default Service.extend({
-  authUrl: '/api/v1/login/company-user',
-  clock:   service(),
-  store:   service(),
-  ajax:    service(),
+  authUrl:   '/api/v1/login/company-user',
+  clock:     service(),
+  store:     service(),
+  ajax:      service(),
+  analytics: service(),
 
   authenticated: computed.bool('token'),
   token:         computed.reads('session.token'),
@@ -45,6 +46,9 @@ export default Service.extend({
         id:      response.id
       });
 
+      this.analytics.identifyUser(response.user);
+      this.analytics.trackEvent('Session', 'log in', 'Session Login');
+
       return ENV.environment === 'test' ? Promise.resolve(session) : session.save();
     })
     .then(record => {
@@ -67,6 +71,8 @@ export default Service.extend({
       return Promise.resolve();
     }
 
+    this.analytics.trackEvent('Session', 'logout', 'Session Logout');
+
     Logger.debug('AS :: Destroying session');
     return this.get('session').destroyRecord()
     .then(() => {
@@ -78,6 +84,8 @@ export default Service.extend({
     if (!this.get('authenticated')) {
       return Promise.resolve();
     }
+
+    this.analytics.trackEvent('Session', 'refresh', 'Session Refreshed');
 
     return this.get('ajax').request('/api/v1/grant/' + this.get('session.id') + '/refresh', { method: 'POST' })
     .then(response => {
