@@ -4,11 +4,11 @@ import config from './config/environment';
 import RouterScroll from 'ember-router-scroll';
 
 const Router = EmberRouter.extend(RouterScroll, {
-  location: config.locationType,
-  rootURL:  config.rootURL,
-  headData: service(),
-  router:   service(),
-  metrics:  service(),
+  location:  config.locationType,
+  rootURL:   config.rootURL,
+  headData:  service(),
+  router:    service(),
+  analytics: service(),
 
   setTitle (title) {
     this.get('headData').set('title', title);
@@ -24,7 +24,7 @@ const Router = EmberRouter.extend(RouterScroll, {
     const page = this.router.currentURL,
           title = this.router.currentRouteName || 'unknown';
 
-    this.metrics.trackPage({
+    this.analytics.trackPage({
       page,
       title
     });
