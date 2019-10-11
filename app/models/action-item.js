@@ -55,7 +55,7 @@ export default Model.extend(Validations, {
 
   slug: computed('title', function () {
     let title = this.get('title');
-    return title ? title.replace(/\s/g, '-') : title;
+    return title ? title.replace(/-/g, '-!').replace(/\s/g, '-') : title;
   }),
 
   incompleteTodos: computed.filter('checklist', function (todo) {
