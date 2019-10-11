@@ -29,8 +29,11 @@ export default Controller.extend(ajaxStatus, {
       }
 
       if (!validity.code) {
+        this.analytics.trackEvent('Signup', 'promo_invalid', code);
         return this.ajaxError('Unable to apply discount.', true);
       }
+
+      this.analytics.trackEvent('Signup', 'promo_applied', validity.code);
 
       this.get('model').set('accountBillingPromo', validity.code);
       this.set('appliedPromo', validity);
@@ -52,6 +55,7 @@ export default Controller.extend(ajaxStatus, {
         return paymentMethod.save();
       })
       .then(() => {
+        this.analytics.trackEvent('Signup', 'signup', model.name);
         this.ajaxSuccess();
         this.transitionToRoute('signup.finish');
       })

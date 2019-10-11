@@ -96,6 +96,8 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
       const title = meeting.get('title') ? `"${meeting.get('title')}"` : 'meeting',
             start = moment(meeting.get('start'));
 
+      this.analytics.trackEvent('Features', 'ats_meeting', 'Created ATS meeting');
+
       this.ajaxSuccess(`Scheduled ${title} at ${start.format('h:mma [on] M/D/YY')}`);
 
       this.set('newScheduledMeeting', app.get('id'));
@@ -105,6 +107,8 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
   },
 
   beginOnboarding (jobApplication) {
+    this.analytics.trackEvent('Recruiting', 'hire', 'Hired candidate');
+
     const job = this.get('model.job'),
           jobOpening = this.get('model.jobOpening'),
           applicant = jobApplication.get('applicant');
@@ -165,6 +169,8 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
         return;
       }
 
+      this.analytics.trackEvent('Recruiting', 'candidate_disqualified', 'Disqualified candidate');
+
       const jobApps = get(jobApp, 'length') && jobApp.toArray ? jobApp.toArray() : [ jobApp ];
 
       this.ajaxStart();
@@ -182,6 +188,8 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     },
 
     unDisqualifyCandidate (jobApp) {
+      this.analytics.trackEvent('Recruiting', 'candidate_requalified', 'Requalified candidate');
+
       jobApp.setProperties({
         disqualificationReason: null,
         disqualified:           false
@@ -195,6 +203,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     },
 
     async saveApplicationLabels () {
+      this.analytics.trackEvent('Features', 'ats_labels', 'ATS candidate labeling');
       this.saveModel(await this.get('appInAddLabels'));
     },
 

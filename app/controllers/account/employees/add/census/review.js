@@ -125,6 +125,8 @@ export default Controller.extend(ajaxStatus, {
 
   actions: {
     doDryRun (displayDryRunResults = false) {
+      this.analytics.trackEvent('Employees', 'census_dryrun', 'Census Dry Run');
+
       const headerMap = this.get('headerMap'),
             uploadId = this.get('model.uploadId');
 
@@ -154,6 +156,8 @@ export default Controller.extend(ajaxStatus, {
 
       const headerMap = this.get('headerMap'),
             uploadId = this.get('model.uploadId');
+
+      this.analytics.trackEvent('Employees', 'census_imported', 'Census Imported');
 
       this.get('ajax').post('/api/v1/employee/census/' + uploadId + '/process', { data: { headerMap } })
       .then(() => {

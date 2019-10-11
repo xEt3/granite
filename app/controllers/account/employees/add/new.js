@@ -6,5 +6,9 @@ export default Controller.extend(addEdit, {
   suffixes,
   gender,
   transitionAfterSave: 'account.employee.onboard.index',
-  transitionWithModel: true
+  transitionWithModel: true,
+
+  afterSave () {
+    this.analytics.trackEvent('Employees', 'manual_add', 'Employee manually added');
+  }
 });

@@ -11,6 +11,8 @@ export default Route.extend({
       onboardingProgress: null
     });
 
+    this.analytics.trackEvent('Employees', 'onboarding_completed', 'Completed Onboarding');
+
     model.save().then(() => {
       run.scheduleOnce('afterRender', () => {
         run.later(() => {
