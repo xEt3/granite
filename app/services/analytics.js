@@ -3,6 +3,14 @@ import Service, { inject as service } from '@ember/service';
 export default class AnalyticsService extends Service {
   @service metrics
 
+  __isRobo () {
+    if (this.isRoboBrowser === undefined) {
+      this.isRoboBrowser = /HeadlessChrome/.test(navigator.userAgent);
+    }
+
+    return this.isRoboBrowser;
+  }
+
   /**
    * analytics#identifyUser
    * Identifies a user in metrics
@@ -11,6 +19,10 @@ export default class AnalyticsService extends Service {
    * @return {void}
    */
   identifyUser (userId, options = {}) {
+    if (this.__isRobo()) {
+      return;
+    }
+
     return this.metrics.identify({
       ...options,
       distinctId: userId
@@ -26,6 +38,10 @@ export default class AnalyticsService extends Service {
    * @return {void}
    */
   trackEvent (category, action, label) {
+    if (this.__isRobo()) {
+      return;
+    }
+
     return this.metrics.trackEvent({
       category,
       action,
