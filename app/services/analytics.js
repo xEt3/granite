@@ -48,4 +48,12 @@ export default class AnalyticsService extends Service {
       label
     });
   }
+
+  trackPage (opts) {
+    if (this.__isRobo()) {
+      return;
+    }
+
+    return this.metrics.trackEvent(opts);
+  }
 }
