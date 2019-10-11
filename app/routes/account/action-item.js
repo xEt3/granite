@@ -10,7 +10,7 @@ export default Route.extend({
 
   model (params) {
     return RSVP.hash({
-      actionItem:   this.store.queryRecord('action-item', { title: params.slug.replace(/-/g, ' ') }),
+      actionItem:   this.store.queryRecord('action-item', { title: params.slug.replace(/-(?!!)/g, ' ').replace(/-!/g, '-') }),
       companyUsers: this.store.query('company-user', {
         _id:    { $ne: this.get('auth.user._id') },
         select: 'name employee'
