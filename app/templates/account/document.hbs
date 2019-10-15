@@ -73,7 +73,11 @@
   </div>
 
   {{#if isExpanded}}
-    {{ui-calendar class="field" type="date" inline=true onChange=(action (mut model.effectiveOn))}}
+    {{ui-calendar
+      class="field"
+      type="date"
+      inline=true
+      onChange=(action (mut model.effectiveOn))}}
   {{/if}}
 
   <div class="actions">

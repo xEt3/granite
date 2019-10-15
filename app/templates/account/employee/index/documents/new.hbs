@@ -52,13 +52,17 @@
 
     <div class="field center aligned text">
       {{ui-checkbox
-       class="toggle"
-       label="Assign for a future Date"
-       checked=isExpanded
-       onChange=(action (toggle "isExpanded" this))}}
+        class="toggle"
+        label="Assign for a future Date"
+        checked=isExpanded
+        onChange=(action (toggle "isExpanded" this))}}
     </div>
     {{#if isExpanded}}
-      {{ui-calendar class="field" type="date" inline=true onChange=(action (mut model.effectiveOn))}}
+      {{ui-calendar
+        class="field"
+        type="date"
+        inline=true
+        onChange=(action (mut model.effectiveOn))}}
     {{/if}}
 
     <div class="ui divider"></div>

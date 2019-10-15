@@ -17,7 +17,6 @@ export default Model.extend({
   followups:   hasMany('file'),
   effectiveOn: attr('date'), // Placeholder for effective dated changes. This field is only here to pass along to the api
 
-
   created: attr('date', {
     defaultValue () {
       return new Date();
