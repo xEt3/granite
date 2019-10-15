@@ -50,6 +50,7 @@ export default Controller.extend(addEdit, {
 
   afterSave () {
     this.set('fileAssignment', null);
+    this.set('model.effectiveOn', null);
     this.send('refresh');
   },
 
