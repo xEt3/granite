@@ -36,7 +36,7 @@ module('Acceptance | edit action items', function (hooks) {
     assert.dom('div.field.ember-view > label').hasText('Title');
     assert.dom('input#action-item-title').hasValue(action.title);
     assert.dom('div:nth-child(2) > label').hasText('Description');
-    assert.dom('div:nth-child(2) > textarea').hasValue(action.description);
+    assert.dom('div.field > textarea[placeholder="Description"]').hasValue(action.description);
     assert.dom('span.irs > span.irs-single').hasText(`${action.priority}`);
     assert.dom('label[for="action-item-prerequisites"]').hasText('Prerequisites');
     assert.dom('#action-item-prerequisites > div.default.text').isVisible();
@@ -61,9 +61,9 @@ module('Acceptance | edit action items', function (hooks) {
 
     await visit(`/account/project/${action.title}/edit`);
     await fillIn('input#action-item-title', `${action.title}`);
-    await fillIn('div:nth-child(2) > textarea', `${action.description} testing this`);
+    await fillIn('div.field > textarea[placeholder="Description"]', `${action.description} testing this`);
     assert.dom('input#action-item-title').hasValue(`${action.title}`);
-    assert.dom('div:nth-child(2) > textarea').hasValue(`${action.description} testing this`);
+    assert.dom('div.field > textarea[placeholder="Description"]').hasValue(`${action.description} testing this`);
     await settled();
     await click('#action-item-prerequisites');
     await settled();
