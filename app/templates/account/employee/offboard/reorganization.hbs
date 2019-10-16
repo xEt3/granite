@@ -1,4 +1,4 @@
-{{#confirm-modal deleteContext=model.fullName confirmContent="Are you sure you want to finalize the offboarding for " as |confirm|}}
+{{#confirm-modal deleteContext=model.fullName confirmContent=confirmModalDeleteContext as |confirm|}}
   <form class="ui form" {{action (pipe confirm (action "saveAndContinue")) on="submit"}}>
     <h2 class="ui horizontal divider header">Reorganization</h2>
     {{#if hasDirectReports}}
