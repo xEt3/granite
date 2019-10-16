@@ -11,7 +11,7 @@ export default ApplicationSerializer.extend({
 
   serialize () {
     let json = this._super(...arguments),
-        keys = [ 'department', 'location', 'supervisor', 'companyUser', 'creator' ],
+        keys = [ 'companyUser', 'creator' ],
         deleteKeys = [ 'firstName', 'middleName', 'lastName', 'suffixName', 'emergencyContactPhone', 'emergencyContactNameLast', 'emergencyContactNameFirst' ],
         isNull = val => !val || val === '';
 

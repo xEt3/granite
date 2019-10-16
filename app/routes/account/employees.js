@@ -1,8 +1,9 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { hash } from 'rsvp';
+import refreshable from 'granite/mixins/refreshable';
 
-export default Route.extend({
+export default Route.extend(refreshable, {
   ajax: service(),
 
   model () {

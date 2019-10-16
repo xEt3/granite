@@ -4,7 +4,7 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 
 export default Model.extend({
   message:           attr('string'),
-  signatureRequired: attr('boolean'),
+  signatureRequired: attr('boolean', { defaultValue: true }),
   signature:         attr('string'),
   readOn:            attr('date'),
   signedOn:          attr('date'),
