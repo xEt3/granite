@@ -41,9 +41,9 @@
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
           {{#link-to "account.employee.index.edit" class="item"}}<i class="edit icon"></i>Edit{{/link-to}}
-          {{#unless (or model.onboarding model.offboardingCompleted)}}
+          {{#if (not (or model.onboarding model.offboardingCompleted))}}
             {{#link-to "account.employee.offboard.index" class="item"}}<i class="cut icon"></i>Offboard Employee...{{/link-to}}
-          {{/unless}}
+          {{/if}}
           {{#if (not model.activatedOn)}}
             <div class="item">
               {{#confirm-modal as |confirmActivation|}}

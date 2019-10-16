@@ -21,8 +21,11 @@ const PipelineCardComponent = Component.extend({
     return (this.get('stages') || []).filter(stage => get(stage, '_id') !== stageId);
   }),
 
-  nextMeeting: computed('application.[]', function () {
-    return this.get('getNextMeeting').perform();
+  nextMeeting: computed('application.[]', 'newScheduledMeeting', function () {
+    if (!this.meetingFetched || this.newScheduledMeeting === this.application.id) {
+      return this.get('getNextMeeting').perform();
+    }
+    return false;
   }),
 
   controlsDisabled: computed('application.{hired,disqualified}', function () {
@@ -32,12 +35,14 @@ const PipelineCardComponent = Component.extend({
   getNextMeeting: task(function*() {
     try {
       let results = yield this.get('store').query('event', {
-        contextType: 'JobApplication',
-        contextId:   this.get('application.id'),
         limit:       1,
         start:       { $gt: new Date() },
-        sort:        { start: -1 }
+        sort:        { start: 1 },
+        contextType: 'JobApplication',
+        contextId:   this.get('application.id')
       });
+
+      this.set('meetingFetched', true);
 
       return (results || A()).get('firstObject');
     } catch (e) {

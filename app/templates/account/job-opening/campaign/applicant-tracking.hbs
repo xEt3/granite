@@ -98,6 +98,7 @@
     as |confirm|}}
     {{card-pipeline
       activeCandidates
+      newScheduledMeeting=newScheduledMeeting
       pipeline=model.pipeline
       onDisqualify=(action (pipe
         (action set "appInDisqualifyConfirm")
