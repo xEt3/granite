@@ -13,7 +13,9 @@ export default Controller.extend(pagination, {
     'hireDateStart',
     'hireDateEnd',
     'page',
-    'limit'
+    'limit',
+    'sortProp',
+    'sortAsc'
   ],
 
   limit:         20,
@@ -26,6 +28,23 @@ export default Controller.extend(pagination, {
   location:      null,
   hireDateStart: null,
   hireDateEnd:   null,
+  sortBy:        null,
+  sortProp:      null,
+  sortAsc:       true,
+
+  sortOptions: [{
+    label: 'First Name',
+    path:  'name.first'
+  }, {
+    label: 'Last Name',
+    path:  'name.last'
+  }, {
+    label: 'Employee Number',
+    path:  'employeeNumber'
+  }, {
+    label: 'Created Date',
+    path:  'created'
+  }],
 
   intros: computed(function () {
     return [{
