@@ -30,6 +30,15 @@
       {{/ember-popover}}
     </a>
   {{/if}}
+  <div class="detail">
+    {{if pastAssignment "Assigned" "Pending"}}
+    {{#ember-tooltip
+      side="right"
+      popperContainer="body"
+    }}
+      Document {{if pastAssignment "was" "will be"}} assigned on {{time (or assignment.effectiveOn assignment.created)}} by {{assignment.creator.fullName}}
+    {{/ember-tooltip}}
+  </div>
 </div>
 
 {{#ui-modal name="modal__file-assignment-signature" id=modalId}}
