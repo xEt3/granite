@@ -25,6 +25,7 @@ const PipelineCardComponent = Component.extend({
     if (!this.meetingFetched || this.newScheduledMeeting === this.application.id) {
       return this.get('getNextMeeting').perform();
     }
+    return false;
   }),
 
   controlsDisabled: computed('application.{hired,disqualified}', function () {
