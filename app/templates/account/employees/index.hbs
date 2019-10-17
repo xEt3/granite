@@ -105,20 +105,36 @@
     </h1>
 
     <div class="right aligned text floated menu__actions">
-      {{#ui-dropdown class="selection" id="employee-sort" selected=sortProp onChange=(action (mut sortProp))}}
-        <i class="dropdown icon"></i>
-        <div class="default text">Sort By</div>
+      {{#ui-dropdown class="left floated top pointing inline" selected=sortProp onChange=(action (mut sortProp))}}
+        <h3 class="ui inline header">
+          {{ember-tooltip
+            side="left"
+            popperContainer="body"
+            text="Choose sort method"}}
+          <a href="#" id="sort-employee-icon"><i class="sort icon"></i></a>
+        </h3>
         <div class="menu">
           {{#each sortOptions as |option|}}
-            <div class="item" data-value="{{option.path}}">
+            <div class="item" data-value={{option.path}}>
+              {{#if (eq option.path sortProp)}}
+                <i class="check icon"></i>
+              {{/if}}
               {{option.label}}
             </div>
           {{/each}}
         </div>
       {{/ui-dropdown}}
-      {{!-- ADD A CARROT THAT FLIPS DEPENDING ON ASC OR DESC SORT --}}
-      {{!-- <i class="sort amount up icon"></i>
-      <i class="sort amount down icon"></i> --}}
+
+      <h3 class="ui left floated header">
+        {{ember-tooltip
+          side="left"
+          popperContainer="body"
+          text="Change sort direction"}}
+        <a href="#" class="top pointing inline" {{action "toggleSortAsc"}}>
+          <i class="sort amount {{if sortAsc 'up' 'down'}} icon"></i>
+        </a>
+      </h3>
+
       <h3 class="ui right floated header">
         <a href="#" class={{if showFilters "text-red"}} {{action toggleProperty "showFilters"}}>
           {{ember-tooltip
@@ -128,6 +144,7 @@
           <i class="{{if showFilters "remove" "filter"}} icon"></i>
         </a>
       </h3>
+
       {{#ui-dropdown class="right floated top pointing inline"}}
         <h3 class="ui inline header">
           {{ember-tooltip

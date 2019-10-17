@@ -29,8 +29,8 @@ export default Controller.extend(pagination, {
   hireDateStart: null,
   hireDateEnd:   null,
   sortBy:        null,
-  sortProp:      null,
-  sortAsc:       true,
+  sortProp:      'created',
+  sortAsc:       false,
 
   sortOptions: [{
     label: 'First Name',
@@ -69,6 +69,10 @@ export default Controller.extend(pagination, {
   actions: {
     updateFilter (filter, value) {
       this.set(filter, value);
+    },
+
+    toggleSortAsc () {
+      this.toggleProperty('sortAsc');
     },
 
     resetFilters () {

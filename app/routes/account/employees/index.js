@@ -18,10 +18,11 @@ export default Route.extend(resource, {
     hireDateEnd:   { refreshModel: true },
     page:          { refreshModel: true },
     limit:         { refreshModel: true },
-    sortProp:      { refreshModel: true }
+    sortProp:      { refreshModel: true },
+    sortAsc:       { refreshModel: true }
   },
 
-  sort: {  },
+  sort: {},
 
   filters: [
     'supervisor',
@@ -55,7 +56,7 @@ export default Route.extend(resource, {
       }
     });
 
-    query.sort[params.sortProp] = 1;
+    query.sort[params.sortProp] = params.sortAsc ? 1 : -1;
   },
 
   model () {
