@@ -12,11 +12,19 @@ export default Controller.extend(addEdit, {
     return cf ? Object.keys(cf).length : 0;
   }),
 
+  cliffNotes: computed('separationNotes', function () {
+    return this.get('model.separationNotes').match(/([\w]+\s+|.+){1,6}/)[0].trim();
+  }),
+
   hasAnniversaries:    computed.or('model.{hireDate,dateOfBirth}'),
   hasDirectContact:    computed.or('model.{phone,email}'),
   hasEmergencyContact: computed.or(
     'model.{emergencyContactPhone,emergencyContactNameFirst,emergencyContactNameLast}'
   ),
+
+  terminated: computed('model.terminatedOn', function () {
+    return moment(this.get('model.terminatedOn')).format('MM/DD/YY');
+  }),
 
   onProbation: computed('model.probationUntil', function () {
     return this.get('model.probationUntil') && moment(this.get('model.probationUntil')).isAfter(moment());
