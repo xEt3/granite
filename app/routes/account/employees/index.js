@@ -18,11 +18,8 @@ export default Route.extend(resource, {
     hireDateEnd:   { refreshModel: true },
     page:          { refreshModel: true },
     limit:         { refreshModel: true },
-    sortProp:      { refreshModel: true },
     sortAsc:       { refreshModel: true }
   },
-
-  sort: {},
 
   filters: [
     'supervisor',
@@ -31,8 +28,6 @@ export default Route.extend(resource, {
   ],
 
   mutateQuery (query, params) {
-    query.sort = {};
-
     if (params.hireDateStart) {
       query.hireDate = { $gte: params.hireDateStart };
     }
@@ -55,8 +50,6 @@ export default Route.extend(resource, {
         query[v] = true;
       }
     });
-
-    query.sort[params.sortProp] = params.sortAsc ? 1 : -1;
   },
 
   model () {

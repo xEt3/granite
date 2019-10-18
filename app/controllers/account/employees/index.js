@@ -14,7 +14,7 @@ export default Controller.extend(pagination, {
     'hireDateEnd',
     'page',
     'limit',
-    'sortProp',
+    'sortBy',
     'sortAsc'
   ],
 
@@ -28,8 +28,7 @@ export default Controller.extend(pagination, {
   location:      null,
   hireDateStart: null,
   hireDateEnd:   null,
-  sortBy:        null,
-  sortProp:      'created',
+  sortBy:        'created',
   sortAsc:       false,
 
   sortOptions: [{

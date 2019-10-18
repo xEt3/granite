@@ -105,7 +105,7 @@
     </h1>
 
     <div class="right aligned text floated menu__actions">
-      {{#ui-dropdown class="left floated top pointing inline" selected=sortProp onChange=(action (mut sortProp))}}
+      {{#ui-dropdown class="left floated top pointing inline" selected=sortBy onChange=(action (mut sortBy))}}
         <h3 class="ui inline header">
           {{ember-tooltip
             side="left"
@@ -129,7 +129,7 @@
         {{ember-tooltip
           side="left"
           popperContainer="body"
-          text="Change sort direction"}}
+          text=(if sortAsc "Sort descending" "Sort ascending")}}
         <a href="#" class="top pointing inline" {{action "toggleSortAsc"}}>
           <i class="sort amount {{if sortAsc 'up' 'down'}} icon"></i>
         </a>
