@@ -70,10 +70,6 @@ export default Controller.extend(pagination, {
       this.set(filter, value);
     },
 
-    toggleSortAsc () {
-      this.toggleProperty('sortAsc');
-    },
-
     resetFilters () {
       this.setProperties({
         onboarding:    false,

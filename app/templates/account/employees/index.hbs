@@ -130,8 +130,8 @@
           side="left"
           popperContainer="body"
           text=(if sortAsc "Sort descending" "Sort ascending")}}
-        <a href="#" class="top pointing inline" {{action "toggleSortAsc"}}>
-          <i class="sort amount {{if sortAsc 'up' 'down'}} icon"></i>
+        <a href="#" class="top pointing inline" {{action (toggle "sortAsc" this)}}>
+          <i class="sort amount {{if sortAsc "up" "down"}} icon"></i>
         </a>
       </h3>
 
