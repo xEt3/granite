@@ -67,7 +67,10 @@ export default Mixin.create({
 
     // merge dynamic sort
     if (params.sortBy) {
-      query.sort[params.sortBy] = params.sortAsc ? 1 : -1;
+      query.sort = {
+        ...query.sort || {},
+        [params.sortBy]: params.sortAsc ? 1 : -1
+      };
     }
 
     // merge static query
