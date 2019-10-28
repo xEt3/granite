@@ -1,18 +1,18 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { className, classNames, tagName } from '@ember-decorators/component';
 
+@tagName('div')
+@classNames('ui', 'top', 'attached', 'label')
 class RecruitingStatusBar extends Component {
-  classNames = [ 'ui', 'top', 'attached', 'label' ]
-  classNameBindings = [ 'isOpen:green' ]
-  tagName = 'div'
+  @className
+  @computed('campaign.{hiring,startOn}')
+  get campaignStatus () {
+    let { hiring, startOn } = this.get('campaign'),
+        now = moment();
 
-  @computed('campaign.{startOn,endOn,completedOn,dueOn}')
-  get isOpen () {
-    console.log('in getter');
-    return true;
+    return hiring ? 'green' : now.isBefore(startOn) ? null : 'red';
   }
 }
 
-// export default Component.extend({
-// });
 export default RecruitingStatusBar;
