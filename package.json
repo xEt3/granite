@@ -90,6 +90,7 @@
     "ember-cp-validations": "^4.0.0-beta.3",
     "ember-d3": "^0.4.3",
     "ember-data": "~3.13.0",
+    "ember-decorators": "^6.1.1",
     "ember-drag-sort": "^1.1.1",
     "ember-export-application-global": "^2.0.0",
     "ember-faker": "^1.2.1",
