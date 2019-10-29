@@ -21,7 +21,7 @@ module('Acceptance | employees', function (hooks) {
     let { employee } = await authenticate.call(this, server);
     await visit('/account/employees');
     await settled();
-    assert.dom(findAll('.header')[4]).includesText(employee.firstName);
+    assert.dom(findAll('.header')[6]).includesText(employee.firstName);
     assert.dom('.ui.tiny.rounded.image img').exists();
   });
 
@@ -29,7 +29,7 @@ module('Acceptance | employees', function (hooks) {
     let { employee } = await authenticate.call(this, server, { employee: { picture: null } });
     await visit('/account/employees');
     await settled();
-    assert.dom(findAll('.header')[4]).includesText(employee.firstName);
+    assert.dom(findAll('.header')[6]).includesText(employee.firstName);
     assert.dom(`img[src="/api/v1/employee/${employee.id}/avatar"]`).exists();
   });
 
