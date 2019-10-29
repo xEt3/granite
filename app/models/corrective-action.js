@@ -28,6 +28,7 @@ export default Model.extend({
   didResolve:         attr('boolean'),
   followUpOn:         attr('date'),
   resolutionStatusOn: attr('date'),
+  documents:          hasMany('file'),
 
   issuedOn: attr('date', { defaultValue: () => new Date() }),
 

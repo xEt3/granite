@@ -104,6 +104,18 @@ export default Controller.extend(addEdit, del, {
       this.get(response ? 'resolveFollowup' : 'rejectFollowup')(response ? this.get('followup') : null);
       this.set('respondedFollowup', true);
       $('#modal__corrective-action--followup').modal('hide');
+    },
+
+    selectDocuments () {
+      $('div[id^="modal__document-selection"]')
+      .modal({ detachable: true })
+      .modal('show');
+    },
+
+    async saveDocument () {
+      let action = await this.get('model');
+      action.get('documents').addObject(action.file);
+      return await this.saveModel();
     }
   }
 });

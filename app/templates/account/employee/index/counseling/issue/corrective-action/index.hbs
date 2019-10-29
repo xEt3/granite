@@ -27,6 +27,26 @@
   </div>
 {{/if}}
 
+{{#if model.documents}}
+<div class="center aligned text">
+  <a href="#" class="item" {{action (toggle "showDocuments" this)}}>
+    <i class="eye {{if showDocuments "slash"}} icon"></i>{{if showDocuments "Hide" "Show"}} {{model.documents.length}} supporting {{inflect-text 'Document' model.documents.length}}
+  </a>
+</div>
+{{/if}}
+
+{{#if showDocuments}}
+  <div class="ui divided items">
+    {{#each model.documents as |document|}}
+      <Display::IssueDocuments
+        @document={{document}}
+        class="item"
+        @onDelete={{action "delete"}}
+      />
+    {{/each}}
+  </div>
+{{/if}}
+
 {{#liquid-if model.followUps.length}}
   <div class="ui divider"></div>
   <h2><i class="repeat icon"></i>Follow ups</h2>

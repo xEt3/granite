@@ -19,6 +19,23 @@
             <i class="repeat icon"></i>Follow Up
           </a>
         {{/if}}
+
+          {{input/document-selection-modal
+            title="New Corrective Action Document"
+            selected=model.file
+            correctiveAction=model
+            assignText="Use Document"
+            singleDoc=true
+            systemUse=true
+            autoTag='correctiveActionDocument'
+            onSelected=(pipe-action
+              (action (mut model.file))
+              (action "saveDocument"))
+          }}
+
+        <a href="#" class="item" {{action "selectDocuments"}}>
+          <i class="trash icon"></i>Add a Document
+        </a>
         {{#link-to
           "account.employee.index.counseling.issue.corrective-action.edit"
           class="item"}}
