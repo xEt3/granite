@@ -1,5 +1,5 @@
 {{#each model.issues as |correctiveActtion|}}
-  <div class="print-media__corrective-action {{if (not-eq correctiveActtion model.lastObject) 'page-break'}}">
+  <div class="print-media__corrective-action {{if (not-eq correctiveActtion model.lastObject) "page-break"}}">
     <h3 class="ui center aligned header">
       {{#if (await correctiveActtion.actionSeverity)}}
         {{get (await correctiveActtion.actionSeverity) "name"}}
@@ -12,7 +12,7 @@
         </div>
         <div class="meta">
           {{#if correctiveActtion.employee.jobTitle}}
-          {{correctiveActtion.employee.jobTitle}}
+            {{correctiveActtion.employee.jobTitle}}
           {{/if}}
         </div>
       </div>
@@ -22,7 +22,7 @@
         </div>
         <div class="meta">
           {{#if correctiveActtion.employee.department.name}}
-          Department: {{correctiveActtion.employee.department.name}}
+            Department: {{correctiveActtion.employee.department.name}}
           {{/if}}
         </div>
       </div>
