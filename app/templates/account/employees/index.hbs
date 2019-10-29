@@ -105,6 +105,36 @@
     </h1>
 
     <div class="right aligned text floated menu__actions">
+      {{#ui-dropdown class="left floated top pointing inline" selected=sortBy onChange=(action (mut sortBy))}}
+        <h3 class="ui inline header">
+          {{ember-tooltip
+            side="left"
+            popperContainer="body"
+            text="Choose sort method"}}
+          <a href="#" id="sort-employee-icon"><i class="sort icon"></i></a>
+        </h3>
+        <div class="menu">
+          {{#each sortOptions as |option|}}
+            <div class="item" data-value={{option.path}}>
+              {{#if (eq option.path sortProp)}}
+                <i class="check icon"></i>
+              {{/if}}
+              {{option.label}}
+            </div>
+          {{/each}}
+        </div>
+      {{/ui-dropdown}}
+
+      <h3 class="ui left floated header">
+        {{ember-tooltip
+          side="left"
+          popperContainer="body"
+          text=(if sortAsc "Sort descending" "Sort ascending")}}
+        <a href="#" class="top pointing inline" {{action (toggle "sortAsc" this)}}>
+          <i class="sort amount {{if sortAsc "up" "down"}} icon"></i>
+        </a>
+      </h3>
+
       <h3 class="ui right floated header">
         <a href="#" class={{if showFilters "text-red"}} {{action toggleProperty "showFilters"}}>
           {{ember-tooltip
@@ -114,6 +144,7 @@
           <i class="{{if showFilters "remove" "filter"}} icon"></i>
         </a>
       </h3>
+
       {{#ui-dropdown class="right floated top pointing inline"}}
         <h3 class="ui inline header">
           {{ember-tooltip

@@ -18,10 +18,8 @@ export default Route.extend(resource, {
     hireDateEnd:   { refreshModel: true },
     page:          { refreshModel: true },
     limit:         { refreshModel: true },
-    sortBy:        { refreshModel: true }
+    sortAsc:       { refreshModel: true }
   },
-
-  sort: { created: -1 },
 
   filters: [
     'supervisor',
