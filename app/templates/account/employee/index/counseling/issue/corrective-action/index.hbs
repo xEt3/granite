@@ -30,7 +30,7 @@
 {{#if model.documents}}
 <div class="center aligned text">
   <a href="#" class="item" {{action (toggle "showDocuments" this)}}>
-    <i class="eye {{if showDocuments "slash"}} icon"></i>{{if showDocuments "Hide" "Show"}} {{model.documents.length}} supporting {{inflect-text 'Document' model.documents.length}}
+    <i class="eye {{if showDocuments "slash"}} icon"></i>{{if showDocuments "Hide" "Show"}} {{model.documents.length}} supporting {{inflect-text 'document' model.documents.length}}
   </a>
 </div>
 {{/if}}
