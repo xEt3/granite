@@ -20,10 +20,12 @@
   </hgroup>
   <div class="ui divider"></div>
 
-  <LinkTo @route="account.employee.index.counseling.print-all">
-    <i class="print icon"></i>
-    Print All Corrective Actions
-  </LinkTo>
+  {{#if model}}
+    <LinkTo @route="account.employee.index.counseling.print-all">
+      <i class="print icon"></i>
+      Print All Corrective Actions
+    </LinkTo>
+  {{/if}}
 
   {{display/resource-list
     model

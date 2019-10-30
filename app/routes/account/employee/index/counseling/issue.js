@@ -6,6 +6,7 @@ export default Route.extend({
   },
 
   async setupController (controller, model) {
+    this._super(...arguments);
     controller.setProperties({ correctiveActions: await this.store.query('corrective-action', { employeeIssue: model.id }) });
   }
 });
