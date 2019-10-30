@@ -1,0 +1,9 @@
+<div class="left floated detail">
+  {{if campaign.startOn (time campaign.startOn) (time campaign.created)}}
+  - {{if campaign.endOn (time campaign.endOn) "Until Filled"}}
+</div>
+<div class="right floated detail">
+  {{#if campaign.dueOn}}
+    Due On {{time campaign.dueOn}}
+  {{/if}}
+</div>

@@ -36,19 +36,19 @@ module('Acceptance | new action items', function (hooks) {
     assert.dom('div#new-todo-assigned-to > div.menu.transition.visible').isVisible();
     await click('div#new-todo-assigned-to div.item.selected');
     assert.dom('div#new-todo-assigned-to > div.text').hasText('No Assignee');
-    assert.dom('form:nth-child(12) > button').isVisible();
+    assert.dom('form > button.huge.green').isVisible();
   });
 
   test('adding new item', async function (assert) {
     await authenticate.call(this, server);
     await visit('/account/projects/new');
     await fillIn('input#action-item-title', 'check the fridge');
-    await fillIn('div:nth-child(2) > textarea', 'oh snap I am full');
+    await fillIn('div.field > textarea[placeholder="Description"]', 'oh snap I am full');
     await fillIn('div.ui.calendar.field input[type="text"]', 'September 18, 2178');
     assert.dom('input#action-item-title').hasValue('check the fridge');
-    assert.dom('div:nth-child(2) > textarea').hasValue('oh snap I am full');
+    assert.dom('div.field > textarea[placeholder="Description"]').hasValue('oh snap I am full');
     assert.dom('div.ui.calendar.field input[type="text"]').hasValue('September 18, 2178');
-    await click('form:nth-child(12) > button');
+    await click('form > button.huge.green');
     await settled();
     assert.equal(currentURL(), '/account/project/check-the-fridge');
   });

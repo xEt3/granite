@@ -9,6 +9,10 @@ export default Controller.extend({
     return this.makeNode(this.get('model'), { deprecating: true });
   }),
 
+  confirmModalDeleteContext: computed('model.fullName', function () {
+    return `Are you sure you want to finalize the offboarding for ${this.get('model.fullName')}?`;
+  }),
+
   replacementNode: computed('replacement', function () {
     return this.get('replacement') ? this.makeNode(this.get('replacement'), { simulate: true }) : false;
   }),

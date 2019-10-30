@@ -76,7 +76,9 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     });
   },
 
-  saveMeeting (event) {
+  async saveMeeting (event) {
+    this.set('newScheduledMeeting', null);
+
     this.ajaxStart();
 
     const app = this.get('appInScheduler'),
@@ -88,16 +90,20 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
       attendantId:   get(isEmployeeApplicant ? app.get('employee') : app.get('applicant'), 'id'),
       attendantType: isEmployeeApplicant ? 'Employee' : 'Applicant'
     });
+    try {
+      let meeting = await event.save();
 
-    event.save()
-    .then(meeting => {
       const title = meeting.get('title') ? `"${meeting.get('title')}"` : 'meeting',
             start = moment(meeting.get('start'));
 
       this.analytics.trackEvent('Features', 'ats_meeting', 'Created ATS meeting');
 
       this.ajaxSuccess(`Scheduled ${title} at ${start.format('h:mma [on] M/D/YY')}`);
-    });
+
+      this.set('newScheduledMeeting', app.get('id'));
+    } catch (e) {
+      this.ajaxError(e);
+    }
   },
 
   beginOnboarding (jobApplication) {

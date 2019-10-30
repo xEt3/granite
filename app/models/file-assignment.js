@@ -10,11 +10,12 @@ export default Model.extend({
   signedOn:          attr('date'),
   visibleToEmployee: attr('boolean', { defaultValue: true }),
 
-  creator:   belongsTo('employee'),
-  company:   belongsTo('company'),
-  employee:  belongsTo('employee'),
-  file:      belongsTo('file'),
-  followups: hasMany('file'),
+  creator:     belongsTo('employee'),
+  company:     belongsTo('company'),
+  employee:    belongsTo('employee'),
+  file:        belongsTo('file'),
+  followups:   hasMany('file'),
+  effectiveOn: attr('date'), // Placeholder for effective dated changes. This field is only here to pass along to the api
 
   created: attr('date', {
     defaultValue () {

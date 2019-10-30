@@ -4,6 +4,7 @@ import { htmlSafe } from '@ember/string';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import del from 'granite/mixins/controller-abstractions/delete';
 import $ from 'jquery';
+import moment from 'moment';
 
 export default Component.extend(addEdit, del, {
   classNames:   [ 'item' ],
@@ -19,6 +20,10 @@ export default Component.extend(addEdit, del, {
 
   signature: computed('assignment.signature', function () {
     return htmlSafe(`<img src=${this.get('assignment.signature')} class="ui medium image">`);
+  }),
+
+  pastAssignment: computed('assignment.effectiveOn', function () {
+    return !this.get('assignment.effectiveOn') ? true : moment(this.get('assignment.effectiveOn')).isBefore(moment());
   }),
 
   actions: {
