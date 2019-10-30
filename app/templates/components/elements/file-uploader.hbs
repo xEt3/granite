@@ -47,7 +47,7 @@
       {{/if}}
 
       <div class="field">
-        <input class="input-hidden" type="file" id={{inputId}} multiple={{allowMulti}} {{action "selectFile" on="change"}} />
+        <input class="input-hidden" type="file" id={{inputId}} multiple={{allowMulti}} {{action "selectFile" on="change"}}>
         {{#if saveError}}
           <p>{{saveError}}</p>
         {{/if}}
