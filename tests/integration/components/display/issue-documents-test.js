@@ -25,6 +25,8 @@ module('Integration | Component | display/issue-documents', function (hooks) {
     assert.dom(this.element, '.content .header').includesText(this.document.title);
     assert.dom(this.element, '.content .meta').includesText(this.document.description);
     assert.dom(this.element, '.content .meta.right.floated').includesText(this.document.creator.fullName);
+    assert.dom('.content span a i.trash').exists();
+    assert.dom('.content a i.download').exists();
 
     await click('.trash');
     await settled();
