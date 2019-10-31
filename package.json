@@ -41,7 +41,8 @@
     "@bower_components/moment": "moment/moment#^2.13.0",
     "@bower_components/nprogress": "rstacruz/nprogress#^0.2.0",
     "@bower_components/semantic-ui-calendar": "mdehoog/semantic-ui-calendar#^0.0.6",
-    "broccoli-clean-css": "^2.0.1"
+    "broccoli-clean-css": "^2.0.1",
+    "ember-sinon": "^4.1.1"
   },
   "devDependencies": {
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.4.4",
