@@ -52,7 +52,7 @@
           <p>{{saveError}}</p>
         {{/if}}
         {{#unless autoUpload}}
-          <button type="submit" class="positive ui button right floated" disabled={{if files false true}}>Upload</button>
+          <button type="submit" class="positive ui {{if working 'loading'}} button right floated" disabled={{or (not files) working}}>Upload</button>
         {{/unless}}
       </div>
     </div>
