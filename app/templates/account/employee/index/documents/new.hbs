@@ -32,7 +32,7 @@
     </div>
     <div class="ui divider"></div>
     <form {{action "saveAssignment" on="submit"}}>
-      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=(not assignments)}}Assign {{assignments.length}} {{inflect-text 'Document' assignments.length}}{{/form/action-button}}
+      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=(not assignments)}}Assign {{assignments.length}} {{inflect-text "Document" assignments.length}}{{/form/action-button}}
     </form>
   </div>
 </div>
