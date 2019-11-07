@@ -21,6 +21,25 @@
       {{/ui-checkbox}}
     </div>
     <div class="small field">
+      {{ui-checkbox
+        class="small"
+        label="Assign for a future Date"
+        checked=isExpanded
+        onChange=(action (toggle "isExpanded" this))}}
+    </div>
+    {{#if isExpanded}}
+      {{ui-calendar
+        class="field"
+        type="date"
+        onChange=(action
+          (pipe
+            (action (mut model.effectiveOn))
+            (action onChange model)
+          )
+        )
+      }}
+    {{/if}}
+    <div class="small field">
       {{#ui-checkbox
         class="small"
         disabled=(not model.visibleToEmployee)
