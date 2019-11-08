@@ -32,10 +32,10 @@
       </div>
     </div>
   </div>
-  
+
   <div class="field">
-    <label for="separationNotes"> Notes (for your use only)</label>
-    {{textarea rows="1" placeholder="Notes..." value=model.separationNotes}}
+    <label for="separation-notes"> Notes (for your use only)</label>
+    <Textarea @id="separation-notes" @rows="1" @placeholder="Notes..." @value={{this.model.separationNotes}} />
   </div>
 
   <div class="ui divider"></div>

@@ -18,10 +18,6 @@ export default Controller.extend(addEdit, {
     'model.{emergencyContactPhone,emergencyContactNameFirst,emergencyContactNameLast}'
   ),
 
-  terminated: computed('model.terminatedOn', function () {
-    return moment(this.get('model.terminatedOn')).format('MM/DD/YY');
-  }),
-
   onProbation: computed('model.probationUntil', function () {
     return this.get('model.probationUntil') && moment(this.get('model.probationUntil')).isAfter(moment());
   }),
