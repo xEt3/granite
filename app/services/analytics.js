@@ -54,6 +54,6 @@ export default class AnalyticsService extends Service {
       return;
     }
 
-    return this.metrics.trackEvent(opts);
+    return this.metrics.trackPage(opts);
   }
 }
