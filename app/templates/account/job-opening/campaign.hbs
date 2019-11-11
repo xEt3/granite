@@ -40,6 +40,14 @@
           <div class="header">Actions</div>
           {{#link-to "account.job-opening.campaign.settings" class="item"}}<i class="settings icon"></i> Settings{{/link-to}}
           <div class="text-danger header">Danger Zone</div>
+          {{#if (and model.completedSetup (not model.closed))}}
+            {{#confirm-modal confirmContent="Are you sure you want to close this job opening?" class="item" as |confirm|}}
+              <a href="#" id="job__action--close" class="text-danger" {{action (pipe confirm (action "close"))}}>
+                <i class="close icon"></i>Close Job Opening
+                {{!-- FIND A BETTER ICON?? --}}
+              </a>
+            {{/confirm-modal}}
+          {{/if}}
           {{#confirm-modal deleteContext=model.name class="item" as |confirm|}}
             <a href="#" id="job__action--delete" class="text-danger" {{action (pipe confirm (action "delete"))}}>
               <i class="trash icon"></i>Delete Record
