@@ -18,7 +18,7 @@
   </div>
   <div class="right floated">
     {{#if (and assignment.cannedType assignment.cannedSubmitted)}}
-      <a href={{assignment.filledFile.url}} id="action-item__action--download" target="_blank">
+      <a href={{assignment.filledFile.url}} id="action-item__action--download" target="_blank" rel="noopener">
         {{ember-tooltip
           side="left"
           popperContainer="body"
