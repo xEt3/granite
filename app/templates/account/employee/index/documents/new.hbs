@@ -6,19 +6,16 @@
       </h1>
     </hgroup>
     <div class="ui divider"></div>
-    <h3>
-      Assignments
-      <span class="small text">
+    <div class="center aligned text">
         {{#input/document-selection-modal
           title="Add a document"
           assignText="Use Documents"
           selection=docModalSelection
           onSelected=(action "addAssignment")
           as |execute|}}
-          <a href="#" {{action execute}}>Assign another file...</a>
+          <a  href="#" {{action execute}}>Assign a file...</a>
         {{/input/document-selection-modal}}
-      </span>
-    </h3>
+    </div>
     <div class="ui divided list">
       {{#each assignments as |assignment|}}
         {{list-item/document-assignment
@@ -30,9 +27,11 @@
         <h3 class="center aligned light text">Nothing assigned, yet.</h3>
       {{/each}}
     </div>
-    <div class="ui divider"></div>
-    <form {{action "saveAssignment" on="submit"}}>
-      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=(not assignments)}}Assign {{assignments.length}} {{inflect-text "Document" assignments.length}}{{/form/action-button}}
-    </form>
+    {{#if assignments}}
+      <div class="ui divider"></div>
+      <form {{action "saveAssignment" on="submit"}}>
+        {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=(not assignments)}}Assign {{assignments.length}} {{inflect-text "Document" assignments.length}}{{/form/action-button}}
+      </form>
+    {{/if}}
   </div>
 </div>

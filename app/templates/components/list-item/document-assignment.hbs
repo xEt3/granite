@@ -20,6 +20,28 @@
         </label>
       {{/ui-checkbox}}
     </div>
+
+    {{#if model.visibleToEmployee}}
+    <div class="small field">
+      {{#ui-checkbox
+        class="small"
+        disabled=(not model.visibleToEmployee)
+        checked=model.signatureRequired
+        onChange=(action
+          (pipe
+            (action (mut model.signatureRequired))
+            (action onChange model)
+          )
+        )
+      }}
+        <label>
+          Require Signature
+        </label>
+      {{/ui-checkbox}}
+    </div>
+    {{/if}}
+
+
     <div class="small field">
       {{ui-checkbox
         class="small"
@@ -39,23 +61,6 @@
         )
       }}
     {{/if}}
-    <div class="small field">
-      {{#ui-checkbox
-        class="small"
-        disabled=(not model.visibleToEmployee)
-        checked=model.signatureRequired
-        onChange=(action
-          (pipe
-            (action (mut model.signatureRequired))
-            (action onChange model)
-          )
-        )
-      }}
-        <label>
-          Require Signature
-        </label>
-      {{/ui-checkbox}}
-    </div>
   {{/if}}
 </div>
 
