@@ -43,6 +43,83 @@
 
 <div class="ui stackable two column grid">
   <div class="column">
+    {{#if model.offboardingCompleted}}
+      <div class="ui raised segment">
+        <span class="ui orange left ribbon label"><i class="cut icon"></i>Final Information</span>
+        {{!-- {{#link-to "account.employee.index.edit.index" class="ui right corner orange label"}}
+          <i class="pencil icon"></i>
+        {{/link-to}} --}}
+        <div class="ui basic segment">
+          <p class="text">
+            <p>
+              {{#if model.separationNotes}}
+                <div class="line-item-value">
+                  <i>
+                    Notes
+                  </i>
+                  <u>
+                    {{#if separationNotes}}
+                      {{model.separationNotes}}
+                    {{/if}}
+                    <a href="#" class="right floated" {{action (toggle "separationNotes" this)}}>{{if separationNotes "Hide" "View"}} Notes</a>
+                  </u>
+                </div>
+              {{/if}}
+              <div class="line-item-value">
+                <i>
+                  Terminated on
+                </i>
+                <u>
+                  {{time model.terminatedOn}}
+                </u>
+              </div>
+              <div class="line-item-value">
+                <i>
+                  Offboarder
+                </i>
+                <u>
+                  {{model.offboarder.fullName}}
+                </u>
+              </div>
+              <div class="line-item-value">
+                <i>
+                  Eligible For Rehire
+                </i>
+                <u>
+                  {{if model.eligibleForRehire "Yes" "No"}}
+                </u>
+              </div>
+            </p>
+            <div>
+              <a href="mailto:{{model.finalEmail}}">
+                {{ember-tooltip
+                  side="right"
+                  popperContainer="body"
+                  text="Final Email"}}
+                <i class="large icons">
+                  <i class="mail icon"></i>
+                  <i class="bottom right corner building outline icon"></i>
+                </i>
+                {{model.finalEmail}}
+              </a>
+              <p>
+                {{#if model.finalAddressCity}}
+                  {{#if model.finalAddressLine1}}
+                    {{model.finalAddressLine1}},<br>
+                    {{#if model.finalAddressLine2}}
+                      {{model.finalAddressLine2}},<br>
+                    {{/if}}
+                    {{model.finalAddressCity}},
+                    {{model.finalAddressState}}
+                    {{model.finalAddressZip}}
+                  {{/if}}
+                {{/if}}
+              </p>
+            </div>
+          </p>
+        </div>
+      </div>
+    {{/if}}
     <div class="ui raised segment">
       <span class="ui blue ribbon label"><i class="announcement icon"></i>Direct Contact</span>
       {{#link-to "account.employee.index.edit.index" class="ui right corner blue label"}}
