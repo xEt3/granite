@@ -11,6 +11,7 @@
         onChange=(action
           (pipe
             (action (mut model.visibleToEmployee))
+            (action "checkBoxMagic")
             (action onChange model)
           )
         )
@@ -22,44 +23,38 @@
     </div>
 
     {{#if model.visibleToEmployee}}
-    <div class="small field">
-      {{#ui-checkbox
-        class="small"
-        disabled=(not model.visibleToEmployee)
-        checked=model.signatureRequired
-        onChange=(action
-          (pipe
-            (action (mut model.signatureRequired))
-            (action onChange model)
+      <div class="small field">
+        {{#ui-checkbox
+          class="small"
+          disabled=(not model.visibleToEmployee)
+          checked=model.signatureRequired
+          onChange=(action
+            (pipe
+              (action (mut model.signatureRequired))
+              (action onChange model)
+            )
           )
-        )
-      }}
-        <label>
-          Require Signature
-        </label>
-      {{/ui-checkbox}}
-    </div>
-    {{/if}}
-
-
-    <div class="small field">
-      {{ui-checkbox
-        class="small"
-        label="Assign for a future Date"
-        checked=isExpanded
-        onChange=(action (toggle "isExpanded" this))}}
-    </div>
-    {{#if isExpanded}}
-      {{ui-calendar
-        class="field"
-        type="date"
-        onChange=(action
-          (pipe
-            (action (mut model.effectiveOn))
-            (action onChange model)
-          )
-        )
-      }}
+        }}
+          <label>
+            Require Signature
+          </label>
+        {{/ui-checkbox}}
+      </div>
+      <div class="small field">
+        {{ui-checkbox
+          class="small"
+          label="Assign For A Future Date"
+          checked=isExpanded
+          onChange=(action (toggle "isExpanded" this))
+        }}
+      </div>
+      {{#if isExpanded}}
+        {{ui-calendar
+          class="field"
+          type="date"
+          onChange=(action onChange model)
+        }}
+      {{/if}}
     {{/if}}
   {{/if}}
 </div>
