@@ -7,14 +7,14 @@
     </hgroup>
     <div class="ui divider"></div>
     <div class="center aligned text">
-        {{#input/document-selection-modal
-          title="Add a document"
-          assignText="Use Documents"
-          selection=docModalSelection
-          onSelected=(action "addAssignment")
-          as |execute|}}
-          <a  href="#" {{action execute}}>Choose a Document</a>
-        {{/input/document-selection-modal}}
+      {{#input/document-selection-modal
+        title="Add a document"
+        assignText="Use Documents"
+        selection=docModalSelection
+        onSelected=(action "addAssignment")
+        as |execute|}}
+        <a  href="#" {{action execute}}>Choose a Document</a>
+      {{/input/document-selection-modal}}
     </div>
     <div class="ui divided list">
       {{#each assignments as |assignment|}}
