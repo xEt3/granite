@@ -34,11 +34,9 @@ export default Controller.extend(addEdit, del, {
       const model = this.get('model');
       model.set('closed', true);
       if (!model.completedOn) {
-        model.set('completedOn', moment().toDate());
+        model.set('completedOn', new Date());
       }
-      if (!model.hiring) {
-        model.set('hiring', false);
-      }
+
       this.saveModel(model);
     }
   }
