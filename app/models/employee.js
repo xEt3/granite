@@ -131,9 +131,10 @@ export default Model.extend(Validations, {
     inverse: null
   }),
 
-  dateOfBirth:  attr('date'),
-  effectiveOn:  attr('date'), // Placeholder for effective dated changes. This field is only here to pass along to the api
-  customFields: attr({ defaultValue: () => {} }),
+  dateOfBirth:     attr('date'),
+  effectiveOn:     attr('date'), // Placeholder for effective dated changes. This field is only here to pass along to the api
+  customFields:    attr({ defaultValue: () => {} }),
+  separationNotes: attr('string'),
 
   onProbation: computed('probationUntil', function () {
     return this.get('probationUntil') && moment(this.get('probationUntil')).isAfter(moment());
