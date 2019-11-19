@@ -91,12 +91,17 @@ export default Model.extend(Validations, {
   externalLinkAutomaticSync: attr('boolean'),
   externalLinkLastSync:      attr('date'),
 
+  // Auto exit interview
   autoExitInterview:     attr('boolean'),
   autoExitInterviewDate: attr('date'),
   autoExitInterviewForm: belongsTo('form', {
     async:   true,
     inverse: null
   }),
+
+  // Auto I9 collection
+  autoI9Collection: attr('boolean'),
+  autoW4Collection: attr('boolean'),
 
   company: belongsTo('company', {
     async:   true,
@@ -131,9 +136,10 @@ export default Model.extend(Validations, {
     inverse: null
   }),
 
-  dateOfBirth:  attr('date'),
-  effectiveOn:  attr('date'), // Placeholder for effective dated changes. This field is only here to pass along to the api
-  customFields: attr({ defaultValue: () => {} }),
+  dateOfBirth:     attr('date'),
+  effectiveOn:     attr('date'), // Placeholder for effective dated changes. This field is only here to pass along to the api
+  customFields:    attr({ defaultValue: () => {} }),
+  separationNotes: attr('string'),
 
   onProbation: computed('probationUntil', function () {
     return this.get('probationUntil') && moment(this.get('probationUntil')).isAfter(moment());

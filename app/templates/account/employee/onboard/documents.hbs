@@ -3,6 +3,55 @@
 </h2>
 
 <form class="ui form" {{action "saveAndContinue" on="submit"}}>
+  <div class="ui two {{unless employee.hireDate "disabled"}} fields">
+    {{#unless employee.hireDate}}
+      {{ember-tooltip
+        side="top"
+        popperContainer="body"
+        text="Use of automated I9/W4 collection requires a hire date set in the Job tab."}}
+    {{/unless}}
+    <div class="field">
+      <label for="i9-collect">
+        Automated I9 Section One Collection
+        <i class="ui question circle icon">
+          {{#ember-tooltip
+            side="right"
+            popperContainer="body"
+          }}
+            Automated I9 collection sends the employee a link to fill out the I9 section one on the start of their work day on {{time employee.hireDate "M/D/YY"}}. After the employee fills it out, we will notify you.
+          {{/ember-tooltip}}
+        </i>
+      </label>
+      {{ui-checkbox
+        id="i9-collect"
+        class="toggle"
+        label=(if employee.autoI9Collection "Collect I9" "Do not collect I9")
+        checked=employee.autoI9Collection
+        onChange=(action (mut employee.autoI9Collection))}}
+    </div>
+    <div class="field">
+      <label for="w4-collect">
+        Automated W4 Collection
+        <i class="ui question circle icon">
+          {{#ember-tooltip
+            side="right"
+            popperContainer="body"
+          }}
+            Automated W4 collection sends the employee a link to fill out the most current W4 form on the start of their work day on {{time employee.hireDate "M/D/YY"}}. After the employee fills it out, we will notify you.
+          {{/ember-tooltip}}
+        </i>
+      </label>
+      {{ui-checkbox
+        id="w4-collect"
+        class="toggle"
+        label=(if employee.autoW4Collection "Collect W4" "Do not collect W4")
+        checked=employee.autoW4Collection
+        onChange=(action (mut employee.autoW4Collection))}}
+    </div>
+  </div>
+
+  <div class="ui divider"></div>
+
   {{#if suggestedDocumentsFiltered}}
     <h3 class="ui header">
       Suggested Documents

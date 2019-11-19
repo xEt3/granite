@@ -15,6 +15,12 @@ export default Route.extend({
     let chart = _results && _results.length > 0 ? {
       labels:   _results.map(x => moment(x._id).format('M/D/YY')),
       datasets: [{
+        label:           'Page Views',
+        data:            _results.mapBy('pageViews').toArray(),
+        fill:            false,
+        backgroundColor: 'rgb(3, 177, 252)',
+        borderColor:     'rgb(3, 177, 252)'
+      }, {
         label:           'Total Applied',
         data:            _results.mapBy('total').toArray(),
         fill:            false,
