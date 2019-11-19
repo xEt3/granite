@@ -53,6 +53,11 @@ export default Controller.extend(addEdit, fileSupport, {
     path:        'addressZipcode',
     parentClass: 'four wide'
   }, {
+    label:       'EIN',
+    type:        'text',
+    path:        'ein',
+    parentClass: 'sixteen wide'
+  }, {
     label:       'Timezone',
     type:        'select',
     inputClass:  'search',

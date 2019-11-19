@@ -7,7 +7,7 @@
         type="date"
         label="When will this employee be terminated?"
         dateValue=model.terminatedOn
-        onChange=(action (mut model.terminatedOn))}}      
+        onChange=(action (mut model.terminatedOn))}}
     </div>
 
     <div class="two fields">
@@ -32,6 +32,12 @@
       </div>
     </div>
   </div>
+
+  <div class="field">
+    <label for="separation-notes"> Notes (for your use only)</label>
+    <Textarea @id="separation-notes" @rows="1" @placeholder="Notes..." @value={{this.model.separationNotes}} />
+  </div>
+
   <div class="ui divider"></div>
   {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
 </form>
