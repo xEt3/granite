@@ -9,7 +9,7 @@ import moment from 'moment';
 export default Component.extend(addEdit, del, {
   classNames:   [ 'item' ],
   tagName:      'div',
-  imagePreview: computed.match('assignment.file.extension', /je?pg|png|gif/i),
+  imagePreview: computed.match('assignment.file.extension', /jpe?g|png|gif/i),
   file:         computed('assignment.file', function () {
     return this.get('assignment.file');
   }),

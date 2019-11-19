@@ -33,6 +33,10 @@ export default Controller.extend(addEdit, del, {
     close () {
       const model = this.get('model');
       model.set('closed', true);
+      if (!model.completedOn) {
+        model.set('completedOn', new Date());
+      }
+
       this.saveModel(model);
     }
   }

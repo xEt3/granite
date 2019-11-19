@@ -91,12 +91,17 @@ export default Model.extend(Validations, {
   externalLinkAutomaticSync: attr('boolean'),
   externalLinkLastSync:      attr('date'),
 
+  // Auto exit interview
   autoExitInterview:     attr('boolean'),
   autoExitInterviewDate: attr('date'),
   autoExitInterviewForm: belongsTo('form', {
     async:   true,
     inverse: null
   }),
+
+  // Auto I9 collection
+  autoI9Collection: attr('boolean'),
+  autoW4Collection: attr('boolean'),
 
   company: belongsTo('company', {
     async:   true,
