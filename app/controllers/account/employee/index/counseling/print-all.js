@@ -1,6 +1,3 @@
 import Controller from '@ember/controller';
 
-export default Controller.extend({
-  queryParams: [ 'issue' ],
-  issue:       null
-});
+export default Controller.extend({ queryParams: [ 'issue', 'slug' ] });

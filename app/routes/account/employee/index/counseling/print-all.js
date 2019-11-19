@@ -1,30 +1,30 @@
 import Route from '@ember/routing/route';
 import { scheduleOnce, later, next } from '@ember/runloop';
 
-let followThroughPath = 'account.employee.index.counseling.issue';
-
 export default Route.extend({
   titleToken:  'Counseling',
-  queryParams: { issue: { refreshModel: true } },
+  queryParams: {
+    issue: { refreshModel: true },
+    slug:  { refreshModel: true }
+  },
+  followThroughPath: 'account.employee.index.counseling.issue',
+  slug:              null,
 
   async model (params) {
     let employee = this._super(...arguments);
 
-    if (!params.issue) {
-      followThroughPath = 'account.employee.index.counseling';
+    let queryParams = { employee: employee.get('id') };
 
-      return {
-        employee,
-        issues: await this.store.query('correctiveAction', { employee: employee.get('id') })
-      };
+    if (params.issue) {
+      this.slug = params.slug;
+      Object.assign(queryParams, { employeeIssue: params.issue });
+    } else {
+      this.followThroughPath = 'account.employee.index.counseling';
     }
 
     return {
       employee,
-      issues: await this.store.query('correctiveAction', {
-        employee:      employee.get('id'),
-        employeeIssue: params.issue
-      })
+      issues: await this.store.query('correctiveAction', queryParams)
     };
   },
 
@@ -32,7 +32,12 @@ export default Route.extend({
     async didTransition () {
       next(() => scheduleOnce('afterRender', () => {
         window.print();
-        later(() => this.transitionTo(followThroughPath), 100);
+        later(() =>  {
+          if (this.slug) {
+            this.transitionTo(this.followThroughPath, this.slug);
+          }
+          this.transitionTo(this.followThroughPath);
+        }, 100);
       }));
     }
   }

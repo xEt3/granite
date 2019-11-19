@@ -1,57 +1,32 @@
-{{#each model.issues as |correctiveActtion|}}
-  <div class="print-media__corrective-action {{if (not-eq correctiveActtion model.lastObject) "page-break"}}">
+{{#each model.issues as |correctiveAction|}}
+  <div class="print-media__corrective-action {{if (not-eq correctiveAction model.lastObject) "page-break"}}">
     <h3 class="ui center aligned header">
-      {{#if (await correctiveActtion.actionSeverity)}}
-        {{get (await correctiveActtion.actionSeverity) "name"}}
+      {{#if (await correctiveAction.actionSeverity)}}
+        {{get (await correctiveAction.actionSeverity) "name"}}
       {{/if}}
     </h3>
     <div class="item clearfix">
       <div class="left floated content">
         <div class="header">
-          Employee: {{correctiveActtion.employee.fullName}}
+          Employee: {{correctiveAction.employee.fullName}}
         </div>
         <div class="meta">
-          {{#if correctiveActtion.employee.jobTitle}}
-            {{correctiveActtion.employee.jobTitle}}
+          {{#if correctiveAction.employee.jobTitle}}
+            {{correctiveAction.employee.jobTitle}}
           {{/if}}
         </div>
       </div>
       <div class="right floated content">
         <div class="header">
-          Date: {{time correctiveActtion.issuedOn}}
+          Date: {{time correctiveAction.issuedOn}}
         </div>
         <div class="meta">
-          {{#if correctiveActtion.employee.department.name}}
-            Department: {{correctiveActtion.employee.department.name}}
+          {{#if correctiveAction.employee.department.name}}
+            Department: {{correctiveAction.employee.department.name}}
           {{/if}}
         </div>
       </div>
     </div>
-    {{#if (get (await correctiveActtion.actionSeverity) "formal")}}
-      <h3 class="ui header">Issue(s)</h3>
-      <p>{{long-text correctiveActtion.descriptionIssues}}</p>
-      <h3 class="ui header">Expectations going forward</h3>
-      <p>{{long-text correctiveActtion.descriptionExpectations}}</p>
-      <h3 class="ui header">Consequences if expectations are not met</h3>
-      <p>{{long-text correctiveActtion.descriptionConsequences}}</p>
-      <div class="employee-comments text container">
-        <h3 class="ui header">Employee Comments</h3>
-        <hr class="employee-comments__line">
-        <hr class="employee-comments__line">
-        <hr class="employee-comments__line">
-      </div>
-      <div class="signature ui equal width grid">
-        <div class="ui column">
-          <div class="signature__line"></div>
-          (Employee Signature)
-          <span class="right floated">(Date)</span>
-        </div>
-        <div class="ui column">
-          <div class="signature__line"></div>
-          (Manager/Supervisor/HR Signature)
-          <span class="right floated">(Date)</span>
-        </div>
-      </div>
-    {{/if}}
+    <Display::FormalAction @correctiveAction={{correctiveAction}} />
   </div>
 {{/each}}

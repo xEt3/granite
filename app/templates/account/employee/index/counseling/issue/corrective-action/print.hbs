@@ -26,28 +26,5 @@
       </div>
     </div>
   </div>
-  <h3 class="ui header">Issue(s)</h3>
-  <p>{{long-text model.descriptionIssues}}</p>
-  <h3 class="ui header">Expectations going forward</h3>
-  <p>{{long-text model.descriptionExpectations}}</p>
-  <h3 class="ui header">Consequences if expectations are not met</h3>
-  <p>{{long-text model.descriptionConsequences}}</p>
-  <div class="employee-comments text container">
-    <h3 class="ui header">Employee Comments</h3>
-    <hr class="employee-comments__line">
-    <hr class="employee-comments__line">
-    <hr class="employee-comments__line">
-  </div>
-  <div class="signature ui equal width grid">
-    <div class="ui column">
-      <div class="signature__line"></div>
-      (Employee Signature)
-      <span class="right floated">(Date)</span>
-    </div>
-    <div class="ui column">
-      <div class="signature__line"></div>
-      (Manager/Supervisor/HR Signature)
-      <span class="right floated">(Date)</span>
-    </div>
-  </div>
+  <Display::FormalAction @correctiveAction={{this.model}} />
 </div>

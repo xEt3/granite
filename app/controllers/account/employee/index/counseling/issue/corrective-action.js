@@ -106,16 +106,9 @@ export default Controller.extend(addEdit, del, {
       $('#modal__corrective-action--followup').modal('hide');
     },
 
-    selectDocuments () {
-      $('div[id^="modal__document-selection"]')
-      .modal({ detachable: true })
-      .modal('show');
-    },
-
-    async saveDocument () {
-      let action = await this.get('model');
-      action.get('documents').addObject(action.file);
-      return await this.saveModel();
+    saveDocument () {
+      this.model.get('documents').addObject(this.model.get('file'));
+      return this.saveModel();
     }
   }
 });
