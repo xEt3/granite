@@ -10,6 +10,7 @@ import Validations from './validations/company';
 export default Model.extend(Validations,  {
   name:  attr('string'),
   email: attr('string'),
+  ein:   attr('string'),
 
   addressLine1:   attr('string'),
   addressLine2:   attr('string'),

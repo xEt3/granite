@@ -7,19 +7,36 @@
 {{/if}}
 <div class="clearing content">
   <div class="header">
-    {{#link-to "account.document" file.id}}
-      {{file.title}}
-      <span class="light text">{{file.extension}}</span>
-    {{/link-to}}
+    {{#if assignment.cannedType}}
+      {{assignment.cannedType}} form
+    {{else}}
+      {{#link-to "account.document" file.id}}
+        {{file.title}}
+        <span class="light text">{{file.extension}}</span>
+      {{/link-to}}
+    {{/if}}
   </div>
   <div class="right floated">
+    {{#if (and assignment.cannedType assignment.cannedSubmitted)}}
+      <a href={{assignment.filledFile.url}} id="action-item__action--download" target="_blank" rel="noopener">
+        {{ember-tooltip
+          side="left"
+          popperContainer="body"
+          text="Download completed form"}}
+        <i class="download icon"></i>
+      </a>
+    {{/if}}
     {{#confirm-modal deleteContext=file.title tagName="span" class="right floated" as |confirm|}}
       <a href="#" id="action-item__action--delete" {{action (pipe confirm (action "delete" assignment))}}>
+        {{ember-tooltip
+          side="left"
+          popperContainer="body"
+          text="Delete assignment"}}
         <i class="trash icon"></i>
       </a>
     {{/confirm-modal}}
 
-    {{#if (not assignment.visibleToEmployee)}}
+    {{#if (or (not assignment.visibleToEmployee) assignment.cannedType)}}
       {{#modals/upload-document
         systemUse=true
         uploadComplete=(action "uploadFollowup") as |openUploadModal|
@@ -39,7 +56,12 @@
     <div class="ui equal width stackable grid">
       <div class="left aligned column">
         <div class="ui small text">
-          <p>Document {{if pastAssignment "was" "will be"}} assigned on {{time (or assignment.effectiveOn assignment.created)}} by {{assignment.creator.fullName}}</p>
+          <p>
+            Document {{if pastAssignment "was" "will be"}} assigned on {{time (or assignment.effectiveOn assignment.created)}}
+            {{#if assignment.creator}}
+              by {{assignment.creator.fullName}}
+            {{/if}}
+          </p>
           {{#if assignment.readOn}}
             <p>Viewed: {{time assignment.readOn}}</p>
           {{/if}}
