@@ -40,6 +40,9 @@ export default ApplicationSerializer.extend({
 
     serializeKeys(json, 'address', 'finalAddress', 'externalLink');
 
+    json.finalAddressSelfService = json.finalAddress.selfService;
+    delete json.finalAddress.selfService;
+
     return json;
   }
 });
