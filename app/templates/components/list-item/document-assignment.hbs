@@ -11,8 +11,8 @@
         onChange=(action
           (pipe
             (action (mut model.visibleToEmployee))
-            (action "checkBoxMagic")
-            (action onChange model)
+            (action "checkBoxDisplay")
+            (if onChange (action onChange model))
           )
         )
       }}
@@ -31,7 +31,7 @@
           onChange=(action
             (pipe
               (action (mut model.signatureRequired))
-              (action onChange model)
+              (if onChange (action onChange model))
             )
           )
         }}
@@ -52,7 +52,7 @@
         {{ui-calendar
           class="field"
           type="date"
-          onChange=(action onChange model)
+          onChange=(if onChange (action onChange model))
         }}
       {{/if}}
     {{/if}}

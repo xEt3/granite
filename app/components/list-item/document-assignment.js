@@ -5,12 +5,21 @@ export default BaseLiComponent.extend({
   isPendingState: or('model.isLoading', 'model.isSaving', 'model.isReloading'),
 
   actions: {
-    checkBoxMagic () {
+    checkBoxDisplay () {
       let model = this.get('model');
 
-      model.set('signatureRequired', model.visibleToEmployee ? true : false);
-      model.set('effectiveOn', model.visibleToEmployee ? model.effectiveOn : null);
+      if (model.visibleToEmployee) {
+        return;
+      }
+      model.setProperties({
+        signatureRequired: false,
+        effectiveOn:       null
+      });
       return;
     }
+  },
+
+  onChange () {
+    //noop
   }
 });

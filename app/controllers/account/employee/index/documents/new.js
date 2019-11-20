@@ -70,10 +70,6 @@ export default Controller.extend(addEdit, {
     async removeAssignment (assignment) {
       await assignment.destroyRecord();
       this.assignments.removeObject(assignment);
-    },
-
-    change () {
-      // noop
     }
   }
 });
