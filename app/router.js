@@ -65,6 +65,8 @@ Router.map(function () {
         this.route('invoice', { path: '/invoice/:id' });
       });
       this.route('integrations');
+      this.route('user');
+
       this.route('templates', function () {
         this.route('edit', { path: '/:template_id/edit' });
         this.route('add', { path: '/:template_key' });
