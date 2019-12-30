@@ -8,18 +8,18 @@
 
 <form class="ui form">
   <div class="field">
-    <label for="current">Current Password</label>
-    {{input type="password" id='current-password' value=current-password placeholder="Enter your current password"}}
+    <label for="current-password">Current Password</label>
+    {{input type="password" id='current-password' value=passwords.currentPassword placeholder="Enter your current password"}}
   </div>
 
   <div class="field">
-    <label for="new">New Password</label>
-    {{input type="password" id='new-password' value=new-password placeholder="Enter your new password"}}
+    <label for="new-password">New Password</label>
+    {{input type="password" id='new-password' value=passwords.newPassword placeholder="Enter your new password"}}
   </div>
 
   <div class="field">
-    <label for="confirm">Confirm New Password</label>
-    {{input type="password" id='confirm-password' value=confirm-password placeholder="Confirm your new password"}}
+    <label for="confirm-password">Confirm New Password</label>
+    {{input type="password" id='confirm-password' value=passwords.confirmPassword placeholder="Confirm your new password"}}
   </div>
 </form>
 
