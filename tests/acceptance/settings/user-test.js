@@ -21,7 +21,7 @@ module('Acceptance | settings/user', function (hooks) {
     await click('.yellow.button');
 
     const controller = this.owner.lookup('controller:account/settings/user');
-    assert.equal(controller.get('successMessage'), 'Successfully Changed', 'success message is "Successfully Changed"');
+    assert.equal(controller.get('successMessage'), 'Successfully Changed.', 'success message is "Successfully Changed."');
   });
 
   test('changing password with non matching passwords', async function (assert) {
