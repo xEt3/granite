@@ -89,7 +89,7 @@ export default function () {
     return { subscription: null }; //works for now
   });
 
-  this.post('company-user/change-password', (companyUser, request) => {
+  this.post('company-user/change-password', () => {
     return {};
   });
 
