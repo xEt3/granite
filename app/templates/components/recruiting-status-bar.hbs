@@ -3,7 +3,9 @@
   - {{if campaign.endOn (time campaign.endOn) "Until Filled"}}
 </div>
 <div class="right floated detail">
-  {{#if campaign.dueOn}}
+  {{#if campaign.completedOn}}
+    Completed On {{time campaign.completedOn}}
+  {{else if campaign.dueOn}}
     Due On {{time campaign.dueOn}}
   {{/if}}
 </div>
