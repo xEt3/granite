@@ -93,8 +93,7 @@ export default Controller.extend(addEdit, {
         context:    '.ember-application',
         onHidden:   () => {
           if (!this.get('respondedAssignment')) {
-            this.send('respondedAssignment', false);
-
+            this.send('respondAssignment', false);
           }
         }
       }).modal('show');
