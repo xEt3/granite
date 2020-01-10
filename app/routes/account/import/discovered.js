@@ -5,8 +5,8 @@ import { get } from '@ember/object';
 
 export default Route.extend({
   async beforeModel (transition) {
-    const resultSetId = transition.params['account.import.discovered'].result_set_id || (transition.handlerInfos[transition.handlerInfos.length - 1].context || {})._id,
-          serviceName = transition.queryParams.service;
+    const resultSetId = ((transition.params || {})['account.import.discovered'] || {}).result_set_id || (transition.routeInfos[transition.routeInfos.length - 1].context || {})._id,
+          serviceName = transition.to.queryParams.service;
 
     try {
       const currentTask = (await this.store.query('task-status', {
