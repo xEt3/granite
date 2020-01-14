@@ -13,33 +13,31 @@
         </h3> 
 
         <div class="item clearfix ui basic segment">
-          <div class="">
-            <div class="header">
-              Employee: {{correctiveAction.employee.fullName}}
-              <span class="right floated content"> 
-                Date of Issuance: {{time correctiveAction.issuedOn}}
-              </span>
-            </div>
-            <div class="meta">
-              <p>
-                {{#if correctiveAction.employee.jobTitle}}
-                 JobTitle: {{correctiveAction.employee.jobTitle}}
-                {{/if}}
-                <span class="right floated content">
-                  {{#if correctiveAction.employee.department.name}}
-                   Department: {{correctiveAction.employee.department.name}}
-                  {{/if}}
-                </span>
-              </p>
-              {{#if correctiveAction.notes}}
-               <p> Notes: {{correctiveAction.notes}}</p>
+          <div class="header">
+            Employee: {{correctiveAction.employee.fullName}}
+            <span class="right floated content"> 
+              Date of Issuance: {{time correctiveAction.issuedOn}}
+            </span>
+          </div>
+          <div class="meta">
+            <p>
+              {{#if correctiveAction.employee.jobTitle}}
+                JobTitle: {{correctiveAction.employee.jobTitle}}
               {{/if}}
-            </div>
+              <span class="right floated content">
+                {{#if correctiveAction.employee.department.name}}
+                  Department: {{correctiveAction.employee.department.name}}
+                {{/if}}
+              </span>
+            </p>
+            {{#if correctiveAction.notes}}
+              <p>Notes: {{correctiveAction.notes}}</p>
+            {{/if}}
           </div>
         </div>
 
-        <div class='ui basic segment'>
-          <Display::FormalAction @correctiveAction={{correctiveAction}} @hideEmployeeSection=true />
+        <div class="ui basic segment">
+          <Display::FormalAction @correctiveAction={{correctiveAction}} hideEmployeeSection=true />
         </div>
       </div>
     {{/if}}
