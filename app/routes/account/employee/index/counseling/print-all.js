@@ -7,24 +7,34 @@ export default Route.extend({
     issue: { refreshModel: true },
     slug:  { refreshModel: true }
   },
-  followThroughPath: 'account.employee.index.counseling.issue',
-  slug:              null,
+
+  resetController (controller, isExiting) {
+    if (isExiting) {
+      controller.setProperties({
+        issue: undefined,
+        slug:  undefined
+      });
+    }
+  },
 
   async model (params) {
     let employee = this._super(...arguments);
-
     let queryParams = { employee: employee.get('id') };
 
     if (params.issue) {
       this.slug = params.slug;
       Object.assign(queryParams, { employeeIssue: params.issue });
+      this.followThroughPath = 'account.employee.index.counseling.issue';
+
     } else {
+      this.slug = undefined;
       this.followThroughPath = 'account.employee.index.counseling';
     }
 
     return {
       employee,
-      issues: await this.store.query('correctiveAction', queryParams)
+      issue:             await this.store.query('employee-issue', { employee: queryParams.employee }),
+      correctiveActions: await this.store.query('correctiveAction', queryParams)
     };
   },
 

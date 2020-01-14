@@ -1,32 +1,48 @@
-{{#each model.issues as |correctiveAction|}}
-  <div class="print-media__corrective-action {{if (not-eq correctiveAction model.lastObject) "page-break"}}">
-    <h3 class="ui center aligned header">
-      {{#if (await correctiveAction.actionSeverity)}}
-        {{get (await correctiveAction.actionSeverity) "name"}}
-      {{/if}}
-    </h3>
-    <div class="item clearfix">
-      <div class="left floated content">
-        <div class="header">
-          Employee: {{correctiveAction.employee.fullName}}
-        </div>
-        <div class="meta">
-          {{#if correctiveAction.employee.jobTitle}}
-            {{correctiveAction.employee.jobTitle}}
+{{#each model.issue as |issue|}}
+  {{#each model.correctiveActions as |correctiveAction|}}
+    {{#if (eq issue.id correctiveAction.employeeIssue.id)}}
+      <div class="print-media__corrective-action {{if (not-eq correctiveAction model.lastObject) "page-break"}}">
+        <h3 class="ui center aligned header">
+          {{issue.title}} 
+          {{#if (await correctiveAction.actionSeverity)}}
+            - {{get (await correctiveAction.actionSeverity) "name"}}
           {{/if}}
+          {{#if correctiveAction.type}}
+            ({{correctiveAction.type}})
+          {{/if}}
+        </h3> 
+
+        <div class="item clearfix ui basic segment">
+          <div class="">
+            <div class="header">
+              Employee: {{correctiveAction.employee.fullName}}
+              <span class="right floated content"> 
+                Date of Issuance: {{time correctiveAction.issuedOn}}
+              </span>
+            </div>
+            <div class="meta">
+              <p>
+                {{#if correctiveAction.employee.jobTitle}}
+                 JobTitle: {{correctiveAction.employee.jobTitle}}
+                {{/if}}
+                <span class="right floated content">
+                  {{#if correctiveAction.employee.department.name}}
+                   Department: {{correctiveAction.employee.department.name}}
+                  {{/if}}
+                </span>
+              </p>
+              {{#if correctiveAction.notes}}
+               <p> Notes: {{correctiveAction.notes}}</p>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+
+        <div class='ui basic segment'>
+          <Display::FormalAction @correctiveAction={{correctiveAction}} @hideEmployeeSection=true />
         </div>
       </div>
-      <div class="right floated content">
-        <div class="header">
-          Date: {{time correctiveAction.issuedOn}}
-        </div>
-        <div class="meta">
-          {{#if correctiveAction.employee.department.name}}
-            Department: {{correctiveAction.employee.department.name}}
-          {{/if}}
-        </div>
-      </div>
-    </div>
-    <Display::FormalAction @correctiveAction={{correctiveAction}} />
-  </div>
+    {{/if}}
+  {{/each}}
 {{/each}}
+
