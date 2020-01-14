@@ -15,9 +15,7 @@
         <div class="item clearfix ui basic segment">
           <div class="header">
             Employee: {{correctiveAction.employee.fullName}}
-            <span class="right floated content"> 
-              Date of Issuance: {{time correctiveAction.issuedOn}}
-            </span>
+            <span class="right floated content"> Date of Issuance: {{time correctiveAction.issuedOn}}</span>
           </div>
           <div class="meta">
             <p>
@@ -37,7 +35,7 @@
         </div>
 
         <div class="ui basic segment">
-          <Display::FormalAction @correctiveAction={{correctiveAction}} hideEmployeeSection=true />
+          <Display::FormalAction @correctiveAction={{correctiveAction}} @hideEmployeeSection={{true}} />
         </div>
       </div>
     {{/if}}
