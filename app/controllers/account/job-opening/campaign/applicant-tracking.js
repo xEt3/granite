@@ -138,8 +138,8 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     });
 
     try {
-      await jobApplication.save()
-      await employee.save()
+      await jobApplication.save();
+      await employee.save();
 
       if (wasNew) {
         this.transitionToRoute('account.employee.onboard', employee.get('id'));
