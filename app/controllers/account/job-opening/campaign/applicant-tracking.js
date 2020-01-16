@@ -106,14 +106,14 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     }
   },
 
-  beginOnboarding (jobApplication) {
+  async beginOnboarding (jobApplication) {
     this.analytics.trackEvent('Recruiting', 'hire', 'Hired candidate');
 
     const job = this.get('model.job'),
           jobOpening = this.get('model.jobOpening'),
-          applicant = jobApplication.get('applicant');
+          applicant  = await jobApplication.get('applicant');
 
-    let employee = jobApplication.get('employee');
+    let employee = await jobApplication.get('employee');
 
     jobApplication.setProperties({
       hired:      true,
@@ -137,14 +137,16 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
       hiredFromJobApp: jobApplication
     });
 
-    return jobApplication.save()
-    .then(() => employee.save())
-    .then(employeeRecord => {
+    try {
+      await jobApplication.save()
+      await employee.save()
+
       if (wasNew) {
-        this.transitionToRoute('account.employee.onboard', employeeRecord.get('id'));
+        this.transitionToRoute('account.employee.onboard', employee.get('id'));
       }
-    })
-    .catch(this.ajaxError.bind(this));
+    } catch (e) {
+      this.ajaxError(e);
+    }
   },
 
   actions: {

@@ -56,7 +56,7 @@ export default Component.extend({
         return;
       }
       let fn = this.get(response ? 'resolve' : 'reject');
-      fn.apply(null, this.get('_originalArgs'));
+      fn.apply(null, response ? this.get('_originalArgs'):null);
       this.set('responded', true);
       this.closeModal();
 
