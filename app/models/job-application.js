@@ -45,7 +45,7 @@ export default Model.extend({
     async:   true,
     inverse: null
   }),
-  
+
   completedOn: attr('date'),
   reviewedOn:  attr('date'),
   created:     attr('date', { defaultValue: () => new Date() }),
