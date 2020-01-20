@@ -3,16 +3,18 @@ import { inject as service } from '@ember/service';
 import config from './config/environment';
 import RouterScroll from 'ember-router-scroll';
 
-const Router = EmberRouter.extend(RouterScroll, {
-  location:  config.locationType,
-  rootURL:   config.rootURL,
-  headData:  service(),
-  router:    service(),
-  analytics: service(),
+export default class Router extends EmberRouter {
+  location = config.locationType;
+  rootURL = config.rootURL;
+  location = config.locationType;
+  rootURL = config.rootURL;
+  @service headDatal
+  @service router;
+  @service analytics;
 
   setTitle (title) {
     this.get('headData').set('title', title);
-  },
+  }
 
   didTransition () {
     this._super(...arguments);
@@ -258,5 +260,3 @@ Router.map(function () {
   this.route('our-product');
   this.route('terms-of-service');
 });
-
-export default Router;
