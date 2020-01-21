@@ -51,7 +51,7 @@
                 Guessed Fields
               </div>
             </th>
-            {{#each this.model.data.0 as |guesses index|}}
+            {{#each (object-at 0 this.model.data) as |guesses index|}}
               <th>
                 <div class="field">
                   {{#ui-dropdown
@@ -87,7 +87,7 @@
                 Your Columns
               </div>
             </th>
-            {{#each this.model.data.1 as |clientDataNames|}}
+            {{#each (object-at 1 this.model.data) as |clientDataNames|}}
               <th>{{clientDataNames}}</th>
             {{/each}}
           </tr>
