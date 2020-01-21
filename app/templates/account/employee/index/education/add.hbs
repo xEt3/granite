@@ -1,17 +1,17 @@
 <div class="ui raised padded segment container clearfix animated fadeInUp">
   <h1 class="ui header titlecased text">
-    Add a new {{type}} for {{employee.firstName}}
+    Add a new {{this.type}} for {{this.employee.firstName}}
   </h1>
 
   <div class="ui divider"></div>
 
   {{#quick-form
-    currentForm.elements
-    model
+    this.currentForm.elements
+    this.model
     this
     submitClass="large green fluid"
     onsubmit=(action "save")
   }}
-    Add {{type}}
+    Add {{this.type}}
   {{/quick-form}}
 </div>

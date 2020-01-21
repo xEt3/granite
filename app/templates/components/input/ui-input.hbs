@@ -1,8 +1,8 @@
-<label for={{inputId}} class={{if srOnly "sr-only"}}>
+<label for={{this.inputId}} class={{if this.srOnly "sr-only"}}>
   {{#if hasBlock}}
     {{yield}}
   {{else}}
-    {{placeholder}}
+    {{this.placeholder}}
   {{/if}}
 </label>
-{{input type=type id=inputId class=inputClass placeholder=placeholder value=value}}
+{{input type=this.type id=this.inputId class=this.inputClass placeholder=this.placeholder value=this.value}}

@@ -1,18 +1,18 @@
-{{#each model as |item|}}
+{{#each this.model as |item|}}
   {{#if hasBlock}}
     {{yield (hash
-      listItem=(component itemComponent item class=componentClass)
+      listItem=(component this.itemComponent item class=this.componentClass)
       item=item
     )}}
   {{else}}
-    {{#if linkTo}}
-      {{#link-to linkTo (get item modelIdentifier) class=linkClass}}
-        {{component itemComponent item class=componentClass}}
+    {{#if this.linkTo}}
+      {{#link-to this.linkTo (get item this.modelIdentifier) class=this.linkClass}}
+        {{component this.itemComponent item class=this.componentClass}}
       {{/link-to}}
     {{else}}
-      {{component itemComponent item class=componentClass}}
+      {{component this.itemComponent item class=this.componentClass}}
     {{/if}}
   {{/if}}
 {{else}}
-  <h2 class="ui center aligned header">No {{resourceName}} available.</h2>
+  <h2 class="ui center aligned header">No {{this.resourceName}} available.</h2>
 {{/each}}

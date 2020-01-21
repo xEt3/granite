@@ -1,21 +1,21 @@
 {{#if hasBlock}}
-  {{yield startConfirmation}}
+  {{yield this.startConfirmation}}
 {{/if}}
 
-{{#ui-modal name="profile" id=modalId class="confirm-modal basic small"}}
+{{#ui-modal name="profile" id=this.modalId class="confirm-modal basic small"}}
   <i class="close icon"></i>
   <div class="header">
-    {{if title title "Heads up!"}}
+    {{if this.title this.title "Heads up!"}}
   </div>
   <div class="content">
-    {{if confirmContent confirmContent (if deleteContext (concat "Are you sure you want to remove " deleteContext "?") "Are you sure you want to do that?")}}
+    {{if this.confirmContent this.confirmContent (if this.deleteContext (concat "Are you sure you want to remove " this.deleteContext "?") "Are you sure you want to do that?")}}
   </div>
   <div class="actions">
     <button class="ui inverted red button" {{action "respond" false}}>
-      {{if rejectText rejectText "No"}}
+      {{if this.rejectText this.rejectText "No"}}
     </button>
     <button class="ui inverted green right labeled icon button" {{action "respond" true}}>
-      {{if confirmText confirmText "Yes"}}
+      {{if this.confirmText this.confirmText "Yes"}}
       <i class="check icon"></i>
     </button>
   </div>

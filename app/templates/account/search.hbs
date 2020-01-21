@@ -4,7 +4,7 @@
   </h1>
   <div class="ui divider"></div>
 
-  {{#each-in model.results as |category group|}}
+  {{#each-in this.model.results as |category group|}}
     <h2 class="search__result-category">{{category}}</h2>
     <div class="ui divided link items">
       {{#each group.results as |result|}}

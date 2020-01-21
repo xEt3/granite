@@ -7,11 +7,11 @@
   <div class="field">
     <div class="ui divider"></div>
     <label for="basenode-selection">Select a supervisor</label>
-    {{#ui-dropdown id="basenode-selection" class="search selection" selected=selectedNode forceSelection=false onChange=(action (mut selectedNode)) as |execute mapper|}}
+    {{#ui-dropdown id="basenode-selection" class="search selection" selected=this.selectedNode forceSelection=false onChange=(action (mut this.selectedNode)) as |execute mapper|}}
       <div class="default text">Select an employee</div>
       <i class="dropdown icon"></i>
       <div class="menu">
-        {{#each model as |employee|}}
+        {{#each this.model as |employee|}}
           <div class="item" data-value={{map-value mapper employee}}>
             {{employee.fullName}}{{#if employee.jobTitle}} - <span class="light text">{{employee.jobTitle}}</span>{{/if}}
           </div>
@@ -20,6 +20,6 @@
     {{/ui-dropdown}}
   </div>
 </div>
-{{#if baseNode}}
-  {{visualizations/organization-tree baseNode=baseNode}}
+{{#if this.baseNode}}
+  {{visualizations/organization-tree baseNode=this.baseNode}}
 {{/if}}

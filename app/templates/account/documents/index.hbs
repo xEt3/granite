@@ -1,4 +1,4 @@
-{{#if showFilters}}
+{{#if this.showFilters}}
   {{#display/filter-pane
     class="ui content form padded segment container"
     onChange=(action "updateFilter") as |filter|
@@ -11,11 +11,11 @@
     {{#filter.section "Tags"}}
       {{#filter.selectControl
         "tags"
-        tags
+        this.tags
         searchable=true
         multi=true
         itemValuePath=false
-        model=filterModels.tags as |item|
+        model=this.filterModels.tags as |item|
       }}
         {{item}}
       {{/filter.selectControl}}
@@ -24,11 +24,11 @@
     {{#filter.section "Extension"}}
       {{#filter.selectControl
         "extension"
-        extension
+        this.extension
         searchable=true
         multi=true
         itemValuePath=false
-        model=filterModels.extension as |extension|
+        model=this.filterModels.extension as |extension|
       }}
         {{extension}}
       {{/filter.selectControl}}
@@ -44,12 +44,12 @@
 
     <div class="right aligned text floated menu__actions">
       <h3 class="ui right floated header">
-        <a href="#" class={{if showFilters "text-red"}} {{action toggleProperty "showFilters"}}>
+        <a href="#" class={{if this.showFilters "text-red"}} {{action this.toggleProperty "showFilters"}}>
           {{ember-tooltip
             side="left"
             popperContainer="body"
             text="Filters"}}
-          <i class="{{if showFilters "remove" "filter"}} icon"></i>
+          <i class="{{if this.showFilters "remove" "filter"}} icon"></i>
         </a>
       </h3>
       {{#ui-dropdown class="right floated top pointing inline"}}
@@ -69,10 +69,10 @@
   <div class="ui divider"></div>
 
   {{display/resource-list
-    model
+    this.model
     "list-item/document-item"
     linkTo="account.document"
     linkClass="item"
     class="ui divided link items"}}
-  {{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}
+  {{elements/x-pagination page=(readonly this.page) pages=(readonly this.pages) onchange=(action (mut this.page))}}
 </div>

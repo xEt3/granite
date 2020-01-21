@@ -1,5 +1,5 @@
 <div class="ui relaxed divided list">
-  {{#each model as |responseGroup|}}
+  {{#each this.model as |responseGroup|}}
     {{list-item/form-group-item responseGroup}}
   {{else}}
     <h2>No forms available.</h2>

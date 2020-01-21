@@ -1,37 +1,37 @@
 <div class="ui very padded raised segment animated fadeInUp">
   <h2 class="ui clearfix header">
-    Settings for {{model.name}}
+    Settings for {{this.model.name}}
   </h2>
   <div class="ui form">
     <h2 class="ui horizontal divider header">Campaign Settings</h2>
     {{quick-form
-      campaignSettingsForm
-      model
+      this.campaignSettingsForm
+      this.model
       this
       tagName="div"
       class="content ui grid"}}
 
     <div class="custom-pipeline-toggle">
       {{ui-checkbox
-        id=customPipelineToggle
+        id=this.customPipelineToggle
         class="toggle"
         label="Use custom recruiting stages"
         parentClass="sixteen wide column"
-        checked=(readonly customPipeline)
+        checked=(readonly this.customPipeline)
         onChange=(action "toggleCustomPipeline")}}
     </div>
 
-    {{#liquid-if customPipeline}}
+    {{#liquid-if this.customPipeline}}
       <h2 class="ui horizontal divider header">Custom Recruiting Process</h2>
 
-      {{#liquid-if canAddStages}}
+      {{#liquid-if this.canAddStages}}
         <button type="button" id="add-stage" class="ui primary fluid button" {{action "openStageModal"}}>
           <i class="plus icon"></i>Add Stage
         </button>
       {{/liquid-if}}
 
       {{#sortable-group tagName="ul" classNames="pipeline-stage-list__cards" onChange="reorderItems" as |group|}}
-        {{#each customPipeline.stages as |stage|}}
+        {{#each this.customPipeline.stages as |stage|}}
           {{#sortable-item tagName="li" classNames="stage-list__card" model=stage group=group}}
             <div class="card-content__wrapper">
               <div class="card-content__title-bar">
@@ -51,8 +51,8 @@
 
     <h2 class="ui horizontal divider header">Job Settings</h2>
     {{quick-form
-      jobSettingsForm
-      model
+      this.jobSettingsForm
+      this.model
       this
       tagName="div"
       class="content ui grid"}}
@@ -60,7 +60,7 @@
     <div class="ui divider"></div>
 
     <form {{action (pipe (action "save") (action "saveCustomPipeline")) on="submit"}}>
-      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Save{{/form/action-button}}
+      {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Save{{/form/action-button}}
     </form>
 
     <p class="center aligned text">
@@ -72,17 +72,17 @@
 <div id="modal__add-stage--placeholder">
   {{#ui-modal id="modal__add-stage" class="small form"}}
     <div class="header">
-      <i class="plus icon"></i>{{if editingStage "Edit" "Add"}} recruiting pipeline stage
+      <i class="plus icon"></i>{{if this.editingStage "Edit" "Add"}} recruiting pipeline stage
     </div>
     <div class="content">
       {{quick-form
-        stageForm
-        currentStage
+        this.stageForm
+        this.currentStage
         this
         tagName="div"}}
     </div>
     <div class="actions">
-      {{#unless editingStage}}
+      {{#unless this.editingStage}}
         <button class="ui red button" {{action "respondStageAddition" false}}>
           Cancel
         </button>

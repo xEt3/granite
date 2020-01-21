@@ -1,6 +1,6 @@
 <div class="content">
   <div class="header">
-    {{asset.identifier}}<i class="{{asset.asset.icon}} icon right floated"></i>
+    {{this.asset.identifier}}<i class="{{this.asset.asset.icon}} icon right floated"></i>
   </div>
 </div>
 <div class="content">
@@ -11,23 +11,23 @@
     <div class="event">
       <div class="content">
         <div class="summary">
-          {{#if assignment.assigner}}
-            {{#link-to "account.employee" assignment.assigner.id}}
-              {{assignment.assigner.fullName}}
+          {{#if this.assignment.assigner}}
+            {{#link-to "account.employee" this.assignment.assigner.id}}
+              {{this.assignment.assigner.fullName}}
             {{/link-to}}
             assigned
           {{else}}
             Assigned
           {{/if}}
           from
-          {{#link-to "account.asset" asset.asset.id}}
-            {{asset.asset.name}}
+          {{#link-to "account.asset" this.asset.asset.id}}
+            {{this.asset.asset.name}}
           {{/link-to}}
-          on {{time asset.created}}
+          on {{time this.asset.created}}
         </div>
       </div>
     </div>
-    {{#if attributes.length}}
+    {{#if this.attributes.length}}
       <a href="#" {{action "toggleProperty" "details"}}>
         {{ember-tooltip
           side="right"
@@ -36,10 +36,10 @@
         <i class="info circle icon"></i>
       </a>
     {{/if}}
-    {{#if attributes.length}}
-      {{#liquid-if details}}
+    {{#if this.attributes.length}}
+      {{#liquid-if this.details}}
         <div class="ui segment">
-          {{#each attributes as |attr|}}
+          {{#each this.attributes as |attr|}}
             <div class="line-item-value">
               <i>{{attr.key}}</i>
               <u>

@@ -1,15 +1,15 @@
 {{#if hasBlock}}
-  {{yield model}}
+  {{yield this.model}}
 {{else}}
   <div class="content">
-    <i class="{{if todo.completedOn "checkmark box" "square outline"}} icon"></i>
-    {{#if model.todo.completedOn}}
-      <s>{{model.todo.title}}</s>
+    <i class="{{if this.todo.completedOn "checkmark box" "square outline"}} icon"></i>
+    {{#if this.model.todo.completedOn}}
+      <s>{{this.model.todo.title}}</s>
     {{else}}
-      {{model.todo.title}}
+      {{this.model.todo.title}}
     {{/if}}
     <small class="right floated meta">
-      {{#link-to "account.action-item" slug}}From "{{model.title}}"{{/link-to}}
+      {{#link-to "account.action-item" this.slug}}From "{{this.model.title}}"{{/link-to}}
     </small>
   </div>
 {{/if}}

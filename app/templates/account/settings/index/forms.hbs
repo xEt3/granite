@@ -10,13 +10,13 @@
     onCreateForm=(route-action "refresh") as |openModal|}}
     {{#confirm-modal class="item" as |confirm|}}
       <div class="ui divided items">
-        {{#each model as |formRecord|}}
+        {{#each this.model as |formRecord|}}
           {{list-item/form-item
             formRecord
             onEdit=(action openModal formRecord)
             onDelete=(action (pipe confirm (action "delete")))}}
         {{else}}
-          <h2 class="ui center aligned header">No {{resourceName}} available.</h2>
+          <h2 class="ui center aligned header">No {{this.resourceName}} available.</h2>
         {{/each}}
       </div>
     {{/confirm-modal}}

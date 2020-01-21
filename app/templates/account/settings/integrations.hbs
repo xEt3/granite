@@ -1,5 +1,5 @@
 <div class="ui form">
-  {{#if (and f s)}}
+  {{#if (and this.f this.s)}}
     <div class="ui red inverted text segment">
       <h3>
         <i class="warning icon"></i> Failed to link {{s}}.
@@ -12,7 +12,7 @@
 
   <h3 class="ui header clearfix">
     Slate Payroll Exchange
-    {{#if (contains "slate" model.linkedServices)}}
+    {{#if (contains "slate" this.model.linkedServices)}}
       {{#link-to "account.import" class="right floated"}}
         <small><i class="sign in alternate icon"></i>Import data from Slate Payroll...</small>
       {{/link-to}}
@@ -25,7 +25,7 @@
   <div class="field">
     {{#form/integration-button
       service="slate"
-      linkedServices=model.linkedServices
+      linkedServices=this.model.linkedServices
       class="right labeled icon secondary massive fluid"
       onNotify=(action "onNotify")
       as |alreadyLinked|

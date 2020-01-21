@@ -1,37 +1,37 @@
 <div class="print-media__corrective-action">
   <h3 class="ui center aligned header">
-    {{#if (await model.actionSeverity)}}
-      {{get (await model.actionSeverity) "name"}}
+    {{#if (await this.model.actionSeverity)}}
+      {{get (await this.model.actionSeverity) "name"}}
     {{/if}}
   </h3>
   <div class="item clearfix">
     <div class="left floated content">
       <div class="header">
-        Employee: {{model.employee.fullName}}
+        Employee: {{this.model.employee.fullName}}
       </div>
       <div class="meta">
-        {{#if model.employee.jobTitle}}
-          {{model.employee.jobTitle}}
+        {{#if this.model.employee.jobTitle}}
+          {{this.model.employee.jobTitle}}
         {{/if}}
       </div>
     </div>
     <div class="right floated content">
       <div class="header">
-        Date: {{time model.issuedOn}}
+        Date: {{time this.model.issuedOn}}
       </div>
       <div class="meta">
-        {{#if model.employee.department.name}}
-          Department: {{model.employee.department.name}}
+        {{#if this.model.employee.department.name}}
+          Department: {{this.model.employee.department.name}}
         {{/if}}
       </div>
     </div>
   </div>
   <h3 class="ui header">Issue(s)</h3>
-  <p>{{long-text model.descriptionIssues}}</p>
+  <p>{{long-text this.model.descriptionIssues}}</p>
   <h3 class="ui header">Expectations going forward</h3>
-  <p>{{long-text model.descriptionExpectations}}</p>
+  <p>{{long-text this.model.descriptionExpectations}}</p>
   <h3 class="ui header">Consequences if expectations are not met</h3>
-  <p>{{long-text model.descriptionConsequences}}</p>
+  <p>{{long-text this.model.descriptionConsequences}}</p>
   <div class="employee-comments text container">
     <h3 class="ui header">Employee Comments</h3>
     <hr class="employee-comments__line">

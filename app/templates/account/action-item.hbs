@@ -1,9 +1,9 @@
 <div class="ui container">
-  {{#if model.cancelledOn}}
-    <h2 class="ui red header"><i class="close icon"></i>This item was cancelled on {{time model.cancelledOn}}</h2>
+  {{#if this.model.cancelledOn}}
+    <h2 class="ui red header"><i class="close icon"></i>This item was cancelled on {{time this.model.cancelledOn}}</h2>
   {{/if}}
-  {{#if model.completedOn}}
-    <h2 class="ui green header"><i class="check icon"></i>This item was completed on {{time model.completedOn}}</h2>
+  {{#if this.model.completedOn}}
+    <h2 class="ui green header"><i class="check icon"></i>This item was completed on {{time this.model.completedOn}}</h2>
   {{/if}}
 
   {{#ui-menu menuClass="pointing"}}
@@ -12,28 +12,27 @@
     {{/link-to}}
     {{#link-to "account.action-item.todo" class="item"}}
       <i class="check square icon"></i>Todos
-      {{#if model.checklist}}
+      {{#if this.model.checklist}}
         <label class="ui left pointing label">
-          {{model.completeTodos.length}}/{{model.checklist.length}}
+          {{this.model.completeTodos.length}}/{{this.model.checklist.length}}
         </label>
       {{/if}}
     {{/link-to}}
     {{#link-to "account.action-item.discussion" class="item"}}
       <i class="comments icon"></i>Discussion
     {{/link-to}}
-    {{#if (eq model.owner.id auth.user.employee.id)}}
+    {{#if (eq this.model.owner.id this.auth.user.employee.id)}}
       <div class="right menu">
         {{#ui-dropdown class="item icon top right pointing"}}
           <i class="wrench icon"></i><i class="dropdown icon"></i>
           <div class="menu">
             <div class="header">Actions</div>
-            <a href="#" id="action-item__action--mark-complete" class="item"
-              {{action (pipe
+            <a href="#" id="action-item__action--mark-complete" class="item" {{action (pipe
                 (action "confirmCompletion")
                 (action "toggleComplete")
                 (action "save")
             )}}>
-              <i class="check icon"></i>Mark as {{if model.completedOn "Incomplete" "Complete"}}
+              <i class="check icon"></i>Mark as {{if this.model.completedOn "Incomplete" "Complete"}}
             </a>
             <a href="#" id="action-item__action--transfer" class="item"
               {{action (pipe
@@ -57,7 +56,7 @@
                 <i class="close icon"></i>Cancel Project
               </a>
             {{/confirm-modal}}
-            {{#confirm-modal as deleteContext=model.title class="item" as |confirm|}}
+            {{#confirm-modal this.as deleteContext=this.model.title class="item" as |confirm|}}
               <a href="#" id="action-item__action--delete" {{action (pipe confirm (action "delete"))}}>
                 <i class="trash icon"></i>Delete Record
               </a>
@@ -78,12 +77,12 @@
   </div>
   <div class="content">
     <div class="field">
-      {{#if transferableTargets}}
-        {{#ui-dropdown class="fluid search selection" id="action-item-transfer-target" selected=transferTarget onChange=(action (mut transferTarget)) as |execute mapper|}}
+      {{#if this.transferableTargets}}
+        {{#ui-dropdown class="fluid search selection" id="action-item-transfer-target" selected=this.transferTarget onChange=(action (mut this.transferTarget)) as |execute mapper|}}
           <i class="dropdown icon"></i>
           <div class="default text">Select a new owner</div>
           <div class="menu">
-            {{#each transferableTargets as |item|}}
+            {{#each this.transferableTargets as |item|}}
               <div class="item" data-value={{map-value mapper item.employee}}>
                 {{item.employee.fullName}}
               </div>
@@ -99,10 +98,10 @@
     <button class="ui red button" {{action "respondTransferModal" false}}>
       Cancel
     </button>
-    <button class="ui primary right labeled icon button" disabled={{if transferTarget false true}} {{action "respondTransferModal" true}}>
+    <button class="ui primary right labeled icon button" disabled={{if this.transferTarget false true}} {{action "respondTransferModal" true}}>
       Transfer
-      {{#if transferTarget}}
-        to {{transferTarget.fullName}}
+      {{#if this.transferTarget}}
+        to {{this.transferTarget.fullName}}
       {{/if}}
       <i class="random icon"></i>
     </button>
@@ -116,8 +115,8 @@
   </div>
   <div class="content">
     Are you sure want to do that?
-    {{#if (and model.incompleteTodos.length (not model.completedOn))}}
-      <p><strong>There's still {{model.incompleteTodos.length}} {{inflect-text "todos" model.incompleteTodos.length}} left to complete!</strong></p>
+    {{#if (and this.model.incompleteTodos.length (not this.model.completedOn))}}
+      <p><strong>There's still {{this.model.incompleteTodos.length}} {{inflect-text "todos" this.model.incompleteTodos.length}} left to complete!</strong></p>
     {{/if}}
   </div>
   <div class="actions">
@@ -125,7 +124,7 @@
       Cancel
     </button>
     <button class="ui inverted green right labeled icon button" {{action "respondConfirmCompleteModal" true}}>
-      Mark {{if model.completedOn "Incomplete" "Complete"}}
+      Mark {{if this.model.completedOn "Incomplete" "Complete"}}
       <i class="check icon"></i>
     </button>
   </div>
@@ -134,10 +133,10 @@
 {{#ui-modal id="modal__action-item--delay" class="small form"}}
   <i class="close icon"></i>
   <div class="header">
-    When should "{{model.title}}" be due?
+    When should "{{this.model.title}}" be due?
   </div>
   <div class="content">
-    {{ui-calendar class="field" type="date" inline=true onChange=(action (mut model.delayedUntil))}}
+    {{ui-calendar class="field" type="date" inline=true onChange=(action (mut this.model.delayedUntil))}}
   </div>
   <div class="actions">
     <button class="ui red button" {{action "respondDelayModal" false}}>
@@ -145,9 +144,9 @@
     </button>
     <button class="ui green right labeled icon button" {{action "respondDelayModal" true}}>
       Delay
-      {{#if model.delayedUntil}}
+      {{#if this.model.delayedUntil}}
         until
-        {{time model.delayedUntil "M/D/YY"}}
+        {{time this.model.delayedUntil "M/D/YY"}}
       {{/if}}
       <i class="ellipsis horizontal icon"></i>
     </button>

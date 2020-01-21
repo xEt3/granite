@@ -1,34 +1,34 @@
 <form class="ui form container liquid-padded" {{action "save" on="submit"}}>
   <div class="field">
     <label for="asset-identifier">Asset Identifier</label>
-    {{input type="text" value=model.identifier id="asset-identifier" placeholder="Unique identifier (VIN, Stock #, RFID)"}}
+    {{input type="text" value=this.model.identifier id="asset-identifier" placeholder="Unique identifier (VIN, Stock #, RFID)"}}
   </div>
   <div class="field">
     <label for="asset-description">Documents</label>
     {{#input/document-selection-modal
       title="Assign asset documents"
-      selected=model.documents
+      selected=this.model.documents
       autoTag="Asset"
-      onSelected=(action (mut model.documents))
+      onSelected=(action (mut this.model.documents))
       as |execute|
     }}
       <button class="ui basic button" {{action execute "selectDocuments"}}>
         <i class="folder icon"></i>
         Add asset documents
-        {{#if model.documents.length}}
-          <span class="ui label">{{model.documents.length}} Assigned</span>
+        {{#if this.model.documents.length}}
+          <span class="ui label">{{this.model.documents.length}} Assigned</span>
         {{/if}}
       </button>
     {{/input/document-selection-modal}}
   </div>
   <div class="ui divider"></div>
 
-  {{#each asset.attributes as |attribute|}}
-    {{input/custom-field object=model.customFields attribute=attribute}}
+  {{#each this.asset.attributes as |attribute|}}
+    {{input/custom-field object=this.model.customFields attribute=attribute}}
   {{/each}}
 
   <p class="text center aligned">Add custom attributes in the {{#link-to "account.asset.information"}}attributes tab{{/link-to}}</p>
 
-  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Add Asset Item{{/form/action-button}}
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Add Asset Item{{/form/action-button}}
 </form>
 <div class="ui divider"></div>

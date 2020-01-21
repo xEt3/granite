@@ -1,21 +1,21 @@
 <div class="content">
   <div class="header">
-    {{location.name}}
-    {{#if location.code}}
+    {{this.location.name}}
+    {{#if this.location.code}}
       <div class="ui blue label">
-        {{location.code}}
+        {{this.location.code}}
       </div>
     {{/if}}
   </div>
   <div class="right floated">
-    {{#link-to "account.anatomy.location.edit" location.id}}
+    {{#link-to "account.anatomy.location.edit" this.location.id}}
       {{ember-tooltip
         side="left"
         popperContainer="body"
         text="Edit location"}}
       <i class="edit icon"></i>
     {{/link-to}}
-    {{#confirm-modal deleteContext=location.name tagName="span" as |confirm|}}
+    {{#confirm-modal deleteContext=this.location.name tagName="span" as |confirm|}}
       <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}>
         {{ember-tooltip
           side="left"
@@ -27,17 +27,17 @@
   </div>
   <div class="meta">
     <p>
-      {{location.addressLine1}}<br>
-      {{#if location.addressLine2}}
-        {{location.addressLine2}}<br>
+      {{this.location.addressLine1}}<br>
+      {{#if this.location.addressLine2}}
+        {{this.location.addressLine2}}<br>
       {{/if}}
-      {{location.addressCity}}, {{location.addressState}} {{location.addressZipcode}}
+      {{this.location.addressCity}}, {{this.location.addressState}} {{this.location.addressZipcode}}
     </p>
-    {{#if location.phoneFormatted}}
+    {{#if this.location.phoneFormatted}}
       <div class="left floated text">
-        {{location.phoneFormatted}}
+        {{this.location.phoneFormatted}}
       </div>
     {{/if}}
-    <span class="ui small text right floated">Created {{time-ago location.created}} {{#if location.creator.fullName}}by {{location.creator.fullName}}{{/if}}</span>
+    <span class="ui small text right floated">Created {{time-ago this.location.created}} {{#if this.location.creator.fullName}}by {{this.location.creator.fullName}}{{/if}}</span>
   </div>
 </div>

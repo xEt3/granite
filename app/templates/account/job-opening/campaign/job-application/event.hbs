@@ -1,8 +1,8 @@
-<h3>{{if model.title model.title "Meeting"}} on {{time model.start "M/D/YY"}}</h3>
+<h3>{{if this.model.title this.model.title "Meeting"}} on {{time this.model.start "M/D/YY"}}</h3>
 <div class="ui divider"></div>
 
 <h4>Participants</h4>
-{{#each attendees as |attendee|}}
+{{#each this.attendees as |attendee|}}
   {{list-item/participant
     attendee.person
     detail=attendee.type

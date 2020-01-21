@@ -4,15 +4,15 @@
   </h2>
   <p>Edit the title and description of your job listing</p>
 
-  {{#input/ui-input value=model.title placeholder="What shows as the job name on the listing?"}}
+  {{#input/ui-input value=this.model.title placeholder="What shows as the job name on the listing?"}}
     Title
   {{/input/ui-input}}
 
   <div class="field">
     <label>Description (How your job description displays on the listing)</label>
     {{input/rich-text
-      value=model.description
-      onChange=(action (mut model.description))}}
+      value=this.model.description
+      onChange=(action (mut this.model.description))}}
   </div>
 
   <h2 class="ui horizontal divider header">
@@ -28,10 +28,10 @@
     </a>
   </h2>
   <div class="ui divided link items">
-    {{#each sources.manual as |manualSource|}}
+    {{#each this.sources.manual as |manualSource|}}
       {{list-item/applicant-source-select
         manualSource
-        selected=(contains manualSource model.manualApplicantSources)
+        selected=(contains manualSource this.model.manualApplicantSources)
         onUpdate=(action "mutManualSelection")}}
     {{else}}
       <h2 class="center aligned light text header">
@@ -43,10 +43,10 @@
 
   <h2 class="ui horizontal divider header">Available Automatic Sources</h2>
   <div class="ui divided link items">
-    {{#each sources.automatic as |source|}}
+    {{#each this.sources.automatic as |source|}}
       {{list-item/applicant-source-select
         source
-        selected=(contains source model.applicantSources)
+        selected=(contains source this.model.applicantSources)
         onUpdate=(action "mutSelection")}}
     {{/each}}
   </div>
@@ -57,7 +57,7 @@
     {{#form/action-button
       type="submit"
       class="ui huge fluid green button"
-      loading=working}}
+      loading=this.working}}
       Next
     {{/form/action-button}}
   </form>
@@ -70,7 +70,7 @@
   </div>
   <div class="content">
     {{#input/ui-input
-      value=manualSource.name
+      value=this.manualSource.name
       placeholder="ex. Post to Craigslist"}}
       Manual Source Name
     {{/input/ui-input}}
@@ -79,7 +79,7 @@
     <button type="button" class="ui red button" {{action "respondManualSource" false}}>
       Cancel
     </button>
-    <button type="button" class="ui green right labeled icon button" disabled={{not manualSource.name}} {{action "respondManualSource" true}}>
+    <button type="button" class="ui green right labeled icon button" disabled={{not this.manualSource.name}} {{action "respondManualSource" true}}>
       Save Manual Source
       <i class="check icon"></i>
     </button>

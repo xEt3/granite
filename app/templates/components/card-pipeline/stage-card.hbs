@@ -1,7 +1,7 @@
 <div class="card-content__wrapper">
   <div class="card-content__title-bar">
     <span class="card-content__applicant-name">
-      {{application.person.firstName}} {{application.person.lastName}}
+      {{this.application.person.firstName}} {{this.application.person.lastName}}
     </span>
     <div class="card-title-bar__controls">
       {{#ui-dropdown
@@ -11,23 +11,23 @@
         <i class="exchange icon"></i>
         <div class="menu">
           <div class="header">Move candidate to...</div>
-          {{#each allExceptCurrentStage as |stage|}}
+          {{#each this.allExceptCurrentStage as |stage|}}
             <a href="#" class="item" {{action "moveTo" stage}}>{{stage.name}}</a>
           {{/each}}
         </div>
       {{/ui-dropdown}}
-      {{#unless controlsDisabled}}
+      {{#unless this.controlsDisabled}}
         {{#ui-dropdown
           class="title-bar__control item icon top right pointing"
         }}
           <i class="setting icon"></i>
           <div class="menu">
-            <a href="#" class="item" {{action onSchedule application}}><i class="calendar icon"></i> Schedule...</a>
-            <a href="#" class="item" {{action onAddLabel application}}><i class="plus icon"></i> Add/Remove labels</a>
-            <a href="#" class="item" {{action onDisqualify application}}><i class="remove circle icon"></i> Disqualify candidate...</a>
-            <a href="#" class="item" {{action onLinkSharing application}}><i class="globe icon"></i> Sharing...</a>
-            {{#if onOnboardCandidate}}
-              <a href="#" class="item" {{action onOnboardCandidate application}}>
+            <a href="#" class="item" {{action this.onSchedule this.application}}><i class="calendar icon"></i> Schedule...</a>
+            <a href="#" class="item" {{action this.onAddLabel this.application}}><i class="plus icon"></i> Add/Remove labels</a>
+            <a href="#" class="item" {{action this.onDisqualify this.application}}><i class="remove circle icon"></i> Disqualify candidate...</a>
+            <a href="#" class="item" {{action this.onLinkSharing this.application}}><i class="globe icon"></i> Sharing...</a>
+            {{#if this.onOnboardCandidate}}
+              <a href="#" class="item" {{action this.onOnboardCandidate this.application}}>
                 <i class="user plus icon"></i> Hire candidate...
               </a>
             {{/if}}
@@ -38,42 +38,42 @@
   </div>
 
   <div class="card-content__email">
-    <a href="mailto:{{application.person.email}}?subject=Regarding the {{application.jobOpening.job.title}} position">{{application.person.email}}</a>
+    <a href="mailto:{{this.application.person.email}}?subject=Regarding the {{this.application.jobOpening.job.title}} position">{{this.application.person.email}}</a>
   </div>
 
   <div class="card-content__next-schedule">
-    {{#if (await nextMeeting)}}
-      Next meeting is {{time-ago (get (await nextMeeting) "start")}}
+    {{#if (await this.nextMeeting)}}
+      Next meeting is {{time-ago (get (await this.nextMeeting) "start")}}
     {{else}}
       Nothing scheduled
     {{/if}}
   </div>
 
   <div class="card-content__application-link card-content__score-container">
-    {{#link-to "account.job-opening.campaign.job-application" application.id}}Open Application{{/link-to}}
-    {{#if application.isScored}}
-      {{#display/calc-color application.scoreAbs as |red green|}}
+    {{#link-to "account.job-opening.campaign.job-application" this.application.id}}Open Application{{/link-to}}
+    {{#if this.application.isScored}}
+      {{#display/calc-color this.application.scoreAbs as |red green|}}
         {{! template-lint-disable }}
         <span style="color: rgb({{red}}, {{green}}, 0)" class="card-content__score">
-          {{application.scoreAbs}}%
+          {{this.application.scoreAbs}}%
         {{! template-lint-enable }}
         </span>
       {{/display/calc-color}}
     {{/if}}
     <span class="card-content__entry-method">
-      {{if application.manualEntry "Manual Entry" "From Quartz"}}
+      {{if this.application.manualEntry "Manual Entry" "From Quartz"}}
     </span>
   </div>
 
-  {{#if (gt application.labels.length 0)}}
+  {{#if (gt this.application.labels.length 0)}}
     <div class="card-content__labels">
-      {{#each (take 3 application.labels) as |label|}}
+      {{#each (take 3 this.application.labels) as |label|}}
         {{custom-label label size="mini"}}
       {{/each}}
-      {{#if (gt application.labels.length 3)}}
+      {{#if (gt this.application.labels.length 3)}}
         <i class="gray-icon ellipsis horizontal icon">
           {{#ember-tooltip side="top" popperContainer="body"}}
-            {{#each (drop 3 application.labels) as |label|}}
+            {{#each (drop 3 this.application.labels) as |label|}}
               {{custom-label label tagName="span" size="mini"}}
             {{/each}}
           {{/ember-tooltip}}
@@ -83,19 +83,19 @@
   {{/if}}
 </div>
 
-{{#if application.employee.id}}
+{{#if this.application.employee.id}}
   <span class="ui bottom attached blue label">
     <i class="fitted user icon"></i>
     Internal applicant
   </span>
 {{/if}}
 
-{{#if application.hired}}
+{{#if this.application.hired}}
   <div class="ui bottom attached green label">
     <i class="fitted check icon"></i>
-    Marked as hired on {{time application.hiredSetOn "M/D/YY"}}
-    {{#if application.hiredSetBy.firstName}}
-      by {{application.hiredSetBy.firstName}}
+    Marked as hired on {{time this.application.hiredSetOn "M/D/YY"}}
+    {{#if this.application.hiredSetBy.firstName}}
+      by {{this.application.hiredSetBy.firstName}}
     {{/if}}
     {{!-- <a class="ui right floated"{{action onUnHire application}}>
       <i class="history icon"></i>
@@ -104,15 +104,15 @@
   </div>
 {{/if}}
 
-{{#if application.disqualified}}
+{{#if this.application.disqualified}}
   <div class="ui bottom attached red label">
     <i class="fitted remove icon"></i>
     Candidate is disqualified
-    {{#if application.disqualificationReason}}
-      ({{application.disqualificationReason}})
+    {{#if this.application.disqualificationReason}}
+      ({{this.application.disqualificationReason}})
     {{/if}}
-    {{#if application.disqualificationEmail}}<span class="card-content__notified">Notified</span>{{/if}}
-    <a class="ui right floated" role="button" {{action onUnDisqualify application}}>
+    {{#if this.application.disqualificationEmail}}<span class="card-content__notified">Notified</span>{{/if}}
+    <a class="ui right floated" role="button" {{action this.onUnDisqualify this.application}}>
       <i class="history icon"></i>
       Undo
     </a>

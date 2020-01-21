@@ -1,16 +1,16 @@
 {{#if hasBlock}}
-  {{yield model}}
+  {{yield this.model}}
 {{else}}
   <div class="content">
     <div class="header">
-      {{model.name}}
-      {{#if model.formType}}
-        <span class="ui blue label">{{model.formType}}</span>
+      {{this.model.name}}
+      {{#if this.model.formType}}
+        <span class="ui blue label">{{this.model.formType}}</span>
       {{/if}}
     </div>
     <div class="right floated">
-      {{#if onEdit}}
-        <a href="#" {{action onEdit model}}>
+      {{#if this.onEdit}}
+        <a href="#" {{action this.onEdit this.model}}>
           {{ember-tooltip
             side="left"
             popperContainer="body"
@@ -18,8 +18,8 @@
           <i class="ui edit icon"></i>
         </a>
       {{/if}}
-      {{#if onDelete}}
-        <a href="#" class="text-danger" {{action onDelete model}}>
+      {{#if this.onDelete}}
+        <a href="#" class="text-danger" {{action this.onDelete this.model}}>
           {{ember-tooltip
             side="left"
             popperContainer="body"
@@ -30,8 +30,8 @@
     </div>
 
     <div class="meta">
-      {{model.elements.length}} {{inflect-text "Question" model.elements.length}}
-      <span class="ui small text right floated">Created {{time model.created}}{{#if model.creator}} by {{model.creator.fullName}}{{/if}}</span>
+      {{this.model.elements.length}} {{inflect-text "Question" this.model.elements.length}}
+      <span class="ui small text right floated">Created {{time this.model.created}}{{#if this.model.creator}} by {{this.model.creator.fullName}}{{/if}}</span>
     </div>
   </div>
 {{/if}}

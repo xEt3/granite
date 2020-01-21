@@ -1,11 +1,11 @@
-<h4 role="button" class="ui {{unless active "no margin"}} clickable header" {{action toggleActive}}>
-  {{#if active}}
+<h4 role="button" class="ui {{unless this.active "no margin"}} clickable header" {{action this.toggleActive}}>
+  {{#if this.active}}
     <i class="caret up icon"></i>
   {{else}}
     <i class="caret down icon"></i>
   {{/if}}
-  {{sectionName}}
+  {{this.sectionName}}
 </h4>
-<div class={{unless active "hidden"}}>
-  {{yield (action resetFilter)}}
+<div class={{unless this.active "hidden"}}>
+  {{yield (action this.resetFilter)}}
 </div>

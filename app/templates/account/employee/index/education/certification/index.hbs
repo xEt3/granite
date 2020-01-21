@@ -1,15 +1,15 @@
 <h1>
-  {{model.name}}
+  {{this.model.name}}
   <small class="right floated text">
     {{#link-to "account.employee.index.education.certification.edit"}}<i class="edit icon"></i>{{/link-to}}
-    {{#confirm-modal tagName="span" deleteContext=model.name as |confirm|}}
+    {{#confirm-modal tagName="span" deleteContext=this.model.name as |confirm|}}
       <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}><i class="trash icon"></i></a>
     {{/confirm-modal}}
   </small>
 </h1>
 <div class="ui divider"></div>
 
-{{#if model.renews}}
+{{#if this.model.renews}}
   <h3>
     Renewals
     <small>
@@ -18,21 +18,21 @@
         Add renewal
       {{/link-to}}
     </small>
-    <small class="right floated light text">Next Renewal Due {{time-ago model.nextRenewalDate}} on {{time model.nextRenewalDate "M/D/YY"}}</small>
+    <small class="right floated light text">Next Renewal Due {{time-ago this.model.nextRenewalDate}} on {{time this.model.nextRenewalDate "M/D/YY"}}</small>
   </h3>
 
   <div class="ui list">
-    {{#each model.renewals as |renewal|}}
+    {{#each this.model.renewals as |renewal|}}
       {{renewal.completedOn}}
     {{else}}
-      {{model.name}} hasn"t been renewed, yet.
+      {{this.model.name}} hasn"t been renewed, yet.
     {{/each}}
   </div>
 {{/if}}
 
-{{#if model.document}}
+{{#if this.model.document}}
   <h3>Documents</h3>
   <p>
-    {{#link-to "account.document" model.document.id}}{{model.document.title}}{{/link-to}}
+    {{#link-to "account.document" this.model.document.id}}{{this.model.document.title}}{{/link-to}}
   </p>
 {{/if}}

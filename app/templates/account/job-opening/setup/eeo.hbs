@@ -1,7 +1,7 @@
 <h2 class="ui horizontal divider header">Equal Employment Opportunity</h2>
 
 <h3 class="center aligned light text header">
-  {{#if collectEEO}}
+  {{#if this.collectEEO}}
     <i class="check icon"></i>
     Your company has elected to collect Equal Employment Opportunity data, so Granite will attempt to collect this information during the application process.
   {{else}}
@@ -11,10 +11,10 @@
 </h3>
 <div class="ui divider"></div>
 
-{{#if collectEEO}}
+{{#if this.collectEEO}}
   {{quick-form
-    eeoSettingsForm
-    model
+    this.eeoSettingsForm
+    this.model
     this
     tagName="div"}}
 {{/if}}
@@ -24,7 +24,7 @@
   {{#form/action-button
     type="submit"
     class="ui huge fluid green button"
-    loading=working
+    loading=this.working
   }}
     Next
   {{/form/action-button}}

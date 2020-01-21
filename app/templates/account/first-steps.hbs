@@ -9,8 +9,8 @@
 
     <div class="ui divider"></div>
 
-    <div class="first-steps__container {{if model.company.firstStepsCompletedOn "first-steps__container--animating"}}">
-      {{#if model.company.firstStepsCompletedOn}}
+    <div class="first-steps__container {{if this.model.company.firstStepsCompletedOn "first-steps__container--animating"}}">
+      {{#if this.model.company.firstStepsCompletedOn}}
         <div class="first-steps-container__message">
           <div class="content">
             {{emoji-icon "tada"}} Great job completing the first steps! We'll take you to your activity feed now.
@@ -18,10 +18,10 @@
         </div>
       {{/if}}
       <div class="ui clearing stackable three column grid">
-        {{#each steps as |step|}}
+        {{#each this.steps as |step|}}
           {{display/first-steps
             step
-            completed=(contains step.key model.company.firstStepsCompleted)
+            completed=(contains step.key this.model.company.firstStepsCompleted)
           }}
         {{/each}}
       </div>
