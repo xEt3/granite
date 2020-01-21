@@ -1,16 +1,11 @@
 <div class="ui container basic segment">
-  {{#ui-menu menuClass="pointing menu__employee-page"}}
+  {{#ui-menu menuClass="pointing menu__education-page"}}
     {{#link-to "account.employees" class="item"}}
       <i class="list icon"></i>Summary
     {{/link-to}}
-    {{#ui-dropdown class="item menu-employee-page__more"}}
-      More<i class="dropdown icon"></i>
-      <div class="menu">
-        {{#link-to "account.education.webinars" class="item"}}
-          <i class="mobile icon"></i>Webinars
-        {{/link-to}}
-      </div>
-    {{/ui-dropdown}}
+    {{#link-to "account.education.webinars" class="item"}}
+      <i class="video icon"></i>Webinars
+    {{/link-to}}
   {{/ui-menu}}
   {{outlet}}
 </div>

@@ -1,57 +1,27 @@
-<div class="ui raised padded segment container clearfix">
+<div class="ui raised padded segment container clearfix page__webinars">
   <div class="ui basic segment">
     <h2 class="ui header"> Webinars </h2>
   </div>
   <div class="ui divider"></div>
 
-  <div class="ui three stackable cards">
-    {{#each webinars as |webinar|}}
-      {{#if (find-by 'webinar' webinar authorizations)}}
+  <div class="ui three stackable cards webinars-list">
+    {{#each this.webinars as |webinar|}}
+      {{#if (find-by 'webinar' webinar this.authorizations)}}
         <hgroup class="clearfix">
           <h3 class="ui header left floated"> Purchased </h3>
         </hgroup>
-        <div class="card">
-          <div class="content">
-            <div class="header">{{webinar.title}}</div>
-          </div>
-          <div class="content">
-            <h4 class="ui sub header">Description</h4>
-            <div class="ui small feed">
-              <div class="event">
-                <div class="content">
-                  <div class="summary">
-                    {{webinar.description}}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {{!-- <div class="extra content">
-            <a>
-              {{#ember-tooltip
-                      side="left"
-                    }}
-                ${{webinar.price}} for 90days
-              {{/ember-tooltip}}
-              <i class="small info icon"></i>
-            </a>
-            <a>
-              <i class="ui right floated blue add icon"></i>
-            </a>
-          </div> --}}
-        </div>
-        <div class="ui divider"></div>
       {{/if}}
-      <div class="card">
+
+      <div class="card webinar__card">
         <div class="content">
-          <div class="header">{{webinar.title}}</div>
+          <div class="header webinar-card__title">{{webinar.title}}</div>
         </div>
         <div class="content">
           <h4 class="ui sub header">Description</h4>
           <div class="ui small feed">
             <div class="event">
               <div class="content">
-                <div class="summary">
+                <div class="summary webinar-card__description">
                   {{webinar.description}}
                 </div>
               </div>
@@ -63,7 +33,7 @@
             {{#ember-tooltip
               side="left"
             }}
-              ${{webinar.price}} for 90days
+              90days for ${{webinar.price}}
             {{/ember-tooltip}}
             <i class="small info icon"></i>
           </a>
@@ -72,7 +42,10 @@
           </a>
         </div>
       </div>
-    {{/each}}
+          {{else}}
+          <h4>No webinars available</h4>
+          <div class="ui divider"></div>
+          {{/each}}
   </div>
   {{#if items}}
     {{#each items as |item|}}

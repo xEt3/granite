@@ -1,5 +1,6 @@
 import moment from 'moment';
-import { Response, faker } from 'ember-cli-mirage';
+import { Response } from 'ember-cli-mirage';
+import faker from 'faker';
 
 const searchModels = [ 'employees', 'departments', 'locations' ];
 
@@ -99,7 +100,8 @@ export default function () {
     'payment-methods', 'comments', 'comments/:id', 'job-openings', 'jobs', 'jobs/:id', 'job-openings/:id', 'job-applications',
     'forms', 'applicant-sources', 'applicant-sources', 'manual-applicant-sources', 'applicants', 'applicants/:id',
     'job-applications/:id', 'events', 'certifications', 'training-assignments', 'corrective-actions', 'corrective-actions/:id',
-    'employee-issues/:id', 'employee-issues', 'company-user' ];
+    'employee-issues/:id', 'employee-issues', 'webinars', 'webinar-authorizations', 'company-user' ];
+
   let verbs = [ 'get', 'put', 'post', 'del' ];
 
   array.forEach((route)=>{

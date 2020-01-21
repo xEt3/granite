@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, find, settled } from '@ember/test-helpers';
-import { faker } from 'ember-cli-mirage';
+import faker from 'faker';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | search/result-item', function (hooks) {

@@ -8,6 +8,8 @@ const nodeIncludes = [
   'semantic-ui-calendar/dist/calendar.css',
   'semantic-ui-calendar/dist/calendar.js',
   'scrollreveal/dist/scrollreveal.min.js',
+  'emojify.js/dist/css/basic/emojify.min.css',
+  'emojify.js/dist/js/emojify.min.js',
   '@bower_components/intro.js/intro.js',
   '@bower_components/intro.js/introjs.css',
   '@bower_components/At.js/dist/js/jquery.atwho.js',

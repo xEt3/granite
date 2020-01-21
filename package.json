@@ -42,6 +42,8 @@
     "@bower_components/nprogress": "rstacruz/nprogress#^0.2.0",
     "@bower_components/semantic-ui-calendar": "mdehoog/semantic-ui-calendar#^0.0.6",
     "broccoli-clean-css": "^2.0.1",
+    "faker": "^4.1.0",
+    "qunit-dom": "^0.9.2"
     "ember-sinon": "^4.1.1"
   },
   "devDependencies": {
@@ -78,7 +80,7 @@
     "ember-cli-inject-live-reload": "^2.0.1",
     "ember-cli-less": "2.0.4",
     "ember-cli-maskedinput": "0.1.2",
-    "ember-cli-mirage": "^0.4.9",
+    "ember-cli-mirage": "^1.1.6",
     "ember-cli-moment-shim": "3.7.1",
     "ember-cli-notifications": "git+https://github.com/associatedemployers/ember-cli-notifications.git#configurable-icons",
     "ember-cli-nprogress": "0.3.1",
@@ -108,7 +110,7 @@
     "ember-pickr": "^1.2.3",
     "ember-promise-helpers": "1.0.6",
     "ember-quill": "0.0.15",
-    "ember-qunit": "^4.5.1",
+    "ember-qunit": "^4.6.0",
     "ember-resolver": "^5.3.0",
     "ember-responsive": "^3.0.0-beta.3",
     "ember-rollbar-client": "^0.8.0",
@@ -126,7 +128,6 @@
     "less-plugin-glob": "^3.0.0",
     "liquid-fire": "^0.30.0",
     "loader.js": "^4.7.0",
-    "qunit-dom": "^0.9.0",
     "scrollreveal": "^4.0.0",
     "semantic-ui-calendar": "^0.0.8",
     "semantic-ui-ember": "git+https://github.com/Semantic-Org/Semantic-UI-Ember.git#6e82f5549f8542663867dd7930260d04edbb92f9",
