@@ -1,6 +1,7 @@
 'use strict';
 
 const EmberApp  = require('ember-cli/lib/broccoli/ember-app'),
+      ENV = process.env.EMBER_ENV,
       globSync  = require('glob').sync;
 
 const nodeIncludes = [
@@ -20,15 +21,16 @@ module.exports = function (defaults) {
       paths: [
         'node_modules/semantic-ui-less'
       ],
-      plugins: [ require('less-plugin-glob') ]
+      plugins:   [ require('less-plugin-glob') ],
+      sourceMap: false
     },
 
     'ember-cli-range-slider': { skin: 'flat' },
 
-    sourcemaps:  { enabled: true },
+    sourcemaps:  { enabled: false },
     fingerprint: { exclude: [ 'product-screenshots/', 'documents/' ] },
 
-    'ember-cli-babel': { includePolyfill: true },
+    'ember-cli-babel': { includePolyfill: ENV === 'production' },
 
     SemanticUI: {
       import: { fonts: false },

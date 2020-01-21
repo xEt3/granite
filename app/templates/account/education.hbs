@@ -1,52 +1,16 @@
-<div class="ui container">
-  <div class="ui very padded raised segment animated fadeInUp">
-    <div class="ui two column grid">
-      <div class="ui column">
-        <h2 class="ui header">
-          Training Burndown
-        </h2>
+<div class="ui container basic segment">
+  {{#ui-menu menuClass="pointing menu__employee-page"}}
+    {{#link-to "account.employees" class="item"}}
+      <i class="list icon"></i>Summary
+    {{/link-to}}
+    {{#ui-dropdown class="item menu-employee-page__more"}}
+      More<i class="dropdown icon"></i>
+      <div class="menu">
+        {{#link-to "account.education.webinars" class="item"}}
+          <i class="mobile icon"></i>Webinars
+        {{/link-to}}
       </div>
-      <div class="ui column right aligned text">
-        <div class="field">
-          <label for="graph-granularity" class="sr-only">Amount of data to show on graph</label>
-          {{#ui-dropdown
-            id="graph-granularity"
-            class="selection"
-            selected=this.granularity
-            onChange=(action (mut this.granularity))
-            as |execute mapper|
-          }}
-            <div class="default text">Granularity</div>
-            <i class="dropdown icon"></i>
-            <div class="menu">
-              {{#each this.granularities as |granularityOption|}}
-                <div class="item" data-value={{map-value mapper granularityOption.value}}>
-                  {{granularityOption.label}}
-                </div>
-              {{/each}}
-            </div>
-          {{/ui-dropdown}}
-        </div>
-      </div>
-    </div>
-    <div class="ui divider"></div>
-
-    {{#if this.model.burndown}}
-      {{ember-chart
-        type="line"
-        data=this.model.burndown.data
-        options=this.model.burndown.options}}
-    {{else}}
-      <h2 class="light text center aligned">Not enough recent data to show your summary.</h2>
-    {{/if}}
-
-    <div class="ui divider"></div>
-    <div class="educate__employee-breakdown ui stackable four column grid">
-      {{#each this.model.employeeMetrics.employees as |metric|}}
-        <div class="ui column">
-          {{list-item/educate/employee-metric metric}}
-        </div>
-      {{/each}}
-    </div>
-  </div>
+    {{/ui-dropdown}}
+  {{/ui-menu}}
+  {{outlet}}
 </div>

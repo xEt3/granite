@@ -120,6 +120,7 @@ Router.map(function () {
         });
         this.route('visual-id');
         this.route('education', function () {
+          this.route('webinars');
           this.route('add');
           this.route('certification', { path: '/certification/:certification_id' }, function () {
             this.route('edit');
@@ -245,7 +246,11 @@ Router.map(function () {
     this.route('help', function () {
       this.route('topic', { path: '/:topic_slug' });
     });
-    this.route('education');
+    this.route('education', function () {
+      this.route('webinars', function () {
+        this.route('purchase');
+      });
+    });
   });
 
   this.route('shared', function () {

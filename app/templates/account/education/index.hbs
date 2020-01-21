@@ -1,0 +1,52 @@
+<div class="ui container">
+    <div class="ui very padded raised segment animated fadeInUp">
+      <div class="ui two column grid">
+        <div class="ui column">
+          <h2 class="ui header">
+            Training Burndown
+          </h2>
+        </div>
+        <div class="ui column right aligned text">
+          <div class="field">
+            <label for="graph-granularity" class="sr-only">Amount of data to show on graph</label>
+            {{#ui-dropdown
+              id="graph-granularity"
+              class="selection"
+              selected=granularity
+              onChange=(action (mut granularity))
+              as |execute mapper|
+            }}
+              <div class="default text">Granularity</div>
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                {{#each granularities as |granularityOption|}}
+                  <div class="item" data-value={{map-value mapper granularityOption.value}}>
+                    {{granularityOption.label}}
+                  </div>
+                {{/each}}
+              </div>
+            {{/ui-dropdown}}
+          </div>
+        </div>
+      </div>
+      <div class="ui divider"></div>
+
+      {{#if model.burndown}}
+        {{ember-chart
+          type="line"
+          data=model.burndown.data
+          options=model.burndown.options}}
+      {{else}}
+        <h2 class="light text center aligned">Not enough recent data to show your summary.</h2>
+      {{/if}}
+
+      <div class="ui divider"></div>
+      <div class="educate__employee-breakdown ui stackable four column grid">
+        {{#each model.employeeMetrics.employees as |metric|}}
+          <div class="ui column">
+            {{list-item/educate/employee-metric metric}}
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
