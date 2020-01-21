@@ -1,14 +1,13 @@
-import EmberRouter from '@ember/routing/router';
 import { inject as service } from '@ember/service';
 import config from './config/environment';
 import RouterScroll from 'ember-router-scroll';
 
-export default class Router extends EmberRouter {
+export default class Router extends RouterScroll {
   location = config.locationType;
   rootURL = config.rootURL;
   location = config.locationType;
   rootURL = config.rootURL;
-  @service headDatal
+  @service headData;
   @service router;
   @service analytics;
 
@@ -17,7 +16,7 @@ export default class Router extends EmberRouter {
   }
 
   didTransition () {
-    this._super(...arguments);
+    super.didTransition(...arguments);
 
     if (config.environment === 'test') {
       return;
@@ -31,7 +30,7 @@ export default class Router extends EmberRouter {
       title
     });
   }
-});
+}
 
 Router.map(function () {
   this.route('vogue');
