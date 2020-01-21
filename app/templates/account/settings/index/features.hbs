@@ -16,11 +16,11 @@
     {{ui-checkbox
       class="toggle"
       label="On"
-      checked=model.collectEEO
-      onChange=(pipe-action (action (mut model.collectEEO)) (action "save"))}}
+      checked=this.model.collectEEO
+      onChange=(pipe-action (action (mut this.model.collectEEO)) (action "save"))}}
   </div>
 
-  {{#if model.collectEEO}}
+  {{#if this.model.collectEEO}}
     <div class="field">
       <label for="aa">
         Collect additional Affirmative Action data<br />
@@ -32,8 +32,8 @@
       {{ui-checkbox
         class="toggle"
         label="On"
-        checked=model.collectAA
-        onChange=(pipe-action (action (mut model.collectAA)) (action "save"))}}
+        checked=this.model.collectAA
+        onChange=(pipe-action (action (mut this.model.collectAA)) (action "save"))}}
     </div>
   {{/if}}
 </div>

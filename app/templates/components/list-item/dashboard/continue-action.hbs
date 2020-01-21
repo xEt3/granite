@@ -1,7 +1,7 @@
-{{#if link}}
-  {{#link-to link model.id}}
-    {{model.description}}
+{{#if this.link}}
+  {{#link-to this.link this.model.id}}
+    {{this.model.description}}
   {{/link-to}}
 {{else}}
-  {{model.description}}
+  {{this.model.description}}
 {{/if}}

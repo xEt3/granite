@@ -1,9 +1,9 @@
 <div class="content">
   <div class="header">
-    {{history.diff.length}} {{inflect-text "changes" history.diff.length}} for {{time history.effectiveOn}}
+    {{this.history.diff.length}} {{inflect-text "changes" this.history.diff.length}} for {{time this.history.effectiveOn}}
   </div>
   <div class="meta">
-    By {{history.creator.fullName}} at {{time history.created "h:mma"}}
+    By {{this.history.creator.fullName}} at {{time this.history.created "h:mma"}}
   </div>
   <div class="description">
     <table class="ui very basic striped unstackable table">
@@ -15,7 +15,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each history.diff as |diff|}}
+        {{#each this.history.diff as |diff|}}
           <tr>
             <td><strong>{{humanize-key (join-array diff.path ".")}}</strong></td>
             <td>{{diff-value-translator key=diff.path value=diff.lhs}}</td>
@@ -32,7 +32,7 @@
         <div class="ui divider"></div>
         <div class="ui two buttons">
           <button class="positive ui button" {{action (pipe confirmApply (action "modifyEffectiveDate"))}}>Apply these changes now</button>
-          <button class="negative ui button" {{action (pipe confirmDelete (action "delete" history))}}>Discard these changes</button>
+          <button class="negative ui button" {{action (pipe confirmDelete (action "delete" this.history))}}>Discard these changes</button>
         </div>
       </div>
     {{/confirm-modal}}

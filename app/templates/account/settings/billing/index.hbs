@@ -1,70 +1,69 @@
 <h2>
   Subscription Status
-  {{#if subscription.cardExpiresSoon}}
+  {{#if this.subscription.cardExpiresSoon}}
     <label class="ui right floated big red label">Card Expires Soon</label>
-  {{else if subscription.currentPaymentMethod.expired}}
+  {{else if this.subscription.currentPaymentMethod.expired}}
     <label class="ui right floated big red label">Card Expired</label>
-  {{else if subscription.paymentFailure}}
+  {{else if this.subscription.paymentFailure}}
     <label class="ui right floated big red label">Problem With Payment Method</label>
   {{/if}}
 </h2>
 <h4>
   Status:
-  <span class={{statusClass}}>{{model.status}}</span>
-  {{#if subscription.isCancelled}}
-    <span class="ui small text">(Canceled on {{time company.deactivatedOn}})</span>
-  {{else if subscription.inTrialPeriod}}
-    <span class="ui small text">(Trial expires {{time model.firstBillingDate}})</span>
-  {{else if subscription.isActive}}
-    <span class="ui small text">(Paid through {{time model.paidThroughDate}})</span>
-  {{else if model.daysPastDue}}
-    <span class="ui small text">(Balance of ${{model.balance}})</span>
+  <span class={{this.statusClass}}>{{this.model.status}}</span>
+  {{#if this.subscription.isCancelled}}
+    <span class="ui small text">(Canceled on {{time this.company.deactivatedOn}})</span>
+  {{else if this.subscription.inTrialPeriod}}
+    <span class="ui small text">(Trial expires {{time this.model.firstBillingDate}})</span>
+  {{else if this.subscription.isActive}}
+    <span class="ui small text">(Paid through {{time this.model.paidThroughDate}})</span>
+  {{else if this.model.daysPastDue}}
+    <span class="ui small text">(Balance of ${{this.model.balance}})</span>
   {{/if}}
 </h4>
 <h4>
   Payment Method:
-  {{#if subscription.currentPaymentMethod}}
-    <img class="ui mini spaced image" alt="Current Payment Method" src={{subscription.currentPaymentMethod.imageUrl}}>
-    {{#if subscription.currentPaymentMethod.email}}
-      {{subscription.currentPaymentMethod.email}}
-    {{else if subscription.currentPaymentMethod.maskedNumber}}
-      {{subscription.currentPaymentMethod.maskedNumber}}
-      <span class="ui small text {{if subscription.cardExpiresSoon "text-danger"}}">(Exp: {{subscription.currentPaymentMethod.expirationDate}})</span>
+  {{#if this.subscription.currentPaymentMethod}}
+    <img class="ui mini spaced image" alt="Current Payment Method" src={{this.subscription.currentPaymentMethod.imageUrl}}>
+    {{#if this.subscription.currentPaymentMethod.email}}
+      {{this.subscription.currentPaymentMethod.email}}
+    {{else if this.subscription.currentPaymentMethod.maskedNumber}}
+      {{this.subscription.currentPaymentMethod.maskedNumber}}
+      <span class="ui small text {{if this.subscription.cardExpiresSoon "text-danger"}}">(Exp: {{this.subscription.currentPaymentMethod.expirationDate}})</span>
     {{/if}}
 
   {{else}}
     No Payment Method
   {{/if}}
-  <a href="#" class="ui right floated small text"
-    {{action
+  <a href="#" class="ui right floated small text" {{action
       (pipe
         (action "getToken")
-        (action openModal "modal_update-payment-method" "paymentMethod")
+        (action this.openModal "modal_update-payment-method" "paymentMethod")
       )
     }}>
     <i class="edit icon"></i>Edit Payment Method
   </a>
 </h4>
-<h4>Number of Employees: {{subscription.activeEmployeeTotal}}</h4>
+<h4>Number of Employees: {{this.subscription.activeEmployeeTotal}}</h4>
   <h4>
-    Next Bill: ${{model.nextBillAmount}}
-    <span class="ui small text">(On {{time model.nextBillingDate}})</span>
+    Next Bill: ${{this.model.nextBillAmount}}
+    <span class="ui small text">(On {{time this.model.nextBillingDate}})</span>
   </h4>
 <h4>
   Last Transaction:
-  {{#if subscription.latestTransaction.amount}}
-    ${{subscription.latestTransaction.amount}}
-    <span class="ui small text">(On {{time subscription.latestTransaction.createdAt}} for {{subscription.latestTransactionDescription}})</span>
+  {{#if this.subscription.latestTransaction.amount}}
+    ${{this.subscription.latestTransaction.amount}}
+    <span class="ui small text">(On {{time this.subscription.latestTransaction.createdAt}} for {{this.subscription.latestTransactionDescription}})</span>
   {{else}}
     No transactions yet.
   {{/if}}
 </h4>
 
-{{#if subscription.isCancelled}}
+{{#if this.subscription.isCancelled}}
   {{#confirm-modal confirmContent="Are you sure you want to activate your account?" as |confirm|}}
     <button class="ui positive fluid button" {{action (pipe confirm (action "activateSubscription"))}}><i class="check circle icon"></i>Activate Subscription</button>
   {{/confirm-modal}}
-{{else if (not subscription.accountSuspended)}}
+{{else if (not this.subscription.accountSuspended)}}
   {{#confirm-modal confirmContent="Are you sure you want to cancel your account? You will immediately lose access until reactivated." as |confirm|}}
     <button class="ui red fluid button" {{action (pipe confirm (action "cancelSubscription"))}}>
       {{ember-tooltip
@@ -79,10 +78,10 @@
 {{outlet}}
 
 {{modals/update-payment-method
-  braintreeToken=braintreeToken
-  working=working
+  braintreeToken=this.braintreeToken
+  working=this.working
   onResponse=(pipe-action
     (action "savePaymentMethod")
-    (action modalResponse "paymentMethod")
+    (action this.modalResponse "paymentMethod")
   )
 }}

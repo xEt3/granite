@@ -1,7 +1,7 @@
 {{elements/file-uploader
   url="/api/v1/employee/census/upload"
   autoUpload=true
-  allowedExtensions=supportedExtensions
+  allowedExtensions=this.supportedExtensions
   dragText="Drag Your Census File Here"
   onWinning=(action "successHandler")
   onError=(action "fileUploadError")

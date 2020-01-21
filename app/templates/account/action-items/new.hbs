@@ -2,11 +2,11 @@
   <h2 class="ui dividing header">Create a New Project</h2>
 
   <div class="ui form">
-    {{input/ui-input type="text" inputId="action-item-title" placeholder="Title" value=model.title}}
+    {{input/ui-input type="text" inputId="action-item-title" placeholder="Title" value=this.model.title}}
 
     <div class="field">
       <label for="action-item-description">Description</label>
-      {{textarea rows="5" placeholder="Description" value=model.description}}
+      {{textarea rows="5" placeholder="Description" value=this.model.description}}
     </div>
 
     <div class="ui divider"></div>
@@ -14,14 +14,14 @@
     {{ui-calendar
       class="field"
       type="date"
-      label=calendarLabel
+      label=this.calendarLabel
       placeholder="Assign a date by selecting or typing"
-      onChange=(action (mut model.dueOn))}}
+      onChange=(action (mut this.model.dueOn))}}
 
     <div class="field">
       <label for="action-item-priority"><i class="exclamation icon"></i> Priority</label>
       <div class="range-label"><i>Low</i><i>High</i></div>
-      {{ember-range-slider id="action-item-priority" keyboard=true keyboard_step=20 grid=true min=1 max=5 step=1 from=model.priority slideStop=(action "updatePriority")}}
+      {{ember-range-slider id="action-item-priority" keyboard=true keyboard_step=20 grid=true min=1 max=5 step=1 from=this.model.priority slideStop=(action "updatePriority")}}
     </div>
 
     <div class="field">
@@ -34,16 +34,16 @@
         Prerequisites
         <i class="right floated info icon" id="it__prerequisites"></i>
       </label>
-      {{#if actionItems}}
+      {{#if this.actionItems}}
         {{#ui-dropdown
           class="fluid search multiple selection"
           id="action-item-prerequisites"
-          selected=model.prerequisites
-          onChange=(action (mut model.prerequisites)) as |execute mapper|}}
+          selected=this.model.prerequisites
+          onChange=(action (mut this.model.prerequisites)) as |execute mapper|}}
           <i class="dropdown icon"></i>
           <div class="default text">Type or select to assign prerequisites</div>
           <div class="menu">
-            {{#each actionItems as |item|}}
+            {{#each this.actionItems as |item|}}
               <div class="item" data-value={{map-value mapper item}}>
                 {{item.title}}
               </div>
@@ -59,7 +59,7 @@
 
     <h4><i class="check square icon"></i>Build a todo</h4>
     <div class="ui list">
-      {{#each model.checklist as |item|}}
+      {{#each this.model.checklist as |item|}}
         <div class="item">
           <a href="#" class="text-danger" {{action "removeTodo" item}}><i class="minus icon"></i></a>
           <span><i class="square outline icon"></i> {{item.title}}</span>
@@ -77,19 +77,19 @@
     <form class="ui segment" {{action "addTodo" on="submit"}}>
       <div class="field">
         <label for="new-todo-item" class="sr-only">Add a new todo item</label>
-        {{input type="text" value=pendingTodo placeholder="Type to add a new todo item"}}
+        {{input type="text" value=this.pendingTodo placeholder="Type to add a new todo item"}}
       </div>
 
       {{#ui-dropdown
         class="fluid search selection"
         id="new-todo-assigned-to"
-        selected=pendingTodoAssignee
-        onChange=(action (mut pendingTodoAssignee)) as |execute mapper|}}
+        selected=this.pendingTodoAssignee
+        onChange=(action (mut this.pendingTodoAssignee)) as |execute mapper|}}
         <i class="dropdown icon"></i>
         <div class="default text">Assign someone to this item</div>
         <div class="menu">
           <div class="item" data-value="">No Assignee</div>
-          {{#each employees as |employee|}}
+          {{#each this.employees as |employee|}}
             <div class="item" data-value={{map-value mapper employee}}>
               {{employee.fullName}}
             </div>
@@ -97,7 +97,7 @@
         </div>
       {{/ui-dropdown}}
 
-      {{#liquid-if pendingTodo class="field"}}
+      {{#liquid-if this.pendingTodo class="field"}}
         <div class="ui divider"></div>
         {{#form/action-button type="submit" class="ui fluid button"}}Add{{/form/action-button}}
       {{/liquid-if}}
@@ -105,7 +105,7 @@
 
     <div class="ui divider"></div>
     <form {{action "save" on="submit"}}>
-      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Save project{{/form/action-button}}
+      {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Save project{{/form/action-button}}
     </form>
   </div>
 </div>

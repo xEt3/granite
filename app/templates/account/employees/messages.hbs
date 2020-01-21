@@ -10,13 +10,13 @@
           {{#ui-dropdown
             class="fluid search multiple selection"
             id="message-targets"
-            selected=messageParticipantTargets
-            onChange=(action (mut messageParticipantTargets)) as |execute mapper|
+            selected=this.messageParticipantTargets
+            onChange=(action (mut this.messageParticipantTargets)) as |execute mapper|
           }}
             <i class="dropdown icon"></i>
             <div class="default text">Search or select people to message</div>
             <div class="menu">
-              {{#each allEmployees as |employee|}}
+              {{#each this.allEmployees as |employee|}}
                 <div class="item" data-value={{map-value mapper employee}}>
                   {{employee.fullName}}
                 </div>
@@ -25,18 +25,18 @@
           {{/ui-dropdown}}
         </div>
 
-        {{#liquid-if messageParticipantTargets.length}}
+        {{#liquid-if this.messageParticipantTargets.length}}
           {{#form/action-button type="submit" class="ui fluid green button"}}
             Start
-            {{if (gt messageParticipantTargets.length 1) "Group"}}
+            {{if (gt this.messageParticipantTargets.length 1) "Group"}}
             Chat
           {{/form/action-button}}
         {{/liquid-if}}
       </form>
 
       <div class="ui segments">
-        {{#each model as |thread|}}
-          {{list-item/message-thread thread user=user}}
+        {{#each this.model as |thread|}}
+          {{list-item/message-thread thread user=this.user}}
         {{/each}}
       </div>
     </div>

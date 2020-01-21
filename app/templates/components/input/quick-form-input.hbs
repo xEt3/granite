@@ -1,43 +1,43 @@
-{{#if (not (and (not field.showLabel) (or (eq field.type "checkbox") (eq field.type "toggle"))))}}
-  <label for={{computedClassName}} class={{field.labelClass}}>
-    {{field.label}}
-    {{#if (and field.helpText field.indirectHelp)}}
+{{#if (not (and (not this.field.showLabel) (or (eq this.field.type "checkbox") (eq this.field.type "toggle"))))}}
+  <label for={{this.computedClassName}} class={{this.field.labelClass}}>
+    {{this.field.label}}
+    {{#if (and this.field.helpText this.field.indirectHelp)}}
       <i class="help circle icon">
         {{ember-tooltip
           side="right"
           popperContainer="body"
-          text=field.helpText}}
+          text=this.field.helpText}}
       </i>
     {{/if}}
   </label>
 
-  {{#if (and field.helpText (not field.indirectHelp))}}
-    <p class="quick-form__help-text">{{field.helpText}}</p>
+  {{#if (and this.field.helpText (not this.field.indirectHelp))}}
+    <p class="quick-form__help-text">{{this.field.helpText}}</p>
   {{/if}}
 {{/if}}
 
-{{#if (eq field.type "select")}}
+{{#if (eq this.field.type "select")}}
   {{#ui-dropdown
-    id=computedClassName
-    class=inputClass
-    selected=(readonly (get model field.path))
+    id=this.computedClassName
+    class=this.inputClass
+    selected=(readonly (get this.model this.field.path))
     forceSelection=false
-    allowAdditions=(if field.inputAttrs.allowAdditions true false)
-    onChange=(action (mut value))
+    allowAdditions=(if this.field.inputAttrs.allowAdditions true false)
+    onChange=(action (mut this.value))
     as |execute mapper|}}
     <div class="default text">
-      {{#if field.selectText}}
-        {{field.selectText}}
+      {{#if this.field.selectText}}
+        {{this.field.selectText}}
       {{else}}
         --Select--
       {{/if}}
     </div>
     <i class="dropdown icon"></i>
     <div class="menu">
-      {{#each (get this field.contentPath) as |item|}}
-        <div class="item" data-value={{map-value mapper (if field.valuePath (get item field.valuePath) item)}}>
-          {{#if field.displayKey}}
-            {{get item field.displayKey}}
+      {{#each (get this this.field.contentPath) as |item|}}
+        <div class="item" data-value={{map-value mapper (if this.field.valuePath (get item this.field.valuePath) item)}}>
+          {{#if this.field.displayKey}}
+            {{get item this.field.displayKey}}
           {{else}}
             {{item}}
           {{/if}}
@@ -45,83 +45,83 @@
       {{/each}}
     </div>
   {{/ui-dropdown}}
-{{else if (eq field.type "textarea")}}
+{{else if (eq this.field.type "textarea")}}
   {{textarea
-    value=value
-    id=computedClassName
-    rows=rows
-    placeholder=(or field.placeholder field.label)
+    value=this.value
+    id=this.computedClassName
+    rows=this.rows
+    placeholder=(or this.field.placeholder this.field.label)
     spellcheck="true"}}
-{{else if (eq field.type "richtext")}}
+{{else if (eq this.field.type "richtext")}}
   {{input/rich-text
-    value=value
-    onChange=(action (mut value))}}
-{{else if (or (eq field.type "checkbox") (eq field.type "toggle"))}}
+    value=this.value
+    onChange=(action (mut this.value))}}
+{{else if (or (eq this.field.type "checkbox") (eq this.field.type "toggle"))}}
   {{ui-checkbox
-    id=computedClassName
-    class=inputClass
-    label=(or field.placeholder field.label)
-    checked=(readonly value)
-    onChange=(action (mut value))}}
-{{else if (eq field.type "date")}}
-  {{#if field.inputAttrs.inline}}
+    id=this.computedClassName
+    class=this.inputClass
+    label=(or this.field.placeholder this.field.label)
+    checked=(readonly this.value)
+    onChange=(action (mut this.value))}}
+{{else if (eq this.field.type "date")}}
+  {{#if this.field.inputAttrs.inline}}
     {{ui-calendar
-      class=inputClass type="date" inline=true onChange=(action (mut value))}}
+      class=this.inputClass type="date" inline=true onChange=(action (mut this.value))}}
   {{else}}
     {{ui-calendar
       type="date"
-      class=inputClass
-      dateValue=initialValue
-      onChange=(action (mut value))}}
+      class=this.inputClass
+      dateValue=this.initialValue
+      onChange=(action (mut this.value))}}
   {{/if}}
-{{else if (eq field.type "radio")}}
-  <div class="{{if field.inputAttrs.inline "inline" "grouped"}} fields">
-    {{#each (get this field.contentPath) as |item|}}
+{{else if (eq this.field.type "radio")}}
+  <div class="{{if this.field.inputAttrs.inline "inline" "grouped"}} fields">
+    {{#each (get this this.field.contentPath) as |item|}}
       <div class="field">
         {{ui-radio
-          name=computedClassName
-          label=(if field.displayKey (get item field.displayKey) item)
+          name=this.computedClassName
+          label=(if this.field.displayKey (get item this.field.displayKey) item)
           value=item
-          current=value
-          onChange=(action (mut value))}}
+          current=this.value
+          onChange=(action (mut this.value))}}
       </div>
     {{/each}}
   </div>
-{{else if (eq field.type "file")}}
+{{else if (eq this.field.type "file")}}
   {{#input/document-selection-modal
-    title=(or field.placeholder field.label)
-    selected=value
+    title=(or this.field.placeholder this.field.label)
+    selected=this.value
     assignText="Use Document"
-    singleDoc=field.singleDoc
-    autoTag=field.autoTag
-    onSelected=(action (mut value))
+    singleDoc=this.field.singleDoc
+    autoTag=this.field.autoTag
+    onSelected=(action (mut this.value))
     as |execute|
   }}
     <button class="ui basic button" {{action execute "selectDocuments"}}>
       <i class="folder icon"></i>
-      {{or field.buttonText field.label}}
-      {{#if value}}
-        <span class="ui label">{{value.title}}</span>
+      {{or this.field.buttonText this.field.label}}
+      {{#if this.value}}
+        <span class="ui label">{{this.value.title}}</span>
       {{/if}}
     </button>
   {{/input/document-selection-modal}}
-{{else if (eq field.type "color")}}
+{{else if (eq this.field.type "color")}}
   {{color-picker
-    components=colorPickerComponents
+    components=this.colorPickerComponents
     comparison=false
-    value=value
+    value=this.value
     onChange=(action "handleOnChange")
   }}
   <span class="ui small text">(Pick a color)</span>
 {{else}}
   {{validated-input
-    type=field.type
-    model=model
-    valuePath=field.path
-    placeholder=(or field.placeholder field.label)
-    inputAttrs=field.inputAttrs
-    id=computedClassName
-    inputClass=inputClass}}
+    type=this.field.type
+    model=this.model
+    valuePath=this.field.path
+    placeholder=(or this.field.placeholder this.field.label)
+    inputAttrs=this.field.inputAttrs
+    id=this.computedClassName
+    inputClass=this.inputClass}}
 {{/if}}
 
 {{#if hasBlock}}

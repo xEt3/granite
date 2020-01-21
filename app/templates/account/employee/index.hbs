@@ -18,7 +18,7 @@
         {{#link-to "account.employee.index.counseling" class="item"}}
           <i class="folder open icon"></i>Counseling
         {{/link-to}}
-        {{#if auth.user.company.exposeBetaModules}}
+        {{#if this.auth.user.company.exposeBetaModules}}
           {{#link-to "account.employee.index.education" class="item"}}
             <i class="graduation cap icon"></i>Education &amp; Training
           {{/link-to}}
@@ -27,13 +27,13 @@
     {{/ui-dropdown}}
 
     <div class="right menu">
-      {{#if visualIdRequired}}
-        {{#link-to "account.employee.index.visual-id" model.id class="item text-red"}}<i class="exclamation icon"></i>Requires Visual ID{{/link-to}}
+      {{#if this.visualIdRequired}}
+        {{#link-to "account.employee.index.visual-id" this.model.id class="item text-red"}}<i class="exclamation icon"></i>Requires Visual ID{{/link-to}}
       {{/if}}
-      {{#if model.onboarding}}
-        {{#link-to "account.employee.onboard" model.id class="item text-blue"}}<i class="wizard icon"></i>Continue Onboarding{{/link-to}}
+      {{#if this.model.onboarding}}
+        {{#link-to "account.employee.onboard" this.model.id class="item text-blue"}}<i class="wizard icon"></i>Continue Onboarding{{/link-to}}
       {{/if}}
-      {{#if model.offboarding}}
+      {{#if this.model.offboarding}}
         {{#link-to "account.employee.offboard" class="item text-red"}}<i class="wizard icon"></i>Continue Offboarding{{/link-to}}
       {{/if}}
 
@@ -41,15 +41,15 @@
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
           {{#link-to "account.employee.index.edit" class="item"}}<i class="edit icon"></i>Edit{{/link-to}}
-          {{#if (not (or model.onboarding model.offboardingCompleted))}}
+          {{#if (not (or this.model.onboarding this.model.offboardingCompleted))}}
             {{#link-to "account.employee.offboard.index" class="item"}}<i class="cut icon"></i>Offboard Employee...{{/link-to}}
           {{/if}}
-          {{#if (not model.activatedOn)}}
+          {{#if (not this.model.activatedOn)}}
             <div class="item">
               {{#confirm-modal as |confirmActivation|}}
                 <a href="#" {{action (pipe confirmActivation (action "resend"))}}>
                   <i class="envelope icon"></i>Resend Activation Email...
-                  {{#if working}}
+                  {{#if this.working}}
                     <div class="ui active dimmer">
                       <div class="ui text loader">Loading</div>
                     </div>
@@ -60,7 +60,7 @@
           {{/if}}
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
-            {{#confirm-modal deleteContext=model.fullName as |confirm|}}
+            {{#confirm-modal deleteContext=this.model.fullName as |confirm|}}
               <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}><i class="trash icon"></i>Delete Record</a>
             {{/confirm-modal}}
           </div>
@@ -69,7 +69,7 @@
     </div>
   {{/ui-menu}}
 
-  <div class="ui basic container segment text-white employee-index-container {{unless onSummary "employee__index-container--minimal"}}">
+  <div class="ui basic container segment text-white employee-index-container {{unless this.onSummary "employee__index-container--minimal"}}">
     <div class="ui equal width stackable grid container">
       <div class="twelve wide column">
         <h1 class="ui left floated center aligned header employee-header-group">
@@ -82,21 +82,21 @@
               </div>
             {{/link-to}}
             <div class="ui small circular image employee-image">
-              {{display/employee-picture url=model.picture employeeId=model.id}}
+              {{display/employee-picture url=this.model.picture employeeId=this.model.id}}
             </div>
           {{/ui-dimmer}}
           <div class="inverted content text-white employee-basic-meta">
-            {{model.fullName}}
+            {{this.model.fullName}}
             <div class="sub header text-white">
-              {{#if model.jobDescription}}
-                {{#link-to "account.job-description" model.jobDescription.id}}
-                  {{model.jobTitle}} <br>
+              {{#if this.model.jobDescription}}
+                {{#link-to "account.job-description" this.model.jobDescription.id}}
+                  {{this.model.jobTitle}} <br>
                 {{/link-to}}
               {{else}}
-                {{model.jobTitle}} <br>
+                {{this.model.jobTitle}} <br>
               {{/if}}
-              {{#if model.hireDate}}
-                Since {{time model.hireDate "MMMM YYYY"}}
+              {{#if this.model.hireDate}}
+                Since {{time this.model.hireDate "MMMM YYYY"}}
               {{/if}}
             </div>
           </div>
@@ -105,14 +105,14 @@
       <div class="right aligned four wide column vertically-aligned contact-column">
         <div class="ui center aligned basic container text-white contact-container">
           <span class="right floated">
-            {{#if model.phone}}
+            {{#if this.model.phone}}
               <div class="phone-contact-icon">
-                <a href="tel:{{model.phone}}"><i class="big circular inverted green phone icon phone-contact-icon-hover"></i></a>
+                <a href="tel:{{this.model.phone}}"><i class="big circular inverted green phone icon phone-contact-icon-hover"></i></a>
               </div>
             {{/if}}
-            {{#if model.email}}
+            {{#if this.model.email}}
               <div class="item email-contact-icon">
-                <a href="mailto:{{model.email}}"><i class="big circular inverted grey mail icon email-contact-icon-hover"></i></a>
+                <a href="mailto:{{this.model.email}}"><i class="big circular inverted grey mail icon email-contact-icon-hover"></i></a>
               </div>
             {{/if}}
           </span>

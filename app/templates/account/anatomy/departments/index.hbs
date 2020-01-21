@@ -5,7 +5,7 @@
 
   <div class="right aligned text floated menu__actions">
     <h3 class="ui header">
-      {{#liquid-if addingDepartment}}
+      {{#liquid-if this.addingDepartment}}
         {{#link-to "account.anatomy.departments.index" class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
       {{else}}
         {{#link-to "account.anatomy.departments.index.new" class="right floated"}}
@@ -25,11 +25,11 @@
 {{liquid-outlet class="add-department"}}
 
 <div class="ui divided items">
-  {{#each model as |department|}}
+  {{#each this.model as |department|}}
     {{list-item/department-item department=department onDelete=(action "delete" )}}
   {{else}}
     <h2 class="ui center aligned header">No departments available.</h2>
   {{/each}}
 </div>
 
-{{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}
+{{elements/x-pagination page=(readonly this.page) pages=(readonly this.pages) onchange=(action (mut this.page))}}

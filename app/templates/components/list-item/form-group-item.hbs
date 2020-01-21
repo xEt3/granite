@@ -1,24 +1,24 @@
 {{#if hasBlock}}
-  {{yield model}}
+  {{yield this.model}}
 {{else}}
   <div class="content clearfix">
     <div class="header">
-      {{model.name}}
-      {{#if model.formType}}
-        <span class="ui tiny label">{{model.formType}}</span>
+      {{this.model.name}}
+      {{#if this.model.formType}}
+        <span class="ui tiny label">{{this.model.formType}}</span>
       {{/if}}
-      {{#if model.count}}
+      {{#if this.model.count}}
         <div class="right floated">
-          {{#link-to "account.employees.forms.responses" model._id}}
+          {{#link-to "account.employees.forms.responses" this.model._id}}
             View Responses
           {{/link-to}}
         </div>
       {{/if}}
     </div>
 
-    {{#if model.count}}
+    {{#if this.model.count}}
       <div class="extra">
-        {{model.count}} {{inflect-text "responses" model.count}} collected
+        {{this.model.count}} {{inflect-text "responses" this.model.count}} collected
       </div>
     {{else}}
       <div class="meta">

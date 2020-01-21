@@ -1,7 +1,7 @@
 {{stateful-intro-js
-  user=auth.user
-  steps=intros
-  start-if=model.data
+  user=this.auth.user
+  steps=this.intros
+  start-if=this.model.data
   hintKey="employees-census"}}
 
 {{#link-to "account.employees.add.census.index" class="item text-danger"}}
@@ -9,15 +9,15 @@
   Reupload census
 {{/link-to}}
 
-{{#if doingDryRun}}
+{{#if this.doingDryRun}}
   <i class="pull-right text-green spinner loading icon"></i>
 {{else}}
   <a href="#" class="pull-right text-green btn__dry-run" {{action "doDryRun" true}}>
-    {{if displayDryRunResults "Regenerate" "Generate"}} dry run data
+    {{if this.displayDryRunResults "Regenerate" "Generate"}} dry run data
   </a>
 {{/if}}
 
-{{#if displayDryRunResults}}
+{{#if this.displayDryRunResults}}
   <p class="text-center text-white">
     The following would be created as a result of this import:
     <a href="#" class="text-muted pull-right" {{action "dumpDryRun"}}>
@@ -25,11 +25,11 @@
     </a>
   </p>
 
-  {{#each potentialData as |potentialDataRecord index|}}
+  {{#each this.potentialData as |potentialDataRecord index|}}
     {{list-item/dry-run-employee
       dryRunRecord=potentialDataRecord
       index=index
-      availableFields=availableFields
+      availableFields=this.availableFields
     }}
   {{/each}}
 {{/if}}
@@ -51,7 +51,7 @@
                 Guessed Fields
               </div>
             </th>
-            {{#each model.data.[0] as |guesses index|}}
+            {{#each this.model.data.0 as |guesses index|}}
               <th>
                 <div class="field">
                   {{#ui-dropdown
@@ -63,7 +63,7 @@
                     <div class="default text">Select field for column</div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
-                      {{#each availableFields as |availableField|}}
+                      {{#each this.availableFields as |availableField|}}
                         <div class="item" data-value={{availableField.path}}>
                           {{availableField.label}}
                         </div>
@@ -87,14 +87,14 @@
                 Your Columns
               </div>
             </th>
-            {{#each model.data.[1] as |clientDataNames|}}
+            {{#each this.model.data.1 as |clientDataNames|}}
               <th>{{clientDataNames}}</th>
             {{/each}}
           </tr>
         </thead>
         <tbody class="monospaced data-rows">
-          {{#each rows as |row rowIndex|}}
-            {{#census/table-row validation=(object-at rowIndex dataValidation)}}
+          {{#each this.rows as |row rowIndex|}}
+            {{#census/table-row validation=(object-at rowIndex this.dataValidation)}}
               <td>
                 {{add-one rowIndex}}
               </td>
@@ -103,10 +103,10 @@
                   column
                   rowIndex
                   columnIndex
-                  potentialData
-                  availableFields
-                  guesses
-                  (object-at columnIndex (object-at rowIndex dataValidation))
+                  this.potentialData
+                  this.availableFields
+                  this.guesses
+                  (object-at columnIndex (object-at rowIndex this.dataValidation))
                   addDepartment=(action "showDepartmentModal")
                   addLocation=(action "showLocationModal")
                   onRefresh=(action "onRefresh")
@@ -121,8 +121,8 @@
 
     <div class="ui divider"></div>
 
-    {{#form/action-button type="submit" class="ui fluid positive big button import-button" loading=working}}
-      <i class="check icon"></i> Import {{rows.length}} records
+    {{#form/action-button type="submit" class="ui fluid positive big button import-button" loading=this.working}}
+      <i class="check icon"></i> Import {{this.rows.length}} records
     {{/form/action-button}}
   </div>
 </form>
@@ -134,37 +134,37 @@
   <div class="content">
     <div class="field">
       <label for="location-name">Name</label>
-      {{input type="text" value=newLocation.name id="location-name" placeholder="Location Name"}}
+      {{input type="text" value=this.newLocation.name id="location-name" placeholder="Location Name"}}
     </div>
     <div class="field">
       <label for="location-code">Code</label>
-      {{input type="text" value=newLocation.code id="location-code" placeholder="Location Code"}}
+      {{input type="text" value=this.newLocation.code id="location-code" placeholder="Location Code"}}
     </div>
     <div class="field">
       <label for="location-phone">Telephone Number</label>
-      {{input type="tel" value=newLocation.phone id="location-phone" placeholder="Location Telephone Number"}}
+      {{input type="tel" value=this.newLocation.phone id="location-phone" placeholder="Location Telephone Number"}}
     </div>
     <div class="field">
       <label for="address-line-1">Address Line 1</label>
-      {{validated-input type="text" model=newLocation valuePath="addressLine1" placeholder="Address Line 1" id="address-line-1"}}
+      {{validated-input type="text" model=this.newLocation valuePath="addressLine1" placeholder="Address Line 1" id="address-line-1"}}
     </div>
     <div class="field">
       <label for="address-line-2">Address Line 2</label>
-      {{input type="text" value=newLocation.addressLine2 placeholder="Address Line 2" id="address-line-2"}}
+      {{input type="text" value=this.newLocation.addressLine2 placeholder="Address Line 2" id="address-line-2"}}
     </div>
     <div class="three fields">
       <div class="field">
         <label for="address-city">City</label>
-        {{input type="text" value=newLocation.addressCity placeholder="City" id="address-city"}}
+        {{input type="text" value=this.newLocation.addressCity placeholder="City" id="address-city"}}
       </div>
       <div class="field">
         <label for="state-name">State</label>
-        {{#ui-dropdown class="search selection" selected=newLocation.addressState onChange=(action (mut newLocation.addressState))}}
-          {{#if stateIsMontana}}<i class="text-danger heart icon"></i>{{/if}}
+        {{#ui-dropdown class="search selection" selected=this.newLocation.addressState onChange=(action (mut this.newLocation.addressState))}}
+          {{#if this.stateIsMontana}}<i class="text-danger heart icon"></i>{{/if}}
           <div class="default text">State</div>
           <i class="dropdown icon"></i>
           <div class="menu">
-            {{#each states as |state|}}
+            {{#each this.states as |state|}}
               <div class="item" data-value={{state.value}}>
                 {{state.label}}
               </div>
@@ -174,7 +174,7 @@
       </div>
       <div class="field">
         <label for="address-zip">Zip</label>
-        {{input type="text" value=newLocation.addressZipcode placeholder="Zip" id="address-zip"}}
+        {{input type="text" value=this.newLocation.addressZipcode placeholder="Zip" id="address-zip"}}
       </div>
     </div>
   </div>
@@ -195,11 +195,11 @@
   <div class="content">
     <div class="field">
       <label for="department-name">Name</label>
-      {{input type="text" value=newDepartment.name id="department-name" placeholder="Department Name"}}
+      {{input type="text" value=this.newDepartment.name id="department-name" placeholder="Department Name"}}
     </div>
     <div class="field">
       <label for="department-code">Code</label>
-      {{input type="text" value=newDepartment.code id="department-code" placeholder="Department Code"}}
+      {{input type="text" value=this.newDepartment.code id="department-code" placeholder="Department Code"}}
     </div>
   </div>
   <div class="actions">

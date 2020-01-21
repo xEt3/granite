@@ -10,14 +10,14 @@
 </td>
 
 <td>
-  {{#if editingValue}}
+  {{#if this.editingValue}}
     <form {{action "saveEdit" on="submit"}}>
       <div class="field">
         <div class="ui grid">
           <div class="ten wide column">
             <label for="new-custom-value" class="sr-only">New {{key}} value</label>
             {{#auto-focus}}
-              {{input type="text" name="new-custom-value" class="ui transparent input" value=newValue placeholder="Field value"}}
+              {{input type="text" name="new-custom-value" class="ui transparent input" value=this.newValue placeholder="Field value"}}
             {{/auto-focus}}
           </div>
           <div class="six wide center middle aligned center aligned column">

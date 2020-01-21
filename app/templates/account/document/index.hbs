@@ -1,18 +1,18 @@
 <div class="content">
   <div class="clearfix">
-    {{#if imagePreview}}
-      <img class="ui small rounded image left floated" alt="" src={{model.url}}>
+    {{#if this.imagePreview}}
+      <img class="ui small rounded image left floated" alt="" src={{this.model.url}}>
     {{/if}}
 
-    {{#if model.description}}
-      <h4>{{model.description}}</h4>
+    {{#if this.model.description}}
+      <h4>{{this.model.description}}</h4>
     {{/if}}
   </div>
 
-  {{#if fileAssignments}}
+  {{#if this.fileAssignments}}
     <div class="ui divider"></div>
     <h3>Assignees</h3>
-    {{#each fileAssignments as |assignment|}}
+    {{#each this.fileAssignments as |assignment|}}
       {{list-item/file-assignment assignment=assignment}}
     {{/each}}
   {{/if}}

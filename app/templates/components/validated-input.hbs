@@ -1,33 +1,33 @@
-<div class="field {{fieldClass}}">
+<div class="field {{this.fieldClass}}">
   {{#if hasBlock}}
     {{yield}}
   {{else}}
     {{input
-      type=type
-      tabindex=tabindex
-      value=value
-      placeholder=placeholder
-      name=valuePath
-      class=inputClass
-      min=inputAttrs.min
-      max=inputAttrs.max
-      step=inputAttrs.step}}
+      type=this.type
+      tabindex=this.tabindex
+      value=this.value
+      placeholder=this.placeholder
+      name=this.valuePath
+      class=this.inputClass
+      min=this.inputAttrs.min
+      max=this.inputAttrs.max
+      step=this.inputAttrs.step}}
   {{/if}}
 
-  {{#if isValid}}
+  {{#if this.isValid}}
     <i class="check icon"></i>
   {{/if}}
 
-  {{#if (or showErrorMessage showWarningMessage showFieldError)}}
+  {{#if (or this.showErrorMessage this.showWarningMessage this.showFieldError)}}
     <div class="input-error animated fadeIn">
       <div class="error">
-        {{#if showFieldError}}
-          {{showFieldError}}
+        {{#if this.showFieldError}}
+          {{this.showFieldError}}
         {{else}}
           {{v-get
-            model
-            valuePath
-            (if showWarningMessage "warningMessage" "message")}}
+            this.model
+            this.valuePath
+            (if this.showWarningMessage "warningMessage" "message")}}
         {{/if}}
       </div>
     </div>

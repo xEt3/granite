@@ -1,22 +1,22 @@
 <div class="ui image label">
   {{display/employee-picture
-    url=assignment.employee.picture
-    employeeId=assignment.employee.id}}
-  {{#link-to "account.employee" assignment.employee.id class="item text-black"}}
-    {{assignment.employee.fullName}}
+    url=this.assignment.employee.picture
+    employeeId=this.assignment.employee.id}}
+  {{#link-to "account.employee" this.assignment.employee.id class="item text-black"}}
+    {{this.assignment.employee.fullName}}
   {{/link-to}}
-  {{#if assignment.readOn}}
+  {{#if this.assignment.readOn}}
     &nbsp;
     <i class="eye icon gray-icon">
       {{#ember-tooltip
         side="right"
         popperContainer="body"
       }}
-        Viewed on {{time assignment.readOn}}
+        Viewed on {{time this.assignment.readOn}}
       {{/ember-tooltip}}
     </i>
   {{/if}}
-  {{#if assignment.signedOn}}
+  {{#if this.assignment.signedOn}}
     <a href="#" class="gray-icon" {{action "openSignatureModal"}}>
       <i class="edit icon"></i>
       {{#ember-popover
@@ -24,29 +24,29 @@
         popperContainer="body"
       }}
         <h4 class="center aligned text">
-          Signed on {{time assignment.signedOn}}
+          Signed on {{time this.assignment.signedOn}}
         </h4>
-        <img src={{assignment.signature}} class="ui medium image" alt="Signature image">
+        <img src={{this.assignment.signature}} class="ui medium image" alt="Signature image">
       {{/ember-popover}}
     </a>
   {{/if}}
   <div class="detail">
-    {{if pastAssignment "Assigned" "Pending"}}
+    {{if this.pastAssignment "Assigned" "Pending"}}
     {{#ember-tooltip
       side="right"
       popperContainer="body"
     }}
-      Document {{if pastAssignment "was" "will be"}} assigned on {{time (or assignment.effectiveOn assignment.created)}} by {{assignment.creator.fullName}}
+      Document {{if this.pastAssignment "was" "will be"}} assigned on {{time (or this.assignment.effectiveOn this.assignment.created)}} by {{this.assignment.creator.fullName}}
     {{/ember-tooltip}}
   </div>
 </div>
 
-{{#ui-modal name="modal__file-assignment-signature" id=modalId}}
+{{#ui-modal name="modal__file-assignment-signature" id=this.modalId}}
   <div class="header">
-    {{assignment.file.title}} signature for {{assignment.employee.fullName}}
+    {{this.assignment.file.title}} signature for {{this.assignment.employee.fullName}}
   </div>
   <div class="content">
-    <img src={{assignment.signature}} alt="">
+    <img src={{this.assignment.signature}} alt="">
   </div>
   <div class="actions">
     <button class="ui red button" {{action "closeSignatureModal"}}>
