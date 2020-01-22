@@ -52,7 +52,34 @@ module('Acceptance | education/webinars', function (hooks) {
     }
   });
 
-  skip('allows a purchase of one or more webinars');
+  skip('allows a purchase of one or more webinars', async function (assert) {
+    await authenticate.call(this, server);
+    const webinars = await server.createList('webinar', 10);
+
+    await visit('/account/education/webinars');
+
+    // Click the first webinar
+    await click('a.webinar-card__purchase');
+    assert.dom('a.webinar-card__purchase i.check').exists();
+    assert.dom('.webinars-cart').exists();
+    assert.dom('.webinars-cart .webinars-cart__item-count').includesText('1');
+    assert.dom('.webinars-cart .webinars-cart__total').includesText(`$${webinars[0].price}`);
+    // Click checkout
+    await click('.webinars-cart .webinars-cart__checkout');
+
+    assert.dom('.confirm-modal').exists();
+    // Click confirm
+    await click('.confirm-modal .actions > .green.button');
+
+    assert.equal(currentURL(), '/account/education/webinars/purchase');
+    assert.dom('.webinars-purchase').includesText('One moment while we process your transaction...');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    assert.dom('.webinars-purchase .webinars-purchase__receipt .receipt__line-item').includesText(webinars[0].title);
+    assert.dom('.webinars-purchase .webinars-purchase__receipt .receipt__line-item').includesText(webinars[0].description);
+    assert.dom('.webinars-purchase .webinars-purchase__receipt .receipt__line-item').includesText(webinars[0].price);
+    assert.dom('.webinars-purchase .webinars-purchase__receipt .receipt__line-item .line-item__watch').exists();
+    assert.dom('.webinars-purchase .webinars-purchase__receipt .receipt__line-item .line-item__assign').exists();
+  });
 
   skip('shows webinars you have authorization to');
 });

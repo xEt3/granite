@@ -47,6 +47,36 @@ export default function () {
   this.passthrough('https://origin-analytics-sand.sandbox.braintree-api.com/**');
   this.passthrough('https://www.paypal.com/**');
 
+  // webinar purchases
+  this.post('/webinar/purchase', (db, request) => {
+    const response = {
+      total:                 0,
+      webinarAuthorizations: []
+    };
+
+    request.params.ids.forEach(id => {
+      const webinar = db.webinars.find(id);
+
+      if (!webinar) {
+        throw new Error('Webinar not found.');
+      }
+
+      response.webinarAuthorizations.push(db.webinarAuthorizations.create({
+        webinar,
+        expiration: moment().add(90, 'days').toDate(),
+        created:    new Date()
+      }));
+
+      response.total += webinar.price;
+    });
+
+    return {
+      ...response,
+      total:       `${response.total}`,
+      transaction: {}
+    };
+  });
+
   // Simulate login actions
 
   this.post('/login/company-user', (db, request) => {

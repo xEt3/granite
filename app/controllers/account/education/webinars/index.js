@@ -1,15 +1,12 @@
 import Controller from '@ember/controller';
-import {
-  Promise
-} from 'rsvp';
-import {
-  computed
-} from '@ember/object';
-import {
-  inject as service
-} from '@ember/service';
+import { A } from '@ember/array';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-import $ from 'jquery';
+
 export default Controller.extend(addEdit, {
-  items: ['llo', 'hahaha', 'test']
+  itemsInCart: A(),
+
+  addToCart (webinar, e) {
+    e.preventDefault();
+    this.itemsInCart.addObject(webinar);
+  }
 });
