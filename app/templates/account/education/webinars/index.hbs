@@ -11,8 +11,8 @@
           <h3 class="ui header left floated"> Purchased </h3>
         </hgroup>
       {{/if}}
-
-      <div class="card webinar__card">
+      <listItem::educate:webinars @webinar={{this.webinar}} />
+      {{!-- <div class="card webinar__card">
         <div class="content">
           <div class="header webinar-card__title">{{webinar.title}}</div>
         </div>
@@ -41,21 +41,56 @@
             <i class="ui right floated blue add icon"></i>
           </a>
         </div>
-      </div>
-          {{else}}
-          <h4>No webinars available</h4>
-          <div class="ui divider"></div>
-          {{/each}}
+      </div> --}}
+    {{else}}
+      <h4>No webinars available</h4>
+      <div class="ui divider"></div>
+    {{/each}}
   </div>
   {{#if items}}
-    {{#each items as |item|}}
-      <div class="ui basic segment">
-        {{items.length}} in cart
-        <button class="ui icon big button">
-          <i class="right arrow icon"></i>
-        </button>
-      </div>
-    {{/each}}
+    <div class="ui divider"></div>
+
+    <div class="ui three stackable cards webinars-list">
+      {{#each items as |item|}}
+        <div class="card webinar__card">
+          <div class="content">
+            <div class="header webinar-card__title">{{webinar.title}}</div>
+          </div>
+          <div class="content">
+            <h4 class="ui sub header">Description</h4>
+            <div class="ui small feed">
+              <div class="event">
+                <div class="content">
+                  <div class="summary webinar-card__description">
+                    {{webinar.description}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="extra content">
+            <a>
+              {{#ember-tooltip
+              side="left"
+            }}
+                90days for ${{webinar.price}}
+              {{/ember-tooltip}}
+              <i class="small info icon"></i>
+            </a>
+            <a>
+              <i class="ui right floated blue add icon"></i>
+            </a>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+    <div class="ui basic segment">
+      {{items.length}} in cart
+      <button class="ui icon big button">
+        <i class="right arrow icon"></i>
+      </button>
+    </div>
+
   {{/if}}
 
 </div>
