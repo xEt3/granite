@@ -1,8 +1,15 @@
-<UiSticky @context={{@stickyContext}}>
-<div class={{@class}}>
+<EmberWormhole @destinationElement={{this.wormholeTarget}}>
+  <form class="sticky-cart {{if this.shouldHide "sticky-cart--hidden"}} {{@class}}" {{on "submit" (fn this.submitCart)}}>
+    <div class="sticky-cart__cart-icon">
+      <i class="cart icon"></i>
+    </div>
+    <h2 class="sticky-cart__item-count">{{@items.length}} {{inflect-text "webinars" @items.length}} in cart</h2>
 
-  {{#each @items as |item|}}
-    {{item.id}} : I'm in hererrr
-  {{/each}}
-</div>
-  </UiSticky>
+    <button type="submit" class="sticky-cart__purchase ui green button">
+      Purchase
+      <div class="sticky-cart-purchase__total">
+        90 day access to {{@items.length}} {{inflect-text "webinars" @items.length}} for ${{this.itemTotal}}
+      </div>
+    </button>
+  </form>
+</EmberWormhole>

@@ -1,64 +1,69 @@
-<div class="content">
-  <div class="header webinar-card__title">{{this.webinar.title}}</div>
-</div>
-<div class="content">
-  <h4 class="ui sub header">Description</h4>
+<div class="card webinar__card">
   <div class="content">
-    <div class="summary webinar-card__description">
-      {{this.webinar.description}}
+    <div class="header webinar-card__title">{{@webinar.title}}</div>
+  </div>
+  <div class="content">
+    <h4 class="ui sub header">Description</h4>
+    <div class="content">
+      <div class="summary webinar-card__description">
+        {{@webinar.description}}
+      </div>
     </div>
   </div>
-</div>
-<div class="extra content">
-  {{#if this.authorization}}
-    <span class="webinar-card__access">
-      {{#ember-tooltip
-        side="left"
-      }}
-        {{this.timeRemaining}}
-      {{/ember-tooltip}}
-      <i class="check icon"></i>
-    </span>
-    <a href="#" class="webinar-card__watch right floated">
-      {{#ember-tooltip
-            side="left"
-          }}
-        Watch Webinar
-      {{/ember-tooltip}}
-        <i class="add icon"></i>
-    </a>
-    <a href="#" class="webinar-card__assign right floated">
-      {{#ember-tooltip
-        side="left"
-      }}
-        Assign Webinar
-      {{/ember-tooltip}}
-      <i class="icons">
-        <i class="graduation cap icon"></i>
-        <i class="corner add icon"></i>
-      </i>
-    </a>
-  {{else}}
-    <span class="webinar-card__access">
-      {{#ember-tooltip
-        side="left"
-      }}
-        90 days for ${{this.webinar.price}}
-      {{/ember-tooltip}}
-      <i class="info circle icon"></i>
-    </span>
-    {{#if @addToCart}}
-      <a href="#" class="webinar-card__purchase right floated" {{on "click" (fn @addToCart this.webinar)}}>
-        {{#ember-tooltip
-          side="left"
-        }}
-          Add to cart
-        {{/ember-tooltip}}
-        <i class="icons">
-          <i class="blue cart icon"></i>
+  <div class="extra content">
+    {{#if this.authorization}}
+      <span class="webinar-card__access">
+        <EmberTooltip @side="left">
+          {{this.timeRemaining}}
+        </EmberTooltip>
+        <i class="large check icon"></i>
+      </span>
+      <a href="#" class="webinar-card__watch right floated">
+        <EmberTooltip @side="left">
+          Watch Webinar
+        </EmberTooltip>
+          <i class="large add icon"></i>
+      </a>
+      <a href="#" class="webinar-card__assign right floated">
+        <EmberTooltip @side="left">
+          Assign Webinar
+        </EmberTooltip>
+        <i class="large icons">
+          <i class="graduation cap icon"></i>
           <i class="corner add icon"></i>
         </i>
       </a>
+    {{else}}
+      <span class="webinar-card__access">
+        <EmberTooltip @side="left" >
+          90 days for ${{@webinar.price}}
+        </EmberTooltip>
+        <i class="large info circle icon"></i>
+      </span>
+      {{#if (and @addToCart @removeFromCart) tagName='span'}}
+        <a
+          href="#"
+          class="{{if this.inCart 'text-danger '}}webinar-card__purchase right floated"
+          {{on "click" (fn (if this.inCart @removeFromCart @addToCart) @webinar)}}>
+          {{#if this.inCart}}
+            <EmberTooltip @side="left">
+              Remove from cart
+            </EmberTooltip>
+            <i class="large icons">
+              <i class="cart icon"></i>
+              <i class="corner huge minus icon"></i>
+            </i>
+          {{else}}
+          <EmberTooltip @side="left">
+          Add to cart
+          </EmberTooltip>
+          <i class="large icons">
+            <i class="blue cart icon"></i>
+            <i class="corner huge add icon"></i>
+          </i>
+          {{/if}}
+        </a>
+      {{/if}}
     {{/if}}
-  {{/if}}
+  </div>
 </div>

@@ -10,28 +10,15 @@
   <div class="ui three stackable cards webinars-list">
     {{#each this.webinars as |webinar|}}
       <ListItem::Educate::WebinarItem
-        class="card webinar__card"
         @webinar={{webinar}}
         @authorization={{find-by 'webinar' webinar this.authorizations}}
-        @addToCart={{action this.addToCart}}/>
+        @addToCart={{this.addToCart}}
+        @removeFromCart={{this.removeFromCart}}
+        @itemsInCart={{this.itemsInCart}}/>
     {{else}}
       <h2 class="ui centered text">
         No webinars available.
       </h2>
     {{/each}}
   </div>
-
-
-  {{!-- FOR THE CART TODO: make sticky --}}
-  {{!-- {{#if this.items}}
-    <div class="ui divider"></div>
-    <h3 class="ui header center aligned"> {{this.items.length}} Webinars in cart </h3>
-    <ListItem::Educate::WebinarItem class="ui three stackable cards webinars-list" @webinars={{this.items}} @authorization={{true}} />
-    <div class="ui basic segment">
-      <button type="button" class="ui icon big green button right floated">
-        Check out
-        <i class="right arrow icon"></i>
-      </button>
-    </div>
-  {{/if}} --}}
 </div>
