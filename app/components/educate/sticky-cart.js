@@ -1,6 +1,15 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
 export default class StickyCartComponent extends Component {
+  @tracked
+  cartExpanded = false
+
+  get expanded () {
+    return !this.shouldHide && this.cartExpanded;
+  }
+
   get wormholeTarget () {
     return document.querySelector('.ember-application');
   }
@@ -17,5 +26,10 @@ export default class StickyCartComponent extends Component {
 
   submitCart () {
     console.log('dunno...');
+  }
+
+  @action
+  toggleCartExpansion () {
+    this.cartExpanded = !this.cartExpanded;
   }
 }

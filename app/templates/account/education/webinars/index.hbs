@@ -1,11 +1,12 @@
-<div class="ui raised padded segment container clearfix page__webinars">
+<div  class="ui raised padded segment container clearfix page__webinars">
   <div class="ui basic segment">
     <h2 class="ui header"> Webinars </h2>
   </div>
   <div class="ui divider"></div>
     <Educate::StickyCart
       @class="webinars-cart"
-      @items={{this.itemsInCart}} />
+      @items={{this.itemsInCart}}
+      @removeFromCart={{this.removeFromCart}}/>
 
   <div class="ui three stackable cards webinars-list">
     {{#each this.webinars as |webinar|}}

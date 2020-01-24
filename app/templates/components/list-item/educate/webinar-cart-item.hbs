@@ -1,0 +1,23 @@
+<div class="webinar-cart-item">
+  <div class="webinar-cart-item__remove text-danger">
+    <a href="#" 
+    {{on "click" (fn @removeFromCart @webinar)}}>
+      <EmberTooltip @side="left">
+        Remove from cart
+      </EmberTooltip>
+      <i class="red large minus icon"></i>
+    </a>
+  </div>
+  <div class="webinar-cart-item__title-description">
+    <div class="webinar-cart-item__title">
+      <h3>{{@webinar.title}}</h3>
+    </div>
+    <div class="webinar-cart-item__description"> 
+      {{@webinar.description}}
+    </div>
+  </div>
+  <div class="webinar-cart-item__price">
+     ${{@webinar.price}}
+  </div>  
+</div>
+
