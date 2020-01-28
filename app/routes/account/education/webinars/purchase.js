@@ -38,6 +38,6 @@ export default class PurchaseRoute extends Route {
     }
 
     success('Successfully processed transaction.');
-    this.transitionTo('account.education.webinars.completed', { queryParams: { idempotencyKey: intent.idempotencyKey } });
+    this.transitionTo('account.education.webinars.purchased', { queryParams: { idempotencyKey: intent.idempotencyKey } });
   }
 }

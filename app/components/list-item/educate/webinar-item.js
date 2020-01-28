@@ -1,9 +1,13 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import moment from 'moment';
 
 export default class WebinarItemComponent extends Component {
+  @tracked
+  readMore = false
+
   get timeRemaining () {
-    return !!this.authorization && `${ moment(this.authorization.expiration).diff(new Date(), 'days')} days of 90 remaining`;
+    return !!this.args.authorization && `${moment(this.args.authorization.expiration).diff(new Date(), 'days')}/90 days remaining`;
   }
 
   get inCart () {

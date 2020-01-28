@@ -16,11 +16,14 @@
 
     {{#if this.purchasedWebinars.length}}
       <h2>Purchased webinars</h2>
-      {{#each this.purchasedWebinars as |webinarGroup|}}
-        <ListItem::Educate::WebinarItem
-          @webinar={{webinarGroup.webinar}}
-          @authorization={{webinarGroup.auth}} />
-      {{/each}}
+      <div class="ui four stackable cards webinars-list--purchased">
+        {{#each this.purchasedWebinars as |webinarGroup|}}
+          <ListItem::Educate::WebinarItem
+            @webinar={{webinarGroup.webinar}}
+            @authorization={{webinarGroup.auth}} />
+        {{/each}}
+      </div>
+
       <h2>Available for purchase</h2>
     {{/if}}
 

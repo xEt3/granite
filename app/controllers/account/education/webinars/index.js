@@ -17,7 +17,7 @@ export default class WebinarsIndexController extends Controller {
   }
 
   get webinarsAvailableForPurchase () {
-    return this.webinars.filter(webinar => !this.purchasedWebinars.includes(webinar));
+    return this.webinars.filter(webinar => !this.purchasedWebinars.find(g => g.webinar.id === webinar.id));
   }
 
   @action

@@ -249,7 +249,7 @@ Router.map(function () {
     this.route('education', function () {
       this.route('webinars', function () {
         this.route('purchase');
-        this.route('completed');
+        this.route('purchased');
       });
     });
   });

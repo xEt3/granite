@@ -1,4 +1,4 @@
-<div class="card webinar__card">
+<div class="ui card webinar__card">
   <div class="content">
     <div class="header webinar-card__title">{{@webinar.title}}</div>
   </div>
@@ -6,33 +6,41 @@
     <h4 class="ui sub header">Description</h4>
     <div class="content">
       <div class="summary webinar-card__description">
-        {{@webinar.description}}
+        {{#if @authorization}}
+          {{@webinar.shortDescription}}
+          <button type="button" {{on "click" (toggle-action "readMore" this)}}>Read more</button>
+          {{#if this.readMore}}
+            {{@webinar.description}}
+            <button type="button" {{on "click" (toggle-action "readMore" this)}}>Show less</button>
+          {{/if}}
+        {{else}}
+          {{@webinar.description}}
+        {{/if}}
       </div>
     </div>
   </div>
   <div class="extra content">
-    {{#if this.authorization}}
-      <span class="webinar-card__access">
-        <EmberTooltip @side="left">
-          {{this.timeRemaining}}
-        </EmberTooltip>
-        <i class="large check icon"></i>
+    {{#if @authorization}}
+      <span class="webinar-card__access text-green">
+        {{this.timeRemaining}}
       </span>
-      <a href="#" class="webinar-card__watch right floated">
-        <EmberTooltip @side="left">
-          Watch Webinar
-        </EmberTooltip>
-          <i class="large add icon"></i>
-      </a>
-      <a href="#" class="webinar-card__assign right floated">
-        <EmberTooltip @side="left">
-          Assign Webinar
-        </EmberTooltip>
-        <i class="large icons">
-          <i class="graduation cap icon"></i>
-          <i class="corner add icon"></i>
-        </i>
-      </a>
+      <div class="right floated">
+        <a href="#" class="webinar-card__assign">
+          <EmberTooltip @side="left">
+            Assign Webinar
+          </EmberTooltip>
+          <i class="large icons">
+            <i class="graduation cap icon"></i>
+            <i class="corner add icon"></i>
+          </i>
+        </a>
+        <a href="#" class="webinar-card__watch text-green">
+          <EmberTooltip @side="left">
+            Watch Webinar
+          </EmberTooltip>
+          <i class="large play icon"></i>
+        </a>
+      </div>
     {{else}}
       <span class="webinar-card__access">
         <EmberTooltip @side="left" >
@@ -54,13 +62,13 @@
               <i class="corner huge minus icon"></i>
             </i>
           {{else}}
-          <EmberTooltip @side="left">
-          Add to cart
-          </EmberTooltip>
-          <i class="large icons">
-            <i class="blue cart icon"></i>
-            <i class="corner huge add icon"></i>
-          </i>
+            <EmberTooltip @side="left">
+              Add to cart
+            </EmberTooltip>
+            <i class="large icons">
+              <i class="blue cart icon"></i>
+              <i class="corner huge add icon"></i>
+            </i>
           {{/if}}
         </a>
       {{/if}}
