@@ -1,4 +1,4 @@
-{{#if showFilters}}
+{{#if this.showFilters}}
   {{#display/filter-pane
     class="ui content form padded segment container"
     onChange=(action "updateFilter") as |filter|
@@ -11,21 +11,21 @@
     {{#filter.section "Visibility" activeState=(hash visibleToEmployee=false)}}
       {{filter.toggleControl
         "visibleToEmployee"
-        visibleToEmployee
+        this.visibleToEmployee
         label="Visible To Employee"}}
     {{/filter.section}}
 
     {{#filter.section "Viewed by Employee" activeState=(hash readOn=false)}}
       {{filter.toggleControl
         "readOn"
-        readOn
+        this.readOn
         label="Viewed"}}
     {{/filter.section}}
 
     {{#filter.section "Signed by Employee" activeState=(hash signedOn=false)}}
       {{filter.toggleControl
         "signedOn"
-        signedOn
+        this.signedOn
         label="Signed"}}
     {{/filter.section}}
 
@@ -47,12 +47,12 @@
             text="Assign a document"}}
           <i id="add-document" class="plus icon"></i>
         {{/link-to}}
-        <a href="#" class={{if showFilters "text-red"}} {{action toggleProperty "showFilters"}}>
+        <a href="#" class={{if this.showFilters "text-red"}} {{action this.toggleProperty "showFilters"}}>
           {{ember-tooltip
             side="left"
             popperContainer="body"
             text="Filters"}}
-          <i class="{{if showFilters "remove" "filter"}} icon"></i>
+          <i class="{{if this.showFilters "remove" "filter"}} icon"></i>
         </a>
       </h3>
     </div>
@@ -60,7 +60,7 @@
   <div class="ui divider"></div>
 
   <div class="ui divided items">
-    {{#each model as |assignment|}}
+    {{#each this.model as |assignment|}}
       {{list-item/employee-document-item
         assignment=assignment
         onNotify=(route-action "notify")
@@ -71,7 +71,7 @@
   </div>
 
   {{elements/x-pagination
-    page=(readonly page)
-    pages=(readonly pages)
-    onchange=(action (mut page))}}
+    page=(readonly this.page)
+    pages=(readonly this.pages)
+    onchange=(action (mut this.page))}}
 </div>

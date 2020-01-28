@@ -1,15 +1,15 @@
-<h2 class="ui header">Editing {{model.name}}</h2>
+<h2 class="ui header">Editing {{this.model.name}}</h2>
 <form class="ui form container" {{action "save" on="submit"}}>
   <div class="field">
     <label for="department-name">Name</label>
-    {{input type="text" value=model.name id="department-name" placeholder="Department Name"}}
+    {{input type="text" value=this.model.name id="department-name" placeholder="Department Name"}}
   </div>
   <div class="field">
     <label for="department-code">Code</label>
-    {{input type="text" value=model.code id="department-code" placeholder="Department Code"}}
+    {{input type="text" value=this.model.code id="department-code" placeholder="Department Code"}}
   </div>
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=(not model.hasDirtyAttributes)}}Save Department{{/form/action-button}}
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working disabled=(not this.model.hasDirtyAttributes)}}Save Department{{/form/action-button}}
   <a href="#" {{action "cancel"}}>
     <div class="ui large fluid danger button">Cancel</div>
   </a>

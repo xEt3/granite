@@ -1,18 +1,18 @@
-{{#if model.logo}}
-  <img src={{model.logo}} alt="Logo" class="ui mini image applicant-source-item__image" />
+{{#if this.model.logo}}
+  <img src={{this.model.logo}} alt="Logo" class="ui mini image applicant-source-item__image" />
 {{/if}}
 <div class="content">
   <div class="header">
     {{ui-checkbox
       class="checkbox"
-      checked=(readonly selected)
-      label=model.name}}
+      checked=(readonly this.selected)
+      label=this.model.name}}
   </div>
-  {{#if model.costPerCycle}}
-    <div class="ui orange right floated horizontal label">${{model.costPerCycle}}/Billing Cycle</div>
+  {{#if this.model.costPerCycle}}
+    <div class="ui orange right floated horizontal label">${{this.model.costPerCycle}}/Billing Cycle</div>
   {{/if}}
   <div class="meta">
-    <span>{{model.description}}</span>
+    <span>{{this.model.description}}</span>
   </div>
 
   <div class="extra">

@@ -5,7 +5,7 @@
   {{/link-to}}
 </div>
 
-{{#if topLevel}}
+{{#if this.topLevel}}
   <div class="right menu">
     <div class="item">
       {{#link-to "about"}}About{{/link-to}}
@@ -19,7 +19,7 @@
     <div class="item">
       {{#link-to "contact"}}Contact{{/link-to}}
     </div>
-    {{#if auth.authenticated}}
+    {{#if this.auth.authenticated}}
       <div class="item login_or_dashboard">
         {{#link-to "account" class="ui outlined blue button"}}Go To Dashboard{{/link-to}}
       </div>

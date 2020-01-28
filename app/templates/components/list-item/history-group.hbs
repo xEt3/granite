@@ -1,51 +1,51 @@
-{{#if group.startOfYear}}
+{{#if this.group.startOfYear}}
   <span class="history__year-start">
-    {{time group.date "YYYY"}}
+    {{time this.group.date "YYYY"}}
   </span>
 {{/if}}
 
-{{#if group.startOfMonth}}
+{{#if this.group.startOfMonth}}
   <span class="history__month-start">
-    <span class="group-date__month">{{time group.date "MMMM"}}</span>
+    <span class="group-date__month">{{time this.group.date "MMMM"}}</span>
   </span>
 {{/if}}
 
 <div class="history-group__main">
   <span class="history__group-date animated rollIn" role="button" {{action "selectGroup"}}>
-    <span class="group-date__month">{{time group.date "MMM"}}</span>
-    <span class="group-date__day">{{time group.date "Do"}}</span>
+    <span class="group-date__month">{{time this.group.date "MMM"}}</span>
+    <span class="group-date__day">{{time this.group.date "Do"}}</span>
   </span>
 
-  <div class="history-group__operation {{if oneOperationInDay "history-group__operation-single"}}" role="button" {{action "selectGroup"}}>
+  <div class="history-group__operation {{if this.oneOperationInDay "history-group__operation-single"}}" role="button" {{action "selectGroup"}}>
     <div class="operation__content">
-      {{#if oneOperationInDay}}
-        One change made to {{join-array shownKeys}}
-        {{#if hiddenKeys.length}}
+      {{#if this.oneOperationInDay}}
+        One change made to {{join-array this.shownKeys}}
+        {{#if this.hiddenKeys.length}}
           <strong>
-            and {{hiddenKeys.length}} {{inflect-text "other" hiddenKeys.length}}
+            and {{this.hiddenKeys.length}} {{inflect-text "other" this.hiddenKeys.length}}
             {{ember-tooltip
               side="top"
               popperContainer="body"
-              text=(join-array hiddenKeys)}}
+              text=(join-array this.hiddenKeys)}}
           </strong>
         {{/if}}
-        {{#if group.history.firstObject.creator}}
-          by {{group.history.firstObject.creator.firstName}}
+        {{#if this.group.history.firstObject.creator}}
+          by {{this.group.history.firstObject.creator.firstName}}
         {{/if}}
       {{else}}
-        Changes made to {{join-array shownKeys}}
-        {{#if hiddenKeys.length}}
+        Changes made to {{join-array this.shownKeys}}
+        {{#if this.hiddenKeys.length}}
           <strong>
-            and {{hiddenKeys.length}} {{inflect-text "other" hiddenKeys.length}}
+            and {{this.hiddenKeys.length}} {{inflect-text "other" this.hiddenKeys.length}}
             {{ember-tooltip
               side="top"
               popperContainer="body"
-              text=(join-array hiddenKeys)}}
+              text=(join-array this.hiddenKeys)}}
           </strong>
         {{/if}}
 
-        {{#if group.history.firstObject.creator}}
-          by {{group.history.firstObject.creator.firstName}}
+        {{#if this.group.history.firstObject.creator}}
+          by {{this.group.history.firstObject.creator.firstName}}
         {{/if}}
       {{/if}}
 

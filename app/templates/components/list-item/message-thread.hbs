@@ -1,10 +1,10 @@
-{{#link-to "account.employees.messages.thread" model.id class=linkClass}}
+{{#link-to "account.employees.messages.thread" this.model.id class=this.linkClass}}
   <h4 class="ui header message-thread__thread-title">
-    {{participantsCondensed}}
+    {{this.participantsCondensed}}
     <div class="minimal margin lightly weighted header message-thread__last-message">
-      {{#if lastMsg.content}}
-        {{lastMsg.content}}
-      {{else if lastMsg.file}}
+      {{#if this.lastMsg.content}}
+        {{this.lastMsg.content}}
+      {{else if this.lastMsg.file}}
         <i class="paperclip icon"></i>Attachment
       {{/if}}
     </div>

@@ -1,11 +1,11 @@
-{{#if importResult}}
+{{#if this.importResult}}
   <h2 class="ui center aligned text text-green header">
     <i class="ui check icon"></i> Successfully imported records.
   </h2>
   <div class="center aligned text">
     {{#link-to "account.index"}}Back to Dashboard{{/link-to}}
   </div>
-  {{#each importResult as |importGroup|}}
+  {{#each this.importResult as |importGroup|}}
     {{#if importGroup.records}}
       <h3 class="titlecased text">{{importGroup.name}}</h3>
       <div class="ui divided list">
@@ -20,32 +20,32 @@
     {{/if}}
   {{/each}}
 {{else}}
-  {{#if working}}
+  {{#if this.working}}
     <div class="ui active inverted dimmer">
       <div class="ui indeterminate massive text loader">
-        {{or status.status "Importing Records"}}
+        {{or this.status.status "Importing Records"}}
         <div class="smaller text">This might take some time...</div>
       </div>
     </div>
   {{/if}}
 
-  {{#if (gt totalSelected 0)}}
+  {{#if (gt this.totalSelected 0)}}
     {{#confirm-modal
       class="item"
       confirmContent="Are you sure you want to import these records?"
       as |confirm|
     }}
       <button class="ui massive fluid green button" {{action (pipe confirm (action "import"))}}>
-        <i class="play icon"></i> Import {{totalSelected}} {{inflect-text "Record" totalSelected}}
+        <i class="play icon"></i> Import {{this.totalSelected}} {{inflect-text "Record" this.totalSelected}}
       </button>
       <div class="ui divider"></div>
     {{/confirm-modal}}
   {{/if}}
 
-  {{#each model.deserialized as |recordSet|}}
+  {{#each this.model.deserialized as |recordSet|}}
     {{#tables/import/record-set
       recordSet
-      selectedRows=(get selected recordSet.name)
+      selectedRows=(get this.selected recordSet.name)
       toggleAllSelected=(action "toggleAllSelected")
       onToggle=(action "toggleRowSelection")
       onTransition=(action "transitionTo")

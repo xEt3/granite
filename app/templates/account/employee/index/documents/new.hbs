@@ -2,7 +2,7 @@
   <div class="ui form">
     <hgroup class="clearfix">
       <h1 class="ui header left floated">
-        Assign New Document to {{model.employee.fullName}}
+        Assign New Document to {{this.model.employee.fullName}}
       </h1>
     </hgroup>
     <div class="ui divider"></div>
@@ -10,17 +10,17 @@
     <div class="field">
       {{#input/document-selection-modal
         title="New Document"
-        selected=model.file
+        selected=this.model.file
         assignText="Use Document"
         singleDoc=true
-        onSelected=(action (mut model.file))
+        onSelected=(action (mut this.model.file))
         as |execute|
       }}
         <button class="ui basic button" {{action execute "selectDocuments"}}>
           <i class="folder icon"></i>
           Add document
-          {{#if model.file}}
-            <span class="ui label">{{model.file.title}}</span>
+          {{#if this.model.file}}
+            <span class="ui label">{{this.model.file.title}}</span>
           {{/if}}
         </button>
       {{/input/document-selection-modal}}
@@ -29,8 +29,8 @@
     <div class="field">
       {{#ui-checkbox
         class="small"
-        checked=model.visibleToEmployee
-        onChange=(action (mut model.visibleToEmployee))
+        checked=this.model.visibleToEmployee
+        onChange=(action (mut this.model.visibleToEmployee))
       }}
         <label>
           Visible To Employee
@@ -40,9 +40,9 @@
     <div class="field">
       {{#ui-checkbox
         class="small"
-        disabled=(not model.visibleToEmployee)
-        checked=model.signatureRequired
-        onChange=(action (mut model.signatureRequired))
+        disabled=(not this.model.visibleToEmployee)
+        checked=this.model.signatureRequired
+        onChange=(action (mut this.model.signatureRequired))
       }}
         <label>
           Require Signature
@@ -54,20 +54,20 @@
       {{ui-checkbox
         class="toggle"
         label="Assign for a future Date"
-        checked=isExpanded
+        checked=this.isExpanded
         onChange=(action (toggle "isExpanded" this))}}
     </div>
-    {{#if isExpanded}}
+    {{#if this.isExpanded}}
       {{ui-calendar
         class="field"
         type="date"
         inline=true
-        onChange=(action (mut model.effectiveOn))}}
+        onChange=(action (mut this.model.effectiveOn))}}
     {{/if}}
 
     <div class="ui divider"></div>
     <form {{action "save" on="submit"}}>
-      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=(not model.file)}}Assign Document{{/form/action-button}}
+      {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working disabled=(not this.model.file)}}Assign Document{{/form/action-button}}
     </form>
   </div>
 </div>

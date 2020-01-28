@@ -2,26 +2,26 @@
   <div class="dashboard__statistics ui three stackable statistics">
     {{#link-to "account.recruiting" class="ui inverted statistic"}}
       <div class="value">
-        {{analytics.stats.unreviewedApplications}}
+        {{this.analytics.stats.unreviewedApplications}}
       </div>
       <div class="label">
-        New Job {{inflect-text "Application" analytics.stats.unreviewedApplications}}
+        New Job {{inflect-text "Application" this.analytics.stats.unreviewedApplications}}
       </div>
     {{/link-to}}
     {{#link-to "account.employees.changes" class="ui inverted statistic"}}
       <div class="value">
-        {{analytics.stats.changes}}
+        {{this.analytics.stats.changes}}
       </div>
       <div class="label">
-        Unreviewed {{inflect-text "Change" analytics.stats.changes}}
+        Unreviewed {{inflect-text "Change" this.analytics.stats.changes}}
       </div>
     {{/link-to}}
     {{#link-to "account.action-items" class="ui inverted statistic"}}
       <div class="value">
-        {{analytics.stats.projectsDue}}
+        {{this.analytics.stats.projectsDue}}
       </div>
       <div class="label">
-        {{inflect-text "Project" analytics.stats.projectsDue}} Due
+        {{inflect-text "Project" this.analytics.stats.projectsDue}} Due
       </div>
     {{/link-to}}
   </div>
@@ -34,26 +34,26 @@
             <h2 class="dashboard-actions__label"><i class="play fitted icon"></i> Pick Up Where You Left Off</h2>
             <div class="dashboard-actions__continue ui list">
               {{#each (if
-                analytics.continueActions
+                this.analytics.continueActions
                 (if
-                  expanded
-                  analytics.continueActions
-                  (take 5 analytics.continueActions)
+                  this.expanded
+                  this.analytics.continueActions
+                  (take 5 this.analytics.continueActions)
                 )
               ) as |continue|}}
                 {{list-item/dashboard/continue-action continue}}
               {{/each}}
             </div>
-            {{#if (gt analytics.continueActions.length 5)}}
-              <a href="#" {{action toggleProperty "expanded"}}>
-                Show {{if expanded "less" "more"}}...
+            {{#if (gt this.analytics.continueActions.length 5)}}
+              <a href="#" {{action this.toggleProperty "expanded"}}>
+                Show {{if this.expanded "less" "more"}}...
               </a>
             {{/if}}
           </div>
           <div class="eight wide column">
             <h2 class="dashboard-actions__label"><i class="clipboard fitted icon"></i> Common Actions</h2>
             <div class="dashboard-actions__common ui list">
-              {{#each commonActions as |act|}}
+              {{#each this.commonActions as |act|}}
                 <div class="item">
                   {{#link-to act.link}}{{act.text}}{{/link-to}}
                 </div>
@@ -67,19 +67,19 @@
       <div class="ui raised very padded text segment">
         <h2>Your Todos &amp; Projects</h2>
 
-        {{#if (and (not analytics.todos.length) (not analytics.actionItemActivity))}}
+        {{#if (and (not this.analytics.todos.length) (not this.analytics.actionItemActivity))}}
           <h3 class="center aligned light text">No project insights available.</h3>
         {{/if}}
 
         <div class="ui relaxed list">
-          {{#each analytics.todos as |actionItemTodo|}}
+          {{#each this.analytics.todos as |actionItemTodo|}}
             {{list-item/dashboard/todo-item actionItemTodo}}
           {{/each}}
         </div>
 
         <div class="ui divider"></div>
         <div class="dashboard-todos-sum__project-activity ui relaxed list">
-          {{#each analytics.actionItemActivity as |projectAct|}}
+          {{#each this.analytics.actionItemActivity as |projectAct|}}
             {{list-item/dashboard/project-activity projectAct}}
           {{/each}}
         </div>
@@ -92,11 +92,11 @@
             Recent Activity
           </h2>
           <div class="right floated">
-            {{#ui-dropdown class="fluid multiple selection" selected=tag onChange=(action (mut tag))}}
+            {{#ui-dropdown class="fluid multiple selection" selected=this.tag onChange=(action (mut this.tag))}}
               <i class="dropdown icon"></i>
               <div class="default text">Select Filters</div>
               <div class="menu">
-                {{#each tags as |tag|}}
+                {{#each this.tags as |tag|}}
                   <div class="item segment__activity" data-value={{tag}}>
                     {{tag}}
                   </div>
@@ -106,11 +106,11 @@
           </div>
         </hgroup>
         <div class="ui large feed">
-          {{#each model as |activity|}}
+          {{#each this.model as |activity|}}
             {{list-item/activity-item activity=activity onNotify=(action "onNotify")}}
           {{/each}}
           <div class="ui divider"></div>
-          <button class="fluid ui button" disabled={{disabled}} {{action "loadMoreActivities"}}>Load More...</button>
+          <button class="fluid ui button" disabled={{this.disabled}} {{action "loadMoreActivities"}}>Load More...</button>
         </div>
       </div>
     </div>

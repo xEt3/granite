@@ -17,7 +17,7 @@
           {{#link-to "account.asset.settings" class="item"}}<i class="settings icon"></i>Settings{{/link-to}}
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
-            {{#confirm-modal as deleteContext=model.name as |confirm|}}
+            {{#confirm-modal this.as deleteContext=this.model.name as |confirm|}}
               <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}><i class="trash icon"></i>Delete Record</a>
             {{/confirm-modal}}
           </div>
@@ -30,9 +30,9 @@
     <hgroup class="clearfix">
       <h1 class="ui header">
         <div class="content">
-          <i class="{{model.icon}} icon"></i>{{model.name}}
+          <i class="{{this.model.icon}} icon"></i>{{this.model.name}}
           <div class="sub header">
-            Created {{time-ago model.created}} on {{time model.created}}
+            Created {{time-ago this.model.created}} on {{time this.model.created}}
           </div>
         </div>
       </h1>

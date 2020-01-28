@@ -1,15 +1,15 @@
-<div class={{if highlightRow "highlight-invoice-row"}}>
-  {{#link-to "account.settings.billing.invoice" transaction.id}}
+<div class={{if this.highlightRow "highlight-invoice-row"}}>
+  {{#link-to "account.settings.billing.invoice" this.transaction.id}}
     <div class="ui three column very relaxed grid text-black">
       <div class="column">
-        <span class="payment-date">{{time transaction.createdAt "MMMM Do, YYYY"}}</span>
+        <span class="payment-date">{{time this.transaction.createdAt "MMMM Do, YYYY"}}</span>
       </div>
       <div class="column">
-        <img alt="Payment Method" class="ui mini image payment-image" src={{paymentMethod.image}}>
-        {{paymentMethod.method}}
+        <img alt="Payment Method" class="ui mini image payment-image" src={{this.paymentMethod.image}}>
+        {{this.paymentMethod.method}}
       </div>
       <div class="column">
-        ${{transaction.amount}}
+        ${{this.transaction.amount}}
       </div>
     </div>
   {{/link-to}}

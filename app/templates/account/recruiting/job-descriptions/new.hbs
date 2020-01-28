@@ -1,6 +1,6 @@
 {{stateful-intro-js
-  user=auth.user
-  steps=intros
+  user=this.auth.user
+  steps=this.intros
   start-if=true
   hintKey="job-description-new"}}
 
@@ -13,13 +13,13 @@
   <div class="ui divider"></div>
 
   {{#quick-form
-    form
-    model
+    this.form
+    this.model
     this
-    working=working
+    working=this.working
     submitClass="huge fluid green"
-    onsubmit=(action "save" model)
-    disabled=(or (not model.category) (not model.title))
+    onsubmit=(action "save" this.model)
+    disabled=(or (not this.model.category) (not this.model.title))
   }}
     Save Job
   {{/quick-form}}

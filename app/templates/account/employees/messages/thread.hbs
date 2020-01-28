@@ -1,7 +1,7 @@
 {{messaging/message-thread
-  model.messages
-  model.thread
-  retrievalMax=retrievalMax
+  this.model.messages
+  this.model.thread
+  retrievalMax=this.retrievalMax
   onMessage=(action "sendMessage")
   onScrollback=(action "scrollback")
 }}

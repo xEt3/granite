@@ -1,4 +1,4 @@
-{{#if model.externalLinkService}}
+{{#if this.model.externalLinkService}}
   <div class="field">
     <label for="automatic-change-sync">
       Automatic Change Syncing<br />
@@ -11,8 +11,8 @@
     {{ui-checkbox
       class="toggle"
       label="On"
-      checked=model.externalLinkAutomaticSync
-      onChange=(action (mut model.externalLinkAutomaticSync))}}
+      checked=this.model.externalLinkAutomaticSync
+      onChange=(action (mut this.model.externalLinkAutomaticSync))}}
   </div>
 {{else}}
   <h3 class="ui center aligned text">No Settings Available.</h3>

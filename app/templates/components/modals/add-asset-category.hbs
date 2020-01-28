@@ -1,8 +1,8 @@
 {{#if hasBlock}}
-  {{yield startAddingAsset}}
+  {{yield this.startAddingAsset}}
 {{/if}}
 
-{{#ui-modal name="addAsset" id=modalId}}
+{{#ui-modal name="addAsset" id=this.modalId}}
   <div class="header">
     Add Asset Category
   </div>
@@ -12,11 +12,11 @@
       <div class="field">
         <label for="asset-name">Asset Name</label>
         <div class="ui left select-addon input pay-rate-number">
-          {{#ui-dropdown class="inline scrolling" selected=newAsset.icon onChange=(action (mut newAsset.icon))}}
+          {{#ui-dropdown class="inline scrolling" selected=this.newAsset.icon onChange=(action (mut this.newAsset.icon))}}
             <div class="default text">Icon</div>
             <i class="dropdown icon"></i>
             <div class="menu">
-              {{#each icons as |icon|}}
+              {{#each this.icons as |icon|}}
                 <div class="item" data-value={{icon}}>
                   <i class="{{icon}} icon"></i>
                 </div>
@@ -24,19 +24,19 @@
             </div>
           {{/ui-dropdown}}
 
-          {{input type="text" value=newAsset.name id="asset-name" placeholder="Keycards"}}
+          {{input type="text" value=this.newAsset.name id="asset-name" placeholder="Keycards"}}
         </div>
       </div>
       <div class="field">
         <label for="asset-description">Description</label>
-        {{input type="text" value=newAsset.description id="asset-description" placeholder="All the keycards for our employees"}}
+        {{input type="text" value=this.newAsset.description id="asset-description" placeholder="All the keycards for our employees"}}
       </div>
       <div class="field center aligned text">
         {{ui-checkbox
           class="toggle"
-          label=sharableLabel
-          checked=newAsset.sharable
-          onChange=(action (mut newAsset.sharable))}}
+          label=this.sharableLabel
+          checked=this.newAsset.sharable
+          onChange=(action (mut this.newAsset.sharable))}}
       </div>
     </form>
   </div>

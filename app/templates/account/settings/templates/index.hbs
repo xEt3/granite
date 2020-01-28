@@ -1,6 +1,6 @@
 <p>
   Templates allow you to customize the behavior and content of Granite.
-  {{#unless model}}
+  {{#unless this.model}}
     {{#link-to "account.settings.templates.add"}}Add a new template to get started.{{/link-to}}
   {{/unless}}
 </p>
@@ -8,7 +8,7 @@
 <div class="ui divider"></div>
 
 {{#each-in
-  (group-by "category" model.definitionsGrouped)
+  (group-by "category" this.model.definitionsGrouped)
   as |category groups|
 }}
   <h2>{{category}}</h2>

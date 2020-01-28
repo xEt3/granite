@@ -1,6 +1,6 @@
 <div class="right aligned text">
   {{#input/equipment-picker
-    assignableAssets=assignableAssets
+    assignableAssets=this.assignableAssets
     onSelect=(action "selectAsset")
     onCreate=(action "createAsset")
     newAssetCategory=(action "newAssetCategory")}}
@@ -8,17 +8,17 @@
   {{/input/equipment-picker}}
 </div>
 
-{{#if model}}
+{{#if this.model}}
   <div class="ui basic segment">
     <div class="ui cards">
-      {{#each model as |asset|}}
+      {{#each this.model as |asset|}}
         {{list-item/assigned-asset-item
           asset=asset
-          employee=employee
+          employee=this.employee
           onUnassign=(action "unassignAsset")}}
       {{/each}}
     </div>
-    {{#if working}}
+    {{#if this.working}}
       <div class="ui active dimmer">
         <div class="ui loader"></div>
       </div>
@@ -33,19 +33,19 @@
 {{#ui-modal name="new-asset" class="new-asset" detachable=true onApprove=(action "saveAsset") onDeny=(action "abortAsset")}}
   <i class="cancel close icon"></i>
   <div class="header">
-    Creating a new item in "{{pendingAssetItem.asset.name}}" for {{employee.firstName}}
+    Creating a new item in "{{this.pendingAssetItem.asset.name}}" for {{this.employee.firstName}}
   </div>
   <div class="content">
     <form class="ui form container">
       <div class="field">
         <label for="asset-identifier">Asset Identifier</label>
-        {{input type="text" value=pendingAssetItem.identifier id="asset-identifier" placeholder="Unique identifier (VIN, Stock #, RFID)"}}
+        {{input type="text" value=this.pendingAssetItem.identifier id="asset-identifier" placeholder="Unique identifier (VIN, Stock #, RFID)"}}
       </div>
 
-      {{#if pendingAssetItem.asset.attributes}}
+      {{#if this.pendingAssetItem.asset.attributes}}
         <div class="ui divider"></div>
-        {{#each pendingAssetItem.asset.attributes as |attribute|}}
-          {{input/custom-field object=pendingAssetItem.customFields attribute=attribute}}
+        {{#each this.pendingAssetItem.asset.attributes as |attribute|}}
+          {{input/custom-field object=this.pendingAssetItem.customFields attribute=attribute}}
         {{/each}}
       {{/if}}
     </form>
@@ -63,20 +63,20 @@
 
 {{#ui-modal name="asset-documents" class="asset-documents"}}
   <div class="header">
-    Assign Documents related to {{newAssetItem.identifier}}?
+    Assign Documents related to {{this.newAssetItem.identifier}}?
   </div>
   <div class="content">
     <form class="ui form">
-      {{#if suggestedDocs}}
+      {{#if this.suggestedDocs}}
         <h3 class="ui header">
           Suggested Documents
           <div class="small light text">
-            Here are some documents that {{employee.firstName}} might need.
+            Here are some documents that {{this.employee.firstName}} might need.
           </div>
         </h3>
 
         <div class="ui divided list">
-          {{#each suggestedDocs as |doc|}}
+          {{#each this.suggestedDocs as |doc|}}
             {{list-item/document-suggestion
               doc
               class="item"
@@ -88,7 +88,7 @@
         Assignments
       </h3>
       <div class="ui divided list">
-        {{#each fileAssignments as |assignment|}}
+        {{#each this.fileAssignments as |assignment|}}
           {{list-item/document-assignment
             assignment
             class="item"
@@ -104,7 +104,7 @@
     <button class="ui red button" {{action "cancelAssignments"}}>
       Cancel
     </button>
-    <button class="ui primary right labeled icon {{if working "loading"}} button" {{action "saveAssignments"}}>
+    <button class="ui primary right labeled icon {{if this.working "loading"}} button" {{action "saveAssignments"}}>
       Assign <i class="add user icon"></i>
     </button>
   </div>

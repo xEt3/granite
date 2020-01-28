@@ -1,5 +1,5 @@
 <div class="ui tall stacked opaque very padded container segment">
-  <form class="ui form" {{action "submit" nonce on="submit"}}>
+  <form class="ui form" {{action "submit" this.nonce on="submit"}}>
     <h1 class="ui header centered"><i class="lock icon"></i>Payment Information</h1>
 
     <div class="ui divider"></div>
@@ -9,24 +9,24 @@
          flow="vault"
         )
       )
-      authorization=braintreeToken.token
-      onNonce=(action (mut nonce))}}
+      authorization=this.braintreeToken.token
+      onNonce=(action (mut this.nonce))}}
 
     <div>
-      {{#unless showPromo}}
-        <a href="#" class="link__promo-toggle" {{action toggleProperty "showPromo"}}>Have a promo code?</a>
+      {{#unless this.showPromo}}
+        <a href="#" class="link__promo-toggle" {{action this.toggleProperty "showPromo"}}>Have a promo code?</a>
       {{/unless}}
       <p class="right aligned very small text"><i class="lock icon"></i>Powered by Braintree Payments</p>
     </div>
 
-    {{#if showPromo}}
+    {{#if this.showPromo}}
       <div class="animated fadeInUp container__promo-code">
         <div class="ui divider"></div>
         <h3>Promo Code</h3>
-        {{#if appliedPromo}}
+        {{#if this.appliedPromo}}
           <p class="text-green promo-code__applied">
             <i class="check icon"></i>
-            <strong>Account promo code applied, "{{appliedPromo.code}}" for {{appliedPromo.amount}} off.</strong>
+            <strong>Account promo code applied, "{{this.appliedPromo.code}}" for {{this.appliedPromo.amount}} off.</strong>
           </p>
         {{/if}}
         <div class="ui stackable grid">
@@ -37,10 +37,10 @@
               inputClass="ui large input promo-code__input"
               srOnly=true
               placeholder="Enter a promo code"
-              value=promoCode}}
+              value=this.promoCode}}
           </div>
           <div class="three wide column field">
-            <button type="button" class="ui large fluid blue button promo-code__apply" disabled={{not promoCode}} {{action "verifyDiscount"}}>Apply</button>
+            <button type="button" class="ui large fluid blue button promo-code__apply" disabled={{not this.promoCode}} {{action "verifyDiscount"}}>Apply</button>
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@
     <h4 class="ui horizontal divider header">Note</h4>
     <p class="center aligned text">We won't charge your card until after the trial and have added active employees. You may also cancel at any time. Adding your payment information and completing your account setup creates a monthly subscription that adjusts based on active employees. {{#link-to "pricing"}}Learn more about our pricing.{{/link-to}}</p>
 
-    {{#form/action-button type="submit" disabled=(or savingStep (not nonce)) class="ui massive fluid green button" loading=savingStep}}
+    {{#form/action-button type="submit" disabled=(or this.savingStep (not this.nonce)) class="ui massive fluid green button" loading=this.savingStep}}
       Start 14-day trial and setup Granite
     {{/form/action-button}}
   </form>

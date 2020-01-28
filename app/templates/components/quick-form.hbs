@@ -1,30 +1,30 @@
-{{#each form as |field|}}
-  {{#if (not (and field.displayIf (not (get model field.displayIf))))}}
+{{#each this.form as |field|}}
+  {{#if (not (and field.displayIf (not (get this.model field.displayIf))))}}
     {{#if field.embeddedInput}}
       {{#input/quick-form-input
         field
-        model
-        controller
+        this.model
+        this.controller
         class=field.class
       }}
         {{input/quick-form-input
           field.embeddedInput
-          model
-          controller
+          this.model
+          this.controller
           tagName=null
           class=field.class}}
       {{/input/quick-form-input}}
     {{else}}
       {{input/quick-form-input
         field
-        model
-        controller
+        this.model
+        this.controller
         class=field.class}}
     {{/if}}
   {{/if}}
 {{/each}}
 
-{{#if onsubmit}}
+{{#if this.onsubmit}}
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class=_submitClass disabled=disabled loading=working}}{{yield}}{{/form/action-button}}
+  {{#form/action-button type="submit" class=this._submitClass disabled=this.disabled loading=this.working}}{{yield}}{{/form/action-button}}
 {{/if}}

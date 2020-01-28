@@ -1,5 +1,5 @@
 {{#if hasBlock}}
-  {{yield priority priorityText priorityColor}}
+  {{yield this.priority this.priorityText this.priorityColor}}
 {{else}}
-  {{priorityText}} ({{priority}})
+  {{this.priorityText}} ({{this.priority}})
 {{/if}}

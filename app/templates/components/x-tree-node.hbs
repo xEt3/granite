@@ -1,6 +1,6 @@
 <span role="button" class="toggle-icon" {{action "toggleExpand" bubbles=false}}>
-  {{#if model.children.length}}
-    {{#if model.isExpanded}}
+  {{#if this.model.children.length}}
+    {{#if this.model.isExpanded}}
       &#x25BC;
     {{else}}
       &#x25B6;
@@ -9,26 +9,26 @@
     &nbsp;&nbsp;
   {{/if}}
 </span>
-{{#if checkable}}
-  <div preventsDefault={{false}} class="ui checkbox {{if model.isIndeterminate "indeterminate" (if model.isChecked "checked")}}">
+{{#if this.checkable}}
+  <div preventsDefault={{false}} class="ui checkbox {{if this.model.isIndeterminate "indeterminate" (if this.model.isChecked "checked")}}">
     {{input
       type="checkbox"
-      checked=model.isChecked
+      checked=this.model.isChecked
       change=(pipe-action
-        (action toggleProperty "model.isChecked")
+        (action this.toggleProperty "model.isChecked")
         (action "toggleCheck")
       )
-      indeterminate=model.isIndeterminate}}
+      indeterminate=this.model.isIndeterminate}}
     <label class="node">
-      {{capitalize model.name}}
+      {{capitalize this.model.name}}
     </label>
   </div>
 {{/if}}
 
 <span role="button" onclick={{action "toggleCheck"}}>
   {{#if hasBlock}}
-    {{yield model}}
+    {{yield this.model}}
   {{else}}
-    {{model.name}}
+    {{this.model.name}}
   {{/if}}
 </span>

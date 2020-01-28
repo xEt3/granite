@@ -5,8 +5,8 @@
     {{/link-to}}
     {{#link-to "account.employees.changes" class="item"}}
       <i class="history icon"></i>Changes
-      {{#if model.changeQueue}}
-        <div class="ui left pointing orange tiny label">{{model.changeQueue}}</div>
+      {{#if this.model.changeQueue}}
+        <div class="ui left pointing orange tiny label">{{this.model.changeQueue}}</div>
       {{/if}}
     {{/link-to}}
     {{#link-to "account.employees.messages" class="item"}}

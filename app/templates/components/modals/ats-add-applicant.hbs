@@ -1,8 +1,8 @@
 {{#if hasBlock}}
-  {{yield startApplication}}
+  {{yield this.startApplication}}
 {{/if}}
 
-{{#ui-modal name="application" id=modalId}}
+{{#ui-modal name="application" id=this.modalId}}
   <div class="header">
     Add Application
   </div>
@@ -12,38 +12,38 @@
         <div class="five wide field">
           <label for="first-name">First Name*</label>
           {{#auto-focus}}
-            {{validated-input type="text" model=newApplicant valuePath="firstName" placeholder="First Name" id="first-name"}}
+            {{validated-input type="text" model=this.newApplicant valuePath="firstName" placeholder="First Name" id="first-name"}}
           {{/auto-focus}}
         </div>
         <div class="three wide field">
           <label for="middle-name">Middle Name</label>
-          {{input type="text" value=newApplicant.middleName placeholder="Middle" id="middle-name"}}
+          {{input type="text" value=this.newApplicant.middleName placeholder="Middle" id="middle-name"}}
         </div>
         <div class="five wide field">
           <label for="last-name">Last Name*</label>
-          {{validated-input type="text" model=newApplicant valuePath="lastName" placeholder="Last Name" id="last-name"}}
+          {{validated-input type="text" model=this.newApplicant valuePath="lastName" placeholder="Last Name" id="last-name"}}
         </div>
       </div>
       <div class="two fields">
         <div class="field">
           <label for="employee-phone">Phone Number*</label>
-          {{masked-input type="tel" placeholder="Employee Phone #" id="employee-phone" mask="(111) 111-1111" value=newApplicant.phone on-change=(action (mut newApplicant.phone) value="target.value")}}
+          {{masked-input type="tel" placeholder="Employee Phone #" id="employee-phone" mask="(111) 111-1111" value=this.newApplicant.phone on-change=(action (mut this.newApplicant.phone) value="target.value")}}
         </div>
         <div class="field">
           <label for="email">Email*</label>
-          {{validated-input type="email" model=newApplicant valuePath="email" placeholder="Email" id="email"}}
+          {{validated-input type="email" model=this.newApplicant valuePath="email" placeholder="Email" id="email"}}
         </div>
       </div>
       <div class="field">
         <label for="stage-selector">Application Stage</label>
-        {{#ui-dropdown class="selection" id="stage-selector" selected=newApplication.stage onChange=(action (mut newApplication.stage)) as |execute mapper|}}
+        {{#ui-dropdown class="selection" id="stage-selector" selected=this.newApplication.stage onChange=(action (mut this.newApplication.stage)) as |execute mapper|}}
           <i class="dropdown icon"></i>
           <div class="default text">No stage</div>
           <div class="menu">
             <div class="item" data-value={{map-value mapper null}}>
               No stage
             </div>
-            {{#each model.pipeline.stages as |stage|}}
+            {{#each this.model.pipeline.stages as |stage|}}
               <div class="item" data-value={{map-value mapper stage.id}}>
                 {{stage.name}}
               </div>
@@ -54,12 +54,12 @@
 
       <div class="field">
         <label for="cover-letter">Cover Letter</label>
-        {{textarea rows="5" placeholder="Cover Letter" value=newApplication.coverLetter}}
+        {{textarea rows="5" placeholder="Cover Letter" value=this.newApplication.coverLetter}}
       </div>
 
       <div class="field">
         <label>
-          {{#if fileIsAdded}}
+          {{#if this.fileIsAdded}}
             <div class="ui large header text-green clearfix">
               <span><i class="check icon"></i>Resume/CV Added.</span>
               <a href="#" class="text-red right floated" {{action "removeFile"}}>Remove</a>
@@ -71,14 +71,14 @@
         </label>
         {{drop-zone
           class="input__dropzone"
-          url=resumeEndpoint
+          url=this.resumeEndpoint
           uploadMultiple=false
           acceptedFiles=".doc,.docx,.pdf,.rtf,.txt"
           maxFiles=1
           autoProcessQueue=false
           dictDefaultMessage="Drop or Click to Add Resume"
           thumbnailWidth="175"
-          headers=(hash X-API-Token=auth.token)
+          headers=(hash X-API-Token=this.auth.token)
           addedfile=(action "addedFile")
           error=(action "uploadError")
           uploadprogress=(action "uploadProgressUpdate")
@@ -91,7 +91,7 @@
     <button class="ui inverted red button" {{action "cancel"}}>
       Cancel
     </button>
-    <button class="ui green right labeled icon {{if working "loading"}} button" {{action "save"}}>
+    <button class="ui green right labeled icon {{if this.working "loading"}} button" {{action "save"}}>
       Add Application
       <i class="check icon"></i>
     </button>

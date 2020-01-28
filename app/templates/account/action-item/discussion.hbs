@@ -2,7 +2,7 @@
   <div class="ui comments">
     <form class="ui reply form" {{action "comment" on="submit"}}>
       <div class="field">
-        {{input/comment-box value=commentText}}
+        {{input/comment-box value=this.commentText}}
       </div>
       <div class="field right aligned text">
         <button type="submit" class="ui blue right labeled submit icon button">
@@ -13,7 +13,7 @@
     </form>
 
     <h3 class="ui dividing header">Comments</h3>
-    {{#each model as |comment|}}
+    {{#each this.model as |comment|}}
       {{list-item/discussion-comment-item comment}}
     {{else}}
       <h3 class="center aligned text header">No comments available.</h3>

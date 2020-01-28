@@ -1,13 +1,13 @@
 <a class="avatar">
-  {{display/employee-picture url=comment.commenter.picture employeeId=comment.commenter.id}}
+  {{display/employee-picture url=this.comment.commenter.picture employeeId=this.comment.commenter.id}}
 </a>
 <div class="content">
-  {{#link-to "account.employee" comment.commenter.id class="author"}}{{comment.commenter.fullName}}{{/link-to}}
+  {{#link-to "account.employee" this.comment.commenter.id class="author"}}{{this.comment.commenter.fullName}}{{/link-to}}
   <div class="metadata">
-    <span class="date">{{time-ago comment.created}} on {{time comment.created "M/D/YY [at] h:mma"}}</span>
+    <span class="date">{{time-ago this.comment.created}} on {{time this.comment.created "M/D/YY [at] h:mma"}}</span>
   </div>
 
-  <div class="text">{{comment.text}}</div>
+  <div class="text">{{this.comment.text}}</div>
 
   <div class="actions">
     <a href="#" class="text-red" {{action "delete"}}>Remove</a>

@@ -31,11 +31,11 @@ module.exports = function (defaults) {
     'ember-cli-babel': { includePolyfill: true },
 
     SemanticUI: {
+      import: { fonts: false },
       source: {
         css:        'node_modules/semantic-ui-less',
         javascript: 'node_modules/semantic-ui-css',
-        images:     'node_modules/semantic-ui-less/themes/default/assets/images',
-        fonts:      'node_modules/semantic-ui-less/themes/default/assets/fonts'
+        images:     'node_modules/semantic-ui-less/themes/default/assets/images'
       }
     },
 

@@ -84,8 +84,7 @@ export default Controller.extend(addEdit, {
         detachable: true,
         onHidden:   () => {
           if (!this.get('respondedAssignment')) {
-            this.send('respondedAssignment', false);
-
+            this.send('respondAssignment', false);
           }
         }
       }).modal('show');

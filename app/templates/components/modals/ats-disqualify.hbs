@@ -1,4 +1,4 @@
-{{#ui-modal id=modalId}}
+{{#ui-modal id=this.modalId}}
   <div class="header">
     Disqualify Candidate
   </div>
@@ -6,14 +6,14 @@
     <form class="ui form">
       <div class="field">
         <label for="dq-reason">Reason for disqualification</label>
-        {{#ui-dropdown class="selection" id="dq-reason" selected=model.disqualificationReason onChange=(action (mut model.disqualificationReason)) as |execute mapper|}}
+        {{#ui-dropdown class="selection" id="dq-reason" selected=this.model.disqualificationReason onChange=(action (mut this.model.disqualificationReason)) as |execute mapper|}}
           <i class="dropdown icon"></i>
           <div class="default text">Reason for disqualification</div>
           <div class="menu">
             <div class="item" data-value={{map-value mapper null}}>
               Do not specify
             </div>
-            {{#each disqualificationReasons as |reason|}}
+            {{#each this.disqualificationReasons as |reason|}}
               <div class="item" data-value={{map-value mapper reason}}>
                 {{reason}}
               </div>
@@ -27,11 +27,11 @@
     </form>
   </div>
   <div class="actions">
-    {{#ui-checkbox checked=model.disqualificationEmail onChange=(action (mut model.disqualificationEmail))}}
+    {{#ui-checkbox checked=this.model.disqualificationEmail onChange=(action (mut this.model.disqualificationEmail))}}
       <label>
         Send Rejection Notification
-        {{#if model}}
-          to {{model.person.firstName}} (<a href="mailto:{{model.person.email}}" class="ats-confirm-disqualify__email-link">{{model.person.email}}</a>)
+        {{#if this.model}}
+          to {{this.model.person.firstName}} (<a href="mailto:{{this.model.person.email}}" class="ats-confirm-disqualify__email-link">{{this.model.person.email}}</a>)
         {{/if}}?
       </label>
     {{/ui-checkbox}}

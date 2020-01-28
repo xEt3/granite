@@ -1,13 +1,13 @@
-<h4>Editing Template for {{definition.title}}</h4>
+<h4>Editing Template for {{this.definition.title}}</h4>
 <div class="ui divider"></div>
 
 <form class="ui form" {{action "save" on="submit"}}>
-  {{#if definition.isRenderable}}
+  {{#if this.definition.isRenderable}}
     <p>
       Templates support the "Mustache" language. See <a href="http://mustache.github.io/mustache.5.html" rel="noopener" target="_blank">the mustache manual</a> for more information.
     </p>
   {{/if}}
-  {{#each definition.contentKeys as |contentKey|}}
+  {{#each this.definition.contentKeys as |contentKey|}}
     <div class="ui field">
       <label>
         {{contentKey.title}}
@@ -18,7 +18,7 @@
         <i class="info circle icon"></i>
       </label>
       {{textarea
-        value=(mut (get model.content contentKey.key))
+        value=(mut (get this.model.content contentKey.key))
         rows="4"
         spellcheck="true"}}
     </div>
@@ -27,14 +27,14 @@
   <div class="ui divider"></div>
   {{#form/action-button
     type="submit"
-    loading=working
+    loading=this.working
     class="ui large green fluid button"
   }}
     Save Template
   {{/form/action-button}}
 
   <h5>Available form data</h5>
-  {{#each definition.availableData as |data|}}
+  {{#each this.definition.availableData as |data|}}
     <div class="ui light text">
       <div><strong>{{data.title}}</strong></div>
       <div>{{data.description}}</div>
