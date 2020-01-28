@@ -24,10 +24,6 @@ export default class StickyCartComponent extends Component {
     }, 0);
   }
 
-  submitCart () {
-    console.log('dunno...');
-  }
-
   @action
   toggleCartExpansion () {
     this.cartExpanded = !this.cartExpanded;

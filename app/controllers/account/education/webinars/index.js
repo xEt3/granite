@@ -5,7 +5,20 @@ import { inject as service } from '@ember/service';
 
 export default class WebinarsIndexController extends Controller {
   @service data
+  @service transactions
+
   itemsInCart = A()
+
+  get purchasedWebinars () {
+    return this.authorizations.map(auth => ({
+      auth,
+      webinar: this.webinars.findBy('id', auth.belongsTo('webinar').id())
+    }));
+  }
+
+  get webinarsAvailableForPurchase () {
+    return this.webinars.filter(webinar => !this.purchasedWebinars.includes(webinar));
+  }
 
   @action
   addToCart (webinar, e) {
@@ -17,5 +30,17 @@ export default class WebinarsIndexController extends Controller {
   removeFromCart (webinar, e) {
     e.preventDefault();
     this.itemsInCart.removeObject(webinar);
+  }
+
+  @action
+  checkout () {
+    // Create the transaction intent
+    const idempotencyKey = this.transactions.createIntent({
+      type:       'webinarPurchase',
+      webinarIds: this.itemsInCart.mapBy('id')
+    });
+
+    // Transition to process
+    this.transitionToRoute('account.education.webinars.purchase', { queryParams: { idempotencyKey } });
   }
 }

@@ -52,23 +52,23 @@ module('Acceptance | education/webinars', function (hooks) {
     }
   });
 
-  skip('allows a purchase of one or more webinars', async function (assert) {
+  test('allows a purchase of one or more webinars', async function (assert) {
     await authenticate.call(this, server);
     const webinars = await server.createList('webinar', 10);
 
     await visit('/account/education/webinars');
+    assert.equal(currentURL(), '/account/education/webinars');
 
     // Click the first webinar
     await click('a.webinar-card__purchase');
-    assert.dom('a.webinar-card__purchase i.check').exists();
     assert.dom('.webinars-cart').exists();
-    assert.dom('.webinars-cart .webinars-cart__item-count').includesText('1');
-    assert.dom('.webinars-cart .webinars-cart__total').includesText(`$${webinars[0].price}`);
-    // Click checkout
-    await click('.webinars-cart .webinars-cart__checkout');
-
+    assert.dom('.sticky-cart__purchase').exists();
+    assert.dom('.webinars-cart .sticky-cart__item-count').includesText('1');
+    assert.dom('.webinars-cart .sticky-cart-expanded-view__total').includesText(`$${webinars[0].price}`);
+    // // Click checkout
+    await click('.webinars-cart .sticky-cart__purchase');
     assert.dom('.confirm-modal').exists();
-    // Click confirm
+    // // Click confirm
     await click('.confirm-modal .actions > .green.button');
 
     assert.equal(currentURL(), '/account/education/webinars/purchase');

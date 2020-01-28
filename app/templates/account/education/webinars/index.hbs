@@ -1,25 +1,41 @@
-<div  class="ui raised padded segment container clearfix page__webinars">
+<div class="ui raised padded segment container page__webinars">
   <div class="ui basic segment">
-    <h2 class="ui header"> Webinars </h2>
-  </div>
-  <div class="ui divider"></div>
-    <Educate::StickyCart
-      @class="webinars-cart"
-      @items={{this.itemsInCart}}
-      @removeFromCart={{this.removeFromCart}}/>
-
-  <div class="ui three stackable cards webinars-list">
-    {{#each this.webinars as |webinar|}}
-      <ListItem::Educate::WebinarItem
-        @webinar={{webinar}}
-        @authorization={{find-by 'webinar' webinar this.authorizations}}
-        @addToCart={{this.addToCart}}
+    <h2 class="ui header">Webinars</h2>
+    <p>Our webinar library is sourced from Associated Employers' team of HR experts. Once you purchase a webinar, you have the ability to watch it or assign it to an employee to watch within the access period. Any webinar purchase will be immediately billed to the payment method associated with your Granite HR subscription.</p>
+    <div class="ui divider"></div>
+    <ConfirmModal
+      @confirmContent="Are you sure you want to complete this purchase? The full amount will be charged to your card on file."
+      as |confirm|
+    >
+      <Educate::StickyCart
+        @class="webinars-cart"
+        @items={{this.itemsInCart}}
         @removeFromCart={{this.removeFromCart}}
-        @itemsInCart={{this.itemsInCart}}/>
-    {{else}}
-      <h2 class="ui centered text">
-        No webinars available.
-      </h2>
-    {{/each}}
+        @onSubmit={{pipe confirm this.checkout}} />
+    </ConfirmModal>
+
+    {{#if this.purchasedWebinars.length}}
+      <h2>Purchased webinars</h2>
+      {{#each this.purchasedWebinars as |webinarGroup|}}
+        <ListItem::Educate::WebinarItem
+          @webinar={{webinarGroup.webinar}}
+          @authorization={{webinarGroup.auth}} />
+      {{/each}}
+      <h2>Available for purchase</h2>
+    {{/if}}
+
+    <div class="ui three stackable cards webinars-list">
+      {{#each this.webinarsAvailableForPurchase as |webinar|}}
+        <ListItem::Educate::WebinarItem
+          @webinar={{webinar}}
+          @addToCart={{this.addToCart}}
+          @removeFromCart={{this.removeFromCart}}
+          @itemsInCart={{this.itemsInCart}} />
+      {{else}}
+        <h2 class="ui centered text">
+          No webinars available.
+        </h2>
+      {{/each}}
+    </div>
   </div>
 </div>

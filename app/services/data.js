@@ -1,7 +1,11 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import { get } from '@ember/object';
 import { map } from 'rsvp';
 import { A } from '@ember/array';
+import { notifyDefaults } from 'granite/config';
+import ENV from 'granite/config/environment';
+
+const IS_TEST = ENV.environment === 'test';
 
 function searchError (errors) {
   const detailKeys = A([ 'detail', 'message', 'title', 'status' ]),
@@ -23,12 +27,26 @@ function findFieldErrors (errors = []) {
 }
 
 export default class DataService extends Service {
+  @service('notification-messages') notifications
   statuses = {}
   __longRunningProps = {}
   enableNotify = true
   transitionWithModel = true
   successMessageTimeout = 3
   slowRunningThreshold = 500
+
+  notify (type) {
+    const notifications = this.get('notifications'),
+          args = Array.prototype.slice.call(arguments, 1);
+
+    args[1] = Object.assign({}, notifyDefaults, args[1]);
+
+    if (IS_TEST) {
+      args[1].clearDuration = 1;
+    }
+
+    notifications[type].apply(notifications, args);
+  }
 
   getModelValidations (model) {
     const validations = get(model, 'validations.messages');
@@ -161,7 +179,7 @@ export default class DataService extends Service {
     });
 
     if (notify) {
-      this.send('notify', 'error', 'Whoops! ' + errMsg);
+      this.notify('error', 'Whoops! ' + errMsg);
     }
   }
 
@@ -191,7 +209,7 @@ export default class DataService extends Service {
     }
 
     if (!silent && notify) {
-      this.send('notify', 'success', success || 'Successfully saved.');
+      this.notify('success', success || 'Successfully saved.');
     }
   }
 

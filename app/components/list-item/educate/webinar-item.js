@@ -1,6 +1,3 @@
-// import {
-//   computed
-// } from '@ember/object';
 import Component from '@glimmer/component';
 import moment from 'moment';
 
