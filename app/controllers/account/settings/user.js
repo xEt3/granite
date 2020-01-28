@@ -9,11 +9,15 @@ export default Controller.extend(modalSupport, ajaxStatus, {
 
   actions: {
     async change () {
-      let { passwords } = this;
+      let {
+        newPassword,
+        confirmPassword,
+        currentPassword
+      } = this.passwords;
 
       this.ajaxStart();
 
-      if (passwords.newPassword !== passwords.confirmPassword) {
+      if (newPassword !== confirmPassword) {
         this.ajaxError('Passwords do not match.');
         return;
       }
@@ -21,8 +25,8 @@ export default Controller.extend(modalSupport, ajaxStatus, {
       try {
         await this.get('ajax').post('/api/v1/company-user/change-password', {
           data: {
-            passwords,
-            userId: this.get('auth.userId')
+            newPassword,
+            currentPassword
           }
         });
         this.set('passwords', {});
