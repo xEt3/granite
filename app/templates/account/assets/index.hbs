@@ -10,7 +10,7 @@
   <div class="ui divider"></div>
 
   <div class="ui divided link items">
-    {{#each model as |asset|}}
+    {{#each this.model as |asset|}}
       {{#link-to "account.asset" asset class="item"}}
         {{list-item/asset-item asset=asset}}
       {{/link-to}}
@@ -19,5 +19,5 @@
     {{/each}}
   </div>
 
-  {{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}
+  {{elements/x-pagination page=(readonly this.page) pages=(readonly this.pages) onchange=(action (mut this.page))}}
 </div>

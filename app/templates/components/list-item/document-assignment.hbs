@@ -1,13 +1,13 @@
-<strong>{{model.file.title}} ({{model.file.extension}})</strong>
+<strong>{{this.model.file.title}} ({{this.model.file.extension}})</strong>
 
 <div class="ui mini form right floated">
-  {{#if isPendingState}}
+  {{#if this.isPendingState}}
     <div class="ui mini active inline loader"></div> Saving...
   {{else}}
     <div class="small field">
       {{#ui-checkbox
         class="small"
-        checked=model.visibleToEmployee
+        checked=this.model.visibleToEmployee
         onChange=(action
           (pipe
             (action (mut model.visibleToEmployee))
@@ -21,7 +21,6 @@
         </label>
       {{/ui-checkbox}}
     </div>
-
     {{#if model.visibleToEmployee}}
       <div class="small field">
         {{#ui-checkbox
@@ -33,6 +32,7 @@
               (action (mut model.signatureRequired))
               (if onChange (action onChange model))
             )
+
           )
         }}
           <label>
@@ -58,7 +58,6 @@
     {{/if}}
   {{/if}}
 </div>
-
 <div class="small text">
-  <a href="#" class="text-danger" {{action onRemove model}}><i class="minus icon"></i>Remove Assignment</a>
+  <a href="#" class="text-danger" {{action this.onRemove this.model}}><i class="minus icon"></i>Remove Assignment</a>
 </div>

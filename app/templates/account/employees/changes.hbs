@@ -4,15 +4,15 @@
       Changes
     </h1>
     <h2 class="ui right floated header">
-      {{model.length}} in queue
+      {{this.model.length}} in queue
     </h2>
   </hgroup>
 
   <div class="ui divider"></div>
 
-  {{#if model}}
+  {{#if this.model}}
     {{#display/resource-list
-      model
+      this.model
       "list-item/change-item"
       class="ui divided items" as |context|
     }}

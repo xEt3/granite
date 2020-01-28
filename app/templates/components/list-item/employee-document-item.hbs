@@ -1,24 +1,24 @@
-{{#if imagePreview}}
+{{#if this.imagePreview}}
   <div class="ui tiny rounded image">
-    <img src={{file.url}} alt="">
+    <img src={{this.file.url}} alt="">
   </div>
 {{else}}
-  {{display/icon-for-file file class="huge"}}
+  {{display/icon-for-file this.file class="huge"}}
 {{/if}}
 <div class="clearing content">
   <div class="header">
-    {{#if assignment.cannedType}}
-      {{assignment.cannedType}} form
+    {{#if this.assignment.cannedType}}
+      {{this.assignment.cannedType}} form
     {{else}}
-      {{#link-to "account.document" file.id}}
-        {{file.title}}
-        <span class="light text">{{file.extension}}</span>
+      {{#link-to "account.document" this.file.id}}
+        {{this.file.title}}
+        <span class="light text">{{this.file.extension}}</span>
       {{/link-to}}
     {{/if}}
   </div>
   <div class="right floated">
-    {{#if (and assignment.cannedType assignment.cannedSubmitted)}}
-      <a href={{assignment.filledFile.url}} id="action-item__action--download" target="_blank" rel="noopener">
+    {{#if (and this.assignment.cannedType this.assignment.cannedSubmitted)}}
+      <a href={{this.assignment.filledFile.url}} id="action-item__action--download" target="_blank" rel="noopener">
         {{ember-tooltip
           side="left"
           popperContainer="body"
@@ -26,8 +26,8 @@
         <i class="download icon"></i>
       </a>
     {{/if}}
-    {{#confirm-modal deleteContext=file.title tagName="span" class="right floated" as |confirm|}}
-      <a href="#" id="action-item__action--delete" {{action (pipe confirm (action "delete" assignment))}}>
+    {{#confirm-modal deleteContext=this.file.title tagName="span" class="right floated" as |confirm|}}
+      <a href="#" id="action-item__action--delete" {{action (pipe confirm (action "delete" this.assignment))}}>
         {{ember-tooltip
           side="left"
           popperContainer="body"
@@ -36,7 +36,7 @@
       </a>
     {{/confirm-modal}}
 
-    {{#if (or (not assignment.visibleToEmployee) assignment.cannedType)}}
+    {{#if (or (not this.assignment.visibleToEmployee) this.assignment.cannedType)}}
       {{#modals/upload-document
         systemUse=true
         uploadComplete=(action "uploadFollowup") as |openUploadModal|
@@ -57,42 +57,42 @@
       <div class="left aligned column">
         <div class="ui small text">
           <p>
-            Document {{if pastAssignment "was" "will be"}} assigned on {{time (or assignment.effectiveOn assignment.created)}}
-            {{#if assignment.creator}}
-              by {{assignment.creator.fullName}}
+            Document {{if this.pastAssignment "was" "will be"}} assigned on {{time (or this.assignment.effectiveOn this.assignment.created)}}
+            {{#if this.assignment.creator}}
+              by {{this.assignment.creator.fullName}}
             {{/if}}
           </p>
-          {{#if assignment.readOn}}
-            <p>Viewed: {{time assignment.readOn}}</p>
+          {{#if this.assignment.readOn}}
+            <p>Viewed: {{time this.assignment.readOn}}</p>
           {{/if}}
-          {{#if assignment.signatureRequired}}
+          {{#if this.assignment.signatureRequired}}
             <p>
-              {{#if assignment.signedOn}}
+              {{#if this.assignment.signedOn}}
                 Signed:
                 <a href="#" class="gray-icon" {{action "openModal"}}>
                   {{ember-popover
                     side="right"
                     popperContainer="body"
-                    text=signature}}
-                  {{time assignment.signedOn}}
+                    text=this.signature}}
+                  {{time this.assignment.signedOn}}
                 </a>
               {{else}}
-                {{assignment.employee.firstName}} has not signed this document yet.
+                {{this.assignment.employee.firstName}} has not signed this document yet.
               {{/if}}
             </p>
           {{/if}}
-          {{#each file.tags as |tag|}}
+          {{#each this.file.tags as |tag|}}
             <span class="ui tiny label">{{tag}}</span>
           {{/each}}
         </div>
       </div>
 
-      {{#if assignment.followups.length}}
+      {{#if this.assignment.followups.length}}
         <div class="left aligned column">
           <div class="ui small text">
             Followed up:
             <ul>
-              {{#each assignment.followups as |followup|}}
+              {{#each this.assignment.followups as |followup|}}
                 <li>
                   <a href={{followup.url}} target="_blank" rel="noopener" download>
                     {{time followup.created}}
@@ -105,16 +105,16 @@
         </div>
       {{/if}}
     </div>
-    <span class="ui small text right floated">Created {{time file.created}}</span>
+    <span class="ui small text right floated">Created {{time this.file.created}}</span>
   </div>
 </div>
 
-{{#ui-modal name="modal__file-assignment-signature" id=modalId}}
+{{#ui-modal name="modal__file-assignment-signature" id=this.modalId}}
   <div class="header">
-    {{assignment.employee.fullName}} signature {{#if assignment.file.title}}for {{assignment.file.title}}{{/if}}
+    {{this.assignment.employee.fullName}} signature {{#if this.assignment.file.title}}for {{this.assignment.file.title}}{{/if}}
   </div>
   <div class="content">
-    <img src={{assignment.signature}} alt="">
+    <img src={{this.assignment.signature}} alt="">
   </div>
   <div class="actions">
     <button class="ui red button" {{action "closeModal"}}>

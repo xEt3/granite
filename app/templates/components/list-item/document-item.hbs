@@ -1,31 +1,31 @@
-{{#if imagePreview}}
+{{#if this.imagePreview}}
   <div class="ui tiny rounded image">
-    <img src={{file.url}} alt="">
+    <img src={{this.file.url}} alt="">
   </div>
 {{else}}
-  {{display/icon-for-file file class="huge"}}
+  {{display/icon-for-file this.file class="huge"}}
 {{/if}}
 <div class="clearing content">
   <div class="header">
-    {{#link-to "account.document" file.id}}
-      {{file.title}}
+    {{#link-to "account.document" this.file.id}}
+      {{this.file.title}}
     {{/link-to}}
-    <span class="light text">{{file.extension}}</span>
+    <span class="light text">{{this.file.extension}}</span>
   </div>
 
   <div class="meta">
-    {{#each file.tags as |tag|}}
+    {{#each this.file.tags as |tag|}}
       <span class="ui tiny label">{{tag}}</span>
     {{/each}}
-    {{#if deleteAction}}
+    {{#if this.deleteAction}}
       <div class="right floated">
-        {{#confirm-modal confirmContent=confirmDeleteContent as |confirm|}}
-          <a href="#" class="text-danger" id="asset-doc__action--delete" {{action (pipe confirm (action deleteAction file))}}>
+        {{#confirm-modal confirmContent=this.confirmDeleteContent as |confirm|}}
+          <a href="#" class="text-danger" id="asset-doc__action--delete" {{action (pipe confirm (action this.deleteAction this.file))}}>
             <i class="trash icon"></i>
           </a>
         {{/confirm-modal}}
       </div>
     {{/if}}
-    <span class="ui small text right floated">Created {{time file.created}}</span>
+    <span class="ui small text right floated">Created {{time this.file.created}}</span>
   </div>
 </div>

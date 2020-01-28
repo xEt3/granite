@@ -1,32 +1,32 @@
-{{#ui-modal id=modalId observeChanges=true context=".ember-application"}}
+{{#ui-modal id=this.modalId observeChanges=true context=".ember-application"}}
   <i class="close icon"></i>
   <div class="header">
-    Schedule a meeting with {{model.person.firstName}}<br />
+    Schedule a meeting with {{this.model.person.firstName}}<br />
     <small class="text-yellow">
-      <strong>{{model.person.firstName}} {{if meeting.skipAttendeeNotification "will not" "will"}} be notified of this meeting</strong>
+      <strong>{{this.model.person.firstName}} {{if this.meeting.skipAttendeeNotification "will not" "will"}} be notified of this meeting</strong>
     </small>
   </div>
   <div class="content ui form">
     {{input/date-range
-      onStartChange=(action (mut meeting.start))
-      onEndChange=(action (mut meeting.end))}}
+      onStartChange=(action (mut this.meeting.start))
+      onEndChange=(action (mut this.meeting.end))}}
     <div class="ui divider"></div>
     {{input/ui-input
       type="text"
       inputId="meeting-title"
       placeholder="Meeting Title"
-      value=meeting.title}}
+      value=this.meeting.title}}
 
     <div class="ui divider"></div>
 
     <div class="ui two column grid">
       <div class="ui field column">
         <label for="meeting-organizer">Organizer</label>
-        {{#ui-dropdown class="fluid search selection" id="meeting-organizer" selected=meeting.organizer onChange=(action (mut meeting.organizer)) as |execute mapper|}}
+        {{#ui-dropdown class="fluid search selection" id="meeting-organizer" selected=this.meeting.organizer onChange=(action (mut this.meeting.organizer)) as |execute mapper|}}
           <i class="dropdown icon"></i>
           <div class="default text">Meeting Organizer</div>
           <div class="menu">
-            {{#each availableOrganizers as |organizer|}}
+            {{#each this.availableOrganizers as |organizer|}}
               <div class="item" data-value={{map-value mapper organizer}}>
                 {{organizer.fullName}}
               </div>
@@ -36,11 +36,11 @@
       </div>
       <div class="ui field column">
         <label for="meeting-facilitator">Facilitator</label>
-        {{#ui-dropdown class="fluid search selection" id="meeting-facilitator" selected=meeting.facilitator onChange=(action (mut meeting.facilitator)) as |execute mapper|}}
+        {{#ui-dropdown class="fluid search selection" id="meeting-facilitator" selected=this.meeting.facilitator onChange=(action (mut this.meeting.facilitator)) as |execute mapper|}}
           <i class="dropdown icon"></i>
           <div class="default text">Meeting Facilitator</div>
           <div class="menu">
-            {{#each availableOrganizers as |facilitator|}}
+            {{#each this.availableOrganizers as |facilitator|}}
               <div class="item" data-value={{map-value mapper facilitator}}>
                 {{facilitator.fullName}}
               </div>
@@ -51,11 +51,11 @@
     </div>
     <div class="field">
       <label for="meeting-attendees">Additional Attendees</label>
-      {{#ui-dropdown class="fluid multiple search selection" id="meeting-attendees" selected=meeting.attendees forceSelection=false onChange=(action (mut meeting.attendees)) as |execute mapper|}}
+      {{#ui-dropdown class="fluid multiple search selection" id="meeting-attendees" selected=this.meeting.attendees forceSelection=false onChange=(action (mut this.meeting.attendees)) as |execute mapper|}}
         <i class="dropdown icon"></i>
         <div class="default text">Additional Attendees</div>
         <div class="menu">
-          {{#each availableOrganizers as |attendee|}}
+          {{#each this.availableOrganizers as |attendee|}}
             <div class="item" data-value={{map-value mapper attendee}}>
               {{attendee.fullName}}
             </div>
@@ -68,14 +68,14 @@
     {{ui-checkbox
       class="left floated toggle"
       label="Do not notify applicant"
-      checked=meeting.skipAttendeeNotification
-      onChange=(action (mut meeting.skipAttendeeNotification))
+      checked=this.meeting.skipAttendeeNotification
+      onChange=(action (mut this.meeting.skipAttendeeNotification))
     }}
 
     <button class="ui inverted red button" {{action "respond" false}}>
       Cancel
     </button>
-    <button class="ui green right labeled icon button" {{action "respond" meeting}} disabled={{if (and meeting.start meeting.end meeting.title ) false true}}>
+    <button class="ui green right labeled icon button" {{action "respond" this.meeting}} disabled={{if (and this.meeting.start this.meeting.end this.meeting.title ) false true}}>
       Schedule
       <i class="check icon"></i>
     </button>

@@ -1,12 +1,12 @@
-{{#ui-modal id=modalId observeChanges=true}}
+{{#ui-modal id=this.modalId observeChanges=true}}
   <i class="close icon"></i>
   <div class="header">
-    {{title}}
+    {{this.title}}
   </div>
   <div class="content">
     {{yield}}
   </div>
-  {{#unless hideActions}}
+  {{#unless this.hideActions}}
     <div class="actions">
       <button class="ui button" {{action "respond" false}}>
         Ok

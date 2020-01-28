@@ -15,7 +15,7 @@
       class="ui large fluid input"
       tabindex="1"
       placeholder="Your New Password"
-      value=password}}
+      value=this.password}}
   </div>
 
   <div class="field">
@@ -26,14 +26,14 @@
       class="ui large fluid input"
       tabindex="1"
       placeholder="Confirm Your New Password"
-      value=passwordConfirm}}
+      value=this.passwordConfirm}}
   </div>
 
   {{#form/action-button
     type="submit"
     class="ui massive fluid orange button"
-    loading=working
-    disabled=(not (and password passwordConfirm))
+    loading=this.working
+    disabled=(not (and this.password this.passwordConfirm))
   }}
     Reset my password
   {{/form/action-button}}

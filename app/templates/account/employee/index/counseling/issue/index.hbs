@@ -5,13 +5,13 @@
 <div class="ui divider"></div>
 
 {{display/resource-list
-  model
+  this.model
   "list-item/employee-corrective-action-item"
   linkTo="account.employee.index.counseling.issue.corrective-action"
   linkClass="item"
   class="ui divided link items"}}
 
 {{elements/x-pagination
-  page=(readonly page)
-  pages=(readonly pages)
-  onchange=(action (mut page))}}
+  page=(readonly this.page)
+  pages=(readonly this.pages)
+  onchange=(action (mut this.page))}}

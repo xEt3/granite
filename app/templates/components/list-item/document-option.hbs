@@ -1,10 +1,10 @@
-{{file.title}}
+{{this.file.title}}
 
 <div class="right floated content">
-  <a href={{file.url}} rel="noopener" target="_blank">
+  <a href={{this.file.url}} rel="noopener" target="_blank">
     <i class="download icon"></i>
   </a>
-  {{#if (not remove)}}
+  {{#if (not this.remove)}}
     <a href="#" {{action "addDocument"}}>
       <i class="green plus square outline icon"></i>
     </a>

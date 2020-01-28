@@ -1,32 +1,32 @@
 <form {{action "saveAndContinue" on="submit"}}>
   <h2 class="ui horizontal divider header">Review</h2>
   <h3 class="ui center aligned lightly weighted header">
-    You are hiring <strong>{{model.positions}} {{inflect-text model.job.title model.positions}}</strong> for your <strong>{{model.location.name}}</strong> location.
-    {{#if model.applicantSources.length}}
+    You are hiring <strong>{{this.model.positions}} {{inflect-text this.model.job.title this.model.positions}}</strong> for your <strong>{{this.model.location.name}}</strong> location.
+    {{#if this.model.applicantSources.length}}
       After launching your campaign, Granite will post your job to
       <strong>
         {{#ember-tooltip
           popperContainer="body"
           text="Manually add applicant"
         }}
-          {{#each model.applicantSources as |source|}}
+          {{#each this.model.applicantSources as |source|}}
             {{source.name}}<br>
           {{/each}}
         {{/ember-tooltip}}
-        {{model.applicantSources.length}} {{inflect-text "source" model.applicantSources.length}}
+        {{this.model.applicantSources.length}} {{inflect-text "source" this.model.applicantSources.length}}
       </strong>
       beginning
       <strong>
-        {{~#if model.startOn}}
-          {{time-ago model.startOn}} on {{time model.startOn}}
+        {{~#if this.model.startOn}}
+          {{time-ago this.model.startOn}} on {{time this.model.startOn}}
         {{else}}
           immediately
         {{~/if}}
       </strong>
       until
       <strong>
-        {{~#if model.endOn}}
-          {{time model.endOn}}
+        {{~#if this.model.endOn}}
+          {{time this.model.endOn}}
         {{else}}
           the position is filled
         {{~/if}}.
@@ -40,7 +40,7 @@
   {{#form/action-button
     type="submit"
     class="ui huge fluid green button"
-    loading=working}}
+    loading=this.working}}
     <i class="rocket icon"></i> Launch Campaign
   {{/form/action-button}}
 </form>

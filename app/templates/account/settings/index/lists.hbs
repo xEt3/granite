@@ -2,33 +2,33 @@
   <div class="four wide column">
     <h3 class="ui header">Select a list</h3>
     <div class="ui vertical fluid tabular menu">
-      <a href="#" class="{{if (eq list "dqReasons") "active"}} item" {{action "toggleList" "dqReasons"}}>
+      <a href="#" class="{{if (eq this.list "dqReasons") "active"}} item" {{action "toggleList" "dqReasons"}}>
         Disqualification Reasons
       </a>
-      <a href="#" class="{{if (eq list "labels") "active"}} item" {{action "toggleList" "labels"}}>
+      <a href="#" class="{{if (eq this.list "labels") "active"}} item" {{action "toggleList" "labels"}}>
         Labels
       </a>
     </div>
   </div>
   <div class="twelve wide stretched column">
-    {{#if dirtyList}}
-      <button class="ui green fluid button" disabled={{working}} {{action "saveList"}}>Save Changes</button>
+    {{#if this.dirtyList}}
+      <button class="ui green fluid button" disabled={{this.working}} {{action "saveList"}}>Save Changes</button>
     {{/if}}
     <div class="ui relaxed divided list">
-      {{#if list}}
+      {{#if this.list}}
         <a href="#" class="item" {{action (pipe-action (action "openModal") (action "addItem"))}}>
           <i class="blue plus icon"></i> New item...
         </a>
       {{/if}}
-      {{#each model as |item index|}}
-        {{#if (eq list "dqReasons")}}
+      {{#each this.model as |item index|}}
+        {{#if (eq this.list "dqReasons")}}
           {{list-item/settings-lists-item
             item
             index
             editItem=(action (pipe-action (action "beginEdit") (action "openModal") (action "editItem")))
             deleteItem=(action "deleteItem")
           }}
-        {{else if (eq list "labels")}}
+        {{else if (eq this.list "labels")}}
           {{list-item/settings-lists-label
             item
             index
@@ -41,21 +41,21 @@
   </div>
 </div>
 
-{{#ui-modal id=modalId class="small form"}}
+{{#ui-modal id=this.modalId class="small form"}}
   <div class="header">
-    {{if editingItem "Edit" "Add"}} item
+    {{if this.editingItem "Edit" "Add"}} item
   </div>
   <div class="content">
     {{quick-form
-      currentForm.elements
-      modelForForm}}
+      this.currentForm.elements
+      this.modelForForm}}
   </div>
   <div class="actions">
     <button class="ui red button" {{action "respondModal" false}}>
       Cancel
     </button>
     <button class="ui green right labeled icon button" {{action "respondModal" true}}>
-      {{if editingItem "Edit" "Add"}} List Item<i class="check icon"></i>
+      {{if this.editingItem "Edit" "Add"}} List Item<i class="check icon"></i>
     </button>
   </div>
 {{/ui-modal}}

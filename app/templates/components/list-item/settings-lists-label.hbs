@@ -1,9 +1,9 @@
-{{custom-label item}}
+{{custom-label this.item}}
 <span class="right floated">
-  <a href="#" {{action editItem item index}}>
+  <a href="#" {{action this.editItem this.item this.index}}>
     <i class="edit icon"></i>
   </a>
-  <a href="#" {{action deleteItem item}}>
+  <a href="#" {{action this.deleteItem this.item}}>
     <i class="red close icon"></i>
   </a>
 </span>

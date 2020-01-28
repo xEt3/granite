@@ -1,11 +1,11 @@
 <div class="ui basic unbordered container segment text-white statistic-container">
   <div class="ui equal width stackable grid">
-    {{#if model.supervisor}}
+    {{#if this.model.supervisor}}
       <div class="center aligned column">
         <div class="ui mini statistic statistic-item">
           <div class="value">
-            {{#link-to "account.employee" model.supervisor.id class="statistic-value"}}
-              {{model.supervisor.fullName}}
+            {{#link-to "account.employee" this.model.supervisor.id class="statistic-value"}}
+              {{this.model.supervisor.fullName}}
             {{/link-to}}
           </div>
           <div class="label text-white">
@@ -14,11 +14,11 @@
         </div>
       </div>
     {{/if}}
-    {{#if model.department}}
+    {{#if this.model.department}}
       <div class="center aligned column">
         <div class="ui mini statistic statistic-item">
           <div class="value statistic-value">
-            {{model.department.name}}
+            {{this.model.department.name}}
           </div>
           <div class="label text-white">
             Department
@@ -26,11 +26,11 @@
         </div>
       </div>
     {{/if}}
-    {{#if model.location}}
+    {{#if this.model.location}}
       <div class="center aligned column">
         <div class="ui mini statistic statistic-item">
           <div class="value statistic-value">
-            {{model.location.name}}
+            {{this.model.location.name}}
           </div>
           <div class="label text-white">
             Location
@@ -43,7 +43,7 @@
 
 <div class="ui stackable two column grid">
   <div class="column">
-    {{#if model.offboardingCompleted}}
+    {{#if this.model.offboardingCompleted}}
       <div class="ui raised segment">
         <span class="ui orange left ribbon label"><i class="cut icon"></i>Final Information</span>
         {{!-- {{#link-to "account.employee.index.edit.index" class="ui right corner orange label"}}
@@ -52,16 +52,16 @@
         <div class="ui basic segment">
           <p class="text">
             <p>
-              {{#if model.separationNotes}}
+              {{#if this.model.separationNotes}}
                 <div class="line-item-value">
                   <i>
                     Notes
                   </i>
                   <u>
-                    {{#if separationNotes}}
-                      {{model.separationNotes}}
+                    {{#if this.separationNotes}}
+                      {{this.model.separationNotes}}
                     {{/if}}
-                    <a href="#" class="right floated" {{action (toggle "separationNotes" this)}}>{{if separationNotes "Hide" "View"}} Notes</a>
+                    <a href="#" class="right floated" {{action (toggle "separationNotes" this)}}>{{if this.separationNotes "Hide" "View"}} Notes</a>
                   </u>
                 </div>
               {{/if}}
@@ -70,7 +70,7 @@
                   Terminated on
                 </i>
                 <u>
-                  {{time model.terminatedOn}}
+                  {{time this.model.terminatedOn}}
                 </u>
               </div>
               <div class="line-item-value">
@@ -78,7 +78,7 @@
                   Offboarder
                 </i>
                 <u>
-                  {{model.offboarder.fullName}}
+                  {{this.model.offboarder.fullName}}
                 </u>
               </div>
               <div class="line-item-value">
@@ -86,12 +86,12 @@
                   Eligible For Rehire
                 </i>
                 <u>
-                  {{if model.eligibleForRehire "Yes" "No"}}
+                  {{if this.model.eligibleForRehire "Yes" "No"}}
                 </u>
               </div>
             </p>
             <div>
-              <a href="mailto:{{model.finalEmail}}">
+              <a href="mailto:{{this.model.finalEmail}}">
                 {{ember-tooltip
                   side="right"
                   popperContainer="body"
@@ -100,18 +100,18 @@
                   <i class="mail icon"></i>
                   <i class="bottom right corner building outline icon"></i>
                 </i>
-                {{model.finalEmail}}
+                {{this.model.finalEmail}}
               </a>
               <p>
-                {{#if model.finalAddressCity}}
-                  {{#if model.finalAddressLine1}}
-                    {{model.finalAddressLine1}},<br>
-                    {{#if model.finalAddressLine2}}
-                      {{model.finalAddressLine2}},<br>
+                {{#if this.model.finalAddressCity}}
+                  {{#if this.model.finalAddressLine1}}
+                    {{this.model.finalAddressLine1}},<br>
+                    {{#if this.model.finalAddressLine2}}
+                      {{this.model.finalAddressLine2}},<br>
                     {{/if}}
-                    {{model.finalAddressCity}},
-                    {{model.finalAddressState}}
-                    {{model.finalAddressZip}}
+                    {{this.model.finalAddressCity}},
+                    {{this.model.finalAddressState}}
+                    {{this.model.finalAddressZip}}
                   {{/if}}
                 {{/if}}
               </p>
@@ -126,9 +126,9 @@
         <i class="pencil icon"></i>
       {{/link-to}}
       <div class="ui basic segment">
-        {{#if hasDirectContact}}
-          {{#if model.email}}
-            <a href="mailto:{{model.email}}">
+        {{#if this.hasDirectContact}}
+          {{#if this.model.email}}
+            <a href="mailto:{{this.model.email}}">
               {{ember-tooltip
                 side="right"
                 popperContainer="body"
@@ -137,11 +137,11 @@
                 <i class="mail icon"></i>
                 <i class="bottom right corner building outline icon"></i>
               </i>
-              {{model.email}}
+              {{this.model.email}}
             </a> <br />
           {{/if}}
-          {{#if model.privateEmail}}
-            <a href="mailto:{{model.privateEmail}}">
+          {{#if this.model.privateEmail}}
+            <a href="mailto:{{this.model.privateEmail}}">
               {{ember-tooltip
                 side="right"
                 popperContainer="body"
@@ -150,13 +150,13 @@
                 <i class="mail icon"></i>
                 <i class="bottom right corner user icon"></i>
               </i>
-              {{model.privateEmail}}
+              {{this.model.privateEmail}}
             </a> <br />
           {{/if}}
-          {{#if model.phone}}
-            <a href="tel:{{model.phone}}">
+          {{#if this.model.phone}}
+            <a href="tel:{{this.model.phone}}">
               <i class="phone icon"></i>
-              {{format-phone model.phone}}
+              {{format-phone this.model.phone}}
             </a>
           {{/if}}
         {{else}}
@@ -170,14 +170,14 @@
         <i class="pencil icon"></i>
       {{/link-to}}
       <div class="ui basic segment">
-        {{#if model.addressLine1}}
-          {{model.addressLine1}}, <br />
-          {{#if model.addressLine2}}
-            {{model.addressLine2}}, <br />
+        {{#if this.model.addressLine1}}
+          {{this.model.addressLine1}}, <br />
+          {{#if this.model.addressLine2}}
+            {{this.model.addressLine2}}, <br />
           {{/if}}
-          {{model.addressCity}},
-          {{model.addressState}}
-          {{model.addressZip}}
+          {{this.model.addressCity}},
+          {{this.model.addressState}}
+          {{this.model.addressZip}}
         {{else}}
           <h3 class="ui center aligned header no-info-header">No Address Available</h3>
         {{/if}}
@@ -189,9 +189,9 @@
         <i class="pencil icon"></i>
       {{/link-to}}
       <div class="ui basic segment">
-        {{#if customFieldsExist}}
+        {{#if this.customFieldsExist}}
           <div class="ui list">
-            {{#each-in model.customFields as |key value|}}
+            {{#each-in this.model.customFields as |key value|}}
               <div class="line-item-value">
                 <i>
                   {{key}}
@@ -216,29 +216,29 @@
       {{/link-to}}
       <div class="ui basic segment">
         <p class="text">
-          {{#if (or model.probationUntil model.ssn)}}
-            {{#if model.ssn}}
+          {{#if (or this.model.probationUntil this.model.ssn)}}
+            {{#if this.model.ssn}}
               <div class="line-item-value">
                 <i>
                   SSN
                 </i>
                 <u>
-                  {{#if showSSN}}
-                    {{model.ssn}}
+                  {{#if this.showSSN}}
+                    {{this.model.ssn}}
                   {{else}}
-                    {{model.ssnMasked}}
+                    {{this.model.ssnMasked}}
                   {{/if}}
-                  <a href="#" class="right floated" {{action (toggle "showSSN" this)}}><i class="{{if showSSN "hide" "unhide"}} icon"></i></a>
+                  <a href="#" class="right floated" {{action (toggle "showSSN" this)}}><i class="{{if this.showSSN "hide" "unhide"}} icon"></i></a>
                 </u>
               </div>
             {{/if}}
             <div class="line-item-value">
               <i>
                 Probation
-                {{if onProbation "Until" "Ended On"}}
+                {{if this.onProbation "Until" "Ended On"}}
               </i>
               <u>
-                {{time model.probationUntil}}
+                {{time this.model.probationUntil}}
               </u>
             </div>
           {{else}}
@@ -253,25 +253,25 @@
         <i class="pencil icon"></i>
       {{/link-to}}
       <div class="ui basic segment">
-        {{#if hasAnniversaries}}
+        {{#if this.hasAnniversaries}}
           <p class="text">
-            {{#if model.hireDate}}
+            {{#if this.model.hireDate}}
               <div class="line-item-value">
                 <i>
                   Date of Hire
                 </i>
                 <u>
-                  {{time model.hireDate}} <br />
+                  {{time this.model.hireDate}} <br />
                 </u>
               </div>
             {{/if}}
-            {{#if model.dateOfBirth}}
+            {{#if this.model.dateOfBirth}}
               <div class="line-item-value">
                 <i>
                   Date of Birth
                 </i>
                 <u>
-                  {{time model.dateOfBirth}}
+                  {{time this.model.dateOfBirth}}
                 </u>
               </div>
             {{/if}}
@@ -288,14 +288,14 @@
       {{/link-to}}
       <div class="ui basic segment">
         <p class="text">
-          {{#if hasEmergencyContact}}
-            {{#if model.emergencyContactNameFirst}}
+          {{#if this.hasEmergencyContact}}
+            {{#if this.model.emergencyContactNameFirst}}
               Emergency Contact:
-              {{model.emergencyContactNameFirst}} {{model.emergencyContactNameLast}} <br />
+              {{this.model.emergencyContactNameFirst}} {{this.model.emergencyContactNameLast}} <br />
             {{/if}}
-            {{#if model.emergencyContactPhone}}
+            {{#if this.model.emergencyContactPhone}}
               Contact Phone:
-              <a href="tel:{{model.emergencyContactPhone}}">{{format-phone model.emergencyContactPhone}}</a>
+              <a href="tel:{{this.model.emergencyContactPhone}}">{{format-phone this.model.emergencyContactPhone}}</a>
             {{/if}}
           {{else}}
             <h3 class="ui center aligned header no-info-header">No Emergency Contact Available</h3>
@@ -303,9 +303,9 @@
         </p>
       </div>
     </div>
-    {{#if model.externalLinkService}}
+    {{#if this.model.externalLinkService}}
       <div class="ui raised segment">
-        {{#if working}}
+        {{#if this.working}}
           <div class="ui inverted active dimmer">
             <div class="ui active text loader">Forcing sync...</div>
           </div>
@@ -315,18 +315,18 @@
           <i class="pencil icon"></i>
         {{/link-to}}
         <div class="ui basic segment">
-          Source: {{capitalize model.externalLinkService}}<br />
-          Imported On: {{time model.created "h:mma M/D/YY"}}<br />
+          Source: {{capitalize this.model.externalLinkService}}<br />
+          Imported On: {{time this.model.created "h:mma M/D/YY"}}<br />
           Last Change Sync:
           {{if
-            model.externalLinkLastSync
-            (time model.externalLinkLastSync "h:mm:ssa M/D/YY")
+            this.model.externalLinkLastSync
+            (time this.model.externalLinkLastSync "h:mm:ssa M/D/YY")
             "Never"}}
-          <a href="#" {{action "forceSync"}}>Force sync from {{model.externalLinkService}}</a>
+          <a href="#" {{action "forceSync"}}>Force sync from {{this.model.externalLinkService}}</a>
           <br />
-          Automatic Change Syncing: {{if model.externalLinkAutomaticSync "Enabled" "Disabled"}}
-          {{#if model.externalLinkDocumentLink}}
-            <a class="right floated text" href={{model.externalLinkDocumentLink}}>
+          Automatic Change Syncing: {{if this.model.externalLinkAutomaticSync "Enabled" "Disabled"}}
+          {{#if this.model.externalLinkDocumentLink}}
+            <a class="right floated text" href={{this.model.externalLinkDocumentLink}}>
               Visit record on Slate <i class="external alternate icon"></i>
             </a>
           {{/if}}

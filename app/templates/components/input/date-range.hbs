@@ -1,7 +1,7 @@
 <div class="ui two column grid">
   <div class="ui column center aligned text">
     <p>
-      <label for="{{elementId}}-start">
+      <label for="{{this.elementId}}-start">
         <i class="step backward icon"></i>
         <strong>Start</strong>
       </label>
@@ -10,11 +10,11 @@
       class="field"
       startMode="month"
       inline=true
-      onChange=(action (pipe (action (mut start)) (action onStartChange start)))}}
+      onChange=(action (pipe (action (mut this.start)) (action this.onStartChange this.start)))}}
   </div>
 
   <div class="ui column center aligned text">
-    {{#if start}}
+    {{#if this.start}}
       <div class="animated fadeInLeft">
         <p>
           <label for="ui-date-range-end">
@@ -24,11 +24,11 @@
         </p>
         {{#ui-dropdown
           class="fluid selection"
-          onChange=(action onEndChange) as |execute mapper|}}
+          onChange=(action this.onEndChange) as |execute mapper|}}
           <i class="dropdown icon"></i>
           <div class="default text">How long?</div>
           <div class="menu">
-            {{#each endOptions as |opt|}}
+            {{#each this.endOptions as |opt|}}
               <div class="item" data-value={{map-value mapper opt.value}}>
                 {{opt.label}}
               </div>

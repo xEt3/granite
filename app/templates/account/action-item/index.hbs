@@ -1,37 +1,37 @@
 <div class="ui very padded raised segment animated fadeInUp">
   <div class="ui top attached green label">
-    {{#if model.target}}
-      This item pertains to <a href="#">{{model.target}}</a>
+    {{#if this.model.target}}
+      This item pertains to <a href="#">{{this.model.target}}</a>
     {{/if}}
     <div class="right floated detail">
-      Started on {{time model.created}}
+      Started on {{time this.model.created}}
     </div>
   </div>
 
   <h2 class="ui clearfix header">
-    {{#if (eq model.owner.id auth.user.employee.id)}}
+    {{#if (eq this.model.owner.id this.auth.user.employee.id)}}
       {{#link-to "account.action-item.edit"}}
         <i class="edit fitted icon"></i>
       {{/link-to}}
     {{/if}}
-    {{model.title}}
+    {{this.model.title}}
     <span class="right floated sub header project__sub-header">
       <i class="clock icon"></i>
-      {{#if model.dueOn}}
-        {{#if model.delayedUntil}}
-          <span class="text-yellow">Delayed until {{time model.delayedUntil}}</span> - originally due
+      {{#if this.model.dueOn}}
+        {{#if this.model.delayedUntil}}
+          <span class="text-yellow">Delayed until {{time this.model.delayedUntil}}</span> - originally due
         {{else}}
-          Due {{time-ago model.dueOn}}
+          Due {{time-ago this.model.dueOn}}
         {{/if}}
-        on {{time model.dueOn}}
+        on {{time this.model.dueOn}}
       {{else}}
         No due date
       {{/if}}
     </span>
   </h2>
-  <p>{{model.description}}</p>
+  <p>{{this.model.description}}</p>
 
-  {{#if model.prerequisites}}
+  {{#if this.model.prerequisites}}
     <div class="ui divider"></div>
     <h3 class="ui header">
       Prerequisites
@@ -41,7 +41,7 @@
     </h3>
 
     <div class="ui selection list action-item__prerequisites">
-      {{#each model.prerequisites as |prework|}}
+      {{#each this.model.prerequisites as |prework|}}
         {{#link-to "account.action-item.index" prework class="item"}}
           <div class="header">
             {{prework.title}}
@@ -60,25 +60,25 @@
     </div>
   {{/if}}
 
-  {{#if model.participants}}
+  {{#if this.model.participants}}
     <div class="ui divider"></div>
     <h3 class="header">
       Participants
     </h3>
-    {{#each model.participants as |participant|}}
+    {{#each this.model.participants as |participant|}}
       {{list-item/action-item-participant
         participant
-        owner=model.owner}}
+        owner=this.model.owner}}
     {{/each}}
   {{/if}}
 
-  {{#if (and dependents (not model.completedOn))}}
+  {{#if (and this.dependents (not this.model.completedOn))}}
     <div class="ui divider"></div>
     <h3 class="header">
-      {{dependents.length}} {{inflect-text "Project" dependents.length}} Waiting
+      {{this.dependents.length}} {{inflect-text "Project" this.dependents.length}} Waiting
     </h3>
     <div class="ui selection list action-item__prerequisites">
-      {{#each dependents as |dependent|}}
+      {{#each this.dependents as |dependent|}}
         {{#link-to "account.action-item.index" dependent class="item"}}
           <div class="header">{{dependent.title}}</div>
         {{/link-to}}

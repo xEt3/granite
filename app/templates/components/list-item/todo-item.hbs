@@ -1,47 +1,47 @@
 {{#if hasBlock}}
-  {{yield todo}}
+  {{yield this.todo}}
 {{else}}
   <div class="content">
-    {{#if onStatusChange}}
-      <a href="#" {{action "changeStatus"}}><i class="{{if todo.completedOn "checkmark box" "square outline"}} icon"></i></a>
+    {{#if this.onStatusChange}}
+      <a href="#" {{action "changeStatus"}}><i class="{{if this.todo.completedOn "checkmark box" "square outline"}} icon"></i></a>
     {{else}}
-      <i class="{{if todo.completedOn "checkmark box" "square outline"}} icon"></i>
+      <i class="{{if this.todo.completedOn "checkmark box" "square outline"}} icon"></i>
     {{/if}}
-    {{#if todo.completedOn}}
-      <s>{{todo.title}}</s>
-      <small class="meta">Completed by {{todo.completedBy.firstName}} {{time-ago todo.completedOn}} on {{time todo.completedOn "M/D/YY [at] h:mma"}}</small>
+    {{#if this.todo.completedOn}}
+      <s>{{this.todo.title}}</s>
+      <small class="meta">Completed by {{this.todo.completedBy.firstName}} {{time-ago this.todo.completedOn}} on {{time this.todo.completedOn "M/D/YY [at] h:mma"}}</small>
     {{else}}
-      {{todo.title}}
+      {{this.todo.title}}
     {{/if}}
     <small class="right floated meta">
-      {{#if todo.assignedTo}}
-        <strong>Assigned</strong> to {{todo.assignedTo.firstName}} by {{todo.assignedBy.firstName}} {{time-ago todo.assignedOn}}
+      {{#if this.todo.assignedTo}}
+        <strong>Assigned</strong> to {{this.todo.assignedTo.firstName}} by {{this.todo.assignedBy.firstName}} {{time-ago this.todo.assignedOn}}
       {{else}}
         No owner
       {{/if}}
 
-      {{#if onAssigneeChange}}
+      {{#if this.onAssigneeChange}}
         <a href="#" {{action (pipe (action "selectAssignee") (action "changeAssignee"))}}><i class="setting icon"></i></a>
       {{/if}}
     </small>
   </div>
 
-  {{#ui-modal id=modalId class="small form"}}
+  {{#ui-modal id=this.modalId class="small form"}}
     <i class="close icon"></i>
     <div class="header">
       <i class="setting icon"></i>Edit todo's assignee
     </div>
     <div class="content">
       <div class="field">
-        {{#if assignableTo}}
-          {{#ui-dropdown class="fluid search selection" selected=todo.assignedTo onChange=(action (mut newAssignee)) as |execute mapper|}}
+        {{#if this.assignableTo}}
+          {{#ui-dropdown class="fluid search selection" selected=this.todo.assignedTo onChange=(action (mut this.newAssignee)) as |execute mapper|}}
             <i class="dropdown icon"></i>
             <div class="default text">Select a new assignee</div>
             <div class="menu">
               <div class="item" data-value="">
                 No Assignee
               </div>
-              {{#each assignableTo as |item|}}
+              {{#each this.assignableTo as |item|}}
                 <div class="item" data-value={{map-value mapper item}}>
                   {{item.fullName}}
                 </div>
@@ -57,9 +57,9 @@
       <button class="ui red button" {{action "respondAssignee" false}}>
         Cancel
       </button>
-      <button class="ui primary right labeled icon button" {{action "respondAssignee" newAssignee}}>
-        {{#if newAssignee}}
-          Assign to {{newAssignee.fullName}}
+      <button class="ui primary right labeled icon button" {{action "respondAssignee" this.newAssignee}}>
+        {{#if this.newAssignee}}
+          Assign to {{this.newAssignee.fullName}}
         {{else}}
           Unassign
         {{/if}}

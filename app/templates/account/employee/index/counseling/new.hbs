@@ -10,19 +10,19 @@
   <div class="ui divider"></div>
 
   <p class="center aligned text">
-    {{#link-to "account.settings.index.processes" class=(unless severities.length "text-danger")}}
-      <i class="{{if severities.length "info circle" "warning sign"}} icon"></i> Visit the <strong>Correction Action Options</strong> section in your <strong>Processes</strong> settings to configure options{{if severities.length "." " before proceeding!"}}
+    {{#link-to "account.settings.index.processes" class=(unless this.severities.length "text-danger")}}
+      <i class="{{if this.severities.length "info circle" "warning sign"}} icon"></i> Visit the <strong>Correction Action Options</strong> section in your <strong>Processes</strong> settings to configure options{{if this.severities.length "." " before proceeding!"}}
     {{/link-to}}
   </p>
 
   {{quick-form
-    form
-    model
+    this.form
+    this.model
     this
     tagName="div"}}
 
   <div class="ui divider"></div>
-  <form {{action "save" model on="submit"}}>
-    {{#form/action-button type="submit" class="ui positive fluid huge button" loading=working}}Save Issue{{/form/action-button}}
+  <form {{action "save" this.model on="submit"}}>
+    {{#form/action-button type="submit" class="ui positive fluid huge button" loading=this.working}}Save Issue{{/form/action-button}}
   </form>
 </div>

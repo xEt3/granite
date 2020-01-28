@@ -1,25 +1,25 @@
 <div class="content">
   <span class="header clearfix">
-    {{asset.identifier}}
-    {{#if attributes.length}}
+    {{this.asset.identifier}}
+    {{#if this.attributes.length}}
       <a href="#" {{action "toggleProperty" "details"}}>
         {{ember-tooltip
           side="top"
           popperContainer="body"
           text="View attributes"}}
-        <i class="{{if details "up" "down"}} angle icon"></i>
+        <i class="{{if this.details "up" "down"}} angle icon"></i>
       </a>
     {{/if}}
     <div class="right floated">
-      {{#if addDocuments}}
+      {{#if this.addDocuments}}
         {{#input/document-selection-modal
           title="Assign asset stock item documents"
           tagName="span"
-          selected=asset.documents
+          selected=this.asset.documents
           autoTag="Stock Asset"
           onSelected=(pipe-action
-            (action (mut asset.documents))
-            (action saveStockItem))
+            (action (mut this.asset.documents))
+            (action this.saveStockItem))
           as |execute|
         }}
           <a href="#" class="asset-item__action--select-document" {{action execute "selectDocuments"}}>
@@ -31,7 +31,7 @@
           </a>
         {{/input/document-selection-modal}}
       {{/if}}
-      {{#link-to "account.asset.index.edit" asset.id class="asset-item__action--edit"}}
+      {{#link-to "account.asset.index.edit" this.asset.id class="asset-item__action--edit"}}
         {{ember-tooltip
           side="left"
           popperContainer="body"
@@ -55,19 +55,19 @@
     </div>
   </span>
   <div class="description text small">
-    Assigned to <a href="#" {{action toggleProperty "showAssignments"}}>{{asset.assignments.length}} {{inflect-text "employee" asset.assignments.length}}</a>
-    - Has <a href="#" {{action toggleProperty "showDocuments"}}>{{asset.documents.length}} {{inflect-text "document" asset.documents.length}}</a>
-    - Created {{time-ago asset.created}}{{#if asset.creator}} by {{asset.creator.fullName}}{{/if}}
-    {{#liquid-if showAssignments}}
+    Assigned to <a href="#" {{action this.toggleProperty "showAssignments"}}>{{this.asset.assignments.length}} {{inflect-text "employee" this.asset.assignments.length}}</a>
+    - Has <a href="#" {{action this.toggleProperty "showDocuments"}}>{{this.asset.documents.length}} {{inflect-text "document" this.asset.documents.length}}</a>
+    - Created {{time-ago this.asset.created}}{{#if this.asset.creator}} by {{this.asset.creator.fullName}}{{/if}}
+    {{#liquid-if this.showAssignments}}
       <ul>
-        {{#each asset.assignments as |assignment|}}
+        {{#each this.asset.assignments as |assignment|}}
           <li>{{assignment.employee.fullName}}</li>
         {{/each}}
       </ul>
     {{/liquid-if}}
-    {{#liquid-if showDocuments}}
+    {{#liquid-if this.showDocuments}}
       <ul>
-        {{#each asset.documents as |document|}}
+        {{#each this.asset.documents as |document|}}
           <li>
             {{document.title}}.{{document.extension}}
             <a href="#" class="text-danger" {{action "removeDocument" document}}>
@@ -82,10 +82,10 @@
       </ul>
     {{/liquid-if}}
   </div>
-  {{#if attributes.length}}
-    {{#liquid-if details}}
+  {{#if this.attributes.length}}
+    {{#liquid-if this.details}}
       <div class="ui segment">
-        {{#each attributes as |attr|}}
+        {{#each this.attributes as |attr|}}
           <div class="line-item-value">
             <i>{{attr.key}}</i>
             <u>

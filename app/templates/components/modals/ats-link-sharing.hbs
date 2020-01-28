@@ -1,4 +1,4 @@
-{{#ui-modal id=modalId observeChanges=true context=".ember-application"}}
+{{#ui-modal id=this.modalId observeChanges=true context=".ember-application"}}
   <i class="close icon"></i>
   <div class="header">
     Sharing Configuration<br>
@@ -7,7 +7,7 @@
     </small>
   </div>
   <div class="content ui form">
-    {{#if working}}
+    {{#if this.working}}
       <div class="ui active inverted dimmer">
         <div class="ui text loader">Hang on...</div>
       </div>
@@ -22,18 +22,18 @@
       {{ui-checkbox
         id="link-sharing"
         class="toggle"
-        label=(if publicLink
+        label=(if this.publicLink
           "Link sharing is enabled. Click to turn off link sharing."
           "Link sharing is disabled. Click to turn on link sharing."
         )
-        checked=publicLink
+        checked=this.publicLink
         onChange=(action "toggleSharedLink")}}
     </div>
 
-    {{#if publicLink}}
+    {{#if this.publicLink}}
       <p>
-        Public application link for {{model.applicant.firstName}}<br>
-        <a href={{publicLink}} target="_blank" rel="noopener">{{publicLink}}</a><br>
+        Public application link for {{this.model.applicant.firstName}}<br>
+        <a href={{this.publicLink}} target="_blank" rel="noopener">{{this.publicLink}}</a><br>
         <strong>
           Treat this link like a password for the job application.
         </strong>
@@ -44,13 +44,13 @@
         <label>Send public link to emails</label>
         {{#ui-dropdown
           class="fluid search multiple selection"
-          selected=sendTo
+          selected=this.sendTo
           allowAdditions=true
-          onChange=(action (mut sendTo)) as |execute mapper|}}
+          onChange=(action (mut this.sendTo)) as |execute mapper|}}
           <i class="dropdown icon"></i>
           <div class="default text">Add emails to send link</div>
           <div class="menu">
-            {{#each prevEmails as |item|}}
+            {{#each this.prevEmails as |item|}}
               <div class="item" data-value={{map-value mapper item}}>
                 {{item}}
               </div>
@@ -60,24 +60,24 @@
       </div>
       <div class="field">
         <label>Note to recipients (optional)</label>
-        {{textarea rows="3" placeholder="Note" value=linkNote}}
+        {{textarea rows="3" placeholder="Note" value=this.linkNote}}
       </div>
 
-      <button class="ui fluid primary {{if sendingLink "loading"}} button" disabled={{or working (not sendTo.length)}} {{action "sendLink"}}>
+      <button class="ui fluid primary {{if this.sendingLink "loading"}} button" disabled={{or this.working (not this.sendTo.length)}} {{action "sendLink"}}>
         Send Link
       </button>
     {{/if}}
   </div>
   <div class="actions">
     <p class="left floated">
-      {{#if errorMessage}}
-        <p class="text-red">{{errorMessage}}</p>
+      {{#if this.errorMessage}}
+        <p class="text-red">{{this.errorMessage}}</p>
       {{/if}}
-      {{#if successMessage}}
-        <p class="text-green">{{successMessage}}</p>
+      {{#if this.successMessage}}
+        <p class="text-green">{{this.successMessage}}</p>
       {{/if}}
     </p>
-    <button class="ui right button" disabled={{working}} {{action "respond" model}}>
+    <button class="ui right button" disabled={{this.working}} {{action "respond" this.model}}>
       Close
     </button>
   </div>

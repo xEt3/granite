@@ -1,8 +1,8 @@
 {{display/employee-picture
-  url=participant.picture
-  employeeId=participant.id
+  url=this.participant.picture
+  employeeId=this.participant.id
 }}
-{{participant.fullName}}
-{{#if detail}}
-  <div class="{{if online "green"}} detail">{{detail}}</div>
+{{this.participant.fullName}}
+{{#if this.detail}}
+  <div class="{{if this.online "green"}} detail">{{detail}}</div>
 {{/if}}

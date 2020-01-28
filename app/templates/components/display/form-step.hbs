@@ -1,6 +1,6 @@
-{{#link-to fullLink class="step"}}
-  {{#if step.icon}}<i class="{{step.icon}} icon"></i>{{/if}}
+{{#link-to this.fullLink class="step"}}
+  {{#if this.step.icon}}<i class="{{this.step.icon}} icon"></i>{{/if}}
   <div class="content">
-    <div class="title">{{step.title}}</div>
+    <div class="title">{{this.step.title}}</div>
   </div>
 {{/link-to}}

@@ -1,21 +1,21 @@
 <div class="content">
   <div class="header">
-    {{department.name}}
-    {{#if department.code}}
+    {{this.department.name}}
+    {{#if this.department.code}}
       <div class="ui blue label">
-        {{department.code}}
+        {{this.department.code}}
       </div>
     {{/if}}
   </div>
   <div class="right floated">
-    {{#link-to "account.anatomy.department.edit" department.id}}
+    {{#link-to "account.anatomy.department.edit" this.department.id}}
       {{ember-tooltip
         side="left"
         popperContainer="body"
         text="Edit department"}}
       <i class="edit icon"></i>
     {{/link-to}}
-    {{#confirm-modal deleteContext=department.name tagName="span" as |confirm|}}
+    {{#confirm-modal deleteContext=this.department.name tagName="span" as |confirm|}}
       <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}>
         {{ember-tooltip
           side="left"
@@ -26,6 +26,6 @@
     {{/confirm-modal}}
   </div>
   <div class="meta">
-    <span class="ui small text right floated">Created {{time-ago department.created}} {{#if department.creator.fullName}}by {{department.creator.fullName}}{{/if}}</span>
+    <span class="ui small text right floated">Created {{time-ago this.department.created}} {{#if this.department.creator.fullName}}by {{this.department.creator.fullName}}{{/if}}</span>
   </div>
 </div>
