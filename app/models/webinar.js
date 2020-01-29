@@ -1,6 +1,6 @@
-import Model, { attr } from 'ember-data/model';
+import Model, { attr } from '@ember-data/model';
 
-const SHORT_DESCRIPTION_CHARS = 24;
+const SHORT_DESCRIPTION_CHARS = 48;
 
 export default class WebinarModel extends Model {
   @attr('string') title
