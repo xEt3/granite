@@ -70,10 +70,6 @@ module('Integration | Component | list-item/educate/webinar-item', function (hoo
     assert.dom(this.element, '.webinar-card__title').includesText(webinar.title);
     assert.dom(this.element, '.webinar-card__description').includesText(webinar.description);
     assert.dom('.webinar-card__purchase').doesNotExist();
-    // await triggerEvent('.webinar-card__access i', 'mouseenter');
-    // assertTooltipRendered(assert);
-    // assertTooltipVisible(assert);
-    // assertTooltipContent(assert, { contentString: `${ moment(webinarAuthorization.expiration).diff(new Date(), 'days')} days of 90 remaining` });
 
     assert.dom('a.webinar-card__watch').exists();
     assert.dom('a.webinar-card__assign').exists();

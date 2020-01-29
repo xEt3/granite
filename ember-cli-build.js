@@ -59,5 +59,15 @@ module.exports = function (defaults) {
   fontFiles.map(path =>
     app.import(path, { destDir: 'assets/themes/default/assets/fonts' }, { overwrite: true }));
 
+  if (ENV !== 'production') {
+    // For mirage server parsing
+    app.import('node_modules/qs/dist/qs.js', {
+      using: [{
+        transformation: 'cjs',
+        as:             'qs'
+      }]
+    });
+  }
+
   return app.toTree();
 };

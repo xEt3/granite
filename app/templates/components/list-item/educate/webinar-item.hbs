@@ -2,28 +2,24 @@
   <div class="content">
     <div class="header webinar-card__title">{{@webinar.title}}</div>
   </div>
-  <div class="content">
-    <h4 class="ui sub header">Description</h4>
+  {{#if @authorization}}
+    <EmberTooltip @delay="300" @side="left">
+      {{@webinar.description}}
+    </EmberTooltip>
+  {{else}}
     <div class="content">
-      <div class="summary webinar-card__description">
-        {{#if @authorization}}
-          {{#if this.readMore}}
-            {{@webinar.description}}
-          {{else}}
-            {{@webinar.shortDescription}}
-            {{!-- <button type="button" {{on "click" (toggle-action "readMore" this)}}>Read more</button> --}}
-          {{/if}}
-            <button type="button" {{on "click" (toggle-action "readMore" this)}}>
-              {{if this.readMore "Show less" "Read more"}}
-            </button>
-        {{/if}}
+      <h4 class="ui sub header">Description</h4>
+      <div class="content">
+        <div class="summary webinar-card__description">
+         {{@webinar.description}}
+        </div>
       </div>
     </div>
-  </div>
+  {{/if}}
   <div class="extra content">
     {{#if @authorization}}
       <span class="webinar-card__access text-green">
-        {{this.timeRemaining}}
+        <i class="clock icon"></i><strong>{{this.timeRemaining}}/90 days</strong> remaining
       </span>
       <div class="right floated">
         <a href="#" class="webinar-card__assign">
@@ -35,7 +31,7 @@
             <i class="corner add icon"></i>
           </i>
         </a>
-        <a href="#" class="webinar-card__watch text-green">
+        <a href="#" class="webinar-card__watch text-green" {{on "click" (prevent-default this.watch)}}>
           <EmberTooltip @side="left">
             Watch Webinar
           </EmberTooltip>

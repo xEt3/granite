@@ -31,13 +31,14 @@ export default class PurchaseRoute extends Route {
     const { success, error } = this.data.createStatus('webinarPurchase');
 
     try {
-      await this.ajax.post('/api/v1/webinar/purchase', { data: { ids: intent.data.webinarIds } });
+      var result = await this.ajax.post('/api/v1/webinar/purchase', { data: { ids: intent.data.webinarIds } });
     } catch (err) {
       error(err);
       return this.backToWebinars();
     }
 
     success('Successfully processed transaction.');
+    this.transactions.resolveIntent(intent.idempotencyKey, result);
     this.transitionTo('account.education.webinars.purchased', { queryParams: { idempotencyKey: intent.idempotencyKey } });
   }
 }

@@ -1,6 +1,7 @@
 import { module, test, skip } from 'qunit';
 import { visit, currentURL, click, findAll } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
+import sinon from 'sinon';
 import authenticate from 'granite/tests/helpers/auth';
 
 
@@ -60,25 +61,45 @@ module('Acceptance | education/webinars', function (hooks) {
     assert.equal(currentURL(), '/account/education/webinars');
 
     // Click the first webinar
-    await click('a.webinar-card__purchase');
+    await click('a.webinar-card__purchase .add');
+    await click('a.webinar-card__purchase .add');
     assert.dom('.webinars-cart').exists();
     assert.dom('.sticky-cart__purchase').exists();
-    assert.dom('.webinars-cart .sticky-cart__item-count').includesText('1');
-    assert.dom('.webinars-cart .sticky-cart-expanded-view__total').includesText(`$${webinars[0].price}`);
+    assert.dom('.webinars-cart .sticky-cart__item-count').includesText('2');
+    assert.dom('.webinars-cart .sticky-cart-expanded-view__total').includesText(`$${webinars[0].price + webinars[1].price}`);
     // // Click checkout
     await click('.webinars-cart .sticky-cart__purchase');
     assert.dom('.confirm-modal').exists();
     // // Click confirm
-    await click('.confirm-modal .actions > .green.button');
+    click('.confirm-modal .actions > .green.button');
+    await new Promise(resolve => setTimeout(resolve, 500));
 
-    assert.equal(currentURL(), '/account/education/webinars/purchase');
-    assert.dom('.webinars-purchase').includesText('One moment while we process your transaction...');
+    assert.ok(currentURL().indexOf('/account/education/webinars/purchase?') > -1);
+    assert.dom('.webinars-purchase').includesText('One moment while we process your transaction');
     await new Promise(resolve => setTimeout(resolve, 2000));
-    assert.dom('.webinars-purchase .webinars-purchase__receipt .receipt__line-item').includesText(webinars[0].title);
-    assert.dom('.webinars-purchase .webinars-purchase__receipt .receipt__line-item').includesText(webinars[0].description);
-    assert.dom('.webinars-purchase .webinars-purchase__receipt .receipt__line-item').includesText(webinars[0].price);
-    assert.dom('.webinars-purchase .webinars-purchase__receipt .receipt__line-item .line-item__watch').exists();
-    assert.dom('.webinars-purchase .webinars-purchase__receipt .receipt__line-item .line-item__assign').exists();
+    assert.ok(currentURL().indexOf('/account/education/webinars/purchased') > -1);
+    assert.dom('.webinars-purchased .header').includesText(`Receipt for your webinar purchase on ${moment().format('M/D/YY')}`);
+    // Line items
+    assert.dom('.webinars-purchased .webinars-purchase__receipt .receipt__line-item').includesText(webinars[0].title);
+    assert.dom('.webinars-purchased .webinars-purchase__receipt .receipt__line-item').includesText(webinars[0].description);
+    assert.dom('.webinars-purchased .webinars-purchase__receipt .receipt__line-item').includesText(webinars[0].price);
+    assert.dom('.webinars-purchased .webinars-purchase__receipt .receipt__total').includesText(webinars[0].price + webinars[1].price);
+    // Card information
+    assert.dom('.webinars-purchased .webinars-purchase__receipt .receipt__card-info').exists();
+    assert.dom('.webinars-purchased .webinars-purchase__receipt .receipt__card-info .card-info__number').includesText('411111******1111');
+    assert.dom('.webinars-purchased .webinars-purchase__receipt .receipt__card-info img.card-info__image[src="https://assets.braintreegateway.com/payment_method_logo/visa.png?environment=sandbox"]').exists();
+
+    const windowPrintStub = sinon.stub(window, 'print').returns(true);
+
+    // Print button
+    await click('a.webinars-purchased__print');
+    assert.ok(windowPrintStub.calledOnce, 'window.print calledOnce');
+    windowPrintStub.restore();
+
+    // Link back to webinars
+    assert.dom('.webinars-purchased a[href="/account/education/webinars"].button.green.fluid').exists();
+
+    await this.pauseTest();
   });
 
   skip('shows webinars you have authorization to');

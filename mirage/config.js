@@ -1,11 +1,13 @@
 import moment from 'moment';
 import { Response } from 'ember-cli-mirage';
 import faker from 'faker';
+import qs from 'qs';
 
 const searchModels = [ 'employees', 'departments', 'locations' ];
 
-const parseIncoming = req => {
-  return req.requestBody ? JSON.parse('{"' + decodeURIComponent(req.requestBody).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}') : {};
+const parseIncoming = (req, qsParser) => {
+  const b = req.requestBody;
+  return b ? qsParser ? qs.parse(b) : JSON.parse('{"' + decodeURIComponent(b).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}') : {};
 };
 
 // HACK - mirage is incapable of handling incoming embedded records https://github.com/samselikoff/ember-cli-mirage/issues/797#issuecomment-233115924
@@ -48,13 +50,46 @@ export default function () {
   this.passthrough('https://www.paypal.com/**');
 
   // webinar purchases
-  this.post('/webinar/purchase', (db, request) => {
+  this.post('/webinar/purchase', function (db, request) {
+    const { ids } = parseIncoming(request, true);
+
     const response = {
       total:                 0,
-      webinarAuthorizations: []
+      webinarAuthorizations: [],
+      transaction:           {
+        id:                'g9s5yfxd',
+        status:            'submitted_for_settlement',
+        type:              'sale',
+        currencyIsoCode:   'USD',
+        amount:            '60.00',
+        merchantAccountId: 'granite',
+        customer:          {
+          id:        '123',
+          firstName: 'James',
+          lastName:  'Collins',
+          company:   'Skliff Inc.',
+          email:     'james@aehr.org',
+          phone:     '(123) 123-1234'
+        },
+        creditCard: {
+          token:            '8rkk6vg',
+          bin:              '411111',
+          last4:            '1111',
+          cardType:         'Visa',
+          expirationMonth:  '11',
+          expirationYear:   '2020',
+          customerLocation: 'US',
+          cardholderName:   'ul',
+          imageUrl:         'https://assets.braintreegateway.com/payment_method_logo/visa.png?environment=sandbox',
+          maskedNumber:     '411111******1111',
+          expirationDate:   '11/2020'
+        },
+        paymentInstrumentType: 'credit_card',
+        lineItems:             []
+      }
     };
 
-    request.params.ids.forEach(id => {
+    ids.forEach(id => {
       const webinar = db.webinars.find(id);
 
       if (!webinar) {
@@ -67,15 +102,23 @@ export default function () {
         created:    new Date()
       }));
 
+      response.transaction.lineItems.push({
+        quantity:    '1',
+        name:        webinar.title,
+        description: webinar.description,
+        kind:        'debit',
+        unitAmount:  `${webinar.price}`,
+        totalAmount: `${webinar.price}.00`
+      });
+
       response.total += webinar.price;
     });
 
     return {
       ...response,
-      total:       `${response.total}`,
-      transaction: {}
+      total: `${response.total}`
     };
-  });
+  }, { timing: 1000 });
 
   // Simulate login actions
 

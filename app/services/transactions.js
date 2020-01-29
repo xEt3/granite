@@ -3,6 +3,7 @@ import { A } from '@ember/array';
 
 export default class TransactionsService extends Service {
   intents = A()
+  resolved = A()
 
   /**
    * createIntent
@@ -40,11 +41,12 @@ export default class TransactionsService extends Service {
    * @public
    * Gets a transaction intent from the service
    * @param {String} idempotencyKey idempotency key of the intent
+   * @param {Boolean} resolved Use the resolved store rather than the intent store
    * @returns {Undefined|Object} intent object
    * @memberof TransactionsService
    */
-  getIntent (idempotencyKey) {
-    return this.intents.findBy('idempotencyKey', idempotencyKey);
+  getIntent (idempotencyKey, resolved) {
+    return this[resolved ? 'resolved' : 'intents'].findBy('idempotencyKey', idempotencyKey);
   }
 
   /**
@@ -52,10 +54,32 @@ export default class TransactionsService extends Service {
    * @public
    * Removes an intent from the service
    * @param {String} idempotencyKey idempotency key of the intent
+   * @param {Boolean} resolved Use the resolved store rather than the intent store
    * @returns {void}
    * @memberof TransactionsService
    */
-  removeIntent (idempotencyKey) {
-    this.intents.removeObject(this.getIntent(idempotencyKey));
+  removeIntent (idempotencyKey, resolved) {
+    this[resolved ? 'resolved' : 'intents'].removeObject(this.getIntent(idempotencyKey));
+  }
+
+  /**
+   * resolveIntent
+   * @public
+   * Moves an intent into a resolved intent
+   * @param {String} idempotencyKey idempotency key of the intent
+   * @param {Object} update Data to update before moving the intent
+   * @returns {void}
+   * @memberof TransactionsService
+   */
+  resolveIntent (idempotencyKey, update = {}) {
+    const intent = this.getIntent(idempotencyKey);
+    this.intents.removeObject(intent);
+    this.resolved.addObject({
+      ...intent,
+      data: {
+        ...intent.data,
+        ...update
+      }
+    });
   }
 }
