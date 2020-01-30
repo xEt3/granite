@@ -250,6 +250,7 @@ Router.map(function () {
       this.route('webinars', function () {
         this.route('purchase');
         this.route('purchased');
+        this.route('stream', { path: '/:authorization_id/stream' });
       });
     });
   });

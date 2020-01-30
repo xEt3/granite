@@ -16,10 +16,4 @@ export default class WebinarItemComponent extends Component {
   get inCart () {
     return this.args.itemsInCart ? this.args.itemsInCart.findBy('id', (this.args.webinar || {}).id) : false;
   }
-  @action
-  async watch () {
-    let url = await this.ajax.request(`/api/v1/webinar-authorization/${this.args.authorization.id}/playback`);
-    console.log(url);
-  }
-
 }

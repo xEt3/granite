@@ -125,6 +125,7 @@
     "ember-source": "~3.16.0",
     "ember-tooltips": "^3.4.0",
     "ember-truth-helpers": "2.0.0",
+    "ember-videojs": "^0.0.24",
     "emojify.js": "~1.1.0",
     "eslint": "^6.5.1",
     "eslint-plugin-ember": "^7.7.2",
@@ -137,7 +138,8 @@
     "scrollreveal": "^4.0.0",
     "semantic-ui-calendar": "^0.0.8",
     "semantic-ui-ember": "git+https://github.com/Semantic-Org/Semantic-UI-Ember.git#6e82f5549f8542663867dd7930260d04edbb92f9",
-    "semantic-ui-less": "2.4.1"
+    "semantic-ui-less": "2.4.1",
+    "video.js": "^7.6.6"
   },
   "engines": {
     "node": "8.* || >= 10.*",
