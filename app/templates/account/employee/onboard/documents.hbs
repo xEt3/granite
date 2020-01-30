@@ -3,8 +3,8 @@
 </h2>
 
 <form class="ui form" {{action "saveAndContinue" on="submit"}}>
-  <div class="ui two {{unless employee.hireDate "disabled"}} fields">
-    {{#unless employee.hireDate}}
+  <div class="ui two {{unless this.employee.hireDate "disabled"}} fields">
+    {{#unless this.employee.hireDate}}
       {{ember-tooltip
         side="top"
         popperContainer="body"
@@ -18,16 +18,16 @@
             side="right"
             popperContainer="body"
           }}
-            Automated I9 collection sends the employee a link to fill out the I9 section one on the start of their work day on {{time employee.hireDate "M/D/YY"}}. After the employee fills it out, we will notify you.
+            Automated I9 collection sends the employee a link to fill out the I9 section one on the start of their work day on {{time this.employee.hireDate "M/D/YY"}}. After the employee fills it out, we will notify you.
           {{/ember-tooltip}}
         </i>
       </label>
       {{ui-checkbox
         id="i9-collect"
         class="toggle"
-        label=(if employee.autoI9Collection "Collect I9" "Do not collect I9")
-        checked=employee.autoI9Collection
-        onChange=(action (mut employee.autoI9Collection))}}
+        label=(if this.employee.autoI9Collection "Collect I9" "Do not collect I9")
+        checked=this.employee.autoI9Collection
+        onChange=(action (mut this.employee.autoI9Collection))}}
     </div>
     <div class="field">
       <label for="w4-collect">
@@ -37,31 +37,31 @@
             side="right"
             popperContainer="body"
           }}
-            Automated W4 collection sends the employee a link to fill out the most current W4 form on the start of their work day on {{time employee.hireDate "M/D/YY"}}. After the employee fills it out, we will notify you.
+            Automated W4 collection sends the employee a link to fill out the most current W4 form on the start of their work day on {{time this.employee.hireDate "M/D/YY"}}. After the employee fills it out, we will notify you.
           {{/ember-tooltip}}
         </i>
       </label>
       {{ui-checkbox
         id="w4-collect"
         class="toggle"
-        label=(if employee.autoW4Collection "Collect W4" "Do not collect W4")
-        checked=employee.autoW4Collection
-        onChange=(action (mut employee.autoW4Collection))}}
+        label=(if this.employee.autoW4Collection "Collect W4" "Do not collect W4")
+        checked=this.employee.autoW4Collection
+        onChange=(action (mut this.employee.autoW4Collection))}}
     </div>
   </div>
 
   <div class="ui divider"></div>
 
-  {{#if suggestedDocumentsFiltered}}
+  {{#if this.suggestedDocumentsFiltered}}
     <h3 class="ui header">
       Suggested Documents
       <div class="small light text">
-        Here are some documents that {{employee.firstName}} might need.
+        Here are some documents that {{this.employee.firstName}} might need.
       </div>
     </h3>
 
     <div class="ui divided list">
-      {{#each suggestedDocumentsFiltered as |docSug|}}
+      {{#each this.suggestedDocumentsFiltered as |docSug|}}
         {{list-item/document-suggestion
           docSug
           class="item"
@@ -70,7 +70,7 @@
     </div>
   {{/if}}
 
-  {{#if onboardingDocumentsFiltered}}
+  {{#if this.onboardingDocumentsFiltered}}
     <h3 class="ui header">
       Onboarding Documents
       <div class="small light text">
@@ -79,7 +79,7 @@
     </h3>
 
     <div class="ui divided list">
-      {{#each onboardingDocumentsFiltered as |docSug|}}
+      {{#each this.onboardingDocumentsFiltered as |docSug|}}
         {{list-item/document-suggestion
           docSug
           class="item"
@@ -93,7 +93,7 @@
     <span class="small text">
       {{#input/document-selection-modal
         title="Add a file"
-        selection=docModalSelection
+        selection=this.docModalSelection
         autoTag="Onboarding"
         onSelected=(action "addAssignment")
         as |execute|}}
@@ -102,7 +102,7 @@
     </span>
   </h3>
   <div class="ui divided list">
-    {{#each assignments as |assignment|}}
+    {{#each this.assignments as |assignment|}}
       {{list-item/document-assignment
         assignment
         class="item"
@@ -115,7 +115,7 @@
 
   <div class="ui divider"></div>
 
-  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}
     Next
   {{/form/action-button}}
 </form>

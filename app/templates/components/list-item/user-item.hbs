@@ -1,28 +1,28 @@
 <div class="ui tiny rounded image">
-  {{display/employee-picture url=user.employee.picture employeeId=user.employee.id}}
+  {{display/employee-picture url=this.user.employee.picture employeeId=this.user.employee.id}}
 </div>
 <div class="content">
   <div class="header">
-    {{user.fullName}}
-    {{#if user.inactive}}
+    {{this.user.fullName}}
+    {{#if this.user.inactive}}
       <label class="ui red label">Inactive</label>
     {{/if}}
   </div>
   <div class="right floated">
-    {{#link-to "account.anatomy.company-users.edit" user.id}}
+    {{#link-to "account.anatomy.company-users.edit" this.user.id}}
       {{ember-tooltip
         side="left"
         popperContainer="body"
         text="Edit user"}}
       <i class="edit icon"></i>
     {{/link-to}}
-    {{#if user.inactive}}
+    {{#if this.user.inactive}}
       <a href="#" {{action "toggleInactiveState" false}}>
         {{ember-tooltip
           side="left"
           popperContainer="body"
           text="Reactivate user"}}
-        <i class="{{if working "loading spinner" "undo"}} icon"></i>
+        <i class="{{if this.working "loading spinner" "undo"}} icon"></i>
       </a>
     {{else}}
       <a href="#" class="text-danger" {{action "openTransferModal"}}>
@@ -30,30 +30,30 @@
           side="left"
           popperContainer="body"
           text="Deactivate user"}}
-        <i class="{{if working "loading spinner" "times"}} icon"></i>
+        <i class="{{if this.working "loading spinner" "times"}} icon"></i>
       </a>
     {{/if}}
   </div>
   <div class="meta">
-    <span>{{user.email}}</span>
-    <span class="ui small text right floated">Created {{time-ago user.created}} on {{time user.created}}</span>
+    <span>{{this.user.email}}</span>
+    <span class="ui small text right floated">Created {{time-ago this.user.created}} on {{time this.user.created}}</span>
   </div>
   <div class="extra">
-    {{#if user.activatedOn}}
-      <i class="check icon"></i>Activated {{time-ago user.activatedOn}}
+    {{#if this.user.activatedOn}}
+      <i class="check icon"></i>Activated {{time-ago this.user.activatedOn}}
     {{else}}
-      <span class="text-green"><i class="mail outline icon"></i>Activation email sent {{time-ago user.created}}</span>
+      <span class="text-green"><i class="mail outline icon"></i>Activation email sent {{time-ago this.user.created}}</span>
     {{/if}}
   </div>
 </div>
 
-{{#ui-modal name="modal__transfer-projects" id=modalId class="small form"}}
+{{#ui-modal name="modal__transfer-projects" id=this.modalId class="small form"}}
   <div class="header">
-    Transfer {{user.fullName}}'s projects
+    Transfer {{this.user.fullName}}'s projects
   </div>
   <div class="content">
     <div class="ui relaxed divided list">
-      {{#each projects as |project|}}
+      {{#each this.projects as |project|}}
         <div class="item">
           <div class="content">
             <div class="header">
@@ -68,17 +68,17 @@
           </div>
         </div>
       {{else}}
-        {{user.firstName}} has no outstanding projects.
+        {{this.user.firstName}} has no outstanding projects.
       {{/each}}
     </div>
 
-    {{#if projects.length}}
-      <label for={{dropdownId}}>Transfer to</label>
-      {{#ui-dropdown class="fluid selection" id=dropdownId selected=newOwner onChange=(action (mut newOwner)) as |execute mapper|}}
+    {{#if this.projects.length}}
+      <label for={{this.dropdownId}}>Transfer to</label>
+      {{#ui-dropdown class="fluid selection" id=this.dropdownId selected=this.newOwner onChange=(action (mut this.newOwner)) as |execute mapper|}}
         <div class="default text">New Owner</div>
         <i class="dropdown icon"></i>
         <div class="menu">
-          {{#each users as |user|}}
+          {{#each this.users as |user|}}
             <div data-value={{map-value mapper user.employee}} class="item">
               {{user.fullName}}
             </div>
@@ -89,6 +89,6 @@
   </div>
   <div class="actions">
     <button class="ui inverted red button" {{action "cancel"}}>Cancel</button>
-    <button class="ui primary button" {{action (pipe (action "transferProjects")(action "toggleInactiveState" true))}} disabled={{disableDeactivate}}>Confirm Deactivation</button>
+    <button class="ui primary button" {{action (pipe (action "transferProjects")(action "toggleInactiveState" true))}} disabled={{this.disableDeactivate}}>Confirm Deactivation</button>
   </div>
 {{/ui-modal}}

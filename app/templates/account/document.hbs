@@ -9,8 +9,8 @@
         <div class="menu">
           <div class="item">
             <a href="#" {{action (pipe
-              (action "openAssignmentModal" file)
-              (action remapToModels)
+              (action "openAssignmentModal" this.file)
+              (action this.remapToModels)
               (action "save")
               (action "closeAssignmentModal")
             )}}>
@@ -19,7 +19,7 @@
           </div>
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
-            {{#confirm-modal deleteContext=(concat model.title " - " model.mimeType) as |confirm|}}
+            {{#confirm-modal deleteContext=(concat this.model.title " - " this.model.mimeType) as |confirm|}}
               <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}><i class="trash icon"></i>Delete File</a>
             {{/confirm-modal}}
           </div>
@@ -31,19 +31,19 @@
   <div class="ui raised padded segment container clearfix">
     <hgroup>
       <h2>
-        {{display/icon-for-file model}}
-        {{if model.title model.title "Document"}}
-        {{#if model.tags}}
-          {{#each model.tags as |tag|}}
+        {{display/icon-for-file this.model}}
+        {{if this.model.title this.model.title "Document"}}
+        {{#if this.model.tags}}
+          {{#each this.model.tags as |tag|}}
             <span class="ui tiny label">{{tag}}</span>
           {{/each}}
         {{/if}}
-        <a href={{model.url}} target="_blank" rel="noopener" class="right floated" download><i class="download fitted icon"></i></a>
+        <a href={{this.model.url}} target="_blank" rel="noopener" class="right floated" download><i class="download fitted icon"></i></a>
       </h2>
     </hgroup>
 
     <span class="ui small text">
-      Created by {{model.creator.fullName}} on {{time model.created}}
+      Created by {{this.model.creator.fullName}} on {{time this.model.created}}
     </span>
 
     <div class="ui divider"></div>
@@ -54,12 +54,12 @@
 
 {{#ui-modal name="modal__file-assignment" id="modal__file-assignment" class="small form"}}
   <div class="header">
-    Assign {{model.title}}
+    Assign {{this.model.title}}
   </div>
   <div class="content">
     {{quick-form
-      fileAssignmentForm
-      fileAssignment
+      this.fileAssignmentForm
+      this.fileAssignment
       this
       tagName="div"}}
 
@@ -67,29 +67,29 @@
       {{ui-checkbox
         class="toggle"
         label="Assign for a future Date"
-        checked=isExpanded
+        checked=this.isExpanded
         onChange=(action (toggle "isExpanded" this))}}
     </div>
   </div>
 
-  {{#if isExpanded}}
+  {{#if this.isExpanded}}
     {{ui-calendar
       class="field"
       type="date"
       inline=true
-      onChange=(action (mut model.effectiveOn))}}
+      onChange=(action (mut this.model.effectiveOn))}}
   {{/if}}
 
   <div class="actions">
     <button class="ui red button" {{action "respondAssignment" false}}>
       Cancel
     </button>
-    <button class="ui primary right labeled icon {{if working "loading"}} button" {{action "respondAssignment" true}} disabled={{lt fileAssignment.employees.length 1}}>
+    <button class="ui primary right labeled icon {{if this.working "loading"}} button" {{action "respondAssignment" true}} disabled={{lt this.fileAssignment.employees.length 1}}>
       Assign
-      {{#if (gte fileAssignment.employees.length 2)}}
-        To {{fileAssignment.employees.length}} Employees
-      {{else if (eq fileAssignment.employees.length 1)}}
-        To {{fileAssignment.employees.firstObject.firstName}}
+      {{#if (gte this.fileAssignment.employees.length 2)}}
+        To {{this.fileAssignment.employees.length}} Employees
+      {{else if (eq this.fileAssignment.employees.length 1)}}
+        To {{this.fileAssignment.employees.firstObject.firstName}}
       {{/if}}
       <i class="add user icon"></i>
     </button>

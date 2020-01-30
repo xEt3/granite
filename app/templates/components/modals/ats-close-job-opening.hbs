@@ -1,14 +1,14 @@
 {{#if hasBlock}}
-  {{yield startConfirmation}}
+  {{yield this.startConfirmation}}
 {{/if}}
 
-{{#ui-modal name="profile" id=modalId}}
+{{#ui-modal name="profile" id=this.modalId}}
   <div class="header">
     Make sure to close your manual applicant sources!
   </div>
   <div class="content">
     <ul class="ui list">
-      {{#each sourcesToClose as |source|}}
+      {{#each this.sourcesToClose as |source|}}
         <li>{{source.name}}</li>
       {{/each}}
     </ul>

@@ -18,7 +18,7 @@
           {{get (await model.actionSeverity) "name"}} on
         {{/if}}
         {{time
-          (if model.issuedOn model.issuedOn model.created)
+          (if this.model.issuedOn this.model.issuedOn this.model.created)
           "MMMM Do YYYY"}}
       </span>
       {{#ui-dropdown class="item icon top right pointing right floated"}}
@@ -55,17 +55,17 @@
 {{#ui-modal name="modal__corrective-action--followup" id="modal__corrective-action--followup" class="small form"}}
   <div class="header">
     Following up to
-    {{#if (await model.actionSeverity)}}
-      {{get (await model.actionSeverity) "name"}} on
+    {{#if (await this.model.actionSeverity)}}
+      {{get (await this.model.actionSeverity) "name"}} on
     {{/if}}
     {{time
-      (if model.issuedOn model.issuedOn model.created)
+      (if this.model.issuedOn this.model.issuedOn this.model.created)
       "MMMM Do YYYY"}}
   </div>
   <div class="content">
     {{quick-form
-      followupForm
-      followup
+      this.followupForm
+      this.followup
       this
       tagName="div"}}
   </div>

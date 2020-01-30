@@ -8,30 +8,30 @@
   <tbody>
     <tr>
       <th>Date of Transaction</th>
-      <td>{{time model.createdAt "MM-DD-YYYY"}}</td>
+      <td>{{time this.model.createdAt "MM-DD-YYYY"}}</td>
     </tr>
     <tr>
       <th class="th__vertical-table-header">Amount</th>
-      <td>${{model.amount}}</td>
+      <td>${{this.model.amount}}</td>
     </tr>
     <tr>
       <th class="th__vertical-table-header">Payment Method</th>
       <td>
-        <img class="ui mini image payment-image" alt="Payment Method" src={{paymentMethod.image}}>
-        {{paymentMethod.method}}
+        <img class="ui mini image payment-image" alt="Payment Method" src={{this.paymentMethod.image}}>
+        {{this.paymentMethod.method}}
       </td>
     </tr>
     <tr>
       <th class="th__vertical-table-header">Description</th>
       <td>
-        {{if isProrateCharge "Charge for proration" "Charge for monthly billing"}}
+        {{if this.isProrateCharge "Charge for proration" "Charge for monthly billing"}}
       </td>
     </tr>
     <tr>
       <th class="th__vertical-table-header">Billing Period</th>
       <td>
-        {{time model.subscription.billingPeriodStartDate "MM/DD/YYYY"}} -
-        {{time model.subscription.billingPeriodEndDate "MM/DD/YYYY"}}
+        {{time this.model.subscription.billingPeriodStartDate "MM/DD/YYYY"}} -
+        {{time this.model.subscription.billingPeriodEndDate "MM/DD/YYYY"}}
       </td>
     </tr>
   </tbody>

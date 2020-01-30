@@ -1,23 +1,23 @@
-{{#each thread.between as |participant|}}
+{{#each this.thread.between as |participant|}}
   {{messaging/thread-participant
     participant
-    connectedUsers=socket.connectedUsers
-    user=auth.user.employee
+    connectedUsers=this.socket.connectedUsers
+    user=this.auth.user.employee
     class="messaging-thread__participant"}}
 {{/each}}
 
 <div class="ui divider"></div>
 
 {{#messaging/messages-pane
-  messages
-  retrievalMax=retrievalMax
-  onScrolledToTop=(action scrolledToTop)
+  this.messages
+  retrievalMax=this.retrievalMax
+  onScrolledToTop=(action this.scrolledToTop)
 }}
   <div class="ui list">
-    {{#each messages as |message|}}
+    {{#each this.messages as |message|}}
       {{messaging/message-item
         message
-        user=auth.user}}
+        user=this.auth.user}}
     {{else}}
       <h2 class="ui center aligned light text header">There's nothing here yet!</h2>
     {{/each}}
@@ -26,29 +26,29 @@
 
 <div class="ui divider"></div>
 
-<form class="ui form messaging-thread__message-form" {{action sendMessage on="submit"}}>
+<form class="ui form messaging-thread__message-form" {{action this.sendMessage on="submit"}}>
   <div class="ui stackable grid">
     <div class="twelve wide column field">
       <div class="ui icon input">
         {{input
           type="text"
-          value=message
-          placeholder=(if fileIsAdded "Add a comment to this file..." "Type a message...")
+          value=this.message
+          placeholder=(if this.fileIsAdded "Add a comment to this file..." "Type a message...")
         }}
 
         <i class="paperclip icon dropzone__attach-trigger" role="button" {{action "removeFile"}}></i>
       </div>
     </div>
     <div class="four wide column field">
-      {{#form/action-button type="submit" disabled=(not (or message fileIsAdded)) class="ui fluid green button"}}
-        Send{{if fileIsAdded " file"}}
+      {{#form/action-button type="submit" disabled=(not (or this.message this.fileIsAdded)) class="ui fluid green button"}}
+        Send{{if this.fileIsAdded " file"}}
       {{/form/action-button}}
     </div>
   </div>
 
   {{drop-zone
-    id=dropzoneId
-    url=fileEndpoint
+    id=this.dropzoneId
+    url=this.fileEndpoint
     class="dropzone__messaging"
     uploadMultiple=false
     acceptedFiles=".doc,.docx,.pdf,.rtf,.txt,.jpg,.png,.gif,.xls,.xlsx"
@@ -59,7 +59,7 @@
     thumbnailHeight=100
     thumbnailWidth=100
     thumbnailMethod="contain"
-    headers=(hash X-API-Token=auth.token)
+    headers=(hash X-API-Token=this.auth.token)
     addedfile=(action "addedFile")
     error=(action "uploadError")
     removedfile=(action "didRemoveFile")

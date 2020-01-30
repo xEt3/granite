@@ -17,10 +17,10 @@
 </hgroup>
 <div class="ui divider"></div>
   <div class="ui divided items">
-    {{#each model as |user|}}
+    {{#each this.model as |user|}}
       {{list-item/user-item
         user
-        allUsers
+        this.allUsers
         onNotify=(route-action "notify")
         onRefresh=(route-action "refresh")
       }}
@@ -29,4 +29,4 @@
     {{/each}}
   </div>
 
-{{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}
+{{elements/x-pagination page=(readonly this.page) pages=(readonly this.pages) onchange=(action (mut this.page))}}

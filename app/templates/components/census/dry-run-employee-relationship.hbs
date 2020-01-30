@@ -1,12 +1,12 @@
 <li>
   <strong>{{key}}:</strong>
-  {{#if value.firstObject}}
+  {{#if this.value.firstObject}}
     <ul>
-      {{#each value as |subValue|}}
+      {{#each this.value as |subValue|}}
         <li>{{to-string subValue}}</li>
       {{/each}}
     </ul>
   {{else}}
-    {{to-string (or (or relationship.fullName relationship.name) value)}}
+    {{to-string (or (or this.relationship.fullName this.relationship.name) this.value)}}
   {{/if}}
 </li>

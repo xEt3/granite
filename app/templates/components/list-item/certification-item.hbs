@@ -1,17 +1,17 @@
-{{#link-to "account.employee.index.education.certification" model.id class="item"}}
+{{#link-to "account.employee.index.education.certification" this.model.id class="item"}}
   <div class="content">
     <h3 class="header">
-      {{model.name}}
-      {{#if model.renews}}
+      {{this.model.name}}
+      {{#if this.model.renews}}
         <small class="light text">
-          Renewal {{time-ago model.nextRenewalDate}} on {{time model.nextRenewalDate "M/D/YY"}}
+          Renewal {{time-ago this.model.nextRenewalDate}} on {{time this.model.nextRenewalDate "M/D/YY"}}
         </small>
       {{/if}}
     </h3>
     <div class="meta">
-      {{#if model.requiresDocument}}
-        <span class="ui tiny {{if model.document "green" "red"}} label">
-          {{#if model.document}}
+      {{#if this.model.requiresDocument}}
+        <span class="ui tiny {{if this.model.document "green" "red"}} label">
+          {{#if this.model.document}}
             <i class="check icon"></i>Document uploaded
           {{else}}
             Document required
@@ -21,6 +21,6 @@
     </div>
   </div>
   <div class="right content">
-    <span class="ui small text">Added {{time-ago model.created}} by {{model.creator.fullName}}</span>
+    <span class="ui small text">Added {{time-ago this.model.created}} by {{this.model.creator.fullName}}</span>
   </div>
 {{/link-to}}

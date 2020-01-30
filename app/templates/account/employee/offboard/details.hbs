@@ -6,14 +6,14 @@
         class="field"
         type="date"
         label="When will this employee be terminated?"
-        dateValue=model.terminatedOn
-        onChange=(action (mut model.terminatedOn))}}
+        dateValue=this.model.terminatedOn
+        onChange=(action (mut this.model.terminatedOn))}}
     </div>
 
     <div class="two fields">
       <div class="field">
         <label for="termination-reason">Separation Category</label>
-        {{#ui-dropdown id="termination-reason" class="search selection" selected=model.terminationReason onChange=(action (mut model.terminationReason))}}
+        {{#ui-dropdown id="termination-reason" class="search selection" selected=this.model.terminationReason onChange=(action (mut this.model.terminationReason))}}
           <div class="default text">Voluntary or Involuntary</div>
           <i class="dropdown icon"></i>
           <div class="menu">
@@ -28,7 +28,7 @@
       </div>
       <div class="field">
         <label for="eligible-for-rehire">Eligible for Rehire</label>
-        {{ui-checkbox class="toggle" label=(if model.eligibleForRehire "Eligible" "Not Eligible") checked=model.eligibleForRehire onChange=(action (mut model.eligibleForRehire))}}
+        {{ui-checkbox class="toggle" label=(if this.model.eligibleForRehire "Eligible" "Not Eligible") checked=this.model.eligibleForRehire onChange=(action (mut this.model.eligibleForRehire))}}
       </div>
     </div>
   </div>
@@ -39,5 +39,5 @@
   </div>
 
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Next{{/form/action-button}}
 </form>

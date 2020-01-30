@@ -1,5 +1,5 @@
 <div class="ui form">
-  {{#liquid-if showTable}}
+  {{#liquid-if this.showTable}}
     <table class="ui very basic celled table">
       <thead>
         <tr>
@@ -8,18 +8,18 @@
         </tr>
       </thead>
       <tbody>
-        {{#each customFieldArray as |field|}}
+        {{#each this.customFieldArray as |field|}}
           {{tables/custom-field key=field.key value=field.value onValueChange=(action "editValue") onDelete=(action "deleteCustomField")}}
         {{/each}}
 
-        {{#if adding}}
+        {{#if this.adding}}
           <tr>
             <td class="ui minimally padded">
               {{#auto-focus}}
-                {{input type="text" value=pendingCustomFieldName placeholder="Allergies"}}
+                {{input type="text" value=this.pendingCustomFieldName placeholder="Allergies"}}
               {{/auto-focus}}
             </td>
-            <td class="ui minimally padded">{{input type="text" value=pendingCustomFieldValue placeholder="Peanuts, Gluten"}}</td>
+            <td class="ui minimally padded">{{input type="text" value=this.pendingCustomFieldValue placeholder="Peanuts, Gluten"}}</td>
           </tr>
           <tr>
             <td class="center aligned text" colspan="2">
@@ -36,7 +36,7 @@
     </h2>
   {{/liquid-if}}
 
-  {{#liquid-unless adding class="ui header clearfix"}}
+  {{#liquid-unless this.adding class="ui header clearfix"}}
     <button class="ui fluid button" {{action "beginAddingCustomField"}} >
       <i class="plus icon"></i>
         Add A Custom Field

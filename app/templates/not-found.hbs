@@ -6,9 +6,9 @@
 
     <p class="hero__subcontent">
       We could not find that page.<br />
-      {{#if fromError.responseText}}
+      {{#if this.fromError.responseText}}
         <small>
-          <code>{{fromError.responseText}}</code> That's all we know.
+          <code>{{this.fromError.responseText}}</code> That's all we know.
         </small>
       {{/if}}
     </p>

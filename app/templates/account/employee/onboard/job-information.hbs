@@ -4,15 +4,15 @@
     <div class="two fields">
       <div class="field">
         <label for="job-title">Job Title</label>
-        {{validated-input type="text" model=model valuePath="jobTitle" placeholder="Job Title" id="job-title"}}
+        {{validated-input type="text" model=this.model valuePath="jobTitle" placeholder="Job Title" id="job-title"}}
       </div>
       {{ui-calendar
         class="field"
         type="date"
         startMode="year"
         label="Hire Date"
-        dateValue=model.hireDate
-        onChange=(action (mut model.hireDate))}}
+        dateValue=this.model.hireDate
+        onChange=(action (mut this.model.hireDate))}}
     </div>
   </div>
   <div class="ui equal width basic form segment">
@@ -20,14 +20,14 @@
       <div class="field">
         <label for="exemption-status">Exemption Status</label>
         Non-exempt
-        {{ui-checkbox class="toggle" label="Exempt" checked=model.exempt onChange=(action (mut model.exempt))}}
+        {{ui-checkbox class="toggle" label="Exempt" checked=this.model.exempt onChange=(action (mut this.model.exempt))}}
       </div>
       <div class="field">
         <label for="pay-rate">Pay Rate</label>
         <div class="ui left icon input pay-rate-number">
-          {{input type="number" id="pay-rate" value=model.payRate}}
+          {{input type="number" id="pay-rate" value=this.model.payRate}}
           <i class="dollar icon"></i>
-          {{#ui-dropdown class="inline pay-rate-unit" selected=model.payRateType onChange=(action (mut model.payRateType))}}
+          {{#ui-dropdown class="inline pay-rate-unit" selected=this.model.payRateType onChange=(action (mut this.model.payRateType))}}
             <div class="default text">Unit</div>
             <i class="dropdown icon"></i>
             <div class="menu">
@@ -46,19 +46,19 @@
       </div>
       <div class="field">
         <label for="workers-comp">Workers Comp Class Code</label>
-        {{input type="text" id="workers-comp" value=model.workersCompClassCode}}
+        {{input type="text" id="workers-comp" value=this.model.workersCompClassCode}}
       </div>
     </div>
   </div>
-  <div class={{if auth.user.company.collectEEO "ui two fields" "field"}}>
+  <div class={{if this.auth.user.company.collectEEO "ui two fields" "field"}}>
     <div class="field">
       <label for="job-description">Job Description</label>
-      {{#ui-dropdown class="selection" selected=model.jobDescription onChange=(action (mut model.jobDescription)) as |execute mapper|}}
+      {{#ui-dropdown class="selection" selected=this.model.jobDescription onChange=(action (mut this.model.jobDescription)) as |execute mapper|}}
         <div class="default text">Job Description</div>
         <i class="dropdown icon"></i>
         <div class="menu">
           <div class="item" data-value="">No Job Description</div>
-          {{#each jobDescriptions as |jobDescription|}}
+          {{#each this.jobDescriptions as |jobDescription|}}
             <div class="item" data-value={{map-value mapper jobDescription}}>
               {{jobDescription.title}}
             </div>
@@ -66,18 +66,18 @@
         </div>
       {{/ui-dropdown}}
     </div>
-    {{#if auth.user.company.collectEEO}}
+    {{#if this.auth.user.company.collectEEO}}
       <div class="field">
         <label for="eeo-job-category">EEO Job Category</label>
         {{#ui-dropdown
           class="selection"
-          selected=model.eeoJobCategory
-          onChange=(action (mut model.eeoJobCategory))
+          selected=this.model.eeoJobCategory
+          onChange=(action (mut this.model.eeoJobCategory))
         }}
           <div class="default text">-- Select EEO Job Category --</div>
           <i class="dropdown icon"></i>
           <div class="menu">
-            {{#each eeoJobCategories as |category|}}
+            {{#each this.eeoJobCategories as |category|}}
               <div class="item" data-value={{category}}>
                 {{category}}
               </div>
@@ -89,12 +89,12 @@
   </div>
   <div class="field">
     <label for="job-location">Location</label>
-    {{#ui-dropdown class="search selection" selected=model.location onChange=(action (mut model.location)) as |execute mapper|}}
+    {{#ui-dropdown class="search selection" selected=this.model.location onChange=(action (mut this.model.location)) as |execute mapper|}}
       <div class="default text">Location</div>
       <i class="dropdown icon"></i>
       <div class="menu">
         <div class="item" data-value="">No Location</div>
-        {{#each locations as |location|}}
+        {{#each this.locations as |location|}}
           <div class="item" data-value={{map-value mapper location}}>
             {{location.name}}
           </div>
@@ -104,12 +104,12 @@
   </div>
   <div class="field">
     <label for="job-department">Department</label>
-    {{#ui-dropdown class="search selection" selected=model.department onChange=(action (mut model.department)) as |execute mapper|}}
+    {{#ui-dropdown class="search selection" selected=this.model.department onChange=(action (mut this.model.department)) as |execute mapper|}}
       <div class="default text">Department</div>
       <i class="dropdown icon"></i>
       <div class="menu">
         <div class="item" data-value="">No Department</div>
-        {{#each departments as |department|}}
+        {{#each this.departments as |department|}}
           <div class="item" data-value={{map-value mapper department}}>
             {{department.name}}
           </div>
@@ -119,12 +119,12 @@
   </div>
   <div class="field">
     <label for="supervisor">Supervisor</label>
-    {{#ui-dropdown class="search selection" selected=model.supervisor onChange=(action (mut model.supervisor)) as |execute mapper|}}
+    {{#ui-dropdown class="search selection" selected=this.model.supervisor onChange=(action (mut this.model.supervisor)) as |execute mapper|}}
       <div class="default text">Supervisor</div>
       <i class="dropdown icon"></i>
       <div class="menu">
         <div class="item" data-value="">No Supervisor</div>
-        {{#each employees as |supervisor|}}
+        {{#each this.employees as |supervisor|}}
           <div class="item" data-value={{map-value mapper supervisor}}>
             {{supervisor.fullName}}
           </div>
@@ -134,5 +134,5 @@
   </div>
 
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Next{{/form/action-button}}
 </form>

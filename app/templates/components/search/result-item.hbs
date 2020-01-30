@@ -1,21 +1,21 @@
-{{#if isEmployee}}
+{{#if this.isEmployee}}
   <div class="ui tiny rounded image">
     {{display/employee-picture
-      url=_picture
-      employeeId=__id
+      url=this._picture
+      employeeId=this.__id
       class="search-result-item__image"}}
   </div>
 {{/if}}
-{{#if (or _title _description)}}
+{{#if (or this._title this._description)}}
   <div class="content">
-    {{#if _title}}
+    {{#if this._title}}
       <div class="search-result-item__title header">
-        {{_title}}
+        {{this._title}}
       </div>
     {{/if}}
-    {{#if _description}}
+    {{#if this._description}}
       <div class="search-result-item__description meta">
-        {{_description}}
+        {{this._description}}
       </div>
     {{/if}}
   </div>

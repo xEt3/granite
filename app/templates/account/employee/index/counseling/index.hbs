@@ -1,6 +1,6 @@
 {{stateful-intro-js
-  user=auth.user
-  steps=intros
+  user=this.auth.user
+  steps=this.intros
   start-if=true
   hintKey="counseling-index"}}
 
@@ -30,7 +30,7 @@
   <div class="ui divider"></div>
 
   {{display/resource-list
-    model
+    this.model
     "list-item/employee-issue-item"
     linkTo="account.employee.index.counseling.issue"
     linkClass="item"
@@ -38,7 +38,7 @@
     class="ui divided link items"}}
 
   {{elements/x-pagination
-    page=(readonly page)
-    pages=(readonly pages)
-    onchange=(action (mut page))}}
+    page=(readonly this.page)
+    pages=(readonly this.pages)
+    onchange=(action (mut this.page))}}
 </div>

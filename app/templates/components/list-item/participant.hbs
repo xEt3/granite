@@ -1,26 +1,26 @@
-{{#if participant.company}}
+{{#if this.participant.company}}
   {{! is employee }}
   {{#link-to
     "account.employee"
-    participant.id
+    this.participant.id
     class="ui image label"
   }}
     {{display/employee-picture
-      url=participant.picture employeeId=participant.id
+      url=this.participant.picture employeeId=this.participant.id
     }}
-    {{participant.fullName}}
-    {{#if detail}}
+    {{this.participant.fullName}}
+    {{#if this.detail}}
       <div class="detail">{{detail}}</div>
     {{/if}}
   {{/link-to}}
 {{else}}
   <span class="ui image label">
     {{display/employee-picture
-      url=participant.picture
-      employeeId=participant.id
+      url=this.participant.picture
+      employeeId=this.participant.id
     }}
-    {{participant.fullName}}
-    {{#if detail}}
+    {{this.participant.fullName}}
+    {{#if this.detail}}
       <div class="detail">{{detail}}</div>
     {{/if}}
   </span>

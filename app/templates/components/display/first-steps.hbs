@@ -1,20 +1,20 @@
-{{#link-to step.link class=linkClass}}
-  {{#if completed}}
+{{#link-to this.step.link class=this.linkClass}}
+  {{#if this.completed}}
     <i class="massive check icon first-steps-card__check-icon"></i>
   {{/if}}
 
   <h3 class="first-steps-card__title">
-    <i class="{{step.icon}} icon"></i>
-    {{step.title}}
+    <i class="{{this.step.icon}} icon"></i>
+    {{this.step.title}}
   </h3>
 
-  <p>{{step.description}}</p>
+  <p>{{this.step.description}}</p>
 
-  <div class="ui bottom attached {{if completed "green" "red"}} label first-steps-card__step">
-    {{#if completed}}
+  <div class="ui bottom attached {{if this.completed "green" "red"}} label first-steps-card__step">
+    {{#if this.completed}}
       This card has been completed
     {{else}}
-      {{step.condition}} to complete this card
+      {{this.step.condition}} to complete this card
     {{/if}}
   </div>
 {{/link-to}}

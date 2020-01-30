@@ -1,22 +1,22 @@
 <div class="ui raised padded segment container clearfix animated fadeInUp">
-  {{#confirm-modal deleteContext=model.title as |confirmDelete|}}
+  {{#confirm-modal deleteContext=this.model.title as |confirmDelete|}}
     <hgroup class="clearfix">
       <h2 class="ui left floated header">
         {{#link-to "account.employee.index.counseling.issue"}}
-          {{model.title}}
+          {{this.model.title}}
         {{/link-to}}
 
         <div class="sub header">
-          <strong>{{model.type}}</strong>
+          <strong>{{this.model.type}}</strong>
         </div>
         <div class="sub header">
-          {{#if (await model.actionSeverity)}}
-            This issue started at <strong>{{get (await model.actionSeverity) "title"}}</strong>
+          {{#if (await this.model.actionSeverity)}}
+            This issue started at <strong>{{get (await this.model.actionSeverity) "title"}}</strong>
           {{/if}}
         </div>
       </h2>
 
-      {{#unless onCorrectiveActionSubroute}}
+      {{#unless this.onCorrectiveActionSubroute}}
         {{#ui-dropdown class="item icon top right pointing right floated"}}
           <i class="wrench icon"></i><i class="dropdown icon"></i>
           <div class="menu">

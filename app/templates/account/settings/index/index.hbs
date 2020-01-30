@@ -5,8 +5,8 @@
     <label for="input__dropzone--company-image">Company Logo</label>
     <div id="template" class="center aligned">
       {{drop-zone
-        url=fileEndpoint
-        id=dropzoneId
+        url=this.fileEndpoint
+        id=this.dropzoneId
         class="input__dropzone"
         method="put"
         uploadMultiple=false
@@ -15,7 +15,7 @@
         autoProcessQueue=false
         dictDefaultMessage="Drop Files or Click to Replace/Add Picture"
         thumbnailWidth="175"
-        headers=(hash X-API-Token=auth.token)
+        headers=(hash X-API-Token=this.auth.token)
         addedfile=(action "addedFile")
         success=(action "uploadedFile")
         capture="camera"}}
@@ -25,8 +25,8 @@
   <div class="ui divider"></div>
 
   {{quick-form
-    settingsForm
-    model
+    this.settingsForm
+    this.model
     this
     class="ui grid padded container"
     tagName="div"}}
@@ -37,7 +37,7 @@
     {{#form/action-button
       type="submit"
       class="ui positive fluid huge button"
-      loading=working}}
+      loading=this.working}}
       Save Changes
     {{/form/action-button}}
   </form>

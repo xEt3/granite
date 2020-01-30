@@ -1,15 +1,15 @@
 <td>
-  {{#if duplicate}}
+  {{#if this.duplicate}}
     <div class="ui red ribbon label import__duplicate-label">
       {{#ember-tooltip
         side="right"
         popperContainer="body"
       }}
-        {{matchReason}} match
+        {{this.matchReason}} match
       {{/ember-tooltip}}
       Possible duplicate of
       <a href="#" {{action "linkToDuplicate"}}>
-        {{duplicate.text}}
+        {{this.duplicate.text}}
       </a>
     </div>
   {{/if}}
@@ -17,9 +17,9 @@
     {{ui-checkbox
       class=""
       label=""
-      checked=isSelected
-      onChange=(action onToggle)
+      checked=this.isSelected
+      onChange=(action this.onToggle)
     }}
   </div>
 </td>
-{{yield record}}
+{{yield this.record}}

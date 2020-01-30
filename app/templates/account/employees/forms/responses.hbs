@@ -1,15 +1,15 @@
-<h3>{{or form.name form.title}} Responses</h3>
+<h3>{{or this.form.name this.form.title}} Responses</h3>
 
 <Modals::ViewFormResponse as |openResponseView|>
   <div class="ui relaxed list">
-    {{#each model as |response|}}
+    {{#each this.model as |response|}}
       <div class="ui item">
         <div class="content">
           <div class="header">
             Response by {{response.employee.fullName}} on {{time response.submittedOn "M/D/YY [at] h:mma"}}
           </div>
           <div class="extra">
-            <a href="#" {{action openResponseView response form}}>View Responses</a>
+            <a href="#" {{action openResponseView response this.form}}>View Responses</a>
           </div>
         </div>
       </div>
@@ -18,6 +18,6 @@
 </Modals::ViewFormResponse>
 
 {{elements/x-pagination
-  page=(readonly page)
-  pages=(readonly pages)
-  onchange=(action (mut page))}}
+  page=(readonly this.page)
+  pages=(readonly this.pages)
+  onchange=(action (mut this.page))}}

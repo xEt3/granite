@@ -15,11 +15,11 @@
 </h4>
 
 <div class="history__timeline clearfix">
-  {{display/timeline-group-detail group=selectedGroup groupDisplayOffset=groupDisplayOffset class=(unless selectedGroup "hidden") onDeselect=(action "deselectGroup")}}
+  {{display/timeline-group-detail group=this.selectedGroup groupDisplayOffset=this.groupDisplayOffset class=(unless this.selectedGroup "hidden") onDeselect=(action "deselectGroup")}}
 
   {{! template-lint-disable no-inline-styles }}
-  <div class="history-timeline__events clearfix" style={{timelineStyle}}>
-    {{#each model as |historyGroup|}}
+  <div class="history-timeline__events clearfix" style={{this.timelineStyle}}>
+    {{#each this.model as |historyGroup|}}
       {{list-item/history-group group=historyGroup onSelect=(action "selectGroup")}}
     {{else}}
       <h3 class="ui center aligned header">No history is available for this employee.</h3>

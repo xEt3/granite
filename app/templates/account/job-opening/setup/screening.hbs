@@ -2,35 +2,35 @@
   <h2 class="ui horizontal divider header">Screening Form</h2>
 
   <div class="field right aligned icon">
-    <button type="button" class="ui compact {{if showingPreview "green"}} button" {{action (toggle "showingPreview" this)}}>
-      <i class="{{if showingPreview "un"}}hide icon"></i>
-      {{if showingPreview "Hide "}}Preview
+    <button type="button" class="ui compact {{if this.showingPreview "green"}} button" {{action (toggle "showingPreview" this)}}>
+      <i class="{{if this.showingPreview "un"}}hide icon"></i>
+      {{if this.showingPreview "Hide "}}Preview
     </button>
 
-    <button type="button" id="toggle-applicant-scoring" class="ui compact {{if model.applicantScoring "blue"}} button" {{action (toggle "applicantScoring" model)}}>
+    <button type="button" id="toggle-applicant-scoring" class="ui compact {{if this.model.applicantScoring "blue"}} button" {{action (toggle "applicantScoring" this.model)}}>
       <i class="star icon"></i>
-      Applicant Scoring {{if model.applicantScoring "On" "Off"}}
+      Applicant Scoring {{if this.model.applicantScoring "On" "Off"}}
     </button>
   </div>
 
   {{#sortable-group
     tagName="ol"
-    class=sortGroupClass
+    class=this.sortGroupClass
     onChange="reorderElements"
     as |group|}}
-    {{#each form.elements as |element index|}}
+    {{#each this.form.elements as |element index|}}
       {{form/form-element
         element
         group
         index=index
         tagName="li"
         class="form-element__list-item"
-        showingPreview=showingPreview
-        scoring=model.applicantScoring
+        showingPreview=this.showingPreview
+        scoring=this.model.applicantScoring
         onRemove=(action "deleteFormElement")}}
     {{/each}}
   {{/sortable-group}}
-  {{#unless showingPreview}}
+  {{#unless this.showingPreview}}
     <button class="ui primary fluid button" type="button" {{action "addFormElement"}}><i class="plus icon"></i>Add a question</button>
   {{/unless}}
 
@@ -39,7 +39,7 @@
     {{#form/action-button
       type="submit"
       class="ui huge fluid green button"
-      loading=working}}
+      loading=this.working}}
       Next
     {{/form/action-button}}
   </form>

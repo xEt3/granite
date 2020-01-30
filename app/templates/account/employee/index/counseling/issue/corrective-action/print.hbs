@@ -1,27 +1,27 @@
 <div class="print-media__corrective-action">
   <h3 class="ui center aligned header">
-    {{#if (await model.actionSeverity)}}
-      {{get (await model.actionSeverity) "name"}}
+    {{#if (await this.model.actionSeverity)}}
+      {{get (await this.model.actionSeverity) "name"}}
     {{/if}}
   </h3>
   <div class="item clearfix">
     <div class="left floated content">
       <div class="header">
-        Employee: {{model.employee.fullName}}
+        Employee: {{this.model.employee.fullName}}
       </div>
       <div class="meta">
-        {{#if model.employee.jobTitle}}
-          {{model.employee.jobTitle}}
+        {{#if this.model.employee.jobTitle}}
+          {{this.model.employee.jobTitle}}
         {{/if}}
       </div>
     </div>
     <div class="right floated content">
       <div class="header">
-        Date: {{time model.issuedOn}}
+        Date: {{time this.model.issuedOn}}
       </div>
       <div class="meta">
-        {{#if model.employee.department.name}}
-          Department: {{model.employee.department.name}}
+        {{#if this.model.employee.department.name}}
+          Department: {{this.model.employee.department.name}}
         {{/if}}
       </div>
     </div>

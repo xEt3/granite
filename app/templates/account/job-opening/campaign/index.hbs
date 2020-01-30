@@ -1,14 +1,14 @@
 <div class="ui very padded raised segment animated fadeInUp">
-  <RecruitingStatusBar @campaign={{jobOpening}} />
+  <RecruitingStatusBar @campaign={{this.jobOpening}} />
   <h2 class="ui header">
     Recent Activity
   </h2>
 
-  {{#if model}}
+  {{#if this.model}}
     {{ember-chart
       type="line"
-      data=model
-      options=summaryOpts
+      data=this.model
+      options=this.summaryOpts
     }}
   {{else}}
     <h2 class="light text center aligned">Not enough recent data to show your summary.</h2>

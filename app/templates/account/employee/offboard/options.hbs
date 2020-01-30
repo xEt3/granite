@@ -11,10 +11,10 @@
           text="Used for automated exit interviews, final address collection, etc."}}
       </i>
     </label>
-    {{input type="email" value=model.finalEmail placeholder="Final Email" id="final-email"}}
+    {{input type="email" value=this.model.finalEmail placeholder="Final Email" id="final-email"}}
   </div>
 
-  <div class={{if model.autoExitInterview "three fields" "field"}}>
+  <div class={{if this.model.autoExitInterview "three fields" "field"}}>
     <div class="field">
       <label for="exit-interview">
         Automated exit interview
@@ -28,19 +28,19 @@
       {{ui-checkbox
         id="exit-interview"
         class="toggle"
-        label=(if model.autoExitInterview "Conduct exit interview" "Do not conduct exit interview")
-        checked=model.autoExitInterview
-        onChange=(action (mut model.autoExitInterview))}}
+        label=(if this.model.autoExitInterview "Conduct exit interview" "Do not conduct exit interview")
+        checked=this.model.autoExitInterview
+        onChange=(action (mut this.model.autoExitInterview))}}
     </div>
 
-    {{#if model.autoExitInterview}}
+    {{#if this.model.autoExitInterview}}
       <div class="field">
         {{ui-calendar
           class="field"
           type="date"
           label="When should the exit interview become available? (Otherwise, their termination date)"
-          dateValue=model.autoExitInterviewDate
-          onChange=(action (mut model.autoExitInterviewDate))}}
+          dateValue=this.model.autoExitInterviewDate
+          onChange=(action (mut this.model.autoExitInterviewDate))}}
       </div>
 
       <div class="field">
@@ -65,13 +65,13 @@
         {{#ui-dropdown
           id="exit-interview-form"
           class="search selection"
-          selected=model.autoExitInterviewForm
-          onChange=(action (mut model.terminationReason)) as |execute mapper|}}
+          selected=this.model.autoExitInterviewForm
+          onChange=(action (mut this.model.terminationReason)) as |execute mapper|}}
           <div class="default text">Select a form to use</div>
           <i class="dropdown icon"></i>
           <div class="menu">
             <div class="item" data-value="">Default Form</div>
-            {{#each availableExitForms as |exitForm|}}
+            {{#each this.availableExitForms as |exitForm|}}
               <div class="item" data-value={{map-value mapper exitForm}}>
                 {{exitForm.name}}
               </div>
@@ -84,32 +84,32 @@
 
   <div class="field">
     <label for="final-address-ss">Final Address</label>
-    {{ui-checkbox id="final-address-ss" class="toggle" label=(if model.finalAddressSelfService "Collect final address from employee" "Enter final address") checked=model.finalAddressSelfService onChange=(action (mut model.finalAddressSelfService))}}
+    {{ui-checkbox id="final-address-ss" class="toggle" label=(if this.model.finalAddressSelfService "Collect final address from employee" "Enter final address") checked=this.model.finalAddressSelfService onChange=(action (mut this.model.finalAddressSelfService))}}
   </div>
 
-  {{#unless model.finalAddressSelfService}}
+  {{#unless this.model.finalAddressSelfService}}
     <div class="animated fadeInUp">
       <div class="field">
         <label for="address-line-1">Address Line 1</label>
-        {{input type="text" value=model.finalAddressLine1 placeholder="Address Line 1" id="address-line-1"}}
+        {{input type="text" value=this.model.finalAddressLine1 placeholder="Address Line 1" id="address-line-1"}}
       </div>
       <div class="field">
         <label for="address-line-2">Address Line 2</label>
-        {{input type="text" value=model.finalAddressLine2 placeholder="Address Line 2" id="address-line-2"}}
+        {{input type="text" value=this.model.finalAddressLine2 placeholder="Address Line 2" id="address-line-2"}}
       </div>
       <div class="three fields">
         <div class="field">
           <label for="address-city">City</label>
-          {{input type="text" value=model.finalAddressCity placeholder="City" id="address-city"}}
+          {{input type="text" value=this.model.finalAddressCity placeholder="City" id="address-city"}}
         </div>
         <div class="field">
           <label for="state-name">State</label>
-          {{#ui-dropdown class="search selection" selected=model.finalAddressState onChange=(action (mut model.finalAddressState))}}
-            {{#if stateIsMontana}}<i class="text-danger heart icon"></i>{{/if}}
+          {{#ui-dropdown class="search selection" selected=this.model.finalAddressState onChange=(action (mut this.model.finalAddressState))}}
+            {{#if this.stateIsMontana}}<i class="text-danger heart icon"></i>{{/if}}
             <div class="default text">State</div>
             <i class="dropdown icon"></i>
             <div class="menu">
-              {{#each states as |state|}}
+              {{#each this.states as |state|}}
                 <div class="item" data-value={{state.value}}>
                   {{state.label}}
                 </div>
@@ -119,7 +119,7 @@
         </div>
         <div class="field">
           <label for="address-zip">Zip</label>
-          {{input type="text" value=model.finalAddressZip placeholder="Zip" id="address-zip"}}
+          {{input type="text" value=this.model.finalAddressZip placeholder="Zip" id="address-zip"}}
         </div>
       </div>
     </div>
@@ -130,20 +130,20 @@
   <div class="field">
     {{#input/document-selection-modal
       title="Select Offboarding Documents"
-      selected=model.offboardingDocuments
-      onSelected=(pipe (action (mut model.offboardingDocuments)) (action "save" model))
+      selected=this.model.offboardingDocuments
+      onSelected=(pipe (action (mut this.model.offboardingDocuments)) (action "save" this.model))
       onNotify= (action "onNotify")
       as |execute|}}
       <button class="ui basic button" {{action execute "selectDocuments"}}>
         <i class="folder icon"></i>
         Assign offboarding documents
-        {{#if model.offboardingDocuments.length}}
-          <span class="ui label">{{model.offboardingDocuments.length}} Assigned</span>
+        {{#if this.model.offboardingDocuments.length}}
+          <span class="ui label">{{this.model.offboardingDocuments.length}} Assigned</span>
         {{/if}}
       </button>
     {{/input/document-selection-modal}}
   </div>
 
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Next{{/form/action-button}}
 </form>

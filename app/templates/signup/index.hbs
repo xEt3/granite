@@ -5,36 +5,36 @@
 
     <div class="field">
       <label for="company-name" class="sr-only">Company Name</label>
-      {{validated-input type="text" model=model valuePath="name" placeholder="Company Name" id="company-name"}}
+      {{validated-input type="text" model=this.model valuePath="name" placeholder="Company Name" id="company-name"}}
     </div>
 
     <h3 class="ui horizontal divider header"><i class="phone icon"></i>Primary Contact</h3>
     <div class="three fields">
       <div class="field">
         <label for="first-name" class="sr-only">First Name</label>
-        {{validated-input type="text" model=model valuePath="contactFirstName" placeholder="First Name" id="first-name"}}
+        {{validated-input type="text" model=this.model valuePath="contactFirstName" placeholder="First Name" id="first-name"}}
       </div>
       <div class="field">
         <label for="middle-name" class="sr-only">Middle Name</label>
-        {{input type="text" value=model.contactMiddleName placeholder="Middle(Optional)" id="middle-name"}}
+        {{input type="text" value=this.model.contactMiddleName placeholder="Middle(Optional)" id="middle-name"}}
       </div>
       <div class="field">
         <label for="last-name" class="sr-only">Last Name</label>
-        {{validated-input type="text" model=model valuePath="contactLastName" placeholder="Last Name" id="last-name"}}
+        {{validated-input type="text" model=this.model valuePath="contactLastName" placeholder="Last Name" id="last-name"}}
       </div>
     </div>
     <div class="field">
       <label for="company-email" class="sr-only">Email Address</label>
-      {{validated-input type="text" model=model valuePath="email" placeholder="Email Address" id="company-email"}}
+      {{validated-input type="text" model=this.model valuePath="email" placeholder="Email Address" id="company-email"}}
     </div>
     <div class="two fields">
       <div class="twelve wide field">
-        {{#validated-input model=model valuePath="contactPhone"}}
-          {{masked-input placeholder="Phone Number" mask="(111) 111-1111" on-change=(action (mut model.contactPhone) value="target.value") name="phone-number"}}
+        {{#validated-input model=this.model valuePath="contactPhone"}}
+          {{masked-input placeholder="Phone Number" mask="(111) 111-1111" on-change=(action (mut this.model.contactPhone) value="target.value") name="phone-number"}}
         {{/validated-input}}
       </div>
       <div class="four wide field">
-        {{input type="text" name="phone-extension" value=model.contactExtension placeholder="Extension"}}
+        {{input type="text" name="phone-extension" value=this.model.contactExtension placeholder="Extension"}}
       </div>
     </div>
 
@@ -42,27 +42,27 @@
     <div class="fields">
       <div class="twelve wide field">
         <label for="street-address"></label>
-        {{validated-input type="text" model=model valuePath="addressLine1" placeholder="Street Address" id="street-address"}}
+        {{validated-input type="text" model=this.model valuePath="addressLine1" placeholder="Street Address" id="street-address"}}
       </div>
       <div class="four wide field">
         <label for="suite-number"></label>
-        {{validated-input type="text" model=model valuePath="addressLine2" placeholder="Suite #" id="suite-number"}}
+        {{validated-input type="text" model=this.model valuePath="addressLine2" placeholder="Suite #" id="suite-number"}}
       </div>
     </div>
 
     <div class="three fields">
       <div class="field">
         <label for="city"></label>
-        {{validated-input type="text" model=model valuePath="addressCity" placeholder="City" id="city"}}
+        {{validated-input type="text" model=this.model valuePath="addressCity" placeholder="City" id="city"}}
       </div>
       <div class="field">
         <label for="state"></label>
-        {{#validated-input model=model valuePath="addressState" id="state"}}
-          {{#ui-dropdown class="select__address-state search selection" selected=model.addressState onChange=(action (mut model.addressState)) as |execute mapper|}}
+        {{#validated-input model=this.model valuePath="addressState" id="state"}}
+          {{#ui-dropdown class="select__address-state search selection" selected=this.model.addressState onChange=(action (mut this.model.addressState)) as |execute mapper|}}
             <div class="default text">Select a State</div>
             <i class="dropdown icon"></i>
             <div class="menu">
-              {{#each stateOptions as |state|}}
+              {{#each this.stateOptions as |state|}}
                 <div class="item select-address-state__item" data-id={{state}} data-value={{map-value mapper state}}>
                   {{state}}
                 </div>
@@ -73,7 +73,7 @@
       </div>
       <div class="field">
         <label for="zipcode"></label>
-        {{validated-input type="text" model=model valuePath="addressZipcode" placeholder="Zip Code" id="zipcode"}}
+        {{validated-input type="text" model=this.model valuePath="addressZipcode" placeholder="Zip Code" id="zipcode"}}
       </div>
     </div>
 
@@ -82,16 +82,16 @@
       <label for="url-prefix" class="sr-only">Employee Access URL</label>
       {{validated-input
         type="text"
-        model=model
-        fieldErrors=fieldErrors
+        model=this.model
+        fieldErrors=this.fieldErrors
         valuePath="urlPrefix"
         placeholder="Employee Access URL (generally your company's abbreviation)"
         id="url-prefix"}}
     </div>
-    {{#display/preview-browser}}{{if model.urlPrefix model.urlPrefix "portal"}}{{/display/preview-browser}}
+    {{#display/preview-browser}}{{if this.model.urlPrefix this.model.urlPrefix "portal"}}{{/display/preview-browser}}
     <div class="ui divider"></div>
-    {{#form/action-button type="submit" class="ui massive fluid green button" loading=working}}Next: Billing{{/form/action-button}}
+    {{#form/action-button type="submit" class="ui massive fluid green button" loading=this.working}}Next: Billing{{/form/action-button}}
   </form>
 </div>
 
-{{test}}
+{{this.test}}

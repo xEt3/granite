@@ -1,10 +1,10 @@
 {{stateful-intro-js
-  user=auth.user
-  steps=intros
+  user=this.auth.user
+  steps=this.intros
   start-if=true
   hintKey="recruiting-campaigns-index"}}
 
-{{#if showFilters}}
+{{#if this.showFilters}}
   {{#display/filter-pane
     class="ui content form padded segment container"
     onChange=(action "updateFilter") as |filter|
@@ -16,7 +16,7 @@
           <button class="negative ui button small text" {{action "resetFilters"}}>Reset All</button>
         </div>
         <div class="item">
-          <a href="#" class="light text" {{action toggleProperty "showFilters"}}>
+          <a href="#" class="light text" {{action this.toggleProperty "showFilters"}}>
             <i class="remove icon"></i>
           </a>
         </div>
@@ -26,9 +26,9 @@
     {{#filter.section "Job Description"}}
       {{#filter.selectControl
         "job"
-        job
+        this.job
         searchable=true
-        model=jobs as |item|
+        model=this.jobs as |item|
       }}
         {{item.title}}{{#if item.description}} - <span class="light text">{{item.description}}</span>{{/if}}
       {{/filter.selectControl}}
@@ -38,13 +38,13 @@
       <div class="ui two fields">
         {{filter.toggleControl
           "closed"
-          closed
+          this.closed
           label="Is Closed"
           class="center aligned text field"}}
 
         {{filter.toggleControl
           "setup"
-          setup
+          this.setup
           label="Needs Setup"
           class="center aligned text field"}}
       </div>
@@ -67,12 +67,12 @@
             text="Start a campaign"}}
           <i id="add-job-opening" class="plus icon"></i>
         {{/link-to}}
-        <a href="#" class={{if showFilters "text-red"}} {{action toggleProperty "showFilters"}}>
+        <a href="#" class={{if this.showFilters "text-red"}} {{action this.toggleProperty "showFilters"}}>
           {{ember-tooltip
             side="left"
             popperContainer="body"
             text="Filters"}}
-          <i class="{{if showFilters "remove" "filter"}} icon"></i>
+          <i class="{{if this.showFilters "remove" "filter"}} icon"></i>
         </a>
       </h3>
     </div>
@@ -80,12 +80,12 @@
   <div class="ui divider"></div>
 
   {{display/resource-list
-    model
+    this.model
     "list-item/job-opening-item"
     class="ui divided items"}}
 
   {{elements/x-pagination
-    page=(readonly page)
-    pages=(readonly pages)
-    onchange=(action (mut page))}}
+    page=(readonly this.page)
+    pages=(readonly this.pages)
+    onchange=(action (mut this.page))}}
 </div>

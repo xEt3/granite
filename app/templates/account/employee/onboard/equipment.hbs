@@ -6,8 +6,8 @@
   <div class="ui basic segment">
     <div class="right aligned text">
       {{#input/equipment-picker
-        assignableAssets=splitAssets.remainingAssets
-        suggestedAssets=splitAssets.suggestedAssets
+        assignableAssets=this.splitAssets.remainingAssets
+        suggestedAssets=this.splitAssets.suggestedAssets
         onSelect=(action "selectAsset")
         onCreate=(action "createAsset")
         newAssetCategory=(action "newAssetCategory")}}
@@ -16,7 +16,7 @@
     </div>
 
     <div class="ui relaxed divided list">
-      {{#each groupedAssignedAssets as |assetGroup|}}
+      {{#each this.groupedAssignedAssets as |assetGroup|}}
         <h4 class="header">
           {{#if assetGroup.asset.icon}}
             <i class="{{assetGroup.asset.icon}} icon"></i>
@@ -46,35 +46,35 @@
   </div>
 
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Next{{/form/action-button}}
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Next{{/form/action-button}}
 </form>
 
 <div id="modal__new-asset--placeholder">
   {{#ui-modal id="modal__new-asset" name="new-asset" class="new-asset" detachable=true onApprove=(action "saveAsset") onDeny=(action "abortAsset")}}
     <i class="cancel close icon"></i>
     <div class="header">
-      Creating a new item in "{{pendingAssetItem.asset.name}}" for {{model.firstName}}
+      Creating a new item in "{{this.pendingAssetItem.asset.name}}" for {{this.model.firstName}}
     </div>
     <div class="content">
       <form class="ui form container">
         <div class="field">
           <label for="asset-identifier">Asset Identifier</label>
-          {{input type="text" value=pendingAssetItem.identifier id="asset-identifier" placeholder="Unique identifier (VIN, Stock #, RFID)"}}
+          {{input type="text" value=this.pendingAssetItem.identifier id="asset-identifier" placeholder="Unique identifier (VIN, Stock #, RFID)"}}
         </div>
 
         <div class="field">
           <label for="asset-description">Documents</label>
           <p class="light text">
             Document upload is only available in category view.
-            <a href="#" {{action "closeAssetModalAndTransition" "account.asset.index.new" pendingAssetItem.asset.id}}>
+            <a href="#" {{action "closeAssetModalAndTransition" "account.asset.index.new" this.pendingAssetItem.asset.id}}>
               Go to asset category
             </a>
           </p>
         </div>
-        {{#if pendingAssetItem.asset.attributes}}
+        {{#if this.pendingAssetItem.asset.attributes}}
           <div class="ui divider"></div>
-          {{#each pendingAssetItem.asset.attributes as |attribute|}}
-            {{input/custom-field object=pendingAssetItem.customFields attribute=attribute}}
+          {{#each this.pendingAssetItem.asset.attributes as |attribute|}}
+            {{input/custom-field object=this.pendingAssetItem.customFields attribute=attribute}}
           {{/each}}
         {{/if}}
       </form>
