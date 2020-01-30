@@ -15,12 +15,12 @@
         <div class="item clearfix ui basic segment">
           <div class="header">
             Employee: {{correctiveAction.employee.fullName}}
-            <span class="right floated content"> Date of Issuance: {{time correctiveAction.issuedOn}}</span>
+            <span class="right floated content">Date of Issuance: {{time correctiveAction.issuedOn}}</span>
           </div>
           <div class="meta">
             <p>
               {{#if correctiveAction.employee.jobTitle}}
-                JobTitle: {{correctiveAction.employee.jobTitle}}
+                Job Title: {{correctiveAction.employee.jobTitle}}
               {{/if}}
               <span class="right floated content">
                 {{#if correctiveAction.employee.department.name}}

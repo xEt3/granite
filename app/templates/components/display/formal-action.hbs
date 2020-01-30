@@ -5,7 +5,7 @@
   <p>{{long-text correctiveAction.descriptionExpectations}}</p>
   <h3 class="ui header">Consequences if expectations are not met</h3>
   <p>{{long-text correctiveAction.descriptionConsequences}}</p>
-  {{#if (not hideEmployeeSection)}}
+  {{#unless hideEmployeeSection}}
     <div class="employee-comments text container">
       <h3 class="ui header">Employee Comments</h3>
       <hr class="employee-comments__line">
@@ -24,5 +24,5 @@
         <span class="right floated">(Date)</span>
       </div>
     </div>
-  {{/if}}
+  {{/unless}}
 {{/if}}

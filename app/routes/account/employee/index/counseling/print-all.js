@@ -34,7 +34,7 @@ export default Route.extend({
     return {
       employee,
       issue:             await this.store.query('employee-issue', { employee: queryParams.employee }),
-      correctiveActions: await this.store.query('correctiveAction', queryParams)
+      correctiveActions: await this.store.query('corrective-action', queryParams)
     };
   },
 
