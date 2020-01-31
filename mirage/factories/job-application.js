@@ -12,6 +12,7 @@ export default Factory.extend({
   hiredSetOn:            null,
   // reviewedOn:            faker.date.past,
   created:               faker.date.past,
+  completedOn:           faker.date.past,
   resume:                null,
   employee:              null,
   hiredSetBy:            null
