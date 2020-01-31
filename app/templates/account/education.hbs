@@ -1,13 +1,11 @@
 <div class="ui container basic segment">
-  {{#ui-menu menuClass="pointing menu__education-page"}}
-    {{#link-to "account.employees" class="item"}}
+  <UiMenu @menuClass="pointing menu__education-page">
+    <LinkTo @route="account.employees" class="item">
       <i class="list icon"></i>Summary
-    {{/link-to}}
-    {{#link-to "account.education.webinars" class="item"}}
+    </LinkTo>
+    <LinkTo @route="account.education.webinars" class="item">
       <i class="video icon"></i>Webinars
-    {{/link-to}}
-  {{/ui-menu}}
+    </LinkTo>
+  </UiMenu>
   {{outlet}}
 </div>
-
-
