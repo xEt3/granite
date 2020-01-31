@@ -89,13 +89,17 @@ export default function () {
     return { subscription: null }; //works for now
   });
 
+  this.post('company-user/change-password', () => {
+    return {};
+  });
+
   let array = [ 'files', 'files/:id', 'file-assignments', 'recruiting-pipelines', 'recruiting-pipelines/:id', 'company-users/:id',
     'company-users', 'employees/:id', 'companies', 'companies/:id', 'permissions', 'action-items', 'asset-items', 'asset-items/:id',
     'action-items/:id', 'assets', 'assets/:id', 'changes', 'histories', 'departments', 'locations',
     'payment-methods', 'comments', 'comments/:id', 'job-openings', 'jobs', 'jobs/:id', 'job-openings/:id', 'job-applications',
     'forms', 'applicant-sources', 'applicant-sources', 'manual-applicant-sources', 'applicants', 'applicants/:id',
     'job-applications/:id', 'events', 'certifications', 'training-assignments', 'corrective-actions', 'corrective-actions/:id',
-    'employee-issues/:id', 'employee-issues' ];
+    'employee-issues/:id', 'employee-issues', 'company-user' ];
   let verbs = [ 'get', 'put', 'post', 'del' ];
 
   array.forEach((route)=>{
