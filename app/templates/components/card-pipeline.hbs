@@ -1,21 +1,21 @@
-{{#each pipeline.stages as |stage|}}
+{{#each this.pipeline.stages as |stage|}}
   {{card-pipeline/stage-column
     stage
-    pipeline.stages
-    newScheduledMeeting=newScheduledMeeting
-    activeCandidates=candidates
+    this.pipeline.stages
+    newScheduledMeeting=this.newScheduledMeeting
+    activeCandidates=this.candidates
     dispatchReorder=(action "setOrder")
     moveAppToStage=(action "moveAppToStage")
-    onDisqualify=onDisqualify
-    onUnDisqualify=onUnDisqualify
-    onUnHire=onUnHire
-    onSchedule=onSchedule
-    disableDragging=working
-    onLinkSharing=onLinkSharing
-    onOnboardCandidate=onOnboardCandidate
-    onAddLabel=onAddLabel}}
+    onDisqualify=this.onDisqualify
+    onUnDisqualify=this.onUnDisqualify
+    onUnHire=this.onUnHire
+    onSchedule=this.onSchedule
+    disableDragging=this.working
+    onLinkSharing=this.onLinkSharing
+    onOnboardCandidate=this.onOnboardCandidate
+    onAddLabel=this.onAddLabel}}
 {{/each}}
 
-<div class="ui {{if workingSlow "active"}} inverted dimmer">
+<div class="ui {{if this.workingSlow "active"}} inverted dimmer">
   <div class="ui text loader">One moment...</div>
 </div>

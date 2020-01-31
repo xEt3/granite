@@ -2,27 +2,27 @@
   (hash
     section=(component
       "display/filter-panes/section"
-      resetFilter=(action resetFilter)
-      sendComponentUpdate=(action sendComponentUpdate)
+      resetFilter=(action this.resetFilter)
+      sendComponentUpdate=(action this.sendComponentUpdate)
     )
     control=(component
       "display/filter-panes/control"
-      update=(action sendComponentUpdate)
+      update=(action this.sendComponentUpdate)
     )
     selectControl=(component
       "display/filter-panes/control"
       type="select"
-      update=(action sendComponentUpdate)
+      update=(action this.sendComponentUpdate)
     )
     toggleControl=(component
       "display/filter-panes/control"
       type="toggle"
-      update=(action sendComponentUpdate)
+      update=(action this.sendComponentUpdate)
     )
     radioControl=(component
       "display/filter-panes/control"
       type="radio"
-      update=(action sendComponentUpdate)
+      update=(action this.sendComponentUpdate)
     )
   )
 }}

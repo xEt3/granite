@@ -1,6 +1,6 @@
 {{#confirm-modal as |confirm|}}
   <form class="ui raised very padded text segment form" {{action (pipe confirm (action "save")) on="submit"}}>
-    <h2 class="ui header">Editing {{model.fullName}}</h2>
+    <h2 class="ui header">Editing {{this.model.fullName}}</h2>
     <div class="ui secondary pointing menu">
       {{#link-to "account.employee.index.edit.index" class="item"}}Personal{{/link-to}}
       {{#link-to "account.employee.index.edit.job" class="item"}}Job{{/link-to}}
@@ -9,10 +9,10 @@
     </div>
     {{outlet}}
     <div class="ui divider"></div>
-    {{#form/action-button type="submit" class="ui massive fluid green button" disabled=(not (or model.hasDirtyAttributes relationshipsChanged)) loading=working}}
+    {{#form/action-button type="submit" class="ui massive fluid green button" disabled=(not (or this.model.hasDirtyAttributes this.relationshipsChanged)) loading=this.working}}
       <i class="save icon"></i>Save
     {{/form/action-button}}
-    <button type="button" class="ui massive fluid basic button" disabled={{not (or model.hasDirtyAttributes relationshipsChanged)}} {{action (pipe (action "selectEffectiveDate") (action "save"))}}>
+    <button type="button" class="ui massive fluid basic button" disabled={{not (or this.model.hasDirtyAttributes this.relationshipsChanged)}} {{action (pipe (action "selectEffectiveDate") (action "save"))}}>
       <i class="calendar icon"></i>Save with effective date
     </button>
   </form>
@@ -24,7 +24,7 @@
     When would you like to date these changes?
   </div>
   <div class="content">
-    {{ui-calendar class="field" type="date" inline=true onChange=(action (mut model.effectiveOn))}}
+    {{ui-calendar class="field" type="date" inline=true onChange=(action (mut this.model.effectiveOn))}}
   </div>
   <div class="actions">
     <button class="ui red button" {{action "respondEffectiveDateModal" false}}>
@@ -32,10 +32,10 @@
     </button>
     <button class="ui green right labeled icon button" {{action "respondEffectiveDateModal" true}}>
       Save
-      {{#if model.effectiveOn}}
-        {{time-ago model.effectiveOn}}
+      {{#if this.model.effectiveOn}}
+        {{time-ago this.model.effectiveOn}}
         on
-        {{time model.effectiveOn "M/D/YY"}}
+        {{time this.model.effectiveOn "M/D/YY"}}
       {{/if}}
       <i class="check icon"></i>
     </button>

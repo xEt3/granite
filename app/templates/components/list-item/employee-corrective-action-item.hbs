@@ -1,14 +1,14 @@
 {{#if hasBlock}}
-  {{yield model}}
+  {{yield this.model}}
 {{else}}
   <div class="header">
-    {{#if (await model.actionSeverity)}}
-      {{get (await model.actionSeverity) "name"}} on
+    {{#if (await this.model.actionSeverity)}}
+      {{get (await this.model.actionSeverity) "name"}} on
     {{/if}}
-    {{time (if model.issuedOn model.issuedOn model.created) "MMMM Do YYYY"}}
+    {{time (if this.model.issuedOn this.model.issuedOn this.model.created) "MMMM Do YYYY"}}
   </div>
   <div class="meta">
-    <span class="ui small text right floated">Created: {{time model.created}}{{#if model.creator}} by {{model.creator.fullName}}{{/if}}</span>
+    <span class="ui small text right floated">Created: {{time this.model.created}}{{#if this.model.creator}} by {{this.model.creator.fullName}}{{/if}}</span>
   </div>
   <div class="extra">
   </div>

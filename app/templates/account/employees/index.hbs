@@ -1,10 +1,10 @@
 {{stateful-intro-js
-  user=auth.user
-  steps=intros
+  user=this.auth.user
+  steps=this.intros
   start-if=true
   hintKey="employees-index"}}
 
-{{#if showFilters}}
+{{#if this.showFilters}}
   {{#display/filter-pane
     class="ui content form padded segment container"
     onChange=(action "updateFilter") as |filter|
@@ -16,7 +16,7 @@
           <button class="negative ui button small text" {{action "resetFilters"}}>Reset All</button>
         </div>
         <div class="item">
-          <a href="#" class="light text" {{action toggleProperty "showFilters"}}>
+          <a href="#" class="light text" {{action this.toggleProperty "showFilters"}}>
             <i class="remove icon"></i>
           </a>
         </div>
@@ -26,9 +26,9 @@
     {{#filter.section "Supervisor"}}
       {{#filter.selectControl
         "supervisor"
-        supervisor
+        this.supervisor
         searchable=true
-        model=filterModels.supervisors as |item|
+        model=this.filterModels.supervisors as |item|
       }}
         {{item.fullName}}{{#if item.jobTitle}} - <span class="light text">{{item.jobTitle}}</span>{{/if}}
       {{/filter.selectControl}}
@@ -37,31 +37,31 @@
     {{#filter.section "Department"}}
       {{filter.selectControl
         "department"
-        department
+        this.department
         searchable=true
-        model=filterModels.departments
+        model=this.filterModels.departments
         itemTextPath="name"}}
     {{/filter.section}}
 
     {{#filter.section "Location"}}
       {{filter.selectControl
         "location"
-        location
+        this.location
         searchable=true
-        model=filterModels.locations
+        model=this.filterModels.locations
         itemTextPath="name"}}
     {{/filter.section}}
 
     {{#filter.section "Hire Date" resets=(array "hireDateStart" "hireDateEnd")}}
-      {{#filter.control "hireDate" (or hireDateStart hireDateEnd) class="two fields"}}
+      {{#filter.control "hireDate" (or this.hireDateStart this.hireDateEnd) class="two fields"}}
         {{ui-calendar
           class="ui field"
           type="date"
           container="body"
           startMode="year"
           label="Start Date"
-          dateValue=hireDateStart
-          onChange=(action (mut hireDateStart))}}
+          dateValue=this.hireDateStart
+          onChange=(action (mut this.hireDateStart))}}
 
         {{ui-calendar
           class="ui field"
@@ -69,8 +69,8 @@
           container="body"
           startMode="year"
           label="End Date"
-          dateValue=hireDateEnd
-          onChange=(action (mut hireDateEnd))}}
+          dateValue=this.hireDateEnd
+          onChange=(action (mut this.hireDateEnd))}}
       {{/filter.control}}
     {{/filter.section}}
 
@@ -78,19 +78,19 @@
       <div class="ui three fields">
         {{filter.toggleControl
           "onboarding"
-          onboarding
+          this.onboarding
           label="Is Onboarding"
           class="center aligned text field"}}
 
         {{filter.toggleControl
           "offboarding"
-          offboarding
+          this.offboarding
           label="Is Offboarding"
           class="center aligned text field"}}
 
         {{filter.toggleControl
           "terminated"
-          terminated
+          this.terminated
           label="Is Terminated"
           class="center aligned text field"}}
       </div>
@@ -105,7 +105,7 @@
     </h1>
 
     <div class="right aligned text floated menu__actions">
-      {{#ui-dropdown class="left floated top pointing inline" selected=sortBy onChange=(action (mut sortBy))}}
+      {{#ui-dropdown class="left floated top pointing inline" selected=this.sortBy onChange=(action (mut this.sortBy))}}
         <h3 class="ui inline header">
           {{ember-tooltip
             side="left"
@@ -114,9 +114,9 @@
           <a href="#" id="sort-employee-icon"><i class="sort icon"></i></a>
         </h3>
         <div class="menu">
-          {{#each sortOptions as |option|}}
+          {{#each this.sortOptions as |option|}}
             <div class="item" data-value={{option.path}}>
-              {{#if (eq option.path sortProp)}}
+              {{#if (eq option.path this.sortProp)}}
                 <i class="check icon"></i>
               {{/if}}
               {{option.label}}
@@ -129,19 +129,19 @@
         {{ember-tooltip
           side="left"
           popperContainer="body"
-          text=(if sortAsc "Sort descending" "Sort ascending")}}
+          text=(if this.sortAsc "Sort descending" "Sort ascending")}}
         <a href="#" class="top pointing inline" {{action (toggle "sortAsc" this)}}>
-          <i class="sort amount {{if sortAsc "up" "down"}} icon"></i>
+          <i class="sort amount {{if this.sortAsc "up" "down"}} icon"></i>
         </a>
       </h3>
 
       <h3 class="ui right floated header">
-        <a href="#" class={{if showFilters "text-red"}} {{action toggleProperty "showFilters"}}>
+        <a href="#" class={{if this.showFilters "text-red"}} {{action this.toggleProperty "showFilters"}}>
           {{ember-tooltip
             side="left"
             popperContainer="body"
             text="Filters"}}
-          <i class="{{if showFilters "remove" "filter"}} icon"></i>
+          <i class="{{if this.showFilters "remove" "filter"}} icon"></i>
         </a>
       </h3>
 
@@ -164,14 +164,14 @@
   <div class="ui divider"></div>
 
   {{display/resource-list
-    model
+    this.model
     "list-item/employee-item"
     linkTo="account.employee"
     linkClass="item"
     class="ui divided link items"}}
 
   {{elements/x-pagination
-    page=(readonly page)
-    pages=(readonly pages)
-    onchange=(action (mut page))}}
+    page=(readonly this.page)
+    pages=(readonly this.pages)
+    onchange=(action (mut this.page))}}
 </div>

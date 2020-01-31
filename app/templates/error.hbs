@@ -1,19 +1,19 @@
 <div class="ui hero cover grey overlay hero__500">
   <div class="hero__content">
     <h3 class="ui header hero__title">
-      {{#if fromError.status}}{{fromError.status}}{{/if}} Uh oh.
+      {{#if this.fromError.status}}{{this.fromError.status}}{{/if}} Uh oh.
     </h3>
 
     <p class="hero__subcontent">
-      {{#if clientError}}You did something bad.{{else}}Something is broken.{{/if}}<br />
-      {{#if fromError.responseText}}
+      {{#if this.clientError}}You did something bad.{{else}}Something is broken.{{/if}}<br />
+      {{#if this.fromError.responseText}}
         <small>
-          <code>{{fromError.responseText}}</code> That's all we know.
+          <code>{{this.fromError.responseText}}</code> That's all we know.
         </small>
       {{/if}}
-      {{#if fromError.message}}
+      {{#if this.fromError.message}}
         <small>
-          <code>{{fromError.message}}</code> That's all we know.
+          <code>{{this.fromError.message}}</code> That's all we know.
         </small>
       {{/if}}
     </p>

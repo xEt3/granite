@@ -1,5 +1,5 @@
 <div class="ui container">
-  <h1 class="text-white">{{model.name}}</h1>
+  <h1 class="text-white">{{this.model.name}}</h1>
   <div class="ui divider"></div>
   {{#ui-menu menuClass="pointing"}}
     {{#link-to "account.job-opening.campaign.index" class="item"}}
@@ -8,19 +8,19 @@
     {{#link-to "account.job-opening.campaign.applicant-tracking" class="item"}}
       <i class="users icon"></i>Applicants
     {{/link-to}}
-    {{#if (not model.closed)}}
+    {{#if (not this.model.closed)}}
       {{#link-to "account.job-opening.campaign.talent-pool" class="item"}}
         <i class="archive icon"></i>Talent Pool
       {{/link-to}}
     {{/if}}
-    {{#if EEOEnabled}}
+    {{#if this.EEOEnabled}}
       {{#link-to "account.job-opening.campaign.eeo-reporting" class="item"}}
         <i class="file alternate icon"></i>EEO Reports
       {{/link-to}}
     {{/if}}
     <div class="right menu">
-      {{#if (and model.completedOn (not model.closed))}}
-        {{#modals/ats-close-job-opening class="item" sourcesToClose=model.manualApplicantSources as |confirm|}}
+      {{#if (and this.model.completedOn (not this.model.closed))}}
+        {{#modals/ats-close-job-opening class="item" sourcesToClose=this.model.manualApplicantSources as |confirm|}}
           <a href="#" class="text-green" {{action (pipe confirm (action "close"))}}>
             {{ember-tooltip
               side="bottom"
@@ -31,7 +31,7 @@
         {{/modals/ats-close-job-opening}}
       {{/if}}
 
-      {{#unless model.completedSetup}}
+      {{#unless this.model.completedSetup}}
         {{#link-to "account.job-opening.setup" class="item text-blue"}}<i class="wizard icon"></i>Continue Setup{{/link-to}}
       {{/unless}}
       {{#ui-dropdown class="item icon top right pointing"}}
@@ -39,7 +39,7 @@
         <div class="menu">
           <div class="header">Actions</div>
           {{#link-to "account.job-opening.campaign.settings" class="item"}}<i class="settings icon"></i> Settings{{/link-to}}
-          {{#if (and model.completedSetup (not model.closed))}}
+          {{#if (and this.model.completedSetup (not this.model.closed))}}
             {{#confirm-modal confirmContent="Are you sure you want to close this job opening?" class="item" as |confirm|}}
               <a href="#" id="job__action--close" class="text-grey" {{action (pipe confirm (action "close"))}}>
                 <i class="stop circle icon"></i>Close Job Opening
@@ -47,7 +47,7 @@
             {{/confirm-modal}}
           {{/if}}
           <div class="text-danger header">Danger Zone</div>
-          {{#confirm-modal deleteContext=model.name class="item" as |confirm|}}
+          {{#confirm-modal deleteContext=this.model.name class="item" as |confirm|}}
             <a href="#" id="job__action--delete" class="text-danger" {{action (pipe confirm (action "delete"))}}>
               <i class="trash icon"></i>Delete Record
             </a>

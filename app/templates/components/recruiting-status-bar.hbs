@@ -1,11 +1,11 @@
 <div class="left floated detail">
-  {{if campaign.startOn (time campaign.startOn) (time campaign.created)}}
-  - {{if campaign.endOn (time campaign.endOn) "Until Filled"}}
+  {{if this.campaign.startOn (time this.campaign.startOn) (time this.campaign.created)}}
+  - {{if this.campaign.endOn (time this.campaign.endOn) "Until Filled"}}
 </div>
 <div class="right floated detail">
-  {{#if campaign.completedOn}}
-    Completed On {{time campaign.completedOn}}
-  {{else if campaign.dueOn}}
-    Due On {{time campaign.dueOn}}
+  {{#if this.campaign.completedOn}}
+    Completed On {{time this.campaign.completedOn}}
+  {{else if this.campaign.dueOn}}
+    Due On {{time this.campaign.dueOn}}
   {{/if}}
 </div>

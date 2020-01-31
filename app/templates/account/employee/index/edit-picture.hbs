@@ -3,14 +3,14 @@
     {{drop-zone
       id="input__dropzone--employee-profile-image"
       class="input__dropzone"
-      url=pictureEndpoint
+      url=this.pictureEndpoint
       uploadMultiple=false
       acceptedFiles="image/*"
       maxFiles=1
       autoProcessQueue=false
       dictDefaultMessage="Drop Files or Click to Replace/Add Picture"
       thumbnailWidth="175"
-      headers=(hash X-API-Token=auth.token)
+      headers=(hash X-API-Token=this.auth.token)
       addedfile=(action "addedFile")
       success=(action "uploadedFile")
       capture="camera"}}
@@ -18,7 +18,7 @@
 
   <div class="ui divider"></div>
 
-  {{#if fileIsAdded}}
+  {{#if this.fileIsAdded}}
     <div class="field">
       <button class="ui green fluid huge button" {{action "processQueue"}}>
         <i class="upload icon"></i>Save

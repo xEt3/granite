@@ -1,27 +1,27 @@
-{{#if link}}
-  {{#link-to step.path}}
+{{#if this.link}}
+  {{#link-to this.step.path}}
     <div class="content">
       <div class="title">
-        {{step.title}}
-        {{#if step.completed}}
+        {{this.step.title}}
+        {{#if this.step.completed}}
           <i class="check icon"></i>
         {{else}}
-          {{#if step.icon}}<i class="{{step.icon}} icon"></i>{{/if}}
+          {{#if this.step.icon}}<i class="{{this.step.icon}} icon"></i>{{/if}}
         {{/if}}
       </div>
-      <div class="description">{{step.description}}</div>
+      <div class="description">{{this.step.description}}</div>
     </div>
   {{/link-to}}
 {{else}}
   <div class="content">
     <div class="title">
-      {{step.title}}
-      {{#if step.completed}}
+      {{this.step.title}}
+      {{#if this.step.completed}}
         <i class="check icon"></i>
       {{else}}
-        {{#if step.icon}}<i class="{{step.icon}} icon"></i>{{/if}}
+        {{#if this.step.icon}}<i class="{{this.step.icon}} icon"></i>{{/if}}
       {{/if}}
     </div>
-    <div class="description">{{step.description}}</div>
+    <div class="description">{{this.step.description}}</div>
   </div>
 {{/if}}

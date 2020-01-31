@@ -6,7 +6,7 @@
   <div class="ui divider"></div>
 
   <div class="ui divided list items">
-    {{#each model as |applicant|}}
+    {{#each this.model as |applicant|}}
       {{list-item/talent-pool-applicant
         applicant}}
     {{else}}
@@ -23,7 +23,7 @@
   <div class="ui divider"></div>
 
   {{elements/x-pagination
-    page=(readonly page)
-    pages=(readonly pages)
-    onchange=(action (mut page))}}
+    page=(readonly this.page)
+    pages=(readonly this.pages)
+    onchange=(action (mut this.page))}}
 </div>

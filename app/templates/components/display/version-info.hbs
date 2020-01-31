@@ -1,9 +1,9 @@
 <p class="text-sm">
   <a href="#" {{action (toggle "showVersion" this)}}>
-    <i class="eye {{if showVersion "slash"}} icon"></i>{{if showVersion "Hide" "Show"}} version info
+    <i class="eye {{if this.showVersion "slash"}} icon"></i>{{if this.showVersion "Hide" "Show"}} version info
   </a>
 
-  {{#if showVersion}}
+  {{#if this.showVersion}}
     <br />{{app-version}}
   {{/if}}
 </p>

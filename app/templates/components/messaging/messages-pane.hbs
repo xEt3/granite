@@ -1,8 +1,8 @@
-{{#if (and isFetchable retrievalMax isTopStuck)}}
+{{#if (and this.isFetchable this.retrievalMax this.isTopStuck)}}
   <div class="messages-pane__head--retrieval-max">No more messages available.</div>
 {{/if}}
 
-{{#if isLoading}}
+{{#if this.isLoading}}
   <div class="messages-pane__head--loader">
     <i class="notched circle loading icon"></i> Loading more messages...
   </div>

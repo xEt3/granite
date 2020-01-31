@@ -1,29 +1,29 @@
 <div class="ui very padded raised segment animated fadeInUp">
-  <div class="ui top attached {{if model.disqualified "red" "green"}} label">
+  <div class="ui top attached {{if this.model.disqualified "red" "green"}} label">
     <i class="info circle icon"></i>
     This application is currently
-    {{~#if model.disqualified}}
-      disqualified{{#if model.disqualificationReason}} ({{model.disqualificationReason}}){{/if}}
-    {{~else if stage}}
-      in the <strong>{{stage.name}}</strong> stage
+    {{~#if this.model.disqualified}}
+      disqualified{{#if this.model.disqualificationReason}} ({{this.model.disqualificationReason}}){{/if}}
+    {{~else if this.stage}}
+      in the <strong>{{this.stage.name}}</strong> stage
     {{~else}}
       not in a stage
     {{~/if}}.
     <div class="right floated detail">
-      Submitted {{time-ago model.completedOn}} on {{time model.completedOn}}
+      Submitted {{time-ago this.model.completedOn}} on {{time this.model.completedOn}}
     </div>
   </div>
 
   <hgroup class="clearfix">
     <span class="ui large header">
-      Job Application for {{model.person.firstName}} {{model.person.lastName}}
+      Job Application for {{this.model.person.firstName}} {{this.model.person.lastName}}
     </span>
 
     {{#ui-dropdown class="item icon top right floated right pointing"}}
       <i class="wrench icon"></i><i class="dropdown fitted icon"></i>
       <div class="menu">
         <div class="header">Actions</div>
-        {{#link-to "account.job-opening.campaign.job-application.edit" model.id class="item"}}
+        {{#link-to "account.job-opening.campaign.job-application.edit" this.model.id class="item"}}
           <i class="edit icon"></i>Edit Application
         {{/link-to}}
       </div>
@@ -31,7 +31,7 @@
   </hgroup>
 
   <div class="job-application__labels">
-    {{#each model.labels as |label|}}
+    {{#each this.model.labels as |label|}}
       {{custom-label label size="small" tagName="span"}}
     {{/each}}
   </div>

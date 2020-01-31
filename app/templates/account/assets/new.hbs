@@ -4,11 +4,11 @@
     <div class="field">
       <label for="asset-name">Asset Name</label>
       <div class="ui left select-addon input pay-rate-number">
-        {{#ui-dropdown class="inline scrolling" selected=model.icon onChange=(action (mut model.icon))}}
+        {{#ui-dropdown class="inline scrolling" selected=this.model.icon onChange=(action (mut this.model.icon))}}
           <div class="default text">Icon</div>
           <i class="dropdown icon"></i>
           <div class="menu">
-            {{#each icons as |icon|}}
+            {{#each this.icons as |icon|}}
               <div class="item" data-value={{icon}}>
                 <i class="{{icon}} icon"></i>
               </div>
@@ -16,27 +16,27 @@
           </div>
         {{/ui-dropdown}}
 
-        {{input type="text" value=model.name id="asset-name" placeholder="Keycards"}}
+        {{input type="text" value=this.model.name id="asset-name" placeholder="Keycards"}}
       </div>
     </div>
     <div class="field">
       <label for="asset-description">Description</label>
-      {{input type="text" value=model.description id="asset-description" placeholder="All the keycards for our employees"}}
+      {{input type="text" value=this.model.description id="asset-description" placeholder="All the keycards for our employees"}}
     </div>
     <div class="field">
       <label for="asset-description">Documents</label>
       {{#input/document-selection-modal
         title="Assign asset documents"
-        selected=model.documents
+        selected=this.model.documents
         autoTag="Asset"
-        onSelected=(action (mut model.documents))
+        onSelected=(action (mut this.model.documents))
         as |execute|
       }}
         <button class="ui basic button" {{action execute "selectDocuments"}}>
           <i class="folder icon"></i>
           Add asset documents
-          {{#if model.documents.length}}
-            <span class="ui label">{{model.documents.length}} Assigned</span>
+          {{#if this.model.documents.length}}
+            <span class="ui label">{{this.model.documents.length}} Assigned</span>
           {{/if}}
         </button>
       {{/input/document-selection-modal}}
@@ -44,9 +44,9 @@
     <div class="field center aligned text">
       {{ui-checkbox
         class="toggle"
-        label=sharableLabel
-        checked=model.sharable
-        onChange=(action (mut model.sharable))}}
+        label=this.sharableLabel
+        checked=this.model.sharable
+        onChange=(action (mut this.model.sharable))}}
     </div>
     <div class="ui divider"></div>
 

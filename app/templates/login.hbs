@@ -1,18 +1,18 @@
 {{#link-to "index" class="login__home-link washout__white shadowed padded logo__mountains"}}{{/link-to}}
 
-{{#if previousTransition}}
+{{#if this.previousTransition}}
   <div class="ui red inverted text segment container">
-    <h3><i class="warning icon"></i> You need to log in to access <strong>{{previousTransition.intent.url}}</strong></h3>
+    <h3><i class="warning icon"></i> You need to log in to access <strong>{{this.previousTransition.intent.url}}</strong></h3>
   </div>
 {{/if}}
 
-{{#if expired}}
+{{#if this.expired}}
   <div class="ui red inverted text segment container">
     <h3><i class="warning icon"></i> Your session has expired. Please log in again.</h3>
   </div>
 {{/if}}
 
-{{#liquid-if recovery use="toLeft"}}
+{{#liquid-if this.recovery use="toLeft"}}
   <form class="ui very padded raised text segment container form" {{action "recover" on="submit"}}>
     <hgroup class="ui center aligned header">
       <h2>It happens.</h2>
@@ -22,20 +22,20 @@
 
     <div class="field">
       <label for="recovery_email">Email Address</label>
-      {{input type="email" id="recovery_email" class="ui large fluid input" tabindex="1" placeholder="Your Account Email" value=recoveryEmail}}
+      {{input type="email" id="recovery_email" class="ui large fluid input" tabindex="1" placeholder="Your Account Email" value=this.recoveryEmail}}
     </div>
 
     {{#form/action-button
       type="submit"
       class="ui massive fluid orange button"
-      loading=working
-      disabled=(not recoveryEmail)
+      loading=this.working
+      disabled=(not this.recoveryEmail)
     }}
       Recover my account
     {{/form/action-button}}
 
     <div class="ui divider"></div>
-    <a href="#" {{action toggleProperty "recovery"}}><i class="fitted left angle icon"></i> Nevermind, I'll log in.</a>
+    <a href="#" {{action this.toggleProperty "recovery"}}><i class="fitted left angle icon"></i> Nevermind, I'll log in.</a>
   </form>
 {{else}}
   <form class="ui very padded raised text segment container form" {{action "login" on="submit"}}>
@@ -47,12 +47,12 @@
 
     <div class="field">
       <label for="email">Email Address</label>
-      {{input type="email" id="email" class="ui large fluid input" tabindex="1" placeholder="Your Account Email" value=email}}
+      {{input type="email" id="email" class="ui large fluid input" tabindex="1" placeholder="Your Account Email" value=this.email}}
     </div>
     <div class="field">
       <label for="password">
         Password
-        <a href="#" class="right floated" {{action toggleProperty "recovery"}}>
+        <a href="#" class="right floated" {{action this.toggleProperty "recovery"}}>
           {{ember-tooltip
             side="left"
             popperContainer="body"
@@ -60,9 +60,9 @@
           <i class="life ring fitted icon"></i>
         </a>
       </label>
-      {{input type="password" id="password" class="ui large fluid input" tabindex="2" placeholder="Your Account Password" value=password}}
+      {{input type="password" id="password" class="ui large fluid input" tabindex="2" placeholder="Your Account Password" value=this.password}}
     </div>
 
-    {{#form/action-button type="submit" class="ui massive fluid green button" loading=working}}Log In{{/form/action-button}}
+    {{#form/action-button type="submit" class="ui massive fluid green button" loading=this.working}}Log In{{/form/action-button}}
   </form>
 {{/liquid-if}}

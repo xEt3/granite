@@ -1,5 +1,5 @@
 <h3 class="ui header">
-  {{#liquid-if (or addingAsset editAsset)}}
+  {{#liquid-if (or this.addingAsset this.editAsset)}}
     {{#link-to "account.asset.index" class="right floated text-danger"}}
       {{ember-tooltip
         side="left"
@@ -9,13 +9,13 @@
     {{/link-to}}
   {{else}}
     <div class="right floated">
-      {{#if model}}
+      {{#if this.model}}
         <a href="#" {{action "toggleProperty" "expandAttributes"}}>
           {{ember-tooltip
             side="left"
             popperContainer="body"
-            text=(if expandAttributes "Hide all stock attributes" "Show all stock attributes")}}
-          <i class="eye {{if expandAttributes "slash"}} icon"></i>
+            text=(if this.expandAttributes "Hide all stock attributes" "Show all stock attributes")}}
+          <i class="eye {{if this.expandAttributes "slash"}} icon"></i>
         </a>
       {{/if}}
       {{#link-to "account.asset.index.new"}}
@@ -32,10 +32,10 @@
 {{liquid-outlet class="add-asset-stock"}}
 
 <div class="ui relaxed divided list">
-  {{#each model as |asset|}}
+  {{#each this.model as |asset|}}
     {{list-item/asset-stock-item
       asset=asset
-      showAttributes=expandAttributes
+      showAttributes=this.expandAttributes
       addDocuments=true
       saveStockItem=(action "save" asset)
       onDelete=(action "delete")}}
@@ -43,4 +43,4 @@
     <h2 class="ui center aligned header">No assets available. {{#link-to "account.asset.index.new"}}Add one?{{/link-to}}</h2>
   {{/each}}
 </div>
-{{elements/x-pagination page=(readonly page) pages=(readonly pages) onchange=(action (mut page))}}
+{{elements/x-pagination page=(readonly this.page) pages=(readonly this.pages) onchange=(action (mut this.page))}}

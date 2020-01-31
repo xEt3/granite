@@ -1,12 +1,12 @@
-{{yield openModalFn}}
+{{yield this.openModalFn}}
 
 <UiModal @id={{this.modalId}}>
   <i class="close icon"></i>
   <div class="header">
-    Viewing response by {{response.employee.fullName}} to {{or response.form.title response.form.name}}
+    Viewing response by {{this.response.employee.fullName}} to {{or this.response.form.title this.response.form.name}}
   </div>
   <div class="content">
-    {{#each responses as |res|}}
+    {{#each this.responses as |res|}}
       <h4>{{res.question}}</h4>
       <p>
         {{#if (is-array res.response.value)}}
@@ -34,7 +34,7 @@
       </p>
     {{/each}}
   </div>
-  {{#unless hideActions}}
+  {{#unless this.hideActions}}
     <div class="actions">
       <button class="ui button" {{action "respond" false}}>
         Ok

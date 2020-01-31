@@ -1,30 +1,30 @@
 <div class="ui header clearfix">
   <div class="right floated">
-    <a href="#" class={{if addingAttribute "text-danger"}} {{action "toggleProperty" "addingAttribute"}}>
+    <a href="#" class={{if this.addingAttribute "text-danger"}} {{action "toggleProperty" "addingAttribute"}}>
       {{ember-tooltip
         side="left"
         popperContainer="body"
-        text=(if addingAttribute "Cancel" "Add a new attribute")}}
-      <i class="{{if addingAttribute "remove" "plus"}} icon"></i>
+        text=(if this.addingAttribute "Cancel" "Add a new attribute")}}
+      <i class="{{if this.addingAttribute "remove" "plus"}} icon"></i>
     </a>
   </div>
 </div>
 
-{{#liquid-if addingAttribute}}
+{{#liquid-if this.addingAttribute}}
   <form class="ui form container" {{action "saveAttribute" on="submit"}}>
     <div class="field">
       <label for="attribute-name">Attribute Name</label>
-      {{input type="text" value=pendingAttribute placeholder="ex. Color"}}
+      {{input type="text" value=this.pendingAttribute placeholder="ex. Color"}}
     </div>
     <div class="field">
-      {{#form/action-button type="submit" class="ui huge fluid green button" loading=working}}Add Asset Attribute{{/form/action-button}}
+      {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Add Asset Attribute{{/form/action-button}}
     </div>
   </form>
   <div class="ui divider"></div>
 {{/liquid-if}}
 
 <div class="ui relaxed divided list">
-  {{#each model.attributes as |attribute|}}
+  {{#each this.model.attributes as |attribute|}}
     <div class="item">
       <div class="content clearfix">
         <span>
@@ -43,6 +43,6 @@
       </div>
     </div>
   {{else}}
-    <h2 class="ui center aligned header">Category "{{model.name}}" doesn't have any attributes</h2>
+    <h2 class="ui center aligned header">Category "{{this.model.name}}" doesn't have any attributes</h2>
   {{/each}}
 </div>

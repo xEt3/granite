@@ -1,9 +1,9 @@
-{{#if computedValue.isPending}}
+{{#if this.computedValue.isPending}}
   <div class="ui active inline loader"></div>
 {{else}}
-  {{#if isRelationship}}
-    {{if displayKey (get computedValue displayKey) (to-string computedValue)}}
+  {{#if this.isRelationship}}
+    {{if this.displayKey (get this.computedValue this.displayKey) (to-string this.computedValue)}}
   {{else}}
-    {{to-string computedValue}}
+    {{to-string this.computedValue}}
   {{/if}}
 {{/if}}
