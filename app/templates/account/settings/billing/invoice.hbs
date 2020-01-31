@@ -24,7 +24,7 @@
     <tr>
       <th class="th__vertical-table-header">Description</th>
       <td>
-        {{if this.isProrateCharge "Charge for proration" "Charge for monthly billing"}}
+        {{if this.isProrateCharge "Charge for proration" `Charge for ${this.model.lineItems.productCode}'}}
       </td>
     </tr>
     <tr>
