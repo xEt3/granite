@@ -96,6 +96,7 @@ Router.map(function () {
         this.route('future-changes');
         this.route('counseling', function () {
           this.route('new');
+          this.route('print-all');
           this.route('issue', { path: '/issue/:issue_slug' }, function () {
             this.route('new');
             this.route('corrective-action', { path: '/corrective-action/:action_id' }, function () {

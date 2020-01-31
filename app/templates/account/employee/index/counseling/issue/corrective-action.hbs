@@ -1,36 +1,52 @@
-{{#confirm-modal deleteContext=(concat "Corrective Action: " this.model.type) as |confirmDelete|}}
-  <hgroup>
-    <span class="ui header">
-      {{#link-to "account.employee.index.counseling.issue.corrective-action"}}
-        {{#if (await this.model.actionSeverity)}}
-          {{get (await this.model.actionSeverity) "name"}} on
+{{#confirm-modal deleteContext=(concat "Corrective Action: " model.type) as |confirmDelete|}}
+  {{#input/document-selection-modal
+    title="New Corrective Action Document"
+    selected=model.file
+    correctiveAction=model
+    assignText="Use Document"
+    singleDoc=true
+    systemUse=true
+    autoTag="corrective Action Document"
+    onSelected=(pipe-action
+      (action (mut model.file))
+      (action "saveDocument"))
+      as |selectDocuments|
+    }}
+    <hgroup>
+      <span class="ui header">
+        {{#if (await model.actionSeverity)}}
+          {{get (await model.actionSeverity) "name"}} on
         {{/if}}
         {{time
           (if this.model.issuedOn this.model.issuedOn this.model.created)
           "MMMM Do YYYY"}}
-      {{/link-to}}
-    </span>
-    {{#ui-dropdown class="item icon top right pointing right floated"}}
-      <i class="wrench icon"></i><i class="dropdown icon"></i>
-      <div class="menu">
-        <div class="header">Actions</div>
-        {{#if (and this.model.followUpOn (not this.model.resolutionStatusOn))}}
-          <a href="#" class="item" {{action (pipe (action "openFollowupModal") (action "saveFollowup"))}}>
-            <i class="repeat icon"></i>Follow Up
+      </span>
+      {{#ui-dropdown class="item icon top right pointing right floated"}}
+        <i class="wrench icon"></i><i class="dropdown icon"></i>
+        <div class="menu">
+          <div class="header">Actions</div>
+          <a href="#" class="item" {{action selectDocuments}}>
+            <i class="folder icon"></i>
+            Add a Document
           </a>
-        {{/if}}
-        {{#link-to
-          "account.employee.index.counseling.issue.corrective-action.edit"
-          class="item"}}
-          <i class="edit icon"></i>Edit
-        {{/link-to}}
-        <div class="text-danger header">Danger Zone</div>
-        <a href="#" class="text-danger item" {{action (pipe confirmDelete (action "delete"))}}>
-          <i class="trash icon"></i>Delete Record
-        </a>
-      </div>
-    {{/ui-dropdown}}
-  </hgroup>
+          {{#if (and model.followUpOn (not model.resolutionStatusOn))}}
+            <a href="#" class="item" {{action (pipe (action "openFollowupModal") (action "saveFollowup"))}}>
+              <i class="repeat icon"></i>Follow Up
+            </a>
+          {{/if}}
+          {{#link-to
+            "account.employee.index.counseling.issue.corrective-action.edit"
+            class="item"}}
+            <i class="edit icon"></i>Edit
+          {{/link-to}}
+          <div class="text-danger header">Danger Zone</div>
+          <a href="#" class="text-danger item" {{action (pipe confirmDelete (action "delete"))}}>
+            <i class="trash icon"></i>Delete Record
+          </a>
+        </div>
+      {{/ui-dropdown}}
+    </hgroup>
+  {{/input/document-selection-modal}}
 {{/confirm-modal}}
 
 <div class="ui divider"></div>
