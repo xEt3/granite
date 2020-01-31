@@ -19,7 +19,7 @@ export default Route.extend(add, {
   },
 
   getModelDefaults () {
-    let employeeIssue = this.modelFor('account.employee.index.counseling.issue');
+    let employeeIssue = this.modelFor('account.employee.index.counseling.issue').issue;
 
     return this.getLastSeverity()
     .then(severity => {
@@ -51,7 +51,7 @@ export default Route.extend(add, {
   },
 
   getLastSeverity () {
-    let employeeIssue = this.modelFor('account.employee.index.counseling.issue');
+    let employeeIssue =  this.modelFor('account.employee.index.counseling.issue').issue;
     // Query for corrective actions using this issue and get
     // the first, newest action
     return this.store.query('corrective-action', {

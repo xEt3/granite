@@ -81,7 +81,8 @@ export default Component.extend(pagination, addEdit, ajaxStatus, {
         query = {
           limit,
           page,
-          systemUse: false
+          systemUse:        this.get('systemUse'),
+          correctiveAction: this.get('correctiveAction.id')
         },
         previousSearch = this.get('previousSearch'),
         previousTag = this.get('previousTag');
@@ -204,6 +205,10 @@ export default Component.extend(pagination, addEdit, ajaxStatus, {
 
       let file = await promise,
           properties = [ 'title', 'description', 'tags' ];
+
+      if (this.get('correctiveAction')) {
+        properties.push('correctiveAction', 'systemUse');
+      }
 
       properties.forEach(prop => {
         if (prop === 'title') {

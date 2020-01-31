@@ -12,6 +12,15 @@
 
     <div class="right aligned text floated menu__actions">
       <h3 class="ui inline header">
+        {{#if model}}
+          <LinkTo @route="account.employee.index.counseling.print-all">
+            {{ember-tooltip
+              side="top"
+              popperContainer="body"
+              text="Print corrective action history"}}
+            <i class="print icon"></i>
+          </LinkTo>
+        {{/if}}
         {{#link-to "account.employee.index.counseling.new"}}
           <i id="add-issue" class="plus icon"></i>
         {{/link-to}}
