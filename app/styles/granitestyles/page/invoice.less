@@ -21,3 +21,16 @@
     display: none;
   }
 }
+
+.transaction-item {
+  transition: all .3s ease-in-out;
+}
+
+.transaction-item:hover {
+  background-color: fade(@granite-blue, 20%);
+}
+
+.transaction-item--canceled {
+  opacity: .5;
+  text-decoration: line-through;
+}

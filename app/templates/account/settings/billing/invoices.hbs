@@ -1,8 +1,16 @@
 {{#if this.model}}
-  <h2>Transactions</h2>
-  {{#each this.model as |transaction index|}}
-    {{list-item/invoice-payment-method transaction=transaction index=index}}
-  {{/each}}
+  <div class="ui basic segment">
+    <h2 class="ui header">Transactions</h2>
+    <p class="center aligned small light text">
+      <i class="info circle icon"></i>
+      We show transactions for the last year. If you need access to an earlier transaction, please contact support.
+    </p>
+  </div>
+  <div class="ui container">
+    {{#each this.model as |transaction index|}}
+      <ListItem::InvoicePaymentMethod @transaction={{transaction}} @index={{index}} />
+    {{/each}}
+  </div>
 {{else}}
   <h3>No transactions yet.</h3>
 {{/if}}

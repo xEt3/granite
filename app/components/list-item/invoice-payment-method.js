@@ -6,6 +6,10 @@ export default Component.extend({
     return this.get('index') % 2 !== 0 ? true : false;
   }),
 
+  isRejected: computed('transaction.status', function () {
+    return [ 'gateway_rejected', 'failed', 'settlement_declined', 'authorization_expired', 'processor_declined', 'voided' ].includes((this.transaction.status || '').toLowerCase());
+  }),
+
   paymentMethod: computed('transaction.paymentInstrumentType', function () {
     const {
       paymentInstrumentType: type,
