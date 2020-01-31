@@ -1,8 +1,9 @@
 <div class="content">
   <div class="header">
-    <span class="light text">({{time this.model.created "M/D"}})</span> {{this.model.changes.length}} {{inflect-text "change" this.model.changes.length}} requested by {{this.model.employee.fullName}}
+    <span class="light text">({{time this.model.created "M/D"}})</span>
+    {{this.model.changes.length}}
+    {{inflect-text "change" this.model.changes.length}} requested by {{this.model.employee.fullName}}
   </div>
-
   <div class="right floated content">
     <button type="button" class="ui positive labeled icon tiny button" {{action this.onApprove this.model}}>
       <i class="ui check icon"></i>
@@ -13,11 +14,17 @@
       Reject
     </button>
   </div>
-
   <div class="extra">
     <ol class="ui ordered list">
       {{#each this.model.changes as |change|}}
-        <li class="item">{{humanize-key change.path}}: <strong>{{change.value}}</strong></li>
+        <li class="item">{{humanize-key change.path}}:
+          <div>
+            Was: <strong>{{change.before}}</strong>
+          </div>
+          <div>
+            After Change: <strong>{{change.value}}</strong>
+          </div>
+        </li>
       {{/each}}
     </ol>
   </div>
