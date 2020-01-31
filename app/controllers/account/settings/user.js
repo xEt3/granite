@@ -18,7 +18,7 @@ export default Controller.extend(modalSupport, ajaxStatus, {
       this.ajaxStart();
 
       if (newPassword !== confirmPassword) {
-        this.ajaxError('Passwords do not match.');
+        this.ajaxError('Passwords do not match.', true);
         return;
       }
 
