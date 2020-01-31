@@ -46,8 +46,9 @@ export default Model.extend({
     inverse: null
   }),
 
-  reviewedOn: attr('date'),
-  created:    attr('date', { defaultValue: () => new Date() }),
+  completedOn: attr('date'),
+  reviewedOn:  attr('date'),
+  created:     attr('date', { defaultValue: () => new Date() }),
 
   isScored: computed('scoreAdditive', 'scoreRelative', 'responses', function () {
     return !isNaN(this.get('scoreAdditive')) && !isNaN(this.get('scoreRelative')) && !!this.get('responses.firstObject');
