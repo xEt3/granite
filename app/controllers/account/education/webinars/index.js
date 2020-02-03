@@ -8,8 +8,13 @@ export default class WebinarsIndexController extends Controller {
   @service data
   @service transactions
 
-  @tracked
-  itemsInCart = A()
+  queryParams = [ 'q', 'preserveScrollPosition' ]
+
+  @tracked itemsInCart = A()
+  @tracked q = ''
+  @tracked preserveScrollPosition = true
+  @tracked webinars = null
+  @tracked authorizations = null
 
   get purchasedWebinars () {
     return this.authorizations.map(auth => ({
@@ -19,7 +24,7 @@ export default class WebinarsIndexController extends Controller {
   }
 
   get webinarsAvailableForPurchase () {
-    return this.webinars.filter(webinar => !this.purchasedWebinars.find(g => g.webinar.id === webinar.id));
+    return this.webinars.filter(webinar => !this.purchasedWebinars.find(g => (g.webinar || {}).id === webinar.id));
   }
 
   get cardLayoutClass () {
@@ -42,6 +47,11 @@ export default class WebinarsIndexController extends Controller {
     }
 
     return 'four';
+  }
+
+  @action
+  submitSearch (term) {
+    this.set('q', term);
   }
 
   @action
