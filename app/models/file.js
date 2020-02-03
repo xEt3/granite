@@ -27,5 +27,10 @@ export default Model.extend(Validations, {
     inverse: null
   }),
 
+  correctiveAction: belongsTo('corrective-action', {
+    async:   true,
+    inverse: null
+  }),
+
   created: attr('date', { defaultValue: () => new Date() })
 });

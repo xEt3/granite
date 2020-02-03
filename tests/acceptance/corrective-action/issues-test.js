@@ -106,4 +106,23 @@ module('Acceptance | issues', function (hooks) {
 
     assert.equal(currentURL(), `/account/employee/${employee.id}/counseling`);
   });
+
+  test('displaying document', async function (assert) {
+    let { employee } = await authenticate.call(this, server),
+        doc = await server.create('file', {
+          tags:      [ 'correctiveActions' ],
+          systemUse: true
+        }),
+        issue = await server.create('employee-issue'),
+        corrective = await server.create('corrective-action', { documents: doc.id }),
+        slug = `${issue.title.replace(/\s|_/g, '-')}_${issue.id}`;
+
+    await visit(`/account/employee/${employee.id}/counseling/issue/${slug}/corrective-action/${corrective.id}`);
+    await settled();
+    assert.equal(currentURL(), `/account/employee/${employee.id}/counseling/issue/${slug}/corrective-action/${corrective.id}`);
+
+    await click('.eye');
+    assert.dom('div.ui.divided.items .content .header').includesText(doc.title);
+    assert.dom('div.ui.divided.items .content .meta').includesText(doc.description);
+  });
 });

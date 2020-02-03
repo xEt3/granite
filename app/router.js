@@ -66,6 +66,8 @@ Router.map(function () {
         this.route('invoice', { path: '/invoice/:id' });
       });
       this.route('integrations');
+      this.route('user');
+
       this.route('templates', function () {
         this.route('edit', { path: '/:template_id/edit' });
         this.route('add', { path: '/:template_key' });
@@ -96,6 +98,7 @@ Router.map(function () {
         this.route('future-changes');
         this.route('counseling', function () {
           this.route('new');
+          this.route('print-all');
           this.route('issue', { path: '/issue/:issue_slug' }, function () {
             this.route('new');
             this.route('corrective-action', { path: '/corrective-action/:action_id' }, function () {
