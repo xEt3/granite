@@ -1,4 +1,5 @@
 import Route from '@ember/routing/route';
+import { all } from 'rsvp';
 import resource from 'granite/mixins/route-abstractions/resource';
 
 export default Route.extend(resource, {
@@ -17,16 +18,35 @@ export default Route.extend(resource, {
     }
   },
 
-  async model ({ q }) {
-    const webinars = !q && this.webinarsCache ? this.webinarsCache : await this._super(...arguments);
+  async model ({ q }, transition) {
+    const qpTransition = transition.from && transition.from.name === transition.to.name;
 
-    if (!q) {
-      this.webinarsCache = webinars;
+    const updateCache = {
+      __cacheWebinars:       !q && !this.__cacheWebinars,
+      __cacheAuthorizations: !qpTransition && !this.__cacheAuthorizations
+    };
+
+    const promisesToResolve = [
+      !q && this.__cacheWebinars ? this.__cacheWebinars : this._super(...arguments),
+      this.__cacheAuthorizations ? this.__cacheAuthorizations : this.store.query('webinar-authorization', { sort: { created: -1 } })
+    ];
+
+    const resolved = await all(promisesToResolve),
+          cacheKeys = Object.keys(updateCache);
+
+    for (let cacheKey in updateCache) {
+      if (!Object.prototype.hasOwnProperty.call(updateCache, cacheKey)) {
+        continue;
+      }
+
+      if (updateCache[cacheKey]) {
+        this[cacheKey] = resolved[cacheKeys.indexOf(cacheKey)];
+      }
     }
 
     return {
-      webinars,
-      authorizations: await this.store.query('webinar-authorization', { sort: { created: -1 } })
+      webinars:       resolved[0],
+      authorizations: resolved[1]
     };
   },
 
