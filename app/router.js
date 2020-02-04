@@ -251,6 +251,7 @@ Router.map(function () {
         this.route('purchase');
         this.route('purchased');
         this.route('stream', { path: '/:authorization_id/stream' });
+        this.route('assign', { path: '/:authorization_id/assign' });
       });
     });
   });

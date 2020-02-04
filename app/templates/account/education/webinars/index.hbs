@@ -21,7 +21,8 @@
         {{#each this.purchasedWebinars as |webinarGroup|}}
           <ListItem::Educate::WebinarItem
             @webinar={{or webinarGroup.webinar webinarGroup.auth.webinar}}
-            @authorization={{webinarGroup.auth}} />
+            @authorization={{webinarGroup.auth}}
+            @onAssign={{this.assignWebinar}} />
         {{/each}}
       </div>
 

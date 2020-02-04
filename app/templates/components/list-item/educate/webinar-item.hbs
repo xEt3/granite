@@ -22,7 +22,7 @@
         <i class="clock icon"></i><strong>{{this.timeRemaining}}/90 days</strong> remaining
       </span>
       <div class="right floated">
-        <a href="#" class="webinar-card__assign">
+        <a href="#" class="webinar-card__assign" {{on "click" (prevent-default (fn @onAssign @authorization))}}>
           <EmberTooltip @side="left">
             Assign Webinar
           </EmberTooltip>

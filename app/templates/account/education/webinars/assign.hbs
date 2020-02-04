@@ -1,0 +1,9 @@
+<div class="ui raised padded segment container page__webinars">
+  <div class="ui basic segment">
+    <h3 class="ui header">Assign "{{this.model.authorization.webinar.title}}" as a training assignment</h3>
+  </div>
+
+  {{#each this.model.employees as |emp|}}
+    {{emp.name.first}}
+  {{/each}}
+</div>

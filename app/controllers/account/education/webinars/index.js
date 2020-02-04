@@ -50,6 +50,11 @@ export default class WebinarsIndexController extends Controller {
   }
 
   @action
+  assignWebinar (auth) {
+    this.transitionToRoute('account.education.webinars.assign', auth.id);
+  }
+
+  @action
   submitSearch (term) {
     this.set('q', term);
   }
