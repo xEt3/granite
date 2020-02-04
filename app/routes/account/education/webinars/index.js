@@ -61,10 +61,11 @@ export default Route.extend(resource, {
   },
 
   setupController (controller, model) {
-    console.log('setting webinars', model.webinars);
+    const { webinars, authorizations } = model;
+
     controller.setProperties({
-      webinars:       model.webinars,
-      authorizations: model.authorizations
+      webinars,
+      authorizations
     });
   }
 });
