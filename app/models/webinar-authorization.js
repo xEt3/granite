@@ -1,12 +1,10 @@
-import Model from 'ember-data/model';
-import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default Model.extend({
-  webinar:   belongsTo('webinar', { inverse: null }),
-  purchaser: belongsTo('company-user', { inverse: null }),
-  company:   belongsTo('company', { inverse: null }),
+export default class WebinarAuthorizationModel extends Model {
+  @belongsTo('webinar', { inverse: null }) webinar
+  @belongsTo('company-user', { inverse: null }) purchaser
+  @belongsTo('company', { inverse: null }) company
 
-  expiration: attr('date'),
-  created:    attr('date')
-});
+  @attr('date') expiration
+  @attr('date') created
+}

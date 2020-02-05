@@ -93,11 +93,13 @@ export default class DataService extends Service {
       return;
     }
 
-    if (get(_model, 'length')) {
-      return map(_model, (m) => this.saveModel(m, label, notify, requireFields));
-    }
+    const { success, error } = this.createStatus(label, notify);
 
-    const { success, error } = this.createStatus(label);
+    if (get(_model, 'length')) {
+      await map(_model, (m, i) => this.saveRecord(m, `label${i}`, false, requireFields));
+      success('Successfully saved.');
+      return;
+    }
 
     let invalid = this._validateModel(_model, requireFields),
         validationsError = this.get('enableModelValidations') && await this.getModelValidations(_model);
@@ -129,6 +131,7 @@ export default class DataService extends Service {
       this._afterSave(record);
     } catch (e) {
       error(e);
+      return false;
     }
     return record;
   }
