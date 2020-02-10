@@ -18,6 +18,11 @@
     <ol class="ui ordered list">
       {{#each this.model.changes as |change|}}
         <li class="item">{{humanize-key change.path}}:
+          {{#if (not-eq change.currentValue change.before) }}
+            <div>
+              Current Information: <strong>{{change.currentValue}}</strong>
+            </div>
+          {{/if}}
           <div>
             Was: <strong>{{change.before}}</strong>
           </div>
