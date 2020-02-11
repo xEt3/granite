@@ -19,8 +19,11 @@
       {{#each this.model.changes as |change|}}
         <li class="item">{{humanize-key change.path}}:
           {{#if (not-eq change.currentValue change.before) }}
-            <div>
-              Current Information: <strong>{{change.currentValue}}</strong>
+            <div> 
+              Current Value: <strong>{{change.currentValue}}</strong> 
+              <i class="info circle icon">
+                <EmberTooltip @side="right" @text="This field has changed since the employee requested to change it. Please review carefully." />
+              </i>
             </div>
           {{/if}}
           <div>
@@ -30,7 +33,7 @@
             After Change: <strong>{{change.value}}</strong>
           </div>
         </li>
-      {{/each}}
+      {{/each}}ks
     </ol>
   </div>
 </div>
