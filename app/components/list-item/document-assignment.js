@@ -15,7 +15,6 @@ export default BaseLiComponent.extend({
         signatureRequired: false,
         effectiveOn:       null
       });
-      return;
     }
   },
 

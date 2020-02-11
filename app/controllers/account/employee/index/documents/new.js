@@ -29,7 +29,7 @@ export default Controller.extend(addEdit, {
     },
 
     async addAssignment (files) {
-      let model = await this.get('model');
+      let model = this.get('model');
       const makeAssignment = (inputFile) => {
 
         let file = inputFile;
@@ -39,7 +39,7 @@ export default Controller.extend(addEdit, {
           file = this.store.peekRecord('file', file.id);
         }
 
-        let { employee, company, followups  } = model;
+        let { employee, company, followups } = model;
 
         let assignment = this.store.createRecord('file-assignment', {
           file,
@@ -48,8 +48,6 @@ export default Controller.extend(addEdit, {
           followups
         });
         this.assignments.pushObject(assignment);
-
-        return;
       };
 
       let _files = Array.isArray(files) ? files : [ files ];
