@@ -29,7 +29,7 @@ module.exports = function (defaults) {
 
     'ember-cli-range-slider': { skin: 'flat' },
 
-    sourcemaps:  { enabled: false },
+    sourcemaps:  { enabled: ENV === 'production' },
     fingerprint: { exclude: [ 'product-screenshots/', 'documents/' ] },
 
     'ember-cli-babel': { includePolyfill: ENV === 'production' },
