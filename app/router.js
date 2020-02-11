@@ -5,8 +5,6 @@ import RouterScroll from 'ember-router-scroll';
 export default class Router extends RouterScroll {
   location = config.locationType;
   rootURL = config.rootURL;
-  location = config.locationType;
-  rootURL = config.rootURL;
   @service headData;
   @service router;
   @service analytics;
