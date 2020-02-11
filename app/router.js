@@ -5,8 +5,6 @@ import RouterScroll from 'ember-router-scroll';
 export default class Router extends RouterScroll {
   location = config.locationType;
   rootURL = config.rootURL;
-  location = config.locationType;
-  rootURL = config.rootURL;
   @service headData;
   @service router;
   @service analytics;
@@ -120,6 +118,7 @@ Router.map(function () {
         });
         this.route('visual-id');
         this.route('education', function () {
+          this.route('webinars');
           this.route('add');
           this.route('certification', { path: '/certification/:certification_id' }, function () {
             this.route('edit');
@@ -245,7 +244,14 @@ Router.map(function () {
     this.route('help', function () {
       this.route('topic', { path: '/:topic_slug' });
     });
-    this.route('education');
+    this.route('education', function () {
+      this.route('webinars', function () {
+        this.route('purchase');
+        this.route('purchased');
+        this.route('stream', { path: '/:authorization_id/stream' });
+        this.route('assign', { path: '/:authorization_id/assign' });
+      });
+    });
   });
 
   this.route('shared', function () {

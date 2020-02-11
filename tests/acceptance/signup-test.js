@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { visit, currentURL, click, find, fillIn, settled } from '@ember/test-helpers';
-import { faker } from 'ember-cli-mirage';
+import faker from 'faker';
 
 const fieldMap = {
   name:              '#company-name input',

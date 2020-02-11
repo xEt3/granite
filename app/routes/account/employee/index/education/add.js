@@ -22,12 +22,21 @@ export default Route.extend(add, {
       throw new Error(`${params.type} is not a supported education type`);
     }
 
-    this.set('modelName', typeMap[params.type]);
-    return this._super(...arguments);
+    const type = typeMap[params.type];
+
+    this.set('modelName', type);
+
+    return {
+      newRecord:        await this._super(...arguments),
+      dataDependencies: type === 'trainingAssignment' && { webinars: await this.store.findAll('webinar-authorization') }
+    };
   },
 
-  setupController (controller) {
-    this._super(...arguments);
-    controller.setProperties({ employee: this.modelFor('account.employee') });
+  setupController (controller, model) {
+    controller.setProperties({
+      model:            model.newRecord,
+      dataDependencies: model.dataDependencies,
+      employee:         this.modelFor('account.employee')
+    });
   }
 });

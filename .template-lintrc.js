@@ -2,5 +2,8 @@
 
 module.exports = {
   extends: 'octane',
-  rules: { 'self-closing-void-elements': false }
+  rules:   {
+    'self-closing-void-elements':    false,
+    'no-curly-component-invocation': { requireDash: true }
+  }
 };

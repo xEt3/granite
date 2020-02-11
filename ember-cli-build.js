@@ -1,12 +1,15 @@
 'use strict';
 
 const EmberApp  = require('ember-cli/lib/broccoli/ember-app'),
+      ENV = process.env.EMBER_ENV,
       globSync  = require('glob').sync;
 
 const nodeIncludes = [
   'semantic-ui-calendar/dist/calendar.css',
   'semantic-ui-calendar/dist/calendar.js',
   'scrollreveal/dist/scrollreveal.min.js',
+  'emojify.js/dist/css/basic/emojify.min.css',
+  'emojify.js/dist/js/emojify.min.js',
   '@bower_components/intro.js/intro.js',
   '@bower_components/intro.js/introjs.css',
   '@bower_components/At.js/dist/js/jquery.atwho.js',
@@ -20,15 +23,16 @@ module.exports = function (defaults) {
       paths: [
         'node_modules/semantic-ui-less'
       ],
-      plugins: [ require('less-plugin-glob') ]
+      plugins:   [ require('less-plugin-glob') ],
+      sourceMap: false
     },
 
     'ember-cli-range-slider': { skin: 'flat' },
 
-    sourcemaps:  { enabled: true },
+    sourcemaps:  { enabled: false },
     fingerprint: { exclude: [ 'product-screenshots/', 'documents/' ] },
 
-    'ember-cli-babel': { includePolyfill: true },
+    'ember-cli-babel': { includePolyfill: ENV === 'production' },
 
     SemanticUI: {
       import: { fonts: false },
@@ -54,6 +58,16 @@ module.exports = function (defaults) {
 
   fontFiles.map(path =>
     app.import(path, { destDir: 'assets/themes/default/assets/fonts' }, { overwrite: true }));
+
+  if (ENV !== 'production') {
+    // For mirage server parsing
+    app.import('node_modules/qs/dist/qs.js', {
+      using: [{
+        transformation: 'cjs',
+        as:             'qs'
+      }]
+    });
+  }
 
   return app.toTree();
 };

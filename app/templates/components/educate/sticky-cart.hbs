@@ -1,0 +1,35 @@
+<EmberWormhole @destinationElement={{this.wormholeTarget}}>
+  <form class="sticky-cart {{if this.shouldHide "sticky-cart--hidden"}} {{if this.expanded "sticky-cart--expanded"}} {{@class}}" {{on "submit" (prevent-default (fn @onSubmit))}}>
+    <div class="sticky-cart__expanded-view">
+      {{#each @items as |item|}}
+        <ListItem::Educate::WebinarCartItem 
+          @webinar={{item}} 
+          @removeFromCart={{@removeFromCart}} />
+      {{/each}}
+      <div class="sticky-cart-expanded-view__total">
+        Total: ${{this.itemTotal}}
+      </div>
+    </div>
+    <div class="sticky-cart__bar">
+      <div class="sticky-cart__cart-icon" role="button" {{on "click" this.toggleCartExpansion}}>
+        <i class="cart icon"></i>
+        <span class="sticky-cart-icon__expand">
+          <i class="angle up icon"></i>
+        </span>
+        <EmberTooltip
+          @popperContainer="body"
+          @side="left"
+        >
+          {{if this.expanded "Close" "View cart"}}
+        </EmberTooltip>
+      </div>
+      <h2 class="sticky-cart__item-count">{{@items.length}} {{inflect-text "webinars" @items.length}} in cart</h2>
+      <button type="submit" class="sticky-cart__purchase ui green button">
+        Purchase
+        <div class="sticky-cart-purchase__total">
+          90 day access to {{@items.length}} {{inflect-text "webinars" @items.length}} for ${{this.itemTotal}}
+        </div>
+      </button>
+    </div>
+  </form>
+</EmberWormhole>

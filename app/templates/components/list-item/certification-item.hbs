@@ -21,6 +21,6 @@
     </div>
   </div>
   <div class="right content">
-    <span class="ui small text">Added {{time-ago this.model.created}} by {{this.model.creator.fullName}}</span>
+    <span class="ui small text">Added {{time-ago this.model.created}}{{#if this.model.creator}} by {{this.model.creator.fullName}}{{/if}}</span>
   </div>
 {{/link-to}}

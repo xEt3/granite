@@ -1,0 +1,60 @@
+<div class="ui raised padded segment container page__webinars">
+  <div class="ui basic segment">
+    <h2 class="ui header">Webinars</h2>
+    <p>Our webinar library is sourced from Associated Employers' team of HR experts. Once you purchase a webinar, you have the ability to watch it or assign it to an employee to watch within the access period. Any webinar purchase will be immediately billed to the payment method associated with your Granite HR subscription.</p>
+    <div class="ui divider"></div>
+    <ConfirmModal
+      @confirmContent="Are you sure you want to complete this purchase? The full amount will be charged to your card on file."
+      as |confirm|
+    >
+      <Educate::StickyCart
+        @class="webinars-cart"
+        @items={{this.itemsInCart}}
+        @removeFromCart={{this.removeFromCart}}
+        @onSubmit={{pipe confirm this.checkout}} />
+    </ConfirmModal>
+
+    {{#if this.purchasedWebinars.length}}
+      <h2>Purchased webinars</h2>
+
+      <div class="ui {{this.cardLayoutClass}} stackable cards webinars-list--purchased">
+        {{#each this.purchasedWebinars as |webinarGroup|}}
+          <ListItem::Educate::WebinarItem
+            @webinar={{or webinarGroup.webinar webinarGroup.auth.webinar}}
+            @authorization={{webinarGroup.auth}}
+            @onAssign={{this.assignWebinar}} />
+        {{/each}}
+      </div>
+
+      <div class="two column stackable grid ui basic segment">
+        <div class="eleven wide column">
+          <h2>Available for purchase</h2>
+        </div>
+        <Input::SearchInput
+          class="five wide column"
+          @value={{this.q}}
+          @searchId="webinar-search-term"
+          @searchPlaceholder="Search by title or description"
+          @onSubmit={{this.submitSearch}} />
+      </div>
+    {{/if}}
+
+    <div class="ui three stackable cards webinars-list">
+      {{#each this.webinarsAvailableForPurchase as |webinar|}}
+        <ListItem::Educate::WebinarItem
+          @webinar={{webinar}}
+          @addToCart={{this.addToCart}}
+          @removeFromCart={{this.removeFromCart}}
+          @itemsInCart={{this.itemsInCart}} />
+      {{else}}
+        <h2 class="ui centered text">
+          {{#if this.q}}
+            No webinars found for "{{this.q}}".
+          {{else}}
+            No webinars available.
+          {{/if}}
+        </h2>
+      {{/each}}
+    </div>
+  </div>
+</div>

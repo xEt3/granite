@@ -49,9 +49,9 @@
   <h2 class="header__list">
     <i class="graduation icon"></i> Training Assignments
   </h2>
-  <div class="ui list">
+  <div class="ui relaxed flex list">
     {{#each this.model.trainingAssignments as |record|}}
-      {{list-item/training-assignment record}}
+      <ListItem::TrainingAssignment @model={{record}} />
     {{else}}
       <h3>No training assignments available.</h3>
     {{/each}}

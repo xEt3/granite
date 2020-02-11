@@ -1,0 +1,74 @@
+<div class="ui card webinar__card">
+  <div class="content">
+    <div class="header webinar-card__title">{{@webinar.title}}</div>
+  </div>
+  {{#if @authorization}}
+    <EmberTooltip @delay="300" @side="left">
+      {{@webinar.description}}
+    </EmberTooltip>
+  {{else}}
+    <div class="content">
+      <h4 class="ui sub header">Description</h4>
+      <div class="content">
+        <div class="summary webinar-card__description">
+         {{@webinar.description}}
+        </div>
+      </div>
+    </div>
+  {{/if}}
+  <div class="extra content">
+    {{#if @authorization}}
+      <span class="webinar-card__access text-green">
+        <i class="clock icon"></i><strong>{{this.timeRemaining}}/90 days</strong> remaining
+      </span>
+      <div class="right floated">
+        <a href="#" class="webinar-card__assign" {{on "click" (prevent-default (fn @onAssign @authorization))}}>
+          <EmberTooltip @side="left">
+            Assign Webinar
+          </EmberTooltip>
+          <i class="large icons">
+            <i class="graduation cap icon"></i>
+            <i class="corner add icon"></i>
+          </i>
+        </a>
+        <LinkTo class="webinar-card__watch text-green" @route="account.education.webinars.stream" @model={{@authorization.id}}>
+          <EmberTooltip @side="left">
+            Watch Webinar
+          </EmberTooltip>
+          <i class="large play icon"></i> 
+        </LinkTo>
+      </div>
+    {{else}}
+      <span class="webinar-card__access">
+        <EmberTooltip @side="left" >
+          90 days for ${{@webinar.price}}
+        </EmberTooltip>
+        <i class="large info circle icon"></i>
+      </span>
+      {{#if (and @addToCart @removeFromCart) tagName='span'}}
+        <a
+          href="#"
+          class="{{if this.inCart 'text-danger '}}webinar-card__purchase right floated"
+          {{on "click" (fn (if this.inCart @removeFromCart @addToCart) @webinar)}}>
+          {{#if this.inCart}}
+            <EmberTooltip @side="left">
+              Remove from cart
+            </EmberTooltip>
+            <i class="large icons">
+              <i class="cart icon"></i>
+              <i class="corner huge minus icon"></i>
+            </i>
+          {{else}}
+            <EmberTooltip @side="left">
+              Add to cart
+            </EmberTooltip>
+            <i class="large icons">
+              <i class="blue cart icon"></i>
+              <i class="corner huge add icon"></i>
+            </i>
+          {{/if}}
+        </a>
+      {{/if}}
+    {{/if}}
+  </div>
+</div>
