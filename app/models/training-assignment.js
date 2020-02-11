@@ -1,19 +1,18 @@
-import Model from 'ember-data/model';
-import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default Model.extend({
-  name:   attr('string'),
-  note:   attr('string'),
-  status: attr('string', { defaultValue: 'Assigned' }),
+export default class TrainingAssignmentModel extends Model {
+  @attr('string') name
+  @attr('string') note
+  @attr('string', { defaultValue: 'Assigned' }) status
 
-  company:  belongsTo('company'),
-  creator:  belongsTo('employee'),
-  employee: belongsTo('employee'),
+  @belongsTo('company') company
+  @belongsTo('employee') creator
+  @belongsTo('employee') employee
+  @belongsTo('webinar-authorization') webinar
 
-  created: attr('date', {
+  @attr('date', {
     defaultValue () {
       return new Date();
     }
-  })
-});
+  }) created
+}

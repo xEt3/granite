@@ -9,9 +9,15 @@
           text=this.field.helpText}}
       </i>
     {{/if}}
+
+    {{#if this.field.helpLink}}
+      <LinkTo @route={{this.field.helpLink}} class="quick-form__help-text right floated">
+        {{this.field.helpText}}
+      </LinkTo>
+    {{/if}}
   </label>
 
-  {{#if (and this.field.helpText (not this.field.indirectHelp))}}
+  {{#if (and (not this.field.helpLink) this.field.helpText (not this.field.indirectHelp))}}
     <p class="quick-form__help-text">{{this.field.helpText}}</p>
   {{/if}}
 {{/if}}

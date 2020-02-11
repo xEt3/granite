@@ -1,17 +1,16 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import { hash } from 'rsvp';
 
 export default Route.extend({
   ajax: service(),
 
-  model () {
-    let { company, transactions } = this.modelFor('account.settings.billing');
+  async model () {
+    let company = this.modelFor('account.settings.billing');
 
-    return hash({
-      transactions,
+    return {
+      transactions: await this.get('ajax').request(`/api/v1/company/${company.get('id')}/transactions`),
       company
-    });
+    };
   },
 
   setupController (controller, model) {

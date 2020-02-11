@@ -1,0 +1,43 @@
+<div class="ui raised padded segment container webinars-purchased">
+  <h2 class="ui header clearfix">
+    Receipt for your webinar purchase on {{time this.model.data.created "M/D/YY"}}
+    <div class="right floated hide-from-invoice-print">
+      <a href="#" role="button" class="webinars-purchased__print" {{on "click" (prevent-default this.print)}}>
+        Print <i class="print icon"></i>
+      </a>
+    </div>
+  </h2>
+  <div class="ui divider"></div>
+
+  <div class="webinars-purchase__receipt">
+    {{#each this.model.data.transaction.lineItems as |item|}}
+      <div class="receipt__line-item">
+        <div class="line-item__info">
+          <div class="line-item-info__title">
+            <h3>{{item.name}}</h3>
+          </div>
+          <div class="line-item-info__description">
+            {{item.description}}
+          </div>
+        </div>
+        <div class="line-item__price">
+          ${{item.unitAmount}}
+        </div>
+      </div>
+    {{/each}}
+    <div class="receipt__bottom">
+      <div class="receipt__card-info">
+        <h4>Billed to</h4>
+        <img class="ui mini image card-info__image" alt="Payment Method" src={{this.paymentMethod.image}}>
+        <span class="card-info__number">{{this.paymentMethod.method}}</span>
+      </div>
+      <div class="receipt__total">
+        Total ${{this.model.data.total}}
+      </div>
+    </div>
+  </div>
+  <div class="ui divider"></div>
+  <LinkTo @route="account.education.webinars.index" class="ui green fluid button hidden-print" role="button">
+    Back to webinars
+  </LinkTo>
+</div>

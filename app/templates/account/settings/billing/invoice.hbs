@@ -1,14 +1,14 @@
 <h3 class="ui header centered">
   Transaction
-  <a href="#" class="right floated hide-from-invoice-print"{{action "printTransaction"}}>
+  <a href="#" class="right floated hide-from-invoice-print" {{on "click" (prevent-default this.printTransaction)}}>
     <i class="print icon"></i>
   </a>
 </h3>
-<table class="ui very basic striped table">
+<table class="ui padded basic striped table">
   <tbody>
     <tr>
       <th>Date of Transaction</th>
-      <td>{{time this.model.createdAt "MM-DD-YYYY"}}</td>
+      <td>{{time this.model.createdAt "M/DD/YYYY"}}</td>
     </tr>
     <tr>
       <th class="th__vertical-table-header">Amount</th>
@@ -24,15 +24,53 @@
     <tr>
       <th class="th__vertical-table-header">Description</th>
       <td>
-        {{if this.isProrateCharge "Charge for proration" "Charge for monthly billing"}}
+        {{#if this.isSubscription}}
+          Monthly Subscription
+        {{/if}}
+        {{#if this.isProrateCharge}}
+          ~ prorated
+        {{else if this.model.customFields.transactionType}}
+          Charge for {{this.model.customFields.transactionType}}
+        {{/if}}
       </td>
     </tr>
-    <tr>
-      <th class="th__vertical-table-header">Billing Period</th>
-      <td>
-        {{time this.model.subscription.billingPeriodStartDate "MM/DD/YYYY"}} -
-        {{time this.model.subscription.billingPeriodEndDate "MM/DD/YYYY"}}
-      </td>
-    </tr>
+    {{#if this.isSubscription}}
+      <tr>        
+        <th class="th__vertical-table-header">Billing Period</th>
+        <td>
+          {{time this.model.subscription.billingPeriodStartDate "MM/DD/YYYY"}} -
+          {{time this.model.subscription.billingPeriodEndDate "MM/DD/YYYY"}}
+        </td>
+      </tr>
+    {{/if}}
+    {{#if this.model.lineItems.length}}
+      <tr>
+        <th colspan="2" class="th__vertical-table-header">
+          Items
+          <span class="right floated">
+            {{this.model.lineItems.length}} {{inflect-text "items" this.model.lineItems.length}} </span>
+        </th>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          {{#each this.model.lineItems as |item|}}
+            <div class="receipt__line-item receipt__line-item--transaction-page">
+              <div class="line-item__info">
+                <div class="line-item-info__title">
+                  <h3>{{item.name}}</h3>
+                </div>
+                <div class="line-item-info__description">
+                  {{item.description}}
+                </div>
+              </div>
+              <div class="line-item__price">
+                ${{item.unitAmount}}
+              </div>
+            </div>
+          {{/each}}
+        </td>
+      </tr>
+    {{/if}}
   </tbody>
 </table>

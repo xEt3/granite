@@ -1,0 +1,16 @@
+<div class="ui raised padded segment container page__webinars">
+  <div class="ui basic segment">
+    <h2 class="ui header">Watch: {{this.model.authorization.webinar.title}}</h2>
+    <div class="ui divider"></div>
+    <VideojsPlayer
+      @src={{this.model.playback.url}}
+      @type="video/mp4"
+      @autoplay={{true}}
+      @fluid={{true}} />
+
+    <div class="ui divider"></div>
+    <LinkTo @route="account.education.webinars.index" class="ui green fluid button hidden-print" role="button">
+      Back to webinars
+    </LinkTo>
+  </div>
+</div>

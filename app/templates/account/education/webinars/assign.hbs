@@ -1,0 +1,43 @@
+<form class="ui form raised padded segment container page__webinars" {{on "submit" (prevent-default this.save)}}>
+  <h3 class="ui header">Assign "{{this.model.authorization.webinar.title}}" as a training assignment</h3>
+
+  <div class="field">
+    <label for="assignment-employees">Select employees to assign</label>
+    <UiDropdown
+      class="fluid search multiple selection"
+      id="assignment-employees"
+      @selected={{this.employeesToAssign}}
+      @onChange={{fn (mut this.employeesToAssign)}}
+      as |execute mapper|
+    >
+      <i class="dropdown icon"></i>
+      <div class="default text">Type or select to add employees</div>
+      <div class="menu">
+        {{#each this.model.employees as |employee|}}
+          <div class="item" data-value={{map-value mapper employee}}>
+            {{employee.fullName}}
+            {{#if employee.jobTitle}}
+              - {{employee.jobTitle}}
+            {{/if}}
+          </div>
+        {{/each}}
+      </div>
+    </UiDropdown>
+  </div>
+
+  <div class="field">
+    <label for="assignment-notes">Notes</label>
+    <Textarea @value={{this.notes}} rows="3" id="assignment-notes" />
+  </div>
+
+  <div class="ui divider"></div>
+
+  <Form::ActionButton
+    type="submit"
+    class="ui huge fluid green button"
+    loading={{this.data.statuses.webinarAssignment.isLoading}}
+    disabled={{not this.employeesToAssign.length}}
+  >
+    Assign to employee{{if (gt this.employeesToAssign.length 1) 's'}}
+  </Form::ActionButton>
+</form>

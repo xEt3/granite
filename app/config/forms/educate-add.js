@@ -54,6 +54,14 @@ export const forms = {
       type:  'text',
       path:  'name'
     }, {
+      label:       'Webinar (Optional)',
+      type:        'select',
+      path:        'webinar',
+      contentPath: 'controller.dataDependencies.webinars',
+      displayKey:  'webinar.title',
+      helpLink:    'account.education.webinars',
+      helpText:    'Get webinars...'
+    }, {
       label: 'Notes',
       type:  'textarea',
       rows:  '3',

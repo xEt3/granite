@@ -35,11 +35,12 @@
   {{else}}
     No Payment Method
   {{/if}}
-  <a href="#" class="ui right floated small text" {{action
-      (pipe
+
+  <a href="#" class="ui right floated small text" {{on "click" (prevent-default (pipe-action
         (action "getToken")
         (action this.openModal "modal_update-payment-method" "paymentMethod")
       )
+    )
     }}>
     <i class="edit icon"></i>Edit Payment Method
   </a>

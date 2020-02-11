@@ -3,7 +3,8 @@ import { inject as service } from '@ember/service';
 import moment from 'moment';
 
 export default Route.extend({
-  ajax: service(),
+  titleToken: 'Education',
+  ajax:       service(),
 
   queryParams: { granularity: { refreshModel: true } },
 

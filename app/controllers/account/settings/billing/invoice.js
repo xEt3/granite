@@ -1,36 +1,46 @@
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import { action } from '@ember/object';
 import moment from 'moment';
 
-export default Controller.extend({
-  isProrateCharge: computed('model.subscription.{billingPeriodStartDate,billingPeriodEndDate}', function () {
-    let start = moment(this.get('model.subscription.billingPeriodStartDate')),
-        end = moment(this.get('model.subscription.billingPeriodEndDate')),
-        diff = end.diff(start, 'days');
+export default class InvoiceController extends Controller {
+  get isSubscription () {
+    return !(this.model.customFields || {}).transactionType && this.model.subscriptionId;
+  }
 
-    return diff < 28 ? true : false;
-  }),
+  get isProrateCharge () {
+    const {
+      billingPeriodStartDate,
+      billingPeriodEndDate
+    } = this.model.subscription || {};
 
-  paymentMethod: computed('model.paymentInstrumentType', function () {
-    let transaction = this.get('model');
-    if (transaction.paymentInstrumentType === 'credit_card') {
+    return moment(billingPeriodEndDate).diff(billingPeriodStartDate, 'days') < 28;
+  }
+
+  get paymentMethod () {
+    const {
+      creditCard,
+      paymentInstrumentType,
+      paypal
+    } = this.model;
+
+    switch (paymentInstrumentType) {
+    case 'credit_card':
       return {
-        method: transaction.creditCard.maskedNumber,
-        image:  transaction.creditCard.imageUrl
+        method: creditCard.maskedNumber,
+        image:  creditCard.imageUrl
       };
-    } else if (transaction.paymentInstrumentType === 'paypal_account') {
+    case 'paypal_account':
       return {
-        method: transaction.paypal.payerEmail,
-        image:  transaction.paypal.imageUrl
+        method: paypal.payerEmail,
+        image:  paypal.imageUrl
       };
-    } else {
+    default:
       return null;
     }
-  }),
-
-  actions: {
-    printTransaction () {
-      window.print();
-    }
   }
-});
+
+  @action
+  printTransaction () {
+    window.print();
+  }
+}

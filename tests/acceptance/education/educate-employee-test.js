@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import authenticate from 'granite/tests/helpers/auth';
-// import { faker } from 'ember-cli-mirage';
 import { visit, currentURL, click, settled, findAll, fillIn } from '@ember/test-helpers';
 import moment from 'moment';
 

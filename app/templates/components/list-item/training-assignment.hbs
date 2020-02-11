@@ -1,14 +1,18 @@
-<a href="#" class="item">
+<div class="item">
   {{!-- {{#link-to "account.employee.index.education.certification" model.id class="item"}} --}}
   <div class="content">
     <h3 class="header">
-      {{this.model.name}}
+      {{@model.name}}
     </h3>
     <div class="meta">
+      {{#if @model.webinar}}
+        Webinar: {{@model.webinar.webinar.title}}
+      {{/if}}
     </div>
   </div>
   <div class="right content">
-    <span class="ui small text">Added {{time-ago this.model.created}} by {{this.model.creator.fullName}}</span>
+    <strong>{{@model.status}}</strong>
+    <div class="ui small text">Added {{time-ago @model.created}}{{#if @model.creator}} by {{@model.creator.fullName}}{{/if}}</div>
   </div>
   {{!-- {{/link-to}} --}}
-</a>
+</div>
