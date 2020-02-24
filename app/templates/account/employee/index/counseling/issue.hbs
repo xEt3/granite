@@ -8,23 +8,22 @@
         </LinkTo>
 
         {{#unless this.onCorrectiveActionSubroute}}
-          <span>{{#ui-dropdown class="item icon top right pointing right floated"}}
-              <i class="wrench icon"></i><i class="dropdown icon"></i>
-              <div class="menu">
-                {{#if correctiveActions}}
-                  <LinkTo class="item" @route="account.employee.index.counseling.print-all"
-                          @query={{hash issue=model.id slug=model.slug }}>
-                    <i class="print icon"></i>
-                    Print Corrective Actions
-                  </LinkTo>
-                {{/if}}
-                <div class="text-danger header">Danger Zone</div>
-                <a href="#" class="text-danger item" {{action (pipe confirmDelete (action "delete"))}}>
-                  <i class="trash icon"></i>Delete Record
-                </a>
-              </div>
-            {{/ui-dropdown}}
-          </span>
+          {{#ui-dropdown class="item icon top right pointing right floated"}}
+            <i class="wrench icon"></i><i class="dropdown icon"></i>
+            <div class="menu">
+              {{#if correctiveActions}}
+                <LinkTo class="item" @route="account.employee.index.counseling.print-all"
+                        @query={{hash issue=model.id slug=model.slug }}>
+                  <i class="print icon"></i>
+                  Print Corrective Actions
+                </LinkTo>
+              {{/if}}
+              <div class="text-danger header">Danger Zone</div>
+              <a href="#" class="text-danger item" {{action (pipe confirmDelete (action "delete"))}}>
+                <i class="trash icon"></i>Delete Record
+              </a>
+            </div>
+          {{/ui-dropdown}}
         {{/unless}}
       </p>
 
