@@ -6,12 +6,11 @@ import { inject as service } from '@ember/service';
 import { singularize } from 'ember-inflector';
 import $ from 'jquery';
 import ajaxStatus from 'granite/mixins/ajax-status';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-export default Controller.extend(ajaxStatus, addEdit, {
+export default Controller.extend(ajaxStatus, {
   auth: service(),
 
-  groupedAssignedAssets: computed('assignedAssets.[]', 'asset.assignments', function () {
+  groupedAssignedAssets: computed('assignedAssets.[]', function () {
     let assignedAssets = this.get('assignedAssets'),
         groups = A();
 
@@ -36,7 +35,7 @@ export default Controller.extend(ajaxStatus, addEdit, {
     return groups;
   }),
 
-  splitAssets: computed('assignableAssets.[]', 'jobSuggestedAssets.[]', 'asset.assignments', function () {
+  splitAssets: computed('assignableAssets.[]', 'jobSuggestedAssets.[]', function () {
     let jobSuggestedAssets = this.get('jobSuggestedAssets'),
         assignableAssets = this.get('assignableAssets'),
         suggestedAssets = A(),
@@ -99,28 +98,27 @@ export default Controller.extend(ajaxStatus, addEdit, {
       });
     },
 
-    async selectAsset (asset) {
+    selectAsset (asset) {
       this.ajaxStart();
 
       let user = this.get('auth.user'),
           employee = this.get('model');
 
-      if (await asset.get('assignments').findBy('employee.id', employee.get('id'))) {
+      if (asset.get('assignments').findBy('employee.id', employee.get('id'))) {
         this.ajaxSuccess(null, true);
         return;
       }
 
-      let assignment = await this.store.createRecord('asset-assignment', {
+      let assignment = this.store.createRecord('asset-assignment', {
         employee,
         assigner: user
       });
 
-
-      await asset.get('assignments').addObject(assignment);
-
+      asset.get('assignments').addObject(assignment);
 
       asset.save()
       .then(assetItem => {
+        assetItem.assignments.filterBy('id', null).invoke('destroyRecord');
         this.get('assignedAssets').addObject(assetItem);
         this.ajaxSuccess(null, true);
         this.send('refresh');
@@ -128,24 +126,19 @@ export default Controller.extend(ajaxStatus, addEdit, {
       .catch(this.ajaxError.bind(this));
     },
 
-    async unassignAsset (asset) {
-      await this.get('assignedAssets').removeObject(asset);
-      console.log('here is the asset', asset);
+    unassignAsset (asset) {
+      this.get('assignedAssets').removeObject(asset);
 
-      let assignment = await asset.get('assignments').findBy('employee.id', this.get('model.id'));
+      let assignment = asset.get('assignments').findBy('employee.id', this.get('model.id'));
 
       if (assignment) {
         this.ajaxStart();
 
-        await asset.get('assignments').removeObject(assignment);
+        asset.get('assignments').removeObject(assignment);
 
-        try {
-          await asset.save();
-          this.ajaxSuccess(null, true);
-          // this.send('refresh');
-        } catch (e) {
-          this.ajaxError(e);
-        }
+        asset.save()
+        .then(() => this.ajaxSuccess(null, true))
+        .catch(this.ajaxError.bind(this));
       }
     },
 
