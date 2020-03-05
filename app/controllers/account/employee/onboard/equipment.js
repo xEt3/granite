@@ -133,7 +133,6 @@ export default Controller.extend(ajaxStatus, {
 
       if (assignment) {
         this.ajaxStart();
-
         asset.get('assignments').removeObject(assignment);
 
         asset.save()
