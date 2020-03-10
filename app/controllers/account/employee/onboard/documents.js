@@ -39,6 +39,7 @@ export default Controller.extend(addEdit, {
 
         let assignment = this.store.createRecord('file-assignment', {
           file,
+          fileType:          'Onboarding',
           employee:          this.get('employee'),
           visibleToEmployee: true
         });

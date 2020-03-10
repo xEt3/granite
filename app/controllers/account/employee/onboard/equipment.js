@@ -118,8 +118,10 @@ export default Controller.extend(ajaxStatus, {
 
       asset.save()
       .then(assetItem => {
+        assetItem.assignments.filterBy('id', null).invoke('destroyRecord');
         this.get('assignedAssets').addObject(assetItem);
         this.ajaxSuccess(null, true);
+        this.send('refresh');
       })
       .catch(this.ajaxError.bind(this));
     },
