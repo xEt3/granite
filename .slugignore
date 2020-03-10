@@ -3,8 +3,5 @@
 /mirage
 /tests
 /scripts
-/node_modules
 /vendor
-/public
 /scripts
-/app
