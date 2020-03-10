@@ -11,6 +11,7 @@ export default Model.extend({
   readOn:            attr('date'),
   signedOn:          attr('date'),
   visibleToEmployee: attr('boolean', { defaultValue: true }),
+  fileType:          attr('string'),
 
   creator:             belongsTo('employee'),
   company:             belongsTo('company'),

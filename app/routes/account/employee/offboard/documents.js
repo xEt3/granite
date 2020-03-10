@@ -17,6 +17,7 @@ export default Route.extend({
       }),
       assignments: this.store.query('file-assignment', {
         employee: employee.get('id'),
+        fileType: { $ne: 'Onboarding' },
         sort:     { created: 1 }
       })
     });
