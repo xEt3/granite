@@ -6,25 +6,6 @@
           <i class="angle left icon"></i>
           Back To All Issues
         </LinkTo>
-
-        {{#unless this.onCorrectiveActionSubroute}}
-          {{#ui-dropdown class="item icon top right pointing right floated"}}
-            <i class="wrench icon"></i><i class="dropdown icon"></i>
-            <div class="menu">
-              {{#if correctiveActions}}
-                <LinkTo class="item" @route="account.employee.index.counseling.print-all"
-                        @query={{hash issue=model.id slug=model.slug }}>
-                  <i class="print icon"></i>
-                  Print Corrective Actions
-                </LinkTo>
-              {{/if}}
-              <div class="text-danger header">Danger Zone</div>
-              <a href="#" class="text-danger item" {{action (pipe confirmDelete (action "delete"))}}>
-                <i class="trash icon"></i>Delete Record
-              </a>
-            </div>
-          {{/ui-dropdown}}
-        {{/unless}}
       </p>
 
       <h2 class="ui left floated header">
@@ -42,6 +23,24 @@
         </div>
       </h2>
 
+      {{#unless this.onCorrectiveActionSubroute}}
+        {{#ui-dropdown class="item icon top right pointing right floated"}}
+          <i class="wrench icon"></i><i class="dropdown icon"></i>
+          <div class="menu">
+            {{#if correctiveActions}}
+              <LinkTo class="item" @route="account.employee.index.counseling.print-all"
+                      @query={{hash issue=model.id slug=model.slug }}>
+                <i class="print icon"></i>
+                Print Corrective Actions
+              </LinkTo>
+            {{/if}}
+            <div class="text-danger header">Danger Zone</div>
+            <a href="#" class="text-danger item" {{action (pipe confirmDelete (action "delete"))}}>
+              <i class="trash icon"></i>Delete Record
+            </a>
+          </div>
+        {{/ui-dropdown}}
+      {{/unless}}
     </hgroup>
   {{/confirm-modal}}
 
