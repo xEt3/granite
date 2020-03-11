@@ -1,6 +1,13 @@
 <div class="ui raised padded segment container clearfix animated fadeInUp">
   {{#confirm-modal deleteContext=this.model.title as |confirmDelete|}}
     <hgroup class="clearfix">
+      <p>
+        <LinkTo @route="account.employee.index.counseling">
+          <i class="angle left icon"></i>
+          Back To All Issues
+        </LinkTo>
+      </p>
+
       <h2 class="ui left floated header">
         {{#link-to "account.employee.index.counseling.issue"}}
           {{this.model.title}}
