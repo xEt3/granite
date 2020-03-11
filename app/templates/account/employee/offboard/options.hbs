@@ -126,24 +126,5 @@
   {{/unless}}
 
   <div class="ui divider"></div>
-
-  <div class="field">
-    {{#input/document-selection-modal
-      title="Select Offboarding Documents"
-      selected=this.model.offboardingDocuments
-      onSelected=(pipe (action (mut this.model.offboardingDocuments)) (action "save" this.model))
-      onNotify= (action "onNotify")
-      as |execute|}}
-      <button class="ui basic button" {{action execute "selectDocuments"}}>
-        <i class="folder icon"></i>
-        Assign offboarding documents
-        {{#if this.model.offboardingDocuments.length}}
-          <span class="ui label">{{this.model.offboardingDocuments.length}} Assigned</span>
-        {{/if}}
-      </button>
-    {{/input/document-selection-modal}}
-  </div>
-
-  <div class="ui divider"></div>
   {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Next{{/form/action-button}}
 </form>

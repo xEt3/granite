@@ -50,7 +50,7 @@
 </form>
 
 <div id="modal__new-asset--placeholder">
-  {{#ui-modal id="modal__new-asset" name="new-asset" class="new-asset" detachable=true onApprove=(action "saveAsset") onDeny=(action "abortAsset")}}
+  {{#ui-modal id="modal__new-asset" name="new-asset" class="new-asset" detachable=true}}
     <i class="cancel close icon"></i>
     <div class="header">
       Creating a new item in "{{this.pendingAssetItem.asset.name}}" for {{this.model.firstName}}
@@ -80,13 +80,13 @@
       </form>
     </div>
     <div class="actions">
-      <div class="ui negative deny button">
+      <button class="ui red button" {{action "abortAsset"}}>
         Cancel
-      </div>
-      <div class="ui positive right labeled icon button">
+      </button>
+      <button class="ui green right labeled icon button" {{action "saveAsset"}}>
         Create &amp; Assign Asset
         <i class="check icon"></i>
-      </div>
+      </button>
     </div>
   {{/ui-modal}}
 </div>

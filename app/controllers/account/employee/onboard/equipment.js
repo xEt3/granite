@@ -83,6 +83,7 @@ export default Controller.extend(ajaxStatus, {
       this.get('pendingAssetItem').save()
       .then(asset => {
         this.send('selectAsset', asset);
+        $('#modal__new-asset').modal('hide');
       })
       .catch(this.ajaxError.bind(this));
     },
@@ -93,6 +94,7 @@ export default Controller.extend(ajaxStatus, {
       asset.destroyRecord()
       .then(() => {
         this.set('pendingAssetItem', null);
+        $('#modal__new-asset').modal('hide');
       });
     },
 
@@ -116,8 +118,10 @@ export default Controller.extend(ajaxStatus, {
 
       asset.save()
       .then(assetItem => {
+        assetItem.assignments.filterBy('id', null).invoke('destroyRecord');
         this.get('assignedAssets').addObject(assetItem);
         this.ajaxSuccess(null, true);
+        this.send('refresh');
       })
       .catch(this.ajaxError.bind(this));
     },
