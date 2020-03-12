@@ -14,7 +14,7 @@ export default Component.extend({
       detachable: true,
       closable:   false,
       onHidden:   () => {
-        if (this.isDestroyed || this.isDestroying) {
+        if (!this || this.isDestroyed || this.isDestroying) {
           return this.getModalById().remove();
         }
 
