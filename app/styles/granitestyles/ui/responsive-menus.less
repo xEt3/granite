@@ -4,6 +4,10 @@
 .menu__container-responsive {
   position: relative;
 
+  .item.mobile{
+    display: none !important;
+  }
+
   > .collapser {
     display: none;
     visibility: hidden;
@@ -29,6 +33,12 @@
   .ui.menu {
     @media screen and (max-width: @mobile-breakpoint) {
       transition: all .6s ease-in-out;
+
+      &:not(.open){
+        .item.mobile{
+          display: block !important;
+        }
+      }
 
       > .item {
         overflow: hidden;
@@ -58,7 +68,7 @@
         overflow-y: auto;
         display: block;
         padding-top: 56px;
-
+      
         .item.active:not(.dropdown) {
           top: 0;
           left: 0;
