@@ -25,7 +25,7 @@ export default Controller.extend(del, {
     return currentMenu === 'history' ? 'changes' : currentMenu;
   }),
 
-  classMenu: computed('subRoute', function () {
+  subMenuClass: computed('subRoute', function () {
     return this.icons[this.get('subRoute')];
   }),
 

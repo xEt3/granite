@@ -1,8 +1,8 @@
 <div class="ui container basic segment">
   {{#ui-menu menuClass="pointing menu__employee-page"}}
-    {{#if this.classMenu}}
+    {{#if this.subMenuClass}}
       <LinkTo @route={{this.currentPath}} @class="item mobile">
-        <i class="{{this.classMenu}} icon"></i>{{capitalize this.subRoute}}
+        <i class="{{this.subMenuClass}} icon"></i>{{capitalize this.subRoute}}
       </LinkTo>
     {{/if}}
     {{#link-to "account.employee.index.index" class="item"}}
