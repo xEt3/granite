@@ -166,7 +166,7 @@ var IntroJSComponent = Component.extend({
   },
 
   _onExit: function () {
-    if (this.isDestroying || this.isDestroyed) {
+    if (!this || this.isDestroying || this.isDestroyed) {
       return;
     }
     this.sendAction('on-exit', this.get('currentStep'), this);

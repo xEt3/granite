@@ -68,7 +68,7 @@ export default Controller.extend(ajaxStatus, {
 
       $('#modal__new-asset').modal({
         onHidden: () => {
-          if (this.isDestroyed || this.isDestroying) {
+          if (!this || this.isDestroyed || this.isDestroying) {
             $('#modal__new-asset').remove();
           }
 
