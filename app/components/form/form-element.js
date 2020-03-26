@@ -1,7 +1,7 @@
 import SortableItem from 'ember-sortable/components/sortable-item';
 import { formTypes } from 'granite/config/statics';
 import Object from '@ember/object';
-import { computed, observer } from '@ember/object';
+import { computed } from '@ember/object';
 import { run } from '@ember/runloop';
 
 const labelSuggestions = [
@@ -62,16 +62,15 @@ const FormElementComponent = SortableItem.extend({
     return label;
   }),
 
-  /* eslint-disable-next-line */
-  rerenderFormElement: observer('model.{allowAdditions,multiple}', function () {
-    if (this.get('isDestroyed') || this.get('isDestroying')) {
-      return;
-    }
-
+  changedSelectProperty () {
     let type = this.get('model.type');
+    this.set('loadingType', true);
     this.set('model.type', '');
-    run.next(() => this.set('model.type', type));
-  }),
+    run.next(() => {
+      this.set('model.type', type);
+      this.set('loadingType', false);
+    });
+  },
 
   actions: {
     removeElement () {

@@ -27,6 +27,24 @@
       }}
       <div class="ui divider"></div>
     </div>
+  {{else if this.loadingType}}
+    <div class="form-element__preview form-element__preview--loading">
+      {{! dummy element}}
+      {{input/quick-form-input
+        (hash
+          label=this.label
+          type='select'
+          placeholder=(or this.model.label " ")
+          showLabel=true
+        )
+        this.emptyObject
+        this.model
+      }}
+      <div class="ui divider"></div>
+      <div class="ui active inverted dimmer">
+        <div class="ui text loader">Loading element...</div>
+      </div>
+    </div>
   {{/if}}
 
   {{#unless this.showingPreview}}
@@ -64,14 +82,14 @@
       </div>
     </div>
 
-    {{#if (eq this.model.type "select")}}
+    {{#if (or (eq this.model.type "select") this.loadingType)}}
       <div class="two fields">
         <div class="field">
           {{ui-checkbox
             class="toggle"
             label="Allow multiple selections"
             checked=(readonly this.model.multiple)
-            onChange=(action (mut this.model.multiple))}}
+            onChange=(pipe-action (action (mut this.model.multiple)) (action this.changedSelectProperty))}}
         </div>
         <div class="field">
           {{ember-tooltip
@@ -82,7 +100,7 @@
             class="toggle"
             label="Allow additions to options"
             checked=(readonly this.model.allowAdditions)
-            onChange=(action (mut this.model.allowAdditions))}}
+            onChange=(pipe-action (action (mut this.model.allowAdditions)) (action this.changedSelectProperty))}}
         </div>
       </div>
     {{/if}}
@@ -108,7 +126,7 @@
         onChange=(action (mut this.model.required))}}
     </div>
 
-    {{#if this.requiresOptions}}
+    {{#if (or this.requiresOptions this.loadingType)}}
       <div class="field">
         <label>Add options for the applicant to choose from</label>
       </div>
