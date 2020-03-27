@@ -6,27 +6,37 @@ import { inject as service } from '@ember/service';
 
 export default Controller.extend(del, {
   ajax:                service(),
+  router:              service(),
   application:         controller(),
   transitionAfterSave: 'account.employees',
-  icons:               {
-    equipment:  'mobile',
-    changes:    'history',
-    documents:  'file',
-    counseling: 'folder open',
-    education:  'graduation cap'
-  },
-
-  onSummary:   computed.equal('application.currentPath', 'account.employee.index.index'),
-  currentPath: computed.reads('application.currentPath'),
-
-  subRoute: computed('target.currentURL', function () {
-    let path = this.target.currentURL.split('/');
-    let currentMenu = path[path.length - 1];
-    return currentMenu === 'history' ? 'changes' : currentMenu;
+  subRoutes:           computed('auth.user.company.exposeBetaModules', function () {
+    return [{
+      route: 'account.employee.index.equipment',
+      name:  'Equipment',
+      icon:  'mobile'
+    }, {
+      route: 'account.employee.index.documents',
+      name:  'Documents',
+      icon:  'file'
+    }, {
+      route: 'account.employee.index.history',
+      name:  'Changes',
+      icon:  'history'
+    }, {
+      route: 'account.employee.index.counseling',
+      name:  'Counseling',
+      icon:  'folder open'
+    }, this.get('auth.user.company.exposeBetaModules') && {
+      route: 'account.employee.index.education',
+      name:  'Education & Training',
+      icon:  'graduation cap'
+    } ].filter(Boolean);
   }),
 
-  subMenuClass: computed('subRoute', function () {
-    return this.icons[this.get('subRoute')];
+  onSummary: computed.equal('router.currentRouteName', 'account.employee.index.index'),
+
+  subRoute: computed('router.currentRouteName', function () {
+    return this.subRoutes.find(({ route }) => this.get('router.currentRouteName').indexOf(route.split('.').pop()) > -1);
   }),
 
   actions: {
