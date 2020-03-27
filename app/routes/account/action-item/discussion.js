@@ -1,21 +1,19 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
-import refreshable from 'granite/mixins/refreshable';
+import Route from 'granite/core/route';
 
-export default Route.extend(refreshable, {
-  titleToken: 'Discussion',
+export default class AccountActionItemDiscussionRoute extends Route {
+  titleToken = 'Discussion'
 
-  model () {
+  async model () {
     let actionItem = this.modelFor('account.action-item');
 
-    return RSVP.hash({
+    return {
       actionItem,
-      comments: this.store.query('comment', {
+      comments: await this.store.query('comment', {
         targetId: actionItem.get('id'),
         sort:     { created: -1 }
       })
-    });
-  },
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -23,4 +21,4 @@ export default Route.extend(refreshable, {
       actionItem: model.actionItem
     });
   }
-});
+}

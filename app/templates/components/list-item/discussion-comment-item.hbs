@@ -1,15 +1,15 @@
 <a class="avatar">
-  {{display/employee-picture url=this.comment.commenter.picture employeeId=this.comment.commenter.id}}
+  <Display::EmployeePicture @url={{this.comment.commenter.picture}} @employeeId={{this.comment.commenter.id}} />
 </a>
 <div class="content">
-  {{#link-to "account.employee" this.comment.commenter.id class="author"}}{{this.comment.commenter.fullName}}{{/link-to}}
+  <LinkTo @route="account.employee" @model={{this.comment.commenter.id}} @class="author">{{this.comment.commenter.fullName}}</LinkTo>
   <div class="metadata">
-    <span class="date">{{time-ago this.comment.created}} on {{time this.comment.created "M/D/YY [at] h:mma"}}</span>
+    <span class="date"><TimeAgo @time={{this.comment.created}} /> on {{time this.comment.created "M/D/YY [at] h:mma"}}</span>
   </div>
 
   <div class="text">{{this.comment.text}}</div>
 
   <div class="actions">
-    <a href="#" class="text-red" {{action "delete"}}>Remove</a>
+    <a href="#" class="text-red" {{on "click" this.delete}}>Remove</a>
   </div>
 </div>
