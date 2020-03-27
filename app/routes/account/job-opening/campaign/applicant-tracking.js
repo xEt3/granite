@@ -1,11 +1,9 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { hash } from 'rsvp';
-import refreshable from 'granite/mixins/refreshable';
 
-export default Route.extend(refreshable, {
-  titleToken: 'Applicants',
-
-  queryParams: { showDisqualified: { refreshModel: true } },
+export default class ApplicantTrackingRoute extends Route {
+  titleToken = 'Applicants'
+  queryParams = { showDisqualified: { refreshModel: true } }
 
   model (params) {
     const jobOpening = this.modelFor('account.job-opening');
@@ -34,4 +32,4 @@ export default Route.extend(refreshable, {
       .then(results => results ? results.get('firstObject') : results)
     });
   }
-});
+}
