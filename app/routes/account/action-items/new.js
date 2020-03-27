@@ -1,30 +1,29 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import RSVP from 'rsvp';
-import add from 'granite/mixins/route-abstractions/add';
 
-export default Route.extend(add, {
-  titleToken: 'New Project',
-  auth:       service(),
-  modelName:  'action-item',
+export default class AccountActionItemNewRoute extends Route {
+  @service auth
+  titleToken = 'New Project'
+  routeType = 'add'
+  modelName =  'action-item'
 
   getModelDefaults () {
     return {
-      owner:   this.get('auth.user.employee'),
-      company: this.get('auth.user.company')
+      owner:   this.auth.get('user.employee'),
+      company: this.auth.get('user.company')
     };
-  },
+  }
 
-  model () {
-    return RSVP.hash({
-      actionItem:  this._super(...arguments),
-      actionItems: this.store.query('action-item', {
+  async model () {
+    return {
+      actionItem:  await super.model(...arguments),
+      actionItems: await this.store.query('action-item', {
         completedOn: { $not: { $type: 9 } },
         cancelledOn: { $not: { $type: 9 } }
       }),
-      employees: this.store.findAll('employee')
-    });
-  },
+      employees: await this.store.findAll('employee')
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -33,4 +32,4 @@ export default Route.extend(add, {
       employees:   model.employees
     });
   }
-});
+}

@@ -1,8 +1,8 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+// import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
+// import RSVP from 'rsvp';
 import { A } from '@ember/array';
 import { inject as service } from '@ember/service';
-import add from 'granite/mixins/route-abstractions/add';
 
 const crud = [ 'create', 'read', 'update', 'delete' ],
       nodeDefaults = {
@@ -12,22 +12,23 @@ const crud = [ 'create', 'read', 'update', 'delete' ],
         isVisible:  true
       };
 
-export default Route.extend(add, {
-  titleToken: 'New User',
-  auth:       service(),
-  modelName:  'company-user',
+export default class AccountAnatomyCompanyUsersAddRoute extends Route {
+  @service auth
+  titleToken = 'New User'
+  modelName =  'company-user'
+  routeType = 'add'
 
   getModelDefaults () {
-    return { company: this.get('auth.user.company') };
-  },
+    return { company: this.auth.get('user.company') };
+  }
 
-  model () {
-    return RSVP.hash({
-      permissions: this.store.findAll('permission'),
-      user:        this._super(...arguments),
-      employees:   this.store.query('employee', { _id: { $ne: this.get('auth.user.employee.id') } })
-    });
-  },
+  async model () {
+    return {
+      permissions: await this.store.findAll('permission'),
+      user:        await super.model(...arguments),
+      employees:   await this.store.query('employee', { _id: { $ne: this.auth.get('user.employee.id') } })
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -58,4 +59,4 @@ export default Route.extend(add, {
       }, A()).toArray()
     });
   }
-});
+}
