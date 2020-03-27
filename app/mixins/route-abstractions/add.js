@@ -2,6 +2,7 @@ import Mixin from '@ember/object/mixin';
 import { assert } from '@ember/debug';
 import { resolve } from 'rsvp';
 import { inject as service } from '@ember/service';
+import { deprecate } from '@ember/application/deprecations';
 
 export default Mixin.create({
   auth: service(),
@@ -9,6 +10,8 @@ export default Mixin.create({
   modelDefaults: {},
 
   async model (params) {
+    deprecate('Mixing in the route-abstraction for add is deprecated in favor of extending the granite core route.');
+
     const modelName = this.get('modelName'),
           defaults = this.get('modelDefaults'),
           getDefaults = this.getModelDefaults;

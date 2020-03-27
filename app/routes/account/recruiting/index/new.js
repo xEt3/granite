@@ -1,28 +1,26 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
-import add from 'granite/mixins/route-abstractions/add';
 
-export default Route.extend(add, {
-  titleToken: 'New Campaign',
-  auth:       service(),
-  modelName:  'job-opening',
+export default class AccountRecruitingNewRoute extends Route {
+  @service auth
+  titleToken = 'New Campaign'
+  routeType = 'add'
+  modelName = 'job-opening'
 
-  model () {
-    return RSVP.hash({
-      jobOpening:      this._super(...arguments),
-      jobDescriptions: this.store.findAll('job')
-    });
-  },
+  async model () {
+    return {
+      jobOpening:      await super.model(...arguments),
+      jobDescriptions: await this.store.findAll('job')
+    };
+  }
 
-  departments: computed(function () {
+  get departments () {
     return this.store.findAll('department');
-  }),
+  }
 
   getModelDefaults () {
     return { creator: this.get('auth.user.employee') };
-  },
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -30,4 +28,4 @@ export default Route.extend(add, {
       descriptions: model.jobDescriptions
     });
   }
-});
+}
