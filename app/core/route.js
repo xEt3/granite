@@ -25,7 +25,9 @@ export default class GraniteRoute extends Route {
       return method.apply(this, arguments);
     }
 
-    super.willTransition(...arguments);//JAMES, THIS LINE HAS ERROR WHEN TRANSITIONING FROM ACTIONITEMS/DISCUSSION
+    if (super.willTransition) {
+      super.willTransition(...arguments);
+    }
   }
 
   @action
