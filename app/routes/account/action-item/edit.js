@@ -6,7 +6,6 @@ export default class AccountActionItemEditRoute extends Route {
   bypassModelHook = true
 
   async model () {
-    debugger;
     const actionItem = await super.model(...arguments);
 
     return {
