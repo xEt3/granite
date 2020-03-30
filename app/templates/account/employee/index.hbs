@@ -1,40 +1,36 @@
 <div class="ui container basic segment">
-  {{#ui-menu menuClass="pointing menu__employee-page"}}
-    {{#link-to "account.employee.index.index" class="item"}}
+  <UiMenu @menuClass="pointing menu__employee-page">
+    {{#if this.subRoute}}
+      <div class="active item mobile">
+        <i class="{{this.subRoute.icon}} icon"></i> {{capitalize this.subRoute.name}}
+      </div>
+    {{/if}}
+    <LinkTo @route="account.employee.index.index" class="item">
       <i class="list icon"></i>Summary
-    {{/link-to}}
-    {{#ui-dropdown class="item menu-employee-page__more"}}
+    </LinkTo>
+    <UiDropdown class="item menu-employee-page__more">
       More<i class="dropdown icon"></i>
       <div class="menu">
-        {{#link-to "account.employee.index.equipment" class="item"}}
-          <i class="mobile icon"></i>Equipment
-        {{/link-to}}
-        {{#link-to "account.employee.index.documents" class="item"}}
-          <i class="file icon"></i>Documents
-        {{/link-to}}
-        {{#link-to "account.employee.index.history" class="item"}}
-          <i class="history icon"></i>Changes
-        {{/link-to}}
-        {{#link-to "account.employee.index.counseling" class="item"}}
-          <i class="folder open icon"></i>Counseling
-        {{/link-to}}
-        {{#if this.auth.user.company.exposeBetaModules}}
-          {{#link-to "account.employee.index.education" class="item"}}
-            <i class="graduation cap icon"></i>Education &amp; Training
-          {{/link-to}}
-        {{/if}}
+        {{#each this.subRoutes as |subRoute|}}
+          <LinkTo @route={{subRoute.route}} class="{{if (eq subRoute this.subRoute) 'active '}}item">
+            <i class="{{subRoute.icon}} icon"></i> {{subRoute.name}}
+          </LinkTo>
+        {{/each}}
       </div>
-    {{/ui-dropdown}}
+    </UiDropdown>
 
     <div class="right menu">
       {{#if this.visualIdRequired}}
-        {{#link-to "account.employee.index.visual-id" this.model.id class="item text-red"}}<i class="exclamation icon"></i>Requires Visual ID{{/link-to}}
+        {{#link-to "account.employee.index.visual-id" this.model.id class="item text-red"}}<i
+             class="exclamation icon"></i>Requires Visual ID{{/link-to}}
       {{/if}}
       {{#if this.model.onboarding}}
-        {{#link-to "account.employee.onboard" this.model.id class="item text-blue"}}<i class="wizard icon"></i>Continue Onboarding{{/link-to}}
+        {{#link-to "account.employee.onboard" this.model.id class="item text-blue"}}<i class="wizard icon"></i>Continue
+          Onboarding{{/link-to}}
       {{/if}}
       {{#if this.model.offboarding}}
-        {{#link-to "account.employee.offboard" class="item text-red"}}<i class="wizard icon"></i>Continue Offboarding{{/link-to}}
+        {{#link-to "account.employee.offboard" class="item text-red"}}<i class="wizard icon"></i>Continue
+          Offboarding{{/link-to}}
       {{/if}}
 
       {{#ui-dropdown class="item icon top right"}}
@@ -42,7 +38,8 @@
         <div class="menu">
           {{#link-to "account.employee.index.edit" class="item"}}<i class="edit icon"></i>Edit{{/link-to}}
           {{#if (not (or this.model.onboarding this.model.offboardingCompleted))}}
-            {{#link-to "account.employee.offboard.index" class="item"}}<i class="cut icon"></i>Offboard Employee...{{/link-to}}
+            {{#link-to "account.employee.offboard.index" class="item"}}<i class="cut icon"></i>Offboard
+              Employee...{{/link-to}}
           {{/if}}
           {{#if (not this.model.activatedOn)}}
             <div class="item">
@@ -61,15 +58,17 @@
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
             {{#confirm-modal deleteContext=this.model.fullName as |confirm|}}
-              <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}><i class="trash icon"></i>Delete Record</a>
+              <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}><i
+                   class="trash icon"></i>Delete Record</a>
             {{/confirm-modal}}
           </div>
         </div>
       {{/ui-dropdown}}
     </div>
-  {{/ui-menu}}
+  </UiMenu>
 
-  <div class="ui basic container segment text-white employee-index-container {{unless this.onSummary "employee__index-container--minimal"}}">
+  <div
+       class="ui basic container segment text-white employee-index-container {{unless this.onSummary "employee__index-container--minimal"}}">
     <div class="ui equal width stackable grid container">
       <div class="twelve wide column">
         <h1 class="ui left floated center aligned header employee-header-group">
@@ -107,12 +106,14 @@
           <span class="right floated">
             {{#if this.model.phone}}
               <div class="phone-contact-icon">
-                <a href="tel:{{this.model.phone}}"><i class="big circular inverted green phone icon phone-contact-icon-hover"></i></a>
+                <a href="tel:{{this.model.phone}}"><i
+                     class="big circular inverted green phone icon phone-contact-icon-hover"></i></a>
               </div>
             {{/if}}
             {{#if this.model.email}}
               <div class="item email-contact-icon">
-                <a href="mailto:{{this.model.email}}"><i class="big circular inverted grey mail icon email-contact-icon-hover"></i></a>
+                <a href="mailto:{{this.model.email}}"><i
+                     class="big circular inverted grey mail icon email-contact-icon-hover"></i></a>
               </div>
             {{/if}}
           </span>
