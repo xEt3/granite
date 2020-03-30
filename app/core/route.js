@@ -1,20 +1,23 @@
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
-import { route } from './abstractions';
+import routeAbs from './abstractions/routes';
 
 export default class GraniteRoute extends Route {
+  @service auth
+
+  __methodForRouteType (methodName) {
+    return this.routeType && routeAbs[this.routeType][methodName];
+  }
+
   model () {
     const method = this.__methodForRouteType('model');
 
-    if (method) {
+    if (method && !this.bypassModelHook) {
       return method.apply(this, arguments);
     }
 
-    super.model(...arguments);
-  }
-
-  __methodForRouteType (methodName) {
-    return this.routeType && route[this.routeType][methodName];
+    return super.model(...arguments);
   }
 
   @action
@@ -26,7 +29,7 @@ export default class GraniteRoute extends Route {
     }
 
     if (super.willTransition) {
-      super.willTransition(...arguments);
+      return super.willTransition(...arguments);
     }
   }
 

@@ -6,6 +6,8 @@ export default Mixin.create({
   auth: service(),
 
   model (params) {
+    console.warn('Mixing in the route-abstraction for edit is deprecated in favor of extending the granite core route.');
+
     if (this.get('bypassModelHook')) {
       return this._super(...arguments);
     }
