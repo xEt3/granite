@@ -6,11 +6,6 @@ export default class ListItemDiscussionCommentItemComponent extends Component {
   @service auth
   classNames = [ 'ui', 'comment' ]
 
-  get isOwner () {
-    return this.auth.user.employee.id === this.comment.commenter.id;
-    //COMMENT FOR LATER... IS THIS EVEN USED??
-  }
-
   @action
   delete () {
     this.comment.destroyRecord();

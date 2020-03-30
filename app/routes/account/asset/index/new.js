@@ -1,36 +1,35 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import add from 'granite/mixins/route-abstractions/add';
 
-export default Route.extend(add, {
-  titleToken: 'New Asset',
-  modelName:  'asset-item',
-  auth:       service(),
+export default class AccountAssetNewRoute extends Route {
+  @service auth
+  titleToken = 'New Asset'
+  modelName = 'asset-item'
+  routeType = 'add'
 
   getModelDefaults () {
     return {
       asset:        this.modelFor('account.asset'),
-      company:      this.get('auth.user.company'),
-      creator:      this.get('auth.user'),
+      company:      this.auth.get('user.company'),
+      creator:      this.auth.get('user'),
       customFields: {}
     };
-  },
+  }
 
-  model () {
-    let assetStockItem = this._super(...arguments); // args and context
+  async model () {
+    let assetStockItem = await super.model(...arguments); // args and context
 
-    return RSVP.hash({
+    return {
       assetStockItem,
       asset: this.modelFor('account.asset')
-    });
+    };
     /*
     model = {
       assetStockItem: new stock item,
       asset: asset cat
     };
     */
-  },
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -43,4 +42,4 @@ export default Route.extend(add, {
       {{asset.icon}}
      */
   }
-});
+}

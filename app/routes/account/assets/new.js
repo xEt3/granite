@@ -1,16 +1,16 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import add from 'granite/mixins/route-abstractions/add';
 
-export default Route.extend(add, {
-  titleToken: 'New Assets',
-  auth:       service(),
-  modelName:  'asset',
+export default class AccountAssetsNewRoute extends Route {
+  @service auth
+  titleToken = 'New Assets'
+  modelName =  'asset'
+  routeType = 'add'
 
   getModelDefaults () {
     return {
-      creator: this.get('auth.user'),
-      company: this.get('auth.user.company')
+      creator: this.auth.get('user'),
+      company: this.auth.get('user.company')
     };
   }
-});
+}

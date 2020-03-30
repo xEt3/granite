@@ -1,18 +1,18 @@
-import Route from '@ember/routing/route';
-import add from 'granite/mixins/route-abstractions/add';
+import Route from 'granite/core/route';
 
-export default Route.extend(add, {
-  titleToken: 'New Employee',
-  modelName:  'employee',
+export default class AccountEmployeesAddNewRoute extends Route {
+  titleToken = 'New Employee'
+  modelName =  'employee'
+  routeType = 'add'
 
   getModelDefaults () {
     return {
-      company:            this.get('auth.user.company'),
-      onboarder:          this.get('auth.user'),
+      company:            this.auth.get('user.company'),
+      onboarder:          this.auth.get('user'),
       onboarding:         true,
       onboardingStep:     0,
       onboardingProgress: 0,
-      addressState:       this.get('auth.user.company.addressState')
+      addressState:       this.auth.get('user.company.addressState')
     };
   }
-});
+}

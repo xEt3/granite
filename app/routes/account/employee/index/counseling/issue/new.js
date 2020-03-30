@@ -1,68 +1,63 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+import Route from 'granite/core/route';
 import { A } from '@ember/array';
 import { inject as service } from '@ember/service';
-import add from 'granite/mixins/route-abstractions/add';
 import { issueTypes } from 'granite/config/statics';
 
-export default Route.extend(add, {
-  titleToken: 'Corrective Action',
-  auth:       service(),
-  ajax:       service(),
-  modelName:  'corrective-action',
+export default class AccountEmployeeCounselingIssueNewRoute extends Route {
+  @service auth
+  @service ajax
+  titleToken = 'Corrective Action'
+  modelName =  'corrective-action'
+  routeType = 'add'
 
-  model () {
-    return RSVP.hash({
-      correctiveAction: this._super(...arguments),
-      issueTypes:       this.getIssueTypes()
-    });
-  },
+  async model () {
+    return {
+      correctiveAction: await super.model(...arguments),
+      issueTypes:       await this.getIssueTypes()
+    };
+  }
 
-  getModelDefaults () {
+  async getModelDefaults () {
     let employeeIssue = this.modelFor('account.employee.index.counseling.issue').issue;
 
-    return this.getLastSeverity()
-    .then(severity => {
-      return {
-        severity,
-        employeeIssue,
-        type:     employeeIssue.get('type'),
-        creator:  this.get('auth.user.employee'),
-        employee: this.modelFor('account.employee')
-      };
-    });
-  },
+    let severity = await this.getLastSeverity();
+    return {
+      severity,
+      employeeIssue,
+      type:     employeeIssue.type,
+      creator:  await this.auth.get('user.employee'),
+      employee: this.modelFor('account.employee')
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
       model:      model.correctiveAction,
       issueTypes: model.issueTypes
     });
-  },
+  }
 
-  getIssueTypes () {
-    return this.get('ajax').request('/api/v1/employee-issues', {
+  async getIssueTypes () {
+    let res = await this.get('ajax').request('/api/v1/employee-issues', {
       data: {
         _distinct: true,
         select:    'type'
       }
-    })
-    .then(res => A([ ...issueTypes, ...res ]).uniq());
-  },
+    });
+    return A([ ...issueTypes, ...res ]).uniq();
+  }
 
-  getLastSeverity () {
+  async getLastSeverity () {
     let employeeIssue =  this.modelFor('account.employee.index.counseling.issue').issue;
     // Query for corrective actions using this issue and get
     // the first, newest action
-    return this.store.query('corrective-action', {
-      employeeIssue: employeeIssue.get('id'),
+    let result = await this.store.query('corrective-action', {
+      employeeIssue: employeeIssue.id,
       limit:         1,
       sort:          { created: -1 }
-    })
-    .then(result => {
-      // Get the first correctiveAction in the APRA or the employeeIssue
-      let targetObject = result.get('firstObject') || employeeIssue;
-      return targetObject.get('severity');
     });
+    // Get the first correctiveAction in the APRA or the employeeIssue
+    let targetObject = result.firstObject || employeeIssue;
+    return targetObject.severity;
   }
-});
+}

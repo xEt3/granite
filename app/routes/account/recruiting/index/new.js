@@ -19,7 +19,7 @@ export default class AccountRecruitingNewRoute extends Route {
   }
 
   getModelDefaults () {
-    return { creator: this.get('auth.user.employee') };
+    return { creator: this.auth.get('user.employee') };
   }
 
   setupController (controller, model) {

@@ -11,7 +11,7 @@ export default class AccountActionItemEditRoute extends Route {
     return {
       actionItem,
       actionItems: await this.store.query('action-item', {
-        _id:         { $ne: actionItem.get('id') },
+        _id:         { $ne: actionItem.id },
         completedOn: { $not: { $type: 9 } },
         cancelledOn: { $not: { $type: 9 } }
       })

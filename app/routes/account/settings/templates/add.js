@@ -1,44 +1,39 @@
-import Route from '@ember/routing/route';
-import { hash } from 'rsvp';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import add from 'granite/mixins/route-abstractions/add';
 
-export default Route.extend(add, {
-  titleToken: 'Add Templates',
-  ajax:       service(),
-  modelName:  'template',
+export default class AccountSettingsTemplatesAddRoute extends Route {
+  @service auth
+  @service ajax
+  titleToken = 'Add Templates'
+  modelName =  'template'
+  routeType = 'add'
 
-  getModelDefaults (params) {
-    return this.get('ajax').request(`/api/v1/template/${params.template_key}/default`)
-    .then(({ template }) => {
-      const { content } = template,
-            { isRenderable } = this.get('definition');
+  async getModelDefaults (params) {
+    let { template } = await this.ajax.request(`/api/v1/template/${params.template_key}/default`);
+    const { content } = template,
+          { isRenderable } = this.definition;
 
-      return {
-        key: params.template_key,
-        isRenderable,
-        content
-      };
-    });
-  },
+    return {
+      key: params.template_key,
+      isRenderable,
+      content
+    };
+  }
 
-  model (params) {
-    const mixin = this._super.bind(this);
+  async model (params) {
+    let definition = await this.store.query('template-definition', { key: params.template_key });
+    this.definition = definition.firstObject;
 
-    return this.store.query('template-definition', { key: params.template_key })
-    .then(definition => {
-      this.set('definition', definition.get('firstObject'));
-      return hash({
-        definition,
-        template: mixin(params)
-      });
-    });
-  },
+    return {
+      definition,
+      template: await super.model(params)
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
       model:      model.template,
-      definition: model.definition.get('firstObject')
+      definition: model.definition.firstObject
     });
   }
-});
+}

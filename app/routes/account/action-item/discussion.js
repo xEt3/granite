@@ -9,7 +9,7 @@ export default class AccountActionItemDiscussionRoute extends Route {
     return {
       actionItem,
       comments: await this.store.query('comment', {
-        targetId: actionItem.get('id'),
+        targetId: actionItem.id,
         sort:     { created: -1 }
       })
     };

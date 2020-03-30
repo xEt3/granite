@@ -1,6 +1,4 @@
-// import Route from '@ember/routing/route';
 import Route from 'granite/core/route';
-// import RSVP from 'rsvp';
 import { A } from '@ember/array';
 import { inject as service } from '@ember/service';
 
