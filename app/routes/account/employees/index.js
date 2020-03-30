@@ -1,13 +1,11 @@
-import Route from '@ember/routing/route';
+import { GraniteResourceRoute } from 'granite/core/route';
 import { hash } from 'rsvp';
-import { computed } from '@ember/object';
-import resource from 'granite/mixins/route-abstractions/resource';
 
-export default Route.extend(resource, {
-  titleToken: 'Employees',
-  modelName:  'employee',
+export default class AccountEmployeesRoute extends GraniteResourceRoute {
+  titleToken = 'Employees'
+  modelName = 'employee'
 
-  queryParams: {
+  queryParams = {
     onboarding:    { refreshModel: true },
     offboarding:   { refreshModel: true },
     terminated:    { refreshModel: true },
@@ -19,13 +17,13 @@ export default Route.extend(resource, {
     page:          { refreshModel: true },
     limit:         { refreshModel: true },
     sortAsc:       { refreshModel: true }
-  },
+  }
 
-  filters: [
+  filters = [
     'supervisor',
     'department',
     'location'
-  ],
+  ]
 
   mutateQuery (query, params) {
     if (params.hireDateStart) {
@@ -50,11 +48,11 @@ export default Route.extend(resource, {
         query[v] = true;
       }
     });
-  },
+  }
 
   model () {
     return hash({
-      employees:    this._super(...arguments),
+      employees:    super.model(...arguments),
       filterModels: hash({
         supervisors: this.get('supervisors'),
         departments: this.store.query('department', {
@@ -67,11 +65,11 @@ export default Route.extend(resource, {
         })
       })
     });
-  },
+  }
 
-  supervisors: computed(function () {
+  get supervisors () {
     return this.ajax.request('/api/v1/employees', { data: { $report: 'supervisors' } }).then(response => response.employee);
-  }),
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -79,4 +77,4 @@ export default Route.extend(resource, {
       filterModels: model.filterModels
     });
   }
-});
+}
