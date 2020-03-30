@@ -118,7 +118,7 @@
     "ember-router-scroll": "^2.0.0",
     "ember-sinon": "^4.1.1",
     "ember-sortable": "1.11.2",
-    "ember-source": "~3.16.3",
+    "ember-source": "~3.16.0",
     "ember-tooltips": "^3.4.0",
     "ember-truth-helpers": "2.0.0",
     "ember-videojs": "^0.0.24",
