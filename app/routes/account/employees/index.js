@@ -16,7 +16,8 @@ export default class AccountEmployeesRoute extends GraniteResourceRoute {
     hireDateEnd:   { refreshModel: true },
     page:          { refreshModel: true },
     limit:         { refreshModel: true },
-    sortAsc:       { refreshModel: true }
+    sortAsc:       { refreshModel: true },
+    sortBy:        { refreshModel: true }
   }
 
   filters = [
