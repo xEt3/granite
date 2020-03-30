@@ -1,13 +1,13 @@
-import Route from '@ember/routing/route';
-import edit from 'granite/mixins/route-abstractions/edit';
+import Route from 'granite/core/route';
 const employeeBelongsTo = [ 'location', 'department', 'supervisor', 'jobDescription' ];
 
-export default Route.extend(edit, {
-  titleToken: 'Edit information',
+export default class AccountEmployeeEditRoute extends Route {
+  titleToken = 'Edit information'
+  routeType = 'edit'
 
   model () {
     return this.modelFor('account.employee');
-  },
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -21,4 +21,4 @@ export default Route.extend(edit, {
       })
     });
   }
-});
+}
