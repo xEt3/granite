@@ -1,30 +1,27 @@
 import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
-import edit from 'granite/mixins/route-abstractions/edit';
 
-export default Route.extend(edit, {
-  titleToken:      'Edit Description',
-  auth:            service(),
-  bypassModelHook: true,
+export default class AccountJobDescriptionEditRoute extends Route {
+  @service auth
+  titleToken = 'Edit Description'
+  bypassModelHook = true
+  routeType = 'edit'
 
+  async model () {
+    return {
+      job:         await super.model(...arguments),
+      assets:      await this.store.findAll('asset'), // not so cached
+      departments: this.departments // cached
+    };
+  }
 
-  model () {
-    return RSVP.hash({
-      job:         this._super(...arguments),
-      assets:      this.store.findAll('asset'), // not so cached
-      departments: this.get('departments') // cached
-    });
-  },
-
-  departments: computed(function () {
+  get departments () {
     return this.store.findAll('department');
-  }),
+  }
 
   getModelDefaults () {
-    return { creator: this.get('auth.user.employee') };
-  },
+    return { creator: this.auth.get('user.employee') };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -33,4 +30,4 @@ export default Route.extend(edit, {
       departments: model.departments
     });
   }
-});
+}

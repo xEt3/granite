@@ -1,8 +1,9 @@
-import Route from '@ember/routing/route';
-import edit from 'granite/mixins/route-abstractions/edit';
+import Route from 'granite/core/route';
 
-export default Route.extend(edit, {
+export default class AccountEmployeeEducationCertificateEditRoute extends Route {
+  routeType = 'edit'
+
   model () {
     return this.modelFor('account.employee.index.education.certification');
   }
-});
+}

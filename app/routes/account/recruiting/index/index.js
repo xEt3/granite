@@ -1,28 +1,26 @@
-import Route from '@ember/routing/route';
-import { hash } from 'rsvp';
-import resource from 'granite/mixins/route-abstractions/resource';
+import { GraniteResourceRoute } from 'granite/core/route';
 
-export default Route.extend(resource, {
-  titleToken: 'Recruiting Campaigns',
-  modelName:  'job-opening',
+export default class AccountRecruitingRoute extends GraniteResourceRoute {
+  titleToken = 'Recruiting Campaigns'
+  modelName  =  'job-opening'
 
-  queryParams: {
+  queryParams = {
     job:    { refreshModel: true },
     closed: { refreshModel: true },
     setup:  { refreshModel: true },
     page:   { refreshModel: true },
     limit:  { refreshModel: true },
     sortBy: { refreshModel: true }
-  },
+  }
 
-  sort: {
+  sort = {
     completedOn: 1,
     startOn:     1
-  },
+  }
 
-  filters: [
+  filters = [
     'job'
-  ],
+  ]
 
   mutateQuery (query, params) {
     [ 'closed', 'setup' ].forEach(v => {
@@ -30,17 +28,17 @@ export default Route.extend(resource, {
         query[v] = true;
       }
     });
-  },
+  }
 
-  model () {
-    return hash({
-      campaigns: this._super(...arguments),
-      jobs:      this.store.query('job', {
+  async model () {
+    return {
+      campaigns: await super.model(...arguments),
+      jobs:      await this.store.query('job', {
         select: '_id title',
         sort:   { 'name.last': 1 }
       })
-    });
-  },
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -48,4 +46,4 @@ export default Route.extend(resource, {
       jobs:  model.jobs
     });
   }
-});
+}

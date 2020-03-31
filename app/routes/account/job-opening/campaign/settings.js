@@ -1,28 +1,27 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
-import edit from 'granite/mixins/route-abstractions/edit';
+import Route from 'granite/core/route';
+import { action } from '@ember/object';
 import $ from 'jquery';
 
-export default Route.extend(edit, {
-  titleToken: 'Settings',
+export default class AccountJobOpeningCampaignSettingsRoute extends Route {
+  titleToken = 'Settings'
+  routeType = 'edit'
 
-  model () {
-    let jobOpening = this.modelFor('account.job-opening');
-    return RSVP.hash({
+  async model () {
+    let jobOpening = this.modelFor('account.job-opening'),
+        defaultPipeline = await this.store.query('recruiting-pipeline', { 'jobOpenings.0': { $exists: false } }),
+        customPipeline = await this.store.query('recruiting-pipeline', { jobOpenings: { $in: [ jobOpening.id ] } });
+
+    return {
       jobOpening,
-      locations: this.store.findAll('location'),
-      employees: this.store.query('employee', {
+      defaultPipeline: defaultPipeline ? defaultPipeline.firstObject : defaultPipeline,
+      customPipeline:  customPipeline ? customPipeline.firstObject : customPipeline,
+      locations:       this.store.findAll('location'),
+      employees:       this.store.query('employee', {
         email:       { $exists: true },
         companyUser: { $exists: true }
-      }),
-
-      defaultPipeline: this.store.query('recruiting-pipeline', { 'jobOpenings.0': { $exists: false } })
-      .then(results => results ? results.get('firstObject') : results),
-
-      customPipeline: this.store.query('recruiting-pipeline', { jobOpenings: { $in: [ jobOpening.get('id') ] } })
-      .then(results => results ? results.get('firstObject') : results)
-    });
-  },
+      })
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -32,11 +31,10 @@ export default Route.extend(edit, {
       defaultPipeline: model.defaultPipeline,
       customPipeline:  model.customPipeline
     });
-  },
-
-  actions: {
-    willTransition () {
-      $('#modal__add-stage').modal('hide');
-    }
   }
-});
+
+  @action
+  willTransition () {
+    $('#modal__add-stage').modal('hide');
+  }
+}
