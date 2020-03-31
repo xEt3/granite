@@ -1,4 +1,3 @@
-import Controller from '@ember/controller';
-import wizard from 'granite/mixins/wizard/controller';
+import { GraniteWizardController } from 'granite/core/wizard';
 
-export default Controller.extend(wizard, {});
+export default class AccountEmployeeOffboardController extends GraniteWizardController {}
