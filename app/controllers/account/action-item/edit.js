@@ -1,14 +1,17 @@
-import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 
-export default Controller.extend(addEdit, {
-  transitionAfterSave: 'account.action-item.index',
-  transitionWithModel: true,
-  modelIdentifier:     'slug',
-
-  actions: {
-    updatePriority (newValue) {
-      this.set('model.priority', newValue[0]);
-    }
+export default class AccountActionItemEditController extends Controller {
+  @service data
+  afterSaveOptions = {
+    transitionAfterSave: 'account.action-item.index',
+    transitionWithModel: true,
+    modelIdentifier:     'slug'
   }
-});
+
+  @action
+  updatePriority (newValue) {
+    this.set('model.priority', newValue[0]);
+  }
+}

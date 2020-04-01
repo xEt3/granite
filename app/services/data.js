@@ -1,5 +1,5 @@
 import Service, { inject as service } from '@ember/service';
-import { get } from '@ember/object';
+import { get, action } from '@ember/object';
 import { map } from 'rsvp';
 import { A } from '@ember/array';
 import { notifyDefaults } from 'granite/config';
@@ -28,10 +28,10 @@ function findFieldErrors (errors = []) {
 
 export default class DataService extends Service {
   @service('notification-messages') notifications
+  @service router
   statuses = {}
   __longRunningProps = {}
   enableNotify = true
-  transitionWithModel = true
   successMessageTimeout = 3
   slowRunningThreshold = 500
 
@@ -74,8 +74,8 @@ export default class DataService extends Service {
     return invalidFields.length > 0 ? invalidFields : false;
   }
 
-  _afterSave (record) {
-    const transitionAfterSave = this.get('transitionAfterSave');
+  _afterDelete (record) {
+    const transitionAfterSave = this.get('transitionAfterDelete') || this.get('transitionAfterSave');
 
     if (transitionAfterSave) {
       let transitionArgs = [ transitionAfterSave ];
@@ -88,15 +88,23 @@ export default class DataService extends Service {
     }
   }
 
-  async saveRecord (_model, label = 'working', notify = true, requireFields) {
+  @action
+  async saveRecord (_model, label = 'working', options) {
     if (!_model) {
       return;
     }
+    const {
+      requireFields,
+      transitionAfterSave,
+      transitionWithModel,
+      modelIdentifier,
+      notify
+    } = options || {};
 
-    const { success, error } = this.createStatus(label, notify);
+    const { success, error } = this.createStatus(label, notify ?? true);
 
     if (get(_model, 'length')) {
-      await map(_model, (m, i) => this.saveRecord(m, `label${i}`, false, requireFields));
+      await map(_model, (m, i) => this.saveRecord(m, `label${i}`, false, { requireFields })); // don't pass along transition or we prematurely transition...
       success('Successfully saved.');
       return;
     }
@@ -123,17 +131,57 @@ export default class DataService extends Service {
       record = await _model.save();
 
       success('Successfully saved.');
-
-      if (this.afterSave && typeof this.afterSave === 'function') {
-        this.afterSave(record);
-      }
-
-      this._afterSave(record);
     } catch (e) {
       error(e);
       return false;
     }
+
+    if (transitionAfterSave) {
+      let transitionArgs = [ transitionAfterSave ];
+
+      if (transitionWithModel) {
+        transitionArgs.push(record.get(modelIdentifier || 'id'));
+      }
+
+      this.router.transitionTo.apply(this.router, transitionArgs);
+    }
+
     return record;
+  }
+
+  @action
+  async deleteRecord (_model, label = 'working', options) {
+    if (!_model) {
+      return;
+    }
+
+    const {
+      transitionAfterSave,
+      transitionAfterDelete,
+      transitionWithModel,
+      modelIdentifier,
+      notify
+    } = options || {};
+
+    const { success, error } = this.createStatus(label, notify ?? true);
+
+    try {
+      await _model.destroyRecord();
+      success('Successfully deleted.');
+    } catch (e) {
+      error(e);
+      return false;
+    }
+
+    if (transitionAfterSave || transitionAfterDelete) {
+      let transitionArgs = [ transitionAfterSave || transitionAfterDelete ];
+
+      if (transitionWithModel) {
+        transitionArgs.push(_model.get(modelIdentifier || 'id'));
+      }
+
+      this.router.transitionTo.apply(this.router, transitionArgs);
+    }
   }
 
   createStatus (label = 'working', notify = true) {

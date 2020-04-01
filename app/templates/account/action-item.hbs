@@ -52,15 +52,24 @@
 
             <div class="text-danger header">Danger Zone</div>
             {{#confirm-modal class="item" as |confirm|}}
-              <a href="#" id="action-item__action--cancel" {{action (pipe confirm (action "cancelActionItem"))}}>
+              <a href="#" id="action-item__action--cancel" {{action (pipe confirm (action "cancelActionItem") (action "save"))}}>
                 <i class="close icon"></i>Cancel Project
               </a>
             {{/confirm-modal}}
-            {{#confirm-modal this.as deleteContext=this.model.title class="item" as |confirm|}}
-              <a href="#" id="action-item__action--delete" {{action (pipe confirm (action "delete"))}}>
+            <ConfirmModal
+              @deleteContext={{this.model.title}}
+              @class="item" as |confirm|
+            >
+              <a href="#" id="action-item__action--delete" {{on "click" (prevent-default (pipe
+                confirm
+                (fn this.data.deleteRecord
+                  this.model
+                  'working'
+                  this.afterSaveOptions)
+              ))}}>
                 <i class="trash icon"></i>Delete Record
               </a>
-            {{/confirm-modal}}
+            </ConfirmModal>
           </div>
         {{/ui-dropdown}}
       </div>

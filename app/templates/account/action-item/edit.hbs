@@ -42,8 +42,14 @@
       {{/if}}
     </div>
     <div class="ui divider"></div>
-    <form {{action "save" on="submit"}}>
-      {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Save project{{/form/action-button}}
+    <form {{on "submit" (prevent-default (fn this.data.saveRecord this.model 'working' this.afterSaveOptions))}}>
+      <Form::ActionButton
+        @type="submit"
+        @class="ui huge fluid green button"
+        @loading={{this.data.statuses.working.isLoading}}
+      >
+        Save project
+      </Form::ActionButton>
     </form>
   </div>
 </div>
