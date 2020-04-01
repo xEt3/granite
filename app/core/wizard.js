@@ -29,14 +29,19 @@ class GraniteWizardRoute extends GraniteRoute {
    */
   setUserOn = null
 
-  afterModel (model) {
-    super.afterModel(...arguments);
+  setupController (controller, model) {
+    controller.setProperties({
+      steps:    this.get('steps'),
+      basePath: this.get('basePath')
+    });
+
+    super.setupController(...arguments);
 
     const step = model.get(`${this.get('key')}Step`),
           steps = this.steps,
           basePath = this.basePath;
 
-    if (step && step > 1) {
+    if (step > 0) {
       scheduleOnce('afterRender', () => {
         if (this.controller.currentStepIndex === 1) {
           let l = get(steps.objectAt(step), 'link');
@@ -44,15 +49,6 @@ class GraniteWizardRoute extends GraniteRoute {
         }
       });
     }
-  }
-
-  setupController (controller) {
-    controller.setProperties({
-      steps:    this.get('steps'),
-      basePath: this.get('basePath')
-    });
-
-    super.setupController(...arguments);
   }
 
   @action
