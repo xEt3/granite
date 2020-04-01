@@ -238,7 +238,7 @@ export default class DataService extends Service {
     this.__cancelLongRunningProp(label);
 
     this.set(`statuses.${label}`, {
-      isLoading: true,
+      isLoading: false,
       isLoaded:  true,
       isSlow:    false,
       message:   success,

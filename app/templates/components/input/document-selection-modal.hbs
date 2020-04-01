@@ -91,7 +91,11 @@
       </div>
     </div>
     <div class="clearfix">
-      {{elements/x-pagination page=(readonly this.page) pages=(readonly this.pages) onchange=(action (mut this.page))}}
+      <Elements::XPagination
+        @page={{this.page}}
+        @model={{this.results}}
+        @limit={{this.limit}}
+        @onChange={{set this.page _}} />
     </div>
     {{#if this.selectedDocuments}}
       <div class="ui divider"></div>
