@@ -1,85 +1,84 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  _pages:     computed.reads('pages'),
-  classNames: [ 'ui', 'right', 'floated', 'pagination', 'menu' ],
-  maxButtons: 6,
+export default class XPaginationComponent extends Component {
+  maxButtons = 6
+  skipBy = 20
 
-  didReceiveAttrs () {
-    this.set('_page', parseFloat(this.get('page')) || 1);
-  },
+  pageCountFromMetadata (meta, limit) {
+    return Math.ceil((meta || {}).totalRecords / limit);
+  }
 
-  _buttons: computed('_pages', '_page', 'maxButtons', function () {
-    let l = [],
-        t = this.getProperties('_pages', '_page', 'maxButtons');
+  get cleanPageValue () {
+    return parseInt(this.args.page, 0) || 1;
+  }
 
-    if (!t._pages) {
-      return [];
+  get pages () {
+    return this.args.model ?
+      this.pageCountFromMetadata(this.args.model.meta, this.args.limit) :
+      this.args.pages;
+  }
+
+  get buttons () {
+    const buttonList = [],
+          page = this.cleanPageValue,
+          pages = this.pages,
+          maxButtons = this.args.maxButtons || this.maxButtons;
+
+    if (!pages) {
+      return buttonList;
     }
 
-    var p = t._page > t.maxButtons / 2 ? t._page - t.maxButtons / 2 : 1;
+    let p = page > maxButtons / 2 ? page - maxButtons / 2 : 1;
 
-    if (isNaN(t._pages) || isNaN(p)) {
-      return [];
+    if (isNaN(pages) || isNaN(p)) {
+      return buttonList;
     }
 
-    if (p + t.maxButtons > t._pages) {
-      p = t._pages - t.maxButtons + 1;
+    if (p + maxButtons > pages) {
+      p = pages - maxButtons + 1;
     }
 
     if (p <= 0) {
       p = 1;
     }
 
-    var topLoop = t._pages >= t.maxButtons ? t.maxButtons : t._pages;
+    const topLoop = pages >= maxButtons ? maxButtons : pages;
 
-    for (var loop = 0; loop < topLoop; loop++) {
-      l.push({
+    for (let loop = 0; loop < topLoop; loop++) {
+      buttonList.push({
         n:      p,
-        active: p === t._page
+        active: p === page
       });
 
       p++;
     }
 
-    return l;
-  }),
-
-  onFirstPage: computed.lte('_page', 1),
-
-  onLastPage: computed('_page', '_pages', function () {
-    return this.get('_page') >= this.get('_pages');
-  }),
-
-  change () {
-    this.get('onchange')(this.get('_page'));
-  },
-
-  actions: {
-    setPage (n) {
-      this.set('_page', n);
-      this.change();
-    },
-
-    incrementPage (inc = 1) {
-      if (this.get('_page') + inc >= this.get('_pages')) {
-        this.set('_page', this.get('_pages'));
-      } else {
-        this.incrementProperty('_page', inc);
-      }
-
-      this.change();
-    },
-
-    decrementPage (dec = 1) {
-      if (dec >= this.get('_page')) {
-        this.set('_page', 1);
-      } else {
-        this.decrementProperty('_page', dec);
-      }
-
-      this.change();
-    }
+    return buttonList;
   }
-});
+
+  get onFirstPage () {
+    return this.cleanPageValue < 2;
+  }
+
+  get onLastPage () {
+    return this.cleanPageValue >= this.pages;
+  }
+
+  get nextPage () {
+    return Math.min(this.cleanPageValue + 1, this.pages);
+  }
+
+  get previousPage () {
+    return Math.max(this.cleanPageValue - 1, 1);
+  }
+
+  get nextSkipPage () {
+    const incVal = this.args.skipBy || this.skipBy;
+    return Math.min(this.cleanPageValue + incVal, this.pages);
+  }
+
+  get previousSkipPage () {
+    const decVal = this.args.skipBy || this.skipBy;
+    return Math.max(this.cleanPageValue - decVal, 1);
+  }
+}

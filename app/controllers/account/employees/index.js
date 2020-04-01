@@ -1,9 +1,8 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
-import pagination from 'granite/mixins/controller-abstractions/pagination';
+import Controller from 'granite/core/controller';
+import { action } from '@ember/object';
 
-export default Controller.extend(pagination, {
-  queryParams: [
+export default class AccountEmployeesIndexController extends Controller {
+  queryParams = [
     'showFilters',
     'onboarding',
     'offboarding',
@@ -16,22 +15,22 @@ export default Controller.extend(pagination, {
     'limit',
     'sortBy',
     'sortAsc'
-  ],
+  ]
 
-  limit:         20,
-  showFilters:   false,
-  onboarding:    false,
-  offboarding:   false,
-  terminated:    false,
-  supervisor:    null,
-  department:    null,
-  location:      null,
-  hireDateStart: null,
-  hireDateEnd:   null,
-  sortBy:        'created',
-  sortAsc:       false,
+  limit         = 20
+  showFilters   = false
+  onboarding    = false
+  offboarding   = false
+  terminated    = false
+  supervisor    = null
+  department    = null
+  location      = null
+  hireDateStart = null
+  hireDateEnd   = null
+  sortBy        = 'created'
+  sortAsc       = false
 
-  sortOptions: [{
+  sortOptions = [{
     label: 'First Name',
     path:  'name.first'
   }, {
@@ -43,9 +42,9 @@ export default Controller.extend(pagination, {
   }, {
     label: 'Created Date',
     path:  'created'
-  }],
+  }]
 
-  intros: computed(function () {
+  get intros () {
     return [{
       element:  '.divided.link.items',
       intro:    'The employees page shows you all of your employees at a glance.',
@@ -63,24 +62,24 @@ export default Controller.extend(pagination, {
       intro:    'When you need to add an employee, click the add button and pick from a single employee or multiple (via CSV or Excel)',
       position: 'left'
     }];
-  }),
-
-  actions: {
-    updateFilter (filter, value) {
-      this.set(filter, value);
-    },
-
-    resetFilters () {
-      this.setProperties({
-        onboarding:    false,
-        offboarding:   false,
-        terminated:    false,
-        supervisor:    null,
-        department:    null,
-        location:      null,
-        hireDateStart: null,
-        hireDateEnd:   null
-      });
-    }
   }
-});
+
+  @action
+  updateFilter (filter, value) {
+    this.set(filter, value);
+  }
+
+  @action
+  resetFilters () {
+    this.setProperties({
+      onboarding:    false,
+      offboarding:   false,
+      terminated:    false,
+      supervisor:    null,
+      department:    null,
+      location:      null,
+      hireDateStart: null,
+      hireDateEnd:   null
+    });
+  }
+}
