@@ -1,15 +1,15 @@
-import Route from '@ember/routing/route';
-import authenticated from '../mixins/authenticated';
+import { Route, authenticated } from 'granite/core';
+import { action } from '@ember/object';
 import $ from 'jquery';
 
-export default Route.extend(authenticated, {
+@authenticated
+export default class AccountRoute extends Route {
   title (tokens) {
     return tokens.join(' - ') + ' - Granite HR';
-  },
-
-  actions: {
-    willTransition () {
-      $('.account__sidebar').sidebar('hide');
-    }
   }
-});
+
+  @action
+  willTransition () {
+    $('.account__sidebar').sidebar('hide');
+  }
+}
