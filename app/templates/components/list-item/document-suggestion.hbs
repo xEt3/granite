@@ -1,14 +1,16 @@
-{{or this.model.title this.model.file.title}}
-({{or this.model.extension this.model.file.extension}})
-{{#if this.model.reason}}
-  <span>
-    {{ember-tooltip
-      side="right"
-      popperContainer="body"
-      text=this.model.reason}}
-    <i class="blue text question circle icon"></i>
+<div ...attributes>
+  {{or @model.title @model.file.title}}
+  ({{or @model.extension @model.file.extension}})
+  {{#if @model.reason}}
+    <span>
+      <EmberTooltip
+        @side="right"
+        @popperContainer="body"
+        @text={{@model.reason}}/>
+      <i class="blue text question circle icon"></i>
+    </span>
+  {{/if}}
+  <span class="right floated">
+    <a href="#" {{on "click" (prevent-default (fn @addAssignment (or @model.file @model)))}}>Assign</a>
   </span>
-{{/if}}
-<span class="right floated">
-  <a href="#" {{action this.addAssignment (or this.model.file this.model)}}>Assign</a>
-</span>
+</div>

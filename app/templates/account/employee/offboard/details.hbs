@@ -1,19 +1,23 @@
-<form class="ui form" {{action "saveAndContinue" on="submit"}}>
+<form class="ui form" {{on "submit" (prevent-default (route-action "saveAndContinue"))}}>
   <h2 class="ui horizontal divider header">Employee Details</h2>
   <div class="content">
     <div class="field">
-      {{ui-calendar
-        class="field"
-        type="date"
-        label="When will this employee be terminated?"
-        dateValue=this.model.terminatedOn
-        onChange=(action (mut this.model.terminatedOn))}}
+      <UiCalendar
+        @class="field"
+        @type="date"
+        @label="When will this employee be terminated?"
+        @dateValue={{this.model.terminatedOn}}
+        @onChange={{set this.model.terminatedOn _}}/>
     </div>
 
     <div class="two fields">
       <div class="field">
         <label for="termination-reason">Separation Category</label>
-        {{#ui-dropdown id="termination-reason" class="search selection" selected=this.model.terminationReason onChange=(action (mut this.model.terminationReason))}}
+        <UiDropdown
+          @id="termination-reason"
+          @class="search selection"
+          @selected={{this.model.terminationReason}}
+          @onChange={{set this.model.terminationReason _}}>
           <div class="default text">Voluntary or Involuntary</div>
           <i class="dropdown icon"></i>
           <div class="menu">
@@ -24,11 +28,15 @@
               Involuntary
             </div>
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       </div>
       <div class="field">
         <label for="eligible-for-rehire">Eligible for Rehire</label>
-        {{ui-checkbox class="toggle" label=(if this.model.eligibleForRehire "Eligible" "Not Eligible") checked=this.model.eligibleForRehire onChange=(action (mut this.model.eligibleForRehire))}}
+        <UiCheckbox
+          @class="toggle"
+          @label={{if this.model.eligibleForRehire "Eligible" "Not Eligible"}}
+          @checked={{this.model.eligibleForRehire}}
+          @onChange={{set this.model.eligibleForRehire _}}/>
       </div>
     </div>
   </div>
@@ -39,5 +47,5 @@
   </div>
 
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Next{{/form/action-button}}
+  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.wizard.isLoading}}>Next</Form::ActionButton>
 </form>

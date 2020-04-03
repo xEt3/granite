@@ -1,99 +1,115 @@
 /* eslint-disable ember/no-side-effects */
-import Component from '@ember/component';
-import { computed, observer } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { A } from '@ember/array';
 import { run } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import { Promise } from 'rsvp';
 import $ from 'jquery';
-import ajaxStatus from 'granite/mixins/ajax-status';
-import pagination from 'granite/mixins/controller-abstractions/pagination';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+// import ajaxStatus from 'granite/mixins/ajax-status';
+// import pagination from 'granite/mixins/controller-abstractions/pagination';
+// import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-export default Component.extend(pagination, addEdit, ajaxStatus, {
-  ajax:              service(),
-  store:             service(),
-  classNames:        [ 'document__selector' ],
-  limit:             10,
-  page:              1,
-  debounceSearches:  800,
-  searchText:        '',
-  selectedDocuments: A(),
-  show:              false,
-  enableNotify:      false,
+export default class InputDocumentSelectionModalComponent extends Component {
+  @service ajax
+  @service store
+  @service data
+  classNames =        [ 'document__selector' ]
+  limit =             10
+  page =              1
+  debounceSearches =  800
+  searchText =        ''
+  selectedDocuments = A()
+  show =              false
+  enableNotify =      false
 
-  sansHashModalId: computed('elementId', function () {
+  get sansHashModalId () {
     return `modal__document-selection-${this.elementId}`;
-  }),
+  }
 
-  modalId: computed('sansHashModalId', function () {
-    return `#${this.get('sansHashModalId')}`;
-  }),
+  get modalId () {
+    return `#${this.sansHashModalId}`;
+  }
 
-  sansHashDropzoneId: computed('elementId', function () {
+  get sansHashDropzoneId () {
     return `input__dropzone--document-${this.elementId}`;
-  }),
+  }
 
-  dropzoneId: computed('sansHashDropzoneId', function () {
-    return `#${this.get('sansHashDropzoneId')}`;
-  }),
+  get dropzoneId () {
+    return `#${this.sansHashDropzoneId}`;
+  }
 
-  didReceiveAttrs () {
-    this._super(...arguments);
-    let selected = this.get('selected'),
+  async didReceiveAttrs () {
+    super.model(...arguments);
+    let selected = this.selected,
         selection = A();
 
-    if (selected && !this.get('singleDoc')) {
+    if (selected && !this.singleDoc) {
       selection.addObjects(selected);
     }
 
-    this.set('selectedDocuments', selection);
+    this.selectedDocuments = selection;
 
-    this.get('ajax').request('/api/v1/files', {
+    let tags = await this.ajax.request('/api/v1/files', {
       data: {
         _distinct: true,
         select:    'tags'
       }
-    }).then(tags => {
-      if (!this.get('isDestroyed') && !this.get('isDestroying')) {
-        this.set('tags', tags);
-      }
     });
-  },
+
+    if (!this.isDestroyed && !this.isDestroying) {
+      this.tags = tags;
+    }
+  }
 
   /* eslint-disable-next-line */
-  searchTermChanged: observer('searchText', function () {
-    if (this.get('_searchDebounce')) {
-      run.cancel(this.get('_searchDebounce'));
+  searchTermChanged () {
+    if (this._searchDebounce) {
+      run.cancel(this._searchDebounce);
     }
 
-    this.set('_searchDebounce', run.later(() => {
-      this.set('_searchText', this.get('searchText'));
-      this.set('_searchDebounce', null);
-    }, this.get('debounceSearches')));
-  }),
+    this._searchDebounce = run.later(() => {
+      this._searchText = this.searchText;
+      this._searchDebounce = null;
+    }, this.debounceSearches);
+    // this.set('_searchDebounce', run.later(() => {
+    //   this.set('_searchText', this.get('searchText'));
+    //   this.set('_searchDebounce', null);
+    // }, this.get('debounceSearches')));
+  }
+  // searchTermChanged: observer('searchText', function () {
+  //   if (this.get('_searchDebounce')) {
+  //     run.cancel(this.get('_searchDebounce'));
+  //   }
+  //
+  //   this.set('_searchDebounce', run.later(() => {
+  //     this.set('_searchText', this.get('searchText'));
+  //     this.set('_searchDebounce', null);
+  //   }, this.get('debounceSearches')));
+  // }),
 
-  model: computed('selectedTag', '_searchText', 'page', 'limit', 'fileIsAdded', function () {
-    let page = this.get('page') - 1 || 0,
-        limit = this.get('limit'),
-        search = this.get('_searchText'),
-        tag = this.get('selectedTag'),
+  get model () {
+    let page = this.page - 1 || 0,
+        limit = this.limit,
+        search = this._searchText,
+        tag = this.selectedTag,
         query = {
           limit,
           page,
-          systemUse:        this.get('systemUse'),
-          correctiveAction: this.get('correctiveAction.id')
+          systemUse: this.systemUse
         },
-        previousSearch = this.get('previousSearch'),
-        previousTag = this.get('previousTag');
+        previousSearch = this.previousSearch,
+        previousTag = this.previousTag;
 
-    this.setProperties({
-      previousTag:    tag,
-      previousSearch: search
-    });
+    if (this.correctiveAction) {
+      query.correctiveAction = this.correctiveAction.id;
+    }
+
+    this.previousTag = tag;
+    this.previousSearch = search;
 
     if (tag !== previousTag || search !== previousSearch) {
-      this.set('page', 1);
+      this.page = 1;
       page = 0;
     }
 
@@ -111,129 +127,139 @@ export default Component.extend(pagination, addEdit, ajaxStatus, {
     }
 
     return new Promise(resolve => {
-      this.get('store').query('file', query)
+      this.store.query('file', query)
       .then(results => {
-        this.set('results', results);
-        this.set('metadata', results.get('meta'));
+        this.results = results;
+        this.metadata = results.meta;
         resolve(results);
         this.refreshModal();
       });
     });
-  }),
+  }
 
   refreshModal () {
     run('afterRender', () => {
-      $(this.get('modalId')).modal('refresh');
+      $(this.modalId).modal('refresh');
     });
-  },
+  }
 
   didRender () {
-    this._super(...arguments);
+    super.model(...arguments);
     this.refreshModal();
-  },
-
-  actions: {
-    addDocument (file) {
-      if (this.get('singleDoc')) {
-        this.set('selectedDocument', file);
-        return;
-      }
-      this.get('selectedDocuments').addObject(file);
-      this.refreshModal();
-    },
-
-    removeDocument (file) {
-      if (this.get('singleDoc')) {
-        this.set('selectedDocument', null);
-        return;
-      }
-      this.get('selectedDocuments').removeObject(file);
-      this.refreshModal();
-    },
-
-    assign () {
-      $(this.get('modalId')).modal('hide');
-      if (this.get('singleDoc')) {
-        this.get('onSelected')(this.get('selectedDocument'));
-        return;
-      }
-      this.get('onSelected')(this.get('selectedDocuments'));
-    },
-
-    selectDocuments () {
-      $(this.get('modalId'))
-      .modal({ detachable: true })
-      .modal('show');
-    },
-
-    notify (type, msg) {
-      this.get('onNotify')(type, msg);
-    },
-
-    addedFile (file) {
-      if (this.get('fileIsAdded')) {
-        this.send('removeFile', this.get('fileIsAdded'));
-      }
-
-      this.set('fileIsAdded', file);
-    },
-
-    processQueue () {
-      Dropzone.forElement(this.get('dropzoneId')).processQueue();
-    },
-
-    uploadedFile (file, res) {
-      res.files = [ res.file ];
-      delete res.file;
-      this.get('store').pushPayload(res);
-      this.get('resolveUpload')(this.get('store').peekRecord('file', res.files[0].id));
-      this.send('removeFile', file);
-    },
-
-    removeFile (file) {
-      Dropzone.forElement(this.get('dropzoneId')).removeFile(file);
-      this.set('fileIsAdded', false);
-    },
-
-    async uploadFile () {
-      this.ajaxStart();
-
-      let autoTag = this.get('autoTag'),
-          promise = new Promise(resolve => this.set('resolveUpload', resolve));
-
-      this.send('processQueue');
-
-      let file = await promise,
-          properties = [ 'title', 'description', 'tags' ];
-
-      if (this.get('correctiveAction')) {
-        properties.push('correctiveAction', 'systemUse');
-      }
-
-      properties.forEach(prop => {
-        if (prop === 'title') {
-          file.set(prop, this.get('fileName'));
-        } else {
-          file.set(prop, this.get(prop));
-        }
-      });
-
-      if (autoTag) {
-        file.set('tags', Array.isArray(autoTag) ? autoTag : [ autoTag ]);
-      } else {
-        file.set('tags', []);
-      }
-
-      try {
-        await file.save();
-      } catch (e) {
-        this.ajaxError(e);
-        return;
-      }
-
-      this.ajaxSuccess('Succesfully uploaded document.');
-      this.send('addDocument', file);
-      this.set('showDocumentUpload', false);
-    }
   }
-});
+
+  @action
+  addDocument (file) {
+    if (this.singleDoc) {
+      this.selectedDocument = file;
+      return;
+    }
+    this.selectedDocuments.addObject(file);
+    this.refreshModal();
+  }
+
+  @action
+  removeDocument (file) {
+    if (this.singleDoc) {
+      this.selectedDocument = null;
+      return;
+    }
+    this.selectedDocuments.removeObject(file);
+    this.refreshModal();
+  }
+
+  @action
+  assign () {
+    $(this.modalId).modal('hide');
+    if (this.singleDoc) {
+      this.onSelected(this.selectedDocument);
+      return;
+    }
+    this.onSelected(this.selectedDocuments);
+  }
+
+  @action
+  selectDocuments () {
+    $(this.modalId)
+    .modal({ detachable: true })
+    .modal('show');
+  }
+
+  @action
+  notify (type, msg) {
+    this.onNotify(type, msg);
+  }
+
+  @action
+  addedFile (file) {
+    if (this.fileIsAdded) {
+      this.send('removeFile', this.fileIsAdded);
+    }
+
+    this.fileIsAdded = file;
+  }
+
+  @action
+  processQueue () {
+    Dropzone.forElement(this.dropzoneId).processQueue();
+  }
+
+  @action
+  uploadedFile (file, res) {
+    res.files = [ res.file ];
+    delete res.file;
+    this.store.pushPayload(res);
+    this.resolveUpload(this.store.peekRecord('file', res.files[0].id));
+    this.send('removeFile', file);
+  }
+
+  @action
+  removeFile (file) {
+    Dropzone.forElement(this.dropzoneId).removeFile(file);
+    this.fileIsAdded = false;
+  }
+
+  @action
+  async uploadFile () {
+    // this.ajaxStart();
+    let { success, error } = this.data.createStatus();
+
+    let autoTag = this.autoTag,
+        //LINE BELOW THIS DOESN'T WORK IN OCTANE
+        promise = new Promise(resolve => this.set('resolveUpload', resolve));
+
+    this.send('processQueue');//CALL THIS.PROCESSQUEUE??
+
+    let file = await promise,
+        properties = [ 'title', 'description', 'tags' ];
+
+    if (this.correctiveAction) {
+      properties.push('correctiveAction', 'systemUse');
+    }
+
+    properties.forEach(prop => {
+      if (prop === 'title') {
+        file.prop = this.fileName;
+      } else {
+        file.prop = this.prop;
+      }
+    });
+
+    if (autoTag) {
+      file.tags = Array.isArray(autoTag) ? autoTag : [ autoTag ];
+    } else {
+      file.tags = [];
+    }
+
+    try {
+      await file.save();
+    } catch (e) {
+      error(e);
+      return;
+    }
+
+    success('Succesfully uploaded document.');
+    this.send('addDocument', file);
+    this.showDocumentUpload = false;
+  }
+}
