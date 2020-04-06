@@ -1,37 +1,35 @@
 {{#if hasBlock}}
-  {{yield this.startApplication}}
+  {{yield this.openModal}}
 {{/if}}
 
-{{#ui-modal name="modal__file-upload" id=this.modalId}}
+<UiModal @name="modal__file-upload" @id={{this.modalId}}>
   <div class="header">
     Upload a File
   </div>
   <div class="content">
-    {{drop-zone
-      url=this.fileEndpoint
-      id=this.dropzoneId
-      class="input__dropzone"
-      method="put"
-      uploadMultiple=false
-      maxFiles=1
-      autoProcessQueue=false
-      dictDefaultMessage="Drop or Click to Select a File"
-      thumbnailWidth="175"
-      headers=(hash X-API-Token=this.auth.token)
-      addedfile=(action "addedFile")
-      success=(action "uploadedFile")
-      capture="camera"}}
+    <DropZone
+      @url={{this.fileEndpoint}}
+      @id={{this.dropzoneId}}
+      @class="input__dropzone"
+      @method="put"
+      @uploadMultiple={{false}}
+      @maxFiles={{1}}
+      @autoProcessQueue={{false}}
+      @dictDefaultMessage="Drop or Click to Select a File"
+      @thumbnailWidth="175"
+      @headers={{hash X-API-Token=this.auth.token}}
+      @addedfile={{this.addedFile}}
+      @success={{this.uploadedFile}}
+      @capture="camera" />
   </div>
   <div class="actions">
-    <button class="ui red button" {{action this.closeModal}}>
+    <button type="button" class="ui red button" {{on "click" this.closeModal}}>
       Close
     </button>
-    <button class="ui green right labeled icon button" {{action
-      (pipe
-      (action this.upload)
-      (action this.closeModal))
+    <button type="button" class="ui green right labeled icon button" {{on "click"
+      (pipe this.upload this.closeModal)
     }}>
       Upload File<i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

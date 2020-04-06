@@ -1,55 +1,60 @@
 /*
   USAGE
 
-  {{#modals/upload-document
+  <Modals::UploadDocument
     systemUse=true
     uploadComplete=(action 'uploadFollowup') as |openUploadModal|
-  }}
-    <a href="#" {{action openUploadModal}}>
+  >
+    <a href="#" {{on "click" (prevent-default openUploadModal)}}>
       <i class="upload icon"></i>
     </a>
-  {{/modals/upload-document}}
+  </Modals::UploadDocument>
 
   must pass in uploadComplete as function, param will be the file you uploaded --> uploadFollowup (file) {}
 
 */
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import FileHandler from 'granite/core/file-handler';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import fileSupport from 'granite/mixins/file-handling';
 import $ from 'jquery';
 
-export default Component.extend(fileSupport, {
-  auth:  service(),
-  store: service(),
+export default class UploadDocumentModalComponent extends Component {
+  @service() auth
+  @service() store
 
-  tagName: [ 'span' ],
+  constructor () {
+    super(...arguments);
+    this.files = new FileHandler({ dropzoneId: this.dropzoneId });
+  }
 
-  fileData: computed('systemUse', function () {
-    return { systemUse: this.get('systemUse') };
-  }),
+  get fileData () {
+    return { systemUse: this.args.systemUse };
+  }
 
-  startApplication: computed('modalId', function () {
-    return this.openModal.bind(this);
-  }),
+  get elementId () {
+    return Math.round(Math.random() * Math.pow(10, 10));
+  }
 
-  modalId: computed('', function () {
-    return `modal__file-upload-${this.get('elementId')}`;
-  }),
+  get modalId () {
+    return `modal__file-upload-${this.elementId}`;
+  }
 
-  dropzoneId: computed('elementId', function () {
+  get dropzoneId () {
     return `input__dropzone--document-${this.elementId}`;
-  }),
+  }
 
+  @action
   openModal () {
     $(`#${this.get('modalId')}`).modal({
       detachable: true,
       closable:   false
     }).modal('show');
-  },
+  }
 
+  @action
   closeModal () {
     this.send('removeFile');
     $(`#${this.get('modalId')}`).modal('hide');
   }
-});
+}
