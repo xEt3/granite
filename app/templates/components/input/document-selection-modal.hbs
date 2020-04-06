@@ -5,7 +5,7 @@
   @name="modal__document-selection"
   @id={{this.sansHashModalId}}
   @class="ui long modal">
-  <h1 class="ui header">{{if this.title this.title "Select Documents"}}</h1>
+  <h1 class="ui header">{{if @title @title "Select Documents"}}</h1>
 
   <div class="content ui form">
     <p class="ui center aligned text">
@@ -58,18 +58,19 @@
       <div class="ui field column">
         <label>Search by text</label>
         <div class="ui icon input {{if this._searchDebounce "loading"}}">
-          <Input @type="search" @placeholder="Search documents" @key-down={{this.searchTermChanged}} @value={{this.searchText}}/>
+          <Input {{on "keydown" this.searchTermChanged}} @type="search" @placeholder="Search documents" @value={{this.searchText}}/>
           <i class="search icon"></i>
         </div>
       </div>
       <div class="ui field column">
         <label>Limit by tag</label>
-        {{#ui-dropdown class="search fluid selection"
-          selected=this.selectedTag
-          fullTextSearch=true
-          forceSelection=false
-          observeChanges=true
-          onChange=(action (mut this.selectedTag)) as |execute mapper|}}
+        <UiDropdown
+          @class="search fluid selection"
+          @selected={{this.selectedTag}}
+          @fullTextSearch={{true}}
+          @forceSelection={{false}}
+          @observeChanges={{true}}
+          @onChange={{set this.selectedTag _}} as |execute mapper|>
           <div class="default text">All Tags</div>
           <i class="dropdown icon"></i>
           <div class="menu">
@@ -80,17 +81,21 @@
               </div>
             {{/each}}
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       </div>
     </div>
 
     <div class="ui divided list raised segment document-selection__results">
       {{#each this.results as |document|}}
-        {{list-item/document-option file=document remove=(or (contains document this.selectedDocuments) (eq document this.selectedDocument)) onRemove=(action "removeDocument") onAddition=(action "addDocument")}}
+        <ListItem::DocumentOption
+          @file={{document}}
+          @remove={{or (contains document this.selectedDocuments) (eq document this.selectedDocument)}}
+          @onRemove={{this.removeDocument}}
+          @onAddition={{this.addDocument}}/>
       {{else}}
         <h3 class="ui center aligned light text header">No documents found.</h3>
       {{/each}}
-      <div class="ui inverted {{if (or this.model.isPending this._searchDebounce) "active animated fadeInUp"}} dimmer">
+      <div class="ui inverted {{if (or this.data.statuses.working.isLoading this._searchDebounce) "active animated fadeInUp"}} dimmer">
         <div class="ui indeterminate text inverted loader">Searching Documents...</div>
       </div>
     </div>
@@ -99,7 +104,7 @@
         @page={{this.page}}
         @model={{this.results}}
         @limit={{this.limit}}
-        @onChange={{set this.page _}} />
+        @onChange={{pipe (set this.page _) this.getModel}}/>
     </div>
     {{#if this.selectedDocuments}}
       <div class="ui divider"></div>
@@ -107,11 +112,14 @@
       <div class="ui divided list">
         {{#each this.selectedDocuments as |selectedDocument|}}
           <div class="item">
-            {{list-item/document-option file=selectedDocument remove=true onRemove=(action "removeDocument")}}
+            <ListItem::DocumentOption
+              @file={{selectedDocument}}
+              @remove={{true}}
+              @onRemove={{this.removeDocument}}/>
           </div>
         {{/each}}
       </div>
-      <button class="ui huge fluid positive button" {{action "assign"}}>{{if this.assignText this.assignText "Assign Documents"}}</button>
+      <button class="ui huge fluid positive button" {{on "click" this.assign}}>{{if this.assignText this.assignText "Assign Documents"}}</button>
     {{/if}}
 
     {{#if this.selectedDocument}}
@@ -119,10 +127,13 @@
       <h3 class="ui header">Selected Document</h3>
       <div class="ui divided list">
         <div class="item">
-          {{list-item/document-option file=this.selectedDocument remove=true onRemove=(action "removeDocument")}}
+          <ListItem::DocumentOption
+            @file={{this.selectedDocument}}
+            @remove={{true}}
+            @onRemove={{this.removeDocument}}/>
         </div>
       </div>
-      <button class="ui huge fluid positive button" {{action "assign"}}>{{if this.assignText this.assignText "Assign Document"}}</button>
+      <button class="ui huge fluid positive button" {{on "click" this.assign}}>{{if this.assignText this.assignText "Assign Document"}}</button>
     {{/if}}
   </div>
 </UiModal>

@@ -1,19 +1,23 @@
 /* eslint-disable ember/no-side-effects */
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import { action, set } from '@ember/object';
 import { A } from '@ember/array';
 import { run } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import { Promise } from 'rsvp';
 import $ from 'jquery';
-// import ajaxStatus from 'granite/mixins/ajax-status';
-// import pagination from 'granite/mixins/controller-abstractions/pagination';
-// import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 export default class InputDocumentSelectionModalComponent extends Component {
   @service ajax
   @service store
   @service data
+  @tracked results
+  @tracked tags
+  @tracked page
+  @tracked fileName
+  @tracked description
+
   classNames =        [ 'document__selector' ]
   limit =             10
   page =              1
@@ -22,6 +26,27 @@ export default class InputDocumentSelectionModalComponent extends Component {
   selectedDocuments = A()
   show =              false
   enableNotify =      false
+
+  constructor () {
+    super(...arguments);
+    let selected = this.selected,
+        selection = A();
+
+    if (selected && !this.singleDoc) {
+      selection.addObjects(selected);
+    }
+
+    this.selectedDocuments = selection;
+
+    this.getTags()
+    .then(tags => {
+      if (!this.isDestroyed && !this.isDestroying) {
+        this.tags = tags;
+      }
+
+      this.getModel();
+    });
+  }
 
   get sansHashModalId () {
     return `modal__document-selection-${this.elementId}`;
@@ -39,30 +64,8 @@ export default class InputDocumentSelectionModalComponent extends Component {
     return `#${this.sansHashDropzoneId}`;
   }
 
-  async didReceiveAttrs () {
-    super.model(...arguments);
-    let selected = this.selected,
-        selection = A();
-
-    if (selected && !this.singleDoc) {
-      selection.addObjects(selected);
-    }
-
-    this.selectedDocuments = selection;
-
-    let tags = await this.ajax.request('/api/v1/files', {
-      data: {
-        _distinct: true,
-        select:    'tags'
-      }
-    });
-
-    if (!this.isDestroyed && !this.isDestroying) {
-      this.tags = tags;
-    }
-  }
-
   /* eslint-disable-next-line */
+  @action
   searchTermChanged () {
     if (this._searchDebounce) {
       run.cancel(this._searchDebounce);
@@ -70,25 +73,13 @@ export default class InputDocumentSelectionModalComponent extends Component {
 
     this._searchDebounce = run.later(() => {
       this._searchText = this.searchText;
+      this.getModel();
       this._searchDebounce = null;
     }, this.debounceSearches);
-    // this.set('_searchDebounce', run.later(() => {
-    //   this.set('_searchText', this.get('searchText'));
-    //   this.set('_searchDebounce', null);
-    // }, this.get('debounceSearches')));
   }
-  // searchTermChanged: observer('searchText', function () {
-  //   if (this.get('_searchDebounce')) {
-  //     run.cancel(this.get('_searchDebounce'));
-  //   }
-  //
-  //   this.set('_searchDebounce', run.later(() => {
-  //     this.set('_searchText', this.get('searchText'));
-  //     this.set('_searchDebounce', null);
-  //   }, this.get('debounceSearches')));
-  // }),
 
-  get model () {
+  @action
+  async getModel () {
     let page = this.page - 1 || 0,
         limit = this.limit,
         search = this._searchText,
@@ -109,7 +100,7 @@ export default class InputDocumentSelectionModalComponent extends Component {
     this.previousSearch = search;
 
     if (tag !== previousTag || search !== previousSearch) {
-      this.page = 1;
+      set(this, 'page', 1);
       page = 0;
     }
 
@@ -126,15 +117,17 @@ export default class InputDocumentSelectionModalComponent extends Component {
       query.$or = [{ title }, { description }];
     }
 
-    return new Promise(resolve => {
-      this.store.query('file', query)
-      .then(results => {
-        this.results = results;
-        this.metadata = results.meta;
-        resolve(results);
-        this.refreshModal();
-      });
-    });
+    let { success, error } = this.data.createStatus('working', false);
+
+    try {
+      let results = await this.store.query('file', query);
+      this.results = results;
+      this.metadata = results.meta;
+      success();
+      this.refreshModal();
+    } catch (e) {
+      error(e);
+    }
   }
 
   refreshModal () {
@@ -146,6 +139,16 @@ export default class InputDocumentSelectionModalComponent extends Component {
   didRender () {
     super.model(...arguments);
     this.refreshModal();
+  }
+
+  @action
+  async getTags () {
+    return await this.ajax.request('/api/v1/files', {
+      data: {
+        _distinct: true,
+        select:    'tags'
+      }
+    });
   }
 
   @action
@@ -172,10 +175,10 @@ export default class InputDocumentSelectionModalComponent extends Component {
   assign () {
     $(this.modalId).modal('hide');
     if (this.singleDoc) {
-      this.onSelected(this.selectedDocument);
+      this.args.onSelected(this.selectedDocument);
       return;
     }
-    this.onSelected(this.selectedDocuments);
+    this.args.onSelected(this.selectedDocuments);
   }
 
   @action
@@ -193,7 +196,7 @@ export default class InputDocumentSelectionModalComponent extends Component {
   @action
   addedFile (file) {
     if (this.fileIsAdded) {
-      this.send('removeFile', this.fileIsAdded);
+      this.removeFile(this.fileIsAdded);
     }
 
     this.fileIsAdded = file;
@@ -210,7 +213,7 @@ export default class InputDocumentSelectionModalComponent extends Component {
     delete res.file;
     this.store.pushPayload(res);
     this.resolveUpload(this.store.peekRecord('file', res.files[0].id));
-    this.send('removeFile', file);
+    this.removeFile(file);
   }
 
   @action
@@ -221,14 +224,14 @@ export default class InputDocumentSelectionModalComponent extends Component {
 
   @action
   async uploadFile () {
-    // this.ajaxStart();
     let { success, error } = this.data.createStatus();
 
-    let autoTag = this.autoTag,
-        //LINE BELOW THIS DOESN'T WORK IN OCTANE
-        promise = new Promise(resolve => this.set('resolveUpload', resolve));
+    let autoTag = this.args.autoTag,
+        promise = new Promise(resolve => {
+          this.resolveUpload = resolve;
+        });
 
-    this.send('processQueue');//CALL THIS.PROCESSQUEUE??
+    this.processQueue();
 
     let file = await promise,
         properties = [ 'title', 'description', 'tags' ];
@@ -239,9 +242,9 @@ export default class InputDocumentSelectionModalComponent extends Component {
 
     properties.forEach(prop => {
       if (prop === 'title') {
-        file.prop = this.fileName;
+        file[prop] = this.fileName;
       } else {
-        file.prop = this.prop;
+        file[prop] = this[prop];
       }
     });
 
@@ -259,7 +262,9 @@ export default class InputDocumentSelectionModalComponent extends Component {
     }
 
     success('Succesfully uploaded document.');
-    this.send('addDocument', file);
+    this.fileName = null;
+    this.description = null;
+    this.addDocument(file);
     this.showDocumentUpload = false;
   }
 }

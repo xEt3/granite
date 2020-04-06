@@ -35,11 +35,11 @@
   </h3>
   <div class="ui divided list">
     {{#each this.assignments as |assignment|}}
-      {{!-- <ListItem::DocumentAssignment
+      <ListItem::DocumentAssignment
         @model={{assignment}}
         class="item"
         @onRemove={{this.removeAssignment}}
-        @onChange={{this.saveAssignmentChanges}}/> --}}
+        @onChange={{this.saveAssignmentChanges}}/>
     {{else}}
       <h3 class="center aligned light text">Nothing assigned, yet.</h3>
     {{/each}}
@@ -47,7 +47,7 @@
 
   <div class="ui divider"></div>
 
-  {{!-- {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.data.statuses.working.isLoading}}
+  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.working.isLoading}}>
     Next
-  {{/form/action-button}} --}}
+  </Form::ActionButton>
 </form>
