@@ -1,18 +1,16 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
-import refreshable from 'granite/mixins/refreshable';
+import Route from 'granite/core/route';
 
-export default Route.extend(refreshable, {
-  titleToken: 'Assets',
+export default class AccountEmployeeOffboardAssetsRoute extends Route {
+  titleToken = 'Assets'
 
-  model () {
+  async model () {
     let employee = this.modelFor('account.employee.offboard');
 
-    return RSVP.hash({
+    return {
       employee,
-      assetItems: this.store.query('asset-item', { 'assignments.employee': employee.get('id') }).then(assets => assets.toArray())
-    });
-  },
+      assetItems: await this.store.query('asset-item', { 'assignments.employee': employee.id }).then(assets => assets.toArray())
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -20,4 +18,4 @@ export default Route.extend(refreshable, {
       employee: model.employee
     });
   }
-});
+}

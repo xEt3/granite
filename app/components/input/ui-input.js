@@ -1,6 +1,5 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  classNames: [ 'field' ],
-  type:       'text'
-});
+export default class InputUiInputComponent extends Component {
+  type = 'text'
+}

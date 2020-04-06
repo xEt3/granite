@@ -2,7 +2,7 @@
   Documents
 </h2>
 
-<form class="ui form" {{action "saveAndContinue" on="submit"}}>
+<form class="ui form" {{on "submit" (prevent-default (route-action "saveAndContinue"))}}>
   {{#if this.offboardingDocumentsFiltered}}
     <h3 class="ui header">
       Offboarding Documents
@@ -13,10 +13,10 @@
 
     <div class="ui divided list">
       {{#each this.offboardingDocumentsFiltered as |docSug|}}
-        {{list-item/document-suggestion
-          docSug
+        <ListItem::DocumentSuggestion
+          @model={{docSug}}
           class="item"
-          addAssignment=(action "addAssignment")}}
+          @addAssignment={{this.addAssignment}}/>
       {{/each}}
     </div>
   {{/if}}
@@ -24,23 +24,22 @@
   <h3>
     Assignments
     <span class="small text">
-      {{#input/document-selection-modal
-        title="Add a file"
-        selection=this.docModalSelection
-        autoTag="Offboarding"
-        onSelected=(action "addAssignment")
-        as |execute|}}
-        <a href="#" {{action execute}}>Assign another file...</a>
-      {{/input/document-selection-modal}}
+      <Input::DocumentSelectionModal
+        @title="Add a file"
+        @selection={{this.docModalSelection}}
+        @autoTag="Offboarding"
+        @onSelected={{this.addAssignment}} as |execute|>
+        <a href="#" {{on "click" (prevent-default execute)}}>Assign another file...</a>
+      </Input::DocumentSelectionModal>
     </span>
   </h3>
   <div class="ui divided list">
     {{#each this.assignments as |assignment|}}
-      {{list-item/document-assignment
-        assignment
+      {{!-- <ListItem::DocumentAssignment
+        @model={{assignment}}
         class="item"
-        onRemove=(action "removeAssignment")
-        onChange=(action "saveAssignmentChanges")}}
+        @onRemove={{this.removeAssignment}}
+        @onChange={{this.saveAssignmentChanges}}/> --}}
     {{else}}
       <h3 class="center aligned light text">Nothing assigned, yet.</h3>
     {{/each}}
@@ -48,7 +47,7 @@
 
   <div class="ui divider"></div>
 
-  {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}
+  {{!-- {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.data.statuses.working.isLoading}}
     Next
-  {{/form/action-button}}
+  {{/form/action-button}} --}}
 </form>

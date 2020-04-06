@@ -1,11 +1,15 @@
-{{yield (action "selectDocuments")}}
+{{yield this.selectDocuments}}
 
-{{#ui-modal name="modal__document-selection" id=this.sansHashModalId class="ui long modal"}}
+{{!-- {{#ui-modal name="modal__document-selection" id=this.sansHashModalId class="ui long modal"}} --}}
+<UiModal
+  @name="modal__document-selection"
+  @id={{this.sansHashModalId}}
+  @class="ui long modal">
   <h1 class="ui header">{{if this.title this.title "Select Documents"}}</h1>
 
   <div class="content ui form">
     <p class="ui center aligned text">
-      <a href="#" class={{if this.showDocumentUpload "text-danger"}} {{action (toggle "showDocumentUpload" this)}}>
+      <a href="#" class={{if this.showDocumentUpload "text-danger"}} {{on "click" (prevent-default (toggle "showDocumentUpload" this))}}>
         {{#if this.showDocumentUpload}}
           <i class="close icon"></i> Close document upload
         {{else}}
@@ -15,37 +19,37 @@
     </p>
 
     {{#if this.showDocumentUpload}}
-      {{drop-zone
-        id=this.sansHashDropzoneId
-        class="input__dropzone"
-        url="/api/v1/file"
-        uploadMultiple=false
-        maxFiles=1
-        autoProcessQueue=false
-        dictDefaultMessage="Drop or Click to Select a File"
-        thumbnailWidth="175"
-        headers=(hash X-API-Token=this.ajax.auth.token)
-        addedfile=(action "addedFile")
-        success=(action "uploadedFile")
-        capture="camera"}}
+      <DropZone
+        @id={{this.sansHashDropzoneId}}
+        @class="input__dropzone"
+        @url="/api/v1/file"
+        @uploadMultiple={{false}}
+        @maxFiles={{1}}
+        @autoProcessQueue={{false}}
+        @dictDefaultMessage="Drop or Click to Select a File"
+        @thumbnailWidth="175"
+        @headers={{hash X-API-Token=this.ajax.auth.token}}
+        @addedfile={{this.addedFile}}
+        @success={{this.uploadedFile}}
+        @capture="camera"/>
       <div class="ui divider"></div>
-      {{input/ui-input type="text" inputId="file-title" placeholder="File Title" value=this.fileName}}
+      <Input::UiInput @type="text" @inputId="file-title" @placeholder="File Title" @value={{this.fileName}}/>
 
       {{#if this.showDescription}}
         <div class="field animated fadeInUp">
           <label for="file-description">Description</label>
-          {{textarea id="file-description" rows="3" placeholder="Description" value=this.description}}
+          <Textarea @id="file-description" @rows="3" @placeholder="Description" @value={{this.description}}/>
         </div>
       {{/if}}
 
       <div class="field center aligned text">
-        <a href="#" {{action (toggle "showDescription" this)}}>
+        <a href="#" {{on "click" (prevent-default (toggle "showDescription" this))}}>
           <i class="angle {{if this.showDescription "up" "down"}} icon"></i>{{if this.showDescription "Hide" "Show"}} Description
         </a>
       </div>
 
-      <form {{action "uploadFile" on="submit"}}>
-        {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working disabled=this.disableSubmit}}Save document{{/form/action-button}}
+      <form {{on "submit" (prevent-default this.uploadFile)}}>
+        <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.working.isLoading}} disabled={{this.disableSubmit}}>Save document</Form::ActionButton>
       </form>
       <div class="ui divider"></div>
     {{/if}}
@@ -54,7 +58,7 @@
       <div class="ui field column">
         <label>Search by text</label>
         <div class="ui icon input {{if this._searchDebounce "loading"}}">
-          {{input type="search" placeholder="Search documents" value=this.searchText}}
+          <Input @type="search" @placeholder="Search documents" @key-down={{this.searchTermChanged}} @value={{this.searchText}}/>
           <i class="search icon"></i>
         </div>
       </div>
@@ -91,7 +95,11 @@
       </div>
     </div>
     <div class="clearfix">
-      {{elements/x-pagination page=(readonly this.page) pages=(readonly this.pages) onchange=(action (mut this.page))}}
+      <Elements::XPagination
+        @page={{this.page}}
+        @model={{this.results}}
+        @limit={{this.limit}}
+        @onChange={{set this.page _}} />
     </div>
     {{#if this.selectedDocuments}}
       <div class="ui divider"></div>
@@ -117,7 +125,7 @@
       <button class="ui huge fluid positive button" {{action "assign"}}>{{if this.assignText this.assignText "Assign Document"}}</button>
     {{/if}}
   </div>
-{{/ui-modal}}
+</UiModal>
 
 {{!-- Usage:  pass the component these four optional things:
  title(the title of the modal),

@@ -1,4 +1,4 @@
-<form class="ui form" {{action "saveAndContinue" on="submit"}}>
+<form class="ui form" {{on "submit" (prevent-default (route-action "saveAndContinue"))}}>
   <h2 class="ui horizontal divider header">Company Assets</h2>
 
   <div class="ui relaxed divided list">
@@ -14,10 +14,10 @@
           {{item.identifier}}
           <span class="right floated">
             <a href="#" class="text-green" {{action "unassignAsset" item}}>
-              {{ember-tooltip
-                side="left"
-                popperContainer="body"
-                text="Mark as collected & unassign asset from employee"}}
+              <EmberTooltip
+                @side="left"
+                @popperContainer="body"
+                @text="Mark as collected & unassign asset from employee"/>
               <i class="check icon"></i>Mark as Collected
             </a>
           </span>
@@ -32,5 +32,5 @@
   </div>
 
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Next{{/form/action-button}}
+  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.wizard.isLoading}}>Next</Form::ActionButton>
 </form>
