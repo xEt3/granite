@@ -35,12 +35,14 @@
         <i class="trash icon"></i>
       </a>
     {{/confirm-modal}}
-
+  {{log this.assignment}}
     {{#if (or (not this.assignment.visibleToEmployee) this.assignment.cannedType)}}
-      {{#modals/upload-document
-        systemUse=true
-        uploadComplete=(action "uploadFollowup") as |openUploadModal|
-      }}
+      {{log 'in here?'}}
+      <Modals::UploadDocument
+        @systemUse={{true}}
+        @uploadComplete={{action "uploadFollowup"}}
+        as |openUploadModal|
+      >
         <a href="#" class="right floated" {{action openUploadModal}}>
           {{ember-tooltip
             side="left"
@@ -48,7 +50,7 @@
             text="Upload a followup document"}}
           <i class="upload icon"></i>
         </a>
-      {{/modals/upload-document}}
+      </Modals::UploadDocument>
     {{/if}}
   </div>
 

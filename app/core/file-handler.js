@@ -1,6 +1,6 @@
-import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { run } from '@ember/runloop';
 import { Promise } from 'rsvp';
 
 export default class FileHandler {
@@ -9,6 +9,8 @@ export default class FileHandler {
       ...this.defaults,
       ...opts
     };
+
+    this.store = opts.store;
   }
 
   defaults = {
@@ -40,8 +42,8 @@ export default class FileHandler {
   }
 
   __ajaxSuccess () {
-    if (this.get('_resolveProcess')) {
-      this.get('_resolveProcess')(this.get('__fileModel'));
+    if (this._resolveProcess) {
+      this._resolveProcess(this.__fileModel);
     }
 
     if (this.ajaxSuccess) {
@@ -50,8 +52,8 @@ export default class FileHandler {
   }
 
   __ajaxError () {
-    if (this.get('_rejectProcess')) {
-      this.get('_rejectProcess')(...arguments);
+    if (this._rejectProcess) {
+      this._rejectProcess(...arguments);
     }
 
     if (this.ajaxError) {
@@ -60,7 +62,7 @@ export default class FileHandler {
   }
 
   __doPreflight () {
-    const fileData = this.get('fileData');
+    const fileData = this.options.fileData;
 
     return this.store.createRecord('file', fileData)
     .save()
@@ -75,7 +77,7 @@ export default class FileHandler {
   }
 
   processQueue () {
-    const DZ = Dropzone.forElement(`#${this.get('dropzoneId')}`),
+    const DZ = Dropzone.forElement(`#${this.options.dropzoneId}`),
           calculatedUrl = this.fileEndpoint;
 
     DZ.options.url = calculatedUrl;
@@ -108,30 +110,28 @@ export default class FileHandler {
 
   @action
   addedFile (file) {
-    this.setProperties({
-      __dropzone:  this,
-      __file:      file,
-      fileIsAdded: true
-    });
+    this.__dropzone = this;
+    this.__file = file;
+    this.fileIsAdded = true;
   }
 
   @action
   uploadedFile (dzfile, response) {
-    this.get('__fileModel').setProperties(response.file);
-    Dropzone.forElement(`#${this.get('dropzoneId')}`).removeAllFiles(dzfile);
+    this.__fileModel.setProperties(response.file);
+    Dropzone.forElement(`#${this.options.dropzoneId}`).removeAllFiles(dzfile);
 
     this.__ajaxSuccess(null, true);
 
-    if (this.uploadComplete) {
+    if (this.options.uploadComplete) {
       let fileId = response.file._id;
       this.store.pushPayload('file', { file: [ response.file ] });
-      this.uploadComplete(this.store.peekRecord('file', fileId));
+      this.options.uploadComplete(this.store.peekRecord('file', fileId));
     }
   }
 
   @action
   removeFile (file) {
-    Dropzone.forElement(`#${this.get('dropzoneId')}`).removeAllFiles(file);
-    this.set('fileIsAdded', false);
+    Dropzone.forElement(`#${this.options.dropzoneId}`).removeAllFiles(file);
+    this.fileIsAdded = false;
   }
 }

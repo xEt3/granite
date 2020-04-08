@@ -25,15 +25,17 @@ export default class UploadDocumentModalComponent extends Component {
 
   constructor () {
     super(...arguments);
-    this.files = new FileHandler({ dropzoneId: this.dropzoneId });
+    this.elementId = Math.round(Math.random() * Math.pow(10, 10));
+    this.files = new FileHandler({
+      store:          this.store,
+      dropzoneId:     this.dropzoneId,
+      fileData:       this.fileData,
+      uploadComplete: this.uploadComplete
+    });
   }
 
   get fileData () {
     return { systemUse: this.args.systemUse };
-  }
-
-  get elementId () {
-    return Math.round(Math.random() * Math.pow(10, 10));
   }
 
   get modalId () {
@@ -45,8 +47,13 @@ export default class UploadDocumentModalComponent extends Component {
   }
 
   @action
+  uploadComplete (arg) {
+    this.args.uploadComplete(arg);
+  }
+
+  @action
   openModal () {
-    $(`#${this.get('modalId')}`).modal({
+    $(`#${this.modalId}`).modal({
       detachable: true,
       closable:   false
     }).modal('show');
@@ -54,7 +61,7 @@ export default class UploadDocumentModalComponent extends Component {
 
   @action
   closeModal () {
-    this.send('removeFile');
-    $(`#${this.get('modalId')}`).modal('hide');
+    this.files.removeFile();
+    $(`#${this.modalId}`).modal('hide');
   }
 }
