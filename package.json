@@ -47,6 +47,7 @@
     "@babel/traverse": "^7.8.3",
     "@babel/types": "^7.8.3",
     "@ember/optional-features": "^1.0.0",
+    "@ember/render-modifiers": "^1.0.2",
     "@glimmer/component": "^1.0.0",
     "@glimmer/tracking": "^1.0.0",
     "babel-eslint": "^10.0.3",

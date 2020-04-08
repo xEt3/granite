@@ -1,3 +1,5 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({ titleToken: 'Onboard' });
+export default class AccountEmployeeOnboardRoute extends Route {
+  titleToken = 'Onboard'
+}

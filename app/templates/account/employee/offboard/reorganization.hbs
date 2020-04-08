@@ -23,7 +23,6 @@
         </UiDropdown>
       </div>
 
-      {{!-- DIG INTO THIS COMPONENT NEXT --}}
       <Visualizations::ReorganizationTree
         @baseNode={{this.baseNode}}
         @originalNode={{this.originalNode}}/>
@@ -35,6 +34,6 @@
     {{/if}}
 
     <div class="ui divider"></div>
-    <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.working.isLoading}}>Next</Form::ActionButton>
+    <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.wizard.isLoading}}>Next</Form::ActionButton>
   </form>
 </ConfirmModal>

@@ -1,18 +1,23 @@
-<form class="ui form" {{action "saveAndContinue" on="submit"}}>
+<form class="ui form" {{on "submit" (prevent-default (route-action "saveAndContinue"))}}>
   <h2 class="ui horizontal divider header">Position Information</h2>
   <div class="ui equal width basic form segment">
     <div class="two fields">
       <div class="field">
         <label for="job-title">Job Title</label>
-        {{validated-input type="text" model=this.model valuePath="jobTitle" placeholder="Job Title" id="job-title"}}
+        <ValidatedInput
+          @type="text"
+          @model={{this.model}}
+          @valuePath="jobTitle"
+          @placeholder="Job Title"
+          id="job-title"/>
       </div>
-      {{ui-calendar
-        class="field"
-        type="date"
-        startMode="year"
-        label="Hire Date"
-        dateValue=this.model.hireDate
-        onChange=(action (mut this.model.hireDate))}}
+      <UiCalendar
+        @class="field"
+        @type="date"
+        @startMode="year"
+        @label="Hire Date"
+        @dateValue={{this.model.hireDate}}
+        @onChange={{set this.model.hireDate _}}/>
     </div>
   </div>
   <div class="ui equal width basic form segment">
@@ -20,6 +25,7 @@
       <div class="field">
         <label for="exemption-status">Exemption Status</label>
         Non-exempt
+        {{!-- START HERE --}}
         {{ui-checkbox class="toggle" label="Exempt" checked=this.model.exempt onChange=(action (mut this.model.exempt))}}
       </div>
       <div class="field">
@@ -134,5 +140,5 @@
   </div>
 
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Next{{/form/action-button}}
+  {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.data.statuses.wizard.isLoading}}Next{{/form/action-button}}
 </form>

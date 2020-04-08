@@ -1,17 +1,17 @@
-<div class="field {{this.fieldClass}}">
+<div class="validated-input field {{this.fieldClass}} {{if this.showErrorClass 'has-error'}} {{if this.isValid 'has-success'}}" ...attributes>
   {{#if hasBlock}}
     {{yield}}
   {{else}}
-    {{input
-      type=this.type
-      tabindex=this.tabindex
-      value=this.value
-      placeholder=this.placeholder
-      name=this.valuePath
-      class=this.inputClass
-      min=this.inputAttrs.min
-      max=this.inputAttrs.max
-      step=this.inputAttrs.step}}
+    <Input {{on "focusout" this.focusOut}}
+      @type={{or @type "text"}}
+      @tabindex={{this.tabindex}}
+      @value={{this.value}}
+      @placeholder={{or @placeholder ''}}
+      @name={{or @valuePath ''}}
+      @class={{@inputClass}}
+      @min={{@inputAttrs.min}}
+      @max={{@inputAttrs.max}}
+      @step={{@inputAttrs.step}}/>
   {{/if}}
 
   {{#if this.isValid}}
@@ -25,8 +25,8 @@
           {{this.showFieldError}}
         {{else}}
           {{v-get
-            this.model
-            this.valuePath
+            @model
+            @valuePath
             (if this.showWarningMessage "warningMessage" "message")}}
         {{/if}}
       </div>
