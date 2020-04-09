@@ -27,6 +27,10 @@ export default class ValidatedInputComponent extends Component {
   @and('shouldDisplayValidations', 'validation.isInvalid') showErrorMessage
   @and('shouldDisplayValidations', 'hasWarnings', 'isValid') showWarningMessage
 
+  get showFieldError () {
+    return this.args.fieldErrors ? this.args.fieldErrors[this.args.valuePath] : false;
+  }
+
   constructor () {
     super(...arguments);
     let valuePath = this.args.valuePath;
@@ -37,11 +41,6 @@ export default class ValidatedInputComponent extends Component {
       readOnly(`args.model.validations.attrs.${valuePath}`)
     );
     defineProperty(this, 'value', alias(`args.model.${valuePath}`));
-
-    //I DONT THINK FIELDERRORS IS A THING?
-    // defineProperty(this, 'showFieldError', computed(`fieldErrors.${valuePath}`, function () {
-    //   return this.get(`fieldErrors.${valuePath}`);
-    // }));
   }
 
   @action

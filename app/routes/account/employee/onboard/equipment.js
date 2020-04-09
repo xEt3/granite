@@ -1,37 +1,43 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import RSVP from 'rsvp';
-import refreshable from 'granite/mixins/refreshable';
 import Object from '@ember/object';
+import { action } from '@ember/object';
 import $ from 'jquery';
 
-export default Route.extend(refreshable, {
-  title: 'Equipment - Granite HR',
+export default class AccountEmployeeOnboardEquipmentRoute extends Route {
+  title = 'Equipment - Granite HR'
 
-  model () {
+  async model () {
     let employee = this.modelFor('account.employee.onboard');
 
-    return RSVP.hash({
+    let assets = await this.store.query('asset', {});
+
+    let assignableAssets = await RSVP.all(assets.map(async asset => {
+      let itemQuery = { asset: asset.id };
+
+      if (!asset.sharable) {
+        itemQuery['assignments.0'] = { $exists: false };
+      }
+
+      let stock = await this.store.query('asset-item', itemQuery);
+
+      return await Object.create({
+        asset,
+        stock
+      });
+    }));
+
+    let assignedAssets = (await this.store.query('asset-item', { 'assignments.employee': employee.id })).toArray();
+
+    let jobSuggestedAssets = await employee.get('jobDescription.assets') ? (await employee.get('jobDescription')).assets.toArray() : [];
+
+    return {
       employee,
-      assignableAssets: this.store.query('asset', {}).then(assets => {
-        return RSVP.map(assets.toArray(), asset => {
-          let itemQuery = { asset: asset.get('id') };
-
-          if (!asset.get('sharable')) {
-            itemQuery['assignments.0'] = { $exists: false };
-          }
-
-          return this.store.query('asset-item', itemQuery)
-          .then(stock => Object.create({
-            asset,
-            stock
-          }));
-        });
-      }),
-
-      assignedAssets:     this.store.query('asset-item', { 'assignments.employee': employee.get('id') }).then(assets => assets.toArray()),
-      jobSuggestedAssets: employee.get('jobDescription.assets') ? employee.get('jobDescription').then(job => job.assets.toArray()) : []
-    });
-  },
+      assignableAssets,
+      assignedAssets,
+      jobSuggestedAssets
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -40,11 +46,10 @@ export default Route.extend(refreshable, {
       assignedAssets:     model.assignedAssets,
       jobSuggestedAssets: model.jobSuggestedAssets
     });
-  },
-
-  actions: {
-    willTransition () {
-      $('#modal__new-asset').modal('hide');
-    }
   }
-});
+
+  @action
+  willTransition () {
+    $('#modal__new-asset').modal('hide');
+  }
+}
