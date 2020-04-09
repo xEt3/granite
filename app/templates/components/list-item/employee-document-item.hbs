@@ -35,9 +35,8 @@
         <i class="trash icon"></i>
       </a>
     {{/confirm-modal}}
-  {{log this.assignment}}
+
     {{#if (or (not this.assignment.visibleToEmployee) this.assignment.cannedType)}}
-      {{log 'in here?'}}
       <Modals::UploadDocument
         @systemUse={{true}}
         @uploadComplete={{action "uploadFollowup"}}

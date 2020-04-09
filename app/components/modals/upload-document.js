@@ -21,12 +21,14 @@ import $ from 'jquery';
 
 export default class UploadDocumentModalComponent extends Component {
   @service() auth
+  @service() data
   @service() store
 
   constructor () {
     super(...arguments);
     this.elementId = Math.round(Math.random() * Math.pow(10, 10));
     this.files = new FileHandler({
+      data:           this.data,
       store:          this.store,
       dropzoneId:     this.dropzoneId,
       fileData:       this.fileData,

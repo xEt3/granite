@@ -11,6 +11,11 @@ export default class FileHandler {
     };
 
     this.store = opts.store;
+    this.data = opts.data;
+
+    if (!this.store) {
+      throw new Error('"store" is a required option for the FileHandler class. It must be an instance of ember data store.');
+    }
   }
 
   defaults = {
@@ -26,7 +31,7 @@ export default class FileHandler {
   @tracked options
 
   // initialize
-  fileIsAdded = false
+  @tracked fileIsAdded = false
 
   get fileEndpoint () {
     const { fileBaseEndpoint } = this.options,
@@ -35,33 +40,32 @@ export default class FileHandler {
     return fileBaseEndpoint.replace(':id', preflightId);
   }
 
-  __ajaxStart () {
-    if (this.ajaxStart) {
-      this.ajaxStart(...arguments);
-    }
-  }
-
-  __ajaxSuccess () {
+  __success () {
     if (this._resolveProcess) {
       this._resolveProcess(this.__fileModel);
     }
 
-    if (this.ajaxSuccess) {
-      this.ajaxSuccess(...arguments);
+    if (this.status) {
+      this.status.success(...arguments);
     }
   }
 
-  __ajaxError () {
+  __error () {
     if (this._rejectProcess) {
       this._rejectProcess(...arguments);
     }
 
-    if (this.ajaxError) {
-      this.ajaxError(...arguments);
+    if (this.status) {
+      this.status.error(...arguments);
     }
   }
 
-  __doPreflight () {
+  /**
+   * doPreflight
+   * @private
+   * @returns {Promise} Resolves to the file created by preflight req
+   */
+  doPreflight () {
     const fileData = this.options.fileData;
 
     return this.store.createRecord('file', fileData)
@@ -76,6 +80,12 @@ export default class FileHandler {
     });
   }
 
+  /**
+   * processQueue
+   * @private
+   * @description Processes the current files in the dropzone
+   * @returns {Object} Dropzone#processQueue response
+   */
   processQueue () {
     const DZ = Dropzone.forElement(`#${this.options.dropzoneId}`),
           calculatedUrl = this.fileEndpoint;
@@ -85,9 +95,18 @@ export default class FileHandler {
     return DZ.processQueue();
   }
 
+  /**
+   * Upload action
+   * @action
+   * @public
+   * @description Processes the queue, sets promise properties to "watch"
+   * @returns {Promise} Processing promise
+   */
   @action
   upload () {
-    this.__ajaxStart();
+    if (this.data) {
+      this.status = this.data.createStatus('fileHandling');
+    }
 
     this._processingPromise = new Promise((resolve, reject) => {
       this._resolveProcess = resolve;
@@ -95,11 +114,11 @@ export default class FileHandler {
 
       // do a preflight request
       if (this.options.filePreflight) {
-        return this.__doPreflight()
+        return this.doPreflight()
         .then(() => run.next(() => {
           this.processQueue();
         }))
-        .catch(this.__ajaxError.bind(this));
+        .catch(this.status.error);
       }
 
       return this.processQueue();
@@ -120,7 +139,7 @@ export default class FileHandler {
     this.__fileModel.setProperties(response.file);
     Dropzone.forElement(`#${this.options.dropzoneId}`).removeAllFiles(dzfile);
 
-    this.__ajaxSuccess(null, true);
+    this.__success(null, true);
 
     if (this.options.uploadComplete) {
       let fileId = response.file._id;
