@@ -1,14 +1,15 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+// import { computed } from '@ember/object';
 
-export default Component.extend({
-  classNames: [ 'field' ],
+export default class InputCustomFieldComponent extends Component {
+  elementId = Math.round(Math.random() * Math.pow(10, 10));
+  value = this.args.object[this.args.attribute]
 
-  inputId: computed('elementId', 'attribute', function () {
-    return this.get('elementId') + '-' + this.get('attribute');
-  }),
+  get inputId () {
+    return this.elementId + '-' + this.args.attribute;
+  }
 
-  placeholder: computed('attribute', function () {
-    return this.get('attribute') + ' value';
-  })
-});
+  get placeholder () {
+    return this.args.attribute + ' value';
+  }
+}

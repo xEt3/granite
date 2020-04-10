@@ -1,53 +1,54 @@
-import { computed } from '@ember/object';
+import Modal from '.';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { htmlSafe } from '@ember/string';
-import Modal from '.';
 import $ from 'jquery';
 
-export default Modal.extend({
-  store: service(),
-  icons: 'mobile tablet desktop laptop car lab configure asterisk cube sound photo'.w(),
+export default class ModalsAddAssetCategoryModal extends Modal {
+  @service store
+  @tracked newAsset = {};
 
-  modalId: computed('elementId', function () {
-    return this.get('elementId') + '-modal';
-  }),
+  elementId = this.elementId = Math.round(Math.random() * Math.pow(10, 10));
+  icons =     'mobile tablet desktop laptop car lab configure asterisk cube sound photo'.w()
 
-  sharableLabel: computed('newAsset.name', function () {
-    return this.get('newAsset.name') ? htmlSafe(`Can ${this.get('newAsset.name')} be shared by employees`) : htmlSafe('Can these assets be shared by employees');
-  }),
+  get modalId () {
+    return this.elementId + '-modal';
+  }
 
-  createConfirm () {
-    const store = this.get('store');
+  get sharableLabel () {
+    return this.newAsset && this.newAsset.name ? htmlSafe(`Can ${this.newAsset.name} be shared by employees`) : htmlSafe('Can these assets be shared by employees');
+  }
 
-    this.setProperties({ newAsset: store.createRecord('asset', {}) });
+  @action
+  async createConfirm () {
+    const store = this.store;
+
+    this.newAsset = await store.createRecord('asset', {});
     this.dispatchSemanticModal();
 
-    return new Promise((resolve, reject) => this.setProperties({
-      resolve,
-      reject
-    }));
-  },
-
-  startAddingAsset: computed('modalId', function () {
-    return this.createConfirm.bind(this);
-  }),
-
-  closeModal () {
-    $('#' + this.get('modalId')).modal('hide');
-  },
-
-  actions: {
-    save () {
-      this.get('newAsset').save().then(asset => {
-        this.setProperties({ newAsset: null });
-        this.closeModal();
-        this.get('newAssetCategory')(asset);
-      });
-    },
-
-    cancel () {
-      this.get('newAsset').destroyRecord();
-      this.closeModal();
-    }
+    return new Promise((resolve, reject) => {
+      this.resolve = resolve;
+      this.reject = reject;
+    });
   }
-});
+
+  @action
+  closeModal () {
+    $('#' + this.modalId).modal('hide');
+  }
+
+  @action
+  async save () {
+    let asset = await this.newAsset.save();
+    this.newAsset = {};
+    this.closeModal();
+    this.args.newAssetCategory(asset);
+  }
+
+  @action
+  cancel () {
+    this.newAsset.destroyRecord();
+    this.closeModal();
+  }
+}

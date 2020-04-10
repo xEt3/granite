@@ -1,52 +1,54 @@
-{{#if hasBlock}}
-  {{yield this.startAddingAsset}}
-{{/if}}
+<div ...attributes>
+  {{#if hasBlock}}
+    {{yield this.createConfirm}}
+  {{/if}}
 
-{{#ui-modal name="addAsset" id=this.modalId}}
-  <div class="header">
-    Add Asset Category
-  </div>
-  <div class="scrolling content">
-    <form class="ui form" {{action "save" on="submit"}}>
-
-      <div class="field">
-        <label for="asset-name">Asset Name</label>
-        <div class="ui left select-addon input pay-rate-number">
-          {{#ui-dropdown class="inline scrolling" selected=this.newAsset.icon onChange=(action (mut this.newAsset.icon))}}
-            <div class="default text">Icon</div>
-            <i class="dropdown icon"></i>
-            <div class="menu">
-              {{#each this.icons as |icon|}}
-                <div class="item" data-value={{icon}}>
-                  <i class="{{icon}} icon"></i>
-                </div>
-              {{/each}}
-            </div>
-          {{/ui-dropdown}}
-
-          {{input type="text" value=this.newAsset.name id="asset-name" placeholder="Keycards"}}
-        </div>
-      </div>
-      <div class="field">
-        <label for="asset-description">Description</label>
-        {{input type="text" value=this.newAsset.description id="asset-description" placeholder="All the keycards for our employees"}}
-      </div>
-      <div class="field center aligned text">
-        {{ui-checkbox
-          class="toggle"
-          label=this.sharableLabel
-          checked=this.newAsset.sharable
-          onChange=(action (mut this.newAsset.sharable))}}
-      </div>
-    </form>
-  </div>
-  <div class="actions">
-    <button class="ui inverted red button" {{action "cancel"}}>
-      Cancel
-    </button>
-    <button class="ui green right labeled icon button" {{action "save"}}>
+  <UiModal @name="addAsset" @id={{this.modalId}}>
+    <div class="header">
       Add Asset Category
-      <i class="check icon"></i>
-    </button>
-  </div>
-{{/ui-modal}}
+    </div>
+    <div class="scrolling content">
+      <form class="ui form" {{on "submit" (prevent-default this.save)}}>
+
+        <div class="field">
+          <label for="asset-name">Asset Name</label>
+          <div class="ui left select-addon input pay-rate-number">
+            <UiDropdown @class="inline scrolling" @selected={{this.newAsset.icon}} @onChange={{set this.newAsset.icon _}}>
+              <div class="default text">Icon</div>
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                {{#each this.icons as |icon|}}
+                  <div class="item" data-value={{icon}}>
+                    <i class="{{icon}} icon"></i>
+                  </div>
+                {{/each}}
+              </div>
+            </UiDropdown>
+
+            <Input @type="text" @value={{this.newAsset.name}} @id="asset-name" @placeholder="Keycards"/>
+          </div>
+        </div>
+        <div class="field">
+          <label for="asset-description">Description</label>
+          <Input @type="text" @value={{this.newAsset.description}} @id="asset-description" @placeholder="All the keycards for our employees"/>
+        </div>
+        <div class="field center aligned text">
+          <UiCheckbox
+            @class="toggle"
+            @label={{this.sharableLabel}}
+            @checked={{this.newAsset.sharable}}
+            @onChange={{set this.newAsset.sharable _}}/>
+        </div>
+      </form>
+    </div>
+    <div class="actions">
+      <button class="ui inverted red button" {{on "click" this.cancel}}>
+        Cancel
+      </button>
+      <button class="ui green right labeled icon button" {{on "click" this.save}}>
+        Add Asset Category
+        <i class="check icon"></i>
+      </button>
+    </div>
+  </UiModal>
+</div>
