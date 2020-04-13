@@ -70,7 +70,7 @@
 
 {{#modals/static-content
   modalId=this.responsesModalId
-  onResponse=(action "modalResponse" "responses")
+  onResponse=(fn this.modalResponse "responses")
   title="Screening responses"
   hideActions=true
 }}
@@ -109,7 +109,7 @@
 
 {{#modals/static-content
   modalId=this.coverLetterModalId
-  onResponse=(action "modalResponse" "coverLetter")
+  onResponse=(fn this.modalResponse "coverLetter")
   title=this.coverLetterTitle
   hideActions=true
 }}

@@ -35,7 +35,6 @@ export default class UploadDocumentModalComponent extends Component {
   }
 
   get dropzoneId () {
-    console.log('dropzoneId', `input__dropzone--document-${this.elementId}`);
     return `input__dropzone--document-${this.elementId}`;
   }
 
