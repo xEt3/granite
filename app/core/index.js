@@ -1,5 +1,7 @@
 import Route from './route';
 import Controller from './controller';
+import elementId from './element-id';
+import FileHandler from './file-handler';
 import { action } from '@ember/object';
 
 function authenticated (constructor) {
@@ -36,8 +38,25 @@ function authenticated (constructor) {
   };
 }
 
+function fileHandling (constructor) {
+  return class FileHandlingClass extends constructor {
+    constructor () {
+      super(...arguments);
+      this.files = new FileHandler({
+        data:           this.data,
+        store:          this.store,
+        dropzoneId:     this.dropzoneId,
+        fileData:       this.fileData,
+        uploadComplete: this.uploadComplete
+      });
+    }
+  };
+}
+
 export {
   Route,
   Controller,
-  authenticated
+  authenticated,
+  fileHandling,
+  elementId
 };

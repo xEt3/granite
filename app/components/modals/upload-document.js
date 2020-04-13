@@ -14,27 +14,17 @@
 
 */
 import Component from '@glimmer/component';
-import FileHandler from 'granite/core/file-handler';
+import { elementId, fileHandling } from 'granite/core';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import $ from 'jquery';
 
+@fileHandling
+@elementId
 export default class UploadDocumentModalComponent extends Component {
-  @service() auth
-  @service() data
-  @service() store
-
-  constructor () {
-    super(...arguments);
-    this.elementId = Math.round(Math.random() * Math.pow(10, 10));
-    this.files = new FileHandler({
-      data:           this.data,
-      store:          this.store,
-      dropzoneId:     this.dropzoneId,
-      fileData:       this.fileData,
-      uploadComplete: this.uploadComplete
-    });
-  }
+  @service auth
+  @service data
+  @service store
 
   get fileData () {
     return { systemUse: this.args.systemUse };
@@ -45,6 +35,7 @@ export default class UploadDocumentModalComponent extends Component {
   }
 
   get dropzoneId () {
+    console.log('dropzoneId', `input__dropzone--document-${this.elementId}`);
     return `input__dropzone--document-${this.elementId}`;
   }
 
