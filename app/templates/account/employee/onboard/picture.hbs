@@ -2,22 +2,22 @@
   <i class="photo icon"></i>Upload {{this.model.firstName}}'s Picture
 </h2>
 
-<form class="ui form" {{action "saveAndContinue" on="submit"}}>
-  {{drop-zone
-    id="input__dropzone--employee-profile-image"
-    class="input__dropzone"
-    url=this.pictureEndpoint
-    uploadMultiple=false
-    acceptedFiles="image/*"
-    maxFiles=1
-    addRemoveLinks=true
-    thumbnailWidth="175"
-    dictDefaultMessage="Drop Files or Click to Add a Picture"
-    headers=(hash X-API-Token=this.auth.token)
-    success=(action "uploadedFile")
-    removedfile=(action "removeFile")
-    capture="camera"}}
+<form class="ui form" {{on "submit" (prevent-default (route-action "saveAndContinue"))}}>
+  <DropZone
+    @id="input__dropzone--employee-profile-image"
+    @class="input__dropzone"
+    @url={{this.pictureEndpoint}}
+    @uploadMultiple={{false}}
+    @maxFiles=1
+    @addRemoveLinks={{true}}
+    @acceptedFiles="image/*"
+    @thumbnailWidth="175"
+    @dictDefaultMessage="Drop Files or Click to Add a Picture"
+    @headers={{hash X-API-Token=this.auth.token}}
+    @success={{this.uploadedFile}}
+    @removedfile={{this.removeFile}}
+    @capture="camera"/>
 
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Next{{/form/action-button}}
+  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.wizard.isLoading}}>Next</Form::ActionButton>
 </form>

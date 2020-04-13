@@ -1,10 +1,9 @@
-import Component from '@ember/component';
-import { computed, defineProperty } from '@ember/object';
+import Component from '@glimmer/component';
+import { computed, defineProperty, action } from '@ember/object';
 
-const QuickFormInputComponent = Component.extend({
-  classNames:            [ 'field' ],
-  classNameBindings:     [ 'computedClassName', 'field.parentClass' ],
-  colorPickerComponents: {
+export default class InputQuickFormInputComponent extends Component {
+  // classNameBindings:     [ 'computedClassName', 'field.parentClass' ],
+  colorPickerComponents = {
     palette: true,
     preview: true,
     opacity: false,
@@ -18,27 +17,27 @@ const QuickFormInputComponent = Component.extend({
       clear: false,
       save:  false
     }
-  },
+  }
 
-  init () {
-    this._super(...arguments);
-    let path = `model.${this.get('field.path')}`;
+  constructor () {
+    super(...arguments);
+    let path = `model.${this.args.field.path}`;
     defineProperty(this, 'value', computed.alias(path));
-    this.set('initialValue', this.get(path));
-  },
+    this.initialValue = this[path];
+  }
 
-  computedClassName: computed('field.{label,class}', function () {
-    let label = this.get('field.label'),
-        classN = this.get('field.class');
+  get computedClassName () {
+    let label = this.args.field.label,
+        classN = this.args.field.class;
 
     return classN || (label || '').replace(/[^\s\w]/g, '').replace(/\s/g, '-').toLowerCase();
-  }),
+  }
 
-  baseInputClass: computed('field.{removeBaseClass,type}', function () {
-    let t = this.get('field.type'),
+  get baseInputClass () {
+    let t = this.args.field.type,
         ic;
 
-    if (this.get('field.removeBaseClass')) {
+    if (this.args.field.removeBaseClass) {
       return '';
     }
 
@@ -58,29 +57,33 @@ const QuickFormInputComponent = Component.extend({
     }
 
     return ic;
-  }),
+  }
 
-  inputClass: computed('field.inputClass', function () {
-    let fieldInputClass = this.get('field.inputClass'),
-        baseInputClass = this.get('baseInputClass');
+  get inputClass () {
+    let fieldInputClass = this.args.field.inputClass,
+        baseInputClass = this.baseInputClass;
 
     return fieldInputClass ? fieldInputClass + ' ' + baseInputClass : baseInputClass;
-  }),
+  }
 
-  rows: computed('field.rows', function () {
-    return this.get('field.rows') || '6';
-  }),
+  get rows () {
+    return this.args.field.rows || '6';
+  }
 
-  actions: {
-    handleOnChange (hsva) {
-      //used for color picker component if type=color
-      if (this.get('model')) {
-        this.set('model.color', hsva.toHEXA().toString());
-      }
+  @action
+  handleOnChange (hsva) {
+    //used for color picker component if type=color
+    if (this.args.model) {
+      this.args.model.color = hsva.toHEXA().toString();
     }
   }
-});
+}
 
-QuickFormInputComponent.reopenClass({ positionalParams: [ 'field', 'model', 'controller' ] });
-
-export default QuickFormInputComponent;
+/*
+  USAGE:
+  template
+  <Input::QuickFormInput
+    @field={{this.field}}
+    @model={{this.model}}
+    @controller={{this}}/>
+*/

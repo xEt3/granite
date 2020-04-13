@@ -12,21 +12,21 @@
       </thead>
       <tbody>
         {{#each-in this.model.customFields as |key value|}}
-          {{tables/custom-field key=key value=value onValueChange=(action "editValue") onDelete=(action "deleteCustomField")}}
+          <Tables::CustomField @key={{key}} @value={{value}} @onValueChange={{this.editValue}} @onDelete={{this.deleteCustomField}}/>
         {{/each-in}}
 
         {{#if this.adding}}
           <tr>
             <td class="ui minimally padded">
               {{#auto-focus}}
-                {{input type="text" value=this.pendingCustomFieldName placeholder="Allergies"}}
+                <Input @type="text" @value={{this.pendingCustomFieldName}} @placeholder="Allergies"/>
               {{/auto-focus}}
             </td>
-            <td class="ui minimally padded">{{input type="text" value=this.pendingCustomFieldValue placeholder="Peanuts, Gluten"}}</td>
+            <td class="ui minimally padded"><Input @type="text" @value={{this.pendingCustomFieldValue}} @placeholder="Peanuts, Gluten"/></td>
           </tr>
           <tr>
             <td class="center aligned text" colspan="2">
-              <a href="#" {{action "saveCustomField"}}><i class="save icon"></i> Save/New</a>
+              <a href="#" {{on "click" (prevent-default this.saveCustomField)}}><i class="save icon"></i> Save/New</a>
             </td>
           </tr>
         {{/if}}
@@ -40,13 +40,13 @@
   {{/liquid-if}}
 
   {{#liquid-unless this.adding class="ui header clearfix"}}
-    <button class="ui fluid button" {{action "beginAddingCustomField"}}>
+    <button class="ui fluid button" {{on "click" this.beginAddingCustomField}}>
       <i class="plus icon"></i>
         Add A Custom Field
     </button>
   {{/liquid-unless}}
 
-  <form {{action "saveAndContinue" on="submit"}}>
-    {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Finish Onboarding{{/form/action-button}}
+  <form {{on "submit" (prevent-default (route-action "saveAndContinue"))}}>
+    <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.wizard.isLoading}}>Finish Onboarding</Form::ActionButton>
   </form>
 </div>

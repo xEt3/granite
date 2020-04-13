@@ -2,51 +2,51 @@
   Documents
 </h2>
 
-<form class="ui form" {{action "saveAndContinue" on="submit"}}>
+<form class="ui form" {{on "submit" (prevent-default (route-action "saveAndContinue"))}}>
   <div class="ui two {{unless this.employee.hireDate "disabled"}} fields">
     {{#unless this.employee.hireDate}}
-      {{ember-tooltip
-        side="top"
-        popperContainer="body"
-        text="Use of automated I9/W4 collection requires a hire date set in the Job tab."}}
+      <EmberTooltip
+        @side="top"
+        @popperContainer="body"
+        @text="Use of automated I9/W4 collection requires a hire date set in the Job tab."/>
     {{/unless}}
     <div class="field">
       <label for="i9-collect">
         Automated I9 Section One Collection
         <i class="ui question circle icon">
-          {{#ember-tooltip
-            side="right"
-            popperContainer="body"
-          }}
+          <EmberTooltip
+            @side="right"
+            @popperContainer="body"
+          >
             Automated I9 collection sends the employee a link to fill out the I9 section one on the start of their work day on {{time this.employee.hireDate "M/D/YY"}}. After the employee fills it out, we will notify you.
-          {{/ember-tooltip}}
+          </EmberTooltip>
         </i>
       </label>
-      {{ui-checkbox
-        id="i9-collect"
-        class="toggle"
-        label=(if this.employee.autoI9Collection "Collect I9" "Do not collect I9")
-        checked=this.employee.autoI9Collection
-        onChange=(action (mut this.employee.autoI9Collection))}}
+      <UiCheckbox
+        @id="i9-collect"
+        @class="toggle"
+        @label={{if this.employee.autoI9Collection "Collect I9" "Do not collect I9"}}
+        @checked={{this.employee.autoI9Collection}}
+        @onChange={{set this.employee.autoI9Collection _}}/>
     </div>
     <div class="field">
       <label for="w4-collect">
         Automated W4 Collection
         <i class="ui question circle icon">
-          {{#ember-tooltip
-            side="right"
-            popperContainer="body"
-          }}
+          <EmberTooltip
+            @side="right"
+            @popperContainer="body"
+          >
             Automated W4 collection sends the employee a link to fill out the most current W4 form on the start of their work day on {{time this.employee.hireDate "M/D/YY"}}. After the employee fills it out, we will notify you.
-          {{/ember-tooltip}}
+          </EmberTooltip>
         </i>
       </label>
-      {{ui-checkbox
-        id="w4-collect"
-        class="toggle"
-        label=(if this.employee.autoW4Collection "Collect W4" "Do not collect W4")
-        checked=this.employee.autoW4Collection
-        onChange=(action (mut this.employee.autoW4Collection))}}
+      <UiCheckbox
+        @id="w4-collect"
+        @class="toggle"
+        @label={{if this.employee.autoW4Collection "Collect W4" "Do not collect W4"}}
+        @checked={{this.employee.autoW4Collection}}
+        @onChange={{set this.employee.autoW4Collection _}}/>
     </div>
   </div>
 
@@ -62,10 +62,10 @@
 
     <div class="ui divided list">
       {{#each this.suggestedDocumentsFiltered as |docSug|}}
-        {{list-item/document-suggestion
-          docSug
+        <ListItem::DocumentSuggestion
+          @model={{docSug}}
           class="item"
-          addAssignment=(action "addAssignment")}}
+          @addAssignment={{this.addAssignment}}/>
       {{/each}}
     </div>
   {{/if}}
@@ -80,10 +80,10 @@
 
     <div class="ui divided list">
       {{#each this.onboardingDocumentsFiltered as |docSug|}}
-        {{list-item/document-suggestion
-          docSug
+        <ListItem::DocumentSuggestion
+          @model={{docSug}}
           class="item"
-          addAssignment=(action "addAssignment")}}
+          @addAssignment={{this.addAssignment}}/>
       {{/each}}
     </div>
   {{/if}}
@@ -91,23 +91,23 @@
   <h3>
     Assignments
     <span class="small text">
-      {{#input/document-selection-modal
-        title="Add a file"
-        selection=this.docModalSelection
-        autoTag="Onboarding"
-        onSelected=(action "addAssignment")
-        as |execute|}}
-        <a href="#" {{action execute}}>Assign another file...</a>
-      {{/input/document-selection-modal}}
+      <Input::DocumentSelectionModal
+        @title="Add a file"
+        @selection={{this.docModalSelection}}
+        @autoTag="Onboarding"
+        @onSelected={{this.addAssignment}}
+        as |execute|>
+        <a href="#" {{on "click" (prevent-default execute)}}>Assign another file...</a>
+      </Input::DocumentSelectionModal>
     </span>
   </h3>
   <div class="ui divided list">
     {{#each this.assignments as |assignment|}}
-      {{list-item/document-assignment
-        assignment
+      <ListItem::DocumentAssignment
+        @model={{assignment}}
         class="item"
-        onRemove=(action "removeAssignment")
-        onChange=(action "saveAssignmentChanges")}}
+        @onRemove={{this.removeAssignment}}
+        @onChange={{this.saveAssignmentChanges}}/>
     {{else}}
       <h3 class="center aligned light text">Nothing assigned, yet.</h3>
     {{/each}}
@@ -115,7 +115,7 @@
 
   <div class="ui divider"></div>
 
-  {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}
+  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.wizard.isLoading}}>
     Next
-  {{/form/action-button}}
+  </Form::ActionButton>
 </form>

@@ -6,8 +6,10 @@ import { A } from '@ember/array';
 import { run } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import { Promise } from 'rsvp';
+import { elementId } from '@granite/core';
 import $ from 'jquery';
 
+@elementId
 export default class InputDocumentSelectionModalComponent extends Component {
   @service ajax
   @service store
@@ -25,7 +27,6 @@ export default class InputDocumentSelectionModalComponent extends Component {
   searchText =        ''
   selectedDocuments = A()
   show =              false
-  enableNotify =      false
 
   constructor () {
     super(...arguments);

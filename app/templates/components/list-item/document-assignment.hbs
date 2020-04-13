@@ -1,5 +1,5 @@
 <div ...attributes>
-  <strong>{{this.model.file.title}} ({{this.model.file.extension}})</strong>
+  <strong>{{@model.file.title}} ({{@model.file.extension}})</strong>
 
   <div class="ui mini form right floated">
     {{#if this.isPendingState}}
@@ -8,12 +8,12 @@
       <div class="small field">
         <UiCheckbox
           @class="small"
-          @checked={{this.model.visibleToEmployee}}
+          @checked={{@model.visibleToEmployee}}
           @onChange={{
             pipe
-              (set this.model.visibleToEmployee _)
+              (set @model.visibleToEmployee _)
               this.checkBoxDisplay
-              (if @onChange (fn @onChange this.model))
+              (if @onChange (fn @onChange @model))
           }}
         >
           <label>
@@ -21,16 +21,16 @@
           </label>
         </UiCheckbox>
       </div>
-      {{#if model.visibleToEmployee}}
+      {{#if @model.visibleToEmployee}}
         <div class="small field">
           <UiCheckbox
             @class="small"
-            @disabled={{not this.model.visibleToEmployee}}
-            @checked={{this.model.signatureRequired}}
+            @disabled={{not @model.visibleToEmployee}}
+            @checked={{@model.signatureRequired}}
             @onChange={{
               pipe
-                (set this.model.signatureRequired _)
-                (if @onChange (fn @onChange this.model))
+                (set @model.signatureRequired _)
+                (if @onChange (fn @onChange @model))
             }}
           >
             <label>
@@ -49,17 +49,17 @@
           <UiCalendar
             @class="field"
             @type="date"
-            @dateValue={{this.model.effectiveOn}}
+            @dateValue={{@model.effectiveOn}}
             @onChange={{
               pipe
-              (set this.model.effectiveOn _)
-              (if @onChange (fn @onChange this.model))
+              (set @model.effectiveOn _)
+              (if @onChange (fn @onChange @model))
             }}/>
         {{/if}}
       {{/if}}
     {{/if}}
   </div>
   <div class="small text">
-    <a href="#" class="text-danger" {{on "click" (prevent-default (fn @onRemove this.model))}}><i class="minus icon"></i>Remove Assignment</a>
+    <a href="#" class="text-danger" {{on "click" (prevent-default (fn @onRemove @model))}}><i class="minus icon"></i>Remove Assignment</a>
   </div>
 </div>

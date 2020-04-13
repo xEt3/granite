@@ -1,11 +1,12 @@
 <div class="ui form">
   <h2 class="ui horizontal divider header">Campaign Settings</h2>
-  {{quick-form
-    this.campaignSettingsForm
-    this.model
-    this
-    tagName="div"
-    class="content ui grid"}}
+  {{!-- HERE --}}
+  <QuickForm
+    @form={{this.campaignSettingsForm}}
+    @model={{this.model}}
+    @controller={{this}}
+    @tagName="div"
+    class="content ui grid"/>
 
   <div class="custom-pipeline-toggle">
     {{ui-checkbox
@@ -46,12 +47,12 @@
   {{/liquid-if}}
 
   <h2 class="ui horizontal divider header">Job Settings</h2>
-  {{quick-form
+  {{!-- {{quick-form
     this.jobSettingsForm
     this.model
     this
     tagName="div"
-    class="content ui grid"}}
+    class="content ui grid"}} --}}
 
   <div class="ui divider"></div>
   <form {{action (pipe (route-action "saveAndContinue") (action "saveCustomPipeline")) on="submit"}}>
@@ -65,11 +66,11 @@
       <i class="plus icon"></i>{{if this.editingStage "Edit" "Add"}} recruiting pipeline stage
     </div>
     <div class="content">
-      {{quick-form
+      {{!-- {{quick-form
         this.stageForm
         this.currentStage
         this
-        tagName="div"}}
+        tagName="div"}} --}}
     </div>
     <div class="actions">
       {{#unless this.editingStage}}

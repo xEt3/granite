@@ -1,30 +1,35 @@
-{{#each this.form as |field|}}
-  {{#if (not (and field.displayIf (not (get this.model field.displayIf))))}}
-    {{#if field.embeddedInput}}
-      {{#input/quick-form-input
-        field
-        this.model
-        this.controller
-        class=field.class
-      }}
-        {{input/quick-form-input
-          field.embeddedInput
-          this.model
-          this.controller
-          tagName=null
-          class=field.class}}
-      {{/input/quick-form-input}}
-    {{else}}
-      {{input/quick-form-input
-        field
-        this.model
-        this.controller
-        class=field.class}}
-    {{/if}}
-  {{/if}}
-{{/each}}
+{{#let (element (if @tagName @tagName "form")) as |Tag|}}
+  <Tag class="ui form" ...attributes>
+    {{#each @form as |field|}}
+      {{#if (not (and field.displayIf (not (get @model field.displayIf))))}}
+        {{#if field.embeddedInput}}
+          {{!-- {{#input/quick-form-input
+            field
+            @model
+            @controller
+            class=field.class
+          }}
+            {{input/quick-form-input
+              field.embeddedInput
+              @model
+              @controller
+              tagName=null
+              class=field.class}}
+          {{/input/quick-form-input}} --}}
+        {{else}}
+          {{!-- HERE --}}
+          <Input::QuickFormInput
+            @field={{field}}
+            @model={{@model}}
+            @controller={{@controller}}
+            class={{field.class}}/>
+        {{/if}}
+      {{/if}}
+    {{/each}}
 
-{{#if this.onsubmit}}
-  <div class="ui divider"></div>
-  {{#form/action-button type="submit" class=this._submitClass disabled=this.disabled loading=this.working}}{{yield}}{{/form/action-button}}
-{{/if}}
+    {{#if this.onsubmit}}
+      <div class="ui divider"></div>
+      {{#form/action-button type="submit" class=this._submitClass disabled=this.disabled loading=this.working}}{{yield}}{{/form/action-button}}
+    {{/if}}
+  </Tag>
+{{/let}}

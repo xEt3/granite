@@ -1,7 +1,4 @@
 <div class="field">
   <label for={{this.inputId}}>{{@attribute}}{{yield}}</label>
-  {{log "??" this.value}}
-  {{!-- {{input type="text" id=this.inputId value=(mut (get this.object this.attribute)) placeholder=this.placeholder}} --}}
-  {{!-- FIGURE THIS OUT --}}
-  <Input @type="text" @id={{this.inputId}} @value={{his.value}} @placeholder={{this.placeholder}}/>
+  <Input @type="text" @id={{this.inputId}} @value={{mut (get @object @attribute)}} @placeholder={{this.placeholder}}/>
 </div>

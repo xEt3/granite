@@ -1,20 +1,25 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 
-export default Controller.extend({
-  pictureExts:     [ 'jpg', 'jpeg', 'png', 'gif', 'tif' ],
-  pictureEndpoint: computed('model.id', function () {
-    return `/api/v1/employee/${this.get('model.id')}/picture`;
-  }),
+export default class AccountEmployeeOnboardPictureController extends Controller {
+  @service data
+  @service auth
 
-  actions: {
-    uploadedFile (file, res) {
-      this.get('model').set('picture', res.employee.picture);
-    },
+  pictureExts =     [ 'jpg', 'jpeg', 'png', 'gif', 'tif' ]
 
-    removeFile (file) {
-      // this.get('model').set('picture', undefined);
-      file.previewElement.remove();
-    }
+  get pictureEndpoint () {
+    return `/api/v1/employee/${this.model.id}/picture`;
   }
-});
+
+  @action
+  uploadedFile (file, res) {
+    this.model.picture = res.employee.picture;
+  }
+
+  @action
+  removeFile (file) {
+    // this.get('model').set('picture', undefined);
+    file.previewElement.remove();
+  }
+}

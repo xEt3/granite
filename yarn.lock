@@ -7367,6 +7367,13 @@ ember-drag-sort@^1.1.1:
     ember-cli-shims "^1.1.0"
     ember-macro-helpers "^0.17.0"
 
+ember-element-helper@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/ember-element-helper/-/ember-element-helper-0.2.0.tgz#eacdf4d8507d6708812623206e24ad37bad487e7"
+  integrity sha512-/WV0PNLyxDvLX/YETb/8KICFTr719OYqFWXqV5XUkh9YhhBGDU/mr1OtlQaWOlsx+sHm42HD2UAICecqex8ziw==
+  dependencies:
+    ember-cli-babel "^6.16.0"
+
 ember-element-resize-detector@~0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/ember-element-resize-detector/-/ember-element-resize-detector-0.4.0.tgz#e21affa62fc9df5c13f587a940611c05f725c1ef"

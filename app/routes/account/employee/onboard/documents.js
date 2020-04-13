@@ -1,27 +1,26 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import { hash } from 'rsvp';
 
-export default Route.extend({
-  ajax:       service(),
-  titleToken: 'Document Assignments',
+export default class AccountEmployeeOnboardDocumentsRoute extends Route {
+  @service ajax
+  titleToken = 'Document Assignments'
 
-  model () {
+  async model () {
     const employee = this.modelFor('account.employee.onboard');
 
-    return hash({
+    return {
       employee,
-      suggestedDocuments:  this.ajax.request(`/api/v1/employee/${employee.get('id')}/suggested-documents`),
-      onboardingDocuments: this.store.query('file', {
+      suggestedDocuments:  await this.ajax.request(`/api/v1/employee/${employee.id}/suggested-documents`),
+      onboardingDocuments: await this.store.query('file', {
         tags: { $in: [ 'Onboarding' ] },
         sort: { title: 1 }
       }),
-      assignments: this.store.query('file-assignment', {
-        employee: employee.get('id'),
+      assignments: await this.store.query('file-assignment', {
+        employee: employee.id,
         sort:     { created: 1 }
       })
-    });
-  },
+    };
+  }
 
   setupController (controller, model) {
     const {
@@ -38,4 +37,4 @@ export default Route.extend({
       assignments: assignments.toArray()
     });
   }
-});
+}

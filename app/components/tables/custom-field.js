@@ -1,27 +1,24 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
-export default Component.extend({
-  tagName: 'tr',
+export default class TablesCustomFieldComponent extends Component {
+  @tracked editingValue
 
-  actions: {
-    editValue () {
-      this.setProperties({
-        editingValue: true,
-        newValue:     this.get('value')
-      });
-    },
-
-    cancelEdit () {
-      this.set('editingValue', false);
-    },
-
-    saveEdit () {
-      this.get('onValueChange')(this.get('key'), this.get('newValue'));
-      this.set('editingValue', false);
-    },
-
-    delete () {
-      this.get('onDelete')(this.get('key'));
-    }
+  @action
+  editValue () {
+    this.editingValue = true;
+    this.newValue = this.args.value;
   }
-});
+
+  @action
+  cancelEdit () {
+    this.editingValue = false;
+  }
+
+  @action
+  saveEdit () {
+    this.args.onValueChange(this.args.key, this.newValue);
+    this.editingValue = false;
+  }
+}

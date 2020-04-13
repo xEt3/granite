@@ -3,13 +3,14 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { htmlSafe } from '@ember/string';
+import { elementId } from '@granite/core';
 import $ from 'jquery';
 
+@elementId
 export default class ModalsAddAssetCategoryModal extends Modal {
   @service store
   @tracked newAsset = {};
 
-  elementId = this.elementId = Math.round(Math.random() * Math.pow(10, 10));
   icons =     'mobile tablet desktop laptop car lab configure asterisk cube sound photo'.w()
 
   get modalId () {

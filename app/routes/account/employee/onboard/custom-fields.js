@@ -1,3 +1,5 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({ titleToken: 'Custom Fields' });
+export default class AccountEmployeeOnboardCustomFieldsRoute extends Route {
+  titleToken = 'Custom Fields'
+}

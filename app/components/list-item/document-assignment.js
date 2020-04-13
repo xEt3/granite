@@ -2,20 +2,20 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
 export default class ListItemDocumentAssignmentComponent extends Component {
-  model = this.args.model
-
   get isPendingState () {
-    return this.model.isLoading || this.model.isSaving || this.model.isReloading;
+    let { model } = this.args;
+    return model.isLoading || model.isSaving || model.isReloading;
   }
 
   @action
   checkBoxDisplay () {
-    if (this.model.visibleToEmployee) {
+    let { model } = this.args;
+    if (model.visibleToEmployee) {
       return;
     }
 
-    this.model.signatureRequired = false;
-    this.model.effectiveOn = null;
+    model.signatureRequired = false;
+    model.effectiveOn = null;
   }
 
   // @action
