@@ -3,21 +3,20 @@
     {{#each @form as |field|}}
       {{#if (not (and field.displayIf (not (get @model field.displayIf))))}}
         {{#if field.embeddedInput}}
-          {{!-- {{#input/quick-form-input
-            field
-            @model
-            @controller
-            class=field.class
-          }}
-            {{input/quick-form-input
-              field.embeddedInput
-              @model
-              @controller
-              tagName=null
-              class=field.class}}
-          {{/input/quick-form-input}} --}}
+          <Input::QuickFormInput
+            @field={{field}}
+            @model={{@model}}
+            @controller={{@controller}}
+            class={{field.class}}
+          >
+            <Input::QuickFormInput
+              @field={{field.embeddedInput}}
+              @model={{@model}}
+              @controller={{@controller}}
+              @tagName={{null}}
+              class={{field.class}}/>
+          </Input::QuickFormInput>
         {{else}}
-          {{!-- HERE --}}
           <Input::QuickFormInput
             @field={{field}}
             @model={{@model}}
@@ -27,9 +26,9 @@
       {{/if}}
     {{/each}}
 
-    {{#if this.onsubmit}}
+    {{#if @onsubmit}}
       <div class="ui divider"></div>
-      {{#form/action-button type="submit" class=this._submitClass disabled=this.disabled loading=this.working}}{{yield}}{{/form/action-button}}
+      <Form::ActionButton type="submit" class={{this._submitClass}} @disabled={{@disabled}} @loading=@working>{{yield}}</Form::ActionButton>
     {{/if}}
   </Tag>
 {{/let}}
