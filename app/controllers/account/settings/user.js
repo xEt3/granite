@@ -1,39 +1,38 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import modalSupport from 'granite/mixins/modal-support';
-import ajaxStatus from 'granite/mixins/ajax-status';
+import { action } from '@ember/object';
 
-export default Controller.extend(modalSupport, ajaxStatus, {
-  ajax:      service(),
-  passwords: {},
+export default class UserSettingsController extends Controller {
+  @service ajax
+  @service data
+  passwords = {}
 
-  actions: {
-    async change () {
-      let {
-        newPassword,
-        confirmPassword,
-        currentPassword
-      } = this.passwords;
+  @action
+  async change () {
+    const {
+      newPassword,
+      confirmPassword,
+      currentPassword
+    } = this.passwords;
 
-      this.ajaxStart();
+    const { success, error } = this.data.createStatus();
 
-      if (newPassword !== confirmPassword) {
-        this.ajaxError('Passwords do not match.', true);
-        return;
-      }
+    if (newPassword !== confirmPassword) {
+      error('Passwords do not match.', true);
+      return;
+    }
 
-      try {
-        await this.get('ajax').post('/api/v1/company-user/change-password', {
-          data: {
-            newPassword,
-            currentPassword
-          }
-        });
-        this.set('passwords', {});
-        this.ajaxSuccess('Successfully Changed.');
-      } catch (e) {
-        this.ajaxError(e);
-      }
+    try {
+      await this.get('ajax').post('/api/v1/company-user/change-password', {
+        data: {
+          newPassword,
+          currentPassword
+        }
+      });
+      this.passwords = {};
+      success('Successfully changed.');
+    } catch (e) {
+      this.ajaxError(e);
     }
   }
-});
+}

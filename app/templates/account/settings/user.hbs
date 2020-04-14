@@ -25,5 +25,5 @@
 
 <div class="ui divider"></div>
 <form {{action "change" on="submit"}}>
-  {{#form/action-button class="ui huge fluid yellow button" loading=working}}Change Password{{/form/action-button}}
+  {{#form/action-button class="ui huge fluid yellow button" loading=this.data.statuses.working.isLoading}}Change Password{{/form/action-button}}
 </form>

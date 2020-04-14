@@ -37,11 +37,9 @@
   {{/if}}
 
   <a href="#" class="ui right floated small text" {{on "click" (prevent-default (pipe-action
-        (action "getToken")
-        (action this.openModal "modal_update-payment-method" "paymentMethod")
-      )
-    )
-    }}>
+    (action "getToken")
+    (action this.openModal "modal_update-payment-method" "paymentMethod")
+  ))}}>
     <i class="edit icon"></i>Edit Payment Method
   </a>
 </h4>
@@ -80,7 +78,7 @@
 
 {{modals/update-payment-method
   braintreeToken=this.braintreeToken
-  working=this.working
+  working=this.data.statuses.working.isLoading
   onResponse=(pipe-action
     (action "savePaymentMethod")
     (action this.modalResponse "paymentMethod")

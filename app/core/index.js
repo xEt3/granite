@@ -1,6 +1,7 @@
 import Route from './route';
 import Controller from './controller';
 import elementId from './element-id';
+import modalSupport from './modal-support';
 import FileHandler from './file-handler';
 import { action } from '@ember/object';
 
@@ -58,5 +59,6 @@ export {
   Controller,
   authenticated,
   fileHandling,
-  elementId
+  elementId,
+  modalSupport
 };
