@@ -9,31 +9,17 @@
   <div class="content ui form">
     <div class="field">
       <label for="form-name">Form Name* (for your use)</label>
-      {{input
-        type="text"
-        value=this.form.name
-        placeholder="Form Name"
-        id="form-name"
-      }}
+      <Input @type="text" @value={{this.form.name}} placeholder="Form Name" @id="form-name" />
     </div>
 
     <div class="field">
       <label for="form-title">Form Title* (employee-facing)</label>
-      {{input
-        type="text"
-        value=this.form.title
-        placeholder="Form Title"
-        id="form-title"
-      }}
+      <Input @type="text" @value={{this.form.title}} placeholder="Form Title" @id="form-title" />
     </div>
 
     <div class="field">
       <label for="form-description">Form Description (optional) (employee-facing)</label>
-      {{textarea
-        value=this.form.description
-        placeholder="Employee-facing description of your form"
-        id="form-description"
-      }}
+      <Textarea @value={{this.form.description}} placeholder="Employee-facing description of your form" @id="form-description" />
     </div>
 
     <div class="ui divider"></div>

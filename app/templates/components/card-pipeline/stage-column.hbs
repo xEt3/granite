@@ -2,14 +2,7 @@
   {{this.stage.name}}
 </h2>
 
-{{#drag-sort-list
-  items=this.candidates
-  dragEndAction=(action this.dispatchReorder this.stage.id)
-  classNames="pipeline-stage__cards"
-  childClass="stage-cards__card"
-  draggingEnabled=(not this.disableDragging)
-  as |jobApp|
-}}
+<DragSortList @items={{this.candidates}} @dragEndAction={{action this.dispatchReorder this.stage.id}} @classNames="pipeline-stage__cards" @childClass="stage-cards__card" @draggingEnabled={{not this.disableDragging}} as |jobApp|>
   {{#if jobApp.id}}
     {{card-pipeline/stage-card
       jobApp
@@ -24,4 +17,4 @@
       onSchedule=this.onSchedule
       onAddLabel=this.onAddLabel}}
   {{/if}}
-{{/drag-sort-list}}
+</DragSortList>

@@ -4,9 +4,9 @@
       <div class="center aligned column">
         <div class="ui mini statistic statistic-item">
           <div class="value">
-            {{#link-to "account.employee" this.model.supervisor.id class="statistic-value"}}
+            <LinkTo @route="account.employee" @model={{this.model.supervisor.id}} class="statistic-value">
               {{this.model.supervisor.fullName}}
-            {{/link-to}}
+            </LinkTo>
           </div>
           <div class="label text-white">
             Supervisor
@@ -92,10 +92,7 @@
             </p>
             <div>
               <a href="mailto:{{this.model.finalEmail}}">
-                {{ember-tooltip
-                  side="right"
-                  popperContainer="body"
-                  text="Final Email"}}
+                <EmberTooltip @side="right" @popperContainer="body" @text="Final Email" />
                 <i class="large icons">
                   <i class="mail icon"></i>
                   <i class="bottom right corner building outline icon"></i>
@@ -122,17 +119,14 @@
     {{/if}}
     <div class="ui raised segment">
       <span class="ui blue ribbon label"><i class="announcement icon"></i>Direct Contact</span>
-      {{#link-to "account.employee.index.edit.index" class="ui right corner blue label"}}
+      <LinkTo @route="account.employee.index.edit.index" class="ui right corner blue label">
         <i class="pencil icon"></i>
-      {{/link-to}}
+      </LinkTo>
       <div class="ui basic segment">
         {{#if this.hasDirectContact}}
           {{#if this.model.email}}
             <a href="mailto:{{this.model.email}}">
-              {{ember-tooltip
-                side="right"
-                popperContainer="body"
-                text="Primary email"}}
+              <EmberTooltip @side="right" @popperContainer="body" @text="Primary email" />
               <i class="large icons">
                 <i class="mail icon"></i>
                 <i class="bottom right corner building outline icon"></i>
@@ -142,10 +136,7 @@
           {{/if}}
           {{#if this.model.privateEmail}}
             <a href="mailto:{{this.model.privateEmail}}">
-              {{ember-tooltip
-                side="right"
-                popperContainer="body"
-                text="Personal Email"}}
+              <EmberTooltip @side="right" @popperContainer="body" @text="Personal Email" />
               <i class="large icons">
                 <i class="mail icon"></i>
                 <i class="bottom right corner user icon"></i>
@@ -166,9 +157,9 @@
     </div>
     <div class="ui raised segment">
       <span class="ui teal ribbon label"><i class="mail icon"></i>Mailing Address</span>
-      {{#link-to "account.employee.index.edit.index" class="ui right corner teal label"}}
+      <LinkTo @route="account.employee.index.edit.index" class="ui right corner teal label">
         <i class="pencil icon"></i>
-      {{/link-to}}
+      </LinkTo>
       <div class="ui basic segment">
         {{#if this.model.addressLine1}}
           {{this.model.addressLine1}}, <br />
@@ -185,9 +176,9 @@
     </div>
     <div class="ui raised segment">
       <span class="ui orange ribbon label"><i class="book icon"></i>Custom Fields</span>
-      {{#link-to "account.employee.index.edit.custom-fields" class="ui right corner orange label"}}
+      <LinkTo @route="account.employee.index.edit.custom-fields" class="ui right corner orange label">
         <i class="pencil icon"></i>
-      {{/link-to}}
+      </LinkTo>
       <div class="ui basic segment">
         {{#if this.customFieldsExist}}
           <div class="ui list">
@@ -211,9 +202,9 @@
   <div class="column">
     <div class="ui raised segment">
       <span class="ui green left ribbon label"><i class="info icon"></i>Additional Information</span>
-      {{#link-to "account.employee.index.edit.index" class="ui right corner green label"}}
+      <LinkTo @route="account.employee.index.edit.index" class="ui right corner green label">
         <i class="pencil icon"></i>
-      {{/link-to}}
+      </LinkTo>
       <div class="ui basic segment">
         <p class="text">
           {{#if (or this.model.probationUntil this.model.ssn)}}
@@ -249,9 +240,9 @@
     </div>
     <div class="ui raised segment">
       <span class="ui grey left ribbon label"><i class="birthday icon"></i>Anniversaries</span>
-      {{#link-to "account.employee.index.edit.index" class="ui right corner grey label"}}
+      <LinkTo @route="account.employee.index.edit.index" class="ui right corner grey label">
         <i class="pencil icon"></i>
-      {{/link-to}}
+      </LinkTo>
       <div class="ui basic segment">
         {{#if this.hasAnniversaries}}
           <p class="text">
@@ -283,9 +274,9 @@
     </div>
     <div class="ui raised segment">
       <span class="ui red left ribbon label"><i class="emergency icon"></i>Emergency Contact</span>
-      {{#link-to "account.employee.index.edit.index" class="ui right corner red label"}}
+      <LinkTo @route="account.employee.index.edit.index" class="ui right corner red label">
         <i class="pencil icon"></i>
-      {{/link-to}}
+      </LinkTo>
       <div class="ui basic segment">
         <p class="text">
           {{#if this.hasEmergencyContact}}
@@ -311,9 +302,9 @@
           </div>
         {{/if}}
         <span class="ui basic ribbon label"><i class="download icon"></i>Imported</span>
-        {{#link-to "account.employee.index.edit.settings" class="ui right corner label"}}
+        <LinkTo @route="account.employee.index.edit.settings" class="ui right corner label">
           <i class="pencil icon"></i>
-        {{/link-to}}
+        </LinkTo>
         <div class="ui basic segment">
           Source: {{capitalize this.model.externalLinkService}}<br />
           Imported On: {{time this.model.created "h:mma M/D/YY"}}<br />

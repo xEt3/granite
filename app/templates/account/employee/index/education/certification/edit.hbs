@@ -1,9 +1,9 @@
 <h1 class="ui header titlecased text">
   Editing {{this.model.name}}
   <small class="right floated">
-    {{#link-to "account.employee.index.education.certification" this.model class="text-danger"}}
+    <LinkTo @route="account.employee.index.education.certification" @model={{this.model}} class="text-danger">
       Cancel
-    {{/link-to}}
+    </LinkTo>
   </small>
 </h1>
 

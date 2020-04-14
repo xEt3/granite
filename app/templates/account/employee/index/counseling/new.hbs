@@ -2,17 +2,17 @@
   <hgroup class="clearfix">
     <h1 class="ui header">
       New Employment Issue
-      {{#link-to "account.employee.index.counseling.index" class="right floated text"}}
+      <LinkTo @route="account.employee.index.counseling.index" class="right floated text">
         <i class="remove icon"></i>
-      {{/link-to}}
+      </LinkTo>
     </h1>
   </hgroup>
   <div class="ui divider"></div>
 
   <p class="center aligned text">
-    {{#link-to "account.settings.index.processes" class=(unless this.severities.length "text-danger")}}
+    <LinkTo @route="account.settings.index.processes" class={{unless this.severities.length "text-danger"}}>
       <i class="{{if this.severities.length "info circle" "warning sign"}} icon"></i> Visit the <strong>Correction Action Options</strong> section in your <strong>Processes</strong> settings to configure options{{if this.severities.length "." " before proceeding!"}}
-    {{/link-to}}
+    </LinkTo>
   </p>
 
   {{quick-form
@@ -23,6 +23,6 @@
 
   <div class="ui divider"></div>
   <form {{action "save" this.model on="submit"}}>
-    {{#form/action-button type="submit" class="ui positive fluid huge button" loading=this.working}}Save Issue{{/form/action-button}}
+    <Form::ActionButton @type="submit" @class="ui positive fluid huge button" @loading={{this.working}}>Save Issue</Form::ActionButton>
   </form>
 </div>

@@ -1,25 +1,25 @@
 <div class="ui container">
-  {{#ui-menu menuClass="pointing"}}
-    {{#link-to "account.job-description.index" class="item"}}
+  <UiMenu @menuClass="pointing">
+    <LinkTo @route="account.job-description.index" class="item">
       <i class="square icon"></i>Summary
-    {{/link-to}}
+    </LinkTo>
     <div class="right menu">
-      {{#ui-dropdown class="item icon top right pointing"}}
+      <UiDropdown @class="item icon top right pointing">
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
           <div class="header">Actions</div>
           <a href="#" class="item" {{action "createCampaign"}}><i class="wizard icon"></i>Hire for this job</a>
-          {{#link-to "account.job-description.edit" this.model.id class="item"}}<i class="edit icon"></i> Edit{{/link-to}}
+          <LinkTo @route="account.job-description.edit" @model={{this.model.id}} class="item"><i class="edit icon"></i> Edit</LinkTo>
           <div class="text-danger header">Danger Zone</div>
-          {{#confirm-modal deleteContext=this.model.title class="item" as |confirm|}}
+          <ConfirmModal @deleteContext={{this.model.title}} @class="item" as |confirm|>
             <a href="#" id="job__action--delete" class="text-danger" {{action (pipe confirm (action "delete"))}}>
               <i class="trash icon"></i>Delete Record
             </a>
-          {{/confirm-modal}}
+          </ConfirmModal>
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
     </div>
-  {{/ui-menu}}
+  </UiMenu>
 
   {{outlet}}
 </div>

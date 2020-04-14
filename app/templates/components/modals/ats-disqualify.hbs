@@ -1,4 +1,4 @@
-{{#ui-modal id=this.modalId}}
+<UiModal @id={{this.modalId}}>
   <div class="header">
     Disqualify Candidate
   </div>
@@ -6,7 +6,7 @@
     <form class="ui form">
       <div class="field">
         <label for="dq-reason">Reason for disqualification</label>
-        {{#ui-dropdown class="selection" id="dq-reason" selected=this.model.disqualificationReason onChange=(action (mut this.model.disqualificationReason)) as |execute mapper|}}
+        <UiDropdown @class="selection" @id="dq-reason" @selected={{this.model.disqualificationReason}} @onChange={{action (mut this.model.disqualificationReason)}} as |execute mapper|>
           <i class="dropdown icon"></i>
           <div class="default text">Reason for disqualification</div>
           <div class="menu">
@@ -19,7 +19,7 @@
               </div>
             {{/each}}
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       </div>
       <span>
         <i>The disqualification reason may be used for EEO reporting.</i>
@@ -27,14 +27,14 @@
     </form>
   </div>
   <div class="actions">
-    {{#ui-checkbox checked=this.model.disqualificationEmail onChange=(action (mut this.model.disqualificationEmail))}}
+    <UiCheckbox @checked={{this.model.disqualificationEmail}} @onChange={{action (mut this.model.disqualificationEmail)}}>
       <label>
         Send Rejection Notification
         {{#if this.model}}
           to {{this.model.person.firstName}} (<a href="mailto:{{this.model.person.email}}" class="ats-confirm-disqualify__email-link">{{this.model.person.email}}</a>)
         {{/if}}?
       </label>
-    {{/ui-checkbox}}
+    </UiCheckbox>
     <button class="ui inverted red button" {{action "respond" false}}>
       Cancel
     </button>
@@ -43,4 +43,4 @@
       <i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

@@ -1,14 +1,10 @@
-{{#ui-modal id=this.modalId}}
+<UiModal @id={{this.modalId}}>
   <div class="header">
     Application Labels
   </div>
   <div class="content">
     <label for="label-multi-select">Current labels for {{#if this.model.person.firstName}}{{this.model.person.firstName}}'s{{/if}} application</label>
-    {{#ui-dropdown
-      class="fluid multiple selection"
-      id="label-multi-select"
-      selected=this.model.labels
-      onChange=(action (mut this.model.labels)) as |execute mapper|}}
+    <UiDropdown @class="fluid multiple selection" @id="label-multi-select" @selected={{this.model.labels}} @onChange={{action (mut this.model.labels)}} as |execute mapper|>
       <i class="dropdown icon"></i>
       <div class="default text">Select labels for application</div>
       <div class="menu">
@@ -18,7 +14,7 @@
           </div>
         {{/each}}
       </div>
-    {{/ui-dropdown}}
+    </UiDropdown>
     {{#if this.currentLabel}}
       <div class="ui divider"></div>
       {{quick-form
@@ -41,4 +37,4 @@
       Save Application Labels<i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

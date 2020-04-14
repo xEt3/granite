@@ -1,21 +1,14 @@
 <div class="right aligned text">
-  {{#input/equipment-picker
-    assignableAssets=this.assignableAssets
-    onSelect=(action "selectAsset")
-    onCreate=(action "createAsset")
-    newAssetCategory=(action "newAssetCategory")}}
+  <Input::EquipmentPicker @assignableAssets={{this.assignableAssets}} @onSelect={{action "selectAsset"}} @onCreate={{action "createAsset"}} @newAssetCategory={{action "newAssetCategory"}}>
     <h3 class="ui header"><a href="#"><i class="plus icon text-white"></i></a></h3>
-  {{/input/equipment-picker}}
+  </Input::EquipmentPicker>
 </div>
 
 {{#if this.model}}
   <div class="ui basic segment">
     <div class="ui cards">
       {{#each this.model as |asset|}}
-        {{list-item/assigned-asset-item
-          asset=asset
-          employee=this.employee
-          onUnassign=(action "unassignAsset")}}
+        <ListItem::AssignedAssetItem @asset={{asset}} @employee={{this.employee}} @onUnassign={{action "unassignAsset"}} />
       {{/each}}
     </div>
     {{#if this.working}}
@@ -30,7 +23,7 @@
   </h2>
 {{/if}}
 
-{{#ui-modal name="new-asset" class="new-asset" detachable=true onApprove=(action "saveAsset") onDeny=(action "abortAsset")}}
+<UiModal @name="new-asset" @class="new-asset" @detachable={{true}} @onApprove={{action "saveAsset"}} @onDeny={{action "abortAsset"}}>
   <i class="cancel close icon"></i>
   <div class="header">
     Creating a new item in "{{this.pendingAssetItem.asset.name}}" for {{this.employee.firstName}}
@@ -39,13 +32,13 @@
     <form class="ui form container">
       <div class="field">
         <label for="asset-identifier">Asset Identifier</label>
-        {{input type="text" value=this.pendingAssetItem.identifier id="asset-identifier" placeholder="Unique identifier (VIN, Stock #, RFID)"}}
+        <Input @type="text" @value={{this.pendingAssetItem.identifier}} @id="asset-identifier" placeholder="Unique identifier (VIN, Stock #, RFID)" />
       </div>
 
       {{#if this.pendingAssetItem.asset.attributes}}
         <div class="ui divider"></div>
         {{#each this.pendingAssetItem.asset.attributes as |attribute|}}
-          {{input/custom-field object=this.pendingAssetItem.customFields attribute=attribute}}
+          <Input::CustomField @object={{this.pendingAssetItem.customFields}} @attribute={{attribute}} />
         {{/each}}
       {{/if}}
     </form>
@@ -59,9 +52,9 @@
       <i class="check icon"></i>
     </div>
   </div>
-{{/ui-modal}}
+</UiModal>
 
-{{#ui-modal name="asset-documents" class="asset-documents"}}
+<UiModal @name="asset-documents" @class="asset-documents">
   <div class="header">
     Assign Documents related to {{this.newAssetItem.identifier}}?
   </div>
@@ -108,4 +101,4 @@
       Assign <i class="add user icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

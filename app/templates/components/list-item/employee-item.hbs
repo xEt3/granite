@@ -2,7 +2,7 @@
   {{yield this.employee.fullName this.employee.title}}
 {{else}}
   <div class="ui tiny rounded image">
-    {{display/employee-picture url=this.employee.picture employeeId=this.employee.id}}
+    <Display::EmployeePicture @url={{this.employee.picture}} @employeeId={{this.employee.id}} />
   </div>
   <div class="content">
     <div class="header">{{this.employee.fullName}}</div>

@@ -1,5 +1,5 @@
 {{#if (eq this.type "select")}}
-  {{#ui-dropdown class=this.selectionClass selected=this.state onChange=(action this.__update) as |execute mapper|}}
+  <UiDropdown @class={{this.selectionClass}} @selected={{this.state}} @onChange={{action this.__update}} as |execute mapper|>
     <div class="default text">
       {{#if this.selectText}}
         {{this.selectText}}
@@ -24,21 +24,11 @@
         </div>
       {{/each}}
     </div>
-  {{/ui-dropdown}}
+  </UiDropdown>
 {{else if (eq this.type "toggle")}}
-  {{ui-checkbox
-    class="toggle"
-    label=(or this.label "controlName")
-    checked=this.state
-    onChange=(action this.__update)}}
+  <UiCheckbox @class="toggle" @label={{or this.label "controlName"}} @checked={{this.state}} @onChange={{action this.__update}} />
 {{else if (eq this.type "radio")}}
-  {{ui-radio
-    class="toggle"
-    name=this.name
-    label=(or this.label "controlName")
-    value=this.value
-    current=this.state
-    onChange=(action this.__update)}}
+  <UiRadio @class="toggle" @name={{this.name}} @label={{or this.label "controlName"}} @value={{this.value}} @current={{this.state}} @onChange={{action this.__update}} />
 {{else}}
   {{yield
     (action this.__update)

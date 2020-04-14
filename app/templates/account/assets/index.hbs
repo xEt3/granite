@@ -5,19 +5,19 @@
       Company Assets
     </h1>
 
-    <h3>{{#link-to "account.assets.new" class="right floated"}}<i class="plus icon"></i>{{/link-to}}</h3>
+    <h3><LinkTo @route="account.assets.new" class="right floated"><i class="plus icon"></i></LinkTo></h3>
   </hgroup>
   <div class="ui divider"></div>
 
   <div class="ui divided link items">
     {{#each this.model as |asset|}}
-      {{#link-to "account.asset" asset class="item"}}
-        {{list-item/asset-item asset=asset}}
-      {{/link-to}}
+      <LinkTo @route="account.asset" @model={{asset}} class="item">
+        <ListItem::AssetItem @asset={{asset}} />
+      </LinkTo>
     {{else}}
       <h2 class="ui center aligned header">No assets available.</h2>
     {{/each}}
   </div>
 
-  {{elements/x-pagination page=(readonly this.page) pages=(readonly this.pages) onchange=(action (mut this.page))}}
+  <Elements::XPagination @page={{readonly this.page}} @pages={{readonly this.pages}} @onchange={{action (mut this.page)}} />
 </div>

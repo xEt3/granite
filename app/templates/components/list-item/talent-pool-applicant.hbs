@@ -22,12 +22,8 @@
 
 <div class="right floated right aligned text content">
   {{#if this._meta.lastApplicationId}}
-    {{#link-to
-      "account.job-opening.campaign.job-application"
-      this._meta.lastApplicationListing
-      this._meta.lastApplicationId
-    }}
+    <LinkTo @route="account.job-opening.campaign.job-application" @models={{array this._meta.lastApplicationListing this._meta.lastApplicationId}}>
       Open Last Job Application
-    {{/link-to}}
+    </LinkTo>
   {{/if}}
 </div>

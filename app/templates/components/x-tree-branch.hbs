@@ -1,25 +1,11 @@
 {{#each this.model as |child|}}
   {{#if child.isVisible}}
     {{#if hasBlock}}
-      {{#x-tree-children
-        select=this.select
-        hover=this.hover
-        hoverOut=this.hoverOut
-        checkable=this.checkable
-        chosenId=this.chosenId
-        recalculateStateAction=(action this.recalculateState)
-        model=child as |node|}}
+      <XTreeChildren @select={{this.select}} @hover={{this.hover}} @hoverOut={{this.hoverOut}} @checkable={{this.checkable}} @chosenId={{this.chosenId}} @recalculateStateAction={{action this.recalculateState}} @model={{child}} as |node|>
         {{yield node}}
-      {{/x-tree-children}}
+      </XTreeChildren>
     {{else}}
-      {{x-tree-children
-        model=child
-        select=this.select
-        hover=this.hover
-        hoverOut=this.hoverOut
-        checkable=this.checkable
-        recalculateStateAction=(action this.recalculateState)
-        chosenId=this.chosenId}}
+      <XTreeChildren @model={{child}} @select={{this.select}} @hover={{this.hover}} @hoverOut={{this.hoverOut}} @checkable={{this.checkable}} @recalculateStateAction={{action this.recalculateState}} @chosenId={{this.chosenId}} />
     {{/if}}
   {{/if}}
 {{/each}}

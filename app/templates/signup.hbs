@@ -3,7 +3,7 @@
     <div class="three wide column">
       <div class="ui vertical signup steps animated fadeInRight">
         {{#each this.steps as |step|}}
-          {{display/ui-step step=step link=false}}
+          <Display::UiStep @step={{step}} @link={{false}} />
         {{/each}}
       </div>
     </div>

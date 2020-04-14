@@ -12,13 +12,7 @@
       class="content ui grid"}}
 
     <div class="custom-pipeline-toggle">
-      {{ui-checkbox
-        id=this.customPipelineToggle
-        class="toggle"
-        label="Use custom recruiting stages"
-        parentClass="sixteen wide column"
-        checked=(readonly this.customPipeline)
-        onChange=(action "toggleCustomPipeline")}}
+      <UiCheckbox @id={{this.customPipelineToggle}} @class="toggle" @label="Use custom recruiting stages" @parentClass="sixteen wide column" @checked={{readonly this.customPipeline}} @onChange={{action "toggleCustomPipeline"}} />
     </div>
 
     {{#liquid-if this.customPipeline}}
@@ -30,9 +24,9 @@
         </button>
       {{/liquid-if}}
 
-      {{#sortable-group tagName="ul" classNames="pipeline-stage-list__cards" onChange="reorderItems" as |group|}}
+      <SortableGroup @tagName="ul" @classNames="pipeline-stage-list__cards" @onChange="reorderItems" as |group|>
         {{#each this.customPipeline.stages as |stage|}}
-          {{#sortable-item tagName="li" classNames="stage-list__card" model=stage group=group}}
+          <SortableItem @tagName="li" @classNames="stage-list__card" @model={{stage}} @group={{group}}>
             <div class="card-content__wrapper">
               <div class="card-content__title-bar">
                 <span class="card-content__stage-name">
@@ -44,9 +38,9 @@
                 <a href="#" class="right floated text-danger delete-stage" {{action "removeStage" stage}}>Remove</a>
               </div>
             </div>
-          {{/sortable-item}}
+          </SortableItem>
         {{/each}}
-      {{/sortable-group}}
+      </SortableGroup>
     {{/liquid-if}}
 
     <h2 class="ui horizontal divider header">Job Settings</h2>
@@ -60,17 +54,17 @@
     <div class="ui divider"></div>
 
     <form {{action (pipe (action "save") (action "saveCustomPipeline")) on="submit"}}>
-      {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Save{{/form/action-button}}
+      <Form::ActionButton @type="submit" @class="ui huge fluid green button" @loading={{this.working}}>Save</Form::ActionButton>
     </form>
 
     <p class="center aligned text">
-      {{#link-to "account.job-opening.campaign" class="text-red"}}Cancel{{/link-to}}
+      <LinkTo @route="account.job-opening.campaign" class="text-red">Cancel</LinkTo>
     </p>
   </div>
 </div>
 
 <div id="modal__add-stage--placeholder">
-  {{#ui-modal id="modal__add-stage" class="small form"}}
+  <UiModal @id="modal__add-stage" @class="small form">
     <div class="header">
       <i class="plus icon"></i>{{if this.editingStage "Edit" "Add"}} recruiting pipeline stage
     </div>
@@ -92,5 +86,5 @@
         <i class="check icon"></i>
       </button>
     </div>
-  {{/ui-modal}}
+  </UiModal>
 </div>

@@ -22,8 +22,5 @@
 
   <div class="ui divider"></div>
 
-  {{elements/x-pagination
-    page=(readonly this.page)
-    pages=(readonly this.pages)
-    onchange=(action (mut this.page))}}
+  <Elements::XPagination @page={{readonly this.page}} @pages={{readonly this.pages}} @onchange={{action (mut this.page)}} />
 </div>

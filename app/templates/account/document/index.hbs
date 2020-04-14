@@ -13,7 +13,7 @@
     <div class="ui divider"></div>
     <h3>Assignees</h3>
     {{#each this.fileAssignments as |assignment|}}
-      {{list-item/file-assignment assignment=assignment}}
+      <ListItem::FileAssignment @assignment={{assignment}} />
     {{/each}}
   {{/if}}
 </div>

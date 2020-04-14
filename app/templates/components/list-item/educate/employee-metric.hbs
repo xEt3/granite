@@ -1,7 +1,7 @@
 <div class="content">
-  {{#link-to "account.employee.index.education" this.model._id class="header employee-metric__name"}}
+  <LinkTo @route="account.employee.index.education" @model={{this.model._id}} class="header employee-metric__name">
     {{this.model.fullName}}
-  {{/link-to}}
+  </LinkTo>
   <div class="meta">
     <span class="employee-metric__job-title">{{this.model.jobTitle}}</span>
   </div>
@@ -11,6 +11,6 @@
   <i class="check icon"></i>
   {{this.model.completed}} of {{this.model.total}} assignments completed
 </div>
-{{#ui-progress percent=this.percentCompleted class="teal indicating bottom attached employee-metric__prog"}}
+<UiProgress @percent={{this.percentCompleted}} @class="teal indicating bottom attached employee-metric__prog">
   <div class="bar"></div>
-{{/ui-progress}}
+</UiProgress>

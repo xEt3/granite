@@ -1,21 +1,21 @@
 <div class="ui text container">
   <div class="ui pointing menu">
     <div class="item"><i class="settings icon"></i></div>
-    {{#link-to "account.settings.index" class="item"}}
+    <LinkTo @route="account.settings.index" class="item">
       <i class="setting icon"></i>General
-    {{/link-to}}
-    {{#link-to "account.settings.billing" class="item"}}
+    </LinkTo>
+    <LinkTo @route="account.settings.billing" class="item">
       <i class="dollar icon"></i>Billing
-    {{/link-to}}
-    {{#link-to "account.settings.integrations" class="item"}}
+    </LinkTo>
+    <LinkTo @route="account.settings.integrations" class="item">
       <i class="exchange icon"></i>Integrations
-    {{/link-to}}
-    {{#link-to "account.settings.templates" class="item"}}
+    </LinkTo>
+    <LinkTo @route="account.settings.templates" class="item">
       <i class="file text outline icon"></i>Templates
-    {{/link-to}}
-    {{#link-to "account.settings.user" class="item"}}
+    </LinkTo>
+    <LinkTo @route="account.settings.user" class="item">
       <i class="user icon"></i>User
-    {{/link-to}}
+    </LinkTo>
   </div>
 
   <div class="ui padded raised segment">

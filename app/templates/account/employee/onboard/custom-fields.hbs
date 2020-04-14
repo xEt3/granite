@@ -18,9 +18,9 @@
         {{#if this.adding}}
           <tr>
             <td class="ui minimally padded">
-              {{#auto-focus}}
+              <AutoFocus>
                 <Input @type="text" @value={{this.pendingCustomFieldName}} @placeholder="Allergies"/>
-              {{/auto-focus}}
+              </AutoFocus>
             </td>
             <td class="ui minimally padded"><Input @type="text" @value={{this.pendingCustomFieldValue}} @placeholder="Peanuts, Gluten"/></td>
           </tr>

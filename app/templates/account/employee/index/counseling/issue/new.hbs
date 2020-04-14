@@ -2,9 +2,9 @@
   <p class="right aligned text">If you need assistance call: <span class="strong"><a href="tel:(406)248-6178">(406) 248-6178</a></span></p>
   <h2 class="ui header">
     New Corrective Action For Issue
-    {{#link-to "account.employee.index.counseling.issue" class="right floated text text-danger"}}
+    <LinkTo @route="account.employee.index.counseling.issue" class="right floated text text-danger">
       <i class="remove icon"></i>
-    {{/link-to}}
+    </LinkTo>
   </h2>
 </hgroup>
 <div class="ui divider"></div>
@@ -17,5 +17,5 @@
 
 <div class="ui divider"></div>
 <form {{action "save" this.model on="submit"}}>
-  {{#form/action-button type="submit" class="ui positive fluid huge button" loading=this.working}}Save Corrective Action{{/form/action-button}}
+  <Form::ActionButton @type="submit" @class="ui positive fluid huge button" @loading={{this.working}}>Save Corrective Action</Form::ActionButton>
 </form>

@@ -13,9 +13,9 @@
   <h3 class="ui header clearfix">
     Slate Payroll Exchange
     {{#if (contains "slate" this.model.linkedServices)}}
-      {{#link-to "account.import" class="right floated"}}
+      <LinkTo @route="account.import" class="right floated">
         <small><i class="sign in alternate icon"></i>Import data from Slate Payroll...</small>
-      {{/link-to}}
+      </LinkTo>
     {{/if}}
   </h3>
   <p>
@@ -23,16 +23,10 @@
   </p>
   <div class="ui divider"></div>
   <div class="field">
-    {{#form/integration-button
-      service="slate"
-      linkedServices=this.model.linkedServices
-      class="right labeled icon secondary massive fluid"
-      onNotify=(action "onNotify")
-      as |alreadyLinked|
-    }}
+    <Form::IntegrationButton @service="slate" @linkedServices={{this.model.linkedServices}} @class="right labeled icon secondary massive fluid" @onNotify={{action "onNotify"}} as |alreadyLinked|>
       <span class="vertically centered">
         {{if alreadyLinked "Connected To Slate Payroll" "Connect To Slate Payroll"}}
       </span> <span class="icon__slate"></span> <i class="random icon"></i>
-    {{/form/integration-button}}
+    </Form::IntegrationButton>
   </div>
 </div>

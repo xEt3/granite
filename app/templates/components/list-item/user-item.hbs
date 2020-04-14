@@ -1,5 +1,5 @@
 <div class="ui tiny rounded image">
-  {{display/employee-picture url=this.user.employee.picture employeeId=this.user.employee.id}}
+  <Display::EmployeePicture @url={{this.user.employee.picture}} @employeeId={{this.user.employee.id}} />
 </div>
 <div class="content">
   <div class="header">
@@ -9,27 +9,18 @@
     {{/if}}
   </div>
   <div class="right floated">
-    {{#link-to "account.anatomy.company-users.edit" this.user.id}}
-      {{ember-tooltip
-        side="left"
-        popperContainer="body"
-        text="Edit user"}}
+    <LinkTo @route="account.anatomy.company-users.edit" @model={{this.user.id}}>
+      <EmberTooltip @side="left" @popperContainer="body" @text="Edit user" />
       <i class="edit icon"></i>
-    {{/link-to}}
+    </LinkTo>
     {{#if this.user.inactive}}
       <a href="#" {{action "toggleInactiveState" false}}>
-        {{ember-tooltip
-          side="left"
-          popperContainer="body"
-          text="Reactivate user"}}
+        <EmberTooltip @side="left" @popperContainer="body" @text="Reactivate user" />
         <i class="{{if this.working "loading spinner" "undo"}} icon"></i>
       </a>
     {{else}}
       <a href="#" class="text-danger" {{action "openTransferModal"}}>
-        {{ember-tooltip
-          side="left"
-          popperContainer="body"
-          text="Deactivate user"}}
+        <EmberTooltip @side="left" @popperContainer="body" @text="Deactivate user" />
         <i class="{{if this.working "loading spinner" "times"}} icon"></i>
       </a>
     {{/if}}
@@ -47,7 +38,7 @@
   </div>
 </div>
 
-{{#ui-modal name="modal__transfer-projects" id=this.modalId class="small form"}}
+<UiModal @name="modal__transfer-projects" @id={{this.modalId}} @class="small form">
   <div class="header">
     Transfer {{this.user.fullName}}'s projects
   </div>
@@ -74,7 +65,7 @@
 
     {{#if this.projects.length}}
       <label for={{this.dropdownId}}>Transfer to</label>
-      {{#ui-dropdown class="fluid selection" id=this.dropdownId selected=this.newOwner onChange=(action (mut this.newOwner)) as |execute mapper|}}
+      <UiDropdown @class="fluid selection" @id={{this.dropdownId}} @selected={{this.newOwner}} @onChange={{action (mut this.newOwner)}} as |execute mapper|>
         <div class="default text">New Owner</div>
         <i class="dropdown icon"></i>
         <div class="menu">
@@ -84,11 +75,11 @@
             </div>
           {{/each}}
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
     {{/if}}
   </div>
   <div class="actions">
     <button class="ui inverted red button" {{action "cancel"}}>Cancel</button>
     <button class="ui primary button" {{action (pipe (action "transferProjects")(action "toggleInactiveState" true))}} disabled={{this.disableDeactivate}}>Confirm Deactivation</button>
   </div>
-{{/ui-modal}}
+</UiModal>

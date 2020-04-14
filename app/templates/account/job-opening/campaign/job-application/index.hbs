@@ -20,10 +20,7 @@
 
     <div class="ui divider"></div>
 
-    {{#modals/add-notes
-      model=this.model
-      refresh=(action "refreshModel") as |openAddModal|
-    }}
+    <Modals::AddNotes @model={{this.model}} @refresh={{action "refreshModel"}} as |openAddModal|>
       <h3 class="dividing header">
         Notes
       </h3>
@@ -32,7 +29,7 @@
       {{else}}
         <span class="light text">No notes available.</span> <a href="#" {{action openAddModal}}>Add notes</a>
       {{/if}}
-    {{/modals/add-notes}}
+    </Modals::AddNotes>
 
     {{#if this.opening.screening}}
       <div class="ui divider"></div>
@@ -68,12 +65,7 @@
   </div>
 </div>
 
-{{#modals/static-content
-  modalId=this.responsesModalId
-  onResponse=(fn this.modalResponse "responses")
-  title="Screening responses"
-  hideActions=true
-}}
+<Modals::StaticContent @modalId={{this.responsesModalId}} @onResponse={{fn this.modalResponse "responses"}} @title="Screening responses" @hideActions={{true}}>
   <div class="ui very relaxed list">
     {{#each this.responses as |group|}}
       <div class="item content">
@@ -105,13 +97,8 @@
       </div>
     {{/each}}
   </div>
-{{/modals/static-content}}
+</Modals::StaticContent>
 
-{{#modals/static-content
-  modalId=this.coverLetterModalId
-  onResponse=(fn this.modalResponse "coverLetter")
-  title=this.coverLetterTitle
-  hideActions=true
-}}
+<Modals::StaticContent @modalId={{this.coverLetterModalId}} @onResponse={{fn this.modalResponse "coverLetter"}} @title={{this.coverLetterTitle}} @hideActions={{true}}>
   {{this.model.coverLetter}}
-{{/modals/static-content}}
+</Modals::StaticContent>

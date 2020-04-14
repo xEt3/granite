@@ -1,5 +1,5 @@
 <div class={{if this.highlightRow "highlight-invoice-row"}}>
-  {{#link-to "account.settings.billing.invoice" this.transaction.id}}
+  <LinkTo @route="account.settings.billing.invoice" @model={{this.transaction.id}}>
     <div class="ui three column very relaxed grid text-black transaction-item {{if this.isRejected 'transaction-item--canceled'}}">
       <div class="column">
         <span class="payment-date">{{time this.transaction.createdAt "MMMM Do, YYYY"}}</span>
@@ -17,6 +17,6 @@
         </EmberTooltip>
       {{/if}}
     </div>
-  {{/link-to}}
+  </LinkTo>
   <div class="ui divider"></div>
 </div>

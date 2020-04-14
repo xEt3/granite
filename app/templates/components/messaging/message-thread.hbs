@@ -30,42 +30,17 @@
   <div class="ui stackable grid">
     <div class="twelve wide column field">
       <div class="ui icon input">
-        {{input
-          type="text"
-          value=this.message
-          placeholder=(if this.fileIsAdded "Add a comment to this file..." "Type a message...")
-        }}
+        <Input @type="text" @value={{this.message}} placeholder={{if this.fileIsAdded "Add a comment to this file..." "Type a message..."}} />
 
         <i class="paperclip icon dropzone__attach-trigger" role="button" {{action "removeFile"}}></i>
       </div>
     </div>
     <div class="four wide column field">
-      {{#form/action-button type="submit" disabled=(not (or this.message this.fileIsAdded)) class="ui fluid green button"}}
+      <Form::ActionButton @type="submit" @disabled={{not (or this.message this.fileIsAdded)}} @class="ui fluid green button">
         Send{{if this.fileIsAdded " file"}}
-      {{/form/action-button}}
+      </Form::ActionButton>
     </div>
   </div>
 
-  {{drop-zone
-    id=this.dropzoneId
-    url=this.fileEndpoint
-    class="dropzone__messaging"
-    uploadMultiple=false
-    acceptedFiles=".doc,.docx,.pdf,.rtf,.txt,.jpg,.png,.gif,.xls,.xlsx"
-    maxFiles=1
-    method="put"
-    autoProcessQueue=false
-    dictDefaultMessage=""
-    thumbnailHeight=100
-    thumbnailWidth=100
-    thumbnailMethod="contain"
-    headers=(hash X-API-Token=this.auth.token)
-    addedfile=(action "addedFile")
-    error=(action "uploadError")
-    removedfile=(action "didRemoveFile")
-    uploadprogress=(action "uploadProgressUpdate")
-    success=(action "uploadedFile")
-    capture="camera"
-    addRemoveLinks=true
-    clickable=".dropzone__attach-trigger"}}
+  <DropZone @id={{this.dropzoneId}} @url={{this.fileEndpoint}} @class="dropzone__messaging" @uploadMultiple={{false}} @acceptedFiles=".doc,.docx,.pdf,.rtf,.txt,.jpg,.png,.gif,.xls,.xlsx" @maxFiles={{1}} @method="put" @autoProcessQueue={{false}} @dictDefaultMessage="" @thumbnailHeight={{100}} @thumbnailWidth={{100}} @thumbnailMethod="contain" @headers={{hash X-API-Token=this.auth.token}} @addedfile={{action "addedFile"}} @error={{action "uploadError"}} @removedfile={{action "didRemoveFile"}} @uploadprogress={{action "uploadProgressUpdate"}} @success={{action "uploadedFile"}} @capture="camera" @addRemoveLinks={{true}} @clickable=".dropzone__attach-trigger" />
 </form>

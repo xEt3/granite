@@ -13,11 +13,7 @@
     </button>
   </div>
 
-  {{#sortable-group
-    tagName="ol"
-    class=this.sortGroupClass
-    onChange="reorderElements"
-    as |group|}}
+  <SortableGroup @tagName="ol" @class={{this.sortGroupClass}} @onChange="reorderElements" as |group|>
     {{#each this.form.elements as |element index|}}
       {{form/form-element
         element
@@ -29,18 +25,15 @@
         scoring=this.model.applicantScoring
         onRemove=(action "deleteFormElement")}}
     {{/each}}
-  {{/sortable-group}}
+  </SortableGroup>
   {{#unless this.showingPreview}}
     <button class="ui primary fluid button" type="button" {{action "addFormElement"}}><i class="plus icon"></i>Add a question</button>
   {{/unless}}
 
   <div class="ui divider"></div>
   <form {{action "saveAndContinue" on="submit"}}>
-    {{#form/action-button
-      type="submit"
-      class="ui huge fluid green button"
-      loading=this.working}}
+    <Form::ActionButton @type="submit" @class="ui huge fluid green button" @loading={{this.working}}>
       Next
-    {{/form/action-button}}
+    </Form::ActionButton>
   </form>
 </div>

@@ -2,7 +2,7 @@
   {{yield this.startApplication}}
 {{/if}}
 
-{{#ui-modal name="application" id=this.modalId}}
+<UiModal @name="application" @id={{this.modalId}}>
   <div class="header">
     Add Application
   </div>
@@ -11,32 +11,32 @@
       <div class="fields">
         <div class="five wide field">
           <label for="first-name">First Name*</label>
-          {{#auto-focus}}
-            {{validated-input type="text" model=this.newApplicant valuePath="firstName" placeholder="First Name" id="first-name"}}
-          {{/auto-focus}}
+          <AutoFocus>
+            <ValidatedInput @type="text" @model={{this.newApplicant}} @valuePath="firstName" @placeholder="First Name" @id="first-name" />
+          </AutoFocus>
         </div>
         <div class="three wide field">
           <label for="middle-name">Middle Name</label>
-          {{input type="text" value=this.newApplicant.middleName placeholder="Middle" id="middle-name"}}
+          <Input @type="text" @value={{this.newApplicant.middleName}} placeholder="Middle" @id="middle-name" />
         </div>
         <div class="five wide field">
           <label for="last-name">Last Name*</label>
-          {{validated-input type="text" model=this.newApplicant valuePath="lastName" placeholder="Last Name" id="last-name"}}
+          <ValidatedInput @type="text" @model={{this.newApplicant}} @valuePath="lastName" @placeholder="Last Name" @id="last-name" />
         </div>
       </div>
       <div class="two fields">
         <div class="field">
           <label for="employee-phone">Phone Number*</label>
-          {{masked-input type="tel" placeholder="Employee Phone #" id="employee-phone" mask="(111) 111-1111" value=this.newApplicant.phone on-change=(action (mut this.newApplicant.phone) value="target.value")}}
+          <MaskedInput @type="tel" @placeholder="Employee Phone #" @id="employee-phone" @mask="(111) 111-1111" @value={{this.newApplicant.phone}} @on-change={{action (mut this.newApplicant.phone) value="target.value"}} />
         </div>
         <div class="field">
           <label for="email">Email*</label>
-          {{validated-input type="email" model=this.newApplicant valuePath="email" placeholder="Email" id="email"}}
+          <ValidatedInput @type="email" @model={{this.newApplicant}} @valuePath="email" @placeholder="Email" @id="email" />
         </div>
       </div>
       <div class="field">
         <label for="stage-selector">Application Stage</label>
-        {{#ui-dropdown class="selection" id="stage-selector" selected=this.newApplication.stage onChange=(action (mut this.newApplication.stage)) as |execute mapper|}}
+        <UiDropdown @class="selection" @id="stage-selector" @selected={{this.newApplication.stage}} @onChange={{action (mut this.newApplication.stage)}} as |execute mapper|>
           <i class="dropdown icon"></i>
           <div class="default text">No stage</div>
           <div class="menu">
@@ -49,12 +49,12 @@
               </div>
             {{/each}}
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       </div>
 
       <div class="field">
         <label for="cover-letter">Cover Letter</label>
-        {{textarea rows="5" placeholder="Cover Letter" value=this.newApplication.coverLetter}}
+        <Textarea @rows="5" placeholder="Cover Letter" @value={{this.newApplication.coverLetter}} />
       </div>
 
       <div class="field">
@@ -69,21 +69,7 @@
             Resume
           {{/if}}
         </label>
-        {{drop-zone
-          class="input__dropzone"
-          url=this.resumeEndpoint
-          uploadMultiple=false
-          acceptedFiles=".doc,.docx,.pdf,.rtf,.txt"
-          maxFiles=1
-          autoProcessQueue=false
-          dictDefaultMessage="Drop or Click to Add Resume"
-          thumbnailWidth="175"
-          headers=(hash X-API-Token=this.auth.token)
-          addedfile=(action "addedFile")
-          error=(action "uploadError")
-          uploadprogress=(action "uploadProgressUpdate")
-          success=(action "uploadedFile")
-          capture="camera"}}
+        <DropZone @class="input__dropzone" @url={{this.resumeEndpoint}} @uploadMultiple={{false}} @acceptedFiles=".doc,.docx,.pdf,.rtf,.txt" @maxFiles={{1}} @autoProcessQueue={{false}} @dictDefaultMessage="Drop or Click to Add Resume" @thumbnailWidth="175" @headers={{hash X-API-Token=this.auth.token}} @addedfile={{action "addedFile"}} @error={{action "uploadError"}} @uploadprogress={{action "uploadProgressUpdate"}} @success={{action "uploadedFile"}} @capture="camera" />
       </div>
     </form>
   </div>
@@ -96,4 +82,4 @@
       <i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

@@ -8,22 +8,16 @@
     {{/if}}
   </div>
   <div class="right floated">
-    {{#link-to "account.anatomy.department.edit" this.department.id}}
-      {{ember-tooltip
-        side="left"
-        popperContainer="body"
-        text="Edit department"}}
+    <LinkTo @route="account.anatomy.department.edit" @model={{this.department.id}}>
+      <EmberTooltip @side="left" @popperContainer="body" @text="Edit department" />
       <i class="edit icon"></i>
-    {{/link-to}}
-    {{#confirm-modal deleteContext=this.department.name tagName="span" as |confirm|}}
+    </LinkTo>
+    <ConfirmModal @deleteContext={{this.department.name}} @tagName="span" as |confirm|>
       <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}>
-        {{ember-tooltip
-          side="left"
-          popperContainer="body"
-          text="Delete department"}}
+        <EmberTooltip @side="left" @popperContainer="body" @text="Delete department" />
         <i class="trash icon"></i>
       </a>
-    {{/confirm-modal}}
+    </ConfirmModal>
   </div>
   <div class="meta">
     <span class="ui small text right floated">Created {{time-ago this.department.created}} {{#if this.department.creator.fullName}}by {{this.department.creator.fullName}}{{/if}}</span>

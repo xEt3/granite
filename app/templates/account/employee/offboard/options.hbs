@@ -11,7 +11,7 @@
           @text="Used for automated exit interviews, final address collection, etc."/>
       </i>
     </label>
-    {{input type="email" value=this.model.finalEmail placeholder="Final Email" id="final-email"}}
+    <Input @type="email" @value={{this.model.finalEmail}} placeholder="Final Email" @id="final-email" />
   </div>
 
   <div class={{if this.model.autoExitInterview "three fields" "field"}}>
@@ -46,13 +46,13 @@
       <div class="field">
         <label for="exit-interview-form">
           Form to use*
-          {{#link-to "account.settings.index.forms" target="_blank"}}
+          <LinkTo @route="account.settings.index.forms" @target="_blank">
             <EmberTooltip
               @side="top"
               @popperContainer="body"
               @text="Manage your forms"/>
             <i class="ui wrench icon"></i>
-          {{/link-to}}
+          </LinkTo>
           <Modals::FormCreator
             @formType="exit-interview"
             @onNotify=true
@@ -69,7 +69,7 @@
           <div class="default text">Select a form to use</div>
           <i class="dropdown icon"></i>
           <div class="menu">
-            <div class="item" data-value="">Default Form</div>
+            <div class="item" data-value>Default Form</div>
             {{#each this.availableExitForms as |exitForm|}}
               <div class="item" data-value={{map-value mapper exitForm}}>
                 {{exitForm.name}}
@@ -95,16 +95,16 @@
     <div class="animated fadeInUp">
       <div class="field">
         <label for="address-line-1">Address Line 1</label>
-        {{input type="text" value=this.model.finalAddressLine1 placeholder="Address Line 1" id="address-line-1"}}
+        <Input @type="text" @value={{this.model.finalAddressLine1}} placeholder="Address Line 1" @id="address-line-1" />
       </div>
       <div class="field">
         <label for="address-line-2">Address Line 2</label>
-        {{input type="text" value=this.model.finalAddressLine2 placeholder="Address Line 2" id="address-line-2"}}
+        <Input @type="text" @value={{this.model.finalAddressLine2}} placeholder="Address Line 2" @id="address-line-2" />
       </div>
       <div class="three fields">
         <div class="field">
           <label for="address-city">City</label>
-          {{input type="text" value=this.model.finalAddressCity placeholder="City" id="address-city"}}
+          <Input @type="text" @value={{this.model.finalAddressCity}} placeholder="City" @id="address-city" />
         </div>
         <div class="field">
           <label for="state-name">State</label>
@@ -126,7 +126,7 @@
         </div>
         <div class="field">
           <label for="address-zip">Zip</label>
-          {{input type="text" value=this.model.finalAddressZip placeholder="Zip" id="address-zip"}}
+          <Input @type="text" @value={{this.model.finalAddressZip}} placeholder="Zip" @id="address-zip" />
         </div>
       </div>
     </div>

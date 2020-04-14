@@ -6,5 +6,5 @@
 
 <div class="ui divider"></div>
 <form {{action "save" this.model on="submit"}}>
-  {{#form/action-button type="submit" class="ui positive fluid huge button" loading=this.working}}Save Corrective Action{{/form/action-button}}
+  <Form::ActionButton @type="submit" @class="ui positive fluid huge button" @loading={{this.working}}>Save Corrective Action</Form::ActionButton>
 </form>

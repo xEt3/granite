@@ -1,25 +1,16 @@
 {{#if this.missingRelationship}}
   {{column}}
-  {{ember-tooltip
-    side="top"
-    popperContainer="body"
-    text=this.popupMessage}}
+  <EmberTooltip @side="top" @popperContainer="body" @text={{this.popupMessage}} />
   <a href="#" {{action "addAction"}}>
     <i class="exclamation circle icon"></i>
   </a>
 {{else if this.missingRequiredFields}}
-  {{ember-tooltip
-    side="top"
-    popperContainer="body"
-    text="This is a required field"}}
+  <EmberTooltip @side="top" @popperContainer="body" @text="This is a required field" />
   {{column}}
   <i class="exclamation circle icon"></i>
 {{else}}
   {{#if this.hasEnumInvalidation}}
-    {{ember-tooltip
-      side="top"
-      popperContainer="body"
-      text=this.hasEnumInvalidation}}
+    <EmberTooltip @side="top" @popperContainer="body" @text={{this.hasEnumInvalidation}} />
     <i class="exclamation circle icon"></i>
   {{/if}}
   {{column}}

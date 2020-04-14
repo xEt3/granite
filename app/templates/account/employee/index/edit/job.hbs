@@ -1,20 +1,14 @@
 <div class="two fields">
   <div class="field">
     <label for="job-title">Job Title</label>
-    {{validated-input type="text" model=this.model valuePath="jobTitle" placeholder="Job Title" id="job-title"}}
+    <ValidatedInput @type="text" @model={{this.model}} @valuePath="jobTitle" @placeholder="Job Title" @id="job-title" />
   </div>
-  {{ui-calendar
-    class="field"
-    type="date"
-    startMode="year"
-    label="Hire Date"
-    dateValue=this.model.hireDate
-    onChange=(action (mut this.model.hireDate))}}
+  <UiCalendar @class="field" @type="date" @startMode="year" @label="Hire Date" @dateValue={{this.model.hireDate}} @onChange={{action (mut this.model.hireDate)}} />
 </div>
 <div class="three fields">
   <div class="field">
     <label for="exemption-status">Exemption Status</label>
-    {{#ui-dropdown class="selection" selected=this.model.exempt onChange=(action (mut this.model.exempt)) as |execute mapper|}}
+    <UiDropdown @class="selection" @selected={{this.model.exempt}} @onChange={{action (mut this.model.exempt)}} as |execute mapper|>
       <div class="default text" value={{this.model.exempt}}></div>
       <i class="dropdown icon"></i>
       <div class="menu">
@@ -25,14 +19,14 @@
           Exempt
         </div>
       </div>
-    {{/ui-dropdown}}
+    </UiDropdown>
   </div>
   <div class="field">
     <label for="pay-rate">Pay Rate</label>
     <div class="ui left icon input pay-rate-number">
-      {{input type="number" step="0.01" value=this.model.payRate id="pay-rate"}}
+      <Input @type="number" @step="0.01" @value={{this.model.payRate}} @id="pay-rate" />
       <i class="dollar icon"></i>
-      {{#ui-dropdown class="inline pay-rate-unit" selected=this.model.payRateType onChange=(action (mut this.model.payRateType))}}
+      <UiDropdown @class="inline pay-rate-unit" @selected={{this.model.payRateType}} @onChange={{action (mut this.model.payRateType)}}>
         <div class="default text">Unit</div>
         <i class="dropdown icon"></i>
         <div class="menu">
@@ -46,38 +40,34 @@
             hourly
           </div>
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
     </div>
   </div>
   <div class="field">
     <label for="workers-comp">Workers Comp Class Code</label>
-    {{input type="text" id="workers-comp" value=this.model.workersCompClassCode}}
+    <Input @type="text" @id="workers-comp" @value={{this.model.workersCompClassCode}} />
   </div>
 </div>
 <div class={{if this.auth.user.company.collectEEO "ui two fields" "field"}}>
   <div class="field">
     <label for="job-description">Job Description</label>
-    {{#ui-dropdown class="selection" selected=this.model.jobDescription onChange=(action (mut this.model.jobDescription)) as |execute mapper|}}
+    <UiDropdown @class="selection" @selected={{this.model.jobDescription}} @onChange={{action (mut this.model.jobDescription)}} as |execute mapper|>
       <div class="default text">Job Description</div>
       <i class="dropdown icon"></i>
       <div class="menu">
-        <div class="item" data-value="">No Job Description</div>
+        <div class="item" data-value>No Job Description</div>
         {{#each this.jobDescriptions as |jobDescription|}}
           <div class="item" data-value={{map-value mapper jobDescription}}>
             {{jobDescription.title}}
           </div>
         {{/each}}
       </div>
-    {{/ui-dropdown}}
+    </UiDropdown>
   </div>
   {{#if this.auth.user.company.collectEEO}}
     <div class="field">
       <label for="eeo-job-category">EEO Job Category</label>
-      {{#ui-dropdown
-        class="selection"
-        selected=this.model.eeoJobCategory
-        onChange=(action (mut this.model.eeoJobCategory))
-      }}
+      <UiDropdown @class="selection" @selected={{this.model.eeoJobCategory}} @onChange={{action (mut this.model.eeoJobCategory)}}>
         <div class="default text">-- Select EEO Job Category --</div>
         <i class="dropdown icon"></i>
         <div class="menu">
@@ -87,52 +77,52 @@
             </div>
           {{/each}}
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
     </div>
   {{/if}}
 </div>
 <div class="field">
   <label for="job-location">Location</label>
-  {{#ui-dropdown class="search selection" selected=this.model.location onChange=(action (mut this.model.location)) as |execute mapper|}}
+  <UiDropdown @class="search selection" @selected={{this.model.location}} @onChange={{action (mut this.model.location)}} as |execute mapper|>
     <div class="default text">Location</div>
     <i class="dropdown icon"></i>
     <div class="menu">
-      <div class="item" data-value="">No Location</div>
+      <div class="item" data-value>No Location</div>
       {{#each this.locations as |location|}}
         <div class="item" data-value={{map-value mapper location}}>
           {{location.name}}
         </div>
       {{/each}}
     </div>
-  {{/ui-dropdown}}
+  </UiDropdown>
 </div>
 <div class="field">
   <label for="job-department">Department</label>
-  {{#ui-dropdown class="search selection" selected=this.model.department onChange=(action (mut this.model.department)) as |execute mapper|}}
+  <UiDropdown @class="search selection" @selected={{this.model.department}} @onChange={{action (mut this.model.department)}} as |execute mapper|>
     <div class="default text">Department</div>
     <i class="dropdown icon"></i>
     <div class="menu">
-      <div class="item" data-value="">No Department</div>
+      <div class="item" data-value>No Department</div>
       {{#each this.departments as |department|}}
         <div class="item" data-value={{map-value mapper department}}>
           {{department.name}}
         </div>
       {{/each}}
     </div>
-  {{/ui-dropdown}}
+  </UiDropdown>
 </div>
 <div class="field">
   <label for="supervisor">Supervisor</label>
-  {{#ui-dropdown class="search selection" selected=this.model.supervisor onChange=(action (mut this.model.supervisor)) as |execute mapper|}}
+  <UiDropdown @class="search selection" @selected={{this.model.supervisor}} @onChange={{action (mut this.model.supervisor)}} as |execute mapper|>
     <div class="default text">Supervisor</div>
     <i class="dropdown icon"></i>
     <div class="menu">
-      <div class="item" data-value="">No Supervisor</div>
+      <div class="item" data-value>No Supervisor</div>
       {{#each this.employees as |supervisor|}}
         <div class="item" data-value={{map-value mapper supervisor}}>
           {{supervisor.fullName}}
         </div>
       {{/each}}
     </div>
-  {{/ui-dropdown}}
+  </UiDropdown>
 </div>

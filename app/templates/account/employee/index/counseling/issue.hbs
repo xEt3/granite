@@ -1,5 +1,5 @@
 <div class="ui raised padded segment container clearfix animated fadeInUp">
-  {{#confirm-modal deleteContext=this.model.title as |confirmDelete|}}
+  <ConfirmModal @deleteContext={{this.model.title}} as |confirmDelete|>
     <hgroup class="clearfix">
       <p>
         <LinkTo @route="account.employee.index.counseling">
@@ -9,9 +9,9 @@
       </p>
 
       <h2 class="ui left floated header">
-        {{#link-to "account.employee.index.counseling.issue"}}
+        <LinkTo @route="account.employee.index.counseling.issue">
           {{this.model.title}}
-        {{/link-to}}
+        </LinkTo>
 
         <div class="sub header">
           <strong>{{this.model.type}}</strong>
@@ -24,7 +24,7 @@
       </h2>
 
       {{#unless this.onCorrectiveActionSubroute}}
-        {{#ui-dropdown class="item icon top right pointing right floated"}}
+        <UiDropdown @class="item icon top right pointing right floated">
           <i class="wrench icon"></i><i class="dropdown icon"></i>
           <div class="menu">
             {{#if correctiveActions}}
@@ -38,10 +38,10 @@
               <i class="trash icon"></i>Delete Record
             </a>
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       {{/unless}}
     </hgroup>
-  {{/confirm-modal}}
+  </ConfirmModal>
 
   <div class="ui divider"></div>
   {{outlet}}

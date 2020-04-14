@@ -5,10 +5,8 @@
   <p>Manage various forms from across different GraniteHR modules.</p>
   <div class="ui divider"></div>
 
-  {{#modals/form-creator
-    onNotify=(action "onNotify")
-    onCreateForm=(route-action "refresh") as |openModal|}}
-    {{#confirm-modal class="item" as |confirm|}}
+  <Modals::FormCreator @onNotify={{action "onNotify"}} @onCreateForm={{route-action "refresh"}} as |openModal|>
+    <ConfirmModal @class="item" as |confirm|>
       <div class="ui divided items">
         {{#each this.model as |formRecord|}}
           {{list-item/form-item
@@ -19,6 +17,6 @@
           <h2 class="ui center aligned header">No {{this.resourceName}} available.</h2>
         {{/each}}
       </div>
-    {{/confirm-modal}}
-  {{/modals/form-creator}}
+    </ConfirmModal>
+  </Modals::FormCreator>
 </div>

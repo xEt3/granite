@@ -2,7 +2,7 @@
   {{#liquid-if this.group}}
     <h2 class="ui center aligned header">{{this.group.history.length}} {{inflect-text "Changes" this.group.history.length}} on {{time this.group.date "MMMM Do"}}</h2>
     {{#each this.group.history as |history|}}
-      {{list-item/history-item history=history}}
+      <ListItem::HistoryItem @history={{history}} />
     {{/each}}
   {{/liquid-if}}
 </div>

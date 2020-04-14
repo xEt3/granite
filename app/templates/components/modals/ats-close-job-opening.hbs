@@ -2,7 +2,7 @@
   {{yield this.startConfirmation}}
 {{/if}}
 
-{{#ui-modal name="profile" id=this.modalId}}
+<UiModal @name="profile" @id={{this.modalId}}>
   <div class="header">
     Make sure to close your manual applicant sources!
   </div>
@@ -22,4 +22,4 @@
       <i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

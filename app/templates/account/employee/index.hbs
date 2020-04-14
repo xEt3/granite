@@ -21,29 +21,29 @@
 
     <div class="right menu">
       {{#if this.visualIdRequired}}
-        {{#link-to "account.employee.index.visual-id" this.model.id class="item text-red"}}<i
-             class="exclamation icon"></i>Requires Visual ID{{/link-to}}
+        <LinkTo @route="account.employee.index.visual-id" @model={{this.model.id}} class="item text-red"><i
+             class="exclamation icon"></i>Requires Visual ID</LinkTo>
       {{/if}}
       {{#if this.model.onboarding}}
-        {{#link-to "account.employee.onboard" this.model.id class="item text-blue"}}<i class="wizard icon"></i>Continue
-          Onboarding{{/link-to}}
+        <LinkTo @route="account.employee.onboard" @model={{this.model.id}} class="item text-blue"><i class="wizard icon"></i>Continue
+          Onboarding</LinkTo>
       {{/if}}
       {{#if this.model.offboarding}}
-        {{#link-to "account.employee.offboard" class="item text-red"}}<i class="wizard icon"></i>Continue
-          Offboarding{{/link-to}}
+        <LinkTo @route="account.employee.offboard" class="item text-red"><i class="wizard icon"></i>Continue
+          Offboarding</LinkTo>
       {{/if}}
 
-      {{#ui-dropdown class="item icon top right"}}
+      <UiDropdown @class="item icon top right">
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
-          {{#link-to "account.employee.index.edit" class="item"}}<i class="edit icon"></i>Edit{{/link-to}}
+          <LinkTo @route="account.employee.index.edit" class="item"><i class="edit icon"></i>Edit</LinkTo>
           {{#if (not (or this.model.onboarding this.model.offboardingCompleted))}}
-            {{#link-to "account.employee.offboard.index" class="item"}}<i class="cut icon"></i>Offboard
-              Employee...{{/link-to}}
+            <LinkTo @route="account.employee.offboard.index" class="item"><i class="cut icon"></i>Offboard
+              Employee...</LinkTo>
           {{/if}}
           {{#if (not this.model.activatedOn)}}
             <div class="item">
-              {{#confirm-modal as |confirmActivation|}}
+              <ConfirmModal as |confirmActivation|>
                 <a href="#" {{action (pipe confirmActivation (action "resend"))}}>
                   <i class="envelope icon"></i>Resend Activation Email...
                   {{#if this.working}}
@@ -52,18 +52,18 @@
                     </div>
                   {{/if}}
                 </a>
-              {{/confirm-modal}}
+              </ConfirmModal>
             </div>
           {{/if}}
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
-            {{#confirm-modal deleteContext=this.model.fullName as |confirm|}}
+            <ConfirmModal @deleteContext={{this.model.fullName}} as |confirm|>
               <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}><i
                    class="trash icon"></i>Delete Record</a>
-            {{/confirm-modal}}
+            </ConfirmModal>
           </div>
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
     </div>
   </UiMenu>
 
@@ -72,25 +72,25 @@
     <div class="ui equal width stackable grid container">
       <div class="twelve wide column">
         <h1 class="ui left floated center aligned header employee-header-group">
-          {{#ui-dimmer class="ui circular image" onElement=".ui.segment" variation="inverted" duration=(hash show=1500) on="hover"}}
-            {{#link-to "account.employee.index.edit-picture" class="ui circular segment dimmer hover-circular"}}
+          <UiDimmer @class="ui circular image" @onElement=".ui.segment" @variation="inverted" @duration={{hash show=1500}} @on="hover">
+            <LinkTo @route="account.employee.index.edit-picture" class="ui circular segment dimmer hover-circular">
               <div class="content">
                 <div class="center text-white">
                   <div>Edit Picture</div>
                 </div>
               </div>
-            {{/link-to}}
+            </LinkTo>
             <div class="ui small circular image employee-image">
-              {{display/employee-picture url=this.model.picture employeeId=this.model.id}}
+              <Display::EmployeePicture @url={{this.model.picture}} @employeeId={{this.model.id}} />
             </div>
-          {{/ui-dimmer}}
+          </UiDimmer>
           <div class="inverted content text-white employee-basic-meta">
             {{this.model.fullName}}
             <div class="sub header text-white">
               {{#if this.model.jobDescription}}
-                {{#link-to "account.job-description" this.model.jobDescription.id}}
+                <LinkTo @route="account.job-description" @model={{this.model.jobDescription.id}}>
                   {{this.model.jobTitle}} <br>
-                {{/link-to}}
+                </LinkTo>
               {{else}}
                 {{this.model.jobTitle}} <br>
               {{/if}}

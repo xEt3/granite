@@ -6,15 +6,12 @@
   <div class="right aligned text floated menu__actions">
     <h3 class="ui header">
       {{#liquid-if this.addingLocation}}
-        {{#link-to "account.anatomy.locations.index" class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
+        <LinkTo @route="account.anatomy.locations.index" class="right floated text-danger"><i class="remove icon"></i></LinkTo>
       {{else}}
-        {{#link-to "account.anatomy.locations.index.new" class="right floated"}}
-          {{ember-tooltip
-            side="left"
-            popperContainer="body"
-            text="Add a location"}}
+        <LinkTo @route="account.anatomy.locations.index.new" class="right floated">
+          <EmberTooltip @side="left" @popperContainer="body" @text="Add a location" />
           <i class="plus icon"></i>
-        {{/link-to}}
+        </LinkTo>
       {{/liquid-if}}
     </h3>
   </div>
@@ -26,10 +23,10 @@
 
 <div class="ui divided items">
   {{#each this.model as |location|}}
-    {{list-item/location-item location=location onDelete=(action "delete" )}}
+    <ListItem::LocationItem @location={{location}} @onDelete={{action "delete"}} />
   {{else}}
     <h2 class="ui center aligned header">No locations available.</h2>
   {{/each}}
 </div>
 
-{{elements/x-pagination page=(readonly this.page) pages=(readonly this.pages) onchange=(action (mut this.page))}}
+<Elements::XPagination @page={{readonly this.page}} @pages={{readonly this.pages}} @onchange={{action (mut this.page)}} />

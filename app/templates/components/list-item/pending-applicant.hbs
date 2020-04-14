@@ -1,9 +1,6 @@
 <div class="content content__flex">
   <div class="field">
-    {{ui-checkbox
-      checked=this.isSelected
-      value=this.isSelected
-    }}
+    <UiCheckbox @checked={{this.isSelected}} @value={{this.isSelected}} />
   </div>
   <div class="header">
     <strong>{{this.model.person.firstName}} {{this.model.person.lastName}}</strong>
@@ -24,15 +21,8 @@
       {{/display/calc-color}}
     {{/if}}
   </div>
-  {{#link-to
-    "account.job-opening.campaign.job-application"
-    this.model.id
-    class="ui blue button list-item__button content__link"
-  }}
-    {{ember-tooltip
-      side="left"
-      popperContainer="body"
-      text="Open application"}}
+  <LinkTo @route="account.job-opening.campaign.job-application" @model={{this.model.id}} class="ui blue button list-item__button content__link">
+    <EmberTooltip @side="left" @popperContainer="body" @text="Open application" />
     <i class="fitted external square icon content__link"></i>
-  {{/link-to}}
+  </LinkTo>
 </div>

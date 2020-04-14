@@ -4,10 +4,7 @@
       {{this.application.person.firstName}} {{this.application.person.lastName}}
     </span>
     <div class="card-title-bar__controls">
-      {{#ui-dropdown
-        class="title-bar__control item icon top right pointing"
-        direction="downward"
-      }}
+      <UiDropdown @class="title-bar__control item icon top right pointing" @direction="downward">
         <i class="exchange icon"></i>
         <div class="menu">
           <div class="header">Move candidate to...</div>
@@ -15,11 +12,9 @@
             <a href="#" class="item" {{action "moveTo" stage}}>{{stage.name}}</a>
           {{/each}}
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
       {{#unless this.controlsDisabled}}
-        {{#ui-dropdown
-          class="title-bar__control item icon top right pointing"
-        }}
+        <UiDropdown @class="title-bar__control item icon top right pointing">
           <i class="setting icon"></i>
           <div class="menu">
             <a href="#" class="item" {{action this.onSchedule this.application}}><i class="calendar icon"></i> Schedule...</a>
@@ -32,7 +27,7 @@
               </a>
             {{/if}}
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       {{/unless}}
     </div>
   </div>
@@ -50,7 +45,7 @@
   </div>
 
   <div class="card-content__application-link card-content__score-container">
-    {{#link-to "account.job-opening.campaign.job-application" this.application.id}}Open Application{{/link-to}}
+    <LinkTo @route="account.job-opening.campaign.job-application" @model={{this.application.id}}>Open Application</LinkTo>
     {{#if this.application.isScored}}
       {{#display/calc-color this.application.scoreAbs as |red green|}}
         {{! template-lint-disable }}
@@ -72,11 +67,11 @@
       {{/each}}
       {{#if (gt this.application.labels.length 3)}}
         <i class="gray-icon ellipsis horizontal icon">
-          {{#ember-tooltip side="top" popperContainer="body"}}
+          <EmberTooltip @side="top" @popperContainer="body">
             {{#each (drop 3 this.application.labels) as |label|}}
               {{custom-label label tagName="span" size="mini"}}
             {{/each}}
-          {{/ember-tooltip}}
+          </EmberTooltip>
         </i>
       {{/if}}
     </div>

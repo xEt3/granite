@@ -2,7 +2,7 @@
   {{yield this.startConfirmation}}
 {{/if}}
 
-{{#ui-modal name="profile" id=this.modalId class="confirm-modal basic small"}}
+<UiModal @name="profile" @id={{this.modalId}} @class="confirm-modal basic small">
   <i class="close icon"></i>
   <div class="header">
     {{if this.title this.title "Heads up!"}}
@@ -19,7 +19,7 @@
       <i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>
 
 {{!--
 {{#confirm-modal confirmContent="that" as |confirm|}}

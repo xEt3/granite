@@ -1,3 +1,3 @@
 {{#if this.showSteps}}
-  {{intro-js steps=this.steps start-if=this.start-if on-exit=(action "markAsShown" true) on-complete=(action "markAsShown" true)}}
+  <IntroJs @steps={{this.steps}} @start-if={{this.start-if}} @on-exit={{action "markAsShown" true}} @on-complete={{action "markAsShown" true}} />
 {{/if}}

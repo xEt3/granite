@@ -23,10 +23,7 @@
         {{#if this.hiddenKeys.length}}
           <strong>
             and {{this.hiddenKeys.length}} {{inflect-text "other" this.hiddenKeys.length}}
-            {{ember-tooltip
-              side="top"
-              popperContainer="body"
-              text=(join-array this.hiddenKeys)}}
+            <EmberTooltip @side="top" @popperContainer="body" @text={{join-array this.hiddenKeys}} />
           </strong>
         {{/if}}
         {{#if this.group.history.firstObject.creator}}
@@ -37,10 +34,7 @@
         {{#if this.hiddenKeys.length}}
           <strong>
             and {{this.hiddenKeys.length}} {{inflect-text "other" this.hiddenKeys.length}}
-            {{ember-tooltip
-              side="top"
-              popperContainer="body"
-              text=(join-array this.hiddenKeys)}}
+            <EmberTooltip @side="top" @popperContainer="body" @text={{join-array this.hiddenKeys}} />
           </strong>
         {{/if}}
 

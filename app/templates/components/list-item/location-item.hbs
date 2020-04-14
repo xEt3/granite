@@ -8,22 +8,16 @@
     {{/if}}
   </div>
   <div class="right floated">
-    {{#link-to "account.anatomy.location.edit" this.location.id}}
-      {{ember-tooltip
-        side="left"
-        popperContainer="body"
-        text="Edit location"}}
+    <LinkTo @route="account.anatomy.location.edit" @model={{this.location.id}}>
+      <EmberTooltip @side="left" @popperContainer="body" @text="Edit location" />
       <i class="edit icon"></i>
-    {{/link-to}}
-    {{#confirm-modal deleteContext=this.location.name tagName="span" as |confirm|}}
+    </LinkTo>
+    <ConfirmModal @deleteContext={{this.location.name}} @tagName="span" as |confirm|>
       <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}>
-        {{ember-tooltip
-          side="left"
-          popperContainer="body"
-          text="Delete location"}}
+        <EmberTooltip @side="left" @popperContainer="body" @text="Delete location" />
         <i class="trash icon"></i>
       </a>
-    {{/confirm-modal}}
+    </ConfirmModal>
   </div>
   <div class="meta">
     <p>

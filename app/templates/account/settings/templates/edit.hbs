@@ -11,27 +11,17 @@
     <div class="ui field">
       <label>
         {{contentKey.title}}
-        {{ember-tooltip
-          side="top"
-          popperContainer="body"
-          text=contentKey.description}}
+        <EmberTooltip @side="top" @popperContainer="body" @text={{contentKey.description}} />
         <i class="info circle icon"></i>
       </label>
-      {{textarea
-        value=(mut (get this.model.content contentKey.key))
-        rows="4"
-        spellcheck="true"}}
+      <Textarea @value={{mut (get this.model.content contentKey.key)}} @rows="4" @spellcheck="true" />
     </div>
   {{/each}}
 
   <div class="ui divider"></div>
-  {{#form/action-button
-    type="submit"
-    loading=this.working
-    class="ui large green fluid button"
-  }}
+  <Form::ActionButton @type="submit" @loading={{this.working}} @class="ui large green fluid button">
     Save Template
-  {{/form/action-button}}
+  </Form::ActionButton>
 
   <h5>Available form data</h5>
   {{#each this.definition.availableData as |data|}}

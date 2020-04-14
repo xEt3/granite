@@ -7,12 +7,7 @@
     <div class="ui six wide column">
       <form class="ui form" {{action "beginThread" on="submit"}}>
         <div class="field">
-          {{#ui-dropdown
-            class="fluid search multiple selection"
-            id="message-targets"
-            selected=this.messageParticipantTargets
-            onChange=(action (mut this.messageParticipantTargets)) as |execute mapper|
-          }}
+          <UiDropdown @class="fluid search multiple selection" @id="message-targets" @selected={{this.messageParticipantTargets}} @onChange={{action (mut this.messageParticipantTargets)}} as |execute mapper|>
             <i class="dropdown icon"></i>
             <div class="default text">Search or select people to message</div>
             <div class="menu">
@@ -22,15 +17,15 @@
                 </div>
               {{/each}}
             </div>
-          {{/ui-dropdown}}
+          </UiDropdown>
         </div>
 
         {{#liquid-if this.messageParticipantTargets.length}}
-          {{#form/action-button type="submit" class="ui fluid green button"}}
+          <Form::ActionButton @type="submit" @class="ui fluid green button">
             Start
             {{if (gt this.messageParticipantTargets.length 1) "Group"}}
             Chat
-          {{/form/action-button}}
+          </Form::ActionButton>
         {{/liquid-if}}
       </form>
 

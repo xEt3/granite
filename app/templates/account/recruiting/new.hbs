@@ -9,7 +9,7 @@
   <form class="ui form" {{action "save" on="submit"}}>
     <div class="field">
       <label for="job-title" class="sr-only">Job Title</label>
-      {{validated-input type="text" model=this.model valuePath="title" placeholder="Job Title" id="job-title" inputClass="ui large fluid input"}}
+      <ValidatedInput @type="text" @model={{this.model}} @valuePath="title" @placeholder="Job Title" @id="job-title" @inputClass="ui large fluid input" />
     </div>
 
     {{!-- <div class="field">
@@ -19,16 +19,11 @@
 
     <div class="field">
       <label for="secondary-description">Testing Description</label>
-      {{textarea value=this.model.description id="secondary-description" cols="80" rows="6" spellcheck="true"}}
+      <Textarea @value={{this.model.description}} @id="secondary-description" @cols="80" @rows="6" @spellcheck="true" />
     </div>
 
-    {{#form/action-button
-      type="submit"
-      class="ui positive button"
-      disabled=(or (not this.model.title) (not this.model.description))
-      loading=this.working
-    }}
+    <Form::ActionButton @type="submit" @class="ui positive button" @disabled={{or (not this.model.title) (not this.model.description)}} @loading={{this.working}}>
       Save
-    {{/form/action-button}}
+    </Form::ActionButton>
   </form>
 </div>

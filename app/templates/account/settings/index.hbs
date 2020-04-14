@@ -1,9 +1,9 @@
 <div class="ui secondary pointing menu">
-  {{#link-to "account.settings.index.index" class="item"}}Account{{/link-to}}
-  {{#link-to "account.settings.index.processes" class="item"}}Processes{{/link-to}}
-  {{#link-to "account.settings.index.features" class="item"}}Features{{/link-to}}
-  {{#link-to "account.settings.index.lists" class="item"}}Lists{{/link-to}}
-  {{#link-to "account.settings.index.forms" class="item"}}Forms{{/link-to}}
+  <LinkTo @route="account.settings.index.index" class="item">Account</LinkTo>
+  <LinkTo @route="account.settings.index.processes" class="item">Processes</LinkTo>
+  <LinkTo @route="account.settings.index.features" class="item">Features</LinkTo>
+  <LinkTo @route="account.settings.index.lists" class="item">Lists</LinkTo>
+  <LinkTo @route="account.settings.index.forms" class="item">Forms</LinkTo>
 </div>
 
 {{outlet}}

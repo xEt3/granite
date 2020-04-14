@@ -5,22 +5,22 @@
     </h1>
 
     <div class="right aligned text floated menu__actions">
-      {{#ui-dropdown class="right floated top pointing inline"}}
+      <UiDropdown @class="right floated top pointing inline">
         <h2 class="ui inline header"><a href="#" id="add-education"><i class="plus icon"></i></a></h2>
         <div class="menu">
           <h6 class="header">Add a new...</h6>
-          {{#link-to "account.employee.index.education.add" (query-params type="certification") class="item"}}
+          <LinkTo @route="account.employee.index.education.add" @query={{hash type="certification"}} class="item">
             <i class="icons">
               <i class="id card icon"></i>
               <i class="corner add icon"></i>
             </i> Certification
-          {{/link-to}}
-          {{#link-to "account.employee.index.education.add" (query-params type="training assignment") class="item"}}
+          </LinkTo>
+          <LinkTo @route="account.employee.index.education.add" @query={{hash type="training assignment"}} class="item">
             <i class="icons">
               <i class="graduation cap icon"></i>
               <i class="corner add icon"></i>
             </i> Training Assignment
-          {{/link-to}}
+          </LinkTo>
           {{!-- {{#link-to "account.employee.index.education.add" (query-params type="education") class="item"}}
             <i class="icons">
               <i class="text file icon"></i>
@@ -28,7 +28,7 @@
             </i> Education Document
           {{/link-to}} --}}
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
     </div>
   </hgroup>
   <div class="ui divider"></div>

@@ -1,14 +1,7 @@
-{{#ui-search
-  type="category"
-  class="ui fluid category search"
-  apiSettings=this.apiSettings
-  fields=this.search.fields
-  searchDelay=this.debounceInterval
-  onSelect=(action this.selected)
-}}
+<UiSearch @type="category" @class="ui fluid category search" @apiSettings={{this.apiSettings}} @fields={{this.search.fields}} @searchDelay={{this.debounceInterval}} @onSelect={{action this.selected}}>
   <div class="ui icon input">
-    {{input type="text" placeholder=this.placeholder class="prompt" value=this.query}}
+    <Input @type="text" placeholder={{this.placeholder}} class="prompt" @value={{this.query}} />
     <i class="search link icon"></i>
   </div>
   <div class="results"></div>
-{{/ui-search}}
+</UiSearch>

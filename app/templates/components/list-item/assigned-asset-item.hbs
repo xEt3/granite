@@ -12,27 +12,24 @@
       <div class="content">
         <div class="summary">
           {{#if this.assignment.assigner}}
-            {{#link-to "account.employee" this.assignment.assigner.id}}
+            <LinkTo @route="account.employee" @model={{this.assignment.assigner.id}}>
               {{this.assignment.assigner.fullName}}
-            {{/link-to}}
+            </LinkTo>
             assigned
           {{else}}
             Assigned
           {{/if}}
           from
-          {{#link-to "account.asset" this.asset.asset.id}}
+          <LinkTo @route="account.asset" @model={{this.asset.asset.id}}>
             {{this.asset.asset.name}}
-          {{/link-to}}
+          </LinkTo>
           on {{time this.asset.created}}
         </div>
       </div>
     </div>
     {{#if this.attributes.length}}
       <a href="#" {{action "toggleProperty" "details"}}>
-        {{ember-tooltip
-          side="right"
-          popperContainer="body"
-          text="View attributes"}}
+        <EmberTooltip @side="right" @popperContainer="body" @text="View attributes" />
         <i class="info circle icon"></i>
       </a>
     {{/if}}
@@ -52,9 +49,9 @@
     {{/if}}
   </div>
 </div>
-{{#confirm-modal confirmContent="Are you sure you want to unassign this item and return it to your stock?" as |confirm|}}
+<ConfirmModal @confirmContent="Are you sure you want to unassign this item and return it to your stock?" as |confirm|>
   <button class="ui bottom attached fluid button" role="button" {{action (pipe confirm (action "unassign"))}}>
     <i class="remove user icon"></i>
     Unassign asset
   </button>
-{{/confirm-modal}}
+</ConfirmModal>

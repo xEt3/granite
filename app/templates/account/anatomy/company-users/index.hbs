@@ -5,13 +5,10 @@
 
   <div class="right aligned text floated menu__actions">
     <h3 class="ui right floated header">
-      {{#link-to "account.anatomy.company-users.new" class="right floated"}}
-        {{ember-tooltip
-          side="left"
-          popperContainer="body"
-          text="Add a user"}}
+      <LinkTo @route="account.anatomy.company-users.new" class="right floated">
+        <EmberTooltip @side="left" @popperContainer="body" @text="Add a user" />
         <i class="plus icon"></i>
-      {{/link-to}}
+      </LinkTo>
     </h3>
   </div>
 </hgroup>
@@ -29,4 +26,4 @@
     {{/each}}
   </div>
 
-{{elements/x-pagination page=(readonly this.page) pages=(readonly this.pages) onchange=(action (mut this.page))}}
+<Elements::XPagination @page={{readonly this.page}} @pages={{readonly this.pages}} @onchange={{action (mut this.page)}} />

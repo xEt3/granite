@@ -4,8 +4,8 @@
 
 {{#if this.projectSlug}}
   <p>
-    {{#link-to "account.action-item" this.projectSlug}}
+    <LinkTo @route="account.action-item" @model={{this.projectSlug}}>
       Go to project
-    {{/link-to}}
+    </LinkTo>
   </p>
 {{/if}}

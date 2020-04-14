@@ -5,9 +5,9 @@
   </hgroup>
   <div class="ui divider"></div>
 
-  {{input/ui-input type="password" inputId="user-password" placeholder="Enter a password" value=this.password}}
-  {{input/ui-input type="password" inputId="user-password-confirm" placeholder="Confirm your password" value=this.passwordConfirm}}
+  <Input::UiInput @type="password" @inputId="user-password" @placeholder="Enter a password" @value={{this.password}} />
+  <Input::UiInput @type="password" @inputId="user-password-confirm" @placeholder="Confirm your password" @value={{this.passwordConfirm}} />
 
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class="ui massive fluid green button" loading=this.working disabled=(not this.enableActivation)}}Activate Your Account{{/form/action-button}}
+  <Form::ActionButton @type="submit" @class="ui massive fluid green button" @loading={{this.working}} @disabled={{not this.enableActivation}}>Activate Your Account</Form::ActionButton>
 </form>

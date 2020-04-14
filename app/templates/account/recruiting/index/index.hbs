@@ -1,14 +1,7 @@
-{{stateful-intro-js
-  user=this.auth.user
-  steps=this.intros
-  start-if=true
-  hintKey="recruiting-campaigns-index"}}
+<StatefulIntroJs @user={{this.auth.user}} @steps={{this.intros}} @start-if={{true}} @hintKey="recruiting-campaigns-index" />
 
 {{#if this.showFilters}}
-  {{#display/filter-pane
-    class="ui content form padded segment container"
-    onChange=(action "updateFilter") as |filter|
-  }}
+  <Display::FilterPane @class="ui content form padded segment container" @onChange={{action "updateFilter"}} as |filter|>
     <h2>
       <i class="filter icon"></i> Filters
       <div class="ui horizontal list right floated">
@@ -49,7 +42,7 @@
           class="center aligned text field"}}
       </div>
     {{/filter.section}}
-  {{/display/filter-pane}}
+  </Display::FilterPane>
 {{/if}}
 
 <div class="ui raised padded segment container clearfix animated fadeInUp">
@@ -60,18 +53,12 @@
 
     <div class="right aligned text floated menu__actions">
       <h3 class="ui inline header">
-        {{#link-to "account.recruiting.index.new"}}
-          {{ember-tooltip
-            side="left"
-            popperContainer="body"
-            text="Start a campaign"}}
+        <LinkTo @route="account.recruiting.index.new">
+          <EmberTooltip @side="left" @popperContainer="body" @text="Start a campaign" />
           <i id="add-job-opening" class="plus icon"></i>
-        {{/link-to}}
+        </LinkTo>
         <a href="#" class={{if this.showFilters "text-red"}} {{action this.toggleProperty "showFilters"}}>
-          {{ember-tooltip
-            side="left"
-            popperContainer="body"
-            text="Filters"}}
+          <EmberTooltip @side="left" @popperContainer="body" @text="Filters" />
           <i class="{{if this.showFilters "remove" "filter"}} icon"></i>
         </a>
       </h3>
@@ -84,8 +71,5 @@
     "list-item/job-opening-item"
     class="ui divided items"}}
 
-  {{elements/x-pagination
-    page=(readonly this.page)
-    pages=(readonly this.pages)
-    onchange=(action (mut this.page))}}
+  <Elements::XPagination @page={{readonly this.page}} @pages={{readonly this.pages}} @onchange={{action (mut this.page)}} />
 </div>

@@ -1,10 +1,10 @@
 <h1>
   {{this.model.name}}
   <small class="right floated text">
-    {{#link-to "account.employee.index.education.certification.edit"}}<i class="edit icon"></i>{{/link-to}}
-    {{#confirm-modal tagName="span" deleteContext=this.model.name as |confirm|}}
+    <LinkTo @route="account.employee.index.education.certification.edit"><i class="edit icon"></i></LinkTo>
+    <ConfirmModal @tagName="span" @deleteContext={{this.model.name}} as |confirm|>
       <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}><i class="trash icon"></i></a>
-    {{/confirm-modal}}
+    </ConfirmModal>
   </small>
 </h1>
 <div class="ui divider"></div>
@@ -13,10 +13,10 @@
   <h3>
     Renewals
     <small>
-      {{#link-to "account.employee.index.education.certification.renewal"}}
+      <LinkTo @route="account.employee.index.education.certification.renewal">
         <i class="plus fitted icon"></i>
         Add renewal
-      {{/link-to}}
+      </LinkTo>
     </small>
     <small class="right floated light text">Next Renewal Due {{time-ago this.model.nextRenewalDate}} on {{time this.model.nextRenewalDate "M/D/YY"}}</small>
   </h3>
@@ -33,6 +33,6 @@
 {{#if this.model.document}}
   <h3>Documents</h3>
   <p>
-    {{#link-to "account.document" this.model.document.id}}{{this.model.document.title}}{{/link-to}}
+    <LinkTo @route="account.document" @model={{this.model.document.id}}>{{this.model.document.title}}</LinkTo>
   </p>
 {{/if}}

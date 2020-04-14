@@ -18,16 +18,16 @@
         {{#each this.history.diff as |diff|}}
           <tr>
             <td><strong>{{humanize-key (join-array diff.path ".")}}</strong></td>
-            <td>{{diff-value-translator key=diff.path value=diff.lhs}}</td>
-            <td>{{diff-value-translator key=diff.path value=diff.rhs}}</td>
+            <td><DiffValueTranslator @key={{diff.path}} @value={{diff.lhs}} /></td>
+            <td><DiffValueTranslator @key={{diff.path}} @value={{diff.rhs}} /></td>
           </tr>
         {{/each}}
       </tbody>
     </table>
   </div>
 
-  {{#confirm-modal title="Are you sure?" confirmContent="This will change the effective date to today." class="item" as |confirmApply|}}
-    {{#confirm-modal title="Are you sure?" confirmContent="This will delete the changes." class="item" as |confirmDelete|}}
+  <ConfirmModal @title="Are you sure?" @confirmContent="This will change the effective date to today." @class="item" as |confirmApply|>
+    <ConfirmModal @title="Are you sure?" @confirmContent="This will delete the changes." @class="item" as |confirmDelete|>
       <div class="extra content">
         <div class="ui divider"></div>
         <div class="ui two buttons">
@@ -35,6 +35,6 @@
           <button class="negative ui button" {{action (pipe confirmDelete (action "delete" this.history))}}>Discard these changes</button>
         </div>
       </div>
-    {{/confirm-modal}}
-  {{/confirm-modal}}
+    </ConfirmModal>
+  </ConfirmModal>
 </div>

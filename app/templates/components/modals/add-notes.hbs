@@ -2,19 +2,14 @@
   {{yield this.openModalFn}}
 {{/if}}
 
-{{#ui-modal name="notes" id=this.modalId}}
+<UiModal @name="notes" @id={{this.modalId}}>
   <div class="header">
     Notes
   </div>
   <div class="scrolling content">
     <form class="ui form" {{action "save" on="submit"}}>
       <label for="notes">Notes for this application</label>
-      {{textarea
-        name="note-text"
-        value=this.model.notes
-        spellcheck="true"
-        rows=6
-        placeholder="Add notes"}}
+      <Textarea @name="note-text" @value={{this.model.notes}} @spellcheck="true" @rows={{6}} placeholder="Add notes" />
     </form>
   </div>
   <div class="actions">
@@ -26,4 +21,4 @@
       <i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

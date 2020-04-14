@@ -1,4 +1,4 @@
-{{#ui-modal id=this.modalId observeChanges=true context=".ember-application"}}
+<UiModal @id={{this.modalId}} @observeChanges={{true}} @context=".ember-application">
   <i class="close icon"></i>
   <div class="header">
     Schedule a meeting with {{this.model.person.firstName}}<br />
@@ -7,22 +7,16 @@
     </small>
   </div>
   <div class="content ui form">
-    {{input/date-range
-      onStartChange=(action (mut this.meeting.start))
-      onEndChange=(action (mut this.meeting.end))}}
+    <Input::DateRange @onStartChange={{action (mut this.meeting.start)}} @onEndChange={{action (mut this.meeting.end)}} />
     <div class="ui divider"></div>
-    {{input/ui-input
-      type="text"
-      inputId="meeting-title"
-      placeholder="Meeting Title"
-      value=this.meeting.title}}
+    <Input::UiInput @type="text" @inputId="meeting-title" @placeholder="Meeting Title" @value={{this.meeting.title}} />
 
     <div class="ui divider"></div>
 
     <div class="ui two column grid">
       <div class="ui field column">
         <label for="meeting-organizer">Organizer</label>
-        {{#ui-dropdown class="fluid search selection" id="meeting-organizer" selected=this.meeting.organizer onChange=(action (mut this.meeting.organizer)) as |execute mapper|}}
+        <UiDropdown @class="fluid search selection" @id="meeting-organizer" @selected={{this.meeting.organizer}} @onChange={{action (mut this.meeting.organizer)}} as |execute mapper|>
           <i class="dropdown icon"></i>
           <div class="default text">Meeting Organizer</div>
           <div class="menu">
@@ -32,11 +26,11 @@
               </div>
             {{/each}}
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       </div>
       <div class="ui field column">
         <label for="meeting-facilitator">Facilitator</label>
-        {{#ui-dropdown class="fluid search selection" id="meeting-facilitator" selected=this.meeting.facilitator onChange=(action (mut this.meeting.facilitator)) as |execute mapper|}}
+        <UiDropdown @class="fluid search selection" @id="meeting-facilitator" @selected={{this.meeting.facilitator}} @onChange={{action (mut this.meeting.facilitator)}} as |execute mapper|>
           <i class="dropdown icon"></i>
           <div class="default text">Meeting Facilitator</div>
           <div class="menu">
@@ -46,12 +40,12 @@
               </div>
             {{/each}}
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       </div>
     </div>
     <div class="field">
       <label for="meeting-attendees">Additional Attendees</label>
-      {{#ui-dropdown class="fluid multiple search selection" id="meeting-attendees" selected=this.meeting.attendees forceSelection=false onChange=(action (mut this.meeting.attendees)) as |execute mapper|}}
+      <UiDropdown @class="fluid multiple search selection" @id="meeting-attendees" @selected={{this.meeting.attendees}} @forceSelection={{false}} @onChange={{action (mut this.meeting.attendees)}} as |execute mapper|>
         <i class="dropdown icon"></i>
         <div class="default text">Additional Attendees</div>
         <div class="menu">
@@ -61,16 +55,11 @@
             </div>
           {{/each}}
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
     </div>
   </div>
   <div class="actions">
-    {{ui-checkbox
-      class="left floated toggle"
-      label="Do not notify applicant"
-      checked=this.meeting.skipAttendeeNotification
-      onChange=(action (mut this.meeting.skipAttendeeNotification))
-    }}
+    <UiCheckbox @class="left floated toggle" @label="Do not notify applicant" @checked={{this.meeting.skipAttendeeNotification}} @onChange={{action (mut this.meeting.skipAttendeeNotification)}} />
 
     <button class="ui inverted red button" {{action "respond" false}}>
       Cancel
@@ -80,4 +69,4 @@
       <i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

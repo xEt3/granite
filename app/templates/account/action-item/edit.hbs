@@ -1,10 +1,10 @@
 <div class="ui very padded raised segment animated fadeInUp">
   <div class="ui form">
-    {{input/ui-input type="text" inputId="action-item-title" placeholder="Title" value=this.model.title}}
+    <Input::UiInput @type="text" @inputId="action-item-title" @placeholder="Title" @value={{this.model.title}} />
 
     <div class="field">
       <label for="action-item-description">Description</label>
-      {{textarea rows="5" placeholder="Description" value=this.model.description}}
+      <Textarea @rows="5" placeholder="Description" @value={{this.model.description}} />
     </div>
 
     <div class="ui divider"></div>
@@ -12,21 +12,17 @@
     <div class="field">
       <label for="action-item-priority"><i class="exclamation icon"></i> Priority</label>
       <div class="range-label"><i>Low</i><i>High</i></div>
-      {{ember-range-slider id="action-item-priority" keyboard=true keyboard_step=20 grid=true min=1 max=5 step=1 from=this.model.priority slideStop=(action "updatePriority")}}
+      <EmberRangeSlider @id="action-item-priority" @keyboard={{true}} @keyboard_step={{20}} @grid={{true}} @min={{1}} @max={{5}} @step={{1}} @from={{this.model.priority}} @slideStop={{action "updatePriority"}} />
     </div>
 
     <div class="field">
       <label for="action-item-prerequisites">
-        {{ember-tooltip
-          targetId="it__prerequisites"
-          popperContainer="body"
-          side="left"
-          text="Prerequisites indicate which projects need to be completed before this project can be completed."}}
+        <EmberTooltip @targetId="it__prerequisites" @popperContainer="body" @side="left" @text="Prerequisites indicate which projects need to be completed before this project can be completed." />
         Prerequisites
         <i class="right floated info icon" id="it__prerequisites"></i>
       </label>
       {{#if this.actionItems}}
-        {{#ui-dropdown class="fluid search multiple selection" id="action-item-prerequisites" selected=this.model.prerequisites onChange=(action (mut this.model.prerequisites)) as |execute mapper|}}
+        <UiDropdown @class="fluid search multiple selection" @id="action-item-prerequisites" @selected={{this.model.prerequisites}} @onChange={{action (mut this.model.prerequisites)}} as |execute mapper|>
           <i class="dropdown icon"></i>
           <div class="default text">Type or select to assign prerequisites</div>
           <div class="menu">
@@ -36,7 +32,7 @@
               </div>
             {{/each}}
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       {{else}}
         <p>No other projects are available.</p>
       {{/if}}

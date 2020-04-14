@@ -3,15 +3,7 @@
   <thead>
     <tr>
       <th class="import__select-all-checkbox">
-        {{ui-checkbox
-          label=(if this.allSelected "Deselect All" "Select All")
-          checked=this.allSelected
-          onChange=(action
-            this.toggleAllSelected
-            this.recordSet.name
-            this.recordSet.records
-          )
-        }}
+        <UiCheckbox @label={{if this.allSelected "Deselect All" "Select All"}} @checked={{this.allSelected}} @onChange={{action this.toggleAllSelected this.recordSet.name this.recordSet.records}} />
       </th>
       {{#each this.recordSet.displayMap as |header|}}
         <th>{{humanize-key header}}</th>

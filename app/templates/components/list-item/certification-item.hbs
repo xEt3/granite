@@ -1,4 +1,4 @@
-{{#link-to "account.employee.index.education.certification" this.model.id class="item"}}
+<LinkTo @route="account.employee.index.education.certification" @model={{this.model.id}} class="item">
   <div class="content">
     <h3 class="header">
       {{this.model.name}}
@@ -23,4 +23,4 @@
   <div class="right content">
     <span class="ui small text">Added {{time-ago this.model.created}}{{#if this.model.creator}} by {{this.model.creator.fullName}}{{/if}}</span>
   </div>
-{{/link-to}}
+</LinkTo>

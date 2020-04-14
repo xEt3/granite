@@ -3,7 +3,7 @@
     <i class="ui check icon"></i> Successfully imported records.
   </h2>
   <div class="center aligned text">
-    {{#link-to "account.index"}}Back to Dashboard{{/link-to}}
+    <LinkTo @route="account.index">Back to Dashboard</LinkTo>
   </div>
   {{#each this.importResult as |importGroup|}}
     {{#if importGroup.records}}
@@ -30,16 +30,12 @@
   {{/if}}
 
   {{#if (gt this.totalSelected 0)}}
-    {{#confirm-modal
-      class="item"
-      confirmContent="Are you sure you want to import these records?"
-      as |confirm|
-    }}
+    <ConfirmModal @class="item" @confirmContent="Are you sure you want to import these records?" as |confirm|>
       <button class="ui massive fluid green button" {{action (pipe confirm (action "import"))}}>
         <i class="play icon"></i> Import {{this.totalSelected}} {{inflect-text "Record" this.totalSelected}}
       </button>
       <div class="ui divider"></div>
-    {{/confirm-modal}}
+    </ConfirmModal>
   {{/if}}
 
   {{#each this.model.deserialized as |recordSet|}}
@@ -51,11 +47,11 @@
       onTransition=(action "transitionTo")
       as |component fields|
     }}
-      {{#component.row as |record|}}
+      <component.row as |record|>
         {{#each fields as |field|}}
           <td>{{get record field}}</td>
         {{/each}}
-      {{/component.row}}
+      </component.row>
     {{/tables/import/record-set}}
   {{/each}}
 {{/if}}

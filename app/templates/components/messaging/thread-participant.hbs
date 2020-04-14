@@ -1,7 +1,4 @@
-{{display/employee-picture
-  url=this.participant.picture
-  employeeId=this.participant.id
-}}
+<Display::EmployeePicture @url={{this.participant.picture}} @employeeId={{this.participant.id}} />
 {{this.participant.fullName}}
 {{#if this.detail}}
   <div class="{{if this.online "green"}} detail">{{detail}}</div>

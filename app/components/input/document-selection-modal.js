@@ -6,7 +6,7 @@ import { A } from '@ember/array';
 import { run } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import { Promise } from 'rsvp';
-import { elementId } from '@granite/core';
+import { elementId } from 'granite/core';
 import $ from 'jquery';
 
 @elementId

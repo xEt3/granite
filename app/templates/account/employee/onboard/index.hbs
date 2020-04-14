@@ -1,7 +1,7 @@
 <form class="ui form" {{on "submit" (prevent-default (route-action "saveAndContinue"))}}>
   <h2 class="ui horizontal divider header">Employee Information</h2>
   <div class="field">
-    {{#auto-focus}}
+    <AutoFocus>
       <UiCalendar
         @class="field"
         @type="date"
@@ -9,7 +9,7 @@
         @label="Birth Date"
         @dateValue={{this.model.dateOfBirth}}
         @onChange={{set this.model.dateOfBirth _}}/>
-    {{/auto-focus}}
+    </AutoFocus>
   </div>
   <div class="field">
     <label for="private-email">Personal Email</label>

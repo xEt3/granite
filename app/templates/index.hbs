@@ -6,14 +6,14 @@
 
     <div class="ui two column container center aligned stackable grid hero__big-buttons">
       <div class="column">
-        {{#link-to "our-product" class="ui fluid inverted blue button explore-link"}}
+        <LinkTo @route="our-product" class="ui fluid inverted blue button explore-link">
           <i class="privacy icon"></i> Explore Granite
-        {{/link-to}}
+        </LinkTo>
       </div>
       <div class="column">
-        {{#link-to "signup.index" class="ui fluid green button five-min-set-link"}}
+        <LinkTo @route="signup.index" class="ui fluid green button five-min-set-link">
           <i class="wizard icon"></i> 5 minute sign up
-        {{/link-to}}
+        </LinkTo>
       </div>
     </div>
   </div>
@@ -22,7 +22,7 @@
 <section class="index__callout">
   <h1>
     Organize your company's human resources, recruiting, asset management, &amp; more.
-    {{#link-to "our-product"}}See our features <i class="angle double right icon"></i>{{/link-to}}
+    <LinkTo @route="our-product">See our features <i class="angle double right icon"></i></LinkTo>
   </h1>
 </section>
 
@@ -60,5 +60,5 @@
 {{!-- <div class="ui divider"></div> --}}
 <section class="index__bottom-callout">
   <h1>Don't let us do all the talking.</h1>
-  <h2>{{#link-to "signup"}}Sign up with our free 14-day trial{{/link-to}} and decide what features excite you.<br>Questions? {{#link-to "contact"}}Get in touch.{{/link-to}}</h2>
+  <h2><LinkTo @route="signup">Sign up with our free 14-day trial</LinkTo> and decide what features excite you.<br>Questions? <LinkTo @route="contact">Get in touch.</LinkTo></h2>
 </section>

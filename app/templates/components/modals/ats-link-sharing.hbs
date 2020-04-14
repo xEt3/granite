@@ -1,4 +1,4 @@
-{{#ui-modal id=this.modalId observeChanges=true context=".ember-application"}}
+<UiModal @id={{this.modalId}} @observeChanges={{true}} @context=".ember-application">
   <i class="close icon"></i>
   <div class="header">
     Sharing Configuration<br>
@@ -19,15 +19,7 @@
           Use link sharing to enable a publicly accessible page for this application, so you can share it with collegues that don't have a Granite HR account.
         </p>
       </label>
-      {{ui-checkbox
-        id="link-sharing"
-        class="toggle"
-        label=(if this.publicLink
-          "Link sharing is enabled. Click to turn off link sharing."
-          "Link sharing is disabled. Click to turn on link sharing."
-        )
-        checked=this.publicLink
-        onChange=(action "toggleSharedLink")}}
+      <UiCheckbox @id="link-sharing" @class="toggle" @label={{if this.publicLink "Link sharing is enabled. Click to turn off link sharing." "Link sharing is disabled. Click to turn on link sharing."}} @checked={{this.publicLink}} @onChange={{action "toggleSharedLink"}} />
     </div>
 
     {{#if this.publicLink}}
@@ -42,11 +34,7 @@
       <div class="ui divider"></div>
       <div class="field">
         <label>Send public link to emails</label>
-        {{#ui-dropdown
-          class="fluid search multiple selection"
-          selected=this.sendTo
-          allowAdditions=true
-          onChange=(action (mut this.sendTo)) as |execute mapper|}}
+        <UiDropdown @class="fluid search multiple selection" @selected={{this.sendTo}} @allowAdditions={{true}} @onChange={{action (mut this.sendTo)}} as |execute mapper|>
           <i class="dropdown icon"></i>
           <div class="default text">Add emails to send link</div>
           <div class="menu">
@@ -56,11 +44,11 @@
               </div>
             {{/each}}
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       </div>
       <div class="field">
         <label>Note to recipients (optional)</label>
-        {{textarea rows="3" placeholder="Note" value=this.linkNote}}
+        <Textarea @rows="3" placeholder="Note" @value={{this.linkNote}} />
       </div>
 
       <button class="ui fluid primary {{if this.sendingLink "loading"}} button" disabled={{or this.working (not this.sendTo.length)}} {{action "sendLink"}}>
@@ -81,4 +69,4 @@
       Close
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

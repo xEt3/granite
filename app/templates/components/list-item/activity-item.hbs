@@ -14,19 +14,13 @@
   </div>
   <div class="meta">
     <a href="#" {{action "toggleComments"}}>
-      {{ember-tooltip
-        side="top"
-        popperContainer="body"
-        text="Comments"}}
+      <EmberTooltip @side="top" @popperContainer="body" @text="Comments" />
       <i class="fitted comment icon"></i> {{if this.activity.comments.length this.activity.comments.length}}
     </a>
 
     {{#if this.enableLikes}}
       <a href="#" class="like {{if this.likeByCurrentUser "text-red"}}" {{action "like"}}>
-        {{ember-tooltip
-          side="top"
-          popperContainer="body"
-          text="Thumbs up"}}
+        <EmberTooltip @side="top" @popperContainer="body" @text="Thumbs up" />
         <i class="thumbs up icon"></i>
         {{#if this.likeByCurrentUser}}
           You
@@ -50,24 +44,24 @@
       <h6 class="ui horizontal divider header"><i class="fitted comments icon"></i> Comments</h6>
       <div class="field">
         <label for="comment-text" class="sr-only">Enter your comment</label>
-        {{textarea name="comment-text" value=this.comment.text rows=2 placeholder="Type your comment..."}}
+        <Textarea @name="comment-text" @value={{this.comment.text}} @rows={{2}} placeholder="Type your comment..." />
       </div>
 
       {{#liquid-if this.comment.text}}
-        {{#form/action-button type="submit" class="ui large fluid green button" loading=this.working}}Save Comment{{/form/action-button}}
+        <Form::ActionButton @type="submit" @class="ui large fluid green button" @loading={{this.working}}>Save Comment</Form::ActionButton>
       {{/liquid-if}}
     </form>
 
     <div class="ui feed limited-pane">
       {{#each this.comments as |comment|}}
-        {{list-item/comment-item comment=comment class="event"}}
+        <ListItem::CommentItem @comment={{comment}} @class="event" />
       {{/each}}
     </div>
   {{else}}
     {{#if this.comments.firstObject}}
       <div class="account__comments-section account__comments-muted">
         <div class="ui feed limited-pane">
-          {{list-item/comment-item comment=this.comments.firstObject class="event"}}
+          <ListItem::CommentItem @comment={{this.comments.firstObject}} @class="event" />
         </div>
       </div>
     {{/if}}

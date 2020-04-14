@@ -1,26 +1,23 @@
 <h2 class="ui header text-white mobile-view__employee-history-header">
   Changes Timeline
-  {{#link-to "account.employee.index.future-changes" class="right floated text-white"}}
+  <LinkTo @route="account.employee.index.future-changes" class="right floated text-white">
     <i class="clock icon"></i>Future Changes<i class="right angle icon"></i>
-  {{/link-to}}
+  </LinkTo>
 </h2>
 <h4 class="ui center aligned header">
-  {{#link-to "account.employee.index.history-report" class="text-white"}}
-    {{ember-tooltip
-      side="top"
-      popperContainer="body"
-      text="Switch to report view"}}
+  <LinkTo @route="account.employee.index.history-report" class="text-white">
+    <EmberTooltip @side="top" @popperContainer="body" @text="Switch to report view" />
     <i class="file icon"></i>Report View
-  {{/link-to}}
+  </LinkTo>
 </h4>
 
 <div class="history__timeline clearfix">
-  {{display/timeline-group-detail group=this.selectedGroup groupDisplayOffset=this.groupDisplayOffset class=(unless this.selectedGroup "hidden") onDeselect=(action "deselectGroup")}}
+  <Display::TimelineGroupDetail @group={{this.selectedGroup}} @groupDisplayOffset={{this.groupDisplayOffset}} @class={{unless this.selectedGroup "hidden"}} @onDeselect={{action "deselectGroup"}} />
 
   {{! template-lint-disable no-inline-styles }}
   <div class="history-timeline__events clearfix" style={{this.timelineStyle}}>
     {{#each this.model as |historyGroup|}}
-      {{list-item/history-group group=historyGroup onSelect=(action "selectGroup")}}
+      <ListItem::HistoryGroup @group={{historyGroup}} @onSelect={{action "selectGroup"}} />
     {{else}}
       <h3 class="ui center aligned header">No history is available for this employee.</h3>
     {{/each}}

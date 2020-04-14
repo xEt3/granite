@@ -1,4 +1,4 @@
-{{#link-to this.step.link class=this.linkClass}}
+<LinkTo @route={{this.step.link}} class={{this.linkClass}}>
   {{#if this.completed}}
     <i class="massive check icon first-steps-card__check-icon"></i>
   {{/if}}
@@ -17,4 +17,4 @@
       {{this.step.condition}} to complete this card
     {{/if}}
   </div>
-{{/link-to}}
+</LinkTo>

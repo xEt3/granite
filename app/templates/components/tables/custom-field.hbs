@@ -17,9 +17,9 @@
           <div class="ui grid">
             <div class="ten wide column">
               <label for="new-custom-value" class="sr-only">New {{@key}} value</label>
-              {{#auto-focus}}
+              <AutoFocus>
                 <Input @type="text" @name="new-custom-value" @class="ui transparent input" @value={{this.newValue}} @placeholder="Field value"/>
-              {{/auto-focus}}
+              </AutoFocus>
             </div>
             <div class="six wide center middle aligned center aligned column">
               <a href="#" class="ui text-green" {{on "click" (prevent-default this.saveEdit)}}><i class="check icon"></i></a>

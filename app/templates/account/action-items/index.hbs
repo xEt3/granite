@@ -1,19 +1,15 @@
 <h2 class="ui right aligned header">
-  {{#link-to "account.action-items.new" class="text-white sub header"}}<i class="plus icon"></i>{{/link-to}}
+  <LinkTo @route="account.action-items.new" class="text-white sub header"><i class="plus icon"></i></LinkTo>
 </h2>
 <div class="ui divider"></div>
 
 <div class="clearfix">
   <span class="right floated">
-    {{ember-tooltip
-      side="left"
-      text="Sort according to due date"}}
+    <EmberTooltip @side="left" @text="Sort according to due date" />
     <a href="#" class="text-white" {{action (toggle "isDsc" this)}}><i class="sort large numeric {{if this.isDsc "ascending icon" "descending icon"}}"></i></a>
   </span>
   <span class="left floated">
-    {{ember-tooltip
-      side="right"
-      text="Filter according to priority level"}}
+    <EmberTooltip @side="right" @text="Filter according to priority level" />
     <a href="#" class="text-white" {{action (toggle "expandFiltered" this)}}><i class="large filter icon"></i></a>
   </span>
 </div>
@@ -34,7 +30,7 @@
 {{#if this.model}}
   <div class="ui cards">
     {{#each this.model as |actionItem|}}
-      {{list-item/action-item actionItem=actionItem class="ui link fluid raised card" onToggleSubscription=(action "toggleSubscription")}}
+      <ListItem::ActionItem @actionItem={{actionItem}} @class="ui link fluid raised card" @onToggleSubscription={{action "toggleSubscription"}} />
     {{/each}}
   </div>
 {{else}}

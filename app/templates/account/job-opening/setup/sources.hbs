@@ -4,15 +4,13 @@
   </h2>
   <p>Edit the title and description of your job listing</p>
 
-  {{#input/ui-input value=this.model.title placeholder="What shows as the job name on the listing?"}}
+  <Input::UiInput @value={{this.model.title}} @placeholder="What shows as the job name on the listing?">
     Title
-  {{/input/ui-input}}
+  </Input::UiInput>
 
   <div class="field">
     <label>Description (How your job description displays on the listing)</label>
-    {{input/rich-text
-      value=this.model.description
-      onChange=(action (mut this.model.description))}}
+    <Input::RichText @value={{this.model.description}} @onChange={{action (mut this.model.description)}} />
   </div>
 
   <h2 class="ui horizontal divider header">
@@ -54,26 +52,21 @@
   <div class="ui divider"></div>
 
   <form {{action "saveAndContinue" on="submit"}}>
-    {{#form/action-button
-      type="submit"
-      class="ui huge fluid green button"
-      loading=this.working}}
+    <Form::ActionButton @type="submit" @class="ui huge fluid green button" @loading={{this.working}}>
       Next
-    {{/form/action-button}}
+    </Form::ActionButton>
   </form>
 </div>
 
-{{#ui-modal id="modal__add--manual-source" class="small form"}}
+<UiModal @id="modal__add--manual-source" @class="small form">
   <i class="close icon"></i>
   <div class="header">
     Create a new manual source
   </div>
   <div class="content">
-    {{#input/ui-input
-      value=this.manualSource.name
-      placeholder="ex. Post to Craigslist"}}
+    <Input::UiInput @value={{this.manualSource.name}} @placeholder="ex. Post to Craigslist">
       Manual Source Name
-    {{/input/ui-input}}
+    </Input::UiInput>
   </div>
   <div class="actions">
     <button type="button" class="ui red button" {{action "respondManualSource" false}}>
@@ -84,4 +77,4 @@
       <i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

@@ -74,26 +74,15 @@
       </a>
     </small>
 
-    {{#modals/ats-add-applicant
-      class="ui center aligned text"
-      model=this.model
-      pipelines=this.model.pipeline
-      onNotify=(action "onNotify")
-      refresh=(action "refreshModel") as |openAddModal|
-    }}
+    <Modals::AtsAddApplicant @class="ui center aligned text" @model={{this.model}} @pipelines={{this.model.pipeline}} @onNotify={{action "onNotify"}} @refresh={{action "refreshModel"}} as |openAddModal|>
       <a href="#" class="ats__action--add-applicant smaller text" {{action openAddModal}}>
-        {{ember-tooltip
-          side="bottom"
-          popperContainer="body"
-          text="Manually add applicant"}}
+        <EmberTooltip @side="bottom" @popperContainer="body" @text="Manually add applicant" />
         <i class="ui plus icon"></i> Add Applicant
       </a>
-    {{/modals/ats-add-applicant}}
+    </Modals::AtsAddApplicant>
   </h2>
 
-  {{#confirm-modal
-    confirmContent="Are you sure you want to hire and onboard this candidate?"
-    as |confirm|}}
+  <ConfirmModal @confirmContent="Are you sure you want to hire and onboard this candidate?" as |confirm|>
     {{card-pipeline
       this.activeCandidates
       newScheduledMeeting=this.newScheduledMeeting
@@ -125,17 +114,11 @@
         (action "saveApplicationLabels")
       ))
     }}
-  {{/confirm-modal}}
+  </ConfirmModal>
 
-  {{modals/ats-confirm-inject
-    applicants=this.selectedApplications
-    modalId=this.confirmInjectModalId
-    onResponse=(action "modalResponse" "inject")}}
+  <Modals::AtsConfirmInject @applicants={{this.selectedApplications}} @modalId={{this.confirmInjectModalId}} @onResponse={{action "modalResponse" "inject"}} />
 
-  {{modals/ats-disqualify
-    model=this.appInDisqualifyConfirm
-    modalId=this.disqualifyModalId
-    onResponse=(action "modalResponse" "disqualify")}}
+  <Modals::AtsDisqualify @model={{this.appInDisqualifyConfirm}} @modalId={{this.disqualifyModalId}} @onResponse={{action "modalResponse" "disqualify"}} />
 
   {{modals/ats-scheduler
     this.appInScheduler

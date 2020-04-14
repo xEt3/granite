@@ -2,10 +2,10 @@
 <p>
   <ul class="footer__link-list">
     <li class="item">
-      {{#link-to "terms-of-service"}}
+      <LinkTo @route="terms-of-service">
         Terms of Service
-      {{/link-to}}
+      </LinkTo>
     </li>
   </ul>
 </p>
-{{display/version-info}}
+<Display::VersionInfo />

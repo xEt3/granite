@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { htmlSafe } from '@ember/string';
-import { elementId } from '@granite/core';
+import { elementId } from 'granite/core';
 import $ from 'jquery';
 
 @elementId

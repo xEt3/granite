@@ -41,7 +41,7 @@
   </div>
 </div>
 
-{{#ui-modal id=this.modalId class="small form"}}
+<UiModal @id={{this.modalId}} @class="small form">
   <div class="header">
     {{if this.editingItem "Edit" "Add"}} item
   </div>
@@ -58,4 +58,4 @@
       {{if this.editingItem "Edit" "Add"}} List Item<i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

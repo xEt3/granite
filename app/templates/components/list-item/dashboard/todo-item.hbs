@@ -9,7 +9,7 @@
       {{this.model.todo.title}}
     {{/if}}
     <small class="right floated meta">
-      {{#link-to "account.action-item" this.slug}}From "{{this.model.title}}"{{/link-to}}
+      <LinkTo @route="account.action-item" @model={{this.slug}}>From "{{this.model.title}}"</LinkTo>
     </small>
   </div>
 {{/if}}

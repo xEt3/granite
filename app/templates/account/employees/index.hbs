@@ -1,14 +1,7 @@
-{{stateful-intro-js
-  user=this.auth.user
-  steps=this.intros
-  start-if=true
-  hintKey="employees-index"}}
+<StatefulIntroJs @user={{this.auth.user}} @steps={{this.intros}} @start-if={{true}} @hintKey="employees-index" />
 
 {{#if this.showFilters}}
-  {{#display/filter-pane
-    class="ui content form padded segment container"
-    onChange=(action "updateFilter") as |filter|
-  }}
+  <Display::FilterPane @class="ui content form padded segment container" @onChange={{action "updateFilter"}} as |filter|>
     <h2>
       <i class="filter icon"></i> Filters
       <div class="ui horizontal list right floated">
@@ -54,23 +47,9 @@
 
     {{#filter.section "Hire Date" resets=(array "hireDateStart" "hireDateEnd")}}
       {{#filter.control "hireDate" (or this.hireDateStart this.hireDateEnd) class="two fields"}}
-        {{ui-calendar
-          class="ui field"
-          type="date"
-          container="body"
-          startMode="year"
-          label="Start Date"
-          dateValue=this.hireDateStart
-          onChange=(action (mut this.hireDateStart))}}
+        <UiCalendar @class="ui field" @type="date" @container="body" @startMode="year" @label="Start Date" @dateValue={{this.hireDateStart}} @onChange={{action (mut this.hireDateStart)}} />
 
-        {{ui-calendar
-          class="ui field"
-          type="date"
-          container="body"
-          startMode="year"
-          label="End Date"
-          dateValue=this.hireDateEnd
-          onChange=(action (mut this.hireDateEnd))}}
+        <UiCalendar @class="ui field" @type="date" @container="body" @startMode="year" @label="End Date" @dateValue={{this.hireDateEnd}} @onChange={{action (mut this.hireDateEnd)}} />
       {{/filter.control}}
     {{/filter.section}}
 
@@ -95,7 +74,7 @@
           class="center aligned text field"}}
       </div>
     {{/filter.section}}
-  {{/display/filter-pane}}
+  </Display::FilterPane>
 {{/if}}
 
 <div class="ui raised padded segment container clearfix">
@@ -105,12 +84,9 @@
     </h1>
 
     <div class="right aligned text floated menu__actions">
-      {{#ui-dropdown class="left floated top pointing inline" selected=this.sortBy onChange=(action (mut this.sortBy))}}
+      <UiDropdown @class="left floated top pointing inline" @selected={{this.sortBy}} @onChange={{action (mut this.sortBy)}}>
         <h3 class="ui inline header">
-          {{ember-tooltip
-            side="left"
-            popperContainer="body"
-            text="Choose sort method"}}
+          <EmberTooltip @side="left" @popperContainer="body" @text="Choose sort method" />
           <a href="#" id="sort-employee-icon"><i class="sort icon"></i></a>
         </h3>
         <div class="menu">
@@ -123,13 +99,10 @@
             </div>
           {{/each}}
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
 
       <h3 class="ui left floated header">
-        {{ember-tooltip
-          side="left"
-          popperContainer="body"
-          text=(if this.sortAsc "Sort descending" "Sort ascending")}}
+        <EmberTooltip @side="left" @popperContainer="body" @text={{if this.sortAsc "Sort descending" "Sort ascending"}} />
         <a href="#" class="top pointing inline" {{action (toggle "sortAsc" this)}}>
           <i class="sort amount {{if this.sortAsc "up" "down"}} icon"></i>
         </a>
@@ -137,27 +110,21 @@
 
       <h3 class="ui right floated header">
         <a href="#" class={{if this.showFilters "text-red"}} {{action this.toggleProperty "showFilters"}}>
-          {{ember-tooltip
-            side="left"
-            popperContainer="body"
-            text="Filters"}}
+          <EmberTooltip @side="left" @popperContainer="body" @text="Filters" />
           <i class="{{if this.showFilters "remove" "filter"}} icon"></i>
         </a>
       </h3>
 
-      {{#ui-dropdown class="right floated top pointing inline"}}
+      <UiDropdown @class="right floated top pointing inline">
         <h3 class="ui inline header">
-          {{ember-tooltip
-            side="left"
-            popperContainer="body"
-            text="Add an employee or multiple employees"}}
+          <EmberTooltip @side="left" @popperContainer="body" @text="Add an employee or multiple employees" />
           <a href="#" id="add-employee-trigger"><i class="plus icon"></i></a>
         </h3>
         <div class="menu">
-          {{#link-to "account.employees.add.new" class="item"}}<i class="user icon"></i>One Employee{{/link-to}}
-          {{#link-to "account.employees.add.census" class="item"}}<i class="users icon"></i>Multiple Employees{{/link-to}}
+          <LinkTo @route="account.employees.add.new" class="item"><i class="user icon"></i>One Employee</LinkTo>
+          <LinkTo @route="account.employees.add.census" class="item"><i class="users icon"></i>Multiple Employees</LinkTo>
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
     </div>
   </hgroup>
 

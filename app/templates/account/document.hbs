@@ -1,10 +1,10 @@
 <div class="ui container basic segment">
-  {{#ui-menu menuClass="pointing"}}
-    {{#link-to "account.document.index" class="item"}}
+  <UiMenu @menuClass="pointing">
+    <LinkTo @route="account.document.index" class="item">
       <i class="list icon"></i>Summary
-    {{/link-to}}
+    </LinkTo>
     <div class="right menu">
-      {{#ui-dropdown class="item icon top right pointing"}}
+      <UiDropdown @class="item icon top right pointing">
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
           <div class="item">
@@ -19,14 +19,14 @@
           </div>
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
-            {{#confirm-modal deleteContext=(concat this.model.title " - " this.model.mimeType) as |confirm|}}
+            <ConfirmModal @deleteContext={{concat this.model.title " - " this.model.mimeType}} as |confirm|>
               <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}><i class="trash icon"></i>Delete File</a>
-            {{/confirm-modal}}
+            </ConfirmModal>
           </div>
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
     </div>
-  {{/ui-menu}}
+  </UiMenu>
 
   <div class="ui raised padded segment container clearfix">
     <hgroup>
@@ -52,7 +52,7 @@
   </div>
 </div>
 
-{{#ui-modal name="modal__file-assignment" id="modal__file-assignment" class="small form"}}
+<UiModal @name="modal__file-assignment" @id="modal__file-assignment" @class="small form">
   <div class="header">
     Assign {{this.model.title}}
   </div>
@@ -64,20 +64,12 @@
       tagName="div"}}
 
     <div class="field center aligned text">
-      {{ui-checkbox
-        class="toggle"
-        label="Assign for a future Date"
-        checked=this.isExpanded
-        onChange=(action (toggle "isExpanded" this))}}
+      <UiCheckbox @class="toggle" @label="Assign for a future Date" @checked={{this.isExpanded}} @onChange={{action (toggle "isExpanded" this)}} />
     </div>
   </div>
 
   {{#if this.isExpanded}}
-    {{ui-calendar
-      class="field"
-      type="date"
-      inline=true
-      onChange=(action (mut this.model.effectiveOn))}}
+    <UiCalendar @class="field" @type="date" @inline={{true}} @onChange={{action (mut this.model.effectiveOn)}} />
   {{/if}}
 
   <div class="actions">
@@ -94,4 +86,4 @@
       <i class="add user icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

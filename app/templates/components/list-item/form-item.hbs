@@ -11,19 +11,13 @@
     <div class="right floated">
       {{#if this.onEdit}}
         <a href="#" {{action this.onEdit this.model}}>
-          {{ember-tooltip
-            side="left"
-            popperContainer="body"
-            text="Edit form"}}
+          <EmberTooltip @side="left" @popperContainer="body" @text="Edit form" />
           <i class="ui edit icon"></i>
         </a>
       {{/if}}
       {{#if this.onDelete}}
         <a href="#" class="text-danger" {{action this.onDelete this.model}}>
-          {{ember-tooltip
-            side="left"
-            popperContainer="body"
-            text="Remove form"}}
+          <EmberTooltip @side="left" @popperContainer="body" @text="Remove form" />
           <i class="ui trash icon"></i>
         </a>
       {{/if}}

@@ -6,7 +6,7 @@
   </hgroup>
   <div class="ui divider"></div>
   <label class="permission_label">Permissions</label>
-  {{#x-tree checkable=true model=this.permissionsTree}}{{/x-tree}}
+  <XTree @checkable={{true}} @model={{this.permissionsTree}}></XTree>
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Save Changes{{/form/action-button}}
+  <Form::ActionButton @type="submit" @class="ui huge fluid green button" @loading={{this.working}}>Save Changes</Form::ActionButton>
 </form>

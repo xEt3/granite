@@ -1,4 +1,4 @@
-{{#ui-modal id=this.modalId observeChanges=true}}
+<UiModal @id={{this.modalId}} @observeChanges={{true}}>
   <i class="close icon"></i>
   <div class="header">
     Update Payment Method
@@ -9,11 +9,8 @@
         <div class="ui text loader">Loading</div>
       </div>
     {{else}}
-      {{braintree-dropin
-        braintreeOptions=(hash
-        paypal=(hash flow="vault"))
-        authorization=@braintreeToken.token
-        onNonce=(action (mut this.nonce))}}
+      <BraintreeDropin @braintreeOptions={{hash
+        paypal=(hash flow="vault")}} @authorization={{@braintreeToken.token}} @onNonce={{action (mut this.nonce)}} />
     {{/if}}
     <p class="right aligned very small text"><i class="lock icon"></i>Powered by Braintree Payments</p>
   </div>
@@ -25,4 +22,4 @@
       Save New Payment Method
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

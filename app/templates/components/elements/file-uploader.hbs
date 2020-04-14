@@ -39,10 +39,10 @@
         <p class="text danger">Error occured while uploading file: {{this.errorMessage}}</p>
       {{else}}
         {{#if this.uploadProgress}}
-          {{#ui-progress percent=this.uploadProgress classNames="indicating"}}
+          <UiProgress @percent={{this.uploadProgress}} @classNames="indicating">
             <div class="bar"></div>
             <div class="label">{{this.uploadProgress}}% Uploaded</div>
-          {{/ui-progress}}
+          </UiProgress>
         {{/if}}
       {{/if}}
 

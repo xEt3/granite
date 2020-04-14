@@ -1,7 +1,7 @@
 {{#if this.link}}
-  {{#link-to this.link this.model.id}}
+  <LinkTo @route={{this.link}} @model={{this.model.id}}>
     {{this.model.description}}
-  {{/link-to}}
+  </LinkTo>
 {{else}}
   {{this.model.description}}
 {{/if}}

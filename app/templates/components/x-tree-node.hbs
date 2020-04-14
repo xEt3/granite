@@ -11,14 +11,7 @@
 </span>
 {{#if this.checkable}}
   <div preventsDefault={{false}} class="ui checkbox {{if this.model.isIndeterminate "indeterminate" (if this.model.isChecked "checked")}}">
-    {{input
-      type="checkbox"
-      checked=this.model.isChecked
-      change=(pipe-action
-        (action this.toggleProperty "model.isChecked")
-        (action "toggleCheck")
-      )
-      indeterminate=this.model.isIndeterminate}}
+    <Input @type="checkbox" @checked={{this.model.isChecked}} @change={{pipe-action (action this.toggleProperty "model.isChecked") (action "toggleCheck")}} @indeterminate={{this.model.isIndeterminate}} />
     <label class="node">
       {{capitalize this.model.name}}
     </label>

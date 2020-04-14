@@ -1,20 +1,20 @@
 <div class="ui container">
   <div class="ui pointing menu">
-    {{#link-to "account.employees.index" class="item"}}
+    <LinkTo @route="account.employees.index" class="item">
       <i class="users icon"></i>Employees
-    {{/link-to}}
-    {{#link-to "account.employees.changes" class="item"}}
+    </LinkTo>
+    <LinkTo @route="account.employees.changes" class="item">
       <i class="history icon"></i>Changes
       {{#if this.model.changeQueue}}
         <div class="ui left pointing orange tiny label">{{this.model.changeQueue}}</div>
       {{/if}}
-    {{/link-to}}
-    {{#link-to "account.employees.messages" class="item"}}
+    </LinkTo>
+    <LinkTo @route="account.employees.messages" class="item">
       <i class="envelope icon"></i>Messages
-    {{/link-to}}
-    {{#link-to "account.employees.forms" class="item"}}
+    </LinkTo>
+    <LinkTo @route="account.employees.forms" class="item">
       <i class="list alternate outline icon"></i>Forms
-    {{/link-to}}
+    </LinkTo>
   </div>
 
   {{outlet}}

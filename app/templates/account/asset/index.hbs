@@ -1,30 +1,21 @@
 <h3 class="ui header">
   {{#liquid-if (or this.addingAsset this.editAsset)}}
-    {{#link-to "account.asset.index" class="right floated text-danger"}}
-      {{ember-tooltip
-        side="left"
-        popperContainer="body"
-        text="Cancel"}}
+    <LinkTo @route="account.asset.index" class="right floated text-danger">
+      <EmberTooltip @side="left" @popperContainer="body" @text="Cancel" />
       <i class="remove icon"></i>
-    {{/link-to}}
+    </LinkTo>
   {{else}}
     <div class="right floated">
       {{#if this.model}}
         <a href="#" {{action "toggleProperty" "expandAttributes"}}>
-          {{ember-tooltip
-            side="left"
-            popperContainer="body"
-            text=(if this.expandAttributes "Hide all stock attributes" "Show all stock attributes")}}
+          <EmberTooltip @side="left" @popperContainer="body" @text={{if this.expandAttributes "Hide all stock attributes" "Show all stock attributes"}} />
           <i class="eye {{if this.expandAttributes "slash"}} icon"></i>
         </a>
       {{/if}}
-      {{#link-to "account.asset.index.new"}}
-        {{ember-tooltip
-          side="left"
-          popperContainer="body"
-          text="Add an asset stock item"}}
+      <LinkTo @route="account.asset.index.new">
+        <EmberTooltip @side="left" @popperContainer="body" @text="Add an asset stock item" />
         <i class="plus icon"></i>
-      {{/link-to}}
+      </LinkTo>
     </div>
   {{/liquid-if}}
 </h3>
@@ -33,14 +24,9 @@
 
 <div class="ui relaxed divided list">
   {{#each this.model as |asset|}}
-    {{list-item/asset-stock-item
-      asset=asset
-      showAttributes=this.expandAttributes
-      addDocuments=true
-      saveStockItem=(action "save" asset)
-      onDelete=(action "delete")}}
+    <ListItem::AssetStockItem @asset={{asset}} @showAttributes={{this.expandAttributes}} @addDocuments={{true}} @saveStockItem={{action "save" asset}} @onDelete={{action "delete"}} />
   {{else}}
-    <h2 class="ui center aligned header">No assets available. {{#link-to "account.asset.index.new"}}Add one?{{/link-to}}</h2>
+    <h2 class="ui center aligned header">No assets available. <LinkTo @route="account.asset.index.new">Add one?</LinkTo></h2>
   {{/each}}
 </div>
-{{elements/x-pagination page=(readonly this.page) pages=(readonly this.pages) onchange=(action (mut this.page))}}
+<Elements::XPagination @page={{readonly this.page}} @pages={{readonly this.pages}} @onchange={{action (mut this.page)}} />

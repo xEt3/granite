@@ -1,19 +1,6 @@
 <div class="ui raised very padded text segment">
   <div id="template" class="center aligned">
-    {{drop-zone
-      id="input__dropzone--employee-profile-image"
-      class="input__dropzone"
-      url=this.pictureEndpoint
-      uploadMultiple=false
-      acceptedFiles="image/*"
-      maxFiles=1
-      autoProcessQueue=false
-      dictDefaultMessage="Drop Files or Click to Replace/Add Picture"
-      thumbnailWidth="175"
-      headers=(hash X-API-Token=this.auth.token)
-      addedfile=(action "addedFile")
-      success=(action "uploadedFile")
-      capture="camera"}}
+    <DropZone @id="input__dropzone--employee-profile-image" @class="input__dropzone" @url={{this.pictureEndpoint}} @uploadMultiple={{false}} @acceptedFiles="image/*" @maxFiles={{1}} @autoProcessQueue={{false}} @dictDefaultMessage="Drop Files or Click to Replace/Add Picture" @thumbnailWidth="175" @headers={{hash X-API-Token=this.auth.token}} @addedfile={{action "addedFile"}} @success={{action "uploadedFile"}} @capture="camera" />
   </div>
 
   <div class="ui divider"></div>

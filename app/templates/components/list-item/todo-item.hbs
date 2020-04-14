@@ -26,7 +26,7 @@
     </small>
   </div>
 
-  {{#ui-modal id=this.modalId class="small form"}}
+  <UiModal @id={{this.modalId}} @class="small form">
     <i class="close icon"></i>
     <div class="header">
       <i class="setting icon"></i>Edit todo's assignee
@@ -34,11 +34,11 @@
     <div class="content">
       <div class="field">
         {{#if this.assignableTo}}
-          {{#ui-dropdown class="fluid search selection" selected=this.todo.assignedTo onChange=(action (mut this.newAssignee)) as |execute mapper|}}
+          <UiDropdown @class="fluid search selection" @selected={{this.todo.assignedTo}} @onChange={{action (mut this.newAssignee)}} as |execute mapper|>
             <i class="dropdown icon"></i>
             <div class="default text">Select a new assignee</div>
             <div class="menu">
-              <div class="item" data-value="">
+              <div class="item" data-value>
                 No Assignee
               </div>
               {{#each this.assignableTo as |item|}}
@@ -47,7 +47,7 @@
                 </div>
               {{/each}}
             </div>
-          {{/ui-dropdown}}
+          </UiDropdown>
         {{else}}
           <p>No assignees available.</p>
         {{/if}}
@@ -66,5 +66,5 @@
         <i class="check icon"></i>
       </button>
     </div>
-  {{/ui-modal}}
+  </UiModal>
 {{/if}}

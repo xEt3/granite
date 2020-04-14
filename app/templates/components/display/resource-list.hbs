@@ -6,9 +6,9 @@
     )}}
   {{else}}
     {{#if this.linkTo}}
-      {{#link-to this.linkTo (get item this.modelIdentifier) class=this.linkClass}}
+      <LinkTo @route={{this.linkTo}} @model={{get item this.modelIdentifier}} class={{this.linkClass}}>
         {{component this.itemComponent item class=this.componentClass}}
-      {{/link-to}}
+      </LinkTo>
     {{else}}
       {{component this.itemComponent item class=this.componentClass}}
     {{/if}}

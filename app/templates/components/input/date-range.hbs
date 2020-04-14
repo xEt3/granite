@@ -6,11 +6,7 @@
         <strong>Start</strong>
       </label>
     </p>
-    {{ui-calendar
-      class="field"
-      startMode="month"
-      inline=true
-      onChange=(action (pipe (action (mut this.start)) (action this.onStartChange this.start)))}}
+    <UiCalendar @class="field" @startMode="month" @inline={{true}} @onChange={{action (pipe (action (mut this.start)) (action this.onStartChange this.start))}} />
   </div>
 
   <div class="ui column center aligned text">
@@ -22,9 +18,7 @@
             <i class="clock icon"></i>
           </label>
         </p>
-        {{#ui-dropdown
-          class="fluid selection"
-          onChange=(action this.onEndChange) as |execute mapper|}}
+        <UiDropdown @class="fluid selection" @onChange={{action this.onEndChange}} as |execute mapper|>
           <i class="dropdown icon"></i>
           <div class="default text">How long?</div>
           <div class="menu">
@@ -34,7 +28,7 @@
               </div>
             {{/each}}
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       </div>
     {{/if}}
   </div>

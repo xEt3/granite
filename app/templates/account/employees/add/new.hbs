@@ -9,21 +9,21 @@
     <div class="fields">
       <div class="five wide field">
         <label for="first-name">First Name</label>
-        {{#auto-focus}}
-          {{validated-input type="text" model=this.model valuePath="firstName" placeholder="First Name" id="first-name"}}
-        {{/auto-focus}}
+        <AutoFocus>
+          <ValidatedInput @type="text" @model={{this.model}} @valuePath="firstName" @placeholder="First Name" @id="first-name" />
+        </AutoFocus>
       </div>
       <div class="three wide field">
         <label for="middle-name">Middle Name</label>
-        {{input type="text" value=this.model.middleName placeholder="Middle" id="middle-name"}}
+        <Input @type="text" @value={{this.model.middleName}} placeholder="Middle" @id="middle-name" />
       </div>
       <div class="five wide field">
         <label for="last-name">Last Name</label>
-        {{validated-input type="text" model=this.model valuePath="lastName" placeholder="Last Name" id="last-name"}}
+        <ValidatedInput @type="text" @model={{this.model}} @valuePath="lastName" @placeholder="Last Name" @id="last-name" />
       </div>
       <div class="three wide field">
         <label for="suffix-name">Suffix</label>
-        {{#ui-dropdown class="selection" onChange=(action (mut this.model.suffix))}}
+        <UiDropdown @class="selection" @onChange={{action (mut this.model.suffix)}}>
           <div class="default text">Suffix</div>
           <i class="dropdown icon"></i>
           <div class="menu">
@@ -33,11 +33,11 @@
               </div>
             {{/each}}
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       </div>
       <div class="two wide field">
         <label for="suffix-name">Gender</label>
-        {{#ui-dropdown class="selection" selected=this.model.gender onChange=(action (mut this.model.gender))}}
+        <UiDropdown @class="selection" @selected={{this.model.gender}} @onChange={{action (mut this.model.gender)}}>
           <div class="default text">Gender</div>
           <i class="dropdown icon"></i>
           <div class="menu">
@@ -47,28 +47,28 @@
               </div>
             {{/each}}
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       </div>
     </div>
     <div class="three fields">
       <div class="field">
-        {{input/social-security value=this.model.ssn}}
+        <Input::SocialSecurity @value={{this.model.ssn}} />
       </div>
       <div class="field">
         <label for="employee-phone">Phone Number</label>
-        {{masked-input type="tel" placeholder="Employee Phone #" id="employee-phone" mask="(111) 111-1111" on-change=(action (mut this.model.phone) value="target.value")}}
+        <MaskedInput @type="tel" @placeholder="Employee Phone #" @id="employee-phone" @mask="(111) 111-1111" @on-change={{action (mut this.model.phone) value="target.value"}} />
       </div>
       <div class="field">
         <label for="email">Email</label>
-        {{validated-input type="email" model=this.model valuePath="email" placeholder="Email" id="email"}}
+        <ValidatedInput @type="email" @model={{this.model}} @valuePath="email" @placeholder="Email" @id="email" />
       </div>
       <div class="field">
         <label for="employeeNumber">Employee Number</label>
-        {{validated-input model=this.model valuePath="employeeNumber" placeholder="Employee Number" id="employee-number"}}
+        <ValidatedInput @model={{this.model}} @valuePath="employeeNumber" @placeholder="Employee Number" @id="employee-number" />
       </div>
     </div>
 
     <div class="ui divider"></div>
-    {{#form/action-button type="submit" class="ui massive fluid green button" disabled=this.disabled loading=this.working}}Begin Onboarding{{/form/action-button}}
+    <Form::ActionButton @type="submit" @class="ui massive fluid green button" @disabled={{this.disabled}} @loading={{this.working}}>Begin Onboarding</Form::ActionButton>
   </form>
 </div>

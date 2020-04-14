@@ -9,13 +9,7 @@
         <div class="ui column right aligned text">
           <div class="field">
             <label for="graph-granularity" class="sr-only">Amount of data to show on graph</label>
-            {{#ui-dropdown
-              id="graph-granularity"
-              class="selection"
-              selected=granularity
-              onChange=(action (mut granularity))
-              as |execute mapper|
-            }}
+            <UiDropdown @id="graph-granularity" @class="selection" @selected={{granularity}} @onChange={{action (mut granularity)}} as |execute mapper|>
               <div class="default text">Granularity</div>
               <i class="dropdown icon"></i>
               <div class="menu">
@@ -25,17 +19,14 @@
                   </div>
                 {{/each}}
               </div>
-            {{/ui-dropdown}}
+            </UiDropdown>
           </div>
         </div>
       </div>
       <div class="ui divider"></div>
 
       {{#if model.burndown}}
-        {{ember-chart
-          type="line"
-          data=model.burndown.data
-          options=model.burndown.options}}
+        <EmberChart @type="line" @data={{model.burndown.data}} @options={{model.burndown.options}} />
       {{else}}
         <h2 class="light text center aligned">Not enough recent data to show your summary.</h2>
       {{/if}}

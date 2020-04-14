@@ -6,9 +6,9 @@
 </div>
 <div class="event_details">
   {{#if this.linkTo}}
-    {{#link-to this.linkTo this.model.id class="event__title"}}
+    <LinkTo @route={{this.linkTo}} @model={{this.model.id}} class="event__title">
       {{this.model.title}}
-    {{/link-to}}
+    </LinkTo>
   {{else}}
     <span class="event__title">{{this.model.title}}</span>
   {{/if}}

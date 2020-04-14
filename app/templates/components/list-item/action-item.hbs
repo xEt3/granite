@@ -15,7 +15,7 @@
       </div>
     </h6>
     <div class="header">
-      {{#link-to "account.action-item" this.actionItem.slug}}{{this.actionItem.title}}{{/link-to}}
+      <LinkTo @route="account.action-item" @model={{this.actionItem.slug}}>{{this.actionItem.title}}</LinkTo>
       <a href="#" class="right floated" title="Toggle subscription" {{action "toggleSubscription"}}><i class="{{if (contains this.userId this.subscriberIds) "hide" "unhide"}} fitted icon"></i></a>
     </div>
   </div>
@@ -37,9 +37,9 @@
   </div>
   <div class="content">
     {{#if this.actionItem.checklist.length}}
-      {{#ui-progress percent=this.actionItem.percentComplete class="teal indicating tiny"}}
+      <UiProgress @percent={{this.actionItem.percentComplete}} @class="teal indicating tiny">
         <div class="bar"></div>
-      {{/ui-progress}}
+      </UiProgress>
     {{/if}}
     <h4 class="ui sub header clearfix">
       {{#if this.actionItem.checklist.length}}
@@ -48,7 +48,7 @@
             <i class="check icon"></i>All todos complete
           </strong>
         {{else}}
-          {{#link-to "account.action-item.todo" this.actionItem.slug}}{{this.actionItem.incompleteTodos.length}} {{inflect-text "Todos" this.actionItem.incompleteTodos.length}} Left{{/link-to}}
+          <LinkTo @route="account.action-item.todo" @model={{this.actionItem.slug}}>{{this.actionItem.incompleteTodos.length}} {{inflect-text "Todos" this.actionItem.incompleteTodos.length}} Left</LinkTo>
         {{/if}}
       {{/if}}
       <span class="right floated meta">
@@ -66,6 +66,6 @@
     {{/if}}
   </div>
   <div class="extra content">
-    {{#link-to "account.action-item" this.actionItem.slug class="ui fluid primary button"}}View Item{{/link-to}}
+    <LinkTo @route="account.action-item" @model={{this.actionItem.slug}} class="ui fluid primary button">View Item</LinkTo>
   </div>
 </div>

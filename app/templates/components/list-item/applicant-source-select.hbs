@@ -3,10 +3,7 @@
 {{/if}}
 <div class="content">
   <div class="header">
-    {{ui-checkbox
-      class="checkbox"
-      checked=(readonly this.selected)
-      label=this.model.name}}
+    <UiCheckbox @class="checkbox" @checked={{readonly this.selected}} @label={{this.model.name}} />
   </div>
   {{#if this.model.costPerCycle}}
     <div class="ui orange right floated horizontal label">${{this.model.costPerCycle}}/Billing Cycle</div>

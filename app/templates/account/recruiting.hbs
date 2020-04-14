@@ -1,11 +1,11 @@
 <div class="ui container">
   <div class="ui pointing menu">
-    {{#link-to "account.recruiting.index" class="item"}}
+    <LinkTo @route="account.recruiting.index" class="item">
       <i class="user plus icon"></i>Campaigns
-    {{/link-to}}
-    {{#link-to "account.recruiting.job-descriptions.index" class="item"}}
+    </LinkTo>
+    <LinkTo @route="account.recruiting.job-descriptions.index" class="item">
       <i class="list icon"></i>Descriptions
-    {{/link-to}}
+    </LinkTo>
 
   </div>
 

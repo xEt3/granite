@@ -7,9 +7,9 @@
 {{/if}}
 <div class="clearing content">
   <div class="header">
-    {{#link-to "account.document" this.file.id}}
+    <LinkTo @route="account.document" @model={{this.file.id}}>
       {{this.file.title}}
-    {{/link-to}}
+    </LinkTo>
     <span class="light text">{{this.file.extension}}</span>
   </div>
 
@@ -19,11 +19,11 @@
     {{/each}}
     {{#if this.deleteAction}}
       <div class="right floated">
-        {{#confirm-modal confirmContent=this.confirmDeleteContent as |confirm|}}
+        <ConfirmModal @confirmContent={{this.confirmDeleteContent}} as |confirm|>
           <a href="#" class="text-danger" id="asset-doc__action--delete" {{action (pipe confirm (action this.deleteAction this.file))}}>
             <i class="trash icon"></i>
           </a>
-        {{/confirm-modal}}
+        </ConfirmModal>
       </div>
     {{/if}}
     <span class="ui small text right floated">Created {{time this.file.created}}</span>

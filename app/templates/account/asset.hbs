@@ -1,20 +1,20 @@
 <div class="ui container">
   <div class="ui pointing menu">
-    {{#link-to "account.asset.index" class="item"}}
+    <LinkTo @route="account.asset.index" class="item">
       <i class="list icon"></i>Stock
-    {{/link-to}}
-    {{#link-to "account.asset.information" class="item"}}
+    </LinkTo>
+    <LinkTo @route="account.asset.information" class="item">
       <i class="info icon"></i>Attributes
-    {{/link-to}}
-    {{#link-to "account.asset.documents" class="item"}}
+    </LinkTo>
+    <LinkTo @route="account.asset.documents" class="item">
       <i class="file icon"></i>Associated Documents
-    {{/link-to}}
+    </LinkTo>
     <div class="right menu">
-      {{#ui-dropdown class="item icon top right pointing"}}
+      <UiDropdown @class="item icon top right pointing">
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
-          {{#link-to "account.asset.edit" class="item"}}<i class="edit icon"></i>Edit{{/link-to}}
-          {{#link-to "account.asset.settings" class="item"}}<i class="settings icon"></i>Settings{{/link-to}}
+          <LinkTo @route="account.asset.edit" class="item"><i class="edit icon"></i>Edit</LinkTo>
+          <LinkTo @route="account.asset.settings" class="item"><i class="settings icon"></i>Settings</LinkTo>
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
             {{#confirm-modal this.as deleteContext=this.model.name as |confirm|}}
@@ -22,7 +22,7 @@
             {{/confirm-modal}}
           </div>
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
     </div>
   </div>
 

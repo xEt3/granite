@@ -1,47 +1,36 @@
 <div class="ui image label">
-  {{display/employee-picture
-    url=this.assignment.employee.picture
-    employeeId=this.assignment.employee.id}}
-  {{#link-to "account.employee" this.assignment.employee.id class="item text-black"}}
+  <Display::EmployeePicture @url={{this.assignment.employee.picture}} @employeeId={{this.assignment.employee.id}} />
+  <LinkTo @route="account.employee" @model={{this.assignment.employee.id}} class="item text-black">
     {{this.assignment.employee.fullName}}
-  {{/link-to}}
+  </LinkTo>
   {{#if this.assignment.readOn}}
     &nbsp;
     <i class="eye icon gray-icon">
-      {{#ember-tooltip
-        side="right"
-        popperContainer="body"
-      }}
+      <EmberTooltip @side="right" @popperContainer="body">
         Viewed on {{time this.assignment.readOn}}
-      {{/ember-tooltip}}
+      </EmberTooltip>
     </i>
   {{/if}}
   {{#if this.assignment.signedOn}}
     <a href="#" class="gray-icon" {{action "openSignatureModal"}}>
       <i class="edit icon"></i>
-      {{#ember-popover
-        side="right"
-        popperContainer="body"
-      }}
+      <EmberPopover @side="right" @popperContainer="body">
         <h4 class="center aligned text">
           Signed on {{time this.assignment.signedOn}}
         </h4>
         <img src={{this.assignment.signature}} class="ui medium image" alt="Signature image">
-      {{/ember-popover}}
+      </EmberPopover>
     </a>
   {{/if}}
   <div class="detail">
     {{if this.pastAssignment "Assigned" "Pending"}}
-    {{#ember-tooltip
-      side="right"
-      popperContainer="body"
-    }}
+    <EmberTooltip @side="right" @popperContainer="body">
       Document {{if this.pastAssignment "was" "will be"}} assigned on {{time (or this.assignment.effectiveOn this.assignment.created)}} by {{this.assignment.creator.fullName}}
-    {{/ember-tooltip}}
+    </EmberTooltip>
   </div>
 </div>
 
-{{#ui-modal name="modal__file-assignment-signature" id=this.modalId}}
+<UiModal @name="modal__file-assignment-signature" @id={{this.modalId}}>
   <div class="header">
     {{this.assignment.file.title}} signature for {{this.assignment.employee.fullName}}
   </div>
@@ -53,4 +42,4 @@
       Close
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

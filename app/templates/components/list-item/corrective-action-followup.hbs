@@ -5,12 +5,9 @@
     <div class="header {{if this.model.didResolve "text-green" "light text"}}">
 
       <i class="{{if this.model.didResolve "check" "ellipsis horizontal"}} icon">
-        {{#ember-tooltip
-          side="right"
-          popperContainer="body"
-        }}
+        <EmberTooltip @side="right" @popperContainer="body">
           {{if this.model.didResolve "This follow up marked the issue as resolved." "This follow up did not resolve the issue."}}
-        {{/ember-tooltip}}
+        </EmberTooltip>
       </i>
 
       {{time this.model.created "MMMM Do YYYY"}}
@@ -21,10 +18,7 @@
 
     {{#if this.model.notes}}
       <a href="#" class="right floated" {{action (toggle "isExpanded" this)}}>
-        {{ember-tooltip
-          side="left"
-          popperContainer="body"
-          text="Toggle notes"}}
+        <EmberTooltip @side="left" @popperContainer="body" @text="Toggle notes" />
         <i class="eye {{if this.isExpanded "slash"}} icon"></i>
       </a>
     {{/if}}
