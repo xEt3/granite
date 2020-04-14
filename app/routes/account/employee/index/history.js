@@ -1,11 +1,13 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 import { A } from '@ember/array';
 import moment from 'moment';
 
-export default Route.extend({
-  titleToken: 'History',
+@classic
+export default class HistoryRoute extends Route {
+  titleToken = 'History';
 
-  model (params) {
+  model(params) {
     const page = params.page;
 
     return this.store.query('history', {
@@ -45,4 +47,4 @@ export default Route.extend({
       return historyGroups;
     });
   }
-});
+}

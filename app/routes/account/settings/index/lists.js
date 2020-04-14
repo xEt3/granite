@@ -1,15 +1,17 @@
+import classic from 'ember-classic-decorator';
+import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
-import { inject as service } from '@ember/service';
 
-export default Route.extend({
-  auth: service(),
+@classic
+export default class ListsRoute extends Route {
+  @service
+  auth;
 
-  titleToken: 'Lists',
+  titleToken = 'Lists';
+  queryParams = { list: { refreshModel: true } };
 
-  queryParams: { list: { refreshModel: true } },
-
-  model (params) {
+  model(params) {
     let list = [],
         company = this.get('auth.user.company');
 
@@ -25,12 +27,12 @@ export default Route.extend({
       list,
       company
     });
-  },
+  }
 
-  setupController (controller, model) {
+  setupController(controller, model) {
     controller.setProperties({
       model:   model.list,
       company: model.company
     });
   }
-});
+}

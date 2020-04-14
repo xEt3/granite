@@ -1,40 +1,75 @@
+import classic from 'ember-classic-decorator';
+import { computed } from '@ember/object';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 import { formalActionSuggestions } from 'granite/config/suggestions';
-import { computed } from '@ember/object';
 import { Promise } from 'rsvp';
 
-export default Model.extend({
-  type: attr('string'),
+@classic
+export default class CorrectiveAction extends Model {
+  @attr('string')
+  type;
 
-  descriptionIssues:       attr('string'),
-  descriptionExpectations: attr('string'),
-  descriptionConsequences: attr('string', { defaultValue: formalActionSuggestions.consequences }),
+  @attr('string')
+  descriptionIssues;
 
-  company: belongsTo('company'),
-  creator: belongsTo('employee', {
+  @attr('string')
+  descriptionExpectations;
+
+  @attr('string', { defaultValue: formalActionSuggestions.consequences })
+  descriptionConsequences;
+
+  @belongsTo('company')
+  company;
+
+  @belongsTo('employee', {
     async:   true,
     inverse: null
-  }),
-  employee:          belongsTo('employee'),
-  employeeIssue:     belongsTo('employee-issue'),
-  excludedEmployees: hasMany('employee'),
-  followUps:         hasMany('corrective-action-followup'),
-  severity:          attr('string'),
+  })
+  creator;
 
-  notes:              attr('string'),
-  followUpNotes:      attr('string'),
-  didResolve:         attr('boolean'),
-  followUpOn:         attr('date'),
-  resolutionStatusOn: attr('date'),
-  documents:          hasMany('file'),
+  @belongsTo('employee')
+  employee;
 
-  issuedOn: attr('date', { defaultValue: () => new Date() }),
+  @belongsTo('employee-issue')
+  employeeIssue;
 
-  created: attr('date', { defaultValue: () => new Date() }),
+  @hasMany('employee')
+  excludedEmployees;
 
-  actionSeverity: computed('severity', 'company', function () {
+  @hasMany('corrective-action-followup')
+  followUps;
+
+  @attr('string')
+  severity;
+
+  @attr('string')
+  notes;
+
+  @attr('string')
+  followUpNotes;
+
+  @attr('boolean')
+  didResolve;
+
+  @attr('date')
+  followUpOn;
+
+  @attr('date')
+  resolutionStatusOn;
+
+  @hasMany('file')
+  documents;
+
+  @attr('date', { defaultValue: () => new Date() })
+  issuedOn;
+
+  @attr('date', { defaultValue: () => new Date() })
+  created;
+
+  @computed('severity', 'company')
+  get actionSeverity() {
     let severity = this.get('severity');
 
     if (severity) {
@@ -43,5 +78,5 @@ export default Model.extend({
     }
 
     return null;
-  })
-});
+  }
+}

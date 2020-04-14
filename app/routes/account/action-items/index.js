@@ -1,16 +1,18 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 import { isEmpty } from '@ember/utils';
 import RSVP from 'rsvp';
 
-export default Route.extend({
-  titleToken: 'Projects',
+@classic
+export default class IndexRoute extends Route {
+  titleToken = 'Projects';
 
-  queryParams: {
+  queryParams = {
     filter: { refreshModel: true },
     isDsc:  { refreshModel: true }
-  },
+  };
 
-  model (params) {
+  model(params) {
     let actionItemQuery = {
       $and: [
         { completedOn: { $not: { $type: 9 } } },
@@ -27,10 +29,10 @@ export default Route.extend({
     }
 
     return RSVP.hash({ actionItems: this.store.query('action-item', actionItemQuery) });
-  },
+  }
 
-  setupController (controller, model) {
-    this._super(...arguments);
+  setupController(controller, model) {
+    super.setupController(...arguments);
     controller.setProperties({ model: model.actionItems });
   }
-});
+}

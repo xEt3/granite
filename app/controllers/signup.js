@@ -1,5 +1,6 @@
-import Controller from '@ember/controller';
+import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
+import Controller from '@ember/controller';
 import { inject as controller } from '@ember/controller';
 
 const baseSteps = [{
@@ -19,10 +20,13 @@ const baseSteps = [{
   path:        'signup.finish'
 }];
 
-export default Controller.extend({
-  application: controller(),
+@classic
+export default class SignupController extends Controller {
+  @controller
+  application;
 
-  steps: computed('application.currentPath', function () {
+  @computed('application.currentPath')
+  get steps() {
     const appPath = this.get('application.currentPath');
 
     let activeToggled;
@@ -41,5 +45,5 @@ export default Controller.extend({
 
       return retObj;
     });
-  })
-});
+  }
+}

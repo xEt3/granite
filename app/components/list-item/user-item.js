@@ -1,26 +1,35 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import classic from 'ember-classic-decorator';
+import { classNames } from '@ember-decorators/component';
+import { action, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import ajaxStatus from 'granite/mixins/ajax-status';
 import $ from 'jquery';
 
-let UserItemComponent = Component.extend(ajaxStatus, {
-  store: service(),
-  ajax:  service(),
+@classic
+@classNames('item', 'users__user--item')
+class UserItemComponent extends Component.extend(ajaxStatus) {
+  @service
+  store;
 
-  classNames: [ 'item', 'users__user--item' ],
-  projects:   null,
-  newOwner:   null,
+  @service
+  ajax;
 
-  modalId: computed('elementId', function () {
+  projects = null;
+  newOwner = null;
+
+  @computed('elementId')
+  get modalId() {
     return this.get('elementId') + '-modal';
-  }),
+  }
 
-  dropdownId: computed('elementId', function () {
+  @computed('elementId')
+  get dropdownId() {
     return this.get('elementId') + '-dropdown';
-  }),
+  }
 
-  disableDeactivate: computed('newOwner', 'projects', function () {
+  @computed('newOwner', 'projects')
+  get disableDeactivate() {
     let projects = this.get('projects');
 
     if (!projects || !projects.length) {
@@ -28,9 +37,10 @@ let UserItemComponent = Component.extend(ajaxStatus, {
     }
 
     return this.get('newOwner') ? false : true;
-  }),
+  }
 
-  users: computed('user.id', 'allUsers', function () {
+  @computed('user.id', 'allUsers')
+  get users() {
     let userId = this.get('user.id'),
         allUsers = this.get('allUsers');
 
@@ -52,93 +62,97 @@ let UserItemComponent = Component.extend(ajaxStatus, {
       }
       return userArray;
     }, []);
-  }),
+  }
 
-  closeTransferModal () {
+  closeTransferModal() {
     $(`#${this.get('modalId')}`).modal('hide');
-  },
+  }
 
-  actions: {
-    async openTransferModal () {
-      this.ajaxStart();
-      let { actionItem } = await this.ajax.request('/api/v1/action-items', {
+  @action
+  async openTransferModal() {
+    this.ajaxStart();
+    let { actionItem } = await this.ajax.request('/api/v1/action-items', {
+      data: {
+        owner:       this.get('user.employee.id'),
+        completedOn: null
+      }
+    });
+    this.set('projects', actionItem);
+    this.ajaxSuccess(null, true);
+
+    $(`#${this.get('modalId')}`).modal({
+      detachable:  true,
+      showOnFocus: false,
+      closable:    false,
+      onHidden:    () => {
+        this.setProperties({
+          projects: null,
+          newOwner: null
+        });
+      }
+    }).modal('show');
+  }
+
+  @action
+  async transferProjects() {
+    if (this.get('projects.length') === 0) {
+      return;
+    }
+
+    this.ajaxStart();
+    try {
+      await this.ajax.post('/api/v1/action-item/bulk-transfer', {
         data: {
-          owner:       this.get('user.employee.id'),
-          completedOn: null
+          currentOwner: this.get('user.employee.id'),
+          newOwner:     this.get('newOwner')
         }
       });
-      this.set('projects', actionItem);
-      this.ajaxSuccess(null, true);
-
-      $(`#${this.get('modalId')}`).modal({
-        detachable:  true,
-        showOnFocus: false,
-        closable:    false,
-        onHidden:    () => {
-          this.setProperties({
-            projects: null,
-            newOwner: null
-          });
-        }
-      }).modal('show');
-    },
-
-    async transferProjects () {
-      if (this.get('projects.length') === 0) {
-        return;
-      }
-
-      this.ajaxStart();
-      try {
-        await this.ajax.post('/api/v1/action-item/bulk-transfer', {
-          data: {
-            currentOwner: this.get('user.employee.id'),
-            newOwner:     this.get('newOwner')
-          }
-        });
-      } catch (e) {
-        this.ajaxError(e);
-        this.closeTransferModal();
-        throw e;
-      }
-
-      this.ajaxSuccess('Successfully transferred projects');
-    },
-
-    async toggleInactiveState (val) {
-      let user = this.get('user');
-      user.set('inactive', val);
-
-      this.ajaxStart();
-      try {
-        await user.save();
-      } catch (e) {
-        return this.ajaxError(e);
-      }
-
-      if (val) {
-        this.closeTransferModal();
-        this.ajaxSuccess('Successfully deactivated user');
-      } else {
-        this.ajaxSuccess('Successfully reactivated user');
-      }
-
-      this.send('refresh');
-    },
-
-    cancel () {
+    } catch (e) {
+      this.ajaxError(e);
       this.closeTransferModal();
-    },
-
-    notify (type, msg) {
-      this.get('onNotify')(type, msg);
-    },
-
-    refresh () {
-      this.get('onRefresh')();
+      throw e;
     }
+
+    this.ajaxSuccess('Successfully transferred projects');
   }
-});
+
+  @action
+  async toggleInactiveState(val) {
+    let user = this.get('user');
+    user.set('inactive', val);
+
+    this.ajaxStart();
+    try {
+      await user.save();
+    } catch (e) {
+      return this.ajaxError(e);
+    }
+
+    if (val) {
+      this.closeTransferModal();
+      this.ajaxSuccess('Successfully deactivated user');
+    } else {
+      this.ajaxSuccess('Successfully reactivated user');
+    }
+
+    this.send('refresh');
+  }
+
+  @action
+  cancel() {
+    this.closeTransferModal();
+  }
+
+  @action
+  notify(type, msg) {
+    this.get('onNotify')(type, msg);
+  }
+
+  @action
+  refresh() {
+    this.get('onRefresh')();
+  }
+}
 
 UserItemComponent.reopenClass({ positionalParams: [ 'user', 'allUsers' ] });
 

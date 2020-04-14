@@ -1,12 +1,15 @@
-import Route from '@ember/routing/route';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
 import refreshable from 'granite/mixins/refreshable';
 
-export default Route.extend(refreshable, {
-  ajax: service(),
+@classic
+export default class EmployeesRoute extends Route.extend(refreshable) {
+  @service
+  ajax;
 
-  model () {
+  model() {
     return hash({
       changeQueue: this.get('ajax').request('/api/v1/changes', {
         data: {
@@ -16,4 +19,4 @@ export default Route.extend(refreshable, {
       }).then(response => response && response.count)
     });
   }
-});
+}

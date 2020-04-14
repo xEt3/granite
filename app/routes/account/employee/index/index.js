@@ -1,9 +1,11 @@
+import classic from 'ember-classic-decorator';
+import { action } from '@ember/object';
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  actions: {
-    refresh () {
-      return true;
-    }
+@classic
+export default class IndexRoute extends Route {
+  @action
+  refresh() {
+    return true;
   }
-});
+}

@@ -1,9 +1,11 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  titleToken: 'Signup',
+@classic
+export default class SignupRoute extends Route {
+  titleToken = 'Signup';
 
-  model () {
+  model() {
     return this.store.createRecord('company');
   }
-});
+}

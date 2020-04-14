@@ -1,21 +1,27 @@
+import classic from 'ember-classic-decorator';
+import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
-import { inject as service } from '@ember/service';
 import { A } from '@ember/array';
 import Object from '@ember/object';
 import refreshable from 'granite/mixins/refreshable';
 import humanizeKey from 'granite/utils/humanize-key-name';
 
-export default Route.extend(refreshable, {
-  titleToken:  'History Report',
-  ajax:        service(),
-  limit:       5,
-  queryParams: {
+@classic
+export default class HistoryReportRoute extends Route.extend(refreshable) {
+  titleToken = 'History Report';
+
+  @service
+  ajax;
+
+  limit = 5;
+
+  queryParams = {
     field:   { refreshModel: true },
     creator: { refreshModel: true }
-  },
+  };
 
-  model (params) {
+  model(params) {
     let controller = this.controller,
         page = controller ? controller.get('page') - 1 : 0,
         employee = this.modelFor('account.employee').get('id');
@@ -29,9 +35,9 @@ export default Route.extend(refreshable, {
       fields:   controller && controller.get('fields') ? controller.get('fields') : this.getFields(),
       creators: this.store.findAll('company-user')
     });
-  },
+  }
 
-  getFields (employee) {
+  getFields(employee) {
     return this.get('ajax').request('api/v1/histories', {
       employee,
       select: 'diff -_id'
@@ -49,9 +55,9 @@ export default Route.extend(refreshable, {
         return keys;
       }, A()).uniqBy('display') : [];
     });
-  },
+  }
 
-  getHistory (params, targetId, page) {
+  getHistory(params, targetId, page) {
     let controller = this.controller,
         field = params.field;
 
@@ -98,9 +104,9 @@ export default Route.extend(refreshable, {
         meta:    result.get('meta')
       };
     });
-  },
+  }
 
-  setupController (controller, model) {
+  setupController(controller, model) {
     controller.setProperties({
       model:      model.history.records,
       meta:       model.history.meta,
@@ -109,4 +115,4 @@ export default Route.extend(refreshable, {
       resetModel: false
     });
   }
-});
+}

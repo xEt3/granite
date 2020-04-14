@@ -1,15 +1,24 @@
+import classic from 'ember-classic-decorator';
+import { computed } from '@ember/object';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-import { computed } from '@ember/object';
 
-export default Model.extend({
-  name:   attr('string'),
-  order:  attr('number'),
-  formal: attr('boolean'),
+@classic
+export default class CorrectiveActionSeverity extends Model {
+  @attr('string')
+  name;
 
-  created: attr('date', { defaultValue: () => new Date() }),
+  @attr('number')
+  order;
 
-  title: computed('name', 'order', function () {
+  @attr('boolean')
+  formal;
+
+  @attr('date', { defaultValue: () => new Date() })
+  created;
+
+  @computed('name', 'order')
+  get title() {
     return `${this.get('name')} (${this.get('order')})`;
-  })
-});
+  }
+}

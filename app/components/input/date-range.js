@@ -1,9 +1,12 @@
-import Component from '@ember/component';
+import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
+import Component from '@ember/component';
 import moment from 'moment';
 
-export default Component.extend({
-  endOptions: computed('start', function () {
+@classic
+export default class DateRange extends Component {
+  @computed('start')
+  get endOptions() {
     const start = this.get('start'),
           loopDate = moment(start),
           opts = [];
@@ -32,5 +35,5 @@ export default Component.extend({
     }
 
     return opts;
-  })
-});
+  }
+}

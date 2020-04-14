@@ -1,11 +1,13 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  titleToken (model) {
+@classic
+export default class JobOpeningRoute extends Route {
+  titleToken(model) {
     return model.get('title');
-  },
+  }
 
-  model (params) {
+  model(params) {
     return this.store.find('job-opening', params.id);
   }
-});
+}

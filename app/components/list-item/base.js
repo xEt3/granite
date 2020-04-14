@@ -1,6 +1,8 @@
+import classic from 'ember-classic-decorator';
 import Component from '@ember/component';
 
-let BaseLiComponent = Component.extend({});
+@classic
+class BaseLiComponent extends Component {}
 
 BaseLiComponent.reopenClass({ positionalParams: [ 'model' ] });
 

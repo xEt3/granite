@@ -1,11 +1,15 @@
-import Route from '@ember/routing/route';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Route.extend({
-  headData: service(),
-  title:    'Granite Human Resources | Next-Gen HRIS',
+@classic
+export default class IndexRoute extends Route {
+  @service
+  headData;
 
-  afterModel () {
+  title = 'Granite Human Resources | Next-Gen HRIS';
+
+  afterModel() {
     this.set('headData.description', `A Human Resources System for ${moment().format('YYYY')}. Granite HR helps you conquer recruiting, asset management, projects, & employee information.`);
   }
-});
+}

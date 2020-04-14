@@ -1,12 +1,15 @@
+import classic from 'ember-classic-decorator';
+import { on } from '@ember-decorators/object';
 import Controller from '@ember/controller';
 import { run } from '@ember/runloop';
-import { on } from '@ember/object/evented';
 import $ from 'jquery';
 
-export default Controller.extend({
-  getWindowHeight: on('init', function () {
+@classic
+export default class IndexController extends Controller {
+  @on('init')
+  getWindowHeight() {
     run.scheduleOnce('afterRender', () => {
       this.set('currentWindowHeight', $(window).height());
     });
-  })
-});
+  }
+}

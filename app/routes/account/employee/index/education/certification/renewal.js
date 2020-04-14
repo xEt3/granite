@@ -1,9 +1,11 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  queryParams: { renewal: { refreshModel: true } },
+@classic
+export default class RenewalRoute extends Route {
+  queryParams = { renewal: { refreshModel: true } };
 
-  model ({ renewal }) {
+  model({ renewal }) {
     let certification = this.modelFor('account.employee.index.education.certification');
 
     return {
@@ -13,4 +15,4 @@ export default Route.extend({
         this.store.createRecord('renewal')
     };
   }
-});
+}

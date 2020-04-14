@@ -1,10 +1,12 @@
+import classic from 'ember-classic-decorator';
 import UiSidebar from 'semantic-ui-ember/components/ui-sidebar';
 import $ from 'jquery';
 
-export default UiSidebar.extend({
-  'ui_context': '.ember-application > div.ember-view',
+@classic
+export default class _UiSidebar extends UiSidebar {
+  'ui_context' = '.ember-application > div.ember-view';
 
-  didInsertElement () {
+  didInsertElement() {
     let context = this.get('ui_context');
 
     $(context).addClass('pushable');
@@ -14,4 +16,4 @@ export default UiSidebar.extend({
     .sidebar('attach events', `${context} > .menu .item`)
     .sidebar('setting', 'transition', this.get('transition'));
   }
-});
+}

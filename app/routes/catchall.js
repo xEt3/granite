@@ -1,3 +1,7 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({ titleToken: 'Error' });
+@classic
+export default class CatchallRoute extends Route {
+  titleToken = 'Error';
+}

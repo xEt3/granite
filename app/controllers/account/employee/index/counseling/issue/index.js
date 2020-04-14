@@ -1,5 +1,10 @@
-import Controller from '@ember/controller';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Controller from '@ember/controller';
 import resource from 'granite/mixins/controller-abstractions/resource';
 
-export default Controller.extend(resource, { auth: service() });
+@classic
+export default class IndexController extends Controller.extend(resource) {
+  @service
+  auth;
+}

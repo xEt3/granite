@@ -1,17 +1,21 @@
-import Component from '@ember/component';
+import classic from 'ember-classic-decorator';
+import { tagName } from '@ember-decorators/component';
 import { computed } from '@ember/object';
+import Component from '@ember/component';
 import { run } from '@ember/runloop';
 
-export default Component.extend({
-  tagName: '',
-  showSsn: true,
+@classic
+@tagName('')
+export default class SocialSecurity extends Component {
+  showSsn = true;
 
-  didInsertElement () {
-    this._super(...arguments);
+  didInsertElement() {
+    super.didInsertElement(...arguments);
     run.later(() => this.set('showSsn', false), 800);
-  },
+  }
 
-  ssnInputType: computed('showSsn', function () {
+  @computed('showSsn')
+  get ssnInputType() {
     return this.get('showSsn') ? 'text' : 'password';
-  })
-});
+  }
+}

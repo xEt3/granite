@@ -1,21 +1,27 @@
-import Component from '@ember/component';
-import { inject as service } from '@ember/service';
+import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import ajaxStatus from 'granite/mixins/ajax-status';
 
-export default Component.extend(ajaxStatus, {
-  auth:         service(),
-  subscription: service(),
+@classic
+export default class SubscriptionBanner extends Component.extend(ajaxStatus) {
+  @service
+  auth;
 
-  didUpdateAttrs () {
-    this._super(...arguments);
+  @service
+  subscription;
+
+  didUpdateAttrs() {
+    super.didUpdateAttrs(...arguments);
 
     if (this.get('accountLocked')) {
       this.get('transitionToSubscription')();
     }
-  },
+  }
 
-  bannerClass: computed('subscription.{daysLeftInGracePeriod,accountSuspended,isCancelled}', function () {
+  @computed('subscription.{daysLeftInGracePeriod,accountSuspended,isCancelled}')
+  get bannerClass() {
     if (this.get('subscription.daysLeftInGracePeriod') || this.get('subscription.accountSuspended')) {
       return 'subscription-banner--red';
     } else if (this.get('subscription.isCancelled')) {
@@ -23,5 +29,5 @@ export default Component.extend(ajaxStatus, {
     } else {
       return 'subscription-banner--hidden';
     }
-  })
-});
+  }
+}

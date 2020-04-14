@@ -1,3 +1,7 @@
+import classic from 'ember-classic-decorator';
+import { classNames } from '@ember-decorators/component';
 import Component from '@ember/component';
 
-export default Component.extend({ classNames: [ 'history__timeline-item' ] });
+@classic
+@classNames('history__timeline-item')
+export default class HistoryItem extends Component {}

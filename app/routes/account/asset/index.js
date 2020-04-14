@@ -1,11 +1,13 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 import refreshable from 'granite/mixins/refreshable';
 
-export default Route.extend(refreshable, {
-  titleToken:  'Asset Inventory',
-  queryParams: { page: { refreshModel: true } },
+@classic
+export default class IndexRoute extends Route.extend(refreshable) {
+  titleToken = 'Asset Inventory';
+  queryParams = { page: { refreshModel: true } };
 
-  model (params) {
+  model(params) {
     let page = (params.page || 1) - 1,
         limit = 10;
 
@@ -15,4 +17,4 @@ export default Route.extend(refreshable, {
       asset: this.paramsFor('account.asset').id
     });
   }
-});
+}

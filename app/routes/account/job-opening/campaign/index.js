@@ -1,13 +1,17 @@
-import Route from '@ember/routing/route';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 import { A } from '@ember/array';
 import moment from 'moment';
 
-export default Route.extend({
-  titleToken: 'Summary',
-  ajax:       service(),
+@classic
+export default class IndexRoute extends Route {
+  titleToken = 'Summary';
 
-  async model () {
+  @service
+  ajax;
+
+  async model() {
     const ajax = this.get('ajax'),
           jobOpening = this.modelFor('account.job-opening');
 
@@ -39,12 +43,12 @@ export default Route.extend({
       chart,
       jobOpening
     };
-  },
+  }
 
-  setupController (controller, model) {
+  setupController(controller, model) {
     controller.setProperties({
       model:      model.chart,
       jobOpening: model.jobOpening
     });
   }
-});
+}

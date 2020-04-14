@@ -1,13 +1,15 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
 import refreshable from 'granite/mixins/refreshable';
 
-export default Route.extend(refreshable, {
-  titleToken () {
+@classic
+export default class IndexRoute extends Route.extend(refreshable) {
+  titleToken() {
     return 'Document';
-  },
+  }
 
-  model () {
+  model() {
     let { document } = this.modelFor('account.document');
 
     return hash({
@@ -20,12 +22,12 @@ export default Route.extend(refreshable, {
         }
       })
     });
-  },
+  }
 
-  setupController (controller, model) {
+  setupController(controller, model) {
     controller.setProperties({
       model:           model.document,
       fileAssignments: model.fileAssignments
     });
   }
-});
+}

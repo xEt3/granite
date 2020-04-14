@@ -1,7 +1,9 @@
+import classic from 'ember-classic-decorator';
+import { tagName } from '@ember-decorators/component';
+import { on } from '@ember-decorators/object';
 /* eslint-disable ember/no-on-calls-in-components*/
 import Component from '@ember/component';
 import { run } from '@ember/runloop';
-import { on } from '@ember/object/evented';
 import moment from 'moment';
 import ENV from 'granite/config/environment';
 
@@ -17,11 +19,13 @@ function fromNowWithSeconds (momentObject, m) {
   return momentObject.fromNow(m);
 }
 
-const TimeAgo = Component.extend({
-  tagName:          'span',
-  positionalParams: [ 'time' ],
+@classic
+@tagName('span')
+class TimeAgo extends Component {
+  positionalParams = [ 'time' ];
 
-  _tick: on('didInsertElement', function () {
+  @on('didInsertElement')
+  _tick() {
     if (this.get('isDestroying') || this.get('isDestroyed')) {
       return;
     }
@@ -31,8 +35,8 @@ const TimeAgo = Component.extend({
     if (ENV.environment !== 'test') {
       run.later(this, this._tick, 1000);
     }
-  })
-});
+  }
+}
 
 TimeAgo.reopenClass({ positionalParams: [ 'time' ] });
 

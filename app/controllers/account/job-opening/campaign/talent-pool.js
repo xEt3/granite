@@ -1,4 +1,6 @@
+import classic from 'ember-classic-decorator';
 import Controller from '@ember/controller';
 import resource from 'granite/mixins/controller-abstractions/resource';
 
-export default Controller.extend(resource, {});
+@classic
+export default class TalentPoolController extends Controller.extend(resource) {}

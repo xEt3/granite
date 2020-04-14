@@ -1,11 +1,15 @@
-import Route from '@ember/routing/route';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Route.extend({
-  headData:   service(),
-  titleToken: 'Contact',
+@classic
+export default class ContactRoute extends Route {
+  @service
+  headData;
 
-  afterModel () {
+  titleToken = 'Contact';
+
+  afterModel() {
     this.set('headData.description', 'Questions or feedback for us? Get in touch. Granite HR is a lightweight HRIS that helps you conquer human resources.');
   }
-});
+}

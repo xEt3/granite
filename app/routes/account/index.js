@@ -1,20 +1,27 @@
+import classic from 'ember-classic-decorator';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import { resolve } from 'rsvp';
-import { inject as service } from '@ember/service';
 import { scheduleOnce } from '@ember/runloop';
 import { isEmpty } from '@ember/utils';
 
-export default Route.extend({
-  titleToken: 'Dashboard',
-  ajax:       service(),
-  auth:       service(),
+@classic
+export default class IndexRoute extends Route {
+  titleToken = 'Dashboard';
 
-  queryParams: {
+  @service
+  ajax;
+
+  @service
+  auth;
+
+  queryParams = {
     tag:  { refreshModel: true },
     page: { refreshModel: true }
-  },
+  };
 
-  beforeModel () {
+  beforeModel() {
     return resolve(this.get('auth.user'))
     .then(user => resolve(user.get('company')))
     .then(company => {
@@ -22,9 +29,9 @@ export default Route.extend({
         return this.transitionTo('account.first-steps');
       }
     });
-  },
+  }
 
-  async model (params) {
+  async model(params) {
     let activityQuery = {
       limit: this.get('cachedActivities') ? params.limit : params.limit * (params.page + 1),
       page:  this.get('cachedActivities') ? params.page : 0,
@@ -46,23 +53,23 @@ export default Route.extend({
         }
       })
     };
-  },
+  }
 
-  async getAnalytics () {
+  async getAnalytics() {
     return await this.get('ajax').request('/api/v1/company/dashboard-analytics');
-  },
+  }
 
-  afterModel (model) {
+  afterModel(model) {
     if (model.page > 0) {
       scheduleOnce('afterRender', () => {
         let $activityEl = document.querySelector('.dashboard__activity-feed');
         return $activityEl && window.scrollTo(0, $activityEl.offsetHeight);
       });
     }
-  },
+  }
 
-  setupController (controller, model) {
-    this._super(...arguments);
+  setupController(controller, model) {
+    super.setupController(...arguments);
 
     if (this.get('cachedActivities') && model.page > 0) {
       this.set('cachedActivities', this.get('cachedActivities').concat(model.activities.toArray()));
@@ -76,11 +83,10 @@ export default Route.extend({
       totalRecords: model.activities.get('meta.totalRecords'),
       analytics:    model.analytics
     });
-  },
-
-  actions: {
-    willTransition () {
-      this.controller.set('page', 0);
-    }
   }
-});
+
+  @action
+  willTransition() {
+    this.controller.set('page', 0);
+  }
+}

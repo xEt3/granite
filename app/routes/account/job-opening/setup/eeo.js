@@ -1,3 +1,7 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({ titleToken: 'EEO' });
+@classic
+export default class EeoRoute extends Route {
+  titleToken = 'EEO';
+}

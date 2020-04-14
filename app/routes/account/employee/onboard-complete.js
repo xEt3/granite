@@ -1,10 +1,12 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 import { run } from '@ember/runloop';
 
-export default Route.extend({
-  titleToken: 'Onboard Complete',
+@classic
+export default class OnboardCompleteRoute extends Route {
+  titleToken = 'Onboard Complete';
 
-  afterModel (model) {
+  afterModel(model) {
     model.setProperties({
       onboarding:         false,
       onboardingStep:     null,
@@ -21,4 +23,4 @@ export default Route.extend({
       });
     });
   }
-});
+}

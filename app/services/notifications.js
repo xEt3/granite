@@ -1,12 +1,13 @@
+import classic from 'ember-classic-decorator';
 import Service from '@ember/service';
 import { Promise, resolve } from 'rsvp';
 
-export default Service.extend({
-  isSupported: 'Notification' in window,
+@classic
+export default class NotificationsService extends Service {
+  isSupported = 'Notification' in window;
+  notificationTimeout = 4000;
 
-  notificationTimeout: 4000,
-
-  requestPermission (force) {
+  requestPermission(force) {
     if (!this.get('isSupported')) {
       return resolve('Not supported');
     }
@@ -28,13 +29,13 @@ export default Service.extend({
 
       return resv('Permission defined');
     }));
-  },
+  }
 
-  __checkPermission () {
+  __checkPermission() {
     return this.requestPermission();
-  },
+  }
 
-  send (title, body, icon) {
+  send(title, body, icon) {
     return this.__checkPermission()
     .then(permission => {
       if (permission !== true) {
@@ -48,4 +49,4 @@ export default Service.extend({
       setTimeout(() => notification.close(), this.get('notificationTimeout'));
     });
   }
-});
+}

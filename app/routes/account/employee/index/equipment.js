@@ -1,12 +1,14 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
 import refreshable from 'granite/mixins/refreshable';
-import Object from '@ember/object';
+import Object, { action } from '@ember/object';
 
-export default Route.extend(refreshable, {
-  titleToken: 'Equipment',
+@classic
+export default class EquipmentRoute extends Route.extend(refreshable) {
+  titleToken = 'Equipment';
 
-  model () {
+  model() {
     let employee = this.modelFor('account.employee');
     return RSVP.hash({
       employee,
@@ -29,22 +31,22 @@ export default Route.extend(refreshable, {
       assignedAssets: this.store.query('asset-item', { 'assignments.employee': employee.get('id') }).then(assets => assets.toArray())
     });
 
-  },
-  setupController (controller, model) {
+  }
+
+  setupController(controller, model) {
     controller.setProperties({
       model:            model.assignedAssets,
       employee:         model.employee,
       assignableAssets: model.assignableAssets
     });
-  },
+  }
 
-  actions: {
-    willTransition () {
-      let modalNode = document.querySelector('.ui.modal.new-asset');
+  @action
+  willTransition() {
+    let modalNode = document.querySelector('.ui.modal.new-asset');
 
-      if (modalNode && modalNode.remove) {
-        modalNode.remove();
-      }
+    if (modalNode && modalNode.remove) {
+      modalNode.remove();
     }
   }
-});
+}

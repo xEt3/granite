@@ -1,20 +1,24 @@
-import Component from '@ember/component';
+import classic from 'ember-classic-decorator';
+import { classNames } from '@ember-decorators/component';
 import { computed } from '@ember/object';
+import Component from '@ember/component';
 
-const ControlComponent = Component.extend({
-  classNames:    [ 'ui', 'field' ],
-  hasNull:       true,
-  itemValuePath: 'id',
+@classic
+@classNames('ui', 'field')
+class ControlComponent extends Component {
+  hasNull = true;
+  itemValuePath = 'id';
 
-  didInsertElement () {
-    this._super(...arguments);
+  didInsertElement() {
+    super.didInsertElement(...arguments);
 
     if (this.get('state') && !this.get('parentView.active')) {
       this.set('parentView.active', true);
     }
-  },
+  }
 
-  selectionClass: computed('type', 'searchable', function () {
+  @computed('type', 'searchable')
+  get selectionClass() {
     if (this.get('type') !== 'select') {
       return;
     }
@@ -30,12 +34,12 @@ const ControlComponent = Component.extend({
     }
 
     return classText;
-  }),
+  }
 
-  __update (val) {
+  __update(val) {
     this.get('update')(this.get('controlName'), val);
   }
-});
+}
 
 ControlComponent.reopenClass({ positionalParams: [ 'controlName', 'state' ] });
 

@@ -1,8 +1,11 @@
-import Controller from '@ember/controller';
+import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
+import Controller from '@ember/controller';
 
-export default Controller.extend({
-  steps: computed(function () {
+@classic
+export default class FirstStepsController extends Controller {
+  @computed
+  get steps() {
     return [{
       key:         'anatomy',
       title:       'Anatomy',
@@ -25,5 +28,5 @@ export default Controller.extend({
       link:        'account.settings',
       condition:   'Visit the settings page'
     }];
-  })
-});
+  }
+}

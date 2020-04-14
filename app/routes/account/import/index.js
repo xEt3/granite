@@ -1,7 +1,9 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  model () {
+@classic
+export default class IndexRoute extends Route {
+  model() {
     return this.get('auth.user.company');
   }
-});
+}

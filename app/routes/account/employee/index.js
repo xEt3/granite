@@ -1,12 +1,17 @@
-import Route from '@ember/routing/route';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 import refreshable from 'granite/mixins/refreshable';
 
-export default Route.extend(refreshable, {
-  ajax: service(),
-  auth: service(),
+@classic
+export default class IndexRoute extends Route.extend(refreshable) {
+  @service
+  ajax;
 
-  async model () {
+  @service
+  auth;
+
+  async model() {
     let employee = this.modelFor('account.employee'),
         company = await this.get('auth.user.company') || {};
 
@@ -20,12 +25,12 @@ export default Route.extend(refreshable, {
     }
 
     return employee;
-  },
+  }
 
-  setupController (controller, model) {
+  setupController(controller, model) {
     controller.setProperties({
       model:            model,
       visualIdRequired: this.get('visualIdRequired')
     });
   }
-});
+}

@@ -1,3 +1,7 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({ titleToken: 'Intro to Documents' });
+@classic
+export default class IntroRoute extends Route {
+  titleToken = 'Intro to Documents';
+}

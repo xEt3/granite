@@ -1,23 +1,26 @@
+import classic from 'ember-classic-decorator';
+import { action, computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import $ from 'jquery';
-import { computed } from '@ember/object';
-import { inject as service } from '@ember/service';
 
-export default Component.extend({
-  auth: service(),
+@classic
+export default class AtsDisqualify extends Component {
+  @service
+  auth;
 
-  disqualificationReasons: computed('auth.user.company', function () {
+  @computed('auth.user.company')
+  get disqualificationReasons() {
     return this.get('auth.user.company.disqualificationReasons');
-  }),
-
-  closeModal () {
-    $('#' + this.get('modalId')).modal('hide');
-  },
-
-  actions: {
-    respond (response) {
-      this.get('onResponse')(response);
-      this.closeModal();
-    }
   }
-});
+
+  closeModal() {
+    $('#' + this.get('modalId')).modal('hide');
+  }
+
+  @action
+  respond(response) {
+    this.get('onResponse')(response);
+    this.closeModal();
+  }
+}

@@ -1,16 +1,21 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import classic from 'ember-classic-decorator';
+import { action, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import Controller from '@ember/controller';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import del from 'granite/mixins/controller-abstractions/delete';
 import { closeMessageMap } from 'granite/config/statics';
 
-export default Controller.extend(addEdit, del, {
-  auth:                  service(),
-  transitionAfterDelete: 'account.recruiting.index.index',
-  transitionWithModel:   false,
+@classic
+export default class CampaignController extends Controller.extend(addEdit, del) {
+  @service
+  auth;
 
-  confirmCloseMessage: computed('model.{sendCloseNotice,allocateTalentPool}', function () {
+  transitionAfterDelete = 'account.recruiting.index.index';
+  transitionWithModel = false;
+
+  @computed('model.{sendCloseNotice,allocateTalentPool}')
+  get confirmCloseMessage() {
     if (!this.get('model')) {
       return;
     }
@@ -27,17 +32,16 @@ export default Controller.extend(addEdit, del, {
     return messages.length > 0 ?
       `${closeMessageMap.prefix} ${messages.join(', ')}. ${closeMessageMap.default}` :
       closeMessageMap.default;
-  }),
-
-  actions: {
-    close () {
-      const model = this.get('model');
-      model.set('closed', true);
-      if (!model.completedOn) {
-        model.set('completedOn', new Date());
-      }
-
-      this.saveModel(model);
-    }
   }
-});
+
+  @action
+  close() {
+    const model = this.get('model');
+    model.set('closed', true);
+    if (!model.completedOn) {
+      model.set('completedOn', new Date());
+    }
+
+    this.saveModel(model);
+  }
+}

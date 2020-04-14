@@ -1,3 +1,7 @@
+import classic from 'ember-classic-decorator';
+import { tagName } from '@ember-decorators/component';
 import BaseLiComponent from './base';
 
-export default BaseLiComponent.extend({ tagName: '' });
+@classic
+@tagName('')
+export default class CertificationItem extends BaseLiComponent {}

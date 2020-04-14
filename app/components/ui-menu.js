@@ -1,12 +1,15 @@
+import classic from 'ember-classic-decorator';
+import { action } from '@ember/object';
+import { classNames } from '@ember-decorators/component';
 import Component from '@ember/component';
 
-export default Component.extend({
-  open:       false,
-  classNames: [ 'menu__container-responsive' ],
+@classic
+@classNames('menu__container-responsive')
+export default class UiMenu extends Component {
+  open = false;
 
-  actions: {
-    toggleMenu () {
-      this.toggleProperty('open');
-    }
+  @action
+  toggleMenu() {
+    this.toggleProperty('open');
   }
-});
+}

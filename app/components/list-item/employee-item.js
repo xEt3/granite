@@ -1,6 +1,10 @@
+import classic from 'ember-classic-decorator';
+import { tagName } from '@ember-decorators/component';
 import Component from '@ember/component';
 
-let EmployeeItemComponent = Component.extend({ tagName: '' });
+@classic
+@tagName('')
+class EmployeeItemComponent extends Component {}
 
 EmployeeItemComponent.reopenClass({ positionalParams: [ 'employee' ] });
 

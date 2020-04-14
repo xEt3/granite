@@ -1,3 +1,7 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({ titleToken: 'Edit Custom Fields' });
+@classic
+export default class CustomFieldsRoute extends Route {
+  titleToken = 'Edit Custom Fields';
+}

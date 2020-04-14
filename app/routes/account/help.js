@@ -1,3 +1,7 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({ titleToken: 'Help' });
+@classic
+export default class HelpRoute extends Route {
+  titleToken = 'Help';
+}

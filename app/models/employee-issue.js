@@ -1,26 +1,44 @@
+import classic from 'ember-classic-decorator';
+import { computed } from '@ember/object';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
-import { computed } from '@ember/object';
 import { Promise } from 'rsvp';
 
-export default Model.extend({
-  title: attr('string'),
+@classic
+export default class EmployeeIssue extends Model {
+  @attr('string')
+  title;
 
-  company: belongsTo('company', { inverse: null }),
-  creator: belongsTo('employee', {
+  @belongsTo('company', { inverse: null })
+  company;
+
+  @belongsTo('employee', {
     async:   false,
     inverse: null
-  }),
-  employee:      belongsTo('employee', { inverse: null }),
-  excludedUsers: hasMany('company-user', { inverse: null }),
-  severity:      attr('string'),
-  resolvedOn:    attr('date'),
-  type:          attr('string'),
+  })
+  creator;
 
-  created: attr('date', { defaultValue: () => new Date() }),
+  @belongsTo('employee', { inverse: null })
+  employee;
 
-  actionSeverity: computed('severity', 'company', function () {
+  @hasMany('company-user', { inverse: null })
+  excludedUsers;
+
+  @attr('string')
+  severity;
+
+  @attr('date')
+  resolvedOn;
+
+  @attr('string')
+  type;
+
+  @attr('date', { defaultValue: () => new Date() })
+  created;
+
+  @computed('severity', 'company')
+  get actionSeverity() {
     let severity = this.get('severity');
 
     if (severity) {
@@ -29,9 +47,10 @@ export default Model.extend({
     }
 
     return null;
-  }),
+  }
 
-  slug: computed('id', 'title', function () {
+  @computed('id', 'title')
+  get slug() {
     return `${this.get('title').replace(/\s|_/g, '-')}_${this.get('id')}`;
-  })
-});
+  }
+}

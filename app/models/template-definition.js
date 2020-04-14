@@ -1,14 +1,30 @@
+import classic from 'ember-classic-decorator';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 
-export default Model.extend({
-  key:           attr('string'),
-  title:         attr('string'),
-  description:   attr('string'),
-  availableData: attr('array'),
-  contentKeys:   attr('array'),
-  isRenderable:  attr('boolean'),
-  category:      attr('string'),
+@classic
+export default class TemplateDefinition extends Model {
+  @attr('string')
+  key;
 
-  created: attr('date', { defaultValue: () => new Date() })
-});
+  @attr('string')
+  title;
+
+  @attr('string')
+  description;
+
+  @attr('array')
+  availableData;
+
+  @attr('array')
+  contentKeys;
+
+  @attr('boolean')
+  isRenderable;
+
+  @attr('string')
+  category;
+
+  @attr('date', { defaultValue: () => new Date() })
+  created;
+}

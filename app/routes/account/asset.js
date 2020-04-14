@@ -1,11 +1,13 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  titleToken () {
+@classic
+export default class AssetRoute extends Route {
+  titleToken() {
     return this.context.name;
-  },
+  }
 
-  model (params) {
+  model(params) {
     return this.store.find('asset', params.id);
   }
-});
+}

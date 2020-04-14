@@ -1,37 +1,44 @@
-import Component from '@ember/component';
+import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
-import { bind, scheduleOnce } from '@ember/runloop';
 import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { bind, scheduleOnce } from '@ember/runloop';
 import uriForModel from 'granite/utils/uri-for-model';
 
-export default Component.extend({
-  router:           service(),
-  search:           service(),
-  debounceInterval: 100,
+@classic
+export default class SuggestionInput extends Component {
+  @service
+  router;
 
-  apiSettings: computed('debounceInterval', function () {
+  @service
+  search;
+
+  debounceInterval = 100;
+
+  @computed('debounceInterval')
+  get apiSettings() {
     return {
       throttle:      this.get('debounceInterval'),
       responseAsync: bind(this, this.performSearch)
     };
-  }),
+  }
 
-  performSearch (settings, callback) {
+  performSearch(settings, callback) {
     return this.get('search').performSearch(settings.urlData.query)
     .then(callback)
     .catch(callback);
-  },
+  }
 
-  selected (resultItem) {
+  selected(resultItem) {
     const router = this.get('router');
 
     router.transitionTo.apply(router, uriForModel(resultItem))
     .then(() =>
       scheduleOnce('afterRender', () =>
         this.set('query', null)));
-  },
+  }
 
-  keyPress (e) {
+  keyPress(e) {
     // detect full page flowthru (enter key)
     if (e.keyCode !== 13) {
       return;
@@ -43,4 +50,4 @@ export default Component.extend({
     this.$('input').blur();
     this.set('query', null);
   }
-});
+}

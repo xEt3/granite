@@ -1,18 +1,20 @@
+import classic from 'ember-classic-decorator';
 import ApplicationSerializer from './application';
 import normalizeKeys from '../utils/serialize-object';
 import serializeKeys from '../utils/expand-serialized-object';
 
 
-export default ApplicationSerializer.extend({
-  normalize (modelClass, hash) {
+@classic
+export default class Location extends ApplicationSerializer {
+  normalize(modelClass, hash) {
     normalizeKeys(hash, true, 'address');
-    return this._super(...arguments);
-  },
+    return super.normalize(...arguments);
+  }
 
-  serialize () {
-    let json = this._super(...arguments);
+  serialize() {
+    let json = super.serialize(...arguments);
     serializeKeys(json, 'address');
 
     return json;
   }
-});
+}

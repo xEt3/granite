@@ -1,25 +1,27 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
 
-export default Route.extend({
-  titleToken: 'Todos',
+@classic
+export default class TodoRoute extends Route {
+  titleToken = 'Todos';
 
-  model () {
+  model() {
     return RSVP.hash({
-      actionItem:  this._super(...arguments),
+      actionItem:  super.model(...arguments),
       actionItems: this.store.query('action-item', {
         completedOn: { $not: { $type: 9 } },
         cancelledOn: { $not: { $type: 9 } }
       }),
       employees: this.store.findAll('employee')
     });
-  },
+  }
 
-  setupController (controller, model) {
+  setupController(controller, model) {
     controller.setProperties({
       model:       model.actionItem,
       actionItems: model.actionItems,
       employees:   model.employees
     });
   }
-});
+}

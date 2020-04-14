@@ -1,14 +1,18 @@
-import Route from '@ember/routing/route';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 import moment from 'moment';
 
-export default Route.extend({
-  titleToken: 'Education',
-  ajax:       service(),
+@classic
+export default class EducationRoute extends Route {
+  titleToken = 'Education';
 
-  queryParams: { granularity: { refreshModel: true } },
+  @service
+  ajax;
 
-  async model (params) {
+  queryParams = { granularity: { refreshModel: true } };
+
+  async model(params) {
     const range = params.granularity,
           isShortRange = [ 'day', 'week' ].find(str => range.indexOf(str) > -1);
 
@@ -80,4 +84,4 @@ export default Route.extend({
       }
     };
   }
-});
+}

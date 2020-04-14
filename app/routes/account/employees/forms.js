@@ -1,3 +1,7 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({ titleToken: 'Forms and responses' });
+@classic
+export default class FormsRoute extends Route {
+  titleToken = 'Forms and responses';
+}

@@ -1,11 +1,14 @@
-import Route from '@ember/routing/route';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 import { resolve } from 'rsvp';
 
-export default Route.extend({
-  auth: service(),
+@classic
+export default class CampaignRoute extends Route {
+  @service
+  auth;
 
-  model () {
+  model() {
     return resolve(this.get('auth.user'))
     .then(user => {
       return {
@@ -13,12 +16,12 @@ export default Route.extend({
         parentModel: this.modelFor('account.job-opening')
       };
     });
-  },
+  }
 
-  setupController (controller, model) {
+  setupController(controller, model) {
     controller.setProperties({
       model:      model.parentModel,
       EEOEnabled: model.company.get('collectEEO')
     });
   }
-});
+}

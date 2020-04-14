@@ -1,12 +1,15 @@
-import Component from '@ember/component';
+import classic from 'ember-classic-decorator';
+import { classNames } from '@ember-decorators/component';
 import { computed } from '@ember/object';
+import Component from '@ember/component';
 import { A } from '@ember/array';
 import titleCase from 'granite/utils/title-case';
 
-export default Component.extend({
-  classNames: [ 'ui', 'breadcrumb' ],
-
-  segments: computed('currentPath', function () {
+@classic
+@classNames('ui', 'breadcrumb')
+export default class BreadCrumbs extends Component {
+  @computed('currentPath')
+  get segments() {
     const path = this.get('currentPath'),
           pathSplit = path.split('.'),
           pathLength = pathSplit.length,
@@ -59,5 +62,5 @@ export default Component.extend({
     }
 
     return segments;
-  })
-});
+  }
+}

@@ -1,24 +1,28 @@
+import classic from 'ember-classic-decorator';
+import { action } from '@ember/object';
 import Route from '@ember/routing/route';
 import { scheduleOnce, later, next } from '@ember/runloop';
 
-export default Route.extend({
-  titleToken:  'Counseling',
-  queryParams: {
+@classic
+export default class PrintAllRoute extends Route {
+  titleToken = 'Counseling';
+
+  queryParams = {
     issue: { refreshModel: true },
     slug:  { refreshModel: true }
-  },
+  };
 
-  resetController (controller, isExiting) {
+  resetController(controller, isExiting) {
     if (isExiting) {
       controller.setProperties({
         issue: undefined,
         slug:  undefined
       });
     }
-  },
+  }
 
-  async model (params) {
-    let employee = this._super(...arguments);
+  async model(params) {
+    let employee = super.model(...arguments);
     let queryParams = { employee: employee.get('id') };
 
     if (params.issue) {
@@ -36,19 +40,18 @@ export default Route.extend({
       issue:             await this.store.query('employee-issue', { employee: queryParams.employee }),
       correctiveActions: await this.store.query('corrective-action', queryParams)
     };
-  },
-
-  actions: {
-    async didTransition () {
-      next(() => scheduleOnce('afterRender', () => {
-        window.print();
-        later(() =>  {
-          if (this.slug) {
-            this.transitionTo(this.followThroughPath, this.slug);
-          }
-          this.transitionTo(this.followThroughPath);
-        }, 100);
-      }));
-    }
   }
-});
+
+  @action
+  async didTransition() {
+    next(() => scheduleOnce('afterRender', () => {
+      window.print();
+      later(() =>  {
+        if (this.slug) {
+          this.transitionTo(this.followThroughPath, this.slug);
+        }
+        this.transitionTo(this.followThroughPath);
+      }, 100);
+    }));
+  }
+}

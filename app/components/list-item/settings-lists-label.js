@@ -1,6 +1,10 @@
+import classic from 'ember-classic-decorator';
+import { classNames } from '@ember-decorators/component';
 import Component from '@ember/component';
 
-const SettingsListsItem = Component.extend({ classNames: [ 'item' ] });
+@classic
+@classNames('item')
+class SettingsListsItem extends Component {}
 
 SettingsListsItem.reopenClass({ positionalParams: [ 'item', 'index' ] });
 

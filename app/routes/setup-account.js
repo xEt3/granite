@@ -1,20 +1,26 @@
-import Route from '@ember/routing/route';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Route.extend({
-  titleToken: 'Setup Account',
-  ajax:       service(),
-  auth:       service(),
+@classic
+export default class SetupAccountRoute extends Route {
+  titleToken = 'Setup Account';
 
-  beforeModel () {
+  @service
+  ajax;
+
+  @service
+  auth;
+
+  beforeModel() {
     if (this.get('auth.authenticated')) {
       return this.transitionTo('index');
     }
-  },
+  }
 
-  model (params) {
+  model(params) {
     return this.get('ajax')
     .request(`/api/v1/company-user/activation-status/${params.user_id}/${params.a}`)
     .then(res => res.companyUser);
   }
-});
+}

@@ -1,10 +1,12 @@
+import classic from 'ember-classic-decorator';
+import { classNames, classNameBindings } from '@ember-decorators/component';
 import Component from '@ember/component';
 
-const SectionComponent = Component.extend({
-  classNames:        [ 'ui', 'vertical', 'segment' ],
-  classNameBindings: [ 'active::fade-unless-hovered' ],
-
-  toggleActive () {
+@classic
+@classNames('ui', 'vertical', 'segment')
+@classNameBindings('active::fade-unless-hovered')
+class SectionComponent extends Component {
+  toggleActive() {
     this.toggleProperty('active');
 
     const activeState = Object.assign({}, this.get('activeState')),
@@ -31,7 +33,7 @@ const SectionComponent = Component.extend({
       this.resetFilter(resets || this.get('childViews.0.controlName') || (this.get('sectionName') || '').toLowerCase());
     }
   }
-});
+}
 
 SectionComponent.reopenClass({ positionalParams: [ 'sectionName' ] });
 

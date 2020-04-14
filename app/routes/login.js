@@ -1,17 +1,19 @@
+import classic from 'ember-classic-decorator';
+import { action } from '@ember/object';
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  titleToken: 'Login',
+@classic
+export default class LoginRoute extends Route {
+  titleToken = 'Login';
 
-  resetController (controller, isExiting) {
+  resetController(controller, isExiting) {
     if (isExiting) {
       controller.set('expired', false);
     }
-  },
-
-  actions: {
-    willTransition () {
-      this.get('controller').set('previousTransition', null);
-    }
   }
-});
+
+  @action
+  willTransition() {
+    this.get('controller').set('previousTransition', null);
+  }
+}

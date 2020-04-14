@@ -1,7 +1,10 @@
+import classic from 'ember-classic-decorator';
+import { classNames, tagName } from '@ember-decorators/component';
 import Component from '@ember/component';
 
-export default Component.extend({
-  tagName:    'footer',
-  classNames: [ 'elements__footer' ],
-  now:        new Date()
-});
+@classic
+@tagName('footer')
+@classNames('elements__footer')
+export default class XFooter extends Component {
+  now = new Date();
+}

@@ -1,28 +1,56 @@
+import classic from 'ember-classic-decorator';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 
-export default Model.extend({
-  name: attr('string'),
-  note: attr('string'),
+@classic
+export default class Certification extends Model {
+  @attr('string')
+  name;
 
-  renewalPeriodAmount: attr('number', { defaultValue: 1 }), // 1
-  renewalPeriodUnit:   attr('string', { defaultValue: 'years' }), // year
-  nextRenewalDate:     attr('date'),
-  renews:              attr('boolean'),
-  renewals:            hasMany('renewal'),
-  requiresDocument:    attr('boolean'),
-  initialDate:         attr('date'),
+  @attr('string')
+  note;
 
-  document: belongsTo('file'),
-  company:  belongsTo('company'),
-  creator:  belongsTo('employee'),
-  employee: belongsTo('employee'),
+  @attr('number', { defaultValue: 1 })
+  renewalPeriodAmount; // 1
 
-  documentUploadedOn: attr('date'),
-  created:            attr('date', {
+  @attr('string', { defaultValue: 'years' })
+  renewalPeriodUnit; // year
+
+  @attr('date')
+  nextRenewalDate;
+
+  @attr('boolean')
+  renews;
+
+  @hasMany('renewal')
+  renewals;
+
+  @attr('boolean')
+  requiresDocument;
+
+  @attr('date')
+  initialDate;
+
+  @belongsTo('file')
+  document;
+
+  @belongsTo('company')
+  company;
+
+  @belongsTo('employee')
+  creator;
+
+  @belongsTo('employee')
+  employee;
+
+  @attr('date')
+  documentUploadedOn;
+
+  @attr('date', {
     defaultValue () {
       return new Date();
     }
   })
-});
+  created;
+}

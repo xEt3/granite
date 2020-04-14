@@ -1,14 +1,16 @@
+import classic from 'ember-classic-decorator';
+import { classNames, tagName, layout as templateLayout } from '@ember-decorators/component';
 import Component from '@ember/component';
 import layout from '../templates/components/x-tree-branch';
 
-export default Component.extend({
-  layout,
-  tagName:    'ul',
-  classNames: [ 'tree-branch' ],
-
-  recalculateState () {
+@classic
+@templateLayout(layout)
+@tagName('ul')
+@classNames('tree-branch')
+export default class XTreeBranch extends Component {
+  recalculateState() {
     if (this.get('recalculateStateAction')) {
       this.get('recalculateStateAction')();
     }
   }
-});
+}

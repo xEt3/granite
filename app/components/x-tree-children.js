@@ -1,15 +1,17 @@
+import classic from 'ember-classic-decorator';
+import { classNames, tagName } from '@ember-decorators/component';
 import Component from '@ember/component';
 
-export default Component.extend({
-  tagName:    'li',
-  classNames: [ 'tree-node' ],
-
-  didReceiveAttrs () {
-    this._super(...arguments);
+@classic
+@tagName('li')
+@classNames('tree-node')
+export default class XTreeChildren extends Component {
+  didReceiveAttrs() {
+    super.didReceiveAttrs(...arguments);
     this.recalculateState();
-  },
+  }
 
-  recalculateState () {
+  recalculateState() {
     const children = this.get('model.children');
 
     if (children && children.length) {
@@ -23,4 +25,4 @@ export default Component.extend({
       this.get('recalculateStateAction')();
     }
   }
-});
+}

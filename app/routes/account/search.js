@@ -1,12 +1,16 @@
-import Route from '@ember/routing/route';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Route.extend({
-  search:      service(),
-  queryParams: { q: { refreshModel: true } },
-  titleToken:  'Search Results',
+@classic
+export default class SearchRoute extends Route {
+  @service
+  search;
 
-  model ({ q }) {
+  queryParams = { q: { refreshModel: true } };
+  titleToken = 'Search Results';
+
+  model({ q }) {
     return this.get('search').performSearch(q);
   }
-});
+}

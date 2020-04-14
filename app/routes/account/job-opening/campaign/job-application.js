@@ -1,13 +1,15 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 import refreshable from 'granite/mixins/refreshable';
 import { Promise, hash } from 'rsvp';
 
 const modelKeys = [ 'model', 'events', 'stage', 'opening', 'screening' ];
 
-export default Route.extend(refreshable, {
-  titleToken: 'Application',
+@classic
+export default class JobApplicationRoute extends Route.extend(refreshable) {
+  titleToken = 'Application';
 
-  model (params) {
+  model(params) {
     return hash({
       model:  this.store.find('job-application', params.application_id),
       events: this.store.query('event', {
@@ -22,17 +24,17 @@ export default Route.extend(refreshable, {
       stage:     hashResults.model.get('stage') ? this.getStage(hashResults.model.get('stage')) : Promise.resolve(),
       screening: hashResults.opening.get('screening')
     })));
-  },
+  }
 
-  getStage (stageId) {
+  getStage(stageId) {
     return this.store.query('recruiting-pipeline', {
       'stages._id': stageId,
       limit:        1
     })
     .then(results => results ? results.get('firstObject.stages').findBy('id', stageId) : results);
-  },
+  }
 
-  setupController (controller, response) {
+  setupController(controller, response) {
     modelKeys.forEach(k => controller.set(k, response[k]));
   }
-});
+}

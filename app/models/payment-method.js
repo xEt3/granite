@@ -1,12 +1,19 @@
+import classic from 'ember-classic-decorator';
 import DS from 'ember-data';
 
 const { Model, attr, belongsTo } = DS;
 
-export default Model.extend({
-  nonce:   attr('string'),
-  company: belongsTo('company', {
+@classic
+export default class PaymentMethod extends Model {
+  @attr('string')
+  nonce;
+
+  @belongsTo('company', {
     async:   true,
     inverse: false
-  }),
-  created: attr('date', { defaultValue: () => new Date() })
-});
+  })
+  company;
+
+  @attr('date', { defaultValue: () => new Date() })
+  created;
+}

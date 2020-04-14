@@ -1,27 +1,31 @@
+import classic from 'ember-classic-decorator';
+import { classNames } from '@ember-decorators/component';
+import { observes } from '@ember-decorators/object';
+import { computed } from '@ember/object';
 import Component from '@ember/component';
-import { observer, computed } from '@ember/object';
 import { scheduleOnce, debounce } from '@ember/runloop';
 
-const MessagesPaneComponent = Component.extend({
-  classNames: [ 'messaging-thread__messages-pane' ],
+@classic
+@classNames('messaging-thread__messages-pane')
+class MessagesPaneComponent extends Component {
+  topOffsetFudgePX = 20;
+  messageThreshold = 49;
+  isBottomStuck = true;
 
-  topOffsetFudgePX: 20,
-  messageThreshold: 49,
-  isBottomStuck:    true,
-
-  didInsertElement () {
-    this._super(...arguments);
+  didInsertElement() {
+    super.didInsertElement(...arguments);
     this.$()[0].addEventListener('scroll', this.onScroll.bind(this));
     this.contentChanged();
-  },
+  }
 
-  willDestroyElement () {
+  willDestroyElement() {
     this.$()[0].removeEventListener('scroll', this.onScroll.bind(this));
-    this._super(...arguments);
-  },
+    super.willDestroyElement(...arguments);
+  }
 
   /* eslint-disable-next-line */
-  contentChanged: observer('messages.[]', function () {
+  @observes('messages.[]')
+  contentChanged() {
     const bottomStuck = this.get('isBottomStuck'),
           topStuck = this.get('isTopStuck');
 
@@ -41,22 +45,23 @@ const MessagesPaneComponent = Component.extend({
 
       $this.scrollTop(lastScroll ? $this[0].scrollHeight - lastScroll : 0);
     });
-  }),
+  }
 
-  isFetchable: computed('messages.length', 'messageThreshold', function () {
+  @computed('messages.length', 'messageThreshold')
+  get isFetchable() {
     return this.get('messages.length') > this.get('messageThreshold');
-  }),
+  }
 
-  onScroll (e) {
+  onScroll(e) {
     debounce(this, this.__handleScroll, e, 1000);
-  },
+  }
 
-  triggerTopScrollEvent () {
+  triggerTopScrollEvent() {
     this.set('isLoading', true);
     this.get('onScrolledToTop')();
-  },
+  }
 
-  __handleScroll (e) {
+  __handleScroll(e) {
     const t = e.target,
           isFetchable = this.get('isFetchable');
 
@@ -88,7 +93,7 @@ const MessagesPaneComponent = Component.extend({
       this.set('isBottomStuck', false);
     }
   }
-});
+}
 
 MessagesPaneComponent.reopenClass({ positionalParams: [ 'messages' ] });
 

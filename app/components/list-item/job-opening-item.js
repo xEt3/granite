@@ -1,7 +1,11 @@
-import BaseLiComponent from './base';
+import classic from 'ember-classic-decorator';
+import { classNames } from '@ember-decorators/component';
 import { inject as service } from '@ember/service';
+import BaseLiComponent from './base';
 
-export default BaseLiComponent.extend({
-  auth:       service(),
-  classNames: [ 'item' ]
-});
+@classic
+@classNames('item')
+export default class JobOpeningItem extends BaseLiComponent {
+  @service
+  auth;
+}

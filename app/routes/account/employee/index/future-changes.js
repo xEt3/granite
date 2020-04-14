@@ -1,12 +1,14 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
 import refreshable from 'granite/mixins/refreshable';
 import moment from 'moment';
 
-export default Route.extend(refreshable, {
-  titleToken: 'Future Changes',
+@classic
+export default class FutureChangesRoute extends Route.extend(refreshable) {
+  titleToken = 'Future Changes';
 
-  model () {
+  model() {
     let employee = this.modelFor('account.employee');
     return RSVP.hash({
       pendingChanges: this.store.query('history', {
@@ -14,8 +16,9 @@ export default Route.extend(refreshable, {
         'effectiveOn': { $gt: moment().add(1, 'minute').toDate() }
       })
     });
-  },
-  setupController (controller, model) {
+  }
+
+  setupController(controller, model) {
     controller.setProperties({ model: model.pendingChanges });
   }
-});
+}

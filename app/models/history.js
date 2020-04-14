@@ -1,38 +1,64 @@
+import classic from 'ember-classic-decorator';
+import { computed } from '@ember/object';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
-import { computed } from '@ember/object';
 import resolveForTypeKey from '../utils/resolve-for-type-key';
 import humanizeKeyName from '../utils/humanize-key-name';
 
-export default Model.extend({
-  diff:     attr('array'),
-  snapshot: attr(),
-  applied:  attr('boolean'),
-  approved: attr('boolean'),
+@classic
+export default class History extends Model {
+  @attr('array')
+  diff;
 
-  creatorType: attr('string'),
-  creatorId:   attr('string'),
-  targetType:  attr('string'),
-  targetId:    attr('string'),
-  company:     belongsTo('company', {
+  @attr()
+  snapshot;
+
+  @attr('boolean')
+  applied;
+
+  @attr('boolean')
+  approved;
+
+  @attr('string')
+  creatorType;
+
+  @attr('string')
+  creatorId;
+
+  @attr('string')
+  targetType;
+
+  @attr('string')
+  targetId;
+
+  @belongsTo('company', {
     async:   true,
     inverse: false
-  }),
+  })
+  company;
 
-  reviewedOn:  attr('date'),
-  effectiveOn: attr('date'),
+  @attr('date')
+  reviewedOn;
 
-  created: attr('date', { defaultValue: () => new Date() }),
+  @attr('date')
+  effectiveOn;
 
-  creator: resolveForTypeKey('creator'),
-  target:  resolveForTypeKey('target'),
+  @attr('date', { defaultValue: () => new Date() })
+  created;
 
-  changedKeys: computed('diff.[]', function () {
+  @resolveForTypeKey('creator')
+  creator;
+
+  @resolveForTypeKey('target')
+  target;
+
+  @computed('diff.[]')
+  get changedKeys() {
     let diff = this.get('diff');
     return diff ? diff.reduce((arr, i) => {
       arr.push(humanizeKeyName(i.path.join('.')));
       return arr;
     }, []) : null;
-  })
-});
+  }
+}

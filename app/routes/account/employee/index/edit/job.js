@@ -1,12 +1,16 @@
+import classic from 'ember-classic-decorator';
+import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
-import { inject as service } from '@ember/service';
 
-export default Route.extend({
-  titleToken: 'Edit Jobs',
-  auth:       service(),
+@classic
+export default class JobRoute extends Route {
+  titleToken = 'Edit Jobs';
 
-  model () {
+  @service
+  auth;
+
+  model() {
     let company = this.get('auth.user.company'),
         companyId = company.get('id'),
         employee = this.modelFor('account.employee.index.edit'),
@@ -33,9 +37,9 @@ export default Route.extend({
       }),
       company
     });
-  },
+  }
 
-  setupController (controller, model) {
+  setupController(controller, model) {
     controller.setProperties({
       model:           model.employee,
       employees:       model.employees,
@@ -45,4 +49,4 @@ export default Route.extend({
       jobDescriptions: model.jobDescriptions
     });
   }
-});
+}

@@ -1,34 +1,37 @@
+import classic from 'ember-classic-decorator';
+import { classNames } from '@ember-decorators/component';
+import { action, computed } from '@ember/object';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 
-const FeaturesListComponent = Component.extend({
-  classNames:  [ 'section-content__features' ],
-  autoCycle:   0,
-  autoCycleMs: 5000,
+@classic
+@classNames('section-content__features')
+class FeaturesListComponent extends Component {
+  autoCycle = 0;
+  autoCycleMs = 5000;
 
-  didInsertElement () {
+  didInsertElement() {
     this.scheduleAutoCycle();
-  },
+  }
 
-  willDestroyElement () {
+  willDestroyElement() {
     this.cancelAutoCycle();
-  },
+  }
 
-  scheduleAutoCycle () {
+  scheduleAutoCycle() {
     if (!this.isDestroyed) {
       this.set('_autoCycleTimer', setTimeout(this.incrementAutoCycle.bind(this), this.get('autoCycleMs')));
     }
-  },
+  }
 
-  cancelAutoCycle () {
+  cancelAutoCycle() {
     let timerId = this.get('_autoCycleTimer');
 
     if (timerId) {
       clearTimeout(timerId);
     }
-  },
+  }
 
-  incrementAutoCycle () {
+  incrementAutoCycle() {
     if (this.get('features.length') - 1 === this.get('autoCycle')) {
       this.set('autoCycle', 0);
     } else {
@@ -36,18 +39,18 @@ const FeaturesListComponent = Component.extend({
     }
 
     this.scheduleAutoCycle();
-  },
-
-  feature: computed('selectedFeature', 'features.[]', 'autoCycle', function () {
-    return this.get('selectedFeature') || this.get('features')[this.get('autoCycle')];
-  }),
-
-  actions: {
-    selectFeature (feature) {
-      this.set('selectedFeature', feature);
-    }
   }
-});
+
+  @computed('selectedFeature', 'features.[]', 'autoCycle')
+  get feature() {
+    return this.get('selectedFeature') || this.get('features')[this.get('autoCycle')];
+  }
+
+  @action
+  selectFeature(feature) {
+    this.set('selectedFeature', feature);
+  }
+}
 
 FeaturesListComponent.reopenClass({ positionalParams: [ 'features' ] });
 

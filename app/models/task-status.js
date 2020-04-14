@@ -1,21 +1,39 @@
+import classic from 'ember-classic-decorator';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 
-export default Model.extend({
-  status:      attr('string'),
-  name:        attr('string'),
-  description: attr('string'),
-  result:      attr(),
-  error:       attr('string'),
-  running:     attr('boolean'),
-  context:     attr(),
+@classic
+export default class TaskStatus extends Model {
+  @attr('string')
+  status;
 
-  company: belongsTo('company', {
+  @attr('string')
+  name;
+
+  @attr('string')
+  description;
+
+  @attr()
+  result;
+
+  @attr('string')
+  error;
+
+  @attr('boolean')
+  running;
+
+  @attr()
+  context;
+
+  @belongsTo('company', {
     inverse: null,
     async:   true
-  }),
+  })
+  company;
 
-  updated: Date,
-  created: attr('date')
-});
+  updated = Date;
+
+  @attr('date')
+  created;
+}

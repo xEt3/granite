@@ -1,14 +1,20 @@
-import Controller from '@ember/controller';
+import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
-import { inject as controller } from '@ember/controller';
 import { inject as service } from '@ember/service';
+import Controller from '@ember/controller';
+import { inject as controller } from '@ember/controller';
 import moment from 'moment';
 
-export default Controller.extend({
-  loginController: controller('login'),
-  auth:            service(),
+@classic
+export default class UnauthorizedController extends Controller {
+  @controller('login')
+  loginController;
 
-  unauthorizedReason: computed('fromError', function () {
+  @service
+  auth;
+
+  @computed('fromError')
+  get unauthorizedReason() {
     var error = this.get('fromError');
 
     if (!error) {
@@ -24,5 +30,5 @@ export default Controller.extend({
     }
 
     return error.responseText ? 'The server says: ' + error.responseText : 'The server says: ' + error.statusText;
-  })
-});
+  }
+}

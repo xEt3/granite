@@ -1,17 +1,22 @@
-import Component from '@ember/component';
+import classic from 'ember-classic-decorator';
+import { classNames, tagName } from '@ember-decorators/component';
 import { computed } from '@ember/object';
+import Component from '@ember/component';
 
-const reportView = Component.extend({
-  tagName:    'table',
-  classNames: [ 'ui celled table' ],
-  headers:    computed('data', function () {
+@classic
+@tagName('table')
+@classNames('ui celled table')
+class reportView extends Component {
+  @computed('data')
+  get headers() {
     return this.get('data')[0];
-  }),
+  }
 
-  bodyData: computed('data', function () {
+  @computed('data')
+  get bodyData() {
     return this.get('data').slice(1);
-  })
-});
+  }
+}
 
 reportView.reopenClass({ positionalParams: [ 'data' ] });
 

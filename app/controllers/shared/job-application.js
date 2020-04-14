@@ -1,9 +1,12 @@
-import Controller from '@ember/controller';
+import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
+import Controller from '@ember/controller';
 import { A } from '@ember/array';
 
-export default Controller.extend({
-  responses: computed('model.{jobApplication.responses.[],screening.elements.[]}', function () {
+@classic
+export default class JobApplicationController extends Controller {
+  @computed('model.{jobApplication.responses.[],screening.elements.[]}')
+  get responses() {
     const responses = this.get('model.jobApplication.responses') || A(),
           steps = this.get('model.screening.elements');
 
@@ -11,5 +14,5 @@ export default Controller.extend({
       step,
       response: responses.find(({ step: s }) => s === step._id)
     })) : false;
-  })
-});
+  }
+}

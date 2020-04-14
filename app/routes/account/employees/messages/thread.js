@@ -1,29 +1,36 @@
-import Route from '@ember/routing/route';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 import { A } from '@ember/array';
 import { resolve } from 'rsvp';
 
-export default Route.extend({
-  socket:        service(),
-  messaging:     service(),
-  notifications: service(),
+@classic
+export default class ThreadRoute extends Route {
+  @service
+  socket;
 
-  titleToken (model) {
+  @service
+  messaging;
+
+  @service
+  notifications;
+
+  titleToken(model) {
     let names = model.between ? model.between.toArray() : model.thread.between.toArray();
     if (names.length > 2) {
       return `Conversation with ${names[0].firstName} & ${names[1].firstName}`;
     }
     return `Conversation with ${names[0].firstName}`;
-  },
+  }
 
-  queryParams: { sb: { refreshModel: true } },
+  queryParams = { sb: { refreshModel: true } };
 
-  init () {
-    this._super(...arguments);
+  init() {
+    super.init(...arguments);
     this.set('cache_threadRecord', {});
-  },
+  }
 
-  model (params = {}) {
+  model(params = {}) {
     let scrollback = params.sb || false;
 
     // the message thread
@@ -54,9 +61,9 @@ export default Route.extend({
         };
       });
     });
-  },
+  }
 
-  onMessage ([ message ]) {
+  onMessage([ message ]) {
     if (!document.hasFocus()) {
       const { content: msg, from } = message || {};
 
@@ -76,17 +83,17 @@ export default Route.extend({
 
     controller.get('model.messages').pushObject(message);
     controller.set('ingressPushCount', (controller.get('ingressPushCount') || 0) + 1);
-  },
+  }
 
-  getThreadRecord ({ thread_id }) {
+  getThreadRecord({ thread_id }) {
     const cache = this.get(`cache_threadRecord.${thread_id}`);
     return cache ? resolve(cache) : this.get('store').findRecord('message-thread', thread_id).then(thread => {
       this.set(`cache_threadRecord.${thread_id}`, thread);
       return thread;
     });
-  },
+  }
 
-  retrieveThreadHistory (thread, scrollback, q = {}) {
+  retrieveThreadHistory(thread, scrollback, q = {}) {
     const socket = this.get('socket'),
           id = thread.get('id');
 
@@ -109,15 +116,15 @@ export default Route.extend({
         count: data.count
       };
     });
-  },
+  }
 
-  afterModel () {
+  afterModel() {
     this.messaging.subscribe('thread_message', this.onMessage, this, 'thread_controller');
-  },
+  }
 
-  resetController (controller, exit, transition) {
+  resetController(controller, exit, transition) {
     if (exit || !(transition.queryParams || {}).sb) {
       controller.set('sb', 0);
     }
   }
-});
+}

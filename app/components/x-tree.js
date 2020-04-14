@@ -1,13 +1,15 @@
+import classic from 'ember-classic-decorator';
+import { layout as templateLayout } from '@ember-decorators/component';
 import Component from '@ember/component';
 import layout from '../templates/components/x-tree';
 import { getDescendents, getAncestors } from '../utils/tree';
 import { get, set }  from '@ember/object';
 
-export default Component.extend({
-  layout,
-
-  init () {
-    this._super(...arguments);
+@classic
+@templateLayout(layout)
+export default class XTree extends Component {
+  init() {
+    super.init(...arguments);
     let tree = this.get('model');
 
     // Make sure chosen item is highlighted and expanded-to in the tree
@@ -29,4 +31,4 @@ export default Component.extend({
       getDescendents(tree, expandDepth).setEach('isExpanded', true);
     }
   }
-});
+}

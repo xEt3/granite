@@ -1,30 +1,33 @@
+import classic from 'ember-classic-decorator';
+import { action } from '@ember/object';
 import Controller from '@ember/controller';
 import resource from 'granite/mixins/controller-abstractions/resource';
 
-export default Controller.extend(resource, {
-  queryParams: [
+@classic
+export default class IndexController extends Controller.extend(resource) {
+  queryParams = [
     'showFilters',
     { visibleToEmployee: { type: 'boolean' } },
     { readOn: { type: 'boolean' } },
     { signedOn: { type: 'boolean' } }
-  ],
+  ];
 
-  showFilters:       false,
-  visibleToEmployee: null,
-  readOn:            null,
-  signedOn:          null,
+  showFilters = false;
+  visibleToEmployee = null;
+  readOn = null;
+  signedOn = null;
 
-  actions: {
-    updateFilter (filter, value) {
-      this.set(filter, value);
-    },
-
-    resetFilters () {
-      this.setProperties({
-        visibleToEmployee: null,
-        readOn:            null,
-        signedOn:          null
-      });
-    }
+  @action
+  updateFilter(filter, value) {
+    this.set(filter, value);
   }
-});
+
+  @action
+  resetFilters() {
+    this.setProperties({
+      visibleToEmployee: null,
+      readOn:            null,
+      signedOn:          null
+    });
+  }
+}

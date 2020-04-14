@@ -1,5 +1,7 @@
-import BaseLiComponent from '../base';
+import classic from 'ember-classic-decorator';
+import { classNames } from '@ember-decorators/component';
 import { computed } from '@ember/object';
+import BaseLiComponent from '../base';
 
 const ACT_COLORS = {
   dueOn:       'text-warning',
@@ -7,10 +9,11 @@ const ACT_COLORS = {
   completedOn: 'text-green'
 };
 
-export default BaseLiComponent.extend({
-  classNames: [ 'item' ],
-
-  actionString: computed('model.{dateValue,type}', function () {
+@classic
+@classNames('item')
+export default class ProjectActivity extends BaseLiComponent {
+  @computed('model.{dateValue,type}')
+  get actionString() {
     let model = this.get('model'),
         mVal = moment(model.dateValue),
         ret;
@@ -33,14 +36,16 @@ export default BaseLiComponent.extend({
     }
 
     return ret;
-  }),
+  }
 
-  actColor: computed('model.{type}', function () {
+  @computed('model.{type}')
+  get actColor() {
     return ACT_COLORS[this.get('model.type')];
-  }),
+  }
 
-  projectSlug: computed('model.title', function () {
+  @computed('model.title')
+  get projectSlug() {
     let title = this.get('model.title');
     return title ? title.replace(/\s/g, '-') : title;
-  })
-});
+  }
+}

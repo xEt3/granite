@@ -1,9 +1,11 @@
+import classic from 'ember-classic-decorator';
+import { action } from '@ember/object';
 import Component from '@ember/component';
 
-export default Component.extend({
-  actions: {
-    delete () {
-      this.get('onDelete')(this.get('document'));
-    }
+@classic
+export default class IssueDocuments extends Component {
+  @action
+  delete() {
+    this.get('onDelete')(this.get('document'));
   }
-});
+}

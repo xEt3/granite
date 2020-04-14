@@ -1,3 +1,5 @@
+import classic from 'ember-classic-decorator';
 import ApplicationSerializer from './application';
 
-export default ApplicationSerializer.extend({});
+@classic
+export default class TrainingAssignment extends ApplicationSerializer {}

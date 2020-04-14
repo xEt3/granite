@@ -1,14 +1,20 @@
-import Route from '@ember/routing/route';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
 import { scheduleOnce, later } from '@ember/runloop';
 
-export default Route.extend({
-  auth:       service(),
-  ajax:       service(),
-  titleToken: 'First Steps',
+@classic
+export default class FirstStepsRoute extends Route {
+  @service
+  auth;
 
-  model () {
+  @service
+  ajax;
+
+  titleToken = 'First Steps';
+
+  model() {
     return hash({
       company:       this.get('auth.user.company'),
       employeeCount: this.get('ajax').request('/api/v1/employees', {
@@ -32,9 +38,9 @@ export default Route.extend({
         }
       }).then(response => response && response.count)
     });
-  },
+  }
 
-  afterModel (model) {
+  afterModel(model) {
     const firstStepsCompleted = model.company.get('firstStepsCompleted');
     let change = false;
 
@@ -68,4 +74,4 @@ export default Route.extend({
       });
     });
   }
-});
+}

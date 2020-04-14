@@ -1,7 +1,9 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  model (params) {
+@classic
+export default class JobDescriptionRoute extends Route {
+  model(params) {
     return this.store.find('job', params.id);
   }
-});
+}

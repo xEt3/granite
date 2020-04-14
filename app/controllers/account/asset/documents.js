@@ -1,14 +1,15 @@
+import classic from 'ember-classic-decorator';
+import { action } from '@ember/object';
 import Controller from '@ember/controller';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-export default Controller.extend(addEdit, {
+@classic
+export default class DocumentsController extends Controller.extend(addEdit) {
+  @action
+  removeDocument(doc) {
+    let model = this.get('model');
 
-  actions: {
-    removeDocument (doc) {
-      let model = this.get('model');
-
-      model.get('documents').removeObject(doc);
-      this.send('save', model);
-    }
+    model.get('documents').removeObject(doc);
+    this.send('save', model);
   }
-});
+}

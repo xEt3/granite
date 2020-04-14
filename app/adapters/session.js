@@ -1,3 +1,7 @@
+import classic from 'ember-classic-decorator';
 import LocalForageAdapter from 'ember-localforage-adapter/adapters/localforage';
 
-export default LocalForageAdapter.extend({ namespace: 'granite-grants' });
+@classic
+export default class Session extends LocalForageAdapter {
+  namespace = 'granite-grants';
+}

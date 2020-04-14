@@ -1,24 +1,26 @@
+import classic from 'ember-classic-decorator';
+import { action } from '@ember/object';
 import Controller from '@ember/controller';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import { states as stateOptions } from 'granite/config';
 
-export default Controller.extend(addEdit, {
-  stateOptions,
-  selectedState: null,
-  useMiddleName: false,
+@classic
+export default class IndexController extends Controller.extend(addEdit) {
+  stateOptions = stateOptions;
+  selectedState = null;
+  useMiddleName = false;
 
-  actions: {
-    saveCompany () {
-      let company = this.get('model');
+  @action
+  saveCompany() {
+    let company = this.get('model');
 
-      this.ajaxStart();
+    this.ajaxStart();
 
-      company.save()
-      .then(() => {
-        this.ajaxSuccess();
-        this.transitionToRoute('signup.billing');
-      })
-      .catch(this.ajaxError.bind(this));
-    }
+    company.save()
+    .then(() => {
+      this.ajaxSuccess();
+      this.transitionToRoute('signup.billing');
+    })
+    .catch(this.ajaxError.bind(this));
   }
-});
+}

@@ -1,12 +1,15 @@
+import classic from 'ember-classic-decorator';
+import { computed } from '@ember/object';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import Validations from './validations/employee';
 import { belongsTo, hasMany } from 'ember-data/relationships';
-import { computed } from '@ember/object';
 
-export default Model.extend(Validations, {
+@classic
+export default class Employee extends Model.extend(Validations) {
   // Personal Information
-  fullName: computed('firstName', 'lastName', 'middleName', 'suffix', function () {
+  @computed('firstName', 'lastName', 'middleName', 'suffix')
+  get fullName() {
     var n = this.getProperties('firstName', 'lastName', 'middleName', 'suffixName'),
         fullName = '';
 
@@ -16,138 +19,273 @@ export default Model.extend(Validations, {
     fullName += n.suffixName ? ' ' + n.suffixName : '';
 
     return fullName.length > 0 ? fullName : undefined;
-  }),
+  }
 
-  firstName:  attr('string'),
-  middleName: attr('string'),
-  lastName:   attr('string'),
-  suffixName: attr('string'),
-  gender:     attr('string'),
+  @attr('string')
+  firstName;
 
-  addressLine1:              attr('string'),
-  addressLine2:              attr('string'),
-  addressCity:               attr('string'),
-  addressState:              attr('string'),
-  addressZip:                attr('string'),
-  email:                     attr('string'),
-  privateEmail:              attr('string'),
-  emergencyContactNameFirst: attr('string'),
-  emergencyContactNameLast:  attr('string'),
-  emergencyContactPhone:     attr('string'),
-  picture:                   attr('string'),
-  phone:                     attr('string'),
-  ssn:                       attr('string'),
-  workersCompClassCode:      attr('string'),
-  employeeNumber:            attr('string'),
+  @attr('string')
+  middleName;
 
-  ssnMasked: computed('ssn', function () {
+  @attr('string')
+  lastName;
+
+  @attr('string')
+  suffixName;
+
+  @attr('string')
+  gender;
+
+  @attr('string')
+  addressLine1;
+
+  @attr('string')
+  addressLine2;
+
+  @attr('string')
+  addressCity;
+
+  @attr('string')
+  addressState;
+
+  @attr('string')
+  addressZip;
+
+  @attr('string')
+  email;
+
+  @attr('string')
+  privateEmail;
+
+  @attr('string')
+  emergencyContactNameFirst;
+
+  @attr('string')
+  emergencyContactNameLast;
+
+  @attr('string')
+  emergencyContactPhone;
+
+  @attr('string')
+  picture;
+
+  @attr('string')
+  phone;
+
+  @attr('string')
+  ssn;
+
+  @attr('string')
+  workersCompClassCode;
+
+  @attr('string')
+  employeeNumber;
+
+  @computed('ssn')
+  get ssnMasked() {
     var ssn = this.get('ssn');
     return ssn ? ssn.replace(/\D/g, '').replace(/(?:\d{5})(\d{4})/, '***-**-$1') : ssn;
-  }),
+  }
 
   // Company and Position Information
-  activatedOn:    attr('date'),
-  hireDate:       attr('date'),
-  jobTitle:       attr('string'),
-  payRate:        attr('number'),
-  exempt:         attr('boolean', { defaultValue: false }),
-  payRateType:    attr('string', { defaultValue: 'hourly' }),
-  eeoJobCategory: attr('string'),
-  probationUntil: attr('date'),
+  @attr('date')
+  activatedOn;
 
-  onboarding:     attr('boolean'),
-  onboardingStep: attr('number'),
-  onboarder:      belongsTo('company-user', {
+  @attr('date')
+  hireDate;
+
+  @attr('string')
+  jobTitle;
+
+  @attr('number')
+  payRate;
+
+  @attr('boolean', { defaultValue: false })
+  exempt;
+
+  @attr('string', { defaultValue: 'hourly' })
+  payRateType;
+
+  @attr('string')
+  eeoJobCategory;
+
+  @attr('date')
+  probationUntil;
+
+  @attr('boolean')
+  onboarding;
+
+  @attr('number')
+  onboardingStep;
+
+  @belongsTo('company-user', {
     async:   true,
     inverse: null
-  }),
-  onboardingProgress: attr('number'),
+  })
+  onboarder;
+
+  @attr('number')
+  onboardingProgress;
 
   // Termination
-  offboarding:     attr('boolean'),
-  offboardingStep: attr('number'),
-  offboarder:      belongsTo('company-user', {
+  @attr('boolean')
+  offboarding;
+
+  @attr('number')
+  offboardingStep;
+
+  @belongsTo('company-user', {
     async:   true,
     inverse: null
-  }),
-  offboardingProgress:     attr('number'),
-  offboardingCompleted:    attr('date'),
-  offboardingDocuments:    hasMany('file', { defaultValue: [] }),
-  terminatedOn:            attr('date'),
-  terminationReason:       attr('string'),
-  eligibleForRehire:       attr('boolean'),
-  finalAddressSelfService: attr('boolean', { defaultValue: true }),
-  finalAddressLine1:       attr('string'),
-  finalAddressLine2:       attr('string'),
-  finalAddressCity:        attr('string'),
-  finalAddressState:       attr('string'),
-  finalAddressZip:         attr('string'),
-  finalEmail:              attr('string'),
-  finalAddressCollected:   attr('date'),
+  })
+  offboarder;
 
-  externalLinkService:       attr('string'),
-  externalLinkId:            attr('string'),
-  externalLinkDocumentLink:  attr('string'),
-  externalLinkAutomaticSync: attr('boolean'),
-  externalLinkLastSync:      attr('date'),
+  @attr('number')
+  offboardingProgress;
+
+  @attr('date')
+  offboardingCompleted;
+
+  @hasMany('file', { defaultValue: [] })
+  offboardingDocuments;
+
+  @attr('date')
+  terminatedOn;
+
+  @attr('string')
+  terminationReason;
+
+  @attr('boolean')
+  eligibleForRehire;
+
+  @attr('boolean', { defaultValue: true })
+  finalAddressSelfService;
+
+  @attr('string')
+  finalAddressLine1;
+
+  @attr('string')
+  finalAddressLine2;
+
+  @attr('string')
+  finalAddressCity;
+
+  @attr('string')
+  finalAddressState;
+
+  @attr('string')
+  finalAddressZip;
+
+  @attr('string')
+  finalEmail;
+
+  @attr('date')
+  finalAddressCollected;
+
+  @attr('string')
+  externalLinkService;
+
+  @attr('string')
+  externalLinkId;
+
+  @attr('string')
+  externalLinkDocumentLink;
+
+  @attr('boolean')
+  externalLinkAutomaticSync;
+
+  @attr('date')
+  externalLinkLastSync;
 
   // Auto exit interview
-  autoExitInterview:     attr('boolean'),
-  autoExitInterviewDate: attr('date'),
-  autoExitInterviewForm: belongsTo('form', {
+  @attr('boolean')
+  autoExitInterview;
+
+  @attr('date')
+  autoExitInterviewDate;
+
+  @belongsTo('form', {
     async:   true,
     inverse: null
-  }),
+  })
+  autoExitInterviewForm;
 
   // Auto I9 collection
-  autoI9Collection: attr('boolean'),
-  autoW4Collection: attr('boolean'),
+  @attr('boolean')
+  autoI9Collection;
 
-  company: belongsTo('company', {
+  @attr('boolean')
+  autoW4Collection;
+
+  @belongsTo('company', {
     async:   true,
     inverse: null
-  }),
-  location: belongsTo('location', {
+  })
+  company;
+
+  @belongsTo('location', {
     async:   true,
     inverse: null
-  }),
-  department: belongsTo('department', {
+  })
+  location;
+
+  @belongsTo('department', {
     async:   true,
     inverse: null
-  }),
-  supervisor: belongsTo('employee', {
+  })
+  department;
+
+  @belongsTo('employee', {
     async:   true,
     inverse: null
-  }),
-  companyUser: belongsTo('company-user', {
+  })
+  supervisor;
+
+  @belongsTo('company-user', {
     async:   true,
     inverse: 'employee'
-  }),
-  jobDescription: belongsTo('job', {
-    async:   true,
-    inverse: null
-  }),
-  hiredFromJobApp: belongsTo('job-application', {
-    async:   true,
-    inverse: null
-  }),
-  creator: belongsTo('company-user', {
-    async:   true,
-    inverse: null
-  }),
+  })
+  companyUser;
 
-  dateOfBirth:     attr('date'),
-  effectiveOn:     attr('date'), // Placeholder for effective dated changes. This field is only here to pass along to the api
-  customFields:    attr({ defaultValue: () => {} }),
-  separationNotes: attr('string'),
+  @belongsTo('job', {
+    async:   true,
+    inverse: null
+  })
+  jobDescription;
 
-  onProbation: computed('probationUntil', function () {
+  @belongsTo('job-application', {
+    async:   true,
+    inverse: null
+  })
+  hiredFromJobApp;
+
+  @belongsTo('company-user', {
+    async:   true,
+    inverse: null
+  })
+  creator;
+
+  @attr('date')
+  dateOfBirth;
+
+  @attr('date')
+  effectiveOn; // Placeholder for effective dated changes. This field is only here to pass along to the api
+
+  @attr({ defaultValue: () => {} })
+  customFields;
+
+  @attr('string')
+  separationNotes;
+
+  @computed('probationUntil')
+  get onProbation() {
     return this.get('probationUntil') && moment(this.get('probationUntil')).isAfter(moment());
-  }),
+  }
 
-  created: attr('date', {
+  @attr('date', {
     defaultValue () {
       return new Date();
     }
   })
-});
+  created;
+}

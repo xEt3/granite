@@ -1,3 +1,5 @@
+import classic from 'ember-classic-decorator';
 import ParticipantComponent from './participant';
 
-export default ParticipantComponent.extend();
+@classic
+export default class ActionItemParticipant extends ParticipantComponent {}

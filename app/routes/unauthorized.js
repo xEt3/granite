@@ -1,3 +1,7 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({ titleToken: 'Unauthorized' });
+@classic
+export default class UnauthorizedRoute extends Route {
+  titleToken = 'Unauthorized';
+}

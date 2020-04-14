@@ -1,10 +1,12 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
 
-export default Route.extend({
-  titleToken: 'Sources',
+@classic
+export default class SourcesRoute extends Route {
+  titleToken = 'Sources';
 
-  model () {
+  model() {
     let jobOpening = this.modelFor('account.job-opening');
 
     return RSVP.hash({
@@ -13,9 +15,9 @@ export default Route.extend({
       automatic: this.store.findAll('applicant-source'),
       manual:    this.store.findAll('manual-applicant-source')
     });
-  },
+  }
 
-  setupController (controller, model) {
+  setupController(controller, model) {
     if (!model.jobOpening.get('description') && !model.jobOpening.get('title')) {
       model.jobOpening.setProperties({
         description: model.job.get('description'),
@@ -31,4 +33,4 @@ export default Route.extend({
       }
     });
   }
-});
+}

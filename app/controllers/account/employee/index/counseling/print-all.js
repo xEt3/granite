@@ -1,3 +1,7 @@
+import classic from 'ember-classic-decorator';
 import Controller from '@ember/controller';
 
-export default Controller.extend({ queryParams: [ 'issue', 'slug' ] });
+@classic
+export default class PrintAllController extends Controller {
+  queryParams = [ 'issue', 'slug' ];
+}

@@ -1,10 +1,13 @@
-import Component from '@ember/component';
+import classic from 'ember-classic-decorator';
+import { tagName } from '@ember-decorators/component';
 import { computed } from '@ember/object';
+import Component from '@ember/component';
 
-export default Component.extend({
-  tagName: '',
-
-  fullLink: computed('step.link', 'basePath', function () {
+@classic
+@tagName('')
+export default class FormStep extends Component {
+  @computed('step.link', 'basePath')
+  get fullLink() {
     return this.get('basePath') + '.' + this.get('step.link');
-  })
-});
+  }
+}

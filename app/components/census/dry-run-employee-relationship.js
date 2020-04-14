@@ -1,11 +1,15 @@
-import Component from '@ember/component';
+import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 
-export default Component.extend({
-  store: service(),
+@classic
+export default class DryRunEmployeeRelationship extends Component {
+  @service
+  store;
 
-  relationship: computed('availableFields', 'key', 'value', function () {
+  @computed('availableFields', 'key', 'value')
+  get relationship() {
     let key = this.get('key'),
         value = this.get('value'),
         field = this.get('availableFields').findBy('path', key) || {};
@@ -20,5 +24,5 @@ export default Component.extend({
     }
 
     return false;
-  })
-});
+  }
+}

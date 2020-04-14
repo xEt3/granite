@@ -1,19 +1,23 @@
-import Component from '@ember/component';
+import classic from 'ember-classic-decorator';
+import { classNames, classNameBindings, tagName } from '@ember-decorators/component';
 import { computed } from '@ember/object';
+import Component from '@ember/component';
 
-const ThreadParticipantComponent = Component.extend({
-  tagName:           'span',
-  classNames:        [ 'ui', 'image', 'label' ],
-  classNameBindings: [ 'online:green' ],
-
-  online: computed('connectedUsers.[]', 'participant', function () {
+@classic
+@tagName('span')
+@classNames('ui', 'image', 'label')
+@classNameBindings('online:green')
+class ThreadParticipantComponent extends Component {
+  @computed('connectedUsers.[]', 'participant')
+  get online() {
     return this.get('connectedUsers').includes(this.get('participant.id'));
-  }),
+  }
 
-  detail: computed('online', function () {
+  @computed('online')
+  get detail() {
     return this.get('online') ? 'Online' : 'Offline';
-  })
-});
+  }
+}
 
 ThreadParticipantComponent.reopenClass({ positionalParams: [ 'participant' ] });
 

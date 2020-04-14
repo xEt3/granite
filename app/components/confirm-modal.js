@@ -1,23 +1,26 @@
+import classic from 'ember-classic-decorator';
+import { action, computed } from '@ember/object';
 import Component from '@ember/component';
 import { Promise } from 'rsvp';
-import { computed } from '@ember/object';
 import { run } from '@ember/runloop';
 import $ from 'jquery';
 
-export default Component.extend({
-  responded: false,
+@classic
+export default class ConfirmModal extends Component {
+  responded = false;
 
-  modalId: computed('elementId', function () {
+  @computed('elementId')
+  get modalId() {
     return this.get('elementId') + '-modal';
-  }),
+  }
 
-  didReceiveAttrs () {
+  didReceiveAttrs() {
     if (this.get('confirmOnRender')) {
       run.scheduleOnce('afterRender', () => this.get('startConfirmation')());
     }
-  },
+  }
 
-  createConfirm () {
+  createConfirm() {
     this.setProperties({
       responded:     false,
       _originalArgs: arguments
@@ -40,32 +43,32 @@ export default Component.extend({
       resolve,
       reject
     }));
-  },
+  }
 
-  startConfirmation: computed('modalId', function () {
+  @computed('modalId')
+  get startConfirmation() {
     return this.createConfirm.bind(this);
-  }),
+  }
 
-  closeModal () {
+  closeModal() {
     $('#' + this.get('modalId')).modal('hide');
-  },
+  }
 
-  actions: {
-    respond (response) {
-      if (this.get('isDestroyed')) {
-        return;
-      }
-      let fn = this.get(response ? 'resolve' : 'reject');
-      fn.apply(null, response ? this.get('_originalArgs') : null);
-      this.set('responded', true);
-      this.closeModal();
+  @action
+  respond(response) {
+    if (this.get('isDestroyed')) {
+      return;
+    }
+    let fn = this.get(response ? 'resolve' : 'reject');
+    fn.apply(null, response ? this.get('_originalArgs') : null);
+    this.set('responded', true);
+    this.closeModal();
 
-      // Bubble up the response to an action attr if available
-      let onResponse = this.get('onResponse');
+    // Bubble up the response to an action attr if available
+    let onResponse = this.get('onResponse');
 
-      if (onResponse && typeof onResponse === 'function') {
-        onResponse(response);
-      }
+    if (onResponse && typeof onResponse === 'function') {
+      onResponse(response);
     }
   }
-});
+}

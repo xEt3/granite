@@ -1,8 +1,11 @@
-import Controller from '@ember/controller';
+import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
+import Controller from '@ember/controller';
 
-export default Controller.extend({
-  features: computed(function () {
+@classic
+export default class OurProductController extends Controller {
+  @computed
+  get features() {
     return {
       recruiting: [{
         text:   'Automated Job Listings',
@@ -57,5 +60,5 @@ export default Controller.extend({
         screen: 'product-screenshots/screenshot_custom-fields.png'
       }]
     };
-  })
-});
+  }
+}

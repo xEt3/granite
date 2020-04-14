@@ -1,3 +1,7 @@
+import classic from 'ember-classic-decorator';
+import { classNames } from '@ember-decorators/component';
 import BaseLiComponent from './base';
 
-export default BaseLiComponent.extend({ classNames: [ 'content' ] });
+@classic
+@classNames('content')
+export default class EmployeeCorrectiveActionItem extends BaseLiComponent {}

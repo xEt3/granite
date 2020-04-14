@@ -1,16 +1,21 @@
-import Component from '@ember/component';
+import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
+import Component from '@ember/component';
 
-export default Component.extend({
-  highlightRow: computed('index', function () {
+@classic
+export default class InvoicePaymentMethod extends Component {
+  @computed('index')
+  get highlightRow() {
     return this.get('index') % 2 !== 0 ? true : false;
-  }),
+  }
 
-  isRejected: computed('transaction.status', function () {
+  @computed('transaction.status')
+  get isRejected() {
     return [ 'gateway_rejected', 'failed', 'settlement_declined', 'authorization_expired', 'processor_declined', 'voided' ].includes((this.transaction.status || '').toLowerCase());
-  }),
+  }
 
-  paymentMethod: computed('transaction.paymentInstrumentType', function () {
+  @computed('transaction.paymentInstrumentType')
+  get paymentMethod() {
     const {
       paymentInstrumentType: type,
       creditCard,
@@ -27,5 +32,5 @@ export default Component.extend({
       method: isPaypal ? paypal.payerEmail : creditCard.maskedNumber,
       image:  (isPaypal ? paypal : creditCard).imageUrl
     };
-  })
-});
+  }
+}

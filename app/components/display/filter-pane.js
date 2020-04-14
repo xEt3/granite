@@ -1,11 +1,13 @@
+import classic from 'ember-classic-decorator';
 import Component from '@ember/component';
 
-export default Component.extend({
-  sendComponentUpdate (path, value) {
+@classic
+export default class FilterPane extends Component {
+  sendComponentUpdate(path, value) {
     this.get('onChange')(path, value);
-  },
+  }
 
-  resetFilter (path) {
+  resetFilter(path) {
     this.sendComponentUpdate(path, undefined);
   }
-});
+}

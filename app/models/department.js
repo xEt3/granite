@@ -1,21 +1,30 @@
+import classic from 'ember-classic-decorator';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 
 
-export default Model.extend({
-  name: attr('string'),
-  code: attr('string'),
+@classic
+export default class Department extends Model {
+  @attr('string')
+  name;
 
-  company: belongsTo('company'),
-  creator: belongsTo('company-user', {
+  @attr('string')
+  code;
+
+  @belongsTo('company')
+  company;
+
+  @belongsTo('company-user', {
     async:   true,
     inverse: null
-  }),
+  })
+  creator;
 
-  created: attr('date', {
+  @attr('date', {
     defaultValue () {
       return new Date();
     }
   })
-});
+  created;
+}

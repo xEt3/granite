@@ -1,14 +1,20 @@
+import classic from 'ember-classic-decorator';
+import { action, computed } from '@ember/object';
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
 import { Promise } from 'rsvp';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import $ from 'jquery';
 
-export default Controller.extend(addEdit, {
-  transitionAfterSave: 'account.employee.index',
-  transitionWithModel: true,
+@classic
+export default class EditController extends Controller.extend(addEdit) {
+  transitionAfterSave = 'account.employee.index';
+  transitionWithModel = true;
 
-  relationshipsChanged: computed('model.{location,department,supervisor,jobDescription}', 'initialRelationships.[]', function () {
+  @computed(
+    'model.{location,department,supervisor,jobDescription}',
+    'initialRelationships.[]'
+  )
+  get relationshipsChanged() {
     const initialRelationships = this.get('initialRelationships');
     for (let i = 0; i < initialRelationships.length; i++) {
       if (this.get(`model.${initialRelationships[i].relationshipPath}.id`) !== initialRelationships[i].id) {
@@ -16,31 +22,31 @@ export default Controller.extend(addEdit, {
       }
     }
     return false;
-  }),
-
-  actions: {
-    selectEffectiveDate () {
-      this.set('responded', false);
-
-      $('#effective-date-modal').modal({
-        detachable: true,
-        onHidden:   () => {
-          if (!this.get('responded')) {
-            this.send('respondEffectiveDateModal', false);
-          }
-        }
-      }).modal('show');
-
-      return new Promise((resolve, reject) => this.setProperties({
-        resolve,
-        reject
-      }));
-    },
-
-    respondEffectiveDateModal (response) {
-      this.get(response ? 'resolve' : 'reject')();
-      this.set('responded', true);
-      $('#effective-date-modal').modal('hide');
-    }
   }
-});
+
+  @action
+  selectEffectiveDate() {
+    this.set('responded', false);
+
+    $('#effective-date-modal').modal({
+      detachable: true,
+      onHidden:   () => {
+        if (!this.get('responded')) {
+          this.send('respondEffectiveDateModal', false);
+        }
+      }
+    }).modal('show');
+
+    return new Promise((resolve, reject) => this.setProperties({
+      resolve,
+      reject
+    }));
+  }
+
+  @action
+  respondEffectiveDateModal(response) {
+    this.get(response ? 'resolve' : 'reject')();
+    this.set('responded', true);
+    $('#effective-date-modal').modal('hide');
+  }
+}

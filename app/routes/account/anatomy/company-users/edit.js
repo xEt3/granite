@@ -1,3 +1,4 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 import { A } from '@ember/array';
 import RSVP from 'rsvp';
@@ -10,15 +11,16 @@ const crud = [ 'create', 'read', 'update', 'delete' ],
         isVisible:  true
       };
 
-export default Route.extend({
-  model (params) {
+@classic
+export default class EditRoute extends Route {
+  model(params) {
     return RSVP.hash({
       user:        this.store.findRecord('company-user', params.user_id),
       permissions: this.store.findAll('permission')
     });
-  },
+  }
 
-  setupController (controller, model) {
+  setupController(controller, model) {
     controller.setProperties({
       model:           model.user,
       permission:      model.permissions,
@@ -46,4 +48,4 @@ export default Route.extend({
       }, A()).toArray()
     });
   }
-});
+}

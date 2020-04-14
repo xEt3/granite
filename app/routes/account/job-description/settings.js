@@ -1,9 +1,11 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  titleToken: 'Settings',
+@classic
+export default class SettingsRoute extends Route {
+  titleToken = 'Settings';
 
-  model () {
+  model() {
     return this.modelFor('account.recruiting.job-description');
   }
-});
+}

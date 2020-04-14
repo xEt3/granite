@@ -1,12 +1,19 @@
+import classic from 'ember-classic-decorator';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 
-export default Model.extend({
-  stages: attr('array'),
+@classic
+export default class RecruitingPipeline extends Model {
+  @attr('array')
+  stages;
 
-  jobOpenings: hasMany('job-opening', { inverse: null }),
-  company:     belongsTo('company', { inverse: null }),
+  @hasMany('job-opening', { inverse: null })
+  jobOpenings;
 
-  created: attr('date', { defaultValue: () => new Date() })
-});
+  @belongsTo('company', { inverse: null })
+  company;
+
+  @attr('date', { defaultValue: () => new Date() })
+  created;
+}

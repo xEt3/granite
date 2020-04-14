@@ -1,28 +1,31 @@
+import classic from 'ember-classic-decorator';
+import { action } from '@ember/object';
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  titleToken: 'Error',
+@classic
+export default class ErrorRoute extends Route {
+  titleToken = 'Error';
 
-  actions: {
-    didTransition () {
-      const controller = this.get('controller'),
-            lf = window.localforage;
+  @action
+  didTransition() {
+    const controller = this.get('controller'),
+          lf = window.localforage;
 
-      if (!controller.get('fromError')) {
-        return lf.getItem('graniteRoutePreviousToError').then(previousRoute => {
-          return this.transitionTo(previousRoute && previousRoute !== 'error' ? previousRoute : 'index');
-        });
-      }
+    if (!controller.get('fromError')) {
+      return lf.getItem('graniteRoutePreviousToError').then(previousRoute => {
+        return this.transitionTo(previousRoute && previousRoute !== 'error' ? previousRoute : 'index');
+      });
+    }
 
-      let previousRoute = controller.get('previousRoute');
+    let previousRoute = controller.get('previousRoute');
 
-      if (previousRoute) {
-        lf.setItem('graniteRoutePreviousToError', previousRoute);
-      }
-    },
-
-    willTransition () {
-      window.localforage.setItem('graniteRoutePreviousToError', null);
+    if (previousRoute) {
+      lf.setItem('graniteRoutePreviousToError', previousRoute);
     }
   }
-});
+
+  @action
+  willTransition() {
+    window.localforage.setItem('graniteRoutePreviousToError', null);
+  }
+}

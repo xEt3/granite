@@ -1,17 +1,20 @@
-import Controller from '@ember/controller';
+import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
+import Controller from '@ember/controller';
 
-export default Controller.extend({
-  init () {
-    this._super(...arguments);
+@classic
+export default class IndexController extends Controller {
+  init() {
+    super.init(...arguments);
     this.set('selectedNode', this.get('model.firstObject'));
-  },
+  }
 
-  baseNode: computed('model', 'selectedNode.id', function () {
+  @computed('model', 'selectedNode.id')
+  get baseNode() {
     return this.makeNode(this.get('selectedNode') || this.get('model.firstObject'));
-  }),
+  }
 
-  makeNode (object, base = {}) {
+  makeNode(object, base = {}) {
     if (!object) {
       return;
     }
@@ -26,4 +29,4 @@ export default Controller.extend({
       supervisor: object.belongsTo('supervisor').id()
     });
   }
-});
+}

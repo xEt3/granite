@@ -1,15 +1,22 @@
-import Route from '@ember/routing/route';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
 import refreshable from 'granite/mixins/refreshable';
 
-export default Route.extend(refreshable, {
-  titleToken:  'Users',
-  auth:        service(),
-  ajax:        service(),
-  queryParams: { page: { refreshModel: true } },
+@classic
+export default class IndexRoute extends Route.extend(refreshable) {
+  titleToken = 'Users';
 
-  model (params) {
+  @service
+  auth;
+
+  @service
+  ajax;
+
+  queryParams = { page: { refreshModel: true } };
+
+  model(params) {
     let limit = 10,
         page = (params.page || 1) - 1;
 
@@ -21,12 +28,12 @@ export default Route.extend(refreshable, {
         _id: { $ne: this.get('auth.user.id') }
       })
     });
-  },
+  }
 
-  setupController (controller, model) {
+  setupController(controller, model) {
     controller.setProperties({
       model:    model.limitedUsers,
       allUsers: model.allUsers.companyUser
     });
   }
-});
+}

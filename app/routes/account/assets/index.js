@@ -1,10 +1,12 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  titleToken:  'Assets',
-  queryParams: { page: { refreshModel: true } },
+@classic
+export default class IndexRoute extends Route {
+  titleToken = 'Assets';
+  queryParams = { page: { refreshModel: true } };
 
-  model (params) {
+  model(params) {
     let limit = this.get('controller.limit') || 20,
         page = (params.page || 1) - 1;
 
@@ -13,4 +15,4 @@ export default Route.extend({
       limit
     });
   }
-});
+}

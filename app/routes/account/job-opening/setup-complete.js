@@ -1,10 +1,12 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 import { run } from '@ember/runloop';
 
-export default Route.extend({
-  titleToken: 'Setup Finished',
+@classic
+export default class SetupCompleteRoute extends Route {
+  titleToken = 'Setup Finished';
 
-  afterModel (model) {
+  afterModel(model) {
     model.setProperties({
       setup:          false,
       setupStep:      null,
@@ -21,4 +23,4 @@ export default Route.extend({
       this.transitionTo('account.job-opening');
     }, 5000)));
   }
-});
+}

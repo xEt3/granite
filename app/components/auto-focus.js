@@ -1,9 +1,11 @@
+import classic from 'ember-classic-decorator';
 import Component from '@ember/component';
 import { run } from '@ember/runloop';
 
-export default Component.extend({
-  didInsertElement () {
-    this._super(...arguments);
+@classic
+export default class AutoFocus extends Component {
+  didInsertElement() {
+    super.didInsertElement(...arguments);
     run.scheduleOnce('afterRender', () => this.$('input').focus());
   }
-});
+}

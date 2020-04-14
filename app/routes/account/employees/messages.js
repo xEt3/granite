@@ -1,28 +1,37 @@
-import Route from '@ember/routing/route';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 import refreshable from 'granite/mixins/refreshable';
 import { hash, map } from 'rsvp';
 
-export default Route.extend(refreshable, {
-  auth:          service(),
-  ajax:          service(),
-  socket:        service(),
-  notifications: service(),
+@classic
+export default class MessagesRoute extends Route.extend(refreshable) {
+  @service
+  auth;
 
-  title (tokens) {
+  @service
+  ajax;
+
+  @service
+  socket;
+
+  @service
+  notifications;
+
+  title(tokens) {
     if (tokens.length > 0) {
       return tokens.join();
     }
 
     return tokens.join(' - ') + 'Messaging - HR Self Service';
-  },
+  }
 
-  beforeModel () {
+  beforeModel() {
     this.get('socket').initialize();
     this.notifications.requestPermission();
-  },
+  }
 
-  model () {
+  model() {
     // all message threads,
     // all available employees (except self)
     return hash({
@@ -55,13 +64,13 @@ export default Route.extend(refreshable, {
         sort:         { 'name.first': 1 }
       })
     });
-  },
+  }
 
-  setupController (controller, model) {
+  setupController(controller, model) {
     controller.setProperties({
       model:        model.threads,
       allEmployees: model.employees,
       user:         model.user
     });
   }
-});
+}

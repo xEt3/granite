@@ -1,6 +1,10 @@
+import classic from 'ember-classic-decorator';
+import { tagName } from '@ember-decorators/component';
 import Component from '@ember/component';
 
-const reportViewRow = Component.extend({ tagName: 'tr' });
+@classic
+@tagName('tr')
+class reportViewRow extends Component {}
 
 reportViewRow.reopenClass({ positionalParams: [ 'rowData', 'numColumns' ] });
 

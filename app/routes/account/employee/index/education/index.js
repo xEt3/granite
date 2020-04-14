@@ -1,9 +1,11 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  titleToken: 'Education & Training',
+@classic
+export default class IndexRoute extends Route {
+  titleToken = 'Education & Training';
 
-  async model () {
+  async model() {
     let q = { employee: this.modelFor('account.employee').id };
 
     return {
@@ -11,4 +13,4 @@ export default Route.extend({
       trainingAssignments: await this.store.query('training-assignment', q)
     };
   }
-});
+}

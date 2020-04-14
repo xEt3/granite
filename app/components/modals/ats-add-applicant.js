@@ -1,20 +1,25 @@
+import classic from 'ember-classic-decorator';
+import { action, computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { Promise } from 'rsvp';
-import { computed } from '@ember/object';
-import { inject as service } from '@ember/service';
 import ajaxStatus from 'granite/mixins/ajax-status';
 import $ from 'jquery';
 
-export default Component.extend(ajaxStatus, {
-  store:                   service(),
-  applicantRequiredFields: [ 'firstName', 'lastName', 'phone', 'email' ],
-  fileIsAdded:             false,
+@classic
+export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
+  @service
+  store;
 
-  resumeEndpoint: computed('model.jobOpening.id', function () {
+  applicantRequiredFields = [ 'firstName', 'lastName', 'phone', 'email' ];
+  fileIsAdded = false;
+
+  @computed('model.jobOpening.id')
+  get resumeEndpoint() {
     return `/api/v1/upload/resume/${this.get('model.jobOpening.id')}`;
-  }),
+  }
 
-  uploadResume () {
+  uploadResume() {
     return new Promise((resolveUpload, rejectUpload) => {
       this.setProperties({
         resolveUpload,
@@ -22,13 +27,14 @@ export default Component.extend(ajaxStatus, {
       });
       Dropzone.forElement('.input__dropzone').processQueue();
     });
-  },
+  }
 
-  modalId: computed('elementId', function () {
+  @computed('elementId')
+  get modalId() {
     return this.get('elementId') + '-modal';
-  }),
+  }
 
-  createConfirm () {
+  createConfirm() {
     const store = this.get('store');
 
     this.setProperties({
@@ -46,17 +52,18 @@ export default Component.extend(ajaxStatus, {
       resolve,
       reject
     }));
-  },
+  }
 
-  startApplication: computed('modalId', function () {
+  @computed('modalId')
+  get startApplication() {
     return this.createConfirm.bind(this);
-  }),
+  }
 
-  closeModal () {
+  closeModal() {
     $('#' + this.get('modalId')).modal('hide');
-  },
+  }
 
-  requiredFieldsFilled () {
+  requiredFieldsFilled() {
     let applicantRequiredFields = this.get('applicantRequiredFields');
     let newApplicant = this.get('newApplicant');
     for (let field in applicantRequiredFields) {
@@ -68,103 +75,109 @@ export default Component.extend(ajaxStatus, {
       }
     }
     return true;
-  },
+  }
 
-  actions: {
-    addedFile (file) {
-      let  $dropzone = Dropzone.forElement('.input__dropzone');
+  @action
+  addedFile(file) {
+    let  $dropzone = Dropzone.forElement('.input__dropzone');
 
-      if (this.get('fileIsAdded')) {
-        $dropzone.removeFile(this.get('fileIsAdded'));
-      }
-      this.set('fileIsAdded', file);
-    },
-
-    removeFile () {
-      let $dropzone;
-
-      try {
-        $dropzone = Dropzone.forElement('.input__dropzone');
-      } catch (error) {
-        return;
-      }
-
-      if (!$dropzone) {
-        return;
-      }
-
+    if (this.get('fileIsAdded')) {
       $dropzone.removeFile(this.get('fileIsAdded'));
-      this.set('fileIsAdded', false);
-    },
+    }
+    this.set('fileIsAdded', file);
+  }
 
-    uploadError (err) {
-      this.get('rejectUpload')(err);
-    },
+  @action
+  removeFile() {
+    let $dropzone;
 
-    uploadedFile (prog, response) {
-      this.get('resolveUpload')(response);
-    },
+    try {
+      $dropzone = Dropzone.forElement('.input__dropzone');
+    } catch (error) {
+      return;
+    }
 
-    uploadProgressUpdate (prog) {
-      this.set('uploadProgress', prog);
-    },
+    if (!$dropzone) {
+      return;
+    }
 
-    cancel () {
-      this.get('newApplicant').destroyRecord();
-      this.get('newApplication').destroyRecord();
+    $dropzone.removeFile(this.get('fileIsAdded'));
+    this.set('fileIsAdded', false);
+  }
 
+  @action
+  uploadError(err) {
+    this.get('rejectUpload')(err);
+  }
+
+  @action
+  uploadedFile(prog, response) {
+    this.get('resolveUpload')(response);
+  }
+
+  @action
+  uploadProgressUpdate(prog) {
+    this.set('uploadProgress', prog);
+  }
+
+  @action
+  cancel() {
+    this.get('newApplicant').destroyRecord();
+    this.get('newApplication').destroyRecord();
+
+    this.send('removeFile');
+    this.closeModal();
+  }
+
+  @action
+  save() {
+    const store = this.get('store');
+    this.ajaxStart();
+
+    if (!this.requiredFieldsFilled()) {
+      this.ajaxError('Must fill required fields', true);
+      return;
+    }
+
+    let applicant = this.get('newApplicant'),
+        application = this.get('newApplication');
+
+    application.setProperties({
+      applicant,
+      manualEntry: true,
+      jobOpening:  this.get('model.jobOpening'),
+      reviewedOn:  this.get('newApplication').stage ? new Date() : null
+    });
+
+    applicant.save()
+    .then(() => {
+      if (this.get('fileIsAdded')) {
+        return this.uploadResume();
+      }
+    })
+    .then((response) => {
+      if (response) {
+        store.pushPayload('file', response);
+        let fileRecord = store.peekRecord('file', response.file.id);
+        application.set('resume', fileRecord);
+      }
+
+      return application.save();
+    })
+    .then(() => {
+      this.ajaxSuccess('Saved application successfully');
+      this.setProperties({
+        newApplicant:   null,
+        newApplication: null
+      });
       this.send('removeFile');
       this.closeModal();
-    },
-
-    save () {
-      const store = this.get('store');
-      this.ajaxStart();
-
-      if (!this.requiredFieldsFilled()) {
-        this.ajaxError('Must fill required fields', true);
-        return;
-      }
-
-      let applicant = this.get('newApplicant'),
-          application = this.get('newApplication');
-
-      application.setProperties({
-        applicant,
-        manualEntry: true,
-        jobOpening:  this.get('model.jobOpening'),
-        reviewedOn:  this.get('newApplication').stage ? new Date() : null
-      });
-
-      applicant.save()
-      .then(() => {
-        if (this.get('fileIsAdded')) {
-          return this.uploadResume();
-        }
-      })
-      .then((response) => {
-        if (response) {
-          store.pushPayload('file', response);
-          let fileRecord = store.peekRecord('file', response.file.id);
-          application.set('resume', fileRecord);
-        }
-
-        return application.save();
-      })
-      .then(() => {
-        this.ajaxSuccess('Saved application successfully');
-        this.setProperties({
-          newApplicant:   null,
-          newApplication: null
-        });
-        this.send('removeFile');
-        this.closeModal();
-        this.refresh();
-      });
-    },
-
-    notify (type, msg) {
-      this.get('onNotify')(type, msg);
-    }
+      this.refresh();
+    });
   }
-});
+
+  @action
+  notify(type, msg) {
+    this.get('onNotify')(type, msg);
+  }
+}

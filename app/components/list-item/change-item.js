@@ -1,9 +1,12 @@
+import classic from 'ember-classic-decorator';
+import { classNames } from '@ember-decorators/component';
 import BaseLiComponent from './base';
 
-export default BaseLiComponent.extend({
-  classNames: [ 'item', 'clearfix' ],
-
+@classic
+@classNames('item', 'clearfix')
+export default class ChangeItem extends BaseLiComponent {
   /* stubs */
-  onApprove: () => {},
-  onReject:  () => {}
-});
+  onApprove = () => {};
+
+  onReject = () => {};
+}

@@ -1,3 +1,7 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({ titleToken: 'Census Upload' });
+@classic
+export default class CensusRoute extends Route {
+  titleToken = 'Census Upload';
+}

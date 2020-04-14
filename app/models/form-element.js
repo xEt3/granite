@@ -1,22 +1,42 @@
+import classic from 'ember-classic-decorator';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { A } from '@ember/array';
 import Validations from './validations/form-element';
 
 
-export default Model.extend(Validations, {
-  label:   attr('string'),
-  type:    attr('string'),
-  options: attr('array', { defaultValue: () => A() }),
+@classic
+export default class FormElement extends Model.extend(Validations) {
+  @attr('string')
+  label;
 
-  trueWeight:  attr('number'),
-  falseWeight: attr('number'),
+  @attr('string')
+  type;
 
-  trueDisqualifies:  attr('boolean'),
-  falseDisqualifies: attr('boolean'),
-  allowAdditions:    attr('boolean'),
-  inlineInput:       attr('boolean'),
-  multiple:          attr('boolean'),
+  @attr('array', { defaultValue: () => A() })
+  options;
 
-  created: attr('date', { defaultValue: () => new Date() })
-});
+  @attr('number')
+  trueWeight;
+
+  @attr('number')
+  falseWeight;
+
+  @attr('boolean')
+  trueDisqualifies;
+
+  @attr('boolean')
+  falseDisqualifies;
+
+  @attr('boolean')
+  allowAdditions;
+
+  @attr('boolean')
+  inlineInput;
+
+  @attr('boolean')
+  multiple;
+
+  @attr('date', { defaultValue: () => new Date() })
+  created;
+}

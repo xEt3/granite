@@ -1,23 +1,27 @@
-import Component from '@ember/component';
+import classic from 'ember-classic-decorator';
+import { classNames, classNameBindings, tagName } from '@ember-decorators/component';
 import { computed } from '@ember/object';
+import Component from '@ember/component';
 
 const priorityMap = [ 'Lowest', 'Low', 'Medium', 'High', 'Highest' ],
       priorityColorMap = [ '', 'grey', 'teal', 'red', 'orange' ];
 
-let PriorityLabelComponent = Component.extend({
-  tagName:           'span',
-  classNames:        [ 'ui' ],
-  classNameBindings: [ 'priorityColor' ],
-
-  priorityText: computed('priority', function () {
+@classic
+@tagName('span')
+@classNames('ui')
+@classNameBindings('priorityColor')
+class PriorityLabelComponent extends Component {
+  @computed('priority')
+  get priorityText() {
     return priorityMap[this.get('priority') - 1] || '';
-  }),
+  }
 
-  priorityColor: computed('priority', function () {
+  @computed('priority')
+  get priorityColor() {
     let color = priorityColorMap[this.get('priority') - 1] || '';
     return this.get('hasBlock') ? color : color + ' label';
-  })
-});
+  }
+}
 
 PriorityLabelComponent.reopenClass({ positionalParams: [ 'priority' ] });
 
