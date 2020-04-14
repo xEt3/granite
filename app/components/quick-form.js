@@ -4,11 +4,11 @@ export default class QuickFormComponent extends Component {
   submit (e) {
     e.preventDefault();
     e.stopPropagation();
-    this.onsubmit();
+    this.args.onsubmit();
   }
 
   get _submitClass () {
-    let userClass = this.submitClass || '';
+    let userClass = this.args.submitClass || '';
     return `ui ${userClass} button`;
   }
 }

@@ -1,1 +1,1 @@
-{{quill-editor value=this.value options=this.options textChange=(action "updateText")}}
+<QuillEditor @value=@value @options={{this.options}} @textChange=(fn @onChange this.editor.root.innerHTML)/>

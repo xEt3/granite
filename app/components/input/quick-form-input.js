@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
-import { computed, defineProperty, action } from '@ember/object';
+import { defineProperty, action, get } from '@ember/object';
+import { alias } from '@ember/object/computed';
 
 export default class InputQuickFormInputComponent extends Component {
-  // classNameBindings:     [ 'computedClassName', 'field.parentClass' ],
   colorPickerComponents = {
     palette: true,
     preview: true,
@@ -19,11 +19,14 @@ export default class InputQuickFormInputComponent extends Component {
     }
   }
 
+  controller = this.args.controller;
+
   constructor () {
     super(...arguments);
-    let path = `model.${this.args.field.path}`;
-    defineProperty(this, 'value', computed.alias(path));
-    this.initialValue = this[path];
+    let path = `args.model.${this.args.field.path}`;
+
+    defineProperty(this, 'value', alias(path));
+    this.initialValue = get(this, path);
   }
 
   get computedClassName () {

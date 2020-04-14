@@ -11,6 +11,7 @@ export default class AccountJobOpeningSetupSettingsController extends Controller
   @service data
 
   @tracked customPipeline
+  @tracked currentStage
 
   jobTypes = jobTypes
 
