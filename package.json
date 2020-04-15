@@ -99,7 +99,6 @@
     "ember-event-helpers": "^0.1.0",
     "ember-export-application-global": "^2.0.0",
     "ember-faker": "^1.2.1",
-    "ember-fast-cli": "^1.0.1",
     "ember-fetch": "^6.7.0",
     "ember-font-awesome": "^4.0.0-rc.4",
     "ember-in-viewport": "^3.0.3",
