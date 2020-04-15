@@ -15,11 +15,11 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
   fileIsAdded = false;
 
   @computed('model.jobOpening.id')
-  get resumeEndpoint() {
+  get resumeEndpoint () {
     return `/api/v1/upload/resume/${this.get('model.jobOpening.id')}`;
   }
 
-  uploadResume() {
+  uploadResume () {
     return new Promise((resolveUpload, rejectUpload) => {
       this.setProperties({
         resolveUpload,
@@ -30,11 +30,11 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
   }
 
   @computed('elementId')
-  get modalId() {
+  get modalId () {
     return this.elementId + '-modal';
   }
 
-  createConfirm() {
+  createConfirm () {
     const store = this.store;
 
     this.setProperties({
@@ -55,15 +55,15 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
   }
 
   @computed('modalId')
-  get startApplication() {
+  get startApplication () {
     return this.createConfirm.bind(this);
   }
 
-  closeModal() {
+  closeModal () {
     $('#' + this.modalId).modal('hide');
   }
 
-  requiredFieldsFilled() {
+  requiredFieldsFilled () {
     let applicantRequiredFields = this.applicantRequiredFields;
     let newApplicant = this.newApplicant;
     for (let field in applicantRequiredFields) {
@@ -78,7 +78,7 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
   }
 
   @action
-  addedFile(file) {
+  addedFile (file) {
     let  $dropzone = Dropzone.forElement('.input__dropzone');
 
     if (this.fileIsAdded) {
@@ -88,7 +88,7 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
   }
 
   @action
-  removeFile() {
+  removeFile () {
     let $dropzone;
 
     try {
@@ -106,22 +106,22 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
   }
 
   @action
-  uploadError(err) {
+  uploadError (err) {
     this.rejectUpload(err);
   }
 
   @action
-  uploadedFile(prog, response) {
+  uploadedFile (prog, response) {
     this.resolveUpload(response);
   }
 
   @action
-  uploadProgressUpdate(prog) {
+  uploadProgressUpdate (prog) {
     this.set('uploadProgress', prog);
   }
 
   @action
-  cancel() {
+  cancel () {
     this.newApplicant.destroyRecord();
     this.newApplication.destroyRecord();
 
@@ -130,7 +130,7 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
   }
 
   @action
-  save() {
+  save () {
     const store = this.store;
     this.ajaxStart();
 
@@ -177,7 +177,7 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
   }
 
   @action
-  notify(type, msg) {
+  notify (type, msg) {
     this.onNotify(type, msg);
   }
 }

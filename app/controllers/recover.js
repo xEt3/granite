@@ -13,7 +13,7 @@ export default class RecoverController extends Controller.extend(ajaxStatus) {
   u = null; // user id parameter
 
   @action
-  recover() {
+  recover () {
     const password = this.password,
           passwordConfirm = this.passwordConfirm,
           userId = this.u,

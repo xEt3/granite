@@ -7,7 +7,7 @@ import BaseLiComponent from '../base';
 @classNames('ui', 'card', 'educate__employee-metric')
 export default class EmployeeMetric extends BaseLiComponent {
   @computed('model.{completed,assigned}')
-  get percentCompleted() {
+  get percentCompleted () {
     const completed = this.get('model.completed') || 0,
           assigned = this.get('model.total') || 0;
 

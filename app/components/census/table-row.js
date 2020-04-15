@@ -8,7 +8,7 @@ import Component from '@ember/component';
 @classNameBindings('isInvalid:census__highlight-row')
 export default class TableRow extends Component {
   @computed('validation.[]')
-  get isInvalid() {
+  get isInvalid () {
     let v = this.validation;
     return v && v.some((cell = {}) => cell.invalid);
   }

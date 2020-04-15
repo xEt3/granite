@@ -7,7 +7,7 @@ import BaseLiComponent from '../base';
 @classNames('item', 'action-item__checklist--item')
 export default class TodoItem extends BaseLiComponent {
   @computed('model.title')
-  get slug() {
+  get slug () {
     let title = this.get('model.title');
     return title ? title.replace(/\s/g, '-') : title;
   }

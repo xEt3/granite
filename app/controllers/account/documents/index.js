@@ -21,12 +21,12 @@ export default class IndexController extends Controller.extend(ajaxStatus, pagin
   enableNotify = true;
 
   @action
-  updateFilter(filter, value) {
+  updateFilter (filter, value) {
     this.set(filter, value);
   }
 
   @action
-  resetFilters() {
+  resetFilters () {
     this.setProperties({
       tags:      null,
       extension: null

@@ -3,7 +3,7 @@ import Route from '@ember/routing/route';
 
 @classic
 export default class IndexRoute extends Route {
-  titleToken(model) {
+  titleToken (model) {
     return 'Job - ' + model.get('title');
   }
 }

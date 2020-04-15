@@ -11,7 +11,7 @@ import {
 @tagName('')
 export default class NewImportRecordItem extends BaseLiComponent {
   @computed('model', 'type')
-  get displayProp() {
+  get displayProp () {
     const properties = recordDisplayPropertyMap[this.type] || [],
           record = this.model;
 
@@ -19,11 +19,11 @@ export default class NewImportRecordItem extends BaseLiComponent {
   }
 
   @computed('type')
-  get recordRoute() {
+  get recordRoute () {
     return modelPageMap[this.type];
   }
 
-  linkToRecord() {
+  linkToRecord () {
     const recordRoute = this.recordRoute,
           id = this.get('model._id');
 

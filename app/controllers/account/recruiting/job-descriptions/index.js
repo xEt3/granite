@@ -10,7 +10,7 @@ export default class IndexController extends Controller.extend(resource) {
   auth;
 
   @computed
-  get intros() {
+  get intros () {
     return [{
       element:  '.ui.segment.container',
       intro:    'The job description page shows you all of your job descriptions. Job descriptions can be assigned to employees and are used to start recruiting campaigns.',

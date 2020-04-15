@@ -9,7 +9,7 @@ export default class UiMenu extends Component {
   open = false;
 
   @action
-  toggleMenu() {
+  toggleMenu () {
     this.toggleProperty('open');
   }
 }

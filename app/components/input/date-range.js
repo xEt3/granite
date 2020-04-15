@@ -6,7 +6,7 @@ import moment from 'moment';
 @classic
 export default class DateRange extends Component {
   @computed('start')
-  get endOptions() {
+  get endOptions () {
     const start = this.start,
           loopDate = moment(start),
           opts = [];

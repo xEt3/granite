@@ -5,7 +5,7 @@ import Controller from '@ember/controller';
 @classic
 export default class FirstStepsController extends Controller {
   @computed
-  get steps() {
+  get steps () {
     return [{
       key:         'anatomy',
       title:       'Anatomy',

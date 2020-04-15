@@ -20,16 +20,16 @@ class UserItemComponent extends Component.extend(ajaxStatus) {
   @tracked newOwner = null;
 
   @computed('elementId')
-  get modalId() {
+  get modalId () {
     return this.elementId + '-modal';
   }
 
   @computed('elementId')
-  get dropdownId() {
+  get dropdownId () {
     return this.elementId + '-dropdown';
   }
 
-  get disableDeactivate() {
+  get disableDeactivate () {
     let projects = this.projects;
 
     if (!projects || !projects.length) {
@@ -40,7 +40,7 @@ class UserItemComponent extends Component.extend(ajaxStatus) {
   }
 
   @computed('user.id', 'allUsers')
-  get users() {
+  get users () {
     let userId = this.get('user.id'),
         allUsers = this.allUsers;
 
@@ -64,12 +64,12 @@ class UserItemComponent extends Component.extend(ajaxStatus) {
     }, []);
   }
 
-  closeTransferModal() {
+  closeTransferModal () {
     $(`#${this.modalId}`).modal('hide');
   }
 
   @action
-  async openTransferModal() {
+  async openTransferModal () {
     this.ajaxStart();
     let { actionItem } = await this.ajax.request('/api/v1/action-items', {
       data: {
@@ -94,7 +94,7 @@ class UserItemComponent extends Component.extend(ajaxStatus) {
   }
 
   @action
-  async transferProjects() {
+  async transferProjects () {
     if (this.get('projects.length') === 0) {
       return;
     }
@@ -117,7 +117,7 @@ class UserItemComponent extends Component.extend(ajaxStatus) {
   }
 
   @action
-  async toggleInactiveState(val) {
+  async toggleInactiveState (val) {
     let user = this.user;
     user.set('inactive', val);
 
@@ -139,17 +139,17 @@ class UserItemComponent extends Component.extend(ajaxStatus) {
   }
 
   @action
-  cancel() {
+  cancel () {
     this.closeTransferModal();
   }
 
   @action
-  notify(type, msg) {
+  notify (type, msg) {
     this.onNotify(type, msg);
   }
 
   @action
-  refresh() {
+  refresh () {
     this.onRefresh();
   }
 }

@@ -13,7 +13,7 @@ export default class IndexController extends Controller.extend(ajaxStatus) {
   service = null;
 
   @action
-  discover() {
+  discover () {
     this.ajaxStart();
 
     const serviceName = this.service;

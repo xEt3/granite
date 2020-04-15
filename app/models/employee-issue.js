@@ -38,7 +38,7 @@ export default class EmployeeIssue extends Model {
   created;
 
   @computed('severity', 'company')
-  get actionSeverity() {
+  get actionSeverity () {
     let severity = this.severity;
 
     if (severity) {
@@ -50,7 +50,7 @@ export default class EmployeeIssue extends Model {
   }
 
   @computed('id', 'title')
-  get slug() {
+  get slug () {
     return `${this.title.replace(/\s|_/g, '-')}_${this.id}`;
   }
 }

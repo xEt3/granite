@@ -15,7 +15,7 @@ export default class IntegrationsController extends Controller.extend(ajaxStatus
   s = null; // service name
   f = null; // failure bool
 
-  grant() {
+  grant () {
     const { g, i, s } = this;
 
     if (!g || !i) {
@@ -41,12 +41,12 @@ export default class IntegrationsController extends Controller.extend(ajaxStatus
   }
 
   @action
-  onNotify() {
+  onNotify () {
     this.send.apply(this, [ 'notify', ...arguments ]);
   }
 
   @action
-  clearFailure() {
+  clearFailure () {
     this.setProperties({
       s: null,
       f: null

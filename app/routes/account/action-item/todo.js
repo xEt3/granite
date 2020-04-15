@@ -6,7 +6,7 @@ import RSVP from 'rsvp';
 export default class TodoRoute extends Route {
   titleToken = 'Todos';
 
-  model() {
+  model () {
     return RSVP.hash({
       actionItem:  super.model(...arguments),
       actionItems: this.store.query('action-item', {
@@ -17,7 +17,7 @@ export default class TodoRoute extends Route {
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model:       model.actionItem,
       actionItems: model.actionItems,

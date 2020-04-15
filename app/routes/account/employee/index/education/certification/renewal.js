@@ -5,7 +5,7 @@ import Route from '@ember/routing/route';
 export default class RenewalRoute extends Route {
   queryParams = { renewal: { refreshModel: true } };
 
-  model({ renewal }) {
+  model ({ renewal }) {
     let certification = this.modelFor('account.employee.index.education.certification');
 
     return {

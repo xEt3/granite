@@ -13,20 +13,20 @@ class MessagesPaneComponent extends Component {
   @tracked messageThreshold = 49;
   isBottomStuck = true;
 
-  didInsertElement() {
+  didInsertElement () {
     super.didInsertElement(...arguments);
     this.$()[0].addEventListener('scroll', this.onScroll.bind(this));
     this.contentChanged();
   }
 
-  willDestroyElement() {
+  willDestroyElement () {
     this.$()[0].removeEventListener('scroll', this.onScroll.bind(this));
     super.willDestroyElement(...arguments);
   }
 
   /* eslint-disable-next-line */
   @observes('messages.[]')
-  contentChanged() {
+  contentChanged () {
     const bottomStuck = this.isBottomStuck,
           topStuck = this.isTopStuck;
 
@@ -49,20 +49,20 @@ class MessagesPaneComponent extends Component {
   }
 
   @computed('messages.length', 'messageThreshold')
-  get isFetchable() {
+  get isFetchable () {
     return this.get('messages.length') > this.messageThreshold;
   }
 
-  onScroll(e) {
+  onScroll (e) {
     debounce(this, this.__handleScroll, e, 1000);
   }
 
-  triggerTopScrollEvent() {
+  triggerTopScrollEvent () {
     this.set('isLoading', true);
     this.onScrolledToTop();
   }
 
-  __handleScroll(e) {
+  __handleScroll (e) {
     const t = e.target,
           isFetchable = this.isFetchable;
 

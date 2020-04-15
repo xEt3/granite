@@ -18,11 +18,11 @@ class AddLabelModalComponent extends Component.extend(addEdit) {
   currentLabel = null;
   newLabelForm = lists.labels.elements;
 
-  resetCurrentLabel() {
+  resetCurrentLabel () {
     this.set('currentLabel', null);
   }
 
-  randomColor() {
+  randomColor () {
     let hex = '0123456789ABCDEF',
         color = '#';
     for (let i = 0; i < 6; i++) {
@@ -32,12 +32,12 @@ class AddLabelModalComponent extends Component.extend(addEdit) {
   }
 
   @action
-  async addLabel() {
+  async addLabel () {
     this.set('currentLabel', await this.store.createRecord('label', { color: this.randomColor() }));
   }
 
   @action
-  async saveLabel(label) {
+  async saveLabel (label) {
     let company = await this.get('auth.user.company'),
         companyLabels = await company.get('labels'),
         applicationLabels = await this.get('model.labels');
@@ -59,7 +59,7 @@ class AddLabelModalComponent extends Component.extend(addEdit) {
   }
 
   @action
-  respond(response) {
+  respond (response) {
     this.onResponse(response);
 
     if (!response && this.currentLabel) {

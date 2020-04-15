@@ -25,17 +25,17 @@ export default class IndexController extends Controller {
   }];
 
   @computed('totalRecords', 'model', 'page')
-  get disabled() {
+  get disabled () {
     return this.page >= ACTIVITY_PAGE_HARD_LIMIT || this.totalRecords <= this.get('model.length') ? true : false;
   }
 
   @action
-  onNotify(type, msg) {
+  onNotify (type, msg) {
     this.send('notify', type, msg);
   }
 
   @action
-  loadMoreActivities() {
+  loadMoreActivities () {
     this.set('page', this.page + 1);
   }
 }

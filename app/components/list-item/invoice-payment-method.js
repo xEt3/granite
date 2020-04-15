@@ -5,17 +5,17 @@ import Component from '@ember/component';
 @classic
 export default class InvoicePaymentMethod extends Component {
   @computed('index')
-  get highlightRow() {
+  get highlightRow () {
     return this.index % 2 !== 0 ? true : false;
   }
 
   @computed('transaction.status')
-  get isRejected() {
+  get isRejected () {
     return [ 'gateway_rejected', 'failed', 'settlement_declined', 'authorization_expired', 'processor_declined', 'voided' ].includes((this.transaction.status || '').toLowerCase());
   }
 
   @computed('transaction.paymentInstrumentType')
-  get paymentMethod() {
+  get paymentMethod () {
     const {
       paymentInstrumentType: type,
       creditCard,

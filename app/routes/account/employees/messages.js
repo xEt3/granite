@@ -18,7 +18,7 @@ export default class MessagesRoute extends Route.extend(refreshable) {
   @service
   notifications;
 
-  title(tokens) {
+  title (tokens) {
     if (tokens.length > 0) {
       return tokens.join();
     }
@@ -26,12 +26,12 @@ export default class MessagesRoute extends Route.extend(refreshable) {
     return tokens.join(' - ') + 'Messaging - HR Self Service';
   }
 
-  beforeModel() {
+  beforeModel () {
     this.socket.initialize();
     this.notifications.requestPermission();
   }
 
-  model() {
+  model () {
     // all message threads,
     // all available employees (except self)
     return hash({
@@ -66,7 +66,7 @@ export default class MessagesRoute extends Route.extend(refreshable) {
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model:        model.threads,
       allEmployees: model.employees,

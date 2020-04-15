@@ -21,7 +21,7 @@ export default class IndexRoute extends Route {
     page: { refreshModel: true }
   };
 
-  beforeModel() {
+  beforeModel () {
     return resolve(this.get('auth.user'))
     .then(user => resolve(user.get('company')))
     .then(company => {
@@ -31,7 +31,7 @@ export default class IndexRoute extends Route {
     });
   }
 
-  async model(params) {
+  async model (params) {
     let activityQuery = {
       limit: this.cachedActivities ? params.limit : params.limit * (params.page + 1),
       page:  this.cachedActivities ? params.page : 0,
@@ -55,11 +55,11 @@ export default class IndexRoute extends Route {
     };
   }
 
-  async getAnalytics() {
+  async getAnalytics () {
     return await this.ajax.request('/api/v1/company/dashboard-analytics');
   }
 
-  afterModel(model) {
+  afterModel (model) {
     if (model.page > 0) {
       scheduleOnce('afterRender', () => {
         let $activityEl = document.querySelector('.dashboard__activity-feed');
@@ -68,7 +68,7 @@ export default class IndexRoute extends Route {
     }
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     super.setupController(...arguments);
 
     if (this.cachedActivities && model.page > 0) {
@@ -86,7 +86,7 @@ export default class IndexRoute extends Route {
   }
 
   @action
-  willTransition() {
+  willTransition () {
     this.controller.set('page', 0);
   }
 }

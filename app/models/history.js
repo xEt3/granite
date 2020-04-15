@@ -54,7 +54,7 @@ export default class History extends Model {
   target;
 
   @computed('diff.[]')
-  get changedKeys() {
+  get changedKeys () {
     let diff = this.diff;
     return diff ? diff.reduce((arr, i) => {
       arr.push(humanizeKeyName(i.path.join('.')));

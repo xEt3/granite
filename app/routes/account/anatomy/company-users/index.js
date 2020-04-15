@@ -16,7 +16,7 @@ export default class IndexRoute extends Route.extend(refreshable) {
 
   queryParams = { page: { refreshModel: true } };
 
-  model(params) {
+  model (params) {
     let limit = 10,
         page = (params.page || 1) - 1;
 
@@ -30,7 +30,7 @@ export default class IndexRoute extends Route.extend(refreshable) {
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model:    model.limitedUsers,
       allUsers: model.allUsers.companyUser

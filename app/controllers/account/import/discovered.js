@@ -17,7 +17,7 @@ export default class DiscoveredController extends Controller.extend(ajaxStatus) 
   service = null;
 
   @computed('selected.{employees.[],departments.[],locations.[]}')
-  get totalSelected() {
+  get totalSelected () {
     let selected = this.selected;
 
     return Object.keys(selected).reduce((total, recordset) => {
@@ -25,11 +25,11 @@ export default class DiscoveredController extends Controller.extend(ajaxStatus) 
     }, 0);
   }
 
-  scheduleNextPoll() {
+  scheduleNextPoll () {
     later(this.fetchStatus.bind(this), STATUS_POLL_INT);
   }
 
-  async fetchStatus() {
+  async fetchStatus () {
     let status = await this.store.find('task-status', this.taskId);
 
     this.set('status', status);
@@ -48,7 +48,7 @@ export default class DiscoveredController extends Controller.extend(ajaxStatus) 
   }
 
   @action
-  toggleAllSelected(name, records) {
+  toggleAllSelected (name, records) {
     if (this.get(`selected.${name}.length`) === records.length) {
       this.set(`selected.${name}`, A([]));
     } else {
@@ -57,18 +57,18 @@ export default class DiscoveredController extends Controller.extend(ajaxStatus) 
   }
 
   @action
-  toggleRowSelection(name, row) {
+  toggleRowSelection (name, row) {
     let selection = this.get(`selected.${name}`);
     selection[selection.includes(row) ? 'removeObject' : 'addObject'](row);
   }
 
   @action
-  transitionTo(args) {
+  transitionTo (args) {
     this.transitionToRoute(...args);
   }
 
   @action
-  import() {
+  import () {
     const selected = this.selected,
           serviceName = this.service,
           totalSelected = this.totalSelected;

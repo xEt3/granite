@@ -46,8 +46,8 @@ export default Mixin.create({
     this.setProperties({
       [this.loadingProp]:          false,
       [`${this.loadingProp}Slow`]: false,
-      errorMessage:                       errMsg,
-      fieldErrors:                        errorsArray && findFieldErrors(errorsArray)
+      errorMessage:                errMsg,
+      fieldErrors:                 errorsArray && findFieldErrors(errorsArray)
     });
 
     if (this.enableNotify) {
@@ -61,9 +61,9 @@ export default Mixin.create({
     this.setProperties({
       [this.loadingProp]:          false,
       [`${this.loadingProp}Slow`]: false,
-      errorMessage:                       null,
-      successMessage:                     success,
-      fieldErrors:                        false
+      errorMessage:                null,
+      successMessage:              success,
+      fieldErrors:                 false
     });
 
     setTimeout(() => {
@@ -81,9 +81,9 @@ export default Mixin.create({
     this.setProperties({
       [this.loadingProp]:          true,
       [`${this.loadingProp}Slow`]: false,
-      errorMessage:                       null,
-      successMessage:                     null,
-      fieldErrors:                        false
+      errorMessage:                null,
+      successMessage:              null,
+      fieldErrors:                 false
     });
 
     this.__scheduleLongRunningProp();

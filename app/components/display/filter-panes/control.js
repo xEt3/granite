@@ -9,7 +9,7 @@ class ControlComponent extends Component {
   hasNull = true;
   itemValuePath = 'id';
 
-  didInsertElement() {
+  didInsertElement () {
     super.didInsertElement(...arguments);
 
     if (this.state && !this.get('parentView.active')) {
@@ -18,7 +18,7 @@ class ControlComponent extends Component {
   }
 
   @computed('type', 'searchable')
-  get selectionClass() {
+  get selectionClass () {
     if (this.type !== 'select') {
       return;
     }
@@ -36,7 +36,7 @@ class ControlComponent extends Component {
     return classText;
   }
 
-  __update(val) {
+  __update (val) {
     this.update(this.controlName, val);
   }
 }

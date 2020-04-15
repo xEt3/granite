@@ -10,17 +10,17 @@ export default class ConfirmModal extends Component {
   responded = false;
 
   @computed('elementId')
-  get modalId() {
+  get modalId () {
     return this.elementId + '-modal';
   }
 
-  didReceiveAttrs() {
+  didReceiveAttrs () {
     if (this.confirmOnRender) {
       run.scheduleOnce('afterRender', () => this.startConfirmation());
     }
   }
 
-  createConfirm() {
+  createConfirm () {
     this.setProperties({
       responded:     false,
       _originalArgs: arguments
@@ -46,16 +46,16 @@ export default class ConfirmModal extends Component {
   }
 
   @computed('modalId')
-  get startConfirmation() {
+  get startConfirmation () {
     return this.createConfirm.bind(this);
   }
 
-  closeModal() {
+  closeModal () {
     $('#' + this.modalId).modal('hide');
   }
 
   @action
-  respond(response) {
+  respond (response) {
     if (this.isDestroyed) {
       return;
     }

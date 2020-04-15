@@ -6,7 +6,7 @@ import { htmlSafe } from '@ember/string';
 @classic
 export default class DryRunEmployee extends Component {
   @computed('dryRunRecord', 'availableFields')
-  get missingRequiredFields() {
+  get missingRequiredFields () {
     const availableFields = this.availableFields,
           dryRunRecord = this.dryRunRecord;
 

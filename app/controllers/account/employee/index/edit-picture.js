@@ -9,25 +9,25 @@ export default class EditPictureController extends Controller {
   pictureExts = [ 'jpg', 'jpeg', 'png' ];
 
   @computed('model.id')
-  get pictureEndpoint() {
+  get pictureEndpoint () {
     return `/api/v1/employee/${this.get('model.id')}/picture`;
   }
 
   fileIsAdded = false;
 
   @action
-  addedFile(file) {
+  addedFile (file) {
     this.set('dropzone', this);
     this.set('fileIsAdded', file);
   }
 
   @action
-  processQueue() {
+  processQueue () {
     Dropzone.forElement('#input__dropzone--employee-profile-image').processQueue();
   }
 
   @action
-  uploadedFile() {
+  uploadedFile () {
     this.model.reload().then(model => {
       model.set('picture', model.get('picture') + '?t=' + moment().unix());
       run.later(() => {
@@ -38,13 +38,13 @@ export default class EditPictureController extends Controller {
   }
 
   @action
-  removeFile(file) {
+  removeFile (file) {
     Dropzone.forElement('#input__dropzone--employee-profile-image').removeAllFiles(file);
     this.set('fileIsAdded', false);
   }
 
   @action
-  leaveUpload() {
+  leaveUpload () {
     this.send('removeFile', this.fileIsAdded);
     this.transitionToRoute('account.employee.index');
   }

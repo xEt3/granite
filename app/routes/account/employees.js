@@ -9,7 +9,7 @@ export default class EmployeesRoute extends Route.extend(refreshable) {
   @service
   ajax;
 
-  model() {
+  model () {
     return hash({
       changeQueue: this.ajax.request('/api/v1/changes', {
         data: {

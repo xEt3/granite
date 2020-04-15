@@ -89,7 +89,7 @@ export default class Company extends Model.extend(Validations) {
   probationaryPeriodAmount;
 
   @computed('logoPalette')
-  get rgbPalette() {
+  get rgbPalette () {
     const palette = this.logoPalette;
     return palette && palette.length ? palette.map(hexToRgb) : false;
   }
@@ -122,7 +122,7 @@ export default class Company extends Model.extend(Validations) {
   accountBillingPromo;
 
   @computed('linkedServices.[]')
-  get linkedToSlate() {
+  get linkedToSlate () {
     let services = this.linkedServices;
     return services ? services.includes('slate') : false;
   }

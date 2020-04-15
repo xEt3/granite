@@ -9,7 +9,7 @@ export default class IndexRoute extends Route {
 
   title = 'Granite Human Resources | Next-Gen HRIS';
 
-  afterModel() {
+  afterModel () {
     this.set('headData.description', `A Human Resources System for ${moment().format('YYYY')}. Granite HR helps you conquer recruiting, asset management, projects, & employee information.`);
   }
 }

@@ -6,11 +6,11 @@ import BaseLiComponent from './base';
 @classNames('applicant-source__list-item', 'item')
 @classNameBindings('selected:applicant-source__list-item--selected')
 export default class ApplicantSourceSelect extends BaseLiComponent {
-  sendUpdate() {
+  sendUpdate () {
     this.onUpdate(this.model);
   }
 
-  click() {
+  click () {
     this.sendUpdate();
   }
 }

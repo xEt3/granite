@@ -9,7 +9,7 @@ export default class _AjaxService extends AjaxService {
   auth;
 
   @computed('auth.{authenticated,token}')
-  get headers() {
+  get headers () {
     let headers = {};
     const token = this.get('auth.token');
 

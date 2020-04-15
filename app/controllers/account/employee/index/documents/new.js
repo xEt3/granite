@@ -11,12 +11,12 @@ export default class NewController extends Controller.extend(addEdit) {
   assignments = [];
   enableNotify = false;
 
-  afterSave() {
+  afterSave () {
     this.send('refresh');
   }
 
   @action
-  saveAssignment() {
+  saveAssignment () {
     for (let i = 0; i < this.assignments.length; i++) {
       let { effectiveOn, signatureRequired, visibleToEmployee  } = this.assignments[i];
 
@@ -32,7 +32,7 @@ export default class NewController extends Controller.extend(addEdit) {
   }
 
   @action
-  async addAssignment(files) {
+  async addAssignment (files) {
     let model = this.model;
     const makeAssignment = (inputFile) => {
 
@@ -70,7 +70,7 @@ export default class NewController extends Controller.extend(addEdit) {
   }
 
   @action
-  async removeAssignment(assignment) {
+  async removeAssignment (assignment) {
     await assignment.destroyRecord();
     this.assignments.removeObject(assignment);
   }

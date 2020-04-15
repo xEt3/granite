@@ -5,7 +5,7 @@ import Route from '@ember/routing/route';
 export default class IndexRoute extends Route {
   titleToken = 'Education & Training';
 
-  async model() {
+  async model () {
     let q = { employee: this.modelFor('account.employee').id };
 
     return {

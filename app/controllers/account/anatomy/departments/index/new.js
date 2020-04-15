@@ -7,7 +7,7 @@ export default class NewController extends Controller.extend(addEdit) {
   transitionAfterSave = 'account.anatomy.departments.index';
   transitionWithModel = false;
 
-  afterSave() {
+  afterSave () {
     this.send('refresh');
   }
 }

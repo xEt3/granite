@@ -6,7 +6,7 @@ import refreshable from 'granite/mixins/refreshable';
 export default class FormsRoute extends Route.extend(refreshable) {
   titleToken = 'Forms';
 
-  model() {
+  model () {
     return this.store.query('form', { name: { $not: { $type: 10 } } });
   }
 }

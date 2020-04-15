@@ -7,7 +7,7 @@ export default class IndexRoute extends Route {
   @service
   ajax;
 
-  model() {
+  model () {
     return this.ajax.request('/api/v1/forms?$report=responseGroups');
   }
 }

@@ -53,7 +53,7 @@ export default class CompanyUser extends Model {
   created;
 
   @computed('firstName', 'lastName', 'middleInitial', 'suffix')
-  get fullName() {
+  get fullName () {
     var n = this.getProperties('firstName', 'lastName', 'middleName', 'suffixName'),
         fullName = '';
 

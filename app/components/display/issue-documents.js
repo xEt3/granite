@@ -5,7 +5,7 @@ import Component from '@ember/component';
 @classic
 export default class IssueDocuments extends Component {
   @action
-  delete() {
+  delete () {
     this.onDelete(this.document);
   }
 }

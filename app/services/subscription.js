@@ -13,39 +13,39 @@ export default class SubscriptionService extends Service {
   @service
   auth;
 
-  init() {
+  init () {
     super.init(...arguments);
     this.getSubscription();
   }
 
   @computed('auth.user.company')
-  get company() {
+  get company () {
     return this.get('auth.user.company');
   }
 
   /* eslint-disable-next-line */
   @observes('auth.authenticated', 'auth.user.company')
-  updateSubscription() {
+  updateSubscription () {
     once(this, this.getSubscription);
   }
 
   @computed('subscription.status', 'company.deactivatedOn')
-  get isCancelled() {
+  get isCancelled () {
     return this.get('subscription.status') === 'Canceled' || this.get('company.deactivatedOn') ? true : false;
   }
 
   @computed('subscription', 'subscription.daysPastDue')
-  get accountSuspended() {
+  get accountSuspended () {
     return this.get('subscription.daysPastDue') > 14 ? true : false;
   }
 
   @computed('isCancelled', 'accountSuspended')
-  get accountLocked() {
+  get accountLocked () {
     return this.isCancelled || this.accountSuspended ? true : false;
   }
 
   @computed('subscription', 'subscription.daysPastDue')
-  get daysLeftInGracePeriod() {
+  get daysLeftInGracePeriod () {
     let days = this.get('subscription.daysPastDue') < 15 ? this.get('subscription.daysPastDue') : null;
 
     if (!days) {
@@ -69,33 +69,33 @@ export default class SubscriptionService extends Service {
   }
 
   @computed('subscription.status')
-  get isActive() {
+  get isActive () {
     return this.get('subscription.status') === 'Active' ? true : false;
   }
 
   @computed('subscription.firstBillingDate')
-  get inTrialPeriod() {
+  get inTrialPeriod () {
     return new Date().getTime() < new Date(this.get('subscription.firstBillingDate')).getTime() ? true : false;
   }
 
   @computed('subscription.failureCount')
-  get paymentFailure() {
+  get paymentFailure () {
     return this.get('subscription.failureCount') > 0 ? true : false;
   }
 
   @computed('subscription.addOns.[0].quantity')
-  get activeEmployeeTotal() {
+  get activeEmployeeTotal () {
     let addOns = (this.get('subscription.addOns')[0] || {}).quantity;
     return addOns > 0 ? addOns + 5 : '5 or Less';
   }
 
   @computed('subscription.transactions')
-  get latestTransaction() {
+  get latestTransaction () {
     return this.get('subscription.transactions')[0];
   }
 
   @computed('subscription.latestTransaction')
-  get latestTransactionDescription() {
+  get latestTransactionDescription () {
     let start = moment(this.get('latestTransaction.subscription.billingPeriodStartDate'));
     let end = moment(this.get('latestTransaction.subscription.billingPeriodEndDate'));
     let diff = end.diff(start, 'days');
@@ -104,7 +104,7 @@ export default class SubscriptionService extends Service {
   }
 
   @computed('customer.paymentMethods.[]', 'subscription.paymentMethodToken')
-  get currentPaymentMethod() {
+  get currentPaymentMethod () {
     let paymentMethods = this.get('customer.paymentMethods'),
         token = this.get('subscription.paymentMethodToken'),
         matchingPaymentMethod = null;
@@ -119,7 +119,7 @@ export default class SubscriptionService extends Service {
   }
 
   @computed('currentPaymentMethod')
-  get cardExpiresSoon() {
+  get cardExpiresSoon () {
     if (!this.get('currentPaymentMethod.expirationDate')) {
       return false;
     }
@@ -131,7 +131,7 @@ export default class SubscriptionService extends Service {
     return expMonth === currentMonth && expYear === currentYear ? true : false;
   }
 
-  getSubscription() {
+  getSubscription () {
     let company = this.get('auth.user.company.id');
 
     if (this.get('auth.authenticated') && company) {

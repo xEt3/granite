@@ -5,7 +5,7 @@ import Route from '@ember/routing/route';
 @classic
 export default class IndexRoute extends Route {
   @action
-  refresh() {
+  refresh () {
     return true;
   }
 }

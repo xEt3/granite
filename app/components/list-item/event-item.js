@@ -8,7 +8,7 @@ import BaseLiComponent from './base';
 @classNames('event')
 export default class EventItem extends BaseLiComponent {
   @computed('model.{facilitator,attendees.[]}')
-  get attendeeCount() {
+  get attendeeCount () {
     const {
       attendees,
       facilitator,

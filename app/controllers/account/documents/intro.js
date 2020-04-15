@@ -9,7 +9,7 @@ export default class IntroController extends Controller {
   auth;
 
   @action
-  done() {
+  done () {
     let user = this.get('auth.user.content');
     user.get('shownHints').addObject('documents');
     user.save()

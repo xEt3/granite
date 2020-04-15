@@ -6,7 +6,7 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 @classic
 export default class DocumentsController extends Controller.extend(addEdit) {
   @action
-  removeDocument(doc) {
+  removeDocument (doc) {
     let model = this.model;
 
     model.get('documents').removeObject(doc);

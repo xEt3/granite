@@ -15,12 +15,12 @@ import titleCase from 'granite/utils/title-case';
 )
 class RecordSetRecordComponent extends Component {
   @computed('selectedRows.[]', 'record.id')
-  get isSelected() {
+  get isSelected () {
     return (this.selectedRows || []).includes(this.get('record.id'));
   }
 
   @computed('duplicate.matchReason')
-  get matchReason() {
+  get matchReason () {
     let match = this.get('duplicate.matchReason');
 
     if (!match) {
@@ -31,7 +31,7 @@ class RecordSetRecordComponent extends Component {
   }
 
   @computed('fields.[]', 'record.duplicate', 'recordType')
-  get duplicate() {
+  get duplicate () {
     const duplicate = this.get('record.duplicate'),
           displayField = this.fields[0],
           page = modelPageMap[this.recordType] || {};
@@ -46,7 +46,7 @@ class RecordSetRecordComponent extends Component {
   }
 
   @action
-  linkToDuplicate() {
+  linkToDuplicate () {
     const { page, id, includeId } = this.duplicate || {};
 
     if (!page) {

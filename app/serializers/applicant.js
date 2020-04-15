@@ -4,12 +4,12 @@ import normalizeKeys from '../utils/serialize-object';
 
 @classic
 export default class Applicant extends ApplicationSerializer {
-  normalize(modelClass, hash) {
+  normalize (modelClass, hash) {
     normalizeKeys(hash, 'suffix', 'name');
     return super.normalize(...arguments);
   }
 
-  serialize() {
+  serialize () {
     let json = super.serialize(...arguments),
         deleteKeys = [ 'firstName', 'middleName', 'lastName', 'suffixName' ];
 

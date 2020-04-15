@@ -4,11 +4,11 @@ import { articles } from 'granite/config/help';
 
 @classic
 export default class TopicRoute extends Route {
-  titleToken(model) {
+  titleToken (model) {
     return model.title;
   }
 
-  model(params) {
+  model (params) {
     return articles[params.topic_slug];
   }
 }

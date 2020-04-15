@@ -6,7 +6,7 @@ import refreshable from 'granite/mixins/refreshable';
 
 @classic
 export default class ProcessesRoute extends Route.extend(refreshable) {
-  model() {
+  model () {
     return hash({
       company:  this.modelFor('account.settings'),
       pipeline: this.store.query('recruiting-pipeline', { 'jobOpening.0': { $exists: false } })
@@ -14,7 +14,7 @@ export default class ProcessesRoute extends Route.extend(refreshable) {
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model:                model.company,
       pipeline:             model.pipeline,
@@ -24,7 +24,7 @@ export default class ProcessesRoute extends Route.extend(refreshable) {
   }
 
   @action
-  willTransition(transition) {
+  willTransition (transition) {
     if (!this.controller.disableSave) {
       if (!confirm('You have unsaved changes, are you sure you want to leave this page?')) {
         transition.abort();

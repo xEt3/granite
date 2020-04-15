@@ -10,7 +10,7 @@ export default class MessagesController extends Controller.extend(ajaxStatus) {
   socket;
 
   @action
-  beginThread() {
+  beginThread () {
     this.ajaxStart();
 
     const participants = this.messageParticipantTargets,

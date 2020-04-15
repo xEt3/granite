@@ -11,7 +11,7 @@ export default class UnappliedChange extends Component.extend(del, addEdit) {
   enableNotify = false;
 
   @action
-  modifyEffectiveDate() {
+  modifyEffectiveDate () {
     let history = this.history;
     this.set('history.effectiveOn', new Date());
     this.saveModel(history).then((x) => {

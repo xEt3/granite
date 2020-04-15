@@ -12,7 +12,7 @@ export default class SubscriptionBanner extends Component.extend(ajaxStatus) {
   @service
   subscription;
 
-  didUpdateAttrs() {
+  didUpdateAttrs () {
     super.didUpdateAttrs(...arguments);
 
     if (this.accountLocked) {
@@ -21,7 +21,7 @@ export default class SubscriptionBanner extends Component.extend(ajaxStatus) {
   }
 
   @computed('subscription.{daysLeftInGracePeriod,accountSuspended,isCancelled}')
-  get bannerClass() {
+  get bannerClass () {
     if (this.get('subscription.daysLeftInGracePeriod') || this.get('subscription.accountSuspended')) {
       return 'subscription-banner--red';
     } else if (this.get('subscription.isCancelled')) {

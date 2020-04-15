@@ -15,7 +15,7 @@ export default class ThreadRoute extends Route {
   @service
   notifications;
 
-  titleToken(model) {
+  titleToken (model) {
     let names = model.between ? model.between.toArray() : model.thread.between.toArray();
     if (names.length > 2) {
       return `Conversation with ${names[0].firstName} & ${names[1].firstName}`;
@@ -25,12 +25,12 @@ export default class ThreadRoute extends Route {
 
   queryParams = { sb: { refreshModel: true } };
 
-  init() {
+  init () {
     super.init(...arguments);
     this.set('cache_threadRecord', {});
   }
 
-  model(params = {}) {
+  model (params = {}) {
     let scrollback = params.sb || false;
 
     // the message thread
@@ -63,7 +63,7 @@ export default class ThreadRoute extends Route {
     });
   }
 
-  onMessage([ message ]) {
+  onMessage ([ message ]) {
     if (!document.hasFocus()) {
       const { content: msg, from } = message || {};
 
@@ -85,7 +85,7 @@ export default class ThreadRoute extends Route {
     controller.set('ingressPushCount', (controller.ingressPushCount || 0) + 1);
   }
 
-  getThreadRecord({ thread_id }) {
+  getThreadRecord ({ thread_id }) {
     const cache = this.get(`cache_threadRecord.${thread_id}`);
     return cache ? resolve(cache) : this.store.findRecord('message-thread', thread_id).then(thread => {
       this.set(`cache_threadRecord.${thread_id}`, thread);
@@ -93,7 +93,7 @@ export default class ThreadRoute extends Route {
     });
   }
 
-  retrieveThreadHistory(thread, scrollback, q = {}) {
+  retrieveThreadHistory (thread, scrollback, q = {}) {
     const socket = this.socket,
           id = thread.get('id');
 
@@ -118,11 +118,11 @@ export default class ThreadRoute extends Route {
     });
   }
 
-  afterModel() {
+  afterModel () {
     this.messaging.subscribe('thread_message', this.onMessage, this, 'thread_controller');
   }
 
-  resetController(controller, exit, transition) {
+  resetController (controller, exit, transition) {
     if (exit || !(transition.queryParams || {}).sb) {
       controller.set('sb', 0);
     }

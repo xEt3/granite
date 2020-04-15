@@ -8,7 +8,7 @@ import Component from '@ember/component';
 @classNameBindings('_hidden:hidden')
 export default class SgSection extends Component {
   @computed('focus', 'name')
-  get _hidden() {
+  get _hidden () {
     return this.focus && this.focus !== this.name;
   }
 }

@@ -9,13 +9,13 @@ export default class NewController extends Controller.extend(addEdit) {
   transitionWithModel = false;
 
   @computed('model.{email,employee}')
-  get disableForm() {
+  get disableForm () {
     let model = this.model;
     return !model.get('email') || !model.get('employee');
   }
 
   @action
-  async save() {
+  async save () {
     let model = this.model,
         employee = await this.get('model.employee'),
         user = await this.saveModel(model);
@@ -25,7 +25,7 @@ export default class NewController extends Controller.extend(addEdit) {
   }
 
   @action
-  presetAttrs() {
+  presetAttrs () {
     let model = this.model,
         employee = this.get('model.employee'),
         attrs = [ 'firstName', 'middleName', 'lastName' ];

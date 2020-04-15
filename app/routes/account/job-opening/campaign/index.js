@@ -11,7 +11,7 @@ export default class IndexRoute extends Route {
   @service
   ajax;
 
-  async model() {
+  async model () {
     const ajax = this.ajax,
           jobOpening = this.modelFor('account.job-opening');
 
@@ -45,7 +45,7 @@ export default class IndexRoute extends Route {
     };
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model:      model.chart,
       jobOpening: model.jobOpening

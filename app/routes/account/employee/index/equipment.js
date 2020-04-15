@@ -8,7 +8,7 @@ import Object, { action } from '@ember/object';
 export default class EquipmentRoute extends Route.extend(refreshable) {
   titleToken = 'Equipment';
 
-  model() {
+  model () {
     let employee = this.modelFor('account.employee');
     return RSVP.hash({
       employee,
@@ -33,7 +33,7 @@ export default class EquipmentRoute extends Route.extend(refreshable) {
 
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model:            model.assignedAssets,
       employee:         model.employee,
@@ -42,7 +42,7 @@ export default class EquipmentRoute extends Route.extend(refreshable) {
   }
 
   @action
-  willTransition() {
+  willTransition () {
     let modalNode = document.querySelector('.ui.modal.new-asset');
 
     if (modalNode && modalNode.remove) {

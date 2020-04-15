@@ -6,7 +6,7 @@ import { run } from '@ember/runloop';
 export default class CompleteOffboardingRoute extends Route {
   titleToken = 'Completed Offboarding';
 
-  afterModel(model) {
+  afterModel (model) {
     model.setProperties({
       offboarding:          false,
       offboardingStep:      null,

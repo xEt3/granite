@@ -71,7 +71,7 @@ class FormElementComponent extends SortableItem {
   })
   label;
 
-  changedSelectProperty() {
+  changedSelectProperty () {
     let type = this.get('model.type');
     this.set('loadingType', true);
     this.set('model.type', '');
@@ -82,7 +82,7 @@ class FormElementComponent extends SortableItem {
   }
 
   @action
-  removeElement() {
+  removeElement () {
     this.set('removing', true);
 
     run.later(() => {
@@ -91,12 +91,12 @@ class FormElementComponent extends SortableItem {
   }
 
   @action
-  addOption() {
+  addOption () {
     this.get('model.options').pushObject(Object.create());
   }
 
   @action
-  removeOption(option) {
+  removeOption (option) {
     this.get('model.options').removeObject(option);
   }
 }

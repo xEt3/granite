@@ -3,7 +3,7 @@ import Route from '@ember/routing/route';
 
 @classic
 export default class IndexRoute extends Route {
-  model() {
+  model () {
     return this.get('auth.user.company');
   }
 }

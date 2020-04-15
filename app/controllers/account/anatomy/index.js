@@ -4,17 +4,17 @@ import Controller from '@ember/controller';
 
 @classic
 export default class IndexController extends Controller {
-  init() {
+  init () {
     super.init(...arguments);
     this.set('selectedNode', this.get('model.firstObject'));
   }
 
   @computed('model', 'selectedNode.id')
-  get baseNode() {
+  get baseNode () {
     return this.makeNode(this.selectedNode || this.get('model.firstObject'));
   }
 
-  makeNode(object, base = {}) {
+  makeNode (object, base = {}) {
     if (!object) {
       return;
     }

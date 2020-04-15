@@ -6,13 +6,13 @@ import { htmlSafe } from '@ember/string';
 @classic
 export default class HistoryController extends Controller {
   @computed('timelineOffset')
-  get timelineStyle() {
+  get timelineStyle () {
     let offset = this.timelineOffset;
     return htmlSafe(offset ? `transform: translate(0, ${offset}px);` : '');
   }
 
   @action
-  selectGroup(selectedGroup, groupDisplayOffset, timelineOffset) {
+  selectGroup (selectedGroup, groupDisplayOffset, timelineOffset) {
     this.setProperties({
       selectedGroup,
       groupDisplayOffset,
@@ -21,7 +21,7 @@ export default class HistoryController extends Controller {
   }
 
   @action
-  deselectGroup() {
+  deselectGroup () {
     this.setProperties({
       selectedGroup:      null,
       groupDisplayOffset: null,

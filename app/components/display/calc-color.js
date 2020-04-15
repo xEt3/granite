@@ -12,7 +12,7 @@ class calcColorComponent extends Component {
   @tracked scale = 255;
 
   @computed('value', 'scale')
-  get mixes() {
+  get mixes () {
     const scale = this.scale,
           val = this.value;
 

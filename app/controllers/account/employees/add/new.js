@@ -10,7 +10,7 @@ export default class NewController extends Controller.extend(addEdit) {
   transitionAfterSave = 'account.employee.onboard.index';
   transitionWithModel = true;
 
-  afterSave() {
+  afterSave () {
     this.analytics.trackEvent('Employees', 'manual_add', 'Employee manually added');
   }
 }

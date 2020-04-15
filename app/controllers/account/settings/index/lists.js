@@ -14,17 +14,17 @@ export default class ListsController extends Controller.extend(addEdit) {
   dirtyList = false;
   @tracked currentItem = null;
 
-  get currentForm() {
+  get currentForm () {
     return lists[this.list];
   }
 
   @computed('currentForm.listType', 'currentItem')
-  get modelForForm() {
+  get modelForForm () {
     //need this bc you have to pass a model object to quick-form
     return this.get('currentForm.listType') === 'string' ? this : this.currentItem;
   }
 
-  afterSave() {
+  afterSave () {
     if (this.list === 'labels') {
       this.model.forEach(item => {
         if (!item.id) {
@@ -35,19 +35,19 @@ export default class ListsController extends Controller.extend(addEdit) {
   }
 
   @action
-  async saveList() {
+  async saveList () {
     let company = this.company;
     await this.saveModel(company);
     this.set('dirtyList', false);
   }
 
   @action
-  toggleList(list) {
+  toggleList (list) {
     this.set('list', list);
   }
 
   @action
-  openModal() {
+  openModal () {
     this.set('respondedModal', false);
 
     if (!this.currentItem) {
@@ -78,19 +78,19 @@ export default class ListsController extends Controller.extend(addEdit) {
   }
 
   @action
-  closeModal() {
+  closeModal () {
     $(`#${this.modalId}`).modal('hide');
   }
 
   @action
-  respondModal(response) {
+  respondModal (response) {
     this.get(response ? 'resolve' : 'reject')(response);
     this.set('respondedModal', true);
     this.send('closeModal');
   }
 
   @action
-  beginEdit(item, index) {
+  beginEdit (item, index) {
     this.setProperties({
       index,
       currentItem: item,
@@ -99,7 +99,7 @@ export default class ListsController extends Controller.extend(addEdit) {
   }
 
   @action
-  addItem() {
+  addItem () {
     let currentItem = this.currentItem;
 
     if (typeof currentItem === 'object') {
@@ -114,7 +114,7 @@ export default class ListsController extends Controller.extend(addEdit) {
   }
 
   @action
-  editItem() {
+  editItem () {
     let currentItem = this.currentItem,
         index = this.index;
 
@@ -124,7 +124,7 @@ export default class ListsController extends Controller.extend(addEdit) {
   }
 
   @action
-  deleteItem(item) {
+  deleteItem (item) {
     this.model.removeObject(item);
     this.set('dirtyList', true);
   }

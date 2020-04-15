@@ -7,7 +7,7 @@ export default class NotificationsService extends Service {
   isSupported = 'Notification' in window;
   notificationTimeout = 4000;
 
-  requestPermission(force) {
+  requestPermission (force) {
     if (!this.isSupported) {
       return resolve('Not supported');
     }
@@ -31,11 +31,11 @@ export default class NotificationsService extends Service {
     }));
   }
 
-  __checkPermission() {
+  __checkPermission () {
     return this.requestPermission();
   }
 
-  send(title, body, icon) {
+  send (title, body, icon) {
     return this.__checkPermission()
     .then(permission => {
       if (permission !== true) {

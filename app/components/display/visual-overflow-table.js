@@ -5,12 +5,12 @@ import { scheduleOnce } from '@ember/runloop';
 
 @classic
 export default class VisualOverflowTable extends Component {
-  didInsertElement() {
+  didInsertElement () {
     super.didInsertElement(...arguments);
     scheduleOnce('afterRender', this, this.setOverflow);
   }
 
-  setOverflow() {
+  setOverflow () {
     let table = this.$('table')[0];
     let view = table.scrollHeight + 'px';
 
@@ -18,7 +18,7 @@ export default class VisualOverflowTable extends Component {
   }
 
   @action
-  quickScroll() {
+  quickScroll () {
     this.$()[0].scrollLeft = this.$()[0].scrollWidth;
   }
 }

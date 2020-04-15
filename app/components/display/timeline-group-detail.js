@@ -7,7 +7,7 @@ import Component from '@ember/component';
 @classNames('history-timeline__detail', 'clearfix')
 export default class TimelineGroupDetail extends Component {
   @action
-  deselectGroup() {
+  deselectGroup () {
     this.onDeselect();
   }
 }

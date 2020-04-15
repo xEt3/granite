@@ -15,7 +15,7 @@ export default class XNavigation extends Component {
   open = false;
 
   @action
-  toggleMenu() {
+  toggleMenu () {
     this.toggleProperty('open');
   }
 }

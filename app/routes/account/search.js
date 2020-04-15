@@ -10,7 +10,7 @@ export default class SearchRoute extends Route {
   queryParams = { q: { refreshModel: true } };
   titleToken = 'Search Results';
 
-  model({ q }) {
+  model ({ q }) {
     return this.search.performSearch(q);
   }
 }

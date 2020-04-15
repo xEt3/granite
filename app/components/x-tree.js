@@ -8,7 +8,7 @@ import { get, set }  from '@ember/object';
 @classic
 @templateLayout(layout)
 export default class XTree extends Component {
-  init() {
+  init () {
     super.init(...arguments);
     let tree = this.model;
 

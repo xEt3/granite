@@ -12,13 +12,13 @@ export default class ThreadController extends Controller {
   sb = 0;
 
   @computed('model.{count,messages.length}')
-  get retrievalMax() {
+  get retrievalMax () {
     const msgLen = this.get('model.messages.length');
     return this.get('model.count') === msgLen || msgLen > 3000;
   }
 
   @action
-  sendMessage(message, file) {
+  sendMessage (message, file) {
     if (!message && !file) {
       return;
     }
@@ -31,7 +31,7 @@ export default class ThreadController extends Controller {
   }
 
   @action
-  scrollback() {
+  scrollback () {
     this.incrementProperty('sb');
   }
 }

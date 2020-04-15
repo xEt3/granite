@@ -6,7 +6,7 @@ import Component from '@ember/component';
 @classNames('ui', 'vertical', 'segment')
 @classNameBindings('active::fade-unless-hovered')
 class SectionComponent extends Component {
-  toggleActive() {
+  toggleActive () {
     this.toggleProperty('active');
 
     const activeState = Object.assign({}, this.activeState),

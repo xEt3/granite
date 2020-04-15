@@ -13,14 +13,14 @@ const crud = [ 'create', 'read', 'update', 'delete' ],
 
 @classic
 export default class EditRoute extends Route {
-  model(params) {
+  model (params) {
     return RSVP.hash({
       user:        this.store.findRecord('company-user', params.user_id),
       permissions: this.store.findAll('permission')
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model:           model.user,
       permission:      model.permissions,

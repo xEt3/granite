@@ -9,7 +9,7 @@ export default class ContactRoute extends Route {
 
   titleToken = 'Contact';
 
-  afterModel() {
+  afterModel () {
     this.set('headData.description', 'Questions or feedback for us? Get in touch. Granite HR is a lightweight HRIS that helps you conquer human resources.');
   }
 }

@@ -7,7 +7,7 @@ export default class InvoicesRoute extends Route {
   @service
   ajax;
 
-  async model() {
+  async model () {
     let company = this.modelFor('account.settings.billing');
 
     return {
@@ -16,7 +16,7 @@ export default class InvoicesRoute extends Route {
     };
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model:   model.transactions.transactions,
       company: model.company

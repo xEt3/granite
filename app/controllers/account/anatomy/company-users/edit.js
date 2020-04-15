@@ -9,7 +9,7 @@ export default class EditController extends Controller.extend(addEdit) {
   transitionWithModel = false;
 
   @action
-  presetAttrs() {
+  presetAttrs () {
     let model = this.model,
         id = [];
 
@@ -25,7 +25,7 @@ export default class EditController extends Controller.extend(addEdit) {
   }
 
   @action
-  permissionCheck() {
+  permissionCheck () {
     let checked = [];
 
     this.permissionsTree.forEach(permission=>{

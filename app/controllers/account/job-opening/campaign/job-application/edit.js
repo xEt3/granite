@@ -15,11 +15,11 @@ export default class EditController extends Controller.extend(ajaxStatus, addEdi
   fileIsAdded = false;
 
   @computed('model.jobOpening.id')
-  get resumeEndpoint() {
+  get resumeEndpoint () {
     return `/api/v1/upload/resume/${this.get('model.jobApplication.jobOpening.id')}`;
   }
 
-  uploadResume() {
+  uploadResume () {
     return new Promise((resolveUpload, rejectUpload) => {
       this.setProperties({
         resolveUpload,
@@ -29,7 +29,7 @@ export default class EditController extends Controller.extend(ajaxStatus, addEdi
     });
   }
 
-  requiredFieldsFilled() {
+  requiredFieldsFilled () {
     let applicantRequiredFields = this.applicantRequiredFields;
     let newApplicant = this.get('model.applicant');
     for (let field in applicantRequiredFields) {
@@ -44,7 +44,7 @@ export default class EditController extends Controller.extend(ajaxStatus, addEdi
   }
 
   @action
-  addedFile(file) {
+  addedFile (file) {
     let  $dropzone = Dropzone.forElement('.input__dropzone');
 
     if (this.fileIsAdded) {
@@ -54,7 +54,7 @@ export default class EditController extends Controller.extend(ajaxStatus, addEdi
   }
 
   @action
-  removeFile() {
+  removeFile () {
     let $dropzone;
 
     try {
@@ -72,28 +72,28 @@ export default class EditController extends Controller.extend(ajaxStatus, addEdi
   }
 
   @action
-  uploadError(err) {
+  uploadError (err) {
     this.rejectUpload(err);
   }
 
   @action
-  uploadedFile(prog, response) {
+  uploadedFile (prog, response) {
     this.resolveUpload(response);
   }
 
   @action
-  uploadProgressUpdate(prog) {
+  uploadProgressUpdate (prog) {
     this.set('uploadProgress', prog);
   }
 
   @action
-  cancel() {
+  cancel () {
     this.send('removeFile');
     this.transitionToRoute('account.job-opening.campaign.job-application');
   }
 
   @action
-  async save() {
+  async save () {
     const store = this.store;
     this.ajaxStart();
 
@@ -128,7 +128,7 @@ export default class EditController extends Controller.extend(ajaxStatus, addEdi
   }
 
   @action
-  onNotify(type, msg) {
+  onNotify (type, msg) {
     this.send('notify', type, msg);
   }
 }

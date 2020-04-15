@@ -8,7 +8,7 @@ const attendeeKeys = [ 'facilitator', 'organizer', 'attendees', 'attendant' ];
 @classic
 export default class EventController extends Controller {
   @computed('model.{facilitator.id,organizer.id,attendees.[],attendant.id}')
-  get attendees() {
+  get attendees () {
     const event = this.model;
 
     return attendeeKeys.reduce((attendees, k) => {

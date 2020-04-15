@@ -10,7 +10,7 @@ export default class ChangesController extends Controller.extend(addEdit) {
   ajax;
 
   @action
-  approveChange(change) {
+  approveChange (change) {
     if (this.working) {
       return;
     }
@@ -26,7 +26,7 @@ export default class ChangesController extends Controller.extend(addEdit) {
   }
 
   @action
-  rejectChange(change) {
+  rejectChange (change) {
     if (this.working) {
       return;
     }

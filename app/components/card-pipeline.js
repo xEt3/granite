@@ -8,7 +8,7 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 @classNames('pipeline')
 class CardPipelineComponent extends Component.extend(addEdit) {
   @action
-  setOrder(targetStageId, { sourceList, sourceIndex, targetList, targetIndex }) {
+  setOrder (targetStageId, { sourceList, sourceIndex, targetList, targetIndex }) {
     const items = this.candidates,
           item = sourceList.objectAt(sourceIndex),
           movedStage = sourceList !== targetList,
@@ -49,7 +49,7 @@ class CardPipelineComponent extends Component.extend(addEdit) {
   }
 
   @action
-  moveAppToStage(app, stage) {
+  moveAppToStage (app, stage) {
     app.setProperties({
       stage:      get(stage, '_id'),
       stageOrder: -1
@@ -65,7 +65,7 @@ class CardPipelineComponent extends Component.extend(addEdit) {
   }
 
   @action
-  notify() {
+  notify () {
     // noop
   }
 }

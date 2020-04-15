@@ -9,22 +9,22 @@ import moment from 'moment';
 @classNames('file-assignment-item')
 export default class FileAssignment extends Component {
   @computed('')
-  get modalId() {
+  get modalId () {
     return `modal__file-assignment-signature-${this.get('assignment.id')}`;
   }
 
   @computed('assignment.effectiveOn')
-  get pastAssignment() {
+  get pastAssignment () {
     return !this.get('assignment.effectiveOn') ? true : moment(this.get('assignment.effectiveOn')).isBefore(moment());
   }
 
   @action
-  openSignatureModal() {
+  openSignatureModal () {
     $(`#${this.modalId}`).modal({ detachable: true }).modal('show');
   }
 
   @action
-  closeSignatureModal() {
+  closeSignatureModal () {
     $(`#${this.modalId}`).modal('hide');
   }
 }

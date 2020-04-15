@@ -14,7 +14,7 @@ export default class FirstStepsRoute extends Route {
 
   titleToken = 'First Steps';
 
-  model() {
+  model () {
     return hash({
       company:       this.get('auth.user.company'),
       employeeCount: this.ajax.request('/api/v1/employees', {
@@ -40,7 +40,7 @@ export default class FirstStepsRoute extends Route {
     });
   }
 
-  afterModel(model) {
+  afterModel (model) {
     const firstStepsCompleted = model.company.get('firstStepsCompleted');
     let change = false;
 

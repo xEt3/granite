@@ -10,12 +10,12 @@ import { run } from '@ember/runloop';
 export default class SocialSecurity extends Component {
   @tracked showSsn = true;
 
-  didInsertElement() {
+  didInsertElement () {
     super.didInsertElement(...arguments);
     run.later(() => this.set('showSsn', false), 800);
   }
 
-  get ssnInputType() {
+  get ssnInputType () {
     return this.showSsn ? 'text' : 'password';
   }
 }

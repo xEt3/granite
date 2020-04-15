@@ -9,7 +9,7 @@ const modelKeys = [ 'model', 'events', 'stage', 'opening', 'screening' ];
 export default class JobApplicationRoute extends Route.extend(refreshable) {
   titleToken = 'Application';
 
-  model(params) {
+  model (params) {
     return hash({
       model:  this.store.find('job-application', params.application_id),
       events: this.store.query('event', {
@@ -26,7 +26,7 @@ export default class JobApplicationRoute extends Route.extend(refreshable) {
     })));
   }
 
-  getStage(stageId) {
+  getStage (stageId) {
     return this.store.query('recruiting-pipeline', {
       'stages._id': stageId,
       limit:        1
@@ -34,7 +34,7 @@ export default class JobApplicationRoute extends Route.extend(refreshable) {
     .then(results => results ? results.get('firstObject.stages').findBy('id', stageId) : results);
   }
 
-  setupController(controller, response) {
+  setupController (controller, response) {
     modelKeys.forEach(k => controller.set(k, response[k]));
   }
 }

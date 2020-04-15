@@ -12,7 +12,7 @@ export default class NewController extends Controller.extend(addEdit) {
   tagSuggestions = [ 'Reference', 'Employee Specific', 'Company Wide', 'Onboarding', 'Offboarding' ];
 
   @action
-  addedFile(file) {
+  addedFile (file) {
     if (this.fileIsAdded) {
       this.send('removeFile', this.fileIsAdded);
     }
@@ -21,12 +21,12 @@ export default class NewController extends Controller.extend(addEdit) {
   }
 
   @action
-  processQueue() {
+  processQueue () {
     Dropzone.forElement('#input__dropzone--document').processQueue();
   }
 
   @action
-  uploadedFile(file, res) {
+  uploadedFile (file, res) {
     res.files = [ res.file ];
     delete res.file;
     this.store.pushPayload(res);
@@ -35,20 +35,20 @@ export default class NewController extends Controller.extend(addEdit) {
   }
 
   @action
-  removeFile(file) {
+  removeFile (file) {
     Dropzone.forElement('#input__dropzone--document').removeFile(file);
     this.set('fileIsAdded', false);
   }
 
   @action
-  leaveUpload() {
+  leaveUpload () {
     this.send('removeFile', this.fileIsAdded);
     this.set('fileIsAdded', false);
     this.transitionToRoute('account.document.index');
   }
 
   @action
-  uploadFile() {
+  uploadFile () {
     this.ajaxStart();
     let promise = new Promise(resolve => this.set('resolveUpload', resolve));
     this.send('processQueue');

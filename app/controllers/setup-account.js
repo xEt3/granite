@@ -13,13 +13,13 @@ export default class SetupAccountController extends Controller.extend(ajaxStatus
   a = null;
 
   @computed('password', 'passwordConfirm')
-  get enableActivation() {
+  get enableActivation () {
     const p = this.password;
     return p && p === this.passwordConfirm;
   }
 
   @action
-  activate() {
+  activate () {
     this.ajaxStart();
     const password = this.password,
           id = this.get('model._id');

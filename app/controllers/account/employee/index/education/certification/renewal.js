@@ -10,7 +10,7 @@ export default class RenewalController extends Controller.extend(addEdit) {
   currentForm = forms.certificationRenewal;
 
   @action
-  async saveRenewal() {
+  async saveRenewal () {
     const { renewal, certification } = this.model,
           renewalId = this.renewal;
 

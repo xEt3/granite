@@ -9,24 +9,24 @@ import layout from '../templates/components/x-tree-node';
 @classNameBindings('model.isSelected:tree-highlight', 'isChosen:tree-chosen')
 export default class XTreeNode extends Component {
   @computed('model.id', 'chosenId')
-  get isChosen() {
+  get isChosen () {
     return this.get('model.id') === this.chosenId;
   }
 
-  recalculateState() {
+  recalculateState () {
     if (this.recalculateStateAction) {
       this.recalculateStateAction();
     }
   }
 
-  click() {
+  click () {
     let select = this.select;
     if (select) {
       select(this.model);
     }
   }
 
-  mouseEnter() {
+  mouseEnter () {
     this.set('model.isSelected', true);
     let hover = this.hover;
     if (hover) {
@@ -34,7 +34,7 @@ export default class XTreeNode extends Component {
     }
   }
 
-  mouseLeave() {
+  mouseLeave () {
     this.set('model.isSelected', false);
     let hoverOut = this.hoverOut;
     if (hoverOut) {
@@ -42,7 +42,7 @@ export default class XTreeNode extends Component {
     }
   }
 
-  setChildCheckboxesRecursively(parentNode, checkValue) {
+  setChildCheckboxesRecursively (parentNode, checkValue) {
     const children = parentNode.children || [];
 
     if (children.length) {
@@ -54,7 +54,7 @@ export default class XTreeNode extends Component {
   }
 
   @action
-  toggleCheck() {
+  toggleCheck () {
     if (this.get('model.children.length')) {
       this.setChildCheckboxesRecursively(this.model, this.get('model.isChecked'));
     }
@@ -63,7 +63,7 @@ export default class XTreeNode extends Component {
   }
 
   @action
-  toggleExpand() {
+  toggleExpand () {
     this.toggleProperty('model.isExpanded');
   }
 }

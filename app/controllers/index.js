@@ -7,7 +7,7 @@ import $ from 'jquery';
 @classic
 export default class IndexController extends Controller {
   @on('init')
-  getWindowHeight() {
+  getWindowHeight () {
     run.scheduleOnce('afterRender', () => {
       this.set('currentWindowHeight', $(window).height());
     });

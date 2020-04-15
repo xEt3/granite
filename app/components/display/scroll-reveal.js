@@ -23,7 +23,7 @@ class ScrollRevealComponent extends Component {
   reset = true;
   duration = 1000;
 
-  init() {
+  init () {
     if (!window.sr) {
       window.sr = ScrollReveal();
     }
@@ -37,11 +37,11 @@ class ScrollRevealComponent extends Component {
     super.init(...arguments);
   }
 
-  didInsertElement() {
+  didInsertElement () {
     this.initializeReveal();
   }
 
-  initializeReveal() {
+  initializeReveal () {
     const componentOpts = this.getProperties(sroptlist);
 
     const opts = Object.keys(componentOpts).reduce((optsObj, key) => {

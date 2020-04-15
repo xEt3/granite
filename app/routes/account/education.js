@@ -12,7 +12,7 @@ export default class EducationRoute extends Route {
 
   queryParams = { granularity: { refreshModel: true } };
 
-  async model(params) {
+  async model (params) {
     const range = params.granularity,
           isShortRange = [ 'day', 'week' ].find(str => range.indexOf(str) > -1);
 

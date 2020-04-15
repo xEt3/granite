@@ -8,11 +8,11 @@ import { A } from '@ember/array';
 @classNameBindings('isSelected:is-selected')
 export default class PendingApplicant extends BaseLiComponent {
   @computed('selected.[]', 'model')
-  get isSelected() {
+  get isSelected () {
     return (this.selected || A()).includes(this.model);
   }
 
-  click(e) {
+  click (e) {
     if (e.target.className.indexOf('content__link') < 0) {
       e.preventDefault();
       this.send('select');
@@ -20,7 +20,7 @@ export default class PendingApplicant extends BaseLiComponent {
   }
 
   @action
-  select() {
+  select () {
     this.onSelectChange(this.model, this.isSelected);
   }
 }

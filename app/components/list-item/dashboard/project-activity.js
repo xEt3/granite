@@ -13,7 +13,7 @@ const ACT_COLORS = {
 @classNames('item')
 export default class ProjectActivity extends BaseLiComponent {
   @computed('model.{dateValue,type}')
-  get actionString() {
+  get actionString () {
     let model = this.model,
         mVal = moment(model.dateValue),
         ret;
@@ -39,12 +39,12 @@ export default class ProjectActivity extends BaseLiComponent {
   }
 
   @computed('model.{type}')
-  get actColor() {
+  get actColor () {
     return ACT_COLORS[this.get('model.type')];
   }
 
   @computed('model.title')
-  get projectSlug() {
+  get projectSlug () {
     let title = this.get('model.title');
     return title ? title.replace(/\s/g, '-') : title;
   }

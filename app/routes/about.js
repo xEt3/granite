@@ -9,7 +9,7 @@ export default class AboutRoute extends Route {
 
   titleToken = 'About';
 
-  afterModel() {
+  afterModel () {
     this.set('headData.description', 'Granite HR is developed by a tight-knit team based in Billings, MT inside of Associated Employers. Associated Employers has helped employers for over a century.');
   }
 }

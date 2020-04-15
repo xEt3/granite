@@ -11,11 +11,11 @@ export default class SettingsRoute extends Route.extend(addEdit) {
 
   transitionAfterSave = false;
 
-  model() {
+  model () {
     return resolve(this.get('auth.user')).then(user => user && user.get('company'));
   }
 
-  afterModel(model) {
+  afterModel (model) {
     const firstStepsCompleted = model.get('firstStepsCompleted');
 
     if (!firstStepsCompleted.includes('settings')) {

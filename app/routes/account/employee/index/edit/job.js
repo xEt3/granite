@@ -10,7 +10,7 @@ export default class JobRoute extends Route {
   @service
   auth;
 
-  model() {
+  model () {
     let company = this.get('auth.user.company'),
         companyId = company.get('id'),
         employee = this.modelFor('account.employee.index.edit'),
@@ -39,7 +39,7 @@ export default class JobRoute extends Route {
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model:           model.employee,
       employees:       model.employees,

@@ -4,11 +4,11 @@ import refreshable from 'granite/mixins/refreshable';
 
 @classic
 export default class EmployeeRoute extends Route.extend(refreshable) {
-  titleToken(model) {
+  titleToken (model) {
     return model.fullName;
   }
 
-  model(params) {
+  model (params) {
     return this.store.find('employee', params.id);
   }
 }

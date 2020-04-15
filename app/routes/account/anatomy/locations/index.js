@@ -12,7 +12,7 @@ export default class IndexRoute extends Route.extend(refreshable) {
   @service
   auth;
 
-  model(params) {
+  model (params) {
     let limit = this.get('controller.limit') || 20,
         page = (params.page || 1) - 1,
         company = this.get('auth.user.company'),
@@ -28,7 +28,7 @@ export default class IndexRoute extends Route.extend(refreshable) {
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     super.setupController(...arguments);
     controller.setProperties({
       model:   model.locations,

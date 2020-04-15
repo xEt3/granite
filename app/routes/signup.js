@@ -5,7 +5,7 @@ import Route from '@ember/routing/route';
 export default class SignupRoute extends Route {
   titleToken = 'Signup';
 
-  model() {
+  model () {
     return this.store.createRecord('company');
   }
 }

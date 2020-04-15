@@ -8,7 +8,7 @@ export default class StatefulIntroJs extends Component {
   markAsShownOnExit = true;
 
   @computed('user.shownHints.[]')
-  get showSteps() {
+  get showSteps () {
     let shownHints = this.get('user.shownHints'),
         hintKey = this.hintKey;
 
@@ -18,7 +18,7 @@ export default class StatefulIntroJs extends Component {
   }
 
   @action
-  markAsShown(exit) {
+  markAsShown (exit) {
     if (exit && !this.markAsShownOnExit) {
       return;
     }

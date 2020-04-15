@@ -6,12 +6,12 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 @classic
 export default class FormsController extends Controller.extend(del, addEdit) {
-  _afterDelete() {
+  _afterDelete () {
     this.send('refresh');
   }
 
   @action
-  onNotify(type, msg) {
+  onNotify (type, msg) {
     this.send('notify', type, msg);
   }
 }

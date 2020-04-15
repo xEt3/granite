@@ -25,7 +25,7 @@ export default class IndexController extends Controller.extend(resource) {
   job = null;
 
   @computed
-  get intros() {
+  get intros () {
     return [{
       element:  '.ui.segment.container',
       intro:    'The recruiting campaigns screen shows you all of your recruiting campaigns and allows you to manage active and past openings.',
@@ -38,12 +38,12 @@ export default class IndexController extends Controller.extend(resource) {
   }
 
   @action
-  updateFilter(filter, value) {
+  updateFilter (filter, value) {
     this.set(filter, value);
   }
 
   @action
-  resetFilters() {
+  resetFilters () {
     this.setProperties({
       closed: false,
       setup:  false,

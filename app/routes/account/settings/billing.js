@@ -12,7 +12,7 @@ export default class BillingRoute extends Route {
   @service
   ajax;
 
-  model() {
+  model () {
     return this.modelFor('account.settings');
   }
 }

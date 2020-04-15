@@ -7,7 +7,7 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 @classic
 export default class SourcesController extends Controller.extend(addEdit) {
-  mutSelect(type, source) {
+  mutSelect (type, source) {
     let selected = this.get(`model.${type}`);
 
     if (selected.includes(source)) {
@@ -18,22 +18,22 @@ export default class SourcesController extends Controller.extend(addEdit) {
   }
 
   @action
-  mutSelection(source) {
+  mutSelection (source) {
     this.mutSelect('applicantSources', source);
   }
 
   @action
-  mutManualSelection(source) {
+  mutManualSelection (source) {
     this.mutSelect('manualApplicantSources', source);
   }
 
   @action
-  addToSelection(source) {
+  addToSelection (source) {
     this.get('model.manualApplicantSources').addObject(source);
   }
 
   @action
-  addManualSource() {
+  addManualSource () {
     this.setProperties({
       manualSource:          this.store.createRecord('manual-applicant-source'),
       respondedManualSource: false
@@ -55,7 +55,7 @@ export default class SourcesController extends Controller.extend(addEdit) {
   }
 
   @action
-  respondManualSource(response) {
+  respondManualSource (response) {
     if (!response) {
       this.manualSource.destroyRecord();
     }

@@ -21,7 +21,7 @@ export default class HistoryReportRoute extends Route.extend(refreshable) {
     creator: { refreshModel: true }
   };
 
-  model(params) {
+  model (params) {
     let controller = this.controller,
         page = controller ? controller.page - 1 : 0,
         employee = this.modelFor('account.employee').get('id');
@@ -37,7 +37,7 @@ export default class HistoryReportRoute extends Route.extend(refreshable) {
     });
   }
 
-  getFields(employee) {
+  getFields (employee) {
     return this.ajax.request('api/v1/histories', {
       employee,
       select: 'diff -_id'
@@ -57,7 +57,7 @@ export default class HistoryReportRoute extends Route.extend(refreshable) {
     });
   }
 
-  getHistory(params, targetId, page) {
+  getHistory (params, targetId, page) {
     let controller = this.controller,
         field = params.field;
 
@@ -106,7 +106,7 @@ export default class HistoryReportRoute extends Route.extend(refreshable) {
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model:      model.history.records,
       meta:       model.history.meta,

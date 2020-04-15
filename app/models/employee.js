@@ -9,7 +9,7 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 export default class Employee extends Model.extend(Validations) {
   // Personal Information
   @computed('firstName', 'lastName', 'middleName', 'suffix')
-  get fullName() {
+  get fullName () {
     var n = this.getProperties('firstName', 'lastName', 'middleName', 'suffixName'),
         fullName = '';
 
@@ -82,7 +82,7 @@ export default class Employee extends Model.extend(Validations) {
   employeeNumber;
 
   @computed('ssn')
-  get ssnMasked() {
+  get ssnMasked () {
     var ssn = this.ssn;
     return ssn ? ssn.replace(/\D/g, '').replace(/(?:\d{5})(\d{4})/, '***-**-$1') : ssn;
   }
@@ -278,7 +278,7 @@ export default class Employee extends Model.extend(Validations) {
   separationNotes;
 
   @computed('probationUntil')
-  get onProbation() {
+  get onProbation () {
     return this.probationUntil && moment(this.probationUntil).isAfter(moment());
   }
 

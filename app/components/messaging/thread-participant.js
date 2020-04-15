@@ -9,12 +9,12 @@ import Component from '@ember/component';
 @classNameBindings('online:green')
 class ThreadParticipantComponent extends Component {
   @computed('connectedUsers.[]', 'participant')
-  get online() {
+  get online () {
     return this.connectedUsers.includes(this.get('participant.id'));
   }
 
   @computed('online')
-  get detail() {
+  get detail () {
     return this.online ? 'Online' : 'Offline';
   }
 }

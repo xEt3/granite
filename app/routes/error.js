@@ -7,7 +7,7 @@ export default class ErrorRoute extends Route {
   titleToken = 'Error';
 
   @action
-  didTransition() {
+  didTransition () {
     const controller = this.controller,
           lf = window.localforage;
 
@@ -25,7 +25,7 @@ export default class ErrorRoute extends Route {
   }
 
   @action
-  willTransition() {
+  willTransition () {
     window.localforage.setItem('graniteRoutePreviousToError', null);
   }
 }

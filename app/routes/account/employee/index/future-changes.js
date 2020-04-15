@@ -8,7 +8,7 @@ import moment from 'moment';
 export default class FutureChangesRoute extends Route.extend(refreshable) {
   titleToken = 'Future Changes';
 
-  model() {
+  model () {
     let employee = this.modelFor('account.employee');
     return RSVP.hash({
       pendingChanges: this.store.query('history', {
@@ -18,7 +18,7 @@ export default class FutureChangesRoute extends Route.extend(refreshable) {
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({ model: model.pendingChanges });
   }
 }

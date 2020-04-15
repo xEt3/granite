@@ -14,7 +14,7 @@ export default class LoginController extends Controller.extend(ajaxStatus) {
   recovery = false;
 
   @action
-  async login() {
+  async login () {
     const email = this.email,
           password = this.password;
 
@@ -41,7 +41,7 @@ export default class LoginController extends Controller.extend(ajaxStatus) {
   }
 
   @action
-  recover() {
+  recover () {
     const email = this.recoveryEmail;
     let wasFatal;
 

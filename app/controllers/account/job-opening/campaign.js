@@ -15,7 +15,7 @@ export default class CampaignController extends Controller.extend(addEdit, del) 
   transitionWithModel = false;
 
   @computed('model.{sendCloseNotice,allocateTalentPool}')
-  get confirmCloseMessage() {
+  get confirmCloseMessage () {
     if (!this.model) {
       return;
     }
@@ -35,7 +35,7 @@ export default class CampaignController extends Controller.extend(addEdit, del) 
   }
 
   @action
-  close() {
+  close () {
     const model = this.model;
     model.set('closed', true);
     if (!model.completedOn) {

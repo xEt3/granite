@@ -8,7 +8,7 @@ import layout from '../templates/components/x-tree-branch';
 @tagName('ul')
 @classNames('tree-branch')
 export default class XTreeBranch extends Component {
-  recalculateState() {
+  recalculateState () {
     if (this.recalculateStateAction) {
       this.recalculateStateAction();
     }

@@ -10,7 +10,7 @@ export default class ActivityService extends Service {
   @service
   auth;
 
-  create(data = {}) {
+  create (data = {}) {
     let user = this.get('auth.user');
 
     data.actorType = 'CompanyUser';

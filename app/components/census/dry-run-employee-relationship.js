@@ -9,7 +9,7 @@ export default class DryRunEmployeeRelationship extends Component {
   store;
 
   @computed('availableFields', 'key', 'value')
-  get relationship() {
+  get relationship () {
     let key = this.key,
         value = this.value,
         field = this.availableFields.findBy('path', key) || {};

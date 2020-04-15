@@ -8,11 +8,11 @@ export default class ActionItemRoute extends Route {
   @service
   auth;
 
-  title(tokens) {
+  title (tokens) {
     return tokens.join(' - ') + ' - ' + this.context.title + ' - Granite HR';
   }
 
-  model(params) {
+  model (params) {
     return RSVP.hash({
       actionItem:   this.store.queryRecord('action-item', { title: params.slug.replace(/-(?!!)/g, ' ').replace(/-!/g, '-') }),
       companyUsers: this.store.query('company-user', {
@@ -26,7 +26,7 @@ export default class ActionItemRoute extends Route {
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model,
       transferableTargets: this.transferableTargets

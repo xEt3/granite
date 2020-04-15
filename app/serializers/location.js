@@ -6,12 +6,12 @@ import serializeKeys from '../utils/expand-serialized-object';
 
 @classic
 export default class Location extends ApplicationSerializer {
-  normalize(modelClass, hash) {
+  normalize (modelClass, hash) {
     normalizeKeys(hash, true, 'address');
     return super.normalize(...arguments);
   }
 
-  serialize() {
+  serialize () {
     let json = super.serialize(...arguments);
     serializeKeys(json, 'address');
 

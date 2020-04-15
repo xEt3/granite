@@ -12,7 +12,7 @@ export default class IndexRoute extends Route {
     isDsc:  { refreshModel: true }
   };
 
-  model(params) {
+  model (params) {
     let actionItemQuery = {
       $and: [
         { completedOn: { $not: { $type: 9 } } },
@@ -31,7 +31,7 @@ export default class IndexRoute extends Route {
     return RSVP.hash({ actionItems: this.store.query('action-item', actionItemQuery) });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     super.setupController(...arguments);
     controller.setProperties({ model: model.actionItems });
   }

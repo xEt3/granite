@@ -9,12 +9,12 @@ let followThroughPath = 'account.employee.index.counseling.issue.corrective-acti
 export default class PrintRoute extends Route {
   titleToken = 'Print';
 
-  afterModel(model) {
+  afterModel (model) {
     return model.get('employee.department');
   }
 
   @action
-  didTransition() {
+  didTransition () {
     next(() => scheduleOnce('afterRender', () => {
       window.print();
       later(() => this.transitionTo(followThroughPath), 100);

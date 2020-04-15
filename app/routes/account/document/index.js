@@ -5,11 +5,11 @@ import refreshable from 'granite/mixins/refreshable';
 
 @classic
 export default class IndexRoute extends Route.extend(refreshable) {
-  titleToken() {
+  titleToken () {
     return 'Document';
   }
 
-  model() {
+  model () {
     let { document } = this.modelFor('account.document');
 
     return hash({
@@ -24,7 +24,7 @@ export default class IndexRoute extends Route.extend(refreshable) {
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model:           model.document,
       fileAssignments: model.fileAssignments

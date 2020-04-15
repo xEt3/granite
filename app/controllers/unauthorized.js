@@ -14,7 +14,7 @@ export default class UnauthorizedController extends Controller {
   auth;
 
   @computed('fromError')
-  get unauthorizedReason() {
+  get unauthorizedReason () {
     var error = this.fromError;
 
     if (!error) {

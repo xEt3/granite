@@ -12,7 +12,7 @@ export default class PrintAllRoute extends Route {
     slug:  { refreshModel: true }
   };
 
-  resetController(controller, isExiting) {
+  resetController (controller, isExiting) {
     if (isExiting) {
       controller.setProperties({
         issue: undefined,
@@ -21,7 +21,7 @@ export default class PrintAllRoute extends Route {
     }
   }
 
-  async model(params) {
+  async model (params) {
     let employee = super.model(...arguments);
     let queryParams = { employee: employee.get('id') };
 
@@ -43,7 +43,7 @@ export default class PrintAllRoute extends Route {
   }
 
   @action
-  async didTransition() {
+  async didTransition () {
     next(() => scheduleOnce('afterRender', () => {
       window.print();
       later(() =>  {

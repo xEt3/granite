@@ -101,7 +101,7 @@ export default class JobOpening extends Model {
   created;
 
   @computed('completedSetup', 'completedOn', 'startOn', 'endOn')
-  get hiring() {
+  get hiring () {
     let now = moment(),
         props = this.getProperties('completedSetup', 'completedOn', 'startOn', 'endOn');
 
@@ -109,7 +109,7 @@ export default class JobOpening extends Model {
   }
 
   @computed('id', 'title')
-  get slug() {
+  get slug () {
     let title = this.title || '';
     return `${title.replace(/[\s]/g, '-')}_${this.id}`;
   }

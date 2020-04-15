@@ -9,7 +9,7 @@ import titleCase from 'granite/utils/title-case';
 @classNames('ui', 'breadcrumb')
 export default class BreadCrumbs extends Component {
   @computed('currentPath')
-  get segments() {
+  get segments () {
     const path = this.currentPath,
           pathSplit = path.split('.'),
           pathLength = pathSplit.length,

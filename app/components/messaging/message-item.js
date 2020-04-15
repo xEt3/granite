@@ -13,16 +13,16 @@ class MessageItemComponent extends Component.extend(inViewportMixin) {
   messaging;
 
   @computed('message.readBy.[]', '__didSendReadUpdate', 'user')
-  get isReadByCurrentUser() {
+  get isReadByCurrentUser () {
     return this.__didSendReadUpdate || (this.message.readBy || A()).includes(this.user.get('id'));
   }
 
   @computed('message.file.mimeType')
-  get isImage() {
+  get isImage () {
     return (this.get('message.file.mimeType') || '').indexOf('image/') > -1;
   }
 
-  didEnterViewport() {
+  didEnterViewport () {
     if (this.isReadByCurrentUser) {
       return;
     }

@@ -6,7 +6,7 @@ import { get } from '@ember/object';
 
 @classic
 export default class DiscoveredRoute extends Route {
-  async beforeModel(transition) {
+  async beforeModel (transition) {
     const resultSetId = ((transition.params || {})['account.import.discovered'] || {}).result_set_id || (transition.routeInfos[transition.routeInfos.length - 1].context || {})._id,
           serviceName = transition.to.queryParams.service;
 
@@ -41,11 +41,11 @@ export default class DiscoveredRoute extends Route {
     }
   }
 
-  model(params) {
+  model (params) {
     return this.store.find('result-set', params.result_set_id);
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     let recordSets = get(model, 'deserialized');
 
     let defaultSelection = recordSets.reduce((selected, recordSet) => Object.assign({

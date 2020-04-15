@@ -7,7 +7,7 @@ export default class JobApplicationRoute extends Route {
   @service
   ajax;
 
-  async model(params) {
+  async model (params) {
     let response = await this.ajax.request(`/api/v1/job-application/shared/${params.sharing_id}`);
 
     if (!response) {

@@ -8,11 +8,11 @@ export default class IndexRoute extends Route {
   @service
   rollbar;
 
-  titleToken() {
+  titleToken () {
     return 'Project';
   }
 
-  model() {
+  model () {
     let actionItem = this.modelFor('account.action-item');
 
     return RSVP.hash({
@@ -23,7 +23,7 @@ export default class IndexRoute extends Route {
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model:      model.actionItem,
       dependents: model.dependents

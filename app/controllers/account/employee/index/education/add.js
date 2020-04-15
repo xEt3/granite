@@ -11,7 +11,7 @@ export default class AddController extends Controller.extend(addEdit) {
   transitionWithModel = false;
 
   @computed('type')
-  get currentForm() {
+  get currentForm () {
     return forms[this.type];
   }
 }

@@ -6,7 +6,7 @@ import { run } from '@ember/runloop';
 export default class SetupCompleteRoute extends Route {
   titleToken = 'Setup Finished';
 
-  afterModel(model) {
+  afterModel (model) {
     model.setProperties({
       setup:          false,
       setupStep:      null,

@@ -14,7 +14,7 @@ export default class EditController extends Controller.extend(addEdit) {
     'model.{location,department,supervisor,jobDescription}',
     'initialRelationships.[]'
   )
-  get relationshipsChanged() {
+  get relationshipsChanged () {
     const initialRelationships = this.initialRelationships;
     for (let i = 0; i < initialRelationships.length; i++) {
       if (this.get(`model.${initialRelationships[i].relationshipPath}.id`) !== initialRelationships[i].id) {
@@ -25,7 +25,7 @@ export default class EditController extends Controller.extend(addEdit) {
   }
 
   @action
-  selectEffectiveDate() {
+  selectEffectiveDate () {
     this.set('responded', false);
 
     $('#effective-date-modal').modal({
@@ -44,7 +44,7 @@ export default class EditController extends Controller.extend(addEdit) {
   }
 
   @action
-  respondEffectiveDateModal(response) {
+  respondEffectiveDateModal (response) {
     this.get(response ? 'resolve' : 'reject')();
     this.set('responded', true);
     $('#effective-date-modal').modal('hide');

@@ -7,7 +7,7 @@ export default class VisualIdRoute extends Route {
   @service
   ajax;
 
-  async model() {
+  async model () {
     let employee = this.modelFor('account.employee');
 
     return {
@@ -16,7 +16,7 @@ export default class VisualIdRoute extends Route {
     };
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model:    model.visualIdRequired,
       employee: model.employee,

@@ -11,7 +11,7 @@ export default class IndexRoute extends Route.extend(refreshable) {
   @service
   auth;
 
-  async model() {
+  async model () {
     let employee = this.modelFor('account.employee'),
         company = await this.get('auth.user.company') || {};
 
@@ -27,7 +27,7 @@ export default class IndexRoute extends Route.extend(refreshable) {
     return employee;
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model:            model,
       visualIdRequired: this.visualIdRequired

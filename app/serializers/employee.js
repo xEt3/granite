@@ -5,13 +5,13 @@ import serializeKeys from '../utils/expand-serialized-object';
 
 @classic
 export default class Employee extends ApplicationSerializer {
-  normalize(modelClass, hash) {
+  normalize (modelClass, hash) {
     normalizeKeys(hash, 'suffix', 'name');
     normalizeKeys(hash, true, 'address', 'emergencyContact', 'finalAddress', 'externalLink');
     return super.normalize(...arguments);
   }
 
-  serialize() {
+  serialize () {
     let json = super.serialize(...arguments),
         keys = [ 'companyUser', 'creator' ],
         deleteKeys = [ 'firstName', 'middleName', 'lastName', 'suffixName', 'emergencyContactPhone', 'emergencyContactNameLast', 'emergencyContactNameFirst' ],

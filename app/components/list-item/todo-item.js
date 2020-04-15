@@ -9,22 +9,22 @@ import $ from 'jquery';
 @classNames('item', 'action-item__checklist--item')
 class TodoItemComponent extends Component {
   @computed('elementId')
-  get modalId() {
+  get modalId () {
     return `${this.elementId}-modal`;
   }
 
-  willDestroy() {
+  willDestroy () {
     $(`#${this.modalId}`).remove();
     super.willDestroy(...arguments);
   }
 
   @action
-  changeStatus() {
+  changeStatus () {
     this.onStatusChange(this.todo);
   }
 
   @action
-  selectAssignee() {
+  selectAssignee () {
     this.set('respondedAssignee', false);
     $(`#${this.modalId}`).modal({
       detachable: true,
@@ -42,13 +42,13 @@ class TodoItemComponent extends Component {
   }
 
   @action
-  changeAssignee(assignee) {
+  changeAssignee (assignee) {
     this.set('newAssignee', null);
     this.onAssigneeChange(this.todo, assignee);
   }
 
   @action
-  respondAssignee(assignee) {
+  respondAssignee (assignee) {
     this.get(assignee !== false ? 'resolve' : 'reject')(assignee || null);
     this.set('respondedAssignee', true);
     $(`#${this.modalId}`).modal('hide');

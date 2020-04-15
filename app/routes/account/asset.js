@@ -3,11 +3,11 @@ import Route from '@ember/routing/route';
 
 @classic
 export default class AssetRoute extends Route {
-  titleToken() {
+  titleToken () {
     return this.context.name;
   }
 
-  model(params) {
+  model (params) {
     return this.store.find('asset', params.id);
   }
 }

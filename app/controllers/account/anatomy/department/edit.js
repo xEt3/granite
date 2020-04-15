@@ -9,7 +9,7 @@ export default class EditController extends Controller.extend(addEdit) {
   transitionWithModel = false;
 
   @action
-  cancel() {
+  cancel () {
     this.model.rollbackAttributes();
     this.transitionToRoute('account.anatomy.departments.index');
   }

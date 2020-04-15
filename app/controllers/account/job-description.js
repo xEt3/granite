@@ -14,7 +14,7 @@ export default class JobDescriptionController extends Controller.extend(addEdit,
   transitionWithModel = false;
 
   @action
-  createCampaign() {
+  createCampaign () {
     this.ajaxStart();
 
     let job = this.model,

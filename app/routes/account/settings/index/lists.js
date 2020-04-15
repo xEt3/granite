@@ -11,7 +11,7 @@ export default class ListsRoute extends Route {
   titleToken = 'Lists';
   queryParams = { list: { refreshModel: true } };
 
-  model(params) {
+  model (params) {
     let list = [],
         company = this.get('auth.user.company');
 
@@ -29,7 +29,7 @@ export default class ListsRoute extends Route {
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model:   model.list,
       company: model.company

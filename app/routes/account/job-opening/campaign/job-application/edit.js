@@ -7,7 +7,7 @@ import { resolve } from 'rsvp';
 export default class EditRoute extends Route {
   titleToken = 'Edit';
 
-  async model() {
+  async model () {
     let parentModel = this.modelFor('account.job-opening.campaign.job-application');
 
     return {
@@ -23,7 +23,7 @@ export default class EditRoute extends Route {
     };
   }
 
-  setupController(controller, response) {
+  setupController (controller, response) {
     controller.setProperties({
       model:    response.model,
       pipeline: response.pipeline
@@ -31,7 +31,7 @@ export default class EditRoute extends Route {
   }
 
   @action
-  willTransition(transition) {
+  willTransition (transition) {
     let model = this.controller.get('model'),
         jobAppHasChangedAttributes = Object.keys(model.jobApplication.changedAttributes()).length > 0,
         appHasChangedAttributes = Object.keys(model.applicant.changedAttributes()).length > 0;

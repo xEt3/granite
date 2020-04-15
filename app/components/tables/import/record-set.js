@@ -5,7 +5,7 @@ import Component from '@ember/component';
 @classic
 class RecordSetComponent extends Component {
   @computed('selectedRows.length', 'recordSet.records.length')
-  get allSelected() {
+  get allSelected () {
     return this.get('selectedRows.length') === this.get('recordSet.records.length');
   }
 }

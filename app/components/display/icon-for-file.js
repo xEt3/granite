@@ -11,7 +11,7 @@ import fileTypes from 'granite/config/mime-types';
 @classNames('icon')
 class IconForFileComponent extends Component {
   @computed('file.{mimeType,extension}')
-  get icon() {
+  get icon () {
     let m = A(fileTypes).find(f => f.match.test(this.get(`file.${f.strategy}`)));
     return m ? m.icon : 'file';
   }

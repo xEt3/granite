@@ -9,12 +9,12 @@ const dictMap = [ 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight'
 @classNames('ui', 'steps')
 @classNameBindings('dictStep')
 export default class FormSteps extends Component {
-  didReceiveAttrs() {
+  didReceiveAttrs () {
     this.set('_step', this.step);
   }
 
   @computed('steps')
-  get dictStep() {
+  get dictStep () {
     return dictMap[this.get('steps.length') - 1];
   }
 }

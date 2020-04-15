@@ -9,7 +9,7 @@ export default class PricingRoute extends Route {
 
   titleToken = 'Pricing';
 
-  afterModel() {
+  afterModel () {
     this.set('headData.description', 'Simplistic and upfront pricing, backed with a 14-day trial gives you utter confidence in billing. Granite HR is a lightweight HRIS that helps you conquer human resources.');
   }
 }

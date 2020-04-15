@@ -16,20 +16,20 @@ export default class SuggestionInput extends Component {
 
   @tracked debounceInterval = 100;
 
-  get apiSettings() {
+  get apiSettings () {
     return {
       throttle:      this.debounceInterval,
       responseAsync: bind(this, this.performSearch)
     };
   }
 
-  performSearch(settings, callback) {
+  performSearch (settings, callback) {
     return this.search.performSearch(settings.urlData.query)
     .then(callback)
     .catch(callback);
   }
 
-  selected(resultItem) {
+  selected (resultItem) {
     const router = this.router;
 
     router.transitionTo.apply(router, uriForModel(resultItem))
@@ -38,7 +38,7 @@ export default class SuggestionInput extends Component {
         this.set('query', null)));
   }
 
-  keyPress(e) {
+  keyPress (e) {
     // detect full page flowthru (enter key)
     if (e.keyCode !== 13) {
       return;

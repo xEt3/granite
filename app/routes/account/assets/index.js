@@ -6,7 +6,7 @@ export default class IndexRoute extends Route {
   titleToken = 'Assets';
   queryParams = { page: { refreshModel: true } };
 
-  model(params) {
+  model (params) {
     let limit = this.get('controller.limit') || 20,
         page = (params.page || 1) - 1;
 

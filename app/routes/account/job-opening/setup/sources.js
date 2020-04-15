@@ -6,7 +6,7 @@ import RSVP from 'rsvp';
 export default class SourcesRoute extends Route {
   titleToken = 'Sources';
 
-  model() {
+  model () {
     let jobOpening = this.modelFor('account.job-opening');
 
     return RSVP.hash({
@@ -17,7 +17,7 @@ export default class SourcesRoute extends Route {
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     if (!model.jobOpening.get('description') && !model.jobOpening.get('title')) {
       model.jobOpening.setProperties({
         description: model.job.get('description'),

@@ -3,11 +3,11 @@ import Route from '@ember/routing/route';
 
 @classic
 export default class CertificationRoute extends Route {
-  titleToken(model) {
+  titleToken (model) {
     return model.name;
   }
 
-  async model({ certification_id }) {
+  async model ({ certification_id }) {
     return this.store.find('certification', certification_id);
   }
 }

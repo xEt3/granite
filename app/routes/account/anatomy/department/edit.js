@@ -3,7 +3,7 @@ import Route from '@ember/routing/route';
 
 @classic
 export default class EditRoute extends Route {
-  model(params) {
+  model (params) {
     return this.store.find('department', params.department_id);
   }
 }

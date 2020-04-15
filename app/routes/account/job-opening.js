@@ -3,11 +3,11 @@ import Route from '@ember/routing/route';
 
 @classic
 export default class JobOpeningRoute extends Route {
-  titleToken(model) {
+  titleToken (model) {
     return model.get('title');
   }
 
-  model(params) {
+  model (params) {
     return this.store.find('job-opening', params.id);
   }
 }

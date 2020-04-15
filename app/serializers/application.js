@@ -3,7 +3,7 @@ import RESTSerializer from 'ember-data/serializers/rest';
 
 @classic
 export default class Application extends RESTSerializer {
-  normalize(modelClass, hash) {
+  normalize (modelClass, hash) {
     if (!hash.id && hash._id) {
       hash.id = hash._id;
     }

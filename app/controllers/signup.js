@@ -26,7 +26,7 @@ export default class SignupController extends Controller {
   application;
 
   @computed('application.currentPath')
-  get steps() {
+  get steps () {
     const appPath = this.get('application.currentPath');
 
     let activeToggled;

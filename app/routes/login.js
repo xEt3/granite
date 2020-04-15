@@ -6,14 +6,14 @@ import Route from '@ember/routing/route';
 export default class LoginRoute extends Route {
   titleToken = 'Login';
 
-  resetController(controller, isExiting) {
+  resetController (controller, isExiting) {
     if (isExiting) {
       controller.set('expired', false);
     }
   }
 
   @action
-  willTransition() {
+  willTransition () {
     this.controller.set('previousTransition', null);
   }
 }

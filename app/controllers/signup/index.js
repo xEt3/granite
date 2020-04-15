@@ -11,7 +11,7 @@ export default class IndexController extends Controller.extend(addEdit) {
   useMiddleName = false;
 
   @action
-  saveCompany() {
+  saveCompany () {
     let company = this.model;
 
     this.ajaxStart();

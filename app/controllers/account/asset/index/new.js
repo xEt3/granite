@@ -7,7 +7,7 @@ export default class NewController extends Controller.extend(addEdit) {
   transitionAfterSave = 'account.asset';
   transitionWithModel = false;
 
-  afterSave() {
+  afterSave () {
     this.send('refresh');
   }
 }

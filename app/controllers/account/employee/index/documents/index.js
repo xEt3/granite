@@ -18,12 +18,12 @@ export default class IndexController extends Controller.extend(resource) {
   signedOn = null;
 
   @action
-  updateFilter(filter, value) {
+  updateFilter (filter, value) {
     this.set(filter, value);
   }
 
   @action
-  resetFilters() {
+  resetFilters () {
     this.setProperties({
       visibleToEmployee: null,
       readOn:            null,

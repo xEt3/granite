@@ -5,7 +5,7 @@ import Controller from '@ember/controller';
 @classic
 export default class FutureChangesController extends Controller {
   @action
-  notifyNewEffective() {
+  notifyNewEffective () {
     this.send('notify',
       'success',
       'This change has been recorded.  Please give our system a minute to update',

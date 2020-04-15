@@ -9,7 +9,7 @@ export default class ReviewRoute extends Route.extend(refreshable) {
   @service
   ajax;
 
-  model({ uploadId }) {
+  model ({ uploadId }) {
     return this.ajax.request(`/api/v1/employee/census/${uploadId}`)
     .then(fileData => {
       return hash({
@@ -19,7 +19,7 @@ export default class ReviewRoute extends Route.extend(refreshable) {
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     super.setupController(...arguments);
     controller.setProperties({
       displayDryRunResults: null,

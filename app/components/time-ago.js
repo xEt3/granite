@@ -25,7 +25,7 @@ class TimeAgo extends Component {
   positionalParams = [ 'time' ];
 
   @on('didInsertElement')
-  _tick() {
+  _tick () {
     if (this.isDestroying || this.isDestroyed) {
       return;
     }

@@ -12,13 +12,13 @@ export default class SetupAccountRoute extends Route {
   @service
   auth;
 
-  beforeModel() {
+  beforeModel () {
     if (this.get('auth.authenticated')) {
       return this.transitionTo('index');
     }
   }
 
-  model(params) {
+  model (params) {
     return this.ajax
     .request(`/api/v1/company-user/activation-status/${params.user_id}/${params.a}`)
     .then(res => res.companyUser);

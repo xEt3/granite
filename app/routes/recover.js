@@ -5,7 +5,7 @@ import Route from '@ember/routing/route';
 export default class RecoverRoute extends Route {
   titleToken = 'Recover Account';
 
-  model(params) {
+  model (params) {
     return params.recovery_id;
   }
 }

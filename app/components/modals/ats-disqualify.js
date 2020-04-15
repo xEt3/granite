@@ -10,16 +10,16 @@ export default class AtsDisqualify extends Component {
   auth;
 
   @computed('auth.user.company')
-  get disqualificationReasons() {
+  get disqualificationReasons () {
     return this.get('auth.user.company.disqualificationReasons');
   }
 
-  closeModal() {
+  closeModal () {
     $('#' + this.modalId).modal('hide');
   }
 
   @action
-  respond(response) {
+  respond (response) {
     this.onResponse(response);
     this.closeModal();
   }

@@ -12,7 +12,7 @@ import hexToRgb from 'granite/utils/hex-to-rgb';
 @classNameBindings('size')
 class CustomLabel extends Component {
   @computed('label.color')
-  get color() {
+  get color () {
     if (!this.get('label.color')) {
       return;
     }

@@ -8,7 +8,7 @@ export default class CampaignRoute extends Route {
   @service
   auth;
 
-  model() {
+  model () {
     return resolve(this.get('auth.user'))
     .then(user => {
       return {
@@ -18,7 +18,7 @@ export default class CampaignRoute extends Route {
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model:      model.parentModel,
       EEOEnabled: model.company.get('collectEEO')

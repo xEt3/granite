@@ -12,12 +12,12 @@ const priorityMap = [ 'Lowest', 'Low', 'Medium', 'High', 'Highest' ],
 @classNameBindings('priorityColor')
 class PriorityLabelComponent extends Component {
   @computed('priority')
-  get priorityText() {
+  get priorityText () {
     return priorityMap[this.priority - 1] || '';
   }
 
   @computed('priority')
-  get priorityColor() {
+  get priorityColor () {
     let color = priorityColorMap[this.priority - 1] || '';
     return this.hasBlock ? color : color + ' label';
   }

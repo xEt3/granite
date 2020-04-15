@@ -14,7 +14,7 @@ const ACTIONS = {
 @classNames('item')
 export default class ContinueAction extends BaseLiComponent {
   @computed('model.continuationAction')
-  get link() {
+  get link () {
     return ACTIONS[this.get('model.continuationAction')];
   }
 }

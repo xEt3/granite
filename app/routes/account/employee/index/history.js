@@ -7,7 +7,7 @@ import moment from 'moment';
 export default class HistoryRoute extends Route {
   titleToken = 'History';
 
-  model(params) {
+  model (params) {
     const page = params.page;
 
     return this.store.query('history', {

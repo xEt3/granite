@@ -6,7 +6,7 @@ import $ from 'jquery';
 export default class _UiSidebar extends UiSidebar {
   'ui_context' = '.ember-application > div.ember-view';
 
-  didInsertElement() {
+  didInsertElement () {
     let context = this.ui_context;
 
     $(context).addClass('pushable');

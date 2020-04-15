@@ -6,7 +6,7 @@ import { run } from '@ember/runloop';
 export default class OnboardCompleteRoute extends Route {
   titleToken = 'Onboard Complete';
 
-  afterModel(model) {
+  afterModel (model) {
     model.setProperties({
       onboarding:         false,
       onboardingStep:     null,

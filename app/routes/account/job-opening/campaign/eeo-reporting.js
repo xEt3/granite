@@ -9,7 +9,7 @@ export default class EeoReportingRoute extends Route {
 
   titleToken = 'EEO Report';
 
-  model() {
+  model () {
     const jobOpening = this.modelFor('account.job-opening');
 
     return this.ajax.request('/api/v1/job-applications/', {

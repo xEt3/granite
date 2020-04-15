@@ -12,7 +12,7 @@ class ResourceListComponent extends Component {
   // resourceName works off of an AdapterPopulatedRecordArray
   // and the type property that returns the query's model
   @computed('model.type')
-  get resourceName() {
+  get resourceName () {
     let type = this.get('model.type.modelName');
     return type ? inflect.pluralize(type) : 'items';
   }

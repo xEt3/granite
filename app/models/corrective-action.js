@@ -69,7 +69,7 @@ export default class CorrectiveAction extends Model {
   created;
 
   @computed('severity', 'company')
-  get actionSeverity() {
+  get actionSeverity () {
     let severity = this.severity;
 
     if (severity) {

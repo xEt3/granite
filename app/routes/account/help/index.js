@@ -9,14 +9,14 @@ export default class IndexRoute extends Route {
   @service
   auth;
 
-  model() {
+  model () {
     return hash({
       user: this.get('auth.user'),
       articles
     });
   }
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     controller.setProperties({
       model: model.articles,
       user:  model.user

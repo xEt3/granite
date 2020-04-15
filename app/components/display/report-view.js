@@ -8,12 +8,12 @@ import Component from '@ember/component';
 @classNames('ui celled table')
 class reportView extends Component {
   @computed('data')
-  get headers() {
+  get headers () {
     return this.data[0];
   }
 
   @computed('data')
-  get bodyData() {
+  get bodyData () {
     return this.data.slice(1);
   }
 }

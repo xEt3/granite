@@ -6,12 +6,12 @@ import Component from '@ember/component';
 @tagName('li')
 @classNames('tree-node')
 export default class XTreeChildren extends Component {
-  didReceiveAttrs() {
+  didReceiveAttrs () {
     super.didReceiveAttrs(...arguments);
     this.recalculateState();
   }
 
-  recalculateState() {
+  recalculateState () {
     const children = this.get('model.children');
 
     if (children && children.length) {

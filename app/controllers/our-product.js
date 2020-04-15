@@ -5,7 +5,7 @@ import Controller from '@ember/controller';
 @classic
 export default class OurProductController extends Controller {
   @computed
-  get features() {
+  get features () {
     return {
       recruiting: [{
         text:   'Automated Job Listings',

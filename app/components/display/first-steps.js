@@ -7,7 +7,7 @@ import Component from '@ember/component';
 @classNames('column')
 class FirstStepsComponent extends Component {
   @computed('completed')
-  get linkClass() {
+  get linkClass () {
     return `first-steps__card ${this.completed ? 'first-steps__card--completed' : ''}`;
   }
 }

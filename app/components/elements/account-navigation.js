@@ -9,7 +9,7 @@ export default class AccountNavigation extends Component {
   linkPrefix = 'account.';
 
   @computed('links')
-  get _links() {
+  get _links () {
     return [ ...this.links ].map(link => {
       return Object.assign({}, link, { fullLink: this.linkPrefix + link.link });
     });
