@@ -1,7 +1,5 @@
-import classic from 'ember-classic-decorator';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-@classic
-export default class FinishRoute extends Route {
-  titleToken = 'Finish';
+export default class AccountJobOpeningSetupFinishRoute extends Route {
+  titleToken = 'Finish'
 }

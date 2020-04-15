@@ -1,18 +1,20 @@
-{{#if this.model.logo}}
-  <img src={{this.model.logo}} alt="Logo" class="ui mini image applicant-source-item__image" />
-{{/if}}
-<div class="content">
-  <div class="header">
-    <UiCheckbox @class="checkbox" @checked={{readonly this.selected}} @label={{this.model.name}} />
-  </div>
-  {{#if this.model.costPerCycle}}
-    <div class="ui orange right floated horizontal label">${{this.model.costPerCycle}}/Billing Cycle</div>
+<div class="applicant-source__list-item item {{if @selected "applicant-source__list-item--selected"}}">
+  {{#if @model.logo}}
+    <img src={{@model.logo}} alt="Logo" class="ui mini image applicant-source-item__image" />
   {{/if}}
-  <div class="meta">
-    <span>{{this.model.description}}</span>
-  </div>
+  <div class="content">
+    <div class="header">
+      <UiCheckbox @class="checkbox" @checked={{readonly @selected}} @label={{@model.name}} @onChange={{fn @onUpdate @model}} />
+    </div>
+    {{#if @model.costPerCycle}}
+      <div class="ui orange right floated horizontal label">${{@model.costPerCycle}}/Billing Cycle</div>
+    {{/if}}
+    <div class="meta">
+      <span>{{@model.description}}</span>
+    </div>
 
-  <div class="extra">
+    <div class="extra">
 
+    </div>
   </div>
 </div>

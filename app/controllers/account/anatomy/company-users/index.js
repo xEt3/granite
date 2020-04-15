@@ -1,13 +1,6 @@
-import Controller from '@ember/controller';
-import pagination from 'granite/mixins/controller-abstractions/pagination';
+import Controller from 'granite/core/controller';
 
-export default Controller.extend(pagination, {
-  queryParams: [ 'page' ],
-  limit:       10,
-
-  actions: {
-    toggleProperty (prop) {
-      this.toggleProperty(prop);
-    }
-  }
-});
+export default class AccountAnatomyCompanyUsersController extends Controller {
+  queryParams = [ 'page' ]
+  limit = 10
+}

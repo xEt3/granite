@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
 export default class InputRichTextComponent extends Component {
   options = {
@@ -13,5 +14,10 @@ export default class InputRichTextComponent extends Component {
         [ 'clean' ]
       ]
     }
+  }
+
+  @action
+  updateText (editor) {
+    this.args.onChange(editor.root.innerHTML);
   }
 }

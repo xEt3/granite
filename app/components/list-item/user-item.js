@@ -1,30 +1,23 @@
+import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import classic from 'ember-classic-decorator';
-import { classNames } from '@ember-decorators/component';
-import { action, computed } from '@ember/object';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import ajaxStatus from 'granite/mixins/ajax-status';
+import { elementId } from 'granite/core';
 import $ from 'jquery';
 
-@classic
-@classNames('item', 'users__user--item')
-class UserItemComponent extends Component.extend(ajaxStatus) {
-  @service
-  store;
+@elementId
+export default class ListItemUserItemComponent extends Component {
+  @service store
+  @service ajax
+  @service data
 
-  @service
-  ajax;
+  @tracked projects = null
+  @tracked newOwner = null
 
-  @tracked projects = null;
-  @tracked newOwner = null;
-
-  @computed('elementId')
   get modalId () {
     return this.elementId + '-modal';
   }
 
-  @computed('elementId')
   get dropdownId () {
     return this.elementId + '-dropdown';
   }
@@ -39,10 +32,9 @@ class UserItemComponent extends Component.extend(ajaxStatus) {
     return this.newOwner ? false : true;
   }
 
-  @computed('user.id', 'allUsers')
   get users () {
-    let userId = this.get('user.id'),
-        allUsers = this.allUsers;
+    let userId = this.args.user.id,
+        allUsers = this.args.allUsers;
 
     return allUsers.reduce((userArray, user) => {
       if (user.id !== userId) {
@@ -70,99 +62,85 @@ class UserItemComponent extends Component.extend(ajaxStatus) {
 
   @action
   async openTransferModal () {
-    this.ajaxStart();
-    let { actionItem } = await this.ajax.request('/api/v1/action-items', {
-      data: {
-        owner:       this.get('user.employee.id'),
-        completedOn: null
-      }
-    });
-    this.set('projects', actionItem);
-    this.ajaxSuccess(null, true);
+    let { success, error } = this.data.createStatus('activation');
+
+    try {
+      let { actionItem } = await this.ajax.request('/api/v1/action-items', {
+        data: {
+          owner:       this.args.user.get('employee.id'),
+          completedOn: null
+        }
+      });
+      this.projects = actionItem;
+      success(null, true);
+    } catch (e) {
+      error(e);
+    }
 
     $(`#${this.modalId}`).modal({
       detachable:  true,
       showOnFocus: false,
       closable:    false,
       onHidden:    () => {
-        this.setProperties({
-          projects: null,
-          newOwner: null
-        });
+        this.projects = null;
+        this.newOwner = null;
       }
     }).modal('show');
   }
 
   @action
   async transferProjects () {
-    if (this.get('projects.length') === 0) {
+    if (this.projects.length === 0) {
       return;
     }
-
-    this.ajaxStart();
+    let { success, error } = this.data.createStatus();
     try {
       await this.ajax.post('/api/v1/action-item/bulk-transfer', {
         data: {
-          currentOwner: this.get('user.employee.id'),
+          currentOwner: this.args.user.get('employee.id'),
           newOwner:     this.newOwner
         }
       });
     } catch (e) {
-      this.ajaxError(e);
+      error(e);
       this.closeTransferModal();
       throw e;
     }
-
-    this.ajaxSuccess('Successfully transferred projects');
+    success('Successfully transferred projects');
   }
 
   @action
   async toggleInactiveState (val) {
-    let user = this.user;
-    user.set('inactive', val);
+    let user = this.args.user;
+    user.inactive = val;
 
-    this.ajaxStart();
+    let { success, error } = this.data.createStatus('activation');
     try {
       await user.save();
     } catch (e) {
-      return this.ajaxError(e);
+      return error(e);
     }
 
     if (val) {
       this.closeTransferModal();
-      this.ajaxSuccess('Successfully deactivated user');
+      success('Successfully deactivated user');
     } else {
-      this.ajaxSuccess('Successfully reactivated user');
+      success('Successfully reactivated user');
     }
 
-    this.send('refresh');
+    this.args.onRefresh();
   }
 
   @action
   cancel () {
     this.closeTransferModal();
   }
-
-  @action
-  notify (type, msg) {
-    this.onNotify(type, msg);
-  }
-
-  @action
-  refresh () {
-    this.onRefresh();
-  }
 }
 
-UserItemComponent.reopenClass({ positionalParams: [ 'user', 'allUsers' ] });
-
-export default UserItemComponent;
-
 /* Usage
-  {{list-item/user-item
-  user
-  allUsers
-  onNotify=(route-action 'notify')
-  onRefresh=(route-action 'refresh')
+  <ListItem::UserItem
+  @user={{user}}
+  @allUsers={{allUsers}}
+  @onRefresh={{route-action 'refreshModel'}}
 }}
 */

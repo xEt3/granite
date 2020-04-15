@@ -1,14 +1,15 @@
-import classic from 'ember-classic-decorator';
-import { action } from '@ember/object';
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
 import { Promise } from 'rsvp';
+import { action } from '@ember/object';
 import $ from 'jquery';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-@classic
-export default class SourcesController extends Controller.extend(addEdit) {
+export default class AccountJobOpeningSetupSourcesController extends Controller {
+  @service data
+
+  @action
   mutSelect (type, source) {
-    let selected = this.get(`model.${type}`);
+    let selected = this.model[type];
 
     if (selected.includes(source)) {
       selected.removeObject(source);
@@ -29,7 +30,7 @@ export default class SourcesController extends Controller.extend(addEdit) {
 
   @action
   addToSelection (source) {
-    this.get('model.manualApplicantSources').addObject(source);
+    this.model.manualApplicantSources.addObject(source);
   }
 
   @action
@@ -43,7 +44,7 @@ export default class SourcesController extends Controller.extend(addEdit) {
       detachable: true,
       onHidden:   () => {
         if (!this.respondedManualSource) {
-          this.send('respondManualSource', false);
+          this.respondManualSource(false);
         }
       }
     }).modal('show');
@@ -60,8 +61,9 @@ export default class SourcesController extends Controller.extend(addEdit) {
       this.manualSource.destroyRecord();
     }
 
-    this.get(response ? 'resolveMs' : 'rejectMs')(response ? this.manualSource : null);
-    this.set('respondedManualSource', true);
+    this[response ? 'resolveMs' : 'rejectMs'](response ? this.manualSource : null);
+    // this.get(response ? 'resolveMs' : 'rejectMs')(response ? this.manualSource : null);
+    this.respondedManualSource = true;
     $('#modal__add--manual-source').modal('hide');
   }
 }

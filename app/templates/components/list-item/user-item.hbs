@@ -1,85 +1,87 @@
-<div class="ui tiny rounded image">
-  <Display::EmployeePicture @url={{this.user.employee.picture}} @employeeId={{this.user.employee.id}} />
-</div>
-<div class="content">
-  <div class="header">
-    {{this.user.fullName}}
-    {{#if this.user.inactive}}
-      <label class="ui red label">Inactive</label>
-    {{/if}}
-  </div>
-  <div class="right floated">
-    <LinkTo @route="account.anatomy.company-users.edit" @model={{this.user.id}}>
-      <EmberTooltip @side="left" @popperContainer="body" @text="Edit user" />
-      <i class="edit icon"></i>
-    </LinkTo>
-    {{#if this.user.inactive}}
-      <a href="#" {{action "toggleInactiveState" false}}>
-        <EmberTooltip @side="left" @popperContainer="body" @text="Reactivate user" />
-        <i class="{{if this.working "loading spinner" "undo"}} icon"></i>
-      </a>
-    {{else}}
-      <a href="#" class="text-danger" {{action "openTransferModal"}}>
-        <EmberTooltip @side="left" @popperContainer="body" @text="Deactivate user" />
-        <i class="{{if this.working "loading spinner" "times"}} icon"></i>
-      </a>
-    {{/if}}
-  </div>
-  <div class="meta">
-    <span>{{this.user.email}}</span>
-    <span class="ui small text right floated">Created {{time-ago this.user.created}} on {{time this.user.created}}</span>
-  </div>
-  <div class="extra">
-    {{#if this.user.activatedOn}}
-      <i class="check icon"></i>Activated {{time-ago this.user.activatedOn}}
-    {{else}}
-      <span class="text-green"><i class="mail outline icon"></i>Activation email sent {{time-ago this.user.created}}</span>
-    {{/if}}
-  </div>
-</div>
-
-<UiModal @name="modal__transfer-projects" @id={{this.modalId}} @class="small form">
-  <div class="header">
-    Transfer {{this.user.fullName}}'s projects
+<div class="item users__user--item">
+  <div class="ui tiny rounded image">
+    <Display::EmployeePicture @url={{@user.employee.picture}} @employeeId={{@user.employee.id}} />
   </div>
   <div class="content">
-    <div class="ui relaxed divided list">
-      {{#each this.projects as |project|}}
-        <div class="item">
-          <div class="content">
-            <div class="header">
-              {{project.title}}
-              <label class="ui tiny left floated red label">{{project.priority}}</label>
-            </div>
-            {{#if project.description}}
-              <div class="description">
-                {{project.description}}
-              </div>
-            {{/if}}
-          </div>
-        </div>
-      {{else}}
-        {{this.user.firstName}} has no outstanding projects.
-      {{/each}}
+    <div class="header">
+      {{@user.fullName}}
+      {{#if @user.inactive}}
+        <label class="ui red label">Inactive</label>
+      {{/if}}
     </div>
+    <div class="right floated">
+      <LinkTo @route="account.anatomy.company-users.edit" @model={{@user.id}}>
+        <EmberTooltip @side="left" @popperContainer="body" @text="Edit user" />
+        <i class="edit icon"></i>
+      </LinkTo>
+      {{#if @user.inactive}}
+        <a href="#" {{on "click" (prevent-default (fn this.toggleInactiveState false))}}>
+          <EmberTooltip @side="left" @popperContainer="body" @text="Reactivate user" />
+          <i class="{{if this.data.statuses.activation.isLoading "loading spinner" "undo"}} icon"></i>
+        </a>
+      {{else}}
+        <a href="#" class="text-danger" {{on "click" (prevent-default this.openTransferModal)}}>
+          <EmberTooltip @side="left" @popperContainer="body" @text="Deactivate user" />
+          <i class="{{if this.data.statuses.activation.isLoading "loading spinner" "times"}} icon"></i>
+        </a>
+      {{/if}}
+    </div>
+    <div class="meta">
+      <span>{{@user.email}}</span>
+      <span class="ui small text right floated">Created {{time-ago @user.created}} on {{time @user.created}}</span>
+    </div>
+    <div class="extra">
+      {{#if @user.activatedOn}}
+        <i class="check icon"></i>Activated {{time-ago @user.activatedOn}}
+      {{else}}
+        <span class="text-green"><i class="mail outline icon"></i>Activation email sent {{time-ago @user.created}}</span>
+      {{/if}}
+    </div>
+  </div>
 
-    {{#if this.projects.length}}
-      <label for={{this.dropdownId}}>Transfer to</label>
-      <UiDropdown @class="fluid selection" @id={{this.dropdownId}} @selected={{this.newOwner}} @onChange={{action (mut this.newOwner)}} as |execute mapper|>
-        <div class="default text">New Owner</div>
-        <i class="dropdown icon"></i>
-        <div class="menu">
-          {{#each this.users as |user|}}
-            <div data-value={{map-value mapper user.employee}} class="item">
-              {{user.fullName}}
+  <UiModal @name="modal__transfer-projects" @id={{this.modalId}} @class="small form">
+    <div class="header">
+      Transfer {{@user.fullName}}'s projects
+    </div>
+    <div class="content">
+      <div class="ui relaxed divided list">
+        {{#each this.projects as |project|}}
+          <div class="item">
+            <div class="content">
+              <div class="header">
+                {{project.title}}
+                <label class="ui tiny left floated red label">{{project.priority}}</label>
+              </div>
+              {{#if project.description}}
+                <div class="description">
+                  {{project.description}}
+                </div>
+              {{/if}}
             </div>
-          {{/each}}
-        </div>
-      </UiDropdown>
-    {{/if}}
-  </div>
-  <div class="actions">
-    <button class="ui inverted red button" {{action "cancel"}}>Cancel</button>
-    <button class="ui primary button" {{action (pipe (action "transferProjects")(action "toggleInactiveState" true))}} disabled={{this.disableDeactivate}}>Confirm Deactivation</button>
-  </div>
-</UiModal>
+          </div>
+        {{else}}
+          {{@user.firstName}} has no outstanding projects.
+        {{/each}}
+      </div>
+
+      {{#if this.projects.length}}
+        <label for={{this.dropdownId}}>Transfer to</label>
+        <UiDropdown @class="fluid selection" @id={{this.dropdownId}} @selected={{this.newOwner}} @onChange={{set this.newOwner _}} as |execute mapper|>
+          <div class="default text">New Owner</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            {{#each this.users as |user|}}
+              <div data-value={{map-value mapper user.employee}} class="item">
+                {{user.fullName}}
+              </div>
+            {{/each}}
+          </div>
+        </UiDropdown>
+      {{/if}}
+    </div>
+    <div class="actions">
+      <button class="ui inverted red button" {{on "click" this.cancel}}>Cancel</button>
+      <button class="ui primary button" {{on "click" (pipe this.transferProjects (fn this.toggleInactiveState true))}} disabled={{this.disableDeactivate}}>Confirm Deactivation</button>
+    </div>
+  </UiModal>
+</div>

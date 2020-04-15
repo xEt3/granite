@@ -1,5 +1,6 @@
-import classic from 'ember-classic-decorator';
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
 
-@classic
-export default class FinishController extends Controller {}
+export default class AccountJobOpeningSetupFinishController extends Controller {
+  @service data
+}

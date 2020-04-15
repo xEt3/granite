@@ -1,7 +1,5 @@
-import classic from 'ember-classic-decorator';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-@classic
-export default class EeoRoute extends Route {
-  titleToken = 'EEO';
+export default class AccountJobOpeningSetupEeoRoute extends Route {
+  titleToken = 'EEO'
 }

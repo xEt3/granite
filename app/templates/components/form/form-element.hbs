@@ -7,8 +7,8 @@
 
   {{#if (and this.model.label this.model.type)}}
     <div class="form-element__preview">
-      {{input/quick-form-input
-        (hash
+      <Input::QuickFormInput
+        @field={{hash
           label=this.label
           type=this.model.type
           placeholder=(or this.model.label " ")
@@ -21,25 +21,25 @@
             allowAdditions=this.model.allowAdditions
             inline=this.model.inlineInput
           )
-        )
-        this.emptyObject
-        this.model
-      }}
+        }}
+        @model={{this.emptyObject}}
+        @controller={{this.model}}
+      />
       <div class="ui divider"></div>
     </div>
   {{else if this.loadingType}}
     <div class="form-element__preview form-element__preview--loading">
       {{! dummy element}}
-      {{input/quick-form-input
-        (hash
+      <Input::QuickFormInput
+        @field={{hash
           label=this.label
           type='select'
           placeholder=(or this.model.label " ")
           showLabel=true
-        )
-        this.emptyObject
-        this.model
-      }}
+        }}
+        @model={{this.emptyObject}}
+        @controller={{this.model}}
+      />
       <div class="ui divider"></div>
       <div class="ui active inverted dimmer">
         <div class="ui text loader">Loading element...</div>
@@ -56,7 +56,7 @@
 
       <div class="field">
         <label>How should they answer?*</label>
-        <UiDropdown @class="selection" @selected={{this.model.type}} @forceSelection={{false}} @onChange={{action (mut this.model.type)}}>
+        <UiDropdown @class="selection" @selected={{this.model.type}} @forceSelection={{false}} @onChange={{set this.model.type _}}>
           <div class="default text">
             Select an input type
           </div>
@@ -78,18 +78,18 @@
     {{#if (or (eq this.model.type "select") this.loadingType)}}
       <div class="two fields">
         <div class="field">
-          <UiCheckbox @class="toggle" @label="Allow multiple selections" @checked={{readonly this.model.multiple}} @onChange={{pipe-action (action (mut this.model.multiple)) (action this.changedSelectProperty)}} />
+          <UiCheckbox @class="toggle" @label="Allow multiple selections" @checked={{readonly this.model.multiple}} @onChange={{pipe-action (set this.model.multiple _) this.changedSelectProperty}} />
         </div>
         <div class="field">
           <EmberTooltip @side="top" @popperContainer="body" @text="This option allows users to select from your list of options or add selection(s) of their own." />
-          <UiCheckbox @class="toggle" @label="Allow additions to options" @checked={{readonly this.model.allowAdditions}} @onChange={{pipe-action (action (mut this.model.allowAdditions)) (action this.changedSelectProperty)}} />
+          <UiCheckbox @class="toggle" @label="Allow additions to options" @checked={{readonly this.model.allowAdditions}} @onChange={{pipe-action (set this.model.allowAdditions _) this.changedSelectProperty}} />
         </div>
       </div>
     {{/if}}
 
     {{#if (eq this.model.type "radio")}}
       <div class="field">
-        <UiCheckbox @class="toggle" @label="Inline Input" @checked={{readonly this.model.inlineInput}} @onChange={{action (mut this.model.inlineInput)}} />
+        <UiCheckbox @class="toggle" @label="Inline Input" @checked={{readonly this.model.inlineInput}} @onChange={{set this.model.inlineInput _}} />
       </div>
     {{/if}}
 
@@ -98,7 +98,7 @@
         <p class="center aligned text text-danger">Note: Requiring this field requires the applicant to select "Yes" to proceed.</p>
       {{/liquid-if}}
 
-      <UiCheckbox @label="This question is required" @checked={{readonly this.model.required}} @onChange={{action (mut this.model.required)}} />
+      <UiCheckbox @label="This question is required" @checked={{readonly this.model.required}} @onChange={{set this.model.required _}} />
     </div>
 
     {{#if (or this.requiresOptions this.loadingType)}}
@@ -113,14 +113,14 @@
                 <div class="ui field">
                   <Input @type="text" class="ui mini fluid input" placeholder="Enter option text" @value={{option.text}} />
                 </div>
-                <a href="#" class="text-danger" {{action "removeOption" option}}><i class="trash icon"></i> Remove</a>
+                <a href="#" class="text-danger" {{on "click" (prevent-default (fn this.removeOption option))}}><i class="trash icon"></i> Remove</a>
               </div>
               {{#if this.scoring}}
                 <div class="eight wide column">
                   <div class="ui field">
                     <Input @type="number" class="ui mini fluid input" @min="-100" @max="100" @step="1" placeholder="Weight (+/-100)" @disabled={{option.disqualifier}} @value={{option.weight}} />
                   </div>
-                  <UiCheckbox @label="Exclude applicants with this answer" @checked={{readonly option.disqualifier}} @onChange={{action (mut option.disqualifier)}} />
+                  <UiCheckbox @label="Exclude applicants with this answer" @checked={{readonly option.disqualifier}} @onChange={{set option.disqualifier _}} />
                 </div>
               {{/if}}
               {{!-- <div class="{{if scoring "four" "eight"}} wide column options-grid__option-controls">
@@ -129,7 +129,7 @@
           {{/each}}
         </div>
       {{/if}}
-      <a href="#" {{action "addOption"}}><i class="plus icon"></i>Add option...</a>
+      <a href="#" {{on "click" (prevent-default this.addOption)}}><i class="plus icon"></i>Add option...</a>
     {{else if (and this.showScoring (not this.model.required))}}
       <div class="two fields">
         <div class="field">
@@ -147,10 +147,10 @@
       </div>
       <div class="two fields">
         <div class="field">
-          <UiCheckbox @label="Exclude applicants with 'Yes' answer" @checked={{readonly this.model.trueDisqualifies}} @onChange={{action (mut this.model.trueDisqualifies)}} />
+          <UiCheckbox @label="Exclude applicants with 'Yes' answer" @checked={{readonly this.model.trueDisqualifies}} @onChange={{set this.model.trueDisqualifies _}} />
         </div>
         <div class="field">
-          <UiCheckbox @label="Exclude applicants with 'No' answer" @checked={{readonly this.model.falseDisqualifies}} @onChange={{action (mut this.model.falseDisqualifies)}} />
+          <UiCheckbox @label="Exclude applicants with 'No' answer" @checked={{readonly this.model.falseDisqualifies}} @onChange={{set this.model.falseDisqualifies _}} />
         </div>
       </div>
     {{/if}}
