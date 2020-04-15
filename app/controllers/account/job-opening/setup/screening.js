@@ -1,69 +1,77 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
-export default Controller.extend(addEdit, {
-  enableModelValidations: true,
+export default class AccountJobOpeningSetupScreeningController extends Controller {
+  @service data
+  @tracked showingPreview
+  enableModelValidations = true
 
-  sortGroupClass: computed('showingPreview', function () {
+  get sortGroupClass () {
     return `ui middle aligned divided list screening__form-elements ${this.showingPreview ? 'screening__form-elements--preview' : ''}`;
-  }),
+  }
 
+  @action
   afterSave () {
     let form = this.form,
         removeDuplicates = [];
 
-    form.get('elements').forEach(e => {
-      if (!e.get('id')) {
+    form.elements.forEach(e => {
+      if (!e.id) {
         e.destroy();
         removeDuplicates.push(e);
       }
     });
-    form.get('elements').removeObjects(removeDuplicates);
-  },
+    form.elements.removeObjects(removeDuplicates);
+  }
 
-  actions: {
-    addFormElement () {
-      let formElement = this.store.createRecord('form-element', {});
-      this.get('form.elements').pushObject(formElement);
-    },
+  @action
+  addFormElement () {
+    let formElement = this.store.createRecord('form-element', {});
+    this.form.elements.pushObject(formElement);
+  }
 
-    deleteFormElement (element) {
-      this.get('form.elements').removeObject(element);
-    },
+  @action
+  deleteFormElement (element) {
+    this.form.elements.removeObject(element);
+  }
 
-    reorderElements (elements) {
-      this.form.set('elements', elements);
-    },
+  @action
+  reorderElements (elements) {
+    this.form.elements = elements;
+  }
 
-    async saveAndContinue () {
-      this.ajaxStart();
+  @action
+  async saveAndContinue () {
+    let { success, error } = this.data.createStatus();
 
-      let f = await this.form;
-      if (!f.elements.length) {
-        try {
-          await f.destroyRecord();
-          this.set('model.screening', null);
-          await this.target.send('saveAndContinue');
-          this.ajaxSuccess();
-        } catch (e) {
-          this.ajaxError(e);
-        }
-        return;
-      }
-
-      f.setProperties({
-        targetType: 'JobOpening',
-        targetId:   this.get('model.id')
-      });
-
+    let f = await this.form;
+    if (!f.elements.length) {
       try {
-        let form = await this.saveModel(f);
-        this.set('model.screening', form);
+        await f.destroyRecord();
+        this.model.screening = null;
         await this.target.send('saveAndContinue');
+        success(null, true);
       } catch (e) {
-        this.ajaxError(e);
+        error(e);
       }
+      return;
+    }
+
+    f.setProperties({
+      targetType: 'JobOpening',
+      targetId:   this.model.id
+    });
+
+    try {
+      let form = await f.save();
+      this.afterSave();
+      this.model.screening = form;
+      await this.target.send('saveAndContinue');
+      success(null, true);
+    } catch (e) {
+      error(e);
     }
   }
-});
+}
