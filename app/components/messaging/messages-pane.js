@@ -1,3 +1,4 @@
+import { tracked } from '@glimmer/tracking';
 import classic from 'ember-classic-decorator';
 import { classNames } from '@ember-decorators/component';
 import { observes } from '@ember-decorators/object';
@@ -9,7 +10,7 @@ import { scheduleOnce, debounce } from '@ember/runloop';
 @classNames('messaging-thread__messages-pane')
 class MessagesPaneComponent extends Component {
   topOffsetFudgePX = 20;
-  messageThreshold = 49;
+  @tracked messageThreshold = 49;
   isBottomStuck = true;
 
   didInsertElement() {

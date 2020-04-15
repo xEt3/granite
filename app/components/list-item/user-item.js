@@ -1,3 +1,4 @@
+import { tracked } from '@glimmer/tracking';
 import classic from 'ember-classic-decorator';
 import { classNames } from '@ember-decorators/component';
 import { action, computed } from '@ember/object';
@@ -15,8 +16,8 @@ class UserItemComponent extends Component.extend(ajaxStatus) {
   @service
   ajax;
 
-  projects = null;
-  newOwner = null;
+  @tracked projects = null;
+  @tracked newOwner = null;
 
   @computed('elementId')
   get modalId() {
@@ -28,7 +29,6 @@ class UserItemComponent extends Component.extend(ajaxStatus) {
     return this.get('elementId') + '-dropdown';
   }
 
-  @computed('newOwner', 'projects')
   get disableDeactivate() {
     let projects = this.get('projects');
 

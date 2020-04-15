@@ -1,3 +1,4 @@
+import { tracked } from '@glimmer/tracking';
 import classic from 'ember-classic-decorator';
 import { action, computed } from '@ember/object';
 import Controller from '@ember/controller';
@@ -10,7 +11,7 @@ export default class IndexController extends Controller {
   feedSource = 'all';
   tag = '';
   limit = 5;
-  page = 0;
+  @tracked page = 0;
 
   commonActions = [{
     text: 'Add a new employee',

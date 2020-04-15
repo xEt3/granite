@@ -1,3 +1,4 @@
+import { tracked } from '@glimmer/tracking';
 import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
@@ -13,9 +14,8 @@ export default class SuggestionInput extends Component {
   @service
   search;
 
-  debounceInterval = 100;
+  @tracked debounceInterval = 100;
 
-  @computed('debounceInterval')
   get apiSettings() {
     return {
       throttle:      this.get('debounceInterval'),

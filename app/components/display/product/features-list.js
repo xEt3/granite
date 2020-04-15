@@ -1,3 +1,4 @@
+import { tracked } from '@glimmer/tracking';
 import classic from 'ember-classic-decorator';
 import { classNames } from '@ember-decorators/component';
 import { action, computed } from '@ember/object';
@@ -6,7 +7,7 @@ import Component from '@ember/component';
 @classic
 @classNames('section-content__features')
 class FeaturesListComponent extends Component {
-  autoCycle = 0;
+  @tracked autoCycle = 0;
   autoCycleMs = 5000;
 
   didInsertElement() {

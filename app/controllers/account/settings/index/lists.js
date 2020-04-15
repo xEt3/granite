@@ -1,3 +1,4 @@
+import { tracked } from '@glimmer/tracking';
 import classic from 'ember-classic-decorator';
 import { action, computed } from '@ember/object';
 import Controller from '@ember/controller';
@@ -9,11 +10,10 @@ import $ from 'jquery';
 export default class ListsController extends Controller.extend(addEdit) {
   queryParams = [ 'list' ];
   modalId = 'settings__list-modal';
-  list = null;
+  @tracked list = null;
   dirtyList = false;
-  currentItem = null;
+  @tracked currentItem = null;
 
-  @computed('list')
   get currentForm() {
     return lists[this.get('list')];
   }

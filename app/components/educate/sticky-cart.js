@@ -3,8 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 export default class StickyCartComponent extends Component {
-  @tracked
-  cartExpanded = false
+  @tracked cartExpanded = false
 
   get expanded () {
     return !this.shouldHide && this.cartExpanded;
