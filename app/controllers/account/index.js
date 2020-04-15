@@ -26,7 +26,7 @@ export default class IndexController extends Controller {
 
   @computed('totalRecords', 'model', 'page')
   get disabled() {
-    return this.page >= ACTIVITY_PAGE_HARD_LIMIT || this.get('totalRecords') <= this.get('model.length') ? true : false;
+    return this.page >= ACTIVITY_PAGE_HARD_LIMIT || this.totalRecords <= this.get('model.length') ? true : false;
   }
 
   @action
@@ -36,6 +36,6 @@ export default class IndexController extends Controller {
 
   @action
   loadMoreActivities() {
-    this.set('page', this.get('page') + 1);
+    this.set('page', this.page + 1);
   }
 }

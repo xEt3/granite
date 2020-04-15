@@ -12,7 +12,7 @@ export default class IndexRoute extends Route {
   ajax;
 
   async model() {
-    const ajax = this.get('ajax'),
+    const ajax = this.ajax,
           jobOpening = this.modelFor('account.job-opening');
 
     let _results = A(await ajax.request(`/api/v1/job-openings/${jobOpening.get('id')}?$report=summary`));

@@ -16,9 +16,9 @@ export default class IndexController extends Controller.extend(ajaxStatus) {
   discover() {
     this.ajaxStart();
 
-    const serviceName = this.get('service');
+    const serviceName = this.service;
 
-    this.get('ajax').request(`/api/v1/integrations/${serviceName}/discover-import`)
+    this.ajax.request(`/api/v1/integrations/${serviceName}/discover-import`)
     .then(response => {
       this.ajaxSuccess(null, true);
       this.transitionToRoute('account.import.discovered', response, { queryParams: { service: serviceName } });

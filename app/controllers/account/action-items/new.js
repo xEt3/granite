@@ -11,7 +11,7 @@ export default Controller.extend(addEdit, {
   calendarLabel:       htmlSafe('<i class="clock icon"></i> Assign a Due Date'),
 
   _afterSave () {
-    this.get('addedTodos').forEach(t => {
+    this.addedTodos.forEach(t => {
       t.destroy();
       this.get('model.checklist').removeObject(t);
     });
@@ -25,8 +25,8 @@ export default Controller.extend(addEdit, {
     },
 
     addTodo () {
-      const title = this.get('pendingTodo'),
-            assignee = this.get('pendingTodoAssignee');
+      const title = this.pendingTodo,
+            assignee = this.pendingTodoAssignee;
 
       let item = this.store.createRecord('checklist-item', { title });
 
@@ -39,7 +39,7 @@ export default Controller.extend(addEdit, {
       }
 
       this.get('model.checklist').addObject(item);
-      this.get('addedTodos').addObject(item);
+      this.addedTodos.addObject(item);
 
       this.setProperties({
         pendingTodo:         null,
@@ -49,7 +49,7 @@ export default Controller.extend(addEdit, {
 
     removeTodo (todo) {
       this.get('model.checklist').removeObject(todo);
-      this.get('addedTodos').removeObject(todo);
+      this.addedTodos.removeObject(todo);
       todo.destroy();
     }
   }

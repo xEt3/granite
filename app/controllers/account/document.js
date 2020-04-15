@@ -35,12 +35,12 @@ export default Controller.extend(addEdit, {
   imagePreview: computed.match('model.extension', /je?pg|png|gif/i),
 
   createFileAssignment () {
-    if (this.get('fileAssignment')) {
-      this.get('fileAssignment').destroyRecord();
+    if (this.fileAssignment) {
+      this.fileAssignment.destroyRecord();
     }
 
     let assignment = this.store.createRecord('file-assignment', {
-      file:    this.get('model'),
+      file:    this.model,
       creator: this.get('auth.user.employee')
     });
 
@@ -56,7 +56,7 @@ export default Controller.extend(addEdit, {
 
   remapToModels (assignment) {
     let employees = assignment.get('employees'),
-        model = this.get('model');
+        model = this.model;
 
     assignment.set('employee', employees.get('firstObject'));
     assignment.set('effectiveOn', model.get('effectiveOn'));
@@ -74,7 +74,7 @@ export default Controller.extend(addEdit, {
 
   actions: {
     delete () {
-      this.get('model').destroyRecord()
+      this.model.destroyRecord()
       .then(() => {
         this.transitionToRoute('account.documents');
       });
@@ -92,7 +92,7 @@ export default Controller.extend(addEdit, {
         detachable: true,
         context:    '.ember-application',
         onHidden:   () => {
-          if (!this.get('respondedAssignment')) {
+          if (!this.respondedAssignment) {
             this.send('respondAssignment', false);
           }
         }
@@ -105,7 +105,7 @@ export default Controller.extend(addEdit, {
     },
 
     respondAssignment (response) {
-      this.get(response ? 'resolveAssignment' : 'rejectAssignment')(response ? this.get('fileAssignment') : null);
+      this.get(response ? 'resolveAssignment' : 'rejectAssignment')(response ? this.fileAssignment : null);
       this.set('respondedAssignment', true);
       this.send('closeAssignmentModal');
     },

@@ -10,26 +10,26 @@ import $ from 'jquery';
 class TodoItemComponent extends Component {
   @computed('elementId')
   get modalId() {
-    return `${this.get('elementId')}-modal`;
+    return `${this.elementId}-modal`;
   }
 
   willDestroy() {
-    $(`#${this.get('modalId')}`).remove();
+    $(`#${this.modalId}`).remove();
     super.willDestroy(...arguments);
   }
 
   @action
   changeStatus() {
-    this.get('onStatusChange')(this.get('todo'));
+    this.onStatusChange(this.todo);
   }
 
   @action
   selectAssignee() {
     this.set('respondedAssignee', false);
-    $(`#${this.get('modalId')}`).modal({
+    $(`#${this.modalId}`).modal({
       detachable: true,
       onHidden:   () => {
-        if (!this.get('respondedAssignee')) {
+        if (!this.respondedAssignee) {
           this.send('respondAssignee', false);
         }
       }
@@ -44,14 +44,14 @@ class TodoItemComponent extends Component {
   @action
   changeAssignee(assignee) {
     this.set('newAssignee', null);
-    this.get('onAssigneeChange')(this.get('todo'), assignee);
+    this.onAssigneeChange(this.todo, assignee);
   }
 
   @action
   respondAssignee(assignee) {
     this.get(assignee !== false ? 'resolve' : 'reject')(assignee || null);
     this.set('respondedAssignee', true);
-    $(`#${this.get('modalId')}`).modal('hide');
+    $(`#${this.modalId}`).modal('hide');
   }
 }
 

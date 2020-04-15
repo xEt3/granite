@@ -10,7 +10,7 @@ export default class StatefulIntroJs extends Component {
   @computed('user.shownHints.[]')
   get showSteps() {
     let shownHints = this.get('user.shownHints'),
-        hintKey = this.get('hintKey');
+        hintKey = this.hintKey;
 
     assert('You must specify a hintKey to use stateful-intro-js', !!hintKey);
 
@@ -19,7 +19,7 @@ export default class StatefulIntroJs extends Component {
 
   @action
   markAsShown(exit) {
-    if (exit && !this.get('markAsShownOnExit')) {
+    if (exit && !this.markAsShownOnExit) {
       return;
     }
 
@@ -30,7 +30,7 @@ export default class StatefulIntroJs extends Component {
     }
 
     let hints = user.get('shownHints'),
-        key = this.get('hintKey');
+        key = this.hintKey;
 
     if (!hints) {
       return;

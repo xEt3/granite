@@ -11,12 +11,12 @@ export default class ConfirmModal extends Component {
 
   @computed('elementId')
   get modalId() {
-    return this.get('elementId') + '-modal';
+    return this.elementId + '-modal';
   }
 
   didReceiveAttrs() {
-    if (this.get('confirmOnRender')) {
-      run.scheduleOnce('afterRender', () => this.get('startConfirmation')());
+    if (this.confirmOnRender) {
+      run.scheduleOnce('afterRender', () => this.startConfirmation());
     }
   }
 
@@ -26,14 +26,14 @@ export default class ConfirmModal extends Component {
       _originalArgs: arguments
     });
 
-    $('#' + this.get('modalId')).modal({
+    $('#' + this.modalId).modal({
       context:    '.ember-application',
       detachable: true,
       onHidden:   () => {
-        if (this.get('isDestroyed')) {
+        if (this.isDestroyed) {
           return;
         }
-        if (!this.get('responded')) {
+        if (!this.responded) {
           this.send('respond', false);
         }
       }
@@ -51,21 +51,21 @@ export default class ConfirmModal extends Component {
   }
 
   closeModal() {
-    $('#' + this.get('modalId')).modal('hide');
+    $('#' + this.modalId).modal('hide');
   }
 
   @action
   respond(response) {
-    if (this.get('isDestroyed')) {
+    if (this.isDestroyed) {
       return;
     }
     let fn = this.get(response ? 'resolve' : 'reject');
-    fn.apply(null, response ? this.get('_originalArgs') : null);
+    fn.apply(null, response ? this._originalArgs : null);
     this.set('responded', true);
     this.closeModal();
 
     // Bubble up the response to an action attr if available
-    let onResponse = this.get('onResponse');
+    let onResponse = this.onResponse;
 
     if (onResponse && typeof onResponse === 'function') {
       onResponse(response);

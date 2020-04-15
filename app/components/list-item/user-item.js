@@ -21,28 +21,28 @@ class UserItemComponent extends Component.extend(ajaxStatus) {
 
   @computed('elementId')
   get modalId() {
-    return this.get('elementId') + '-modal';
+    return this.elementId + '-modal';
   }
 
   @computed('elementId')
   get dropdownId() {
-    return this.get('elementId') + '-dropdown';
+    return this.elementId + '-dropdown';
   }
 
   get disableDeactivate() {
-    let projects = this.get('projects');
+    let projects = this.projects;
 
     if (!projects || !projects.length) {
       return false;
     }
 
-    return this.get('newOwner') ? false : true;
+    return this.newOwner ? false : true;
   }
 
   @computed('user.id', 'allUsers')
   get users() {
     let userId = this.get('user.id'),
-        allUsers = this.get('allUsers');
+        allUsers = this.allUsers;
 
     return allUsers.reduce((userArray, user) => {
       if (user.id !== userId) {
@@ -65,7 +65,7 @@ class UserItemComponent extends Component.extend(ajaxStatus) {
   }
 
   closeTransferModal() {
-    $(`#${this.get('modalId')}`).modal('hide');
+    $(`#${this.modalId}`).modal('hide');
   }
 
   @action
@@ -80,7 +80,7 @@ class UserItemComponent extends Component.extend(ajaxStatus) {
     this.set('projects', actionItem);
     this.ajaxSuccess(null, true);
 
-    $(`#${this.get('modalId')}`).modal({
+    $(`#${this.modalId}`).modal({
       detachable:  true,
       showOnFocus: false,
       closable:    false,
@@ -104,7 +104,7 @@ class UserItemComponent extends Component.extend(ajaxStatus) {
       await this.ajax.post('/api/v1/action-item/bulk-transfer', {
         data: {
           currentOwner: this.get('user.employee.id'),
-          newOwner:     this.get('newOwner')
+          newOwner:     this.newOwner
         }
       });
     } catch (e) {
@@ -118,7 +118,7 @@ class UserItemComponent extends Component.extend(ajaxStatus) {
 
   @action
   async toggleInactiveState(val) {
-    let user = this.get('user');
+    let user = this.user;
     user.set('inactive', val);
 
     this.ajaxStart();
@@ -145,12 +145,12 @@ class UserItemComponent extends Component.extend(ajaxStatus) {
 
   @action
   notify(type, msg) {
-    this.get('onNotify')(type, msg);
+    this.onNotify(type, msg);
   }
 
   @action
   refresh() {
-    this.get('onRefresh')();
+    this.onRefresh();
   }
 }
 

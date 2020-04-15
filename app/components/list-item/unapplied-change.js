@@ -12,10 +12,10 @@ export default class UnappliedChange extends Component.extend(del, addEdit) {
 
   @action
   modifyEffectiveDate() {
-    let history = this.get('history');
+    let history = this.history;
     this.set('history.effectiveOn', new Date());
     this.saveModel(history).then((x) => {
-      this.get('onApplyNow')(x);
+      this.onApplyNow(x);
     });
   }
 }

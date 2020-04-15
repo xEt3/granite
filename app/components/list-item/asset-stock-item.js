@@ -5,7 +5,7 @@ import { A } from '@ember/array';
 export default Component.extend({
   classNames: [ 'item' ],
   didReceiveAttrs () {
-    this.set('details', this.get('showAttributes'));
+    this.set('details', this.showAttributes);
   },
 
   attributes: computed('asset.customFields', function () {
@@ -29,13 +29,13 @@ export default Component.extend({
   actions: {
 
     delete () {
-      this.get('onDelete')(this.get('asset'));
+      this.onDelete(this.asset);
     },
 
     removeDocument (document) {
-      let asset = this.get('asset');
+      let asset = this.asset;
       asset.documents.removeObject(document);
-      this.get('saveStockItem')();
+      this.saveStockItem();
     },
 
     toggleProperty (prop) {

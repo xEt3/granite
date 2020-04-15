@@ -42,7 +42,7 @@ export default Component.extend(ajaxStatus, {
     var addingFiles = this._buildFiles(e.dataTransfer.files);
     this._validateFiles(addingFiles);
     this.set('dragging', false);
-    if (this.get('autoUpload')) {
+    if (this.autoUpload) {
       this.send('saveDocument');
     }
   },
@@ -55,7 +55,7 @@ export default Component.extend(ajaxStatus, {
       $.ajax({
         type:        'POST',
         data:        formData,
-        url:         this.get('url'),
+        url:         this.url,
         processData: false,
         contentType: false,
         cache:       false,
@@ -85,11 +85,11 @@ export default Component.extend(ajaxStatus, {
     }
 
     var self   = this,
-        allowMulti  = this.get('allowMulti'),
-        max    = this.get('maxFiles'),
-        _files = this.get('files');
+        allowMulti  = this.allowMulti,
+        max    = this.maxFiles,
+        _files = this.files;
 
-    var extReg = new RegExp(this.get('allowedExtensions').map(function (ext, index, exts) {
+    var extReg = new RegExp(this.allowedExtensions.map(function (ext, index, exts) {
       return exts.length - 1 === index ? ext : ext + '|';
     }).join(''), 'i');
 
@@ -108,7 +108,7 @@ export default Component.extend(ajaxStatus, {
         handleError('One or more file types are not supported.');
       } else if (!allowMulti && _files.length > 0 || _files.length > max - 1) {
         handleError('File limit reached.');
-      } else if (Math.floor(file.size / 1000000) > this.get('maxSize')) {
+      } else if (Math.floor(file.size / 1000000) > this.maxSize) {
         handleError('Max file size exceeded.');
       } else {
         _files.addObject(file);
@@ -156,29 +156,29 @@ export default Component.extend(ajaxStatus, {
   },
 
   inputId: computed('elementId', function () {
-    return this.get('elementId') + '-input';
+    return this.elementId + '-input';
   }),
 
   shouldSetHasFiles: computed('files.[]', function () {
     // eslint-disable-next-line ember/no-side-effects
-    return this.set('hasFiles', this.get('files') && this.get('files.length') > 0);
+    return this.set('hasFiles', this.files && this.get('files.length') > 0);
   }),
 
 
   actions: {
     notify (type, msg) {
-      this.get('onNotify')(type, msg);
+      this.onNotify(type, msg);
     },
 
     triggerFileInput () {
-      this.$().find('#' + this.get('inputId')).click();
+      this.$().find('#' + this.inputId).click();
     },
 
     selectFile () {
-      var addingFiles = this._buildFiles(this.$().find('#' + this.get('inputId'))[0].files);
+      var addingFiles = this._buildFiles(this.$().find('#' + this.inputId)[0].files);
       this._validateFiles(addingFiles);
 
-      if (this.get('autoUpload')) {
+      if (this.autoUpload) {
         this.send('saveDocument');
       }
     },
@@ -189,16 +189,16 @@ export default Component.extend(ajaxStatus, {
       this.uploadFile(this.get('files.firstObject'))
       .then(successful => {
         this.set('uploadProgress', false);
-        this.get('onWinning')(successful);
+        this.onWinning(successful);
         this.ajaxSuccess();
       }).catch(err => {
-        this.get('onError')(err);
+        this.onError(err);
         this.ajaxError(err);
       });
     },
 
     removeFile (file) {
-      this.get('files').removeObject(file);
+      this.files.removeObject(file);
       if (!this.get('files.length')) {
         this._resetFileInput();
       }

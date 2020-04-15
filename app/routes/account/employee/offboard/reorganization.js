@@ -23,7 +23,7 @@ export default class AccountEmployeeOffboardReorganizationRoute extends Route {
   }
 
   async hasDirectReports (employee) {
-    let res = await this.get('ajax').request('/api/v1/employees', {
+    let res = await this.ajax.request('/api/v1/employees', {
       data: {
         $or,
         supervisor: employee.get('id'),

@@ -67,7 +67,7 @@ export default class ThreadRoute extends Route {
     if (!document.hasFocus()) {
       const { content: msg, from } = message || {};
 
-      this.get('notifications').send(
+      this.notifications.send(
         `New Message From ${(from.name || {}).first || 'User'}`,
         msg ? msg.length > 40 ? `${msg.substring(0, 40)}...` : msg : message.file ? 'Attachment' : null,
         from.picture || `/api/v1/employee/${from._id}/avatar`
@@ -75,26 +75,26 @@ export default class ThreadRoute extends Route {
     }
 
     const threadId = this.get('controller.model.thread.id'),
-          controller = this.get('controller');
+          controller = this.controller;
 
     if (message.messageThread !== threadId) {
       return;
     }
 
     controller.get('model.messages').pushObject(message);
-    controller.set('ingressPushCount', (controller.get('ingressPushCount') || 0) + 1);
+    controller.set('ingressPushCount', (controller.ingressPushCount || 0) + 1);
   }
 
   getThreadRecord({ thread_id }) {
     const cache = this.get(`cache_threadRecord.${thread_id}`);
-    return cache ? resolve(cache) : this.get('store').findRecord('message-thread', thread_id).then(thread => {
+    return cache ? resolve(cache) : this.store.findRecord('message-thread', thread_id).then(thread => {
       this.set(`cache_threadRecord.${thread_id}`, thread);
       return thread;
     });
   }
 
   retrieveThreadHistory(thread, scrollback, q = {}) {
-    const socket = this.get('socket'),
+    const socket = this.socket,
           id = thread.get('id');
 
     let messageQuery = Object.assign({ id }, q);

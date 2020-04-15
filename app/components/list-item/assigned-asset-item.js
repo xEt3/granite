@@ -5,7 +5,7 @@ import { A } from '@ember/array';
 export default Component.extend({
   classNames: [ 'ui centered card' ],
   didReceiveAttrs () {
-    this.set('details', this.get('showAttributes'));
+    this.set('details', this.showAttributes);
   },
 
   attributes: computed('asset.customFields', function () {
@@ -32,7 +32,7 @@ export default Component.extend({
 
   actions: {
     unassign () {
-      this.get('onUnassign')(this.get('asset'));
+      this.onUnassign(this.asset);
     },
 
     toggleProperty (prop) {

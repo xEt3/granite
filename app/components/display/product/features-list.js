@@ -20,12 +20,12 @@ class FeaturesListComponent extends Component {
 
   scheduleAutoCycle() {
     if (!this.isDestroyed) {
-      this.set('_autoCycleTimer', setTimeout(this.incrementAutoCycle.bind(this), this.get('autoCycleMs')));
+      this.set('_autoCycleTimer', setTimeout(this.incrementAutoCycle.bind(this), this.autoCycleMs));
     }
   }
 
   cancelAutoCycle() {
-    let timerId = this.get('_autoCycleTimer');
+    let timerId = this._autoCycleTimer;
 
     if (timerId) {
       clearTimeout(timerId);
@@ -33,7 +33,7 @@ class FeaturesListComponent extends Component {
   }
 
   incrementAutoCycle() {
-    if (this.get('features.length') - 1 === this.get('autoCycle')) {
+    if (this.get('features.length') - 1 === this.autoCycle) {
       this.set('autoCycle', 0);
     } else {
       this.incrementProperty('autoCycle');
@@ -44,7 +44,7 @@ class FeaturesListComponent extends Component {
 
   @computed('selectedFeature', 'features.[]', 'autoCycle')
   get feature() {
-    return this.get('selectedFeature') || this.get('features')[this.get('autoCycle')];
+    return this.selectedFeature || this.features[this.autoCycle];
   }
 
   @action

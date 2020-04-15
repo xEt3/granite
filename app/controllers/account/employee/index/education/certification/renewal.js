@@ -11,8 +11,8 @@ export default class RenewalController extends Controller.extend(addEdit) {
 
   @action
   async saveRenewal() {
-    const { renewal, certification } = this.get('model'),
-          renewalId = this.get('renewal');
+    const { renewal, certification } = this.model,
+          renewalId = this.renewal;
 
     if (!renewalId) {
       certification.renewals.addObject(renewal);

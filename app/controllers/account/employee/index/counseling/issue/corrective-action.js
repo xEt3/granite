@@ -48,8 +48,8 @@ export default Controller.extend(addEdit, del, {
   },
 
   createFollowup () {
-    if (this.get('followup')) {
-      this.get('followup').destroyRecord();
+    if (this.followup) {
+      this.followup.destroyRecord();
     }
 
     let followup = this.store.createRecord('corrective-action-followup', { creator: this.get('auth.user.employee') });
@@ -60,8 +60,8 @@ export default Controller.extend(addEdit, del, {
 
   actions: {
     saveFollowup () {
-      let followup = this.get('followup'),
-          action = this.get('model');
+      let followup = this.followup,
+          action = this.model;
 
       if (!followup) {
         return;
@@ -87,7 +87,7 @@ export default Controller.extend(addEdit, del, {
       $('#modal__corrective-action--followup').modal({
         detachable: true,
         onHidden:   () => {
-          if (!this.get('respondedFollowup')) {
+          if (!this.respondedFollowup) {
             this.send('respondedFollowup', false);
 
           }
@@ -101,7 +101,7 @@ export default Controller.extend(addEdit, del, {
     },
 
     respondFollowup (response) {
-      this.get(response ? 'resolveFollowup' : 'rejectFollowup')(response ? this.get('followup') : null);
+      this.get(response ? 'resolveFollowup' : 'rejectFollowup')(response ? this.followup : null);
       this.set('respondedFollowup', true);
       $('#modal__corrective-action--followup').modal('hide');
     },

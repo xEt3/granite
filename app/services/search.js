@@ -99,7 +99,7 @@ export default Service.extend({
 
     let searchOptions = Object.assign({}, searchDefaults, opts);
 
-    return this.get('ajax').request('/api/v1/search', { data: { q } })
+    return this.ajax.request('/api/v1/search', { data: { q } })
     .then(response => {
       let responseCopy = { ...response };
       responseCopy.results = this.serializeResults(response.results, searchOptions);

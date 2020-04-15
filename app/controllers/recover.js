@@ -14,10 +14,10 @@ export default class RecoverController extends Controller.extend(ajaxStatus) {
 
   @action
   recover() {
-    const password = this.get('password'),
-          passwordConfirm = this.get('passwordConfirm'),
-          userId = this.get('u'),
-          token = this.get('model');
+    const password = this.password,
+          passwordConfirm = this.passwordConfirm,
+          userId = this.u,
+          token = this.model;
 
     this.ajaxStart();
 
@@ -26,7 +26,7 @@ export default class RecoverController extends Controller.extend(ajaxStatus) {
       return;
     }
 
-    this.get('ajax')
+    this.ajax
     .post(`/api/v1/recovery/company-user/${userId}`, {
       data: {
         token,

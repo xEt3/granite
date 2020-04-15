@@ -24,12 +24,12 @@ export default Route.extend({
   notifications: service('notification-messages'),
 
   beforeModel () {
-    return IS_TEST ? Promise.resolve() : this.get('auth').initializeExistingSession();
+    return IS_TEST ? Promise.resolve() : this.auth.initializeExistingSession();
   },
 
   actions: {
     notify (type) {
-      const notifications = this.get('notifications'),
+      const notifications = this.notifications,
             args = Array.prototype.slice.call(arguments, 1);
 
       args[1] = Object.assign({}, notifyDefaults, args[1]);
@@ -66,7 +66,7 @@ export default Route.extend({
     },
 
     logout (expired) {
-      this.get('auth').logout()
+      this.auth.logout()
       .then(() => {
         if (expired) {
           this.transitionTo('login', { queryParams: { expired: true } });

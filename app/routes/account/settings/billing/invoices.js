@@ -11,7 +11,7 @@ export default class InvoicesRoute extends Route {
     let company = this.modelFor('account.settings.billing');
 
     return {
-      transactions: await this.get('ajax').request(`/api/v1/company/${company.get('id')}/transactions`),
+      transactions: await this.ajax.request(`/api/v1/company/${company.get('id')}/transactions`),
       company
     };
   }

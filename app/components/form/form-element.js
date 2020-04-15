@@ -86,7 +86,7 @@ class FormElementComponent extends SortableItem {
     this.set('removing', true);
 
     run.later(() => {
-      this.get('onRemove')(this.get('model'));
+      this.onRemove(this.model);
     }, 1000);
   }
 

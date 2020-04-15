@@ -8,6 +8,6 @@ import Component from '@ember/component';
 export default class FormStep extends Component {
   @computed('step.link', 'basePath')
   get fullLink() {
-    return this.get('basePath') + '.' + this.get('step.link');
+    return this.basePath + '.' + this.get('step.link');
   }
 }

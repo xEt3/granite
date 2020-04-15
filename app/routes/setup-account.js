@@ -19,7 +19,7 @@ export default class SetupAccountRoute extends Route {
   }
 
   model(params) {
-    return this.get('ajax')
+    return this.ajax
     .request(`/api/v1/company-user/activation-status/${params.user_id}/${params.a}`)
     .then(res => res.companyUser);
   }

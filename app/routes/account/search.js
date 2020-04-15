@@ -11,6 +11,6 @@ export default class SearchRoute extends Route {
   titleToken = 'Search Results';
 
   model({ q }) {
-    return this.get('search').performSearch(q);
+    return this.search.performSearch(q);
   }
 }

@@ -18,7 +18,7 @@ export default Mixin.create({
 
   __authenticationStateChanged () {
     if (this.get('auth.authenticated') === false) {
-      this.transitionTo(this.get('authenticationChangeUrl'));
+      this.transitionTo(this.authenticationChangeUrl);
     }
   },
 

@@ -34,7 +34,7 @@ export default Route.extend({
   model (params) {
     let limit = this.get('controller.limit') || 20,
         page = (params.page || 1) - 1,
-        filterModelsCache = this.get('filterModelsCache');
+        filterModelsCache = this.filterModelsCache;
 
     let documentsQuery = {
       limit,
@@ -58,14 +58,14 @@ export default Route.extend({
       documents:    this.store.query('file', documentsQuery),
       employees:    this.store.findAll('employee'),
       filterModels: filterModelsCache || hash({
-        tags: this.get('ajax').request('/api/v1/files', {
+        tags: this.ajax.request('/api/v1/files', {
           data: {
             _distinct: true,
             systemUse: false,
             select:    'tags'
           }
         }),
-        extension: this.get('ajax').request('/api/v1/files', {
+        extension: this.ajax.request('/api/v1/files', {
           data: {
             _distinct: true,
             systemUse: false,

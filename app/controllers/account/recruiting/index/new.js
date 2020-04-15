@@ -31,7 +31,7 @@ export default Controller.extend(addEdit, {
   /* eslint-disable-next-line */
   jobDescriptionChanged: observer('model.job', function () {
     run.once(() => {
-      let model = this.get('model'),
+      let model = this.model,
           jobTitle = model.get('job.title');
 
       if (jobTitle && !model.get('name')) {

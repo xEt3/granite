@@ -9,7 +9,7 @@ import { A } from '@ember/array';
 export default class PendingApplicant extends BaseLiComponent {
   @computed('selected.[]', 'model')
   get isSelected() {
-    return (this.get('selected') || A()).includes(this.get('model'));
+    return (this.selected || A()).includes(this.model);
   }
 
   click(e) {
@@ -21,6 +21,6 @@ export default class PendingApplicant extends BaseLiComponent {
 
   @action
   select() {
-    this.get('onSelectChange')(this.get('model'), this.get('isSelected'));
+    this.onSelectChange(this.model, this.isSelected);
   }
 }

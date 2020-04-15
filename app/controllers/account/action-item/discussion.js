@@ -10,7 +10,7 @@ export default class AccountActionItemDiscussionController extends Controller {
 
   @action
   async comment () {
-    let text = this.get('commentText'),
+    let text = this.commentText,
         commenter = this.get('auth.user.employee');
 
     this.set('commentText', null);

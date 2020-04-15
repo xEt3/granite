@@ -10,10 +10,10 @@ import { get, set }  from '@ember/object';
 export default class XTree extends Component {
   init() {
     super.init(...arguments);
-    let tree = this.get('model');
+    let tree = this.model;
 
     // Make sure chosen item is highlighted and expanded-to in the tree
-    let chosenId = this.get('chosenId');
+    let chosenId = this.chosenId;
     if (chosenId) {
       let chosen = getDescendents(tree).findBy('id', chosenId);
       if (chosen) {
@@ -26,7 +26,7 @@ export default class XTree extends Component {
     }
 
     // Expand to given depth
-    let expandDepth = this.get('expandDepth');
+    let expandDepth = this.expandDepth;
     if (expandDepth) {
       getDescendents(tree, expandDepth).setEach('isExpanded', true);
     }

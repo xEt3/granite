@@ -80,7 +80,7 @@ export class GraniteResourceRoute extends GraniteRoute {
   }
 
   async afterModel (model, transition) {
-    let { totalRecords, requestedLimit, requestedPage } = this.getProperties('totalRecords', 'requestedLimit', 'requestedPage'),
+    let { totalRecords, requestedLimit, requestedPage } = this,
         maxPages = Math.ceil(totalRecords / requestedLimit);
 
     if (requestedPage > maxPages && totalRecords > 0) {

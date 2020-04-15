@@ -10,11 +10,11 @@ export default class ReviewRoute extends Route.extend(refreshable) {
   ajax;
 
   model({ uploadId }) {
-    return this.get('ajax').request(`/api/v1/employee/census/${uploadId}`)
+    return this.ajax.request(`/api/v1/employee/census/${uploadId}`)
     .then(fileData => {
       return hash({
         fileData,
-        potentialData: this.get('ajax').post(`/api/v1/employee/census/${uploadId}/dryrun`, { data: { headerMap: fileData.data[0] } })
+        potentialData: this.ajax.post(`/api/v1/employee/census/${uploadId}/dryrun`, { data: { headerMap: fileData.data[0] } })
       });
     });
   }

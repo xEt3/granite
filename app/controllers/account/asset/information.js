@@ -17,15 +17,15 @@ export default Controller.extend(addEdit, {
     },
 
     removeAttribute (attr) {
-      let model = this.get('model');
+      let model = this.model;
 
       model.get('attributes').removeObject(attr);
       this.send('save', model);
     },
 
     saveAttribute () {
-      let model = this.get('model'),
-          attr = this.get('pendingAttribute');
+      let model = this.model,
+          attr = this.pendingAttribute;
 
       this.ajaxStart();
 

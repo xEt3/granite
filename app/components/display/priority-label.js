@@ -13,13 +13,13 @@ const priorityMap = [ 'Lowest', 'Low', 'Medium', 'High', 'Highest' ],
 class PriorityLabelComponent extends Component {
   @computed('priority')
   get priorityText() {
-    return priorityMap[this.get('priority') - 1] || '';
+    return priorityMap[this.priority - 1] || '';
   }
 
   @computed('priority')
   get priorityColor() {
-    let color = priorityColorMap[this.get('priority') - 1] || '';
-    return this.get('hasBlock') ? color : color + ' label';
+    let color = priorityColorMap[this.priority - 1] || '';
+    return this.hasBlock ? color : color + ' label';
   }
 }
 

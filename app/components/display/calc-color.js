@@ -13,8 +13,8 @@ class calcColorComponent extends Component {
 
   @computed('value', 'scale')
   get mixes() {
-    const scale = this.get('scale'),
-          val = this.get('value');
+    const scale = this.scale,
+          val = this.value;
 
     return {
       low:  fromPercent(100 - val, scale),

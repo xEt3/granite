@@ -11,7 +11,7 @@ export default Controller.extend(addEdit, {
 
   actions: {
     cancel () {
-      this.get('model').rollbackAttributes();
+      this.model.rollbackAttributes();
       this.transitionToRoute('account.anatomy.locations.index');
     }
   }

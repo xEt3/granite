@@ -8,15 +8,15 @@ export default class NotificationsService extends Service {
   notificationTimeout = 4000;
 
   requestPermission(force) {
-    if (!this.get('isSupported')) {
+    if (!this.isSupported) {
       return resolve('Not supported');
     }
 
-    if (this.get('permission') === 'granted' || Notification.permission === 'granted') {
+    if (this.permission === 'granted' || Notification.permission === 'granted') {
       return resolve(true);
     }
 
-    if (this.get('permission') === 'denied' || Notification.permission === 'denied' && !force) {
+    if (this.permission === 'denied' || Notification.permission === 'denied' && !force) {
       return resolve('Permission denied');
     }
 
@@ -46,7 +46,7 @@ export default class NotificationsService extends Service {
         body,
         icon
       });
-      setTimeout(() => notification.close(), this.get('notificationTimeout'));
+      setTimeout(() => notification.close(), this.notificationTimeout);
     });
   }
 }

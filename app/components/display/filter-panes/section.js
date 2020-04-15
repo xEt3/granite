@@ -9,9 +9,9 @@ class SectionComponent extends Component {
   toggleActive() {
     this.toggleProperty('active');
 
-    const activeState = Object.assign({}, this.get('activeState')),
-          active = this.get('active'),
-          resets = this.get('resets');
+    const activeState = Object.assign({}, this.activeState),
+          active = this.active,
+          resets = this.resets;
 
     if (active && activeState) {
       for (let controlName in activeState) {
@@ -27,10 +27,10 @@ class SectionComponent extends Component {
       }
 
       if (this.get('childViews.length') > 1) {
-        return this.get('childViews').map(view => this.resetFilter(view.get('controlName')));
+        return this.childViews.map(view => this.resetFilter(view.get('controlName')));
       }
 
-      this.resetFilter(resets || this.get('childViews.0.controlName') || (this.get('sectionName') || '').toLowerCase());
+      this.resetFilter(resets || this.get('childViews.0.controlName') || (this.sectionName || '').toLowerCase());
     }
   }
 }

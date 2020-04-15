@@ -41,7 +41,7 @@ export default class SubscriptionService extends Service {
 
   @computed('isCancelled', 'accountSuspended')
   get accountLocked() {
-    return this.get('isCancelled') || this.get('accountSuspended') ? true : false;
+    return this.isCancelled || this.accountSuspended ? true : false;
   }
 
   @computed('subscription', 'subscription.daysPastDue')
@@ -135,7 +135,7 @@ export default class SubscriptionService extends Service {
     let company = this.get('auth.user.company.id');
 
     if (this.get('auth.authenticated') && company) {
-      return this.get('ajax').request(`/api/v1/company/${company}/billing`)
+      return this.ajax.request(`/api/v1/company/${company}/billing`)
       .then(response => {
         this.set('subscription', response.subscription);
         this.set('customer', response.customer);

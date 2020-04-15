@@ -30,7 +30,7 @@ class ScrollRevealComponent extends Component {
 
     this.set('_sr', window.sr);
 
-    if (!this.get('hasBlock') && this.get('selector')) {
+    if (!this.hasBlock && this.selector) {
       this.tagName = '';
     }
 
@@ -52,8 +52,8 @@ class ScrollRevealComponent extends Component {
       return optsObj;
     }, {});
 
-    this.get('_sr').reveal(
-      this.get('selector') || this.$().children().first()[0] || this.$(),
+    this._sr.reveal(
+      this.selector || this.$().children().first()[0] || this.$(),
       opts
     );
   }

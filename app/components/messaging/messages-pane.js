@@ -27,8 +27,8 @@ class MessagesPaneComponent extends Component {
   /* eslint-disable-next-line */
   @observes('messages.[]')
   contentChanged() {
-    const bottomStuck = this.get('isBottomStuck'),
-          topStuck = this.get('isTopStuck');
+    const bottomStuck = this.isBottomStuck,
+          topStuck = this.isTopStuck;
 
     if (!bottomStuck && !topStuck) {
       return;
@@ -36,7 +36,7 @@ class MessagesPaneComponent extends Component {
 
     scheduleOnce('afterRender', () => {
       let $this = this.$(),
-          lastScroll = this.get('lastScrollHeight');
+          lastScroll = this.lastScrollHeight;
 
       this.set('isLoading', false);
 
@@ -50,7 +50,7 @@ class MessagesPaneComponent extends Component {
 
   @computed('messages.length', 'messageThreshold')
   get isFetchable() {
-    return this.get('messages.length') > this.get('messageThreshold');
+    return this.get('messages.length') > this.messageThreshold;
   }
 
   onScroll(e) {
@@ -59,14 +59,14 @@ class MessagesPaneComponent extends Component {
 
   triggerTopScrollEvent() {
     this.set('isLoading', true);
-    this.get('onScrolledToTop')();
+    this.onScrolledToTop();
   }
 
   __handleScroll(e) {
     const t = e.target,
-          isFetchable = this.get('isFetchable');
+          isFetchable = this.isFetchable;
 
-    if (isFetchable && t.scrollTop <= this.get('topOffsetFudgePX')) {
+    if (isFetchable && t.scrollTop <= this.topOffsetFudgePX) {
       this.setProperties({
         isTopStuck:       true,
         lastScrollHeight: t.scrollHeight
@@ -76,7 +76,7 @@ class MessagesPaneComponent extends Component {
         this.set('isBottomStuck', false);
       }
 
-      if (this.get('retrievalMax')) {
+      if (this.retrievalMax) {
         return;
       }
 

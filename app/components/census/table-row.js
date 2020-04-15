@@ -9,7 +9,7 @@ import Component from '@ember/component';
 export default class TableRow extends Component {
   @computed('validation.[]')
   get isInvalid() {
-    let v = this.get('validation');
+    let v = this.validation;
     return v && v.some((cell = {}) => cell.invalid);
   }
 }

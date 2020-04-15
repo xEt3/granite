@@ -5,7 +5,7 @@ export default Component.extend({
 
   actions: {
     delete () {
-      this.get('onDelete')(this.get('department'));
+      this.onDelete(this.department);
     },
 
     toggleProperty (prop) {

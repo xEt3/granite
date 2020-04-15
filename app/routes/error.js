@@ -8,16 +8,16 @@ export default class ErrorRoute extends Route {
 
   @action
   didTransition() {
-    const controller = this.get('controller'),
+    const controller = this.controller,
           lf = window.localforage;
 
-    if (!controller.get('fromError')) {
+    if (!controller.fromError) {
       return lf.getItem('graniteRoutePreviousToError').then(previousRoute => {
         return this.transitionTo(previousRoute && previousRoute !== 'error' ? previousRoute : 'index');
       });
     }
 
-    let previousRoute = controller.get('previousRoute');
+    let previousRoute = controller.previousRoute;
 
     if (previousRoute) {
       lf.setItem('graniteRoutePreviousToError', previousRoute);

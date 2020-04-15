@@ -42,7 +42,7 @@ export default class AccountEmployeeOnboardDocumentsController extends Controlle
       let assignment = this.store.createRecord('file-assignment', {
         file,
         fileType:          'Onboarding',
-        employee:          this.get('employee'),
+        employee:          this.employee,
         visibleToEmployee: true
       });
 

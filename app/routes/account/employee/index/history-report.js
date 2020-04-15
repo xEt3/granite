@@ -23,7 +23,7 @@ export default class HistoryReportRoute extends Route.extend(refreshable) {
 
   model(params) {
     let controller = this.controller,
-        page = controller ? controller.get('page') - 1 : 0,
+        page = controller ? controller.page - 1 : 0,
         employee = this.modelFor('account.employee').get('id');
 
     if (controller) {
@@ -32,13 +32,13 @@ export default class HistoryReportRoute extends Route.extend(refreshable) {
 
     return RSVP.hash({
       history:  this.getHistory(params, employee, page),
-      fields:   controller && controller.get('fields') ? controller.get('fields') : this.getFields(),
+      fields:   controller && controller.fields ? controller.fields : this.getFields(),
       creators: this.store.findAll('company-user')
     });
   }
 
   getFields(employee) {
-    return this.get('ajax').request('api/v1/histories', {
+    return this.ajax.request('api/v1/histories', {
       employee,
       select: 'diff -_id'
     })
@@ -64,7 +64,7 @@ export default class HistoryReportRoute extends Route.extend(refreshable) {
     let query = {
       page,
       targetId,
-      limit:  this.get('limit'),
+      limit:  this.limit,
       select: '-snapshot',
       sort:   { created: -1 }
     };
@@ -83,7 +83,7 @@ export default class HistoryReportRoute extends Route.extend(refreshable) {
         controller.set('isLoading', false);
       }
 
-      let existingSet = controller && !controller.get('resetModel') ? controller.get('model') : A(),
+      let existingSet = controller && !controller.resetModel ? controller.model : A(),
           diffs = A();
 
       result.forEach(item => {

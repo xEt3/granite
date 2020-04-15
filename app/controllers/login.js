@@ -15,8 +15,8 @@ export default class LoginController extends Controller.extend(ajaxStatus) {
 
   @action
   async login() {
-    const email = this.get('email'),
-          password = this.get('password');
+    const email = this.email,
+          password = this.password;
 
     this.ajaxStart();
 
@@ -27,7 +27,7 @@ export default class LoginController extends Controller.extend(ajaxStatus) {
     try {
       await this.auth.login(email, password);
 
-      let previousTransition = this.get('previousTransition');
+      let previousTransition = this.previousTransition;
       this.ajaxSuccess('Successfully logged in.');
 
       if (previousTransition) {
@@ -42,13 +42,13 @@ export default class LoginController extends Controller.extend(ajaxStatus) {
 
   @action
   recover() {
-    const email = this.get('recoveryEmail');
+    const email = this.recoveryEmail;
     let wasFatal;
 
     this.ajaxStart();
     this.set('recoveryEmail', null);
 
-    this.get('ajax').request('/api/v1/recovery/company-user/', { data: { email } })
+    this.ajax.request('/api/v1/recovery/company-user/', { data: { email } })
     .catch((err = {}) => {
       if (err.status === 500) {
         wasFatal = true;

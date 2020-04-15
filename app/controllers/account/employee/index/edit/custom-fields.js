@@ -14,7 +14,7 @@ export default Controller.extend({
   }),
 
   customFieldHelper: computed('addingCustomFieldName', function () {
-    return this.get('addingCustomFieldName') ? 'Cancel' : 'Add a new custom field';
+    return this.addingCustomFieldName ? 'Cancel' : 'Add a new custom field';
   }),
 
   /* eslint-disable-next-line */
@@ -54,9 +54,9 @@ export default Controller.extend({
     },
 
     saveCustomField () {
-      let model = this.get('model'),
-          attr = this.get('pendingCustomFieldName'),
-          value = this.get('pendingCustomFieldValue');
+      let model = this.model,
+          attr = this.pendingCustomFieldName,
+          value = this.pendingCustomFieldValue;
 
       if (!attr) {
         this.ajaxError('Custom field name is required.');
@@ -82,14 +82,14 @@ export default Controller.extend({
     },
 
     editValue (key, newValue) {
-      let model = this.get('model');
+      let model = this.model;
       model.set(`customFields.${key}`, newValue);
       this.updateCustomFields();
       model.set('hasDirtyAttributes', true);
     },
 
     deleteCustomField (key) {
-      let model = this.get('model'),
+      let model = this.model,
           customFields = model.get('customFields');
 
       delete customFields[key];

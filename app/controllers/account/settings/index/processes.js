@@ -16,7 +16,7 @@ export default Controller.extend(addEdit, {
   }),
 
   disableSave: computed('correctiveActionsDirty', 'stagesDirty', 'model.hasDirtyAttributes', function () {
-    return this.get('correctiveActionsDirty') || this.get('stagesDirty') || this.get('model.hasDirtyAttributes') ? false : true;
+    return this.correctiveActionsDirty || this.stagesDirty || this.get('model.hasDirtyAttributes') ? false : true;
   }),
 
   severityForm: computed(() => [{
@@ -69,7 +69,7 @@ export default Controller.extend(addEdit, {
 
   actions: {
     reorderItems (items) {
-      let pipeline = this.get('pipeline');
+      let pipeline = this.pipeline;
 
       items.map((stage, i) => {
         const prevIndex = stage.order;
@@ -80,23 +80,23 @@ export default Controller.extend(addEdit, {
       });
 
       pipeline.set('stages', items);
-      this.set('stagesDirty', objectArrayIsDirty(items, this.get('pipelineInitialState')));
+      this.set('stagesDirty', objectArrayIsDirty(items, this.pipelineInitialState));
     },
 
     save () {
-      if (this.get('correctiveActionsDirty') || this.get('model.hasDirtyAttributes')) {
-        this.saveModel(this.get('model'));
+      if (this.correctiveActionsDirty || this.get('model.hasDirtyAttributes')) {
+        this.saveModel(this.model);
       }
 
-      if (this.get('stagesDirty')) {
-        this.saveModel(this.get('pipeline'));
+      if (this.stagesDirty) {
+        this.saveModel(this.pipeline);
       }
     },
 
     openSeverityModal () {
       this.set('respondedSeverityAddition', false);
 
-      if (!this.get('editingCas')) {
+      if (!this.editingCas) {
         this.send('addSeverity');
       }
 
@@ -104,7 +104,7 @@ export default Controller.extend(addEdit, {
         context:    '.ember-application',
         detachable: true,
         onHidden:   () => {
-          if (!this.get('respondedSeverityAddition')) {
+          if (!this.respondedSeverityAddition) {
             this.send('respondSeverityAddition', false);
           }
         }
@@ -119,7 +119,7 @@ export default Controller.extend(addEdit, {
     openStageModal () {
       this.set('respondedStageAddition', false);
 
-      if (!this.get('editingStage')) {
+      if (!this.editingStage) {
         this.send('addStage');
       }
 
@@ -127,7 +127,7 @@ export default Controller.extend(addEdit, {
         context:    '.ember-application',
         detachable: true,
         onHidden:   () => {
-          if (!this.get('respondedStageAddition')) {
+          if (!this.respondedStageAddition) {
             this.send('respondStageAddition', false);
           }
         }
@@ -173,12 +173,12 @@ export default Controller.extend(addEdit, {
     removeSeverity (severity) {
       severity.destroy();
       this.get('auth.user.company.correctiveActionSeverities').removeObject(severity);
-      this.set('correctiveActionsDirty', objectArrayIsDirty(this.get('model.correctiveActionSeverities').toArray(), this.get('casInitialState')));
+      this.set('correctiveActionsDirty', objectArrayIsDirty(this.get('model.correctiveActionSeverities').toArray(), this.casInitialState));
     },
 
     removeStage (stage) {
       this.get('pipeline.stages').removeObject(stage);
-      this.set('stagesDirty', objectArrayIsDirty(this.get('pipeline.stages').toArray(), this.get('pipelineInitialState')));
+      this.set('stagesDirty', objectArrayIsDirty(this.get('pipeline.stages').toArray(), this.pipelineInitialState));
     },
 
     respondSeverityAddition (response) {
@@ -186,14 +186,14 @@ export default Controller.extend(addEdit, {
       this.set('respondedSeverityAddition', true);
       $('#modal__add-cas').modal('hide');
 
-      let currentSeverity = this.get('currentSeverity');
+      let currentSeverity = this.currentSeverity;
 
-      if (!response && !this.get('editingCas')) {
+      if (!response && !this.editingCas) {
         this.send('removeSeverity', currentSeverity);
       }
 
       this.set('editingCas', false);
-      this.set('correctiveActionsDirty', objectArrayIsDirty(this.get('model.correctiveActionSeverities').toArray(), this.get('casInitialState')));
+      this.set('correctiveActionsDirty', objectArrayIsDirty(this.get('model.correctiveActionSeverities').toArray(), this.casInitialState));
     },
 
     respondStageAddition (response) {
@@ -201,14 +201,14 @@ export default Controller.extend(addEdit, {
       this.set('respondedStageAddition', true);
       $('#modal__add-stage').modal('hide');
 
-      let currentStage = this.get('currentStage');
+      let currentStage = this.currentStage;
 
-      if (!response && !this.get('editingStage')) {
+      if (!response && !this.editingStage) {
         this.send('removeStage', currentStage);
       }
 
       this.set('editingStage', false);
-      this.set('stagesDirty', objectArrayIsDirty(this.get('pipeline.stages').toArray(), this.get('pipelineInitialState')));
+      this.set('stagesDirty', objectArrayIsDirty(this.get('pipeline.stages').toArray(), this.pipelineInitialState));
     }
   }
 });

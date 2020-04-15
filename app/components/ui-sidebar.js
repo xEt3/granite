@@ -7,13 +7,13 @@ export default class _UiSidebar extends UiSidebar {
   'ui_context' = '.ember-application > div.ember-view';
 
   didInsertElement() {
-    let context = this.get('ui_context');
+    let context = this.ui_context;
 
     $(context).addClass('pushable');
     // this._super(...arguments);
 
     this.$().sidebar({ context: $(context) })
     .sidebar('attach events', `${context} > .menu .item`)
-    .sidebar('setting', 'transition', this.get('transition'));
+    .sidebar('setting', 'transition', this.transition);
   }
 }

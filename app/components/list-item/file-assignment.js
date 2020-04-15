@@ -20,11 +20,11 @@ export default class FileAssignment extends Component {
 
   @action
   openSignatureModal() {
-    $(`#${this.get('modalId')}`).modal({ detachable: true }).modal('show');
+    $(`#${this.modalId}`).modal({ detachable: true }).modal('show');
   }
 
   @action
   closeSignatureModal() {
-    $(`#${this.get('modalId')}`).modal('hide');
+    $(`#${this.modalId}`).modal('hide');
   }
 }

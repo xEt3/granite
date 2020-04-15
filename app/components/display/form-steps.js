@@ -10,7 +10,7 @@ const dictMap = [ 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight'
 @classNameBindings('dictStep')
 export default class FormSteps extends Component {
   didReceiveAttrs() {
-    this.set('_step', this.get('step'));
+    this.set('_step', this.step);
   }
 
   @computed('steps')

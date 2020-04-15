@@ -8,12 +8,12 @@ export default Controller.extend(ajaxStatus, {
 
   loadingPromo: computed.and('applyingPromo', 'working'),
   savingStep:   computed('applyingPromo', 'working', function () {
-    return !this.get('applyingPromo') && this.get('working');
+    return !this.applyingPromo && this.working;
   }),
 
   actions: {
     async verifyDiscount () {
-      const code = this.get('promoCode');
+      const code = this.promoCode;
 
       if (!code) {
         return;
@@ -35,14 +35,14 @@ export default Controller.extend(ajaxStatus, {
 
       this.analytics.trackEvent('Signup', 'promo_applied', validity.code);
 
-      this.get('model').set('accountBillingPromo', validity.code);
+      this.model.set('accountBillingPromo', validity.code);
       this.set('appliedPromo', validity);
 
       this.ajaxSuccess(null, true);
     },
 
     submit (nonce) {
-      const model = this.get('model');
+      const model = this.model;
 
       this.ajaxStart();
 

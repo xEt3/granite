@@ -8,7 +8,7 @@ class RecruitingStatusBar extends Component {
   @className
   @computed('campaign.{hiring,startOn}')
   get campaignStatus () {
-    let { hiring, startOn } = this.get('campaign'),
+    let { hiring, startOn } = this.campaign,
         now = moment();
 
     return hiring ? 'green' : now.isBefore(startOn) ? null : 'red';

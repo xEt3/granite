@@ -23,7 +23,7 @@ export default class ThreadController extends Controller {
       return;
     }
 
-    this.get('socket').emit('thread_message', {
+    this.socket.emit('thread_message', {
       message,
       file:   file && file._id,
       thread: this.get('model.thread.id')

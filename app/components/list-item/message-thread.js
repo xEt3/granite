@@ -14,19 +14,19 @@ export default BaseListItem.extend({
   }),
 
   linkClass: computed('active', function () {
-    return `ui ${this.get('model.someUnread') ? '' : 'secondary'} segment messaging__message-thread-item ${this.get('active') ? 'active' : ''}`;
+    return `ui ${this.get('model.someUnread') ? '' : 'secondary'} segment messaging__message-thread-item ${this.active ? 'active' : ''}`;
   }),
 
   init () {
     this._super(...arguments);
     this.id = Math.round(Math.random() * 10000);
-    this.messaging.subscribe('thread_message', this.onMessage, this, this.get('id'));
+    this.messaging.subscribe('thread_message', this.onMessage, this, this.id);
   },
 
 
   willDestroy () {
     this._super(...arguments);
-    this.messaging.unsubscribe('thread_message', this.get('id'));
+    this.messaging.unsubscribe('thread_message', this.id);
   },
 
   onMessage ([ message ]) {
@@ -39,7 +39,7 @@ export default BaseListItem.extend({
 
   participantsCondensed: computed('model.between.[]', 'isLongParticipantList', function () {
     const participants = this.get('model.between'),
-          isLong = this.get('isLongParticipantList');
+          isLong = this.isLongParticipantList;
 
     let allButMe = participants.filter(x => x.get('id') !== this.get('user.id')),
         remainingLength;

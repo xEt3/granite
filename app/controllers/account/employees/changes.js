@@ -11,13 +11,13 @@ export default class ChangesController extends Controller.extend(addEdit) {
 
   @action
   approveChange(change) {
-    if (this.get('working')) {
+    if (this.working) {
       return;
     }
 
     this.ajaxStart();
 
-    this.get('ajax').post(`/api/v1/change/${change.get('id')}/apply`)
+    this.ajax.post(`/api/v1/change/${change.get('id')}/apply`)
     .then(() => {
       this.ajaxSuccess(`Successfully applied ${change.get('changes.length')} changes for ${change.get('employee.firstName')}.`);
       this.send('refresh');
@@ -27,7 +27,7 @@ export default class ChangesController extends Controller.extend(addEdit) {
 
   @action
   rejectChange(change) {
-    if (this.get('working')) {
+    if (this.working) {
       return;
     }
 

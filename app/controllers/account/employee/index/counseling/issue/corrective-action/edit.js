@@ -47,7 +47,7 @@ export default Controller.extend(addEdit, {
   sortedSeverities: computed.sort('severities', 'severitySorting'),
 
   form: computed('model.severity', 'severities.[]', function () {
-    let severity = this.get('severities').findBy('id', this.get('model.severity')),
+    let severity = this.severities.findBy('id', this.get('model.severity')),
         severityIsFormal = severity && severity.get('formal');
 
     return severityIsFormal ? [

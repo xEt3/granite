@@ -6,13 +6,13 @@ export default Route.extend({
   auth:       service(),
 
   model () {
-    return this.get('store').find('company', this.get('auth.user.company.id'));
+    return this.store.find('company', this.get('auth.user.company.id'));
   },
 
   setupController (controller, model) {
     this._super(...arguments);
 
-    const { g, i, s } = controller.getProperties('g', 'i', 's');
+    const { g, i, s } = controller;
 
     if (g && i && s && !model.get('linkedServices').includes(s)) {
       controller.grant();

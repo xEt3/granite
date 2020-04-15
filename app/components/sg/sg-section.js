@@ -9,6 +9,6 @@ import Component from '@ember/component';
 export default class SgSection extends Component {
   @computed('focus', 'name')
   get _hidden() {
-    return this.get('focus') && this.get('focus') !== this.get('name');
+    return this.focus && this.focus !== this.name;
   }
 }

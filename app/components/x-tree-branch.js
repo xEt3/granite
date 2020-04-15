@@ -9,8 +9,8 @@ import layout from '../templates/components/x-tree-branch';
 @classNames('tree-branch')
 export default class XTreeBranch extends Component {
   recalculateState() {
-    if (this.get('recalculateStateAction')) {
-      this.get('recalculateStateAction')();
+    if (this.recalculateStateAction) {
+      this.recalculateStateAction();
     }
   }
 }

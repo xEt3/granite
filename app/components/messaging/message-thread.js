@@ -16,27 +16,27 @@ const MessageThreadComponent = Component.extend(fileSupport, {
   },
 
   sendMessage () {
-    resolve(this.get('fileIsAdded') ? this.upload() : null)
+    resolve(this.fileIsAdded ? this.upload() : null)
     .then(file => {
-      this.get('onMessage')(this.get('message'), file);
+      this.onMessage(this.message, file);
       this.set('message', null);
       this.send('removeFile');
     });
   },
 
   scrolledToTop () {
-    this.get('onScrollback')();
+    this.onScrollback();
   },
 
   actions: {
     removeFile () {
       const $dropzone = Dropzone.forElement('.dropzone__messaging');
 
-      if (!$dropzone || !this.get('fileIsAdded')) {
+      if (!$dropzone || !this.fileIsAdded) {
         return;
       }
 
-      $dropzone.removeFile(this.get('fileIsAdded'));
+      $dropzone.removeFile(this.fileIsAdded);
       this.set('fileIsAdded', false);
     },
 
@@ -45,7 +45,7 @@ const MessageThreadComponent = Component.extend(fileSupport, {
     },
 
     uploadError (err) {
-      this.get('rejectUpload')(err);
+      this.rejectUpload(err);
     },
 
     // TODO: use uploadProgress

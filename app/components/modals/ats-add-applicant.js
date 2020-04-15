@@ -31,18 +31,18 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
 
   @computed('elementId')
   get modalId() {
-    return this.get('elementId') + '-modal';
+    return this.elementId + '-modal';
   }
 
   createConfirm() {
-    const store = this.get('store');
+    const store = this.store;
 
     this.setProperties({
       newApplicant:   store.createRecord('applicant', {}),
       newApplication: store.createRecord('jobApplication', {})
     });
 
-    $('#' + this.get('modalId')).modal({
+    $('#' + this.modalId).modal({
       detachable: true,
       closable:   false,
       context:    '.ember-application'
@@ -60,12 +60,12 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
   }
 
   closeModal() {
-    $('#' + this.get('modalId')).modal('hide');
+    $('#' + this.modalId).modal('hide');
   }
 
   requiredFieldsFilled() {
-    let applicantRequiredFields = this.get('applicantRequiredFields');
-    let newApplicant = this.get('newApplicant');
+    let applicantRequiredFields = this.applicantRequiredFields;
+    let newApplicant = this.newApplicant;
     for (let field in applicantRequiredFields) {
       if (field !== '_super') {
         let value = newApplicant[applicantRequiredFields[field]];
@@ -81,8 +81,8 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
   addedFile(file) {
     let  $dropzone = Dropzone.forElement('.input__dropzone');
 
-    if (this.get('fileIsAdded')) {
-      $dropzone.removeFile(this.get('fileIsAdded'));
+    if (this.fileIsAdded) {
+      $dropzone.removeFile(this.fileIsAdded);
     }
     this.set('fileIsAdded', file);
   }
@@ -101,18 +101,18 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
       return;
     }
 
-    $dropzone.removeFile(this.get('fileIsAdded'));
+    $dropzone.removeFile(this.fileIsAdded);
     this.set('fileIsAdded', false);
   }
 
   @action
   uploadError(err) {
-    this.get('rejectUpload')(err);
+    this.rejectUpload(err);
   }
 
   @action
   uploadedFile(prog, response) {
-    this.get('resolveUpload')(response);
+    this.resolveUpload(response);
   }
 
   @action
@@ -122,8 +122,8 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
 
   @action
   cancel() {
-    this.get('newApplicant').destroyRecord();
-    this.get('newApplication').destroyRecord();
+    this.newApplicant.destroyRecord();
+    this.newApplication.destroyRecord();
 
     this.send('removeFile');
     this.closeModal();
@@ -131,7 +131,7 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
 
   @action
   save() {
-    const store = this.get('store');
+    const store = this.store;
     this.ajaxStart();
 
     if (!this.requiredFieldsFilled()) {
@@ -139,19 +139,19 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
       return;
     }
 
-    let applicant = this.get('newApplicant'),
-        application = this.get('newApplication');
+    let applicant = this.newApplicant,
+        application = this.newApplication;
 
     application.setProperties({
       applicant,
       manualEntry: true,
       jobOpening:  this.get('model.jobOpening'),
-      reviewedOn:  this.get('newApplication').stage ? new Date() : null
+      reviewedOn:  this.newApplication.stage ? new Date() : null
     });
 
     applicant.save()
     .then(() => {
-      if (this.get('fileIsAdded')) {
+      if (this.fileIsAdded) {
         return this.uploadResume();
       }
     })
@@ -178,6 +178,6 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
 
   @action
   notify(type, msg) {
-    this.get('onNotify')(type, msg);
+    this.onNotify(type, msg);
   }
 }

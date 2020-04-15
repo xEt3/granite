@@ -12,19 +12,19 @@ import {
 export default class NewImportRecordItem extends BaseLiComponent {
   @computed('model', 'type')
   get displayProp() {
-    const properties = recordDisplayPropertyMap[this.get('type')] || [],
-          record = this.get('model');
+    const properties = recordDisplayPropertyMap[this.type] || [],
+          record = this.model;
 
     return record && properties.map(key => get(record, key)).join(' ');
   }
 
   @computed('type')
   get recordRoute() {
-    return modelPageMap[this.get('type')];
+    return modelPageMap[this.type];
   }
 
   linkToRecord() {
-    const recordRoute = this.get('recordRoute'),
+    const recordRoute = this.recordRoute,
           id = this.get('model._id');
 
     if (!recordRoute) {
@@ -37,6 +37,6 @@ export default class NewImportRecordItem extends BaseLiComponent {
       transitionArgs.push(id);
     }
 
-    this.get('onTransition')(transitionArgs);
+    this.onTransition(transitionArgs);
   }
 }

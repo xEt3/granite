@@ -4,7 +4,7 @@ import Component from '@ember/component';
 @classic
 export default class FilterPane extends Component {
   sendComponentUpdate(path, value) {
-    this.get('onChange')(path, value);
+    this.onChange(path, value);
   }
 
   resetFilter(path) {

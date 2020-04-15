@@ -19,7 +19,7 @@ export default Component.extend(ajaxStatus, {
   click (e) {
     e.preventDefault();
 
-    if (this.get('alreadyLinked')) {
+    if (this.alreadyLinked) {
       return;
     }
 
@@ -27,17 +27,17 @@ export default Component.extend(ajaxStatus, {
   },
 
   alreadyLinked: computed('linkedServices.[]', 'service', function () {
-    return (this.get('linkedServices') || []).includes(this.get('service'));
+    return (this.linkedServices || []).includes(this.service);
   }),
 
   actions: {
     initiateIntegrationIntent () {
       this.ajaxStart();
 
-      let integration = this.get('service'),
-          apiUri = this.get('apiUri').replace(':service', integration);
+      let integration = this.service,
+          apiUri = this.apiUri.replace(':service', integration);
 
-      this.get('ajax').post(apiUri)
+      this.ajax.post(apiUri)
       .then(response => {
         this.ajaxSuccess(null, true);
         window.location = response.authUri;
@@ -46,7 +46,7 @@ export default Component.extend(ajaxStatus, {
     },
 
     notify () {
-      this.get('onNotify').apply(null, arguments);
+      this.onNotify.apply(null, arguments);
     }
   }
 });

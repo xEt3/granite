@@ -55,7 +55,7 @@ export default class AccountEmployeesRoute extends GraniteResourceRoute {
     return hash({
       employees:    super.model(...arguments),
       filterModels: hash({
-        supervisors: this.get('supervisors'),
+        supervisors: this.supervisors,
         departments: this.store.query('department', {
           select: '_id name',
           sort:   { name: 1 }

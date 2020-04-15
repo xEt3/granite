@@ -83,7 +83,7 @@ export default class Employee extends Model.extend(Validations) {
 
   @computed('ssn')
   get ssnMasked() {
-    var ssn = this.get('ssn');
+    var ssn = this.ssn;
     return ssn ? ssn.replace(/\D/g, '').replace(/(?:\d{5})(\d{4})/, '***-**-$1') : ssn;
   }
 
@@ -279,7 +279,7 @@ export default class Employee extends Model.extend(Validations) {
 
   @computed('probationUntil')
   get onProbation() {
-    return this.get('probationUntil') && moment(this.get('probationUntil')).isAfter(moment());
+    return this.probationUntil && moment(this.probationUntil).isAfter(moment());
   }
 
   @attr('date', {

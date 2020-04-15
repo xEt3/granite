@@ -11,8 +11,8 @@ export default Mixin.create({
   async model (params) {
     console.warn('Mixing in the route-abstraction for add is deprecated in favor of extending the granite core route.');
 
-    const modelName = this.get('modelName'),
-          defaults = this.get('modelDefaults'),
+    const modelName = this.modelName,
+          defaults = this.modelDefaults,
           getDefaults = this.getModelDefaults;
 
     let defaultPromise;

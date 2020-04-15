@@ -6,6 +6,6 @@ import Component from '@ember/component';
 export default class IssueDocuments extends Component {
   @action
   delete() {
-    this.get('onDelete')(this.get('document'));
+    this.onDelete(this.document);
   }
 }

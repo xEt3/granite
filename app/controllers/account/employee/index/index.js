@@ -25,7 +25,7 @@ export default Controller.extend(addEdit, {
   actions: {
     forceSync () {
       this.ajaxStart();
-      this.get('ajax').post(`/api/v1/integrations/${this.get('model.externalLinkService')}/force-sync`, {
+      this.ajax.post(`/api/v1/integrations/${this.get('model.externalLinkService')}/force-sync`, {
         data: {
           modelName: 'employees',
           recordId:  this.get('model.id')
@@ -42,13 +42,13 @@ export default Controller.extend(addEdit, {
     },
 
     editValue (key, newValue) {
-      let model = this.get('model');
+      let model = this.model;
       model.set(`customFields.${key}`, newValue);
       this.saveModel();
     },
 
     deleteCustomField (key) {
-      let model = this.get('model'),
+      let model = this.model,
           customFields = model.get('customFields');
 
       delete customFields[key];

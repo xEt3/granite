@@ -16,6 +16,6 @@ export default class SocialSecurity extends Component {
   }
 
   get ssnInputType() {
-    return this.get('showSsn') ? 'text' : 'password';
+    return this.showSsn ? 'text' : 'password';
   }
 }

@@ -16,7 +16,7 @@ import titleCase from 'granite/utils/title-case';
 class RecordSetRecordComponent extends Component {
   @computed('selectedRows.[]', 'record.id')
   get isSelected() {
-    return (this.get('selectedRows') || []).includes(this.get('record.id'));
+    return (this.selectedRows || []).includes(this.get('record.id'));
   }
 
   @computed('duplicate.matchReason')
@@ -33,8 +33,8 @@ class RecordSetRecordComponent extends Component {
   @computed('fields.[]', 'record.duplicate', 'recordType')
   get duplicate() {
     const duplicate = this.get('record.duplicate'),
-          displayField = this.get('fields')[0],
-          page = modelPageMap[this.get('recordType')] || {};
+          displayField = this.fields[0],
+          page = modelPageMap[this.recordType] || {};
 
     return duplicate && {
       page:        page.path,
@@ -47,7 +47,7 @@ class RecordSetRecordComponent extends Component {
 
   @action
   linkToDuplicate() {
-    const { page, id, includeId } = this.get('duplicate') || {};
+    const { page, id, includeId } = this.duplicate || {};
 
     if (!page) {
       return;
@@ -59,7 +59,7 @@ class RecordSetRecordComponent extends Component {
       transitionArgs.push(id);
     }
 
-    this.get('onTransition')(transitionArgs);
+    this.onTransition(transitionArgs);
   }
 }
 

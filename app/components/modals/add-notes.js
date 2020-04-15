@@ -9,21 +9,21 @@ export default Modal.extend(ajaxStatus, {
   enableNotify: false,
 
   modalId: computed('elementId', function () {
-    return this.get('elementId') + '-modal';
+    return this.elementId + '-modal';
   }),
 
   closeModal () {
-    $('#' + this.get('modalId')).modal('hide');
+    $('#' + this.modalId).modal('hide');
   },
 
   actions: {
     cancel () {
-      this.get('model').rollbackAttributes();
+      this.model.rollbackAttributes();
       this.closeModal();
     },
 
     save () {
-      let application = this.get('model');
+      let application = this.model;
       this.ajaxStart();
 
       application.save()

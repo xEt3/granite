@@ -10,7 +10,7 @@ export default class EditController extends Controller.extend(addEdit) {
 
   @action
   presetAttrs() {
-    let model = this.get('model'),
+    let model = this.model,
         id = [];
 
     this.permissionsTree.forEach(permission=>{

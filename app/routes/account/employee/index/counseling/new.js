@@ -34,7 +34,7 @@ export default class AccountEmployeeCounselingNewRoute extends Route {
   }
 
   async getIssueTypes () {
-    let res = await this.get('ajax').request('/api/v1/employee-issues', {
+    let res = await this.ajax.request('/api/v1/employee-issues', {
       data: {
         _distinct: true,
         select:    'type'

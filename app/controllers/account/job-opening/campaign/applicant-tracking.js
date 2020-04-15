@@ -37,8 +37,8 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
   }),
 
   resetMeeting () {
-    if (this.get('currentMeeting')) {
-      this.get('currentMeeting').destroy();
+    if (this.currentMeeting) {
+      this.currentMeeting.destroy();
     }
 
     this.set('currentMeeting', this.store.createRecord('event'));
@@ -81,7 +81,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
 
     this.ajaxStart();
 
-    const app = this.get('appInScheduler'),
+    const app = this.appInScheduler,
           isEmployeeApplicant = app.get('isEmployee');
 
     event.setProperties({
@@ -125,7 +125,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     // if nothing exists, create one
     if (!jobApplication.get('isEmployee') && applicant) {
       let employeeData = Object.assign({}, applicant.getProperties(employeeProps), { onboarding: true });
-      employee = this.get('store').createRecord('employee', employeeData);
+      employee = this.store.createRecord('employee', employeeData);
     }
 
     let wasNew = employee.get('isNew');
@@ -155,11 +155,11 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
     },
 
     selectApplication (app, remove) {
-      this.get('selectedApplications')[remove ? 'removeObject' : 'addObject'](app);
+      this.selectedApplications[remove ? 'removeObject' : 'addObject'](app);
     },
 
     selectAllApplications () {
-      this.set('selectedApplications', A([ ...this.get('pendingApplications').toArray() ]));
+      this.set('selectedApplications', A([ ...this.pendingApplications.toArray() ]));
     },
 
     deselectAllApplications () {
@@ -206,7 +206,7 @@ export default Controller.extend(addEdit, ajaxStatus, modalSupport, {
 
     async saveApplicationLabels () {
       this.analytics.trackEvent('Features', 'ats_labels', 'ATS candidate labeling');
-      this.saveModel(await this.get('appInAddLabels'));
+      this.saveModel(await this.appInAddLabels);
     },
 
     onNotify (type, msg) {

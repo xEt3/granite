@@ -11,7 +11,7 @@ export default class IndexController extends Controller {
 
   @computed('model', 'selectedNode.id')
   get baseNode() {
-    return this.makeNode(this.get('selectedNode') || this.get('model.firstObject'));
+    return this.makeNode(this.selectedNode || this.get('model.firstObject'));
   }
 
   makeNode(object, base = {}) {

@@ -15,18 +15,18 @@ export default class ListsController extends Controller.extend(addEdit) {
   @tracked currentItem = null;
 
   get currentForm() {
-    return lists[this.get('list')];
+    return lists[this.list];
   }
 
   @computed('currentForm.listType', 'currentItem')
   get modelForForm() {
     //need this bc you have to pass a model object to quick-form
-    return this.get('currentForm.listType') === 'string' ? this : this.get('currentItem');
+    return this.get('currentForm.listType') === 'string' ? this : this.currentItem;
   }
 
   afterSave() {
-    if (this.get('list') === 'labels') {
-      this.get('model').forEach(item => {
+    if (this.list === 'labels') {
+      this.model.forEach(item => {
         if (!item.id) {
           item.destroyRecord();
         }
@@ -36,7 +36,7 @@ export default class ListsController extends Controller.extend(addEdit) {
 
   @action
   async saveList() {
-    let company = this.get('company');
+    let company = this.company;
     await this.saveModel(company);
     this.set('dirtyList', false);
   }
@@ -50,12 +50,12 @@ export default class ListsController extends Controller.extend(addEdit) {
   openModal() {
     this.set('respondedModal', false);
 
-    if (!this.get('currentItem')) {
+    if (!this.currentItem) {
       //if we aren't editing, set initial currentItem value for modal usage
       this.set('currentItem', this.get('currentForm.listType') === 'string' ? '' : {});
     }
 
-    $(`#${this.get('modalId')}`).modal({
+    $(`#${this.modalId}`).modal({
       detachable: true,
       context:    '.ember-application',
       onHidden:   () => {
@@ -65,7 +65,7 @@ export default class ListsController extends Controller.extend(addEdit) {
           index:       null
         });
 
-        if (!this.get('respondedModal')) {
+        if (!this.respondedModal) {
           this.send('respondModal', false);
         }
       }
@@ -79,7 +79,7 @@ export default class ListsController extends Controller.extend(addEdit) {
 
   @action
   closeModal() {
-    $(`#${this.get('modalId')}`).modal('hide');
+    $(`#${this.modalId}`).modal('hide');
   }
 
   @action
@@ -100,7 +100,7 @@ export default class ListsController extends Controller.extend(addEdit) {
 
   @action
   addItem() {
-    let currentItem = this.get('currentItem');
+    let currentItem = this.currentItem;
 
     if (typeof currentItem === 'object') {
       currentItem = this.store.createRecord('label', {
@@ -109,23 +109,23 @@ export default class ListsController extends Controller.extend(addEdit) {
       });
     }
 
-    this.get('model').addObject(currentItem);
+    this.model.addObject(currentItem);
     this.set('dirtyList', true);
   }
 
   @action
   editItem() {
-    let currentItem = this.get('currentItem'),
-        index = this.get('index');
+    let currentItem = this.currentItem,
+        index = this.index;
 
-    this.get('model').removeAt(index);
-    this.get('model').insertAt(index, currentItem);
+    this.model.removeAt(index);
+    this.model.insertAt(index, currentItem);
     this.set('dirtyList', true);
   }
 
   @action
   deleteItem(item) {
-    this.get('model').removeObject(item);
+    this.model.removeObject(item);
     this.set('dirtyList', true);
   }
 }

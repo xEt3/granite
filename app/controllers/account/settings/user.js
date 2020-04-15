@@ -23,7 +23,7 @@ export default class UserSettingsController extends Controller {
     }
 
     try {
-      await this.get('ajax').post('/api/v1/company-user/change-password', {
+      await this.ajax.post('/api/v1/company-user/change-password', {
         data: {
           newPassword,
           currentPassword

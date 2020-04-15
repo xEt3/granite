@@ -10,7 +10,7 @@ class PipelineStageComponent extends Component {
   @computed('activeCandidates.@each.{stageOrder,stage}', 'stage._id')
   get candidates() {
     const stageId = this.get('stage._id');
-    return A([ stageId, ...(this.get('activeCandidates') || []).filter(candidate => stageId === candidate.get('stage')).sortBy('stageOrder') ]);
+    return A([ stageId, ...(this.activeCandidates || []).filter(candidate => stageId === candidate.get('stage')).sortBy('stageOrder') ]);
   }
 }
 

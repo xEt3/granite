@@ -8,6 +8,6 @@ import Component from '@ember/component';
 export default class TimelineGroupDetail extends Component {
   @action
   deselectGroup() {
-    this.get('onDeselect')();
+    this.onDeselect();
   }
 }

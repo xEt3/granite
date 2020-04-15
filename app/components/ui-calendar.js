@@ -11,12 +11,12 @@ export default class UiCalendar extends Component.extend(Base) {
 
   @computed('elementId')
   get calendarId() {
-    return `${this.get('elementId')}__calendar`;
+    return `${this.elementId}__calendar`;
   }
 
   init() {
     super.init(...arguments);
-    this.set('value', this.get('dateValue'));
+    this.set('value', this.dateValue);
   }
 }
 

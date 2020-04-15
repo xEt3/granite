@@ -28,21 +28,21 @@ export default Component.extend(addEdit, del, {
 
   actions: {
     openModal () {
-      $(`#${this.get('modalId')}`).modal({ detachable: true }).modal('show');
+      $(`#${this.modalId}`).modal({ detachable: true }).modal('show');
     },
 
     closeModal () {
-      $(`#${this.get('modalId')}`).modal('hide');
+      $(`#${this.modalId}`).modal('hide');
     },
 
     uploadFollowup (file) {
-      let assignment = this.get('assignment');
+      let assignment = this.assignment;
       assignment.get('followups').pushObject(file);
       this.saveModel(assignment);
     },
 
     notify (type, msg) {
-      this.get('onNotify')(type, msg);
+      this.onNotify(type, msg);
     }
   }
 });

@@ -10,9 +10,9 @@ export default class DryRunEmployeeRelationship extends Component {
 
   @computed('availableFields', 'key', 'value')
   get relationship() {
-    let key = this.get('key'),
-        value = this.get('value'),
-        field = this.get('availableFields').findBy('path', key) || {};
+    let key = this.key,
+        value = this.value,
+        field = this.availableFields.findBy('path', key) || {};
 
     if (field.isRelationship) {
       if (key === 'supervisor') {
@@ -20,7 +20,7 @@ export default class DryRunEmployeeRelationship extends Component {
         key = 'employee';
       }
       //if value is object, return value because its a supervisor in the local upload
-      return typeof value === 'object' ? value : this.get('store').findRecord(key, value);
+      return typeof value === 'object' ? value : this.store.findRecord(key, value);
     }
 
     return false;

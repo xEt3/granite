@@ -29,6 +29,6 @@ export default Modal.extend({
       this.set('form', null);
     }
 
-    $(`#${this.get('modalId')}`).modal('hide');
+    $(`#${this.modalId}`).modal('hide');
   }
 });

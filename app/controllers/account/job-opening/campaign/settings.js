@@ -122,15 +122,15 @@ export default Controller.extend(addEdit, {
 
   actions: {
     toggleCustomPipeline () {
-      if (this.get('customPipeline')) {
-        this.get('customPipeline').destroyRecord()
+      if (this.customPipeline) {
+        this.customPipeline.destroyRecord()
         .then(() => {
           this.set('customPipeline', null);
         });
       } else {
         this.set('customPipeline', this.store.createRecord('recruiting-pipeline', {
           company:     this.get('auth.user.company'),
-          jobOpenings: [ this.get('model') ],
+          jobOpenings: [ this.model ],
           stages:      this.get('defaultPipeline.stages').map(({ name, order }) => ({
             name,
             order
@@ -140,13 +140,13 @@ export default Controller.extend(addEdit, {
     },
 
     saveCustomPipeline () {
-      if (this.get('customPipeline')) {
-        this.get('customPipeline').save();
+      if (this.customPipeline) {
+        this.customPipeline.save();
       }
     },
 
     reorderItems (items) {
-      let customPipeline = this.get('customPipeline');
+      let customPipeline = this.customPipeline;
       items.map((stage, i) => {
         const prevIndex = stage.order;
         if (prevIndex !== i) {
@@ -158,7 +158,7 @@ export default Controller.extend(addEdit, {
 
     openStageModal () {
       this.set('respondedStageAddition', false);
-      if (!this.get('editingStage')) {
+      if (!this.editingStage) {
         this.send('addStage');
       }
 
@@ -166,7 +166,7 @@ export default Controller.extend(addEdit, {
         context:    '.ember-application',
         detachable: true,
         onHidden:   () => {
-          if (!this.get('respondedStageAddition')) {
+          if (!this.respondedStageAddition) {
             this.send('respondStageAddition', false);
           }
 
@@ -205,8 +205,8 @@ export default Controller.extend(addEdit, {
       this.get(response ? 'resolveStage' : 'rejectStage')(response);
       this.set('respondedStageAddition', true);
       $('#modal__add-stage').modal('hide');
-      let currentStage = this.get('currentStage');
-      if (!response && !this.get('editingStage')) {
+      let currentStage = this.currentStage;
+      if (!response && !this.editingStage) {
         this.send('removeStage', currentStage);
       }
       this.set('editingStage', false);

@@ -13,7 +13,7 @@ export default Controller.extend(addEdit, {
   }),
 
   disableSave: computed('model.{documents.[],hasDirtyAttributes}', 'initialDocuments.[]', function () {
-    let initialDocuments = this.get('initialDocuments'),
+    let initialDocuments = this.initialDocuments,
         dirtyAttributes = this.get('model.hasDirtyAttributes');
 
     return this.get('model.documents')

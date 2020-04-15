@@ -6,11 +6,11 @@ export default Controller.extend(addEdit, {
   enableModelValidations: true,
 
   sortGroupClass: computed('showingPreview', function () {
-    return `ui middle aligned divided list screening__form-elements ${this.get('showingPreview') ? 'screening__form-elements--preview' : ''}`;
+    return `ui middle aligned divided list screening__form-elements ${this.showingPreview ? 'screening__form-elements--preview' : ''}`;
   }),
 
   afterSave () {
-    let form = this.get('form'),
+    let form = this.form,
         removeDuplicates = [];
 
     form.get('elements').forEach(e => {
@@ -33,18 +33,18 @@ export default Controller.extend(addEdit, {
     },
 
     reorderElements (elements) {
-      this.get('form').set('elements', elements);
+      this.form.set('elements', elements);
     },
 
     async saveAndContinue () {
       this.ajaxStart();
 
-      let f = await this.get('form');
+      let f = await this.form;
       if (!f.elements.length) {
         try {
           await f.destroyRecord();
           this.set('model.screening', null);
-          await this.get('target').send('saveAndContinue');
+          await this.target.send('saveAndContinue');
           this.ajaxSuccess();
         } catch (e) {
           this.ajaxError(e);
@@ -60,7 +60,7 @@ export default Controller.extend(addEdit, {
       try {
         let form = await this.saveModel(f);
         this.set('model.screening', form);
-        await this.get('target').send('saveAndContinue');
+        await this.target.send('saveAndContinue');
       } catch (e) {
         this.ajaxError(e);
       }

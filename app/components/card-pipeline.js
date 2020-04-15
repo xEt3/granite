@@ -9,7 +9,7 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 class CardPipelineComponent extends Component.extend(addEdit) {
   @action
   setOrder(targetStageId, { sourceList, sourceIndex, targetList, targetIndex }) {
-    const items = this.get('candidates'),
+    const items = this.candidates,
           item = sourceList.objectAt(sourceIndex),
           movedStage = sourceList !== targetList,
           newIndex = targetIndex === 0 ? 1 : targetIndex;
@@ -40,7 +40,7 @@ class CardPipelineComponent extends Component.extend(addEdit) {
       candidate.set('stage', newStageId);
       this.saveModel(candidate);
 
-      const cb = this.get('appChangedStage');
+      const cb = this.appChangedStage;
 
       if (cb) {
         cb(candidate, targetStageId);
@@ -57,7 +57,7 @@ class CardPipelineComponent extends Component.extend(addEdit) {
 
     this.saveModel(app);
 
-    const cb = this.get('appChangedStage');
+    const cb = this.appChangedStage;
 
     if (cb) {
       cb(app, stage);

@@ -32,16 +32,16 @@ export default Component.extend(ajaxStatus, {
   }),
 
   newComment () {
-    this.set('comment', this.get('store').createRecord('comment', { commenter: this.get('auth.user.employee') }));
+    this.set('comment', this.store.createRecord('comment', { commenter: this.get('auth.user.employee') }));
   },
 
   actions: {
     notify () {
-      this.get('onNotify')(...arguments);
+      this.onNotify(...arguments);
     },
 
     toggleComments () {
-      if (!this.get('comment')) {
+      if (!this.comment) {
         this.newComment();
       }
 
@@ -51,8 +51,8 @@ export default Component.extend(ajaxStatus, {
     saveComment () {
       this.ajaxStart();
 
-      const activity = this.get('activity'),
-            comment = this.get('comment'),
+      const activity = this.activity,
+            comment = this.comment,
             comments = activity.get('comments.content');
 
       comments.addObject(comment);
@@ -71,15 +71,15 @@ export default Component.extend(ajaxStatus, {
     like () {
       this.ajaxStart();
 
-      const activity = this.get('activity'),
+      const activity = this.activity,
             likes = activity.get('likes.content'),
-            currentLike = this.get('likeByCurrentUser');
+            currentLike = this.likeByCurrentUser;
 
       if (currentLike) {
         likes.removeObject(currentLike);
         currentLike.deleteRecord();
       } else {
-        var like = this.get('store').createRecord('like', { liker: this.get('auth.user') });
+        var like = this.store.createRecord('like', { liker: this.get('auth.user') });
 
         likes.addObject(like);
       }

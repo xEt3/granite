@@ -9,12 +9,12 @@ import Component from '@ember/component';
 class reportView extends Component {
   @computed('data')
   get headers() {
-    return this.get('data')[0];
+    return this.data[0];
   }
 
   @computed('data')
   get bodyData() {
-    return this.get('data').slice(1);
+    return this.data.slice(1);
   }
 }
 

@@ -76,12 +76,12 @@ export default Controller.extend(addEdit, fileSupport, {
 
   actions: {
     saveSettings () {
-      const file = this.get('fileIsAdded');
+      const file = this.fileIsAdded;
 
       Promise.resolve(file ? this.upload() : null)
       .then(uploaded => {
         if (uploaded) {
-          this.get('model').setProperties({
+          this.model.setProperties({
             logo:    uploaded,
             logoUrl: uploaded.get('url')
           });

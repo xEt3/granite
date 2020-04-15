@@ -14,7 +14,7 @@ const ACT_COLORS = {
 export default class ProjectActivity extends BaseLiComponent {
   @computed('model.{dateValue,type}')
   get actionString() {
-    let model = this.get('model'),
+    let model = this.model,
         mVal = moment(model.dateValue),
         ret;
 

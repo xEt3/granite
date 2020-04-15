@@ -41,7 +41,7 @@ export default class AccountActionItemController extends Controller {
     $('#modal__action-item--confirm-complete').modal({
       detachable: true,
       onHidden:   () => {
-        if (!this.get('respondedComplete')) {
+        if (!this.respondedComplete) {
           this.send('respondConfirmCompleteModal', false);
         }
       }
@@ -60,7 +60,7 @@ export default class AccountActionItemController extends Controller {
     $('#modal__action-item--transfer').modal({
       detachable: true,
       onHidden:   () => {
-        if (!this.get('respondedTransfer')) {
+        if (!this.respondedTransfer) {
           this.send('respondTransferModal', false);
         }
       }
@@ -79,7 +79,7 @@ export default class AccountActionItemController extends Controller {
     $('#modal__action-item--delay').modal({
       detachable: true,
       onHidden:   () => {
-        if (!this.get('respondedDelay')) {
+        if (!this.respondedDelay) {
           this.send('respondDelayModal', false);
         }
       }
@@ -93,7 +93,7 @@ export default class AccountActionItemController extends Controller {
 
   @action
   respondTransferModal (response) {
-    this.get(response ? 'resolveTransfer' : 'rejectTransfer')(response ? this.get('transferTarget') : null);
+    this.get(response ? 'resolveTransfer' : 'rejectTransfer')(response ? this.transferTarget : null);
     this.set('respondedTransfer', true);
     $('#modal__action-item--transfer').modal('hide');
   }

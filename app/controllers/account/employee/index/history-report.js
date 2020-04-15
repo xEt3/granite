@@ -16,7 +16,7 @@ export default Controller.extend({
   creator:     [],
 
   canLoadMore: computed('meta.totalRecords', 'limit', function () {
-    return this.get('page') < Math.ceil(this.get('meta.totalRecords') / this.get('limit'));
+    return this.page < Math.ceil(this.get('meta.totalRecords') / this.limit);
   }),
 
   columns: computed(() => {
@@ -50,12 +50,12 @@ export default Controller.extend({
   }),
 
   table: computed('model', function () {
-    return new Table(this.get('columns'), this.get('model'), { enableSync: true });
+    return new Table(this.columns, this.model, { enableSync: true });
   }),
 
   actions: {
     onScrolledToBottom () {
-      if (this.get('canLoadMore')) {
+      if (this.canLoadMore) {
         this.incrementProperty('page');
         this.send('refresh');
       }

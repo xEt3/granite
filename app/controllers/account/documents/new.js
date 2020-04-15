@@ -13,8 +13,8 @@ export default class NewController extends Controller.extend(addEdit) {
 
   @action
   addedFile(file) {
-    if (this.get('fileIsAdded')) {
-      this.send('removeFile', this.get('fileIsAdded'));
+    if (this.fileIsAdded) {
+      this.send('removeFile', this.fileIsAdded);
     }
 
     this.set('fileIsAdded', file);
@@ -29,8 +29,8 @@ export default class NewController extends Controller.extend(addEdit) {
   uploadedFile(file, res) {
     res.files = [ res.file ];
     delete res.file;
-    this.get('store').pushPayload(res);
-    this.get('resolveUpload')(this.get('store').peekRecord('file', res.files[0].id));
+    this.store.pushPayload(res);
+    this.resolveUpload(this.store.peekRecord('file', res.files[0].id));
     this.send('removeFile', file);
   }
 
@@ -42,7 +42,7 @@ export default class NewController extends Controller.extend(addEdit) {
 
   @action
   leaveUpload() {
-    this.send('removeFile', this.get('fileIsAdded'));
+    this.send('removeFile', this.fileIsAdded);
     this.set('fileIsAdded', false);
     this.transitionToRoute('account.document.index');
   }

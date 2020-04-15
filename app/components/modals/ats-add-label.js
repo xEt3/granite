@@ -60,16 +60,16 @@ class AddLabelModalComponent extends Component.extend(addEdit) {
 
   @action
   respond(response) {
-    this.get('onResponse')(response);
+    this.onResponse(response);
 
-    if (!response && this.get('currentLabel')) {
+    if (!response && this.currentLabel) {
       //kill label record if cancelled
-      this.get('currentLabel').destroyRecord();
+      this.currentLabel.destroyRecord();
     }
 
     this.resetCurrentLabel();
 
-    $(`#${this.get('modalId')}`).modal('hide');
+    $(`#${this.modalId}`).modal('hide');
   }
 }
 

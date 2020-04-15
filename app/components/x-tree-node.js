@@ -10,35 +10,35 @@ import layout from '../templates/components/x-tree-node';
 export default class XTreeNode extends Component {
   @computed('model.id', 'chosenId')
   get isChosen() {
-    return this.get('model.id') === this.get('chosenId');
+    return this.get('model.id') === this.chosenId;
   }
 
   recalculateState() {
-    if (this.get('recalculateStateAction')) {
-      this.get('recalculateStateAction')();
+    if (this.recalculateStateAction) {
+      this.recalculateStateAction();
     }
   }
 
   click() {
-    let select = this.get('select');
+    let select = this.select;
     if (select) {
-      select(this.get('model'));
+      select(this.model);
     }
   }
 
   mouseEnter() {
     this.set('model.isSelected', true);
-    let hover = this.get('hover');
+    let hover = this.hover;
     if (hover) {
-      hover(this.get('model'));
+      hover(this.model);
     }
   }
 
   mouseLeave() {
     this.set('model.isSelected', false);
-    let hoverOut = this.get('hoverOut');
+    let hoverOut = this.hoverOut;
     if (hoverOut) {
-      hoverOut(this.get('model'));
+      hoverOut(this.model);
     }
   }
 
@@ -56,7 +56,7 @@ export default class XTreeNode extends Component {
   @action
   toggleCheck() {
     if (this.get('model.children.length')) {
-      this.setChildCheckboxesRecursively(this.get('model'), this.get('model.isChecked'));
+      this.setChildCheckboxesRecursively(this.model, this.get('model.isChecked'));
     }
 
     this.recalculateState();

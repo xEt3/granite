@@ -57,13 +57,13 @@ export default Controller.extend(ajaxStatus, {
       guesses,
       availableFields,
       potentialData
-    } = this.getProperties('guesses', 'availableFields', 'potentialData');
+    } = this;
 
     if (!guesses || !availableFields) {
       return [];
     }
 
-    return this.get('rows').map((row, rIdx) => {
+    return this.rows.map((row, rIdx) => {
       return row.map((column, cIdx) => {
         let guessForCell = guesses[cIdx],
             potentialDataForCell = potentialData[rIdx][guessForCell],
@@ -127,13 +127,13 @@ export default Controller.extend(ajaxStatus, {
     doDryRun (displayDryRunResults = false) {
       this.analytics.trackEvent('Employees', 'census_dryrun', 'Census Dry Run');
 
-      const headerMap = this.get('headerMap'),
+      const headerMap = this.headerMap,
             uploadId = this.get('model.uploadId');
 
       this.set('doingDryRun', true);
       this.ajaxStart();
 
-      return this.get('ajax').post(`/api/v1/employee/census/${uploadId}/dryrun`, { data: { headerMap } }).then(dryrunResult => {
+      return this.ajax.post(`/api/v1/employee/census/${uploadId}/dryrun`, { data: { headerMap } }).then(dryrunResult => {
         this.setProperties({
           displayDryRunResults,
           doingDryRun:   null,
@@ -154,12 +154,12 @@ export default Controller.extend(ajaxStatus, {
     importRecords () {
       this.ajaxStart();
 
-      const headerMap = this.get('headerMap'),
+      const headerMap = this.headerMap,
             uploadId = this.get('model.uploadId');
 
       this.analytics.trackEvent('Employees', 'census_imported', 'Census Imported');
 
-      this.get('ajax').post('/api/v1/employee/census/' + uploadId + '/process', { data: { headerMap } })
+      this.ajax.post('/api/v1/employee/census/' + uploadId + '/process', { data: { headerMap } })
       .then(() => {
         this.ajaxSuccess();
         this.transitionToRoute('account.employees');
@@ -169,7 +169,7 @@ export default Controller.extend(ajaxStatus, {
 
     showLocationModal (locationName) {
       this.setProperties({
-        newLocation:       this.get('store').createRecord('location', { name: locationName }),
+        newLocation:       this.store.createRecord('location', { name: locationName }),
         respondedLocation: false
       });
 
@@ -177,7 +177,7 @@ export default Controller.extend(ajaxStatus, {
         detachable: true,
         closable:   false,
         onHidden:   () => {
-          if (!this.get('respondedLocation')) {
+          if (!this.respondedLocation) {
             this.send('respondLocationModal', false);
           }
         }
@@ -191,7 +191,7 @@ export default Controller.extend(ajaxStatus, {
 
     showDepartmentModal (departmentName) {
       this.setProperties({
-        newDepartment:     this.get('store').createRecord('department', { name: departmentName }),
+        newDepartment:     this.store.createRecord('department', { name: departmentName }),
         respondedLocation: false
       });
 
@@ -199,7 +199,7 @@ export default Controller.extend(ajaxStatus, {
         detachable: true,
         closable:   false,
         onHidden:   () => {
-          if (!this.get('respondedDepartment')) {
+          if (!this.respondedDepartment) {
             this.send('respondDepartmentModal', false);
           }
         }
@@ -213,21 +213,21 @@ export default Controller.extend(ajaxStatus, {
 
     respondLocationModal (response) {
       if (!response) {
-        this.get('newLocation').destroyRecord();
+        this.newLocation.destroyRecord();
       }
 
-      this.get(response ? 'resolveLocation' : 'rejectLocation')(response ? this.get('newLocation') : null);
+      this.get(response ? 'resolveLocation' : 'rejectLocation')(response ? this.newLocation : null);
       this.set('respondedLocation', true);
       $('#modal__add-location').modal('hide');
     },
 
     respondDepartmentModal (response) {
       if (!response) {
-        this.get('newDepartment').destroyRecord();
+        this.newDepartment.destroyRecord();
         this.set('newDepartment', null);
       }
 
-      this.get(response ? 'resolveDepartment' : 'rejectDepartment')(response ? this.get('newDepartment') : null);
+      this.get(response ? 'resolveDepartment' : 'rejectDepartment')(response ? this.newDepartment : null);
       this.set('respondedDepartment', true);
       $('#modal__add-department').modal('hide');
     },

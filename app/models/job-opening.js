@@ -110,7 +110,7 @@ export default class JobOpening extends Model {
 
   @computed('id', 'title')
   get slug() {
-    let title = this.get('title') || '';
-    return `${title.replace(/[\s]/g, '-')}_${this.get('id')}`;
+    let title = this.title || '';
+    return `${title.replace(/[\s]/g, '-')}_${this.id}`;
   }
 }

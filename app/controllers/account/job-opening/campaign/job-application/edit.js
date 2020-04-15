@@ -30,7 +30,7 @@ export default class EditController extends Controller.extend(ajaxStatus, addEdi
   }
 
   requiredFieldsFilled() {
-    let applicantRequiredFields = this.get('applicantRequiredFields');
+    let applicantRequiredFields = this.applicantRequiredFields;
     let newApplicant = this.get('model.applicant');
     for (let field in applicantRequiredFields) {
       if (field !== '_super') {
@@ -47,8 +47,8 @@ export default class EditController extends Controller.extend(ajaxStatus, addEdi
   addedFile(file) {
     let  $dropzone = Dropzone.forElement('.input__dropzone');
 
-    if (this.get('fileIsAdded')) {
-      $dropzone.removeFile(this.get('fileIsAdded'));
+    if (this.fileIsAdded) {
+      $dropzone.removeFile(this.fileIsAdded);
     }
     this.set('fileIsAdded', file);
   }
@@ -67,18 +67,18 @@ export default class EditController extends Controller.extend(ajaxStatus, addEdi
       return;
     }
 
-    $dropzone.removeFile(this.get('fileIsAdded'));
+    $dropzone.removeFile(this.fileIsAdded);
     this.set('fileIsAdded', false);
   }
 
   @action
   uploadError(err) {
-    this.get('rejectUpload')(err);
+    this.rejectUpload(err);
   }
 
   @action
   uploadedFile(prog, response) {
-    this.get('resolveUpload')(response);
+    this.resolveUpload(response);
   }
 
   @action
@@ -94,7 +94,7 @@ export default class EditController extends Controller.extend(ajaxStatus, addEdi
 
   @action
   async save() {
-    const store = this.get('store');
+    const store = this.store;
     this.ajaxStart();
 
     if (!this.requiredFieldsFilled()) {
@@ -109,7 +109,7 @@ export default class EditController extends Controller.extend(ajaxStatus, addEdi
 
     await applicant.save();
 
-    if (this.get('fileIsAdded')) {
+    if (this.fileIsAdded) {
       var response = await this.uploadResume();
     }
 

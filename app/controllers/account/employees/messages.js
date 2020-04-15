@@ -13,10 +13,10 @@ export default class MessagesController extends Controller.extend(ajaxStatus) {
   beginThread() {
     this.ajaxStart();
 
-    const participants = this.get('messageParticipantTargets'),
-          allParticipants = participants.concat([ this.get('user') ]);
+    const participants = this.messageParticipantTargets,
+          allParticipants = participants.concat([ this.user ]);
 
-    this.get('store').query('message-thread', {
+    this.store.query('message-thread', {
       between: {
         $all:  allParticipants.mapBy('id'),
         $size: allParticipants.length
@@ -30,7 +30,7 @@ export default class MessagesController extends Controller.extend(ajaxStatus) {
         return this.transitionToRoute('account.employees.messages.thread', result.get('firstObject'));
       }
 
-      let pendingThread = this.get('store').createRecord('message-thread', { between: allParticipants });
+      let pendingThread = this.store.createRecord('message-thread', { between: allParticipants });
 
       return pendingThread.save().then(thread => {
         this.ajaxSuccess(null, true);

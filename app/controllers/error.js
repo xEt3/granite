@@ -6,7 +6,7 @@ import Controller from '@ember/controller';
 export default class ErrorController extends Controller {
   @computed('fromError')
   get clientError() {
-    var error = this.get('fromError');
+    var error = this.fromError;
     return error && error.status === 400;
   }
 }

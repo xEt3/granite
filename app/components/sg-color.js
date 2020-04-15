@@ -9,6 +9,6 @@ import Component from '@ember/component';
 export default class SgColor extends Component {
   @computed('color')
   get computedClassName() {
-    return 'sg__color-' + this.get('color');
+    return 'sg__color-' + this.color;
   }
 }

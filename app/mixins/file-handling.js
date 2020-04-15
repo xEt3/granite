@@ -20,8 +20,8 @@ export default Mixin.create({
   dropzoneId:  'dropzone', // use your own!
 
   fileEndpoint: computed('fileBaseEndpoint', 'filePreflightIdentifier', function () {
-    const fileBaseEndpoint = this.get('fileBaseEndpoint'),
-          preflightId = this.get('filePreflightIdentifier');
+    const fileBaseEndpoint = this.fileBaseEndpoint,
+          preflightId = this.filePreflightIdentifier;
 
     return fileBaseEndpoint.replace(':id', preflightId);
   }),
@@ -33,8 +33,8 @@ export default Mixin.create({
   },
 
   __ajaxSuccess () {
-    if (this.get('_resolveProcess')) {
-      this.get('_resolveProcess')(this.get('__fileModel'));
+    if (this._resolveProcess) {
+      this._resolveProcess(this.__fileModel);
     }
 
     if (this.ajaxSuccess) {
@@ -43,8 +43,8 @@ export default Mixin.create({
   },
 
   __ajaxError () {
-    if (this.get('_rejectProcess')) {
-      this.get('_rejectProcess')(...arguments);
+    if (this._rejectProcess) {
+      this._rejectProcess(...arguments);
     }
 
     if (this.ajaxError) {
@@ -53,7 +53,7 @@ export default Mixin.create({
   },
 
   __doPreflight () {
-    const fileData = this.get('fileData');
+    const fileData = this.fileData;
 
     return this.store.createRecord('file', fileData)
     .save()
@@ -68,8 +68,8 @@ export default Mixin.create({
   },
 
   processQueue () {
-    const DZ = Dropzone.forElement(`#${this.get('dropzoneId')}`),
-          calculatedUrl = this.get('fileEndpoint');
+    const DZ = Dropzone.forElement(`#${this.dropzoneId}`),
+          calculatedUrl = this.fileEndpoint;
 
     DZ.options.url = calculatedUrl;
 
@@ -84,7 +84,7 @@ export default Mixin.create({
       this.set('_rejectProcess', reject);
 
       // do a preflight request
-      if (this.get('filePreflight')) {
+      if (this.filePreflight) {
         return this.__doPreflight()
         .then(() => run.next(() => {
           this.processQueue();
@@ -95,7 +95,7 @@ export default Mixin.create({
       return this.processQueue();
     }));
 
-    return this.get('_processingPromise');
+    return this._processingPromise;
   },
 
   actions: {
@@ -113,8 +113,8 @@ export default Mixin.create({
     },
 
     uploadedFile (dzfile, response) {
-      this.get('__fileModel').setProperties(response.file);
-      Dropzone.forElement(`#${this.get('dropzoneId')}`).removeAllFiles(dzfile);
+      this.__fileModel.setProperties(response.file);
+      Dropzone.forElement(`#${this.dropzoneId}`).removeAllFiles(dzfile);
 
       this.__ajaxSuccess(null, true);
 
@@ -126,7 +126,7 @@ export default Mixin.create({
     },
 
     removeFile (file) {
-      Dropzone.forElement(`#${this.get('dropzoneId')}`).removeAllFiles(file);
+      Dropzone.forElement(`#${this.dropzoneId}`).removeAllFiles(file);
       this.set('fileIsAdded', false);
     }
   }

@@ -6,7 +6,7 @@ export default class InvoiceRoute extends Route {
 
   async model (params) {
     const company = this.modelFor('account.settings');
-    return await this.get('ajax').request(`/api/v1/company/${company.id}/transaction/${params.id}`);
+    return await this.ajax.request(`/api/v1/company/${company.id}/transaction/${params.id}`);
   }
 
   setupController (controller, model) {

@@ -18,19 +18,19 @@ export default class SuggestionInput extends Component {
 
   get apiSettings() {
     return {
-      throttle:      this.get('debounceInterval'),
+      throttle:      this.debounceInterval,
       responseAsync: bind(this, this.performSearch)
     };
   }
 
   performSearch(settings, callback) {
-    return this.get('search').performSearch(settings.urlData.query)
+    return this.search.performSearch(settings.urlData.query)
     .then(callback)
     .catch(callback);
   }
 
   selected(resultItem) {
-    const router = this.get('router');
+    const router = this.router;
 
     router.transitionTo.apply(router, uriForModel(resultItem))
     .then(() =>
@@ -44,9 +44,9 @@ export default class SuggestionInput extends Component {
       return;
     }
 
-    let q = this.get('query');
+    let q = this.query;
 
-    this.get('router').transitionTo('account.search', { queryParams: { q } });
+    this.router.transitionTo('account.search', { queryParams: { q } });
     this.$('input').blur();
     this.set('query', null);
   }

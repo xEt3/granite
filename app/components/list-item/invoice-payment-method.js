@@ -6,7 +6,7 @@ import Component from '@ember/component';
 export default class InvoicePaymentMethod extends Component {
   @computed('index')
   get highlightRow() {
-    return this.get('index') % 2 !== 0 ? true : false;
+    return this.index % 2 !== 0 ? true : false;
   }
 
   @computed('transaction.status')
@@ -20,7 +20,7 @@ export default class InvoicePaymentMethod extends Component {
       paymentInstrumentType: type,
       creditCard,
       paypal
-    } = this.get('transaction') || {};
+    } = this.transaction || {};
 
     if ([ 'credit_card', 'paypal_account' ].indexOf(type) < 0) {
       return null;

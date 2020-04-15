@@ -19,6 +19,6 @@ export default class CorrectiveActionSeverity extends Model {
 
   @computed('name', 'order')
   get title() {
-    return `${this.get('name')} (${this.get('order')})`;
+    return `${this.name} (${this.order})`;
   }
 }

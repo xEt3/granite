@@ -12,7 +12,7 @@ export default class IndexController extends Controller.extend(addEdit) {
 
   @action
   saveCompany() {
-    let company = this.get('model');
+    let company = this.model;
 
     this.ajaxStart();
 

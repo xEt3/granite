@@ -15,7 +15,7 @@ export default class EditController extends Controller.extend(addEdit) {
     'initialRelationships.[]'
   )
   get relationshipsChanged() {
-    const initialRelationships = this.get('initialRelationships');
+    const initialRelationships = this.initialRelationships;
     for (let i = 0; i < initialRelationships.length; i++) {
       if (this.get(`model.${initialRelationships[i].relationshipPath}.id`) !== initialRelationships[i].id) {
         return true;
@@ -31,7 +31,7 @@ export default class EditController extends Controller.extend(addEdit) {
     $('#effective-date-modal').modal({
       detachable: true,
       onHidden:   () => {
-        if (!this.get('responded')) {
+        if (!this.responded) {
           this.send('respondEffectiveDateModal', false);
         }
       }

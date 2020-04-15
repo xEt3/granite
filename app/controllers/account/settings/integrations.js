@@ -16,7 +16,7 @@ export default class IntegrationsController extends Controller.extend(ajaxStatus
   f = null; // failure bool
 
   grant() {
-    const { g, i, s } = this.getProperties('g', 'i', 's');
+    const { g, i, s } = this;
 
     if (!g || !i) {
       return;
@@ -24,7 +24,7 @@ export default class IntegrationsController extends Controller.extend(ajaxStatus
 
     this.ajaxStart();
 
-    this.get('ajax').request('/api/v1/integrations/grant/' + i, {
+    this.ajax.request('/api/v1/integrations/grant/' + i, {
       method: 'POST',
       data:   { grant: g }
     })

@@ -36,7 +36,7 @@ export default class DataService extends Service {
   slowRunningThreshold = 500
 
   notify (type) {
-    const notifications = this.get('notifications'),
+    const notifications = this.notifications,
           args = Array.prototype.slice.call(arguments, 1);
 
     args[1] = Object.assign({}, notifyDefaults, args[1]);
@@ -75,12 +75,12 @@ export default class DataService extends Service {
   }
 
   _afterDelete (record) {
-    const transitionAfterSave = this.get('transitionAfterDelete') || this.get('transitionAfterSave');
+    const transitionAfterSave = this.transitionAfterDelete || this.transitionAfterSave;
 
     if (transitionAfterSave) {
       let transitionArgs = [ transitionAfterSave ];
 
-      if (this.get('transitionWithModel')) {
+      if (this.transitionWithModel) {
         transitionArgs.push(record.get(this.getWithDefault('modelIdentifier', 'id')));
       }
 
@@ -110,14 +110,14 @@ export default class DataService extends Service {
     }
 
     let invalid = this._validateModel(_model, requireFields),
-        validationsError = this.get('enableModelValidations') && await this.getModelValidations(_model);
+        validationsError = this.enableModelValidations && await this.getModelValidations(_model);
 
     if (validationsError) {
       throw validationsError;
     }
 
     if (invalid) {
-      let requireFieldDescriptors = get(this, 'requireFieldDescriptors'),
+      let requireFieldDescriptors = this.requireFieldDescriptors,
           invalidMessage = 'You must specify these fields: ' + invalid.map(field => {
             return requireFieldDescriptors ? requireFieldDescriptors[field] || field : field;
           }).join(', ');
@@ -247,7 +247,7 @@ export default class DataService extends Service {
 
     if (success && this.successMessageTimeout) {
       setTimeout(() => {
-        if (!this.get('isDestroyed') && !this.get('isDestroying')) {
+        if (!this.isDestroyed && !this.isDestroying) {
           this.set(`statuses.${label}`, {
             isLoading: false,
             isLoaded:  true,
@@ -274,7 +274,7 @@ export default class DataService extends Service {
 
   __scheduleLongRunningProp (label) {
     this.set(`__longRunningProps.${label}`, setTimeout(() => {
-      if (!this.get('isDestroyed') && this.get(`statuses.${label}.isLoading`)) {
+      if (!this.isDestroyed && this.get(`statuses.${label}.isLoading`)) {
         this.set(`statuses.${label}.isSlow`, true);
       }
     }, this.slowRunningThreshold));

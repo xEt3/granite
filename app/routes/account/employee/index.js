@@ -17,7 +17,7 @@ export default class IndexRoute extends Route.extend(refreshable) {
 
     if (company.collectEEO) {
       try {
-        let visualId = await this.get('ajax').request(`/api/v1/eeo/visual-id/${employee.get('id')}`);
+        let visualId = await this.ajax.request(`/api/v1/eeo/visual-id/${employee.get('id')}`);
         this.set('visualIdRequired', visualId.visualIdRequired);
       } catch (e) {
         this.set('visualIdRequired', false);
@@ -30,7 +30,7 @@ export default class IndexRoute extends Route.extend(refreshable) {
   setupController(controller, model) {
     controller.setProperties({
       model:            model,
-      visualIdRequired: this.get('visualIdRequired')
+      visualIdRequired: this.visualIdRequired
     });
   }
 }

@@ -15,7 +15,7 @@ export default class UnauthorizedController extends Controller {
 
   @computed('fromError')
   get unauthorizedReason() {
-    var error = this.get('fromError');
+    var error = this.fromError;
 
     if (!error) {
       return 'Undefined Error.';
@@ -24,7 +24,7 @@ export default class UnauthorizedController extends Controller {
     var sessionExpires = this.auth.get('session.expires');
 
     if (moment(sessionExpires).isBefore(moment())) {
-      this.get('loginController').set('fromError', 'Your session has expired. Please log in again.');
+      this.loginController.set('fromError', 'Your session has expired. Please log in again.');
       this.transitionToRoute('login');
       return 'Your session has expired.';
     }

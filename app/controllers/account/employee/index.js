@@ -43,7 +43,7 @@ export default Controller.extend(del, {
     resend () {
       this.ajaxStart();
 
-      return this.get('ajax').request(`/api/v1/employee/${this.model.id}/resend-activation`)
+      return this.ajax.request(`/api/v1/employee/${this.model.id}/resend-activation`)
       .then(() => {
         this.ajaxSuccess('Email sent.');
       })

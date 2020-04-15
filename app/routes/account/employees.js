@@ -11,7 +11,7 @@ export default class EmployeesRoute extends Route.extend(refreshable) {
 
   model() {
     return hash({
-      changeQueue: this.get('ajax').request('/api/v1/changes', {
+      changeQueue: this.ajax.request('/api/v1/changes', {
         data: {
           _count:     true,
           reviewedOn: { $not: { $type: 9 } }

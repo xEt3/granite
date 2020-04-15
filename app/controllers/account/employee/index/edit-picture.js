@@ -28,7 +28,7 @@ export default class EditPictureController extends Controller {
 
   @action
   uploadedFile() {
-    this.get('model').reload().then(model => {
+    this.model.reload().then(model => {
       model.set('picture', model.get('picture') + '?t=' + moment().unix());
       run.later(() => {
         model.rollbackAttributes();
@@ -45,7 +45,7 @@ export default class EditPictureController extends Controller {
 
   @action
   leaveUpload() {
-    this.send('removeFile', this.get('fileIsAdded'));
+    this.send('removeFile', this.fileIsAdded);
     this.transitionToRoute('account.employee.index');
   }
 }

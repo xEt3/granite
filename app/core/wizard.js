@@ -31,13 +31,13 @@ class GraniteWizardRoute extends GraniteRoute {
 
   setupController (controller, model) {
     controller.setProperties({
-      steps:    this.get('steps'),
-      basePath: this.get('basePath')
+      steps:    this.steps,
+      basePath: this.basePath
     });
 
     super.setupController(...arguments);
 
-    const step = model.get(`${this.get('key')}Step`),
+    const step = model.get(`${this.key}Step`),
           steps = this.steps,
           basePath = this.basePath;
 
@@ -74,8 +74,8 @@ class GraniteWizardRoute extends GraniteRoute {
       await model.save();
       success('Successfully saved progress.');
 
-      if (!controller.get('nextStep')) {
-        this.transitionTo(this.get('returnPath'));
+      if (!controller.nextStep) {
+        this.transitionTo(this.returnPath);
         return;
       }
     } catch (e) {
@@ -83,7 +83,7 @@ class GraniteWizardRoute extends GraniteRoute {
       return;
     }
 
-    this.transitionTo(`${this.get('basePath')}.${controller.get('nextStep.link')}`);
+    this.transitionTo(`${this.basePath}.${controller.get('nextStep.link')}`);
   }
 }
 

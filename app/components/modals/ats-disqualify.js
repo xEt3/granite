@@ -15,12 +15,12 @@ export default class AtsDisqualify extends Component {
   }
 
   closeModal() {
-    $('#' + this.get('modalId')).modal('hide');
+    $('#' + this.modalId).modal('hide');
   }
 
   @action
   respond(response) {
-    this.get('onResponse')(response);
+    this.onResponse(response);
     this.closeModal();
   }
 }

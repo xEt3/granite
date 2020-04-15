@@ -33,8 +33,8 @@ export default class IndexRoute extends Route {
 
   async model(params) {
     let activityQuery = {
-      limit: this.get('cachedActivities') ? params.limit : params.limit * (params.page + 1),
-      page:  this.get('cachedActivities') ? params.page : 0,
+      limit: this.cachedActivities ? params.limit : params.limit * (params.page + 1),
+      page:  this.cachedActivities ? params.page : 0,
       sort:  { created: -1 }
     };
 
@@ -46,7 +46,7 @@ export default class IndexRoute extends Route {
       page:       params.page || 0,
       activities: await this.store.query('activity', activityQuery),
       analytics:  await this.getAnalytics(),
-      tags:       await this.get('ajax').request('/api/v1/activities', {
+      tags:       await this.ajax.request('/api/v1/activities', {
         data: {
           _distinct: true,
           select:    'tag'
@@ -56,7 +56,7 @@ export default class IndexRoute extends Route {
   }
 
   async getAnalytics() {
-    return await this.get('ajax').request('/api/v1/company/dashboard-analytics');
+    return await this.ajax.request('/api/v1/company/dashboard-analytics');
   }
 
   afterModel(model) {
@@ -71,14 +71,14 @@ export default class IndexRoute extends Route {
   setupController(controller, model) {
     super.setupController(...arguments);
 
-    if (this.get('cachedActivities') && model.page > 0) {
-      this.set('cachedActivities', this.get('cachedActivities').concat(model.activities.toArray()));
+    if (this.cachedActivities && model.page > 0) {
+      this.set('cachedActivities', this.cachedActivities.concat(model.activities.toArray()));
     } else {
       this.set('cachedActivities', model.activities.toArray());
     }
 
     controller.setProperties({
-      model:        this.get('cachedActivities'),
+      model:        this.cachedActivities,
       tags:         model.tags,
       totalRecords: model.activities.get('meta.totalRecords'),
       analytics:    model.analytics

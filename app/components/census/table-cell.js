@@ -8,7 +8,7 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
   classNameBindings: [ 'highlightCell:census__highlight-cell' ],
   tagName:           'td',
   guessedField:      computed('availableFields', 'guesses', 'columnIndex', function () {
-    return this.get('availableFields').findBy('path', this.get('guesses')[this.get('columnIndex')]);
+    return this.availableFields.findBy('path', this.guesses[this.columnIndex]);
   }),
 
   missingRelationship:   computed.reads('validation.missingRelationship'),
@@ -16,7 +16,7 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
   highlightCell:         computed.or('missingRelationship', 'missingRequiredFields', 'hasEnumInvalidation'),
 
   hasEnumInvalidation: computed('guessedField.enums.[]', function () {
-    let guessedField = this.get('guessedField');
+    let guessedField = this.guessedField;
 
     if (!guessedField || !guessedField.enums) {
       return false;
@@ -25,13 +25,13 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
     const enums = guessedField.enums,
           enumStr = [ ...enums, enums.indexOf(null) > -1 ? 'or leave this field blank' : null ].filter(Boolean).join(', ');
 
-    let matchingEnum = enums.includes(this.get('column'));
+    let matchingEnum = enums.includes(this.column);
 
     return matchingEnum ? false : `Please use one of these: ${enumStr}`;
   }),
 
   popupMessage: computed('missingRelationship', function () {
-    let relationship = this.get('missingRelationship');
+    let relationship = this.missingRelationship;
 
     if (relationship === 'department' || relationship === 'location') {
       return htmlSafe(`Could not find this ${relationship},  click to create.`);
@@ -42,25 +42,25 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
 
   actions: {
     addAction () {
-      let field = this.get('guessedField'),
-          column = this.get('column'),
+      let field = this.guessedField,
+          column = this.column,
           actionToCall;
 
       if (field.path === 'department') {
-        actionToCall = this.get('addDepartment');
+        actionToCall = this.addDepartment;
       } else if (field.path === 'location') {
-        actionToCall = this.get('addLocation');
+        actionToCall = this.addLocation;
       } else {
         return;
       }
 
       actionToCall(column)
       .then(newRelationshipModel => this.send('save', newRelationshipModel))
-      .then(() => this.get('onRefresh')());
+      .then(() => this.onRefresh());
     },
 
     notify (type, msg) {
-      this.get('onNotify')(type, msg);
+      this.onNotify(type, msg);
     }
   }
 });

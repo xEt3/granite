@@ -12,7 +12,7 @@ export default class VisualIdRoute extends Route {
 
     return {
       employee,
-      visualIdRequired: await this.get('ajax').request(`/api/v1/eeo/visual-id/${employee.get('id')}`)
+      visualIdRequired: await this.ajax.request(`/api/v1/eeo/visual-id/${employee.get('id')}`)
     };
   }
 

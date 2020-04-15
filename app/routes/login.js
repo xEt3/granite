@@ -14,6 +14,6 @@ export default class LoginRoute extends Route {
 
   @action
   willTransition() {
-    this.get('controller').set('previousTransition', null);
+    this.controller.set('previousTransition', null);
   }
 }

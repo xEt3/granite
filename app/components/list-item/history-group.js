@@ -13,11 +13,11 @@ export default Component.extend({
   }),
 
   shownKeys: computed('changedKeysList.[]', function () {
-    return this.get('changedKeysList').slice(0, 2);
+    return this.changedKeysList.slice(0, 2);
   }),
 
   hiddenKeys: computed('changedKeysList.[]', function () {
-    let keys = this.get('changedKeysList');
+    let keys = this.changedKeysList;
     return keys.slice(2, keys.get('length'));
   }),
 
@@ -32,7 +32,7 @@ export default Component.extend({
     selectGroup () {
       let groupOffset = this.$('.history__group-date').offset(),
           timelineOffset = 0 - (groupOffset.top - $('.history__timeline .history-timeline__events').offset().top - 200);
-      this.get('onSelect')(this.get('group'), groupOffset, timelineOffset);
+      this.onSelect(this.group, groupOffset, timelineOffset);
     }
   }
 });

@@ -17,7 +17,7 @@ export default class JobDescriptionController extends Controller.extend(addEdit,
   createCampaign() {
     this.ajaxStart();
 
-    let job = this.get('model'),
+    let job = this.model,
         creator = this.get('auth.user.employee'),
         jobOpening = this.store.createRecord('job-opening', {
           job,

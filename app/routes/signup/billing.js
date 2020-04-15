@@ -12,7 +12,7 @@ export default class BillingRoute extends Route {
 
   model() {
     return RSVP.hash({
-      token:   this.get('ajax').request('/api/v1/bt/token'),
+      token:   this.ajax.request('/api/v1/bt/token'),
       company: this.modelFor('signup.index')
     });
   }

@@ -54,7 +54,7 @@ export default Model.extend(Validations, {
   created:      attr('date', { defaultValue: () => new Date() }),
 
   slug: computed('title', function () {
-    let title = this.get('title');
+    let title = this.title;
     return title ? title.replace(/-/g, '-!').replace(/\s/g, '-') : title;
   }),
 

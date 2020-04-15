@@ -10,10 +10,10 @@ import titleCase from 'granite/utils/title-case';
 export default class BreadCrumbs extends Component {
   @computed('currentPath')
   get segments() {
-    const path = this.get('currentPath'),
+    const path = this.currentPath,
           pathSplit = path.split('.'),
           pathLength = pathSplit.length,
-          overrides = this.get('overrides');
+          overrides = this.overrides;
 
     let segments = A(),
         linkUntil;

@@ -47,7 +47,7 @@ export default Controller.extend(ajaxStatus, addEdit, {
     saveAsset () {
       this.ajaxStart();
 
-      this.get('pendingAssetItem').save()
+      this.pendingAssetItem.save()
       .then(asset => {
         this.send('selectAsset', asset);
       })
@@ -55,7 +55,7 @@ export default Controller.extend(ajaxStatus, addEdit, {
     },
 
     abortAsset () {
-      let asset = this.get('pendingAssetItem');
+      let asset = this.pendingAssetItem;
 
       asset.destroyRecord()
       .then(() => {
@@ -64,11 +64,11 @@ export default Controller.extend(ajaxStatus, addEdit, {
     },
 
     selectAsset (asset) {
-      this.get('model').addObject(asset);
+      this.model.addObject(asset);
       this.ajaxStart();
 
       let user = this.get('auth.user'),
-          employee = this.get('employee');
+          employee = this.employee;
 
       if (asset.get('assignments').findBy('employee.id', employee.get('id'))) {
         this.ajaxSuccess(null, true);
@@ -106,7 +106,7 @@ export default Controller.extend(ajaxStatus, addEdit, {
     },
 
     unassignAsset (asset) {
-      this.get('model').removeObject(asset);
+      this.model.removeObject(asset);
 
       let assignment = asset.get('assignments').findBy('employee.id', this.get('employee.id'));
 
@@ -152,15 +152,15 @@ export default Controller.extend(ajaxStatus, addEdit, {
     createAssignment (file) {
       let newAssignment = this.store.createRecord('file-assignment', {
         file,
-        employee:          this.get('employee'),
+        employee:          this.employee,
         visibleToEmployee: true
       });
-      this.get('fileAssignments').addObject(newAssignment);
-      this.get('suggestedDocs').removeObject(file);
+      this.fileAssignments.addObject(newAssignment);
+      this.suggestedDocs.removeObject(file);
     },
 
     saveAssignments () {
-      this.get('fileAssignments').forEach(fa => {
+      this.fileAssignments.forEach(fa => {
         this.saveModel(fa);
       });
       this.send('closeAssignmentModal');
@@ -171,12 +171,12 @@ export default Controller.extend(ajaxStatus, addEdit, {
     },
 
     updateAssignment (fileAssignment) {
-      this.get('fileAssignments').addObject(fileAssignment);
+      this.fileAssignments.addObject(fileAssignment);
     },
 
     removeAssignment (fileAssignment) {
-      this.get('fileAssignments').removeObject(fileAssignment);
-      this.get('suggestedDocs').addObject(fileAssignment.file);
+      this.fileAssignments.removeObject(fileAssignment);
+      this.suggestedDocs.addObject(fileAssignment.file);
     }
   }
 });

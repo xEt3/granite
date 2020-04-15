@@ -17,7 +17,7 @@ export default class ActivityService extends Service {
     data.actorId = user.get('id');
     data.company = user.get('company');
 
-    let activity = this.get('store').createRecord('activity', data);
+    let activity = this.store.createRecord('activity', data);
     return activity.save();
   }
 }

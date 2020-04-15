@@ -18,7 +18,7 @@ export default class DiscoveredController extends Controller.extend(ajaxStatus) 
 
   @computed('selected.{employees.[],departments.[],locations.[]}')
   get totalSelected() {
-    let selected = this.get('selected');
+    let selected = this.selected;
 
     return Object.keys(selected).reduce((total, recordset) => {
       return (selected[recordset] || []).length + total;
@@ -69,9 +69,9 @@ export default class DiscoveredController extends Controller.extend(ajaxStatus) 
 
   @action
   import() {
-    const selected = this.get('selected'),
-          serviceName = this.get('service'),
-          totalSelected = this.get('totalSelected');
+    const selected = this.selected,
+          serviceName = this.service,
+          totalSelected = this.totalSelected;
 
     if (!totalSelected || !serviceName) {
       return;
@@ -80,7 +80,7 @@ export default class DiscoveredController extends Controller.extend(ajaxStatus) 
     this.set('status', null);
     this.ajaxStart();
 
-    this.get('ajax').post(`/api/v1/integrations/${serviceName}/import`, {
+    this.ajax.post(`/api/v1/integrations/${serviceName}/import`, {
       data: {
         selected,
         resultSet: this.get('model.id')

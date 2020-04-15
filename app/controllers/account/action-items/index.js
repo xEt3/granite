@@ -35,7 +35,7 @@ export default Controller.extend(ajaxStatus, {
 
     changeFilter (index) {
       let indexPlusOne = index + 1,
-          filter = this.get('filter');
+          filter = this.filter;
 
       if (filter.includes(indexPlusOne)) {
         filter.removeObject(indexPlusOne);

@@ -29,7 +29,7 @@ export default class ActionItemRoute extends Route {
   setupController(controller, model) {
     controller.setProperties({
       model,
-      transferableTargets: this.get('transferableTargets')
+      transferableTargets: this.transferableTargets
     });
   }
 }

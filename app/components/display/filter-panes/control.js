@@ -12,24 +12,24 @@ class ControlComponent extends Component {
   didInsertElement() {
     super.didInsertElement(...arguments);
 
-    if (this.get('state') && !this.get('parentView.active')) {
+    if (this.state && !this.get('parentView.active')) {
       this.set('parentView.active', true);
     }
   }
 
   @computed('type', 'searchable')
   get selectionClass() {
-    if (this.get('type') !== 'select') {
+    if (this.type !== 'select') {
       return;
     }
 
     let classText = 'selection';
 
-    if (this.get('multi')) {
+    if (this.multi) {
       classText = `multiple ${classText}`;
     }
 
-    if (this.get('searchable')) {
+    if (this.searchable) {
       classText = `search ${classText}`;
     }
 
@@ -37,7 +37,7 @@ class ControlComponent extends Component {
   }
 
   __update(val) {
-    this.get('update')(this.get('controlName'), val);
+    this.update(this.controlName, val);
   }
 }
 

@@ -42,7 +42,7 @@ export default class SourcesController extends Controller.extend(addEdit) {
     $('#modal__add--manual-source').modal({
       detachable: true,
       onHidden:   () => {
-        if (!this.get('respondedManualSource')) {
+        if (!this.respondedManualSource) {
           this.send('respondManualSource', false);
         }
       }
@@ -57,10 +57,10 @@ export default class SourcesController extends Controller.extend(addEdit) {
   @action
   respondManualSource(response) {
     if (!response) {
-      this.get('manualSource').destroyRecord();
+      this.manualSource.destroyRecord();
     }
 
-    this.get(response ? 'resolveMs' : 'rejectMs')(response ? this.get('manualSource') : null);
+    this.get(response ? 'resolveMs' : 'rejectMs')(response ? this.manualSource : null);
     this.set('respondedManualSource', true);
     $('#modal__add--manual-source').modal('hide');
   }

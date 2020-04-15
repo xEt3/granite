@@ -3,12 +3,12 @@ import AjaxHooks from '../ajax-status';
 
 export default Mixin.create(AjaxHooks, {
   _afterDelete (record) {
-    const transitionAfterSave = this.get('transitionAfterDelete') || this.get('transitionAfterSave');
+    const transitionAfterSave = this.transitionAfterDelete || this.transitionAfterSave;
 
     if (transitionAfterSave) {
       let transitionArgs = [ transitionAfterSave ];
 
-      if (this.get('transitionWithModel')) {
+      if (this.transitionWithModel) {
         transitionArgs.push(record.get(this.getWithDefault('modelIdentifier', 'id')));
       }
 
@@ -20,7 +20,7 @@ export default Mixin.create(AjaxHooks, {
     delete (model) {
       console.warn('Mixing in the controller-abstraction for delete is deprecated in favor of extending the granite service: data.');
 
-      const _model = model || this.get('model');
+      const _model = model || this.model;
 
       if (!_model) {
         return;

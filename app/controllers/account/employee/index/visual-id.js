@@ -14,7 +14,7 @@ export default class VisualIdController extends Controller.extend(ajaxStatus) {
 
   @computed('model.{race,gender}')
   get visualIdForm() {
-    let model = this.get('model'),
+    let model = this.model,
         elements = eeocForm.filter(el => model[el.path]);
 
     return elements;
@@ -22,8 +22,8 @@ export default class VisualIdController extends Controller.extend(ajaxStatus) {
 
   @computed('visualId.{race,gender}', 'model.{race,gender}')
   get formInvalid() {
-    let { race, gender } = this.get('model'),
-        visualId = this.get('visualId'),
+    let { race, gender } = this.model,
+        visualId = this.visualId,
         required = [ race ? 'race' : null, gender ? 'gender' : null ].filter(Boolean);
 
     return required.some(path => !visualId[path]);
@@ -31,12 +31,12 @@ export default class VisualIdController extends Controller.extend(ajaxStatus) {
 
   @action
   async submitVisualId() {
-    if (this.get('formInvalid')) {
+    if (this.formInvalid) {
       return;
     }
 
-    const employee = this.get('employee'),
-          data = this.get('visualId');
+    const employee = this.employee,
+          data = this.visualId;
 
     this.ajaxStart();
 

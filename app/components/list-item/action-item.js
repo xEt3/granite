@@ -8,13 +8,13 @@ export default Component.extend({
   subscriberIds: computed.mapBy('actionItem.subscribers', 'id'),
 
   todosComplete: computed('actionItem.{checklist.length,incompleteTodos.length}', function () {
-    let item = this.get('actionItem');
+    let item = this.actionItem;
     return item.get('checklist.length') > 0 && item.get('incompleteTodos.length') === 0;
   }),
 
   actions: {
     toggleSubscription () {
-      this.get('onToggleSubscription')(this.get('actionItem'));
+      this.onToggleSubscription(this.actionItem);
     }
   }
 });

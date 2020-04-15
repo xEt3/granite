@@ -70,10 +70,10 @@ export default class CorrectiveAction extends Model {
 
   @computed('severity', 'company')
   get actionSeverity() {
-    let severity = this.get('severity');
+    let severity = this.severity;
 
     if (severity) {
-      return Promise.resolve(this.get('company'))
+      return Promise.resolve(this.company)
       .then(c => c.get('correctiveActionSeverities.content').findBy('id', severity));
     }
 

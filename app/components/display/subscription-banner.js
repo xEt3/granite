@@ -15,8 +15,8 @@ export default class SubscriptionBanner extends Component.extend(ajaxStatus) {
   didUpdateAttrs() {
     super.didUpdateAttrs(...arguments);
 
-    if (this.get('accountLocked')) {
-      this.get('transitionToSubscription')();
+    if (this.accountLocked) {
+      this.transitionToSubscription();
     }
   }
 

@@ -34,12 +34,12 @@ export default Controller.extend({
   navTransparent: computed.equal('currentPath', 'index'),
 
   topLevel: computed('currentPath', function () {
-    const currentPath = this.get('currentPath');
+    const currentPath = this.currentPath;
     return currentPath && !nonTopLevelRoutes.find(r => currentPath.indexOf(r) > -1);
   }),
 
   noNav: computed('currentPath', function () {
-    const currentPath = this.get('currentPath');
+    const currentPath = this.currentPath;
     return currentPath && noNavRoutes.find(r => currentPath.indexOf(r) > -1);
   }),
 
@@ -47,7 +47,7 @@ export default Controller.extend({
   updateBodyClass: on('init', observer('topLevel', function () {
     if (ENV.environment !== 'test') {
       run.scheduleOnce('afterRender', () => {
-        $('body')[this.get('topLevel') ? 'removeClass' : 'addClass']('application__in-account');
+        $('body')[this.topLevel ? 'removeClass' : 'addClass']('application__in-account');
       });
     }
   })),
@@ -95,7 +95,7 @@ export default Controller.extend({
     },
 
     authResponse (response) {
-      let auth = this.get('auth');
+      let auth = this.auth;
 
       if (response) {
         auth.refreshSession()

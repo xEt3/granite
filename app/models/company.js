@@ -90,7 +90,7 @@ export default class Company extends Model.extend(Validations) {
 
   @computed('logoPalette')
   get rgbPalette() {
-    const palette = this.get('logoPalette');
+    const palette = this.logoPalette;
     return palette && palette.length ? palette.map(hexToRgb) : false;
   }
 
@@ -123,7 +123,7 @@ export default class Company extends Model.extend(Validations) {
 
   @computed('linkedServices.[]')
   get linkedToSlate() {
-    let services = this.get('linkedServices');
+    let services = this.linkedServices;
     return services ? services.includes('slate') : false;
   }
 }

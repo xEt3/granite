@@ -33,7 +33,7 @@ export default class NewController extends Controller.extend(addEdit) {
 
   @action
   async addAssignment(files) {
-    let model = this.get('model');
+    let model = this.model;
     const makeAssignment = (inputFile) => {
 
       let file = inputFile;

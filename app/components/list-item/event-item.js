@@ -13,7 +13,7 @@ export default class EventItem extends BaseLiComponent {
       attendees,
       facilitator,
       attendantId
-    } = this.get('model').getProperties('attendees', 'facilitator', 'attendantId');
+    } = this.model;
 
     const attendeesLength = get(attendees || [], 'length'),
           includeFacilator = facilitator && !(attendees || A()).findBy('id', facilitator.get('id'));

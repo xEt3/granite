@@ -7,7 +7,7 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 export default class IndexController extends Controller.extend(addEdit) {
   @action
   resetIntros() {
-    let user = this.get('user');
+    let user = this.user;
     user.set('shownHints', []);
     this.send('save', user);
   }

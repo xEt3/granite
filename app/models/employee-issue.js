@@ -39,10 +39,10 @@ export default class EmployeeIssue extends Model {
 
   @computed('severity', 'company')
   get actionSeverity() {
-    let severity = this.get('severity');
+    let severity = this.severity;
 
     if (severity) {
-      return Promise.resolve(this.get('company'))
+      return Promise.resolve(this.company)
       .then(c => c.get('correctiveActionSeverities.content').findBy('id', severity));
     }
 
@@ -51,6 +51,6 @@ export default class EmployeeIssue extends Model {
 
   @computed('id', 'title')
   get slug() {
-    return `${this.get('title').replace(/\s|_/g, '-')}_${this.get('id')}`;
+    return `${this.title.replace(/\s|_/g, '-')}_${this.id}`;
   }
 }

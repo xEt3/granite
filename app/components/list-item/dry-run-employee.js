@@ -7,8 +7,8 @@ import { htmlSafe } from '@ember/string';
 export default class DryRunEmployee extends Component {
   @computed('dryRunRecord', 'availableFields')
   get missingRequiredFields() {
-    const availableFields = this.get('availableFields'),
-          dryRunRecord = this.get('dryRunRecord');
+    const availableFields = this.availableFields,
+          dryRunRecord = this.dryRunRecord;
 
     let missingFields = availableFields.reduce((missingField, field) => {
       let [ path, nestedPath ] = field.path.split('.'),

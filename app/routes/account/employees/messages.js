@@ -27,7 +27,7 @@ export default class MessagesRoute extends Route.extend(refreshable) {
   }
 
   beforeModel() {
-    this.get('socket').initialize();
+    this.socket.initialize();
     this.notifications.requestPermission();
   }
 
@@ -38,13 +38,13 @@ export default class MessagesRoute extends Route.extend(refreshable) {
       threads: this.store.findAll('message-thread')
       .then(result => map(result.toArray(), (thread) => {
         return hash({
-          lastMessage: this.get('store').query('message', {
+          lastMessage: this.store.query('message', {
             limit:         1,
             messageThread: thread.get('id'),
             sort:          { created: -1 }
           }),
 
-          unreadCount: this.get('ajax').request('/api/v1/messages', {
+          unreadCount: this.ajax.request('/api/v1/messages', {
             data: {
               _count:        true,
               messageThread: thread.get('id'),

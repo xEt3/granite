@@ -7,7 +7,7 @@ import { htmlSafe } from '@ember/string';
 export default class HistoryController extends Controller {
   @computed('timelineOffset')
   get timelineStyle() {
-    let offset = this.get('timelineOffset');
+    let offset = this.timelineOffset;
     return htmlSafe(offset ? `transform: translate(0, ${offset}px);` : '');
   }
 

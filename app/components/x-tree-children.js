@@ -21,8 +21,8 @@ export default class XTreeChildren extends Component {
       this.set('model.isIndeterminate', lengthSelected > 0 && lengthSelected !== children.length);
     }
 
-    if (this.get('recalculateStateAction')) {
-      this.get('recalculateStateAction')();
+    if (this.recalculateStateAction) {
+      this.recalculateStateAction();
     }
   }
 }

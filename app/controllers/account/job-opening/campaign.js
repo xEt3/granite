@@ -16,11 +16,11 @@ export default class CampaignController extends Controller.extend(addEdit, del) 
 
   @computed('model.{sendCloseNotice,allocateTalentPool}')
   get confirmCloseMessage() {
-    if (!this.get('model')) {
+    if (!this.model) {
       return;
     }
 
-    const settingProps = this.get('model').getProperties('sendCloseNotice', 'allocateTalentPool');
+    const settingProps = this.model.getProperties('sendCloseNotice', 'allocateTalentPool');
     const messages = Object.keys(settingProps).reduce((msg, key, index, all) => {
       if (settingProps[key] && closeMessageMap[key]) {
         msg.push(`${all.length > 1 && index === all.length - 1 ? 'and ' : ''}${closeMessageMap[key]}`);
@@ -36,7 +36,7 @@ export default class CampaignController extends Controller.extend(addEdit, del) 
 
   @action
   close() {
-    const model = this.get('model');
+    const model = this.model;
     model.set('closed', true);
     if (!model.completedOn) {
       model.set('completedOn', new Date());

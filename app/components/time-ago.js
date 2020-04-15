@@ -26,11 +26,11 @@ class TimeAgo extends Component {
 
   @on('didInsertElement')
   _tick() {
-    if (this.get('isDestroying') || this.get('isDestroyed')) {
+    if (this.isDestroying || this.isDestroyed) {
       return;
     }
 
-    this.set('computedTimeAgo', this.get('time') ? fromNowWithSeconds(moment(this.get('time'))) : 'N/A');
+    this.set('computedTimeAgo', this.time ? fromNowWithSeconds(moment(this.time)) : 'N/A');
 
     if (ENV.environment !== 'test') {
       run.later(this, this._tick, 1000);

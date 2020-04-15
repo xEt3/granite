@@ -12,6 +12,6 @@ export default class AddController extends Controller.extend(addEdit) {
 
   @computed('type')
   get currentForm() {
-    return forms[this.get('type')];
+    return forms[this.type];
   }
 }

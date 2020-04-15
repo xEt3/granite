@@ -18,12 +18,12 @@ const PipelineCardComponent = Component.extend({
 
   allExceptCurrentStage: computed('stages.[]', 'application.stage', function () {
     const stageId = this.get('application.stage');
-    return (this.get('stages') || []).filter(stage => get(stage, '_id') !== stageId);
+    return (this.stages || []).filter(stage => get(stage, '_id') !== stageId);
   }),
 
   nextMeeting: computed('application.[]', 'newScheduledMeeting', function () {
     if (!this.meetingFetched || this.newScheduledMeeting === this.application.id) {
-      return this.get('getNextMeeting').perform();
+      return this.getNextMeeting.perform();
     }
     return false;
   }),
@@ -34,7 +34,7 @@ const PipelineCardComponent = Component.extend({
 
   getNextMeeting: task(function*() {
     try {
-      let results = yield this.get('store').query('event', {
+      let results = yield this.store.query('event', {
         limit:       1,
         start:       { $gt: new Date() },
         sort:        { start: 1 },
@@ -52,7 +52,7 @@ const PipelineCardComponent = Component.extend({
 
   actions: {
     moveTo (stage) {
-      this.get('moveAppToStage')(this.get('application'), stage);
+      this.moveAppToStage(this.application, stage);
     },
 
     toggleProperty (prop) {

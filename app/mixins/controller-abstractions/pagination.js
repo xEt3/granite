@@ -8,7 +8,7 @@ export default Mixin.create({
 
   pages: computed('__totalItems', '__metadataTotalItems', 'limit', function () {
     console.warn('Using the pagination mixin is no longer valid. Change arguments used in x-pagination component.');
-    let total = this.get('__totalItems') || this.get('__metadataTotalItems') || 0;
-    return Math.ceil(total / this.get('limit'));
+    let total = this.__totalItems || this.__metadataTotalItems || 0;
+    return Math.ceil(total / this.limit);
   })
 });
