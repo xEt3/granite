@@ -9,7 +9,7 @@
     <Input @type="text" @value={{this.model.code}} @id="department-code" placeholder="Department Code" />
   </div>
   <div class="ui divider"></div>
-  <Form::ActionButton @type="submit" @class="ui huge fluid green button" @loading={{this.working}} @disabled={{not this.model.hasDirtyAttributes}}>Save Department</Form::ActionButton>
+  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.working}} @disabled={{not this.model.hasDirtyAttributes}}>Save Department</Form::ActionButton>
   <a href="#" {{action "cancel"}}>
     <div class="ui large fluid danger button">Cancel</div>
   </a>

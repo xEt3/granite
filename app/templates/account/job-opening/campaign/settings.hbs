@@ -54,7 +54,7 @@
     <div class="ui divider"></div>
 
     <form {{action (pipe (action "save") (action "saveCustomPipeline")) on="submit"}}>
-      <Form::ActionButton @type="submit" @class="ui huge fluid green button" @loading={{this.working}}>Save</Form::ActionButton>
+      <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.working}}>Save</Form::ActionButton>
     </form>
 
     <p class="center aligned text">

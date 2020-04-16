@@ -22,7 +22,7 @@
       <Textarea @value={{this.model.description}} @id="secondary-description" @cols="80" @rows="6" @spellcheck="true" />
     </div>
 
-    <Form::ActionButton @type="submit" @class="ui positive button" @disabled={{or (not this.model.title) (not this.model.description)}} @loading={{this.working}}>
+    <Form::ActionButton type="submit" class="ui positive button" @disabled={{or (not this.model.title) (not this.model.description)}} @loading={{this.working}}>
       Save
     </Form::ActionButton>
   </form>

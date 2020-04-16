@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="four wide column field">
-      <Form::ActionButton @type="submit" @disabled={{not (or this.message this.fileIsAdded)}} @class="ui fluid green button">
+      <Form::ActionButton type="submit" @disabled={{not (or this.message this.fileIsAdded)}} class="ui fluid green button">
         Send{{if this.fileIsAdded " file"}}
       </Form::ActionButton>
     </div>

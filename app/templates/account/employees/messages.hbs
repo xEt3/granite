@@ -21,7 +21,7 @@
         </div>
 
         {{#liquid-if this.messageParticipantTargets.length}}
-          <Form::ActionButton @type="submit" @class="ui fluid green button">
+          <Form::ActionButton type="submit" class="ui fluid green button">
             Start
             {{if (gt this.messageParticipantTargets.length 1) "Group"}}
             Chat

@@ -9,7 +9,7 @@
     </div>
     {{outlet}}
     <div class="ui divider"></div>
-    <Form::ActionButton @type="submit" @class="ui massive fluid green button" @disabled={{not (or this.model.hasDirtyAttributes this.relationshipsChanged)}} @loading={{this.working}}>
+    <Form::ActionButton type="submit" class="ui massive fluid green button" @disabled={{not (or this.model.hasDirtyAttributes this.relationshipsChanged)}} @loading={{this.working}}>
       <i class="save icon"></i>Save
     </Form::ActionButton>
     <button type="button" class="ui massive fluid basic button" disabled={{not (or this.model.hasDirtyAttributes this.relationshipsChanged)}} {{action (pipe (action "selectEffectiveDate") (action "save"))}}>

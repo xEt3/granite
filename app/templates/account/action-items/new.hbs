@@ -82,13 +82,13 @@
 
       {{#liquid-if this.pendingTodo class="field"}}
         <div class="ui divider"></div>
-        <Form::ActionButton @type="submit" @class="ui fluid button">Add</Form::ActionButton>
+        <Form::ActionButton type="submit" class="ui fluid button">Add</Form::ActionButton>
       {{/liquid-if}}
     </form>
 
     <div class="ui divider"></div>
     <form {{action "save" on="submit"}}>
-      <Form::ActionButton @type="submit" @class="ui huge fluid green button" @loading={{this.working}}>Save project</Form::ActionButton>
+      <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.working}}>Save project</Form::ActionButton>
     </form>
   </div>
 </div>

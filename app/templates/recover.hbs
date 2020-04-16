@@ -17,7 +17,7 @@
     <Input @type="password" @id="password-confirm" class="ui large fluid input" @tabindex="1" placeholder="Confirm Your New Password" @value={{this.passwordConfirm}} />
   </div>
 
-  <Form::ActionButton @type="submit" @class="ui massive fluid orange button" @loading={{this.working}} @disabled={{not (and this.password this.passwordConfirm)}}>
+  <Form::ActionButton type="submit" class="ui massive fluid orange button" @loading={{this.working}} @disabled={{not (and this.password this.passwordConfirm)}}>
     Reset my password
   </Form::ActionButton>
 </form>

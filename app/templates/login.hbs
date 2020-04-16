@@ -25,7 +25,7 @@
       <Input @type="email" @id="recovery_email" class="ui large fluid input" @tabindex="1" placeholder="Your Account Email" @value={{this.recoveryEmail}} />
     </div>
 
-    <Form::ActionButton @type="submit" @class="ui massive fluid orange button" @loading={{this.working}} @disabled={{not this.recoveryEmail}}>
+    <Form::ActionButton type="submit" class="ui massive fluid orange button" @loading={{this.working}} @disabled={{not this.recoveryEmail}}>
       Recover my account
     </Form::ActionButton>
 
@@ -55,6 +55,6 @@
       <Input @type="password" @id="password" class="ui large fluid input" @tabindex="2" placeholder="Your Account Password" @value={{this.password}} />
     </div>
 
-    <Form::ActionButton @type="submit" @class="ui massive fluid green button" @loading={{this.working}}>Log In</Form::ActionButton>
+    <Form::ActionButton type="submit" class="ui massive fluid green button" @loading={{this.working}}>Log In</Form::ActionButton>
   </form>
 {{/liquid-if}}
