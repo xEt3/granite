@@ -1,9 +1,11 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import elementId from 'granite/core/element-id';
 import $ from 'jquery';
 
-export default class ModalIndexComponent extends Component {
+@elementId
+export default class ModalBaseComponent extends Component {
   @tracked modalId = ''
 
   get openModalFn () {

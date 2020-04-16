@@ -1,7 +1,9 @@
+import classic from 'ember-classic-decorator';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { className, classNames, tagName } from '@ember-decorators/component';
 
+@classic
 @tagName('div')
 @classNames('ui', 'top', 'attached', 'label')
 class RecruitingStatusBar extends Component {

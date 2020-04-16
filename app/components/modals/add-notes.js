@@ -1,36 +1,39 @@
-import { computed } from '@ember/object';
-import { inject as service } from '@ember/service';
-import ajaxStatus from 'granite/mixins/ajax-status';
 import Modal from '.';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import $ from 'jquery';
 
-export default Modal.extend(ajaxStatus, {
-  store:        service(),
-  enableNotify: false,
+export default class AddNotesModal extends Modal {
+  @service store
+  @service data
 
-  modalId: computed('elementId', function () {
+  get modalId () {
     return this.elementId + '-modal';
-  }),
+  }
 
+  @action
   closeModal () {
     $('#' + this.modalId).modal('hide');
-  },
+  }
 
-  actions: {
-    cancel () {
-      this.model.rollbackAttributes();
+  @action
+  cancel () {
+    this.model.rollbackAttributes();
+    this.closeModal();
+  }
+
+  @action
+  async save () {
+    const application = this.model,
+          { success, error } = this.data.createStatus();
+
+    try {
+      await application.save();
+
+      success('Saved notes');
       this.closeModal();
-    },
-
-    save () {
-      let application = this.model;
-      this.ajaxStart();
-
-      application.save()
-      .then(() => {
-        this.ajaxSuccess('Saved notes');
-        this.closeModal();
-      });
+    } catch (err) {
+      error(err);
     }
   }
-});
+}
