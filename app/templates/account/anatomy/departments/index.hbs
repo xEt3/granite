@@ -23,10 +23,10 @@
 
 <div class="ui divided items">
   {{#each this.model as |department|}}
-    <ListItem::DepartmentItem @department={{department}} @onDelete={{action "delete"}} />
+    <ListItem::DepartmentItem @department={{department}} @onDelete={{this.data.deleteRecord}} />
   {{else}}
     <h2 class="ui center aligned header">No departments available.</h2>
   {{/each}}
 </div>
 
-<Elements::XPagination @page={{readonly this.page}} @pages={{readonly this.pages}} @onchange={{action (mut this.page)}} />
+<Elements::XPagination @page={{this.page}} @model={{this.model}} @limit={{this.limit}} @onChange={{set this.page _}} />

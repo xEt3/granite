@@ -1,70 +1,72 @@
-<div class="content">
-  <span class="header clearfix">
-    {{this.asset.identifier}}
-    {{#if this.attributes.length}}
-      <a href="#" {{action "toggleProperty" "details"}}>
-        <EmberTooltip @side="top" @popperContainer="body" @text="View attributes" />
-        <i class="{{if this.details "up" "down"}} angle icon"></i>
-      </a>
-    {{/if}}
-    <div class="right floated">
-      {{#if this.addDocuments}}
-        <Input::DocumentSelectionModal @title="Assign asset stock item documents" @tagName="span" @selected={{this.asset.documents}} @autoTag="Stock Asset" @onSelected={{pipe-action (action (mut this.asset.documents)) (action this.saveStockItem)}} as |execute|>
-          <a href="#" class="asset-item__action--select-document" {{action execute "selectDocuments"}}>
-            <EmberTooltip @side="left" @popperContainer="body" @text="Add a document to stock item" />
-            <i class="file outline icon"></i>
-          </a>
-        </Input::DocumentSelectionModal>
-      {{/if}}
-      <LinkTo @route="account.asset.index.edit" @model={{this.asset.id}} class="asset-item__action--edit">
-        <EmberTooltip @side="left" @popperContainer="body" @text="Edit stock item" />
-        <i class="edit icon"></i>
-      </LinkTo>
-      <ConfirmModal @class="item" @tagName="span" @confirmContent="Are you sure you want to delete this stock item?" as |confirm|>
-        <a href="#" class="text-danger asset-item__action--delete" {{action (pipe confirm (action "delete"))}}>
-          <EmberTooltip @side="left" @popperContainer="body" @text="Remove stock item" />
-          <i class="trash icon"></i>
+<div class="item">
+  <div class="content">
+    <span class="header clearfix">
+      {{@asset.identifier}}
+      {{#if this.attributes.length}}
+        <a href="#" {{on "click" (prevent-default (this.toggle "details" this))}}>
+          <EmberTooltip @side="top" @popperContainer="body" @text="View attributes" />
+          <i class="{{if this.details "up" "down"}} angle icon"></i>
         </a>
-      </ConfirmModal>
-    </div>
-  </span>
-  <div class="description text small">
-    Assigned to <a href="#" {{action this.toggleProperty "showAssignments"}}>{{this.asset.assignments.length}} {{inflect-text "employee" this.asset.assignments.length}}</a>
-    - Has <a href="#" {{action this.toggleProperty "showDocuments"}}>{{this.asset.documents.length}} {{inflect-text "document" this.asset.documents.length}}</a>
-    - Created {{time-ago this.asset.created}}{{#if this.asset.creator}} by {{this.asset.creator.fullName}}{{/if}}
-    {{#liquid-if this.showAssignments}}
-      <ul>
-        {{#each this.asset.assignments as |assignment|}}
-          <li>{{assignment.employee.fullName}}</li>
-        {{/each}}
-      </ul>
-    {{/liquid-if}}
-    {{#liquid-if this.showDocuments}}
-      <ul>
-        {{#each this.asset.documents as |document|}}
-          <li>
-            {{document.title}}.{{document.extension}}
-            <a href="#" class="text-danger" {{action "removeDocument" document}}>
-              <EmberTooltip @side="right" @popperContainer="body" @text="Remove document from stock item" />
-              <i class="times icon"></i>
+      {{/if}}
+      <div class="right floated">
+        {{#if @addDocuments}}
+          <Input::DocumentSelectionModal @title="Assign asset stock item documents" @tagName="span" @selected={{@asset.documents}} @autoTag="Stock Asset" @onSelected={{pipe-action (set @asset.documents _) @saveStockItem}} as |execute|>
+            <a href="#" class="asset-item__action--select-document" {{on "click" (prevent-default (fn execute "selectDocuments"))}}>
+              <EmberTooltip @side="left" @popperContainer="body" @text="Add a document to stock item" />
+              <i class="file outline icon"></i>
             </a>
-          </li>
-        {{/each}}
-      </ul>
-    {{/liquid-if}}
-  </div>
-  {{#if this.attributes.length}}
-    {{#liquid-if this.details}}
-      <div class="ui segment">
-        {{#each this.attributes as |attr|}}
-          <div class="line-item-value">
-            <i>{{attr.key}}</i>
-            <u>
-              {{attr.value}}
-            </u>
-          </div>
-        {{/each}}
+          </Input::DocumentSelectionModal>
+        {{/if}}
+        <LinkTo @route="account.asset.index.edit" @model={{@asset.id}} class="asset-item__action--edit">
+          <EmberTooltip @side="left" @popperContainer="body" @text="Edit stock item" />
+          <i class="edit icon"></i>
+        </LinkTo>
+        <ConfirmModal @class="item" @tagName="span" @confirmContent="Are you sure you want to delete this stock item?" as |confirm|>
+          <a href="#" class="text-danger asset-item__action--delete" {{on "click" (prevent-default (pipe confirm (fn @onDelete @asset)))}}>
+            <EmberTooltip @side="left" @popperContainer="body" @text="Remove stock item" />
+            <i class="trash icon"></i>
+          </a>
+        </ConfirmModal>
       </div>
-    {{/liquid-if}}
-  {{/if}}
+    </span>
+    <div class="description text small">
+      Assigned to <a href="#" {{on "click" (prevent-default (this.toggle "showAssignments" this))}}>{{@asset.assignments.length}} {{inflect-text "employee" @asset.assignments.length}}</a>
+      - Has <a href="#" {{on "click" (prevent-default (this.toggle "showDocuments" this))}}>{{@asset.documents.length}} {{inflect-text "document" @asset.documents.length}}</a>
+      - Created {{time-ago @asset.created}}{{#if @asset.creator}} by {{@asset.creator.fullName}}{{/if}}
+      {{#liquid-if this.showAssignments}}
+        <ul>
+          {{#each @asset.assignments as |assignment|}}
+            <li>{{assignment.employee.fullName}}</li>
+          {{/each}}
+        </ul>
+      {{/liquid-if}}
+      {{#liquid-if this.showDocuments}}
+        <ul>
+          {{#each @asset.documents as |document|}}
+            <li>
+              {{document.title}}.{{document.extension}}
+              <a href="#" class="text-danger" {{on "click" (prevent-default (fn this.removeDocument document))}}>
+                <EmberTooltip @side="right" @popperContainer="body" @text="Remove document from stock item" />
+                <i class="times icon"></i>
+              </a>
+            </li>
+          {{/each}}
+        </ul>
+      {{/liquid-if}}
+    </div>
+    {{#if this.attributes.length}}
+      {{#liquid-if this.details}}
+        <div class="ui segment">
+          {{#each this.attributes as |attr|}}
+            <div class="line-item-value">
+              <i>{{attr.key}}</i>
+              <u>
+                {{attr.value}}
+              </u>
+            </div>
+          {{/each}}
+        </div>
+      {{/liquid-if}}
+    {{/if}}
+  </div>
 </div>

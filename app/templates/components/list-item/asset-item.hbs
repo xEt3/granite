@@ -1,26 +1,26 @@
 {{#if hasBlock}}
-  {{yield this.asset.name this.asset.description}}
+  {{yield @asset.name @asset.description}}
 {{else}}
-  {{#if this.asset.icon}}
-    <i class="large middle aligned {{this.asset.icon}} icon"></i>
+  {{#if @asset.icon}}
+    <i class="large middle aligned {{@asset.icon}} icon"></i>
   {{/if}}
   <div class="content">
-    <div class="header">{{this.asset.name}}</div>
+    <div class="header">{{@asset.name}}</div>
     <div class="meta">
-      <span>{{this.asset.description}}</span>
-      <span class="ui small text right floated">{{time-ago this.asset.created}} on {{time this.asset.created}} by {{this.asset.creator.fullName}}</span>
+      <span>{{@asset.description}}</span>
+      <span class="ui small text right floated">{{time-ago @asset.created}} on {{time @asset.created}} by {{@asset.creator.fullName}}</span>
     </div>
     <div class="extra">
-      {{#if this.employee.onboarding}}
+      {{#if @employee.onboarding}}
         <div class="ui green label">
           <i class="circle thin icon"></i>Onboarding
-          {{#if this.employee.onboardingProgress}}
-            {{this.employee.onboardingProgress}}% complete
+          {{#if @employee.onboardingProgress}}
+            {{@employee.onboardingProgress}}% complete
           {{else}}
             in progress
           {{/if}}
-          {{#if this.employee.onboarder}}
-            by {{this.employee.onboarder.fullName}}
+          {{#if @employee.onboarder}}
+            by {{@employee.onboarder.fullName}}
           {{/if}}
         </div>
       {{/if}}

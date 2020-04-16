@@ -7,7 +7,7 @@
   {{else}}
     <div class="right floated">
       {{#if this.model}}
-        <a href="#" {{action "toggleProperty" "expandAttributes"}}>
+        <a href="#" {{on "click" (prevent-default (this.toggle "expandAttributes" this))}}>
           <EmberTooltip @side="left" @popperContainer="body" @text={{if this.expandAttributes "Hide all stock attributes" "Show all stock attributes"}} />
           <i class="eye {{if this.expandAttributes "slash"}} icon"></i>
         </a>
@@ -24,9 +24,9 @@
 
 <div class="ui relaxed divided list">
   {{#each this.model as |asset|}}
-    <ListItem::AssetStockItem @asset={{asset}} @showAttributes={{this.expandAttributes}} @addDocuments={{true}} @saveStockItem={{action "save" asset}} @onDelete={{action "delete"}} />
+    <ListItem::AssetStockItem @asset={{asset}} @showAttributes={{this.expandAttributes}} @addDocuments={{true}} @saveStockItem={{fn this.data.saveRecord asset}} @onDelete={{this.data.deleteRecord}} />
   {{else}}
     <h2 class="ui center aligned header">No assets available. <LinkTo @route="account.asset.index.new">Add one?</LinkTo></h2>
   {{/each}}
 </div>
-<Elements::XPagination @page={{readonly this.page}} @pages={{readonly this.pages}} @onchange={{action (mut this.page)}} />
+<Elements::XPagination @page={{this.page}} @model={{this.model}} @limit={{this.limit}} @onChange={{set this.page _}} />

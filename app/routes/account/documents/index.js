@@ -1,38 +1,36 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
-import { hash } from 'rsvp';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 
-export default Route.extend({
-  titleToken: 'Documents',
-  auth:       service(),
-  ajax:       service(),
+export default class AccountDocumentsRoute extends Route {
+  @service auth
+  @service ajax
+  titleToken = 'Documents'
 
-  queryParams: {
+  queryParams = {
     tags:      { refreshModel: true },
     extension: { refreshModel: true },
     sortProp:  { refreshModel: true },
     asc:       { refreshModel: true },
     page:      { refreshModel: true }
-  },
+  }
 
-  sort:    { created: -1 },
-  filters: [
+  sort =    { created: -1 }
+  filters = [
     'tags',
     'extension'
-  ],
+  ]
 
-  beforeModel () {
-    let hints = this.get('auth.user.shownHints');
+  async beforeModel () {
+    let hints = await this.auth.get('user.shownHints');
 
     if (!hints || !hints.includes('documents')) {
       return this.transitionTo('account.documents.intro');
     }
-  },
+  }
 
-  model (params) {
-    let limit = this.get('controller.limit') || 20,
+  async model (params) {
+    let limit = 20,
         page = (params.page || 1) - 1,
         filterModelsCache = this.filterModelsCache;
 
@@ -54,30 +52,30 @@ export default Route.extend({
 
     documentsQuery.sort[params.sortProp] = params.asc ? -1 : 1;
 
-    return RSVP.hash({
-      documents:    this.store.query('file', documentsQuery),
-      employees:    this.store.findAll('employee'),
-      filterModels: filterModelsCache || hash({
-        tags: this.ajax.request('/api/v1/files', {
+    return {
+      documents:    await this.store.query('file', documentsQuery),
+      employees:    await this.store.findAll('employee'),
+      filterModels: filterModelsCache || {
+        tags: await this.ajax.request('/api/v1/files', {
           data: {
             _distinct: true,
             systemUse: false,
             select:    'tags'
           }
         }),
-        extension: this.ajax.request('/api/v1/files', {
+        extension: await this.ajax.request('/api/v1/files', {
           data: {
             _distinct: true,
             systemUse: false,
             select:    'extension'
           }
         })
-      })
-    });
-  },
+      }
+    };
+  }
 
   setupController (controller, model) {
-    this.set('filterModelsCache', model.filterModels);
+    this.filterModelsCache = model.filterModels;
 
     controller.setProperties({
       model:        model.documents,
@@ -85,4 +83,4 @@ export default Route.extend({
       filterModels: model.filterModels
     });
   }
-});
+}

@@ -1,10 +1,8 @@
-import classic from 'ember-classic-decorator';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-@classic
-export default class FilterPane extends Component {
+export default class DisplayFilterPane extends Component {
   sendComponentUpdate (path, value) {
-    this.onChange(path, value);
+    this.args.onChange(path, value);
   }
 
   resetFilter (path) {

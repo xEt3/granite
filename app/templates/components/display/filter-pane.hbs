@@ -1,28 +1,30 @@
-{{yield
-  (hash
-    section=(component
-      "display/filter-panes/section"
-      resetFilter=(action this.resetFilter)
-      sendComponentUpdate=(action this.sendComponentUpdate)
+<div ...attributes>
+  {{yield
+    (hash
+      section=(component
+        "display/filter-panes/section"
+        resetFilter=this.resetFilter
+        sendComponentUpdate=this.sendComponentUpdate
+      )
+      control=(component
+        "display/filter-panes/control"
+        update=this.sendComponentUpdate
+      )
+      selectControl=(component
+        "display/filter-panes/control"
+        type="select"
+        update=this.sendComponentUpdate
+      )
+      toggleControl=(component
+        "display/filter-panes/control"
+        type="toggle"
+        update=this.sendComponentUpdate
+      )
+      radioControl=(component
+        "display/filter-panes/control"
+        type="radio"
+        update=this.sendComponentUpdate
+      )
     )
-    control=(component
-      "display/filter-panes/control"
-      update=(action this.sendComponentUpdate)
-    )
-    selectControl=(component
-      "display/filter-panes/control"
-      type="select"
-      update=(action this.sendComponentUpdate)
-    )
-    toggleControl=(component
-      "display/filter-panes/control"
-      type="toggle"
-      update=(action this.sendComponentUpdate)
-    )
-    radioControl=(component
-      "display/filter-panes/control"
-      type="radio"
-      update=(action this.sendComponentUpdate)
-    )
-  )
-}}
+  }}
+</div>

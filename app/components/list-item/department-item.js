@@ -1,15 +1,3 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  classNames: [ 'item' ],
-
-  actions: {
-    delete () {
-      this.onDelete(this.department);
-    },
-
-    toggleProperty (prop) {
-      this.toggleProperty(prop);
-    }
-  }
-});
+export default class ListItemDepartmentItemComponent extends Component {}

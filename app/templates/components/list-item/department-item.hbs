@@ -1,25 +1,27 @@
-<div class="content">
-  <div class="header">
-    {{this.department.name}}
-    {{#if this.department.code}}
-      <div class="ui blue label">
-        {{this.department.code}}
-      </div>
-    {{/if}}
-  </div>
-  <div class="right floated">
-    <LinkTo @route="account.anatomy.department.edit" @model={{this.department.id}}>
-      <EmberTooltip @side="left" @popperContainer="body" @text="Edit department" />
-      <i class="edit icon"></i>
-    </LinkTo>
-    <ConfirmModal @deleteContext={{this.department.name}} @tagName="span" as |confirm|>
-      <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}>
-        <EmberTooltip @side="left" @popperContainer="body" @text="Delete department" />
-        <i class="trash icon"></i>
-      </a>
-    </ConfirmModal>
-  </div>
-  <div class="meta">
-    <span class="ui small text right floated">Created {{time-ago this.department.created}} {{#if this.department.creator.fullName}}by {{this.department.creator.fullName}}{{/if}}</span>
+<div class="item">
+  <div class="content">
+    <div class="header">
+      {{@department.name}}
+      {{#if @department.code}}
+        <div class="ui blue label">
+          {{@department.code}}
+        </div>
+      {{/if}}
+    </div>
+    <div class="right floated">
+      <LinkTo @route="account.anatomy.department.edit" @model={{@department.id}}>
+        <EmberTooltip @side="left" @popperContainer="body" @text="Edit department" />
+        <i class="edit icon"></i>
+      </LinkTo>
+      <ConfirmModal @deleteContext={{@department.name}} @tagName="span" as |confirm|>
+        <a href="#" class="text-danger" {{on "click" (prevent-default (pipe confirm (fn @onDelete @department)))}}>
+          <EmberTooltip @side="left" @popperContainer="body" @text="Delete department" />
+          <i class="trash icon"></i>
+        </a>
+      </ConfirmModal>
+    </div>
+    <div class="meta">
+      <span class="ui small text right floated">Created {{time-ago @department.created}} {{#if @department.creator.fullName}}by {{@department.creator.fullName}}{{/if}}</span>
+    </div>
   </div>
 </div>

@@ -1,18 +1,13 @@
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
 import { inject as controller } from '@ember/controller';
-import { computed } from '@ember/object';
-import pagination from 'granite/mixins/controller-abstractions/pagination';
-import del from 'granite/mixins/controller-abstractions/delete';
+import { equal } from '@ember/object/computed';
 
-export default Controller.extend(pagination, del, {
-  application:      controller(),
-  addingDepartment: computed.equal('application.currentPath', 'account.anatomy.departments.index.new'),
-  queryParams:      [ 'page' ],
-  limit:            20,
+export default class AccountAnatomyDepartmentsController extends Controller {
+  @service data
+  @controller application
+  @equal('application.currentPath', 'account.anatomy.departments.index.new') addingDepartment
 
-  actions: {
-    toggleProperty (prop) {
-      this.toggleProperty(prop);
-    }
-  }
-});
+  queryParams =      [ 'page' ]
+  limit =            20
+}
