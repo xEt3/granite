@@ -16,6 +16,7 @@ export default class AccountDocumentsController extends Controller {
 
   @action
   updateFilter (filter, value) {
+    console.log('inside the head honcho', filter, value);
     this.filter = value;
   }
 

@@ -1,11 +1,14 @@
-<h4 role="button" class="ui {{unless this.active "no margin"}} clickable header" {{action this.toggleActive}}>
-  {{#if this.active}}
-    <i class="caret up icon"></i>
-  {{else}}
-    <i class="caret down icon"></i>
-  {{/if}}
-  {{this.sectionName}}
-</h4>
-<div class={{unless this.active "hidden"}}>
-  {{yield (action this.resetFilter)}}
+<div class="ui vertical segment {{if active "fade-unless-hovered"}}">
+  {{!-- <h4 role="button" class="ui {{unless this.active "no margin"}} clickable header" {{on "click" (pipe (this.toggle "active" this) this.toggleActive)}}> --}}
+  <h4 role="button" class="ui {{unless this.active "no margin"}} clickable header" {{on "click" this.toggleActive}}>
+    {{#if this.active}}
+      <i class="caret up icon"></i>
+    {{else}}
+      <i class="caret down icon"></i>
+    {{/if}}
+    {{@sectionName}}
+  </h4>
+  <div class={{unless this.active "hidden"}}>
+    {{yield @resetFilter}}
+  </div>
 </div>
