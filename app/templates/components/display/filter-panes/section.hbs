@@ -6,9 +6,41 @@
     {{else}}
       <i class="caret down icon"></i>
     {{/if}}
-    {{@sectionName}}
+    {{@name}}
   </h4>
   <div class={{unless this.active "hidden"}}>
-    {{yield @resetFilter}}
+    {{yield (hash
+      control=(component
+        "display/filter-panes/control"
+        update=@sendComponentUpdate
+        onInsert=this.registerControl
+        onDestroy=this.unregisterControl
+        section=this
+      )
+      selectControl=(component
+        "display/filter-panes/control"
+        type="select"
+        update=@sendComponentUpdate
+        onInsert=this.registerControl
+        onDestroy=this.unregisterControl
+        section=this
+      )
+      toggleControl=(component
+        "display/filter-panes/control"
+        type="toggle"
+        update=@sendComponentUpdate
+        onInsert=this.registerControl
+        onDestroy=this.unregisterControl
+        section=this
+      )
+      radioControl=(component
+        "display/filter-panes/control"
+        type="radio"
+        update=@sendComponentUpdate
+        onInsert=this.registerControl
+        onDestroy=this.unregisterControl
+        section=this
+      )
+    ) @resetFilter}}
   </div>
 </div>

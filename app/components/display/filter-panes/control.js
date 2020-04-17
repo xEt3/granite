@@ -1,46 +1,35 @@
-import classic from 'ember-classic-decorator';
-import { classNames } from '@ember-decorators/component';
-import { computed } from '@ember/object';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
-@classic
-@classNames('ui', 'field')
-class ControlComponent extends Component {
-  hasNull = true;
-  itemValuePath = 'id';
-
-  didInsertElement () {
-    super.didInsertElement(...arguments);
-
-    if (this.state && !this.get('parentView.active')) {
-      this.set('parentView.active', true);
-    }
+export default class ControlComponent extends Component {
+  get hasNull () {
+    return typeof this.args.hasNull === 'boolean' ? this.args.hasNull : true;
   }
 
-  @computed('type', 'searchable')
+  get itemValuePath () {
+    return this.args.itemValuePath === false ? false : this.args.itemValuePath || 'id';
+  }
+
   get selectionClass () {
-    if (this.type !== 'select') {
-      return;
+    if (this.args.type !== 'select') {
+      return '';
     }
 
     let classText = 'selection';
 
-    if (this.multi) {
+    if (this.args.multi) {
       classText = `multiple ${classText}`;
     }
 
-    if (this.searchable) {
+    if (this.args.searchable) {
       classText = `search ${classText}`;
     }
 
     return classText;
   }
 
-  __update (val) {
-    this.update(this.controlName, val);
+  @action
+  update (val) {
+    this.args.update(this.args.name, val);
   }
 }
-
-ControlComponent.reopenClass({ positionalParams: [ 'controlName', 'state' ] });
-
-export default ControlComponent;

@@ -16,15 +16,15 @@
       </div>
     </h2>
 
-    {{#filter.section "Supervisor"}}
-      {{#filter.selectControl
+    {{#filter.section @name="Supervisor" as |controls|}}
+      {{#controls.selectControl
         "supervisor"
         this.supervisor
         searchable=true
         model=this.filterModels.supervisors as |item|
       }}
         {{item.fullName}}{{#if item.jobTitle}} - <span class="light text">{{item.jobTitle}}</span>{{/if}}
-      {{/filter.selectControl}}
+      {{/controls.selectControl}}
     {{/filter.section}}
 
     {{#filter.section "Department"}}

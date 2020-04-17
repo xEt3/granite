@@ -1,12 +1,28 @@
 // import { classNames, classNameBindings } from '@ember-decorators/component';
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { A } from '@ember/array';
 import { tracked } from '@glimmer/tracking';
 
 // @classNames('ui', 'vertical', 'segment')
 // @classNameBindings('active::fade-unless-hovered')
 export default class DisplayFilterPanesSectionComponent extends Component {
   @tracked active
+  @tracked childViews = A()
+
+  @action
+  registerControl (control) {
+    if (control.state && !this.active) {
+      this.active = true;
+    }
+
+    this.childViews.addObject(control);
+  }
+
+  @action
+  unregisterControl (control) {
+    this.childViews.removeObject(control);
+  }
 
   @action
   toggleActive () {
@@ -33,7 +49,7 @@ export default class DisplayFilterPanesSectionComponent extends Component {
         return this.childViews.map(view => this.resetFilter(view.controlName));
       }
 
-      this.resetFilter(resets || this.childViews[0].controlName || (this.sectionName || '').toLowerCase());
+      this.resetFilter(resets || this.childViews[0].controlName || (this.args.name || '').toLowerCase());
     }
   }
 }
