@@ -6,7 +6,7 @@ import $ from 'jquery';
 
 @classic
 export default class AtsDisqualify extends Component {
-  @service auth;
+  @service auth
 
   @computed('auth.user.company')
   get disqualificationReasons () {
