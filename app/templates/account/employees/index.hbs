@@ -16,64 +16,77 @@
       </div>
     </h2>
 
-    {{#filter.section @name="Supervisor" as |controls|}}
-      {{#controls.selectControl
-        "supervisor"
-        this.supervisor
-        searchable=true
-        model=this.filterModels.supervisors as |item|
-      }}
+    <filter.section @name="Supervisor" as |controls|>
+      <controls.selectControl
+        @name="supervisor"
+        @state={{this.supervisor}}
+        @searchable={{true}}
+        @model={{this.filterModels.supervisors}} as |item|
+      >
         {{item.fullName}}{{#if item.jobTitle}} - <span class="light text">{{item.jobTitle}}</span>{{/if}}
-      {{/controls.selectControl}}
-    {{/filter.section}}
+      </controls.selectControl>
+    </filter.section>
 
-    {{#filter.section "Department"}}
-      {{filter.selectControl
-        "department"
-        this.department
-        searchable=true
-        model=this.filterModels.departments
-        itemTextPath="name"}}
-    {{/filter.section}}
+    <filter.section @name="Department" as |controls|>
+      <controls.selectControl
+        @name="department"
+        @state={{this.department}}
+        @searchable=true
+        @model={{this.filterModels.departments}}
+        @itemTextPath="name" />
+    </filter.section>
 
-    {{#filter.section "Location"}}
-      {{filter.selectControl
-        "location"
-        this.location
-        searchable=true
-        model=this.filterModels.locations
-        itemTextPath="name"}}
-    {{/filter.section}}
+    <filter.section @name="Location" as |controls|>
+      <controls.selectControl
+        @name="location"
+        @state={{this.location}}
+        @searchable={{true}}
+        @model={{this.filterModels.locations}}
+        @itemTextPath="name" />
+    </filter.section>
 
-    {{#filter.section "Hire Date" resets=(array "hireDateStart" "hireDateEnd")}}
-      {{#filter.control "hireDate" (or this.hireDateStart this.hireDateEnd) class="two fields"}}
-        <UiCalendar @class="ui field" @type="date" @container="body" @startMode="year" @label="Start Date" @dateValue={{this.hireDateStart}} @onChange={{action (mut this.hireDateStart)}} />
+    <filter.section @name="Hire Date" @resets=(array "hireDateStart" "hireDateEnd") as |controls|>
+      <controls.control @name="hireDate" @state={{or this.hireDateStart this.hireDateEnd}} class="two fields">
+        <UiCalendar
+          @class="ui field"
+          @type="date"
+          @container="body"
+          @startMode="year"
+          @label="Start Date"
+          @dateValue={{this.hireDateStart}}
+          @onChange={{action (mut this.hireDateStart)}} />
+        <UiCalendar
+          @class="ui field"
+          @type="date"
+          @container="body"
+          @startMode="year"
+          @label="End Date"
+          @dateValue={{this.hireDateEnd}}
+          @onChange={{action (mut this.hireDateEnd)}} />
+      </controls.control>
+    </filter.section>
 
-        <UiCalendar @class="ui field" @type="date" @container="body" @startMode="year" @label="End Date" @dateValue={{this.hireDateEnd}} @onChange={{action (mut this.hireDateEnd)}} />
-      {{/filter.control}}
-    {{/filter.section}}
-
-    {{#filter.section "Additional Filters"}}
+    <filter.section @name="Additional Filters" as |controls|>
       <div class="ui three fields">
-        {{filter.toggleControl
-          "onboarding"
-          this.onboarding
-          label="Is Onboarding"
-          class="center aligned text field"}}
+        <controls.toggleControl
+          @name="onboarding"
+          @state={{this.onboarding}}
+          @label="Is Onboarding"
+          class="center aligned text field" />
 
-        {{filter.toggleControl
-          "offboarding"
-          this.offboarding
-          label="Is Offboarding"
-          class="center aligned text field"}}
+        <controls.toggleControl
+          @name="offboarding"
+          @state={{this.offboarding}}
+          @label="Is Offboarding"
+          class="center aligned text field" />
 
-        {{filter.toggleControl
-          "terminated"
-          this.terminated
-          label="Is Terminated"
-          class="center aligned text field"}}
+        <controls.toggleControl
+          @name="terminated"
+          @state={{this.terminated}}
+          @label="Is Terminated"
+          class="center aligned text field" />
       </div>
-    {{/filter.section}}
+    </filter.section>
   </Display::FilterPane>
 {{/if}}
 
