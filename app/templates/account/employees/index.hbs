@@ -1,12 +1,12 @@
 <StatefulIntroJs @user={{this.auth.user}} @steps={{this.intros}} @start-if={{true}} @hintKey="employees-index" />
 
 {{#if this.showFilters}}
-  <Display::FilterPane @class="ui content form padded segment container" @onChange={{action "updateFilter"}} as |filter|>
+  <Display::FilterPane class="ui content form padded segment container" @onChange={{action "updateFilter"}} as |filter|>
     <h2>
       <i class="filter icon"></i> Filters
       <div class="ui horizontal list right floated">
         <div class="item">
-          <button class="negative ui button small text" {{action "resetFilters"}}>Reset All</button>
+          <button type="button" class="negative ui button small text" {{action "resetFilters"}}>Reset All</button>
         </div>
         <div class="item">
           <a href="#" class="light text" {{action this.toggleProperty "showFilters"}}>
@@ -31,7 +31,7 @@
       <controls.selectControl
         @name="department"
         @state={{this.department}}
-        @searchable=true
+        @searchable={{true}}
         @model={{this.filterModels.departments}}
         @itemTextPath="name" />
     </filter.section>
@@ -45,7 +45,7 @@
         @itemTextPath="name" />
     </filter.section>
 
-    <filter.section @name="Hire Date" @resets=(array "hireDateStart" "hireDateEnd") as |controls|>
+    <filter.section @name="Hire Date" @resets={{array "hireDateStart" "hireDateEnd"}} as |controls|>
       <controls.control @name="hireDate" @state={{or this.hireDateStart this.hireDateEnd}} class="two fields">
         <UiCalendar
           @class="ui field"

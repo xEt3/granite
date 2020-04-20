@@ -1,18 +1,18 @@
 <div class="ui field" ...attributes {{did-insert (fn @onInsert this)}} {{will-destroy (fn @onDestroy this)}}>
   {{#if (eq @type "select")}}
-    <UiDropdown @class={{this.selectionClass}} @selected={{@state}} @onChange={{this.update}} as |execute mapper|>
+    <UiDropdown @class={{this.selectionClass}} @selected={{@state}} @onChange={{fn this.update}} as |execute mapper|>
       <div class="default text">
         {{#if this.selectText}}
           {{this.selectText}}
         {{else}}
-          Select a {{@section.name}}
+          Select a {{@section.args.name}}
         {{/if}}
       </div>
       <i class="dropdown icon"></i>
       <div class="menu">
         {{#if this.hasNull}}
           <div class="item" data-value={{map-value mapper "none"}}>
-            No {{@section.ame}}
+            No {{@section.args.name}}
           </div>
         {{/if}}
         {{#each @model as |item|}}
@@ -29,17 +29,17 @@
   {{else if (eq @type "toggle")}}
     <UiCheckbox
       @class="toggle"
-      @label={{or @label "controlName"}}
+      @label={{or @label @name}}
       @checked={{@state}}
-      @onChange={{this.update}} />
+      @onChange={{fn this.update}} />
   {{else if (eq @type "radio")}}
     <UiRadio
       @class="toggle"
       @name={{@name}}
-      @label={{or @label "controlName"}}
+      @label={{or @label @name}}
       @value={{@value}}
       @current={{@state}}
-      @onChange={{this.update}} />
+      @onChange={{fn this.update}} />
   {{else}}
     {{yield
       this.update
