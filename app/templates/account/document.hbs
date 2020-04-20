@@ -31,7 +31,7 @@
   <div class="ui raised padded segment container clearfix">
     <hgroup>
       <h2>
-        {{display/icon-for-file this.model}}
+        <Display::IconForFile @file={{this.model}}/>
         {{if this.model.title this.model.title "Document"}}
         {{#if this.model.tags}}
           {{#each this.model.tags as |tag|}}

@@ -1,12 +1,3 @@
-import classic from 'ember-classic-decorator';
-import { classNames } from '@ember-decorators/component';
-import BaseLiComponent from './base';
+import Component from '@glimmer/component';
 
-@classic
-@classNames('item', 'clearfix')
-export default class ChangeItem extends BaseLiComponent {
-  /* stubs */
-  onApprove = () => {};
-
-  onReject = () => {};
-}
+export default class ListItemChangeItem extends Component {}

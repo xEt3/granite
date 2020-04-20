@@ -1,7 +1,3 @@
-import classic from 'ember-classic-decorator';
-import { classNames } from '@ember-decorators/component';
-import BaseLiComponent from './base';
+import Component from '@glimmer/component';
 
-@classic
-@classNames('content')
-export default class EmployeeIssueItem extends BaseLiComponent {}
+export default class ListItemEmployeeIssueItem extends Component {}

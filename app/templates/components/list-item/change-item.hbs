@@ -1,39 +1,41 @@
-<div class="content">
-  <div class="header">
-    <span class="light text">({{time this.model.created "M/D"}})</span>
-    {{this.model.changes.length}}
-    {{inflect-text "change" this.model.changes.length}} requested by {{this.model.employee.fullName}}
-  </div>
-  <div class="right floated content">
-    <button type="button" class="ui positive labeled icon tiny button" {{action this.onApprove this.model}}>
-      <i class="ui check icon"></i>
-      Approve
-    </button>
-    <button type="button" class="ui negative labeled icon tiny button" {{action this.onReject this.model}}>
-      <i class="ui times icon"></i>
-      Reject
-    </button>
-  </div>
-  <div class="extra">
-    <ol class="ui ordered list">
-      {{#each this.model.changes as |change|}}
-        <li class="item">{{humanize-key change.path}}:
-          {{#if (not-eq change.currentValue change.before) }}
-            <div> 
-              Current Value: <strong>{{change.currentValue}}</strong> 
-              <i class="info circle icon">
-                <EmberTooltip @side="right" @text="This field has changed since the employee requested to change it. Please review carefully." />
-              </i>
+<div class="item clearfix">
+  <div class="content">
+    <div class="header">
+      <span class="light text">({{time @model.created "M/D"}})</span>
+      {{@model.changes.length}}
+      {{inflect-text "change" @model.changes.length}} requested by {{@model.employee.fullName}}
+    </div>
+    <div class="right floated content">
+      <button type="button" class="ui positive labeled icon tiny button" {{on "click" (fn @onApprove @model)}}>
+        <i class="ui check icon"></i>
+        Approve
+      </button>
+      <button type="button" class="ui negative labeled icon tiny button" {{on "click" (fn @onReject @model)}}>
+        <i class="ui times icon"></i>
+        Reject
+      </button>
+    </div>
+    <div class="extra">
+      <ol class="ui ordered list">
+        {{#each @model.changes as |change|}}
+          <li class="item">{{humanize-key change.path}}:
+            {{#if (not-eq change.currentValue change.before) }}
+              <div>
+                Current Value: <strong>{{change.currentValue}}</strong>
+                <i class="info circle icon">
+                  <EmberTooltip @side="right" @text="This field has changed since the employee requested to change it. Please review carefully." />
+                </i>
+              </div>
+            {{/if}}
+            <div>
+              Was: <strong>{{change.before}}</strong>
             </div>
-          {{/if}}
-          <div>
-            Was: <strong>{{change.before}}</strong>
-          </div>
-          <div>
-            After Change: <strong>{{change.value}}</strong>
-          </div>
-        </li>
-      {{/each}}
-    </ol>
+            <div>
+              After Change: <strong>{{change.value}}</strong>
+            </div>
+          </li>
+        {{/each}}
+      </ol>
+    </div>
   </div>
 </div>

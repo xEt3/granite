@@ -3,7 +3,7 @@
     <img src={{this.file.url}} alt="">
   </div>
 {{else}}
-  {{display/icon-for-file this.file class="huge"}}
+  <Display::IconForFile @file={{this.file}} class="huge"/>
 {{/if}}
 <div class="clearing content">
   <div class="header">

@@ -1,7 +1,3 @@
-import classic from 'ember-classic-decorator';
-import { classNames } from '@ember-decorators/component';
-import BaseLiComponent from './base';
+import Component from '@glimmer/component';
 
-@classic
-@classNames('item')
-export default class CorrectiveActionFollowup extends BaseLiComponent {}
+export default class ListItemCorrectiveActionFollowup extends Component {}

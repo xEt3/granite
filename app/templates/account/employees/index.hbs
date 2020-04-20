@@ -1,7 +1,7 @@
 <StatefulIntroJs @user={{this.auth.user}} @steps={{this.intros}} @start-if={{true}} @hintKey="employees-index" />
 
 {{#if this.showFilters}}
-  <Display::FilterPane class="ui content form padded segment container" @onChange={{action "updateFilter"}} as |filter|>
+  <Display::FilterPane class="ui content form padded segment container" @onChange={{this.updateFilter}} as |filter|>
     <h2>
       <i class="filter icon"></i> Filters
       <div class="ui horizontal list right floated">
@@ -143,12 +143,12 @@
 
   <div class="ui divider"></div>
 
-  {{display/resource-list
-    this.model
-    "list-item/employee-item"
-    linkTo="account.employee"
-    linkClass="item"
-    class="ui divided link items"}}
+  <Display::ResourceList
+    @model={{this.model}}
+    @itemComponent="list-item/employee-item"
+    @linkTo="account.employee"
+    @linkClass="item"
+    class="ui divided link items"/>
 
   <Elements::XPagination
     @page={{this.page}}

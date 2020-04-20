@@ -5,32 +5,31 @@
       <a href="#" class="ui small text right floated text-red" {{on "click" (prevent-default this.resetFilters)}}>Reset All</a>
     </h2>
 
-    {{!-- HERE --}}
-    <filter.section @sectionName="Tags">
-      {{#filter.selectControl
-        "tags"
-        this.tags
-        searchable=true
-        multi=true
-        itemValuePath=false
-        model=this.filterModels.tags as |item|
-      }}
+    <filter.section @name="Tags" as |controls|>
+      <controls.selectControl
+        @name="tags"
+        @state={{this.tags}}
+        @searchable={{true}}
+        @multi={{true}}
+        @itemValuePath={{false}}
+        @model={{this.filterModels.tags}} as |item|
+      >
         {{item}}
-      {{/filter.selectControl}}
+      </controls.selectControl>
     </filter.section>
 
-    {{!-- {{#filter.section "Extension"}}
-      {{#filter.selectControl
-        "extension"
-        this.extension
-        searchable=true
-        multi=true
-        itemValuePath=false
-        model=this.filterModels.extension as |extension|
-      }}
+    <filter.section @name="Extension" as |controls|>
+      <controls.selectControl
+        @name="extension"
+        @state={{this.extension}}
+        @searchable={{true}}
+        @multi={{true}}
+        @itemValuePath={{false}}
+        @model={{this.filterModels.extension}} as |extension|
+      >
         {{extension}}
-      {{/filter.selectControl}}
-    {{/filter.section}} --}}
+      </controls.selectControl>
+    </filter.section>
   </Display::FilterPane>
 {{/if}}
 
@@ -42,7 +41,7 @@
 
     <div class="right aligned text floated menu__actions">
       <h3 class="ui right floated header">
-        <a href="#" class={{if this.showFilters "text-red"}} {{action this.toggleProperty "showFilters"}}>
+        <a href="#" class={{if this.showFilters "text-red"}} {{on "click" (prevent-default (toggle "showFilters" this))}}>
           <EmberTooltip @side="left" @popperContainer="body" @text="Filters" />
           <i class="{{if this.showFilters "remove" "filter"}} icon"></i>
         </a>
@@ -60,11 +59,11 @@
 
   <div class="ui divider"></div>
 
-  {{!-- {{display/resource-list
-    this.model
-    "list-item/document-item"
-    linkTo="account.document"
-    linkClass="item"
-    class="ui divided link items"}}
-  <Elements::XPagination @page={{readonly this.page}} @pages={{readonly this.pages}} @onchange={{action (mut this.page)}} /> --}}
+  <Display::ResourceList
+    @model={{this.model}}
+    @itemComponent="list-item/document-item"
+    @linkTo="account.document"
+    @linkClass="item"
+    class="ui divided link items"/>
+  <Elements::XPagination @page={{this.page}} @model={{this.model}} @limit={{this.limit}} @onChange={{set this.page _}} />
 </div>

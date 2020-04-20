@@ -1,14 +1,15 @@
 import Controller from 'granite/core/controller';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export default class AccountDocumentsController extends Controller {
   @service auth
   @service data
+  @tracked tags = null
+  @tracked extension = null
 
   queryParams = [ 'page', 'asc', 'sortProp', 'tags', 'extension' ]
-  tags = null
-  extension = null
   limit = 20
   page = 1
   asc = true
@@ -16,7 +17,6 @@ export default class AccountDocumentsController extends Controller {
 
   @action
   updateFilter (filter, value) {
-    console.log('inside the head honcho', filter, value);
     this.filter = value;
   }
 

@@ -16,12 +16,12 @@
   </hgroup>
   <div class="ui divider"></div>
 
-  {{display/resource-list
-    this.model
-    "list-item/job-item"
-    linkTo="account.job-description"
-    linkClass="item"
-    class="ui divided link items"}}
+  <Display::ResourceList
+    @model={{this.model}}
+    @itemComponent="list-item/job-item"
+    @linkTo="account.job-description"
+    @linkClass="item"
+    class="ui divided link items"/>
 
-  <Elements::XPagination @page={{readonly this.page}} @pages={{readonly this.pages}} @onchange={{action (mut this.page)}} />
+  <Elements::XPagination @page={{this.page}} @model={{this.model}} @limit={{this.limit}} @onChange={{set this.page _}} />
 </div>

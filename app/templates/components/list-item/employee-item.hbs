@@ -1,58 +1,58 @@
 {{#if hasBlock}}
-  {{yield this.employee.fullName this.employee.title}}
+  {{yield @model.fullName @model.title}}
 {{else}}
   <div class="ui tiny rounded image">
-    <Display::EmployeePicture @url={{this.employee.picture}} @employeeId={{this.employee.id}} />
+    <Display::EmployeePicture @url={{@model.picture}} @employeeId={{@model.id}} />
   </div>
   <div class="content">
-    <div class="header">{{this.employee.fullName}}</div>
+    <div class="header">{{@model.fullName}}</div>
     <div class="meta">
-      <span>{{this.employee.jobTitle}}</span>
-      <span class="ui small text right floated">{{time this.employee.created}}</span>
+      <span>{{@model.jobTitle}}</span>
+      <span class="ui small text right floated">{{time @model.created}}</span>
     </div>
     <div class="extra">
-      {{#if this.employee.externalLinkService}}
+      {{#if @model.externalLinkService}}
         <div class="ui basic label">
-          <i class="download icon"></i>Imported from {{capitalize this.employee.externalLinkService}}
+          <i class="download icon"></i>Imported from {{capitalize @model.externalLinkService}}
         </div>
       {{/if}}
-      {{#if this.employee.onboarding}}
+      {{#if @model.onboarding}}
         <div class="ui green label">
           <i class="circle thin icon"></i>Onboarding
-          {{#if this.employee.onboardingProgress}}
-            {{this.employee.onboardingProgress}}% complete
+          {{#if @model.onboardingProgress}}
+            {{@model.onboardingProgress}}% complete
           {{else}}
             in progress
           {{/if}}
-          {{#if this.employee.onboarder}}
-            by {{this.employee.onboarder.fullName}}
+          {{#if @model.onboarder}}
+            by {{@model.onboarder.fullName}}
           {{/if}}
         </div>
       {{/if}}
 
-      {{#if this.employee.offboarding}}
+      {{#if @model.offboarding}}
         <div class="ui red label">
           <i class="remove icon"></i>Offboarding
-          {{#if this.employee.offboardingProgress}}
-            {{this.employee.offboardingProgress}}% complete
+          {{#if @model.offboardingProgress}}
+            {{@model.offboardingProgress}}% complete
           {{else}}
             in progress
           {{/if}}
-          {{#if this.employee.offboarder}}
-            by {{this.employee.offboarder.fullName}}
+          {{#if @model.offboarder}}
+            by {{@model.offboarder.fullName}}
           {{/if}}
         </div>
       {{/if}}
 
-      {{#if this.employee.onProbation}}
+      {{#if @model.onProbation}}
         <div class="ui basic label">
           In Probation Period
         </div>
       {{/if}}
 
-      {{#if this.employee.terminatedOn}}
+      {{#if @model.terminatedOn}}
         <div class="ui red label">
-          <i class="user times icon"></i>Terminated on {{time this.employee.terminatedOn}}
+          <i class="user times icon"></i>Terminated on {{time @model.terminatedOn}}
         </div>
       {{/if}}
     </div>

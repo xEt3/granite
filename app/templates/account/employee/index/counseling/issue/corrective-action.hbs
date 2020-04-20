@@ -49,11 +49,11 @@
       "MMMM Do YYYY"}}
   </div>
   <div class="content">
-    {{quick-form
-      this.followupForm
-      this.followup
-      this
-      tagName="div"}}
+    <QuickForm
+      @form={{this.followupForm}}
+      @model={{this.followup}}
+      @controller={{this}}
+      @tagName="div"/>
   </div>
   <div class="actions">
     <button class="ui red button" {{action "respondFollowup" false}}>

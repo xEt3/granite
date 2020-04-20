@@ -22,13 +22,13 @@
   </hgroup>
   <div class="ui divider"></div>
 
-  {{display/resource-list
-    this.model
-    "list-item/employee-issue-item"
-    linkTo="account.employee.index.counseling.issue"
-    linkClass="item"
-    modelIdentifier="slug"
-    class="ui divided link items"}}
+  <Display::ResourceList
+    @model={{this.model}}
+    @itemComponent="list-item/employee-issue-item"
+    @linkTo="account.employee.index.counseling.issue"
+    @linkClass="item"
+    @modelIdentifier="slug"
+    class="ui divided link items"/>
 
   <Elements::XPagination
     @page={{this.page}}

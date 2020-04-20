@@ -12,15 +12,13 @@
 <div class="ui divided items">
   {{#each this.model.documents as |file|}}
     <span class="item">
-      {{list-item/document-item
-        file
-        deleteAction=(action "removeDocument")
-        confirmDeleteContent="Are you sure you want to remove this document?"
-      }}
+      <ListItem::DocumentItem
+        @model={{file}}
+        @deleteAction={{this.removeDocument}}
+        @confirmDeleteContent="Are you sure you want to remove this document?"
+      />
     </span>
   {{else}}
     <h2 class="ui center aligned header">No documents available.</h2>
   {{/each}}
 </div>
-
-<Elements::XPagination @page={{readonly this.page}} @pages={{readonly this.pages}} @onchange={{action (mut this.page)}} />

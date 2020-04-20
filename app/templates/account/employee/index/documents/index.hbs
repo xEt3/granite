@@ -1,30 +1,30 @@
 {{#if this.showFilters}}
-  <Display::FilterPane @class="ui content form padded segment container" @onChange={{action "updateFilter"}} as |filter|>
+  <Display::FilterPane class="ui content form padded segment container" @onChange={{this.updateFilter}} as |filter|>
     <h2>
       <i class="filter icon"></i> Filters
       <a href="#" class="ui small text right floated text-red" {{action "resetFilters"}}>Reset All</a>
     </h2>
 
-    {{#filter.section "Visibility" activeState=(hash visibleToEmployee=false)}}
-      {{filter.toggleControl
-        "visibleToEmployee"
-        this.visibleToEmployee
-        label="Visible To Employee"}}
-    {{/filter.section}}
+    <filter.section @name="Visibility" @activeState=(hash visibleToEmployee=false) as |controls|>
+      <controls.toggleControl
+        @name="visibleToEmployee"
+        @state={{this.visibleToEmployee}}
+        @label="Visible To Employee"/>
+    </filter.section>
 
-    {{#filter.section "Viewed by Employee" activeState=(hash readOn=false)}}
-      {{filter.toggleControl
-        "readOn"
-        this.readOn
-        label="Viewed"}}
-    {{/filter.section}}
+    <filter.section @name="Viewed by Employee" @activeState=(hash readOn=false) as |controls|>
+      <controls.toggleControl
+        @name="readOn"
+        @state={{this.readOn}}
+        @label="Viewed"/>
+    </filter.section>
 
-    {{#filter.section "Signed by Employee" activeState=(hash signedOn=false)}}
-      {{filter.toggleControl
-        "signedOn"
-        this.signedOn
-        label="Signed"}}
-    {{/filter.section}}
+    <filter.section @name="Signed by Employee" @activeState=(hash signedOn=false) as |controls|>
+      <controls.toggleControl
+        @name="signedOn"
+        @state={{this.signedOn}}
+        @label="Signed"/>
+    </filter.section>
   </Display::FilterPane>
 {{/if}}
 

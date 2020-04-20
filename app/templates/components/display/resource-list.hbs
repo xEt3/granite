@@ -1,18 +1,20 @@
-{{#each this.model as |item|}}
-  {{#if hasBlock}}
-    {{yield (hash
-      listItem=(component this.itemComponent item class=this.componentClass)
-      item=item
-    )}}
-  {{else}}
-    {{#if this.linkTo}}
-      <LinkTo @route={{this.linkTo}} @model={{get item this.modelIdentifier}} class={{this.linkClass}}>
-        {{component this.itemComponent item class=this.componentClass}}
-      </LinkTo>
+<div ...attributes>
+  {{#each @model as |item|}}
+    {{#if hasBlock}}
+      {{yield (hash
+        listItem=(component @itemComponent model=item class=@componentClass)
+        item=item
+      )}}
     {{else}}
-      {{component this.itemComponent item class=this.componentClass}}
+      {{#if @linkTo}}
+        <LinkTo @route={{@linkTo}} @model={{get item this.modelIdentifier}} class={{@linkClass}}>
+          {{component @itemComponent model=item class=@componentClass}}
+        </LinkTo>
+      {{else}}
+        {{component @itemComponent model=item class=@componentClass}}
+      {{/if}}
     {{/if}}
-  {{/if}}
-{{else}}
-  <h2 class="ui center aligned header">No {{this.resourceName}} available.</h2>
-{{/each}}
+  {{else}}
+    <h2 class="ui center aligned header">No {{this.resourceName}} available.</h2>
+  {{/each}}
+</div>

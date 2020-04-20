@@ -1,11 +1,9 @@
-import classic from 'ember-classic-decorator';
-import { tagName } from '@ember-decorators/component';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-@classic
-@tagName('')
-class EmployeeItemComponent extends Component {}
+export default class ListItemEmployeeItemComponent extends Component {}
 
-EmployeeItemComponent.reopenClass({ positionalParams: [ 'employee' ] });
+/*
+  USAGE
+  <ListItem::EmployeeItem @model={{this.employee}}/>
 
-export default EmployeeItemComponent;
+*/

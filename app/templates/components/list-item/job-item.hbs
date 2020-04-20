@@ -1,10 +1,12 @@
-{{#if hasBlock}}
-  {{yield this.model}}
-{{else}}
-  <div class="header">{{this.model.title}}</div>
-  <div class="meta">
-    <span class="ui small text right floated">Created: {{time this.model.created}}{{#if this.model.creator}} by {{this.model.creator.fullName}}{{/if}}</span>
-  </div>
-  <div class="extra">
-  </div>
-{{/if}}
+<div class="content">
+  {{#if hasBlock}}
+    {{yield @model}}
+  {{else}}
+    <div class="header">{{@model.title}}</div>
+    <div class="meta">
+      <span class="ui small text right floated">Created: {{time @model.created}}{{#if @model.creator}} by {{@model.creator.fullName}}{{/if}}</span>
+    </div>
+    <div class="extra">
+    </div>
+  {{/if}}
+</div>

@@ -50,8 +50,8 @@
 {{#liquid-if model.followUps.length}}
   <div class="ui divider"></div>
   <h2><i class="repeat icon"></i>Follow ups</h2>
-  {{display/resource-list
-    this.sortedFollowUps
-    "list-item/corrective-action-followup"
-    class="ui divided items"}}
+  <Display::ResourceList
+    @model={{this.sortedFollowUps}}
+    @itemComponent="list-item/corrective-action-followup"
+    class="ui divided items"/>
 {{/liquid-if}}

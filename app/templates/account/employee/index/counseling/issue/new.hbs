@@ -9,11 +9,11 @@
 </hgroup>
 <div class="ui divider"></div>
 
-{{quick-form
-  this.form
-  this.model
-  this
-  tagName="div"}}
+<QuickForm
+  @form={{this.form}}
+  @model={{this.model}}
+  @controller={{this}}
+  @tagName="div"/>
 
 <div class="ui divider"></div>
 <form {{action "save" this.model on="submit"}}>
