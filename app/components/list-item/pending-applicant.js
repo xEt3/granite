@@ -1,26 +1,22 @@
-import classic from 'ember-classic-decorator';
-import { classNameBindings } from '@ember-decorators/component';
-import { action, computed } from '@ember/object';
-import BaseLiComponent from './base';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { A } from '@ember/array';
 
-@classic
-@classNameBindings('isSelected:is-selected')
-export default class PendingApplicant extends BaseLiComponent {
-  @computed('selected.[]', 'model')
+export default class PendingApplicant extends Component {
   get isSelected () {
-    return (this.selected || A()).includes(this.model);
+    return (this.args.selected || A()).includes(this.args.model);
   }
 
+  @action
   click (e) {
     if (e.target.className.indexOf('content__link') < 0) {
       e.preventDefault();
-      this.send('select');
+      this.select();
     }
   }
 
   @action
   select () {
-    this.onSelectChange(this.model, this.isSelected);
+    this.args.onSelectChange(this.args.model, this.args.isSelected);
   }
 }

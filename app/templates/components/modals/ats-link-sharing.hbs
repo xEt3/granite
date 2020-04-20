@@ -24,8 +24,8 @@
 
     {{#if this.publicLink}}
       <p>
-        Public application link for {{this.model.applicant.firstName}}<br>
-        <a href={{this.publicLink}} target="_blank" rel="noopener">{{this.publicLink}}</a><br>
+        Public application link for {{@model.applicant.firstName}}<br>
+        <a href={{this.publicLink}} target="_blank" rel="noopener noreferrer">{{this.publicLink}}</a><br>
         <strong>
           Treat this link like a password for the job application.
         </strong>
@@ -51,7 +51,7 @@
         <Textarea @rows="3" placeholder="Note" @value={{this.linkNote}} />
       </div>
 
-      <button class="ui fluid primary {{if this.sendingLink "loading"}} button" disabled={{or this.working (not this.sendTo.length)}} {{action "sendLink"}}>
+      <button class="ui fluid primary {{if this.data.statuses.linkSharing.isLoading "loading"}} button" disabled={{or this.working (not this.sendTo.length)}} {{action "sendLink"}}>
         Send Link
       </button>
     {{/if}}
@@ -65,7 +65,7 @@
         <p class="text-green">{{this.successMessage}}</p>
       {{/if}}
     </p>
-    <button class="ui right button" disabled={{this.working}} {{action "respond" this.model}}>
+    <button class="ui right button" disabled={{this.data.statuses.linkSharing.isLoading}} {{action "respond" @model}}>
       Close
     </button>
   </div>

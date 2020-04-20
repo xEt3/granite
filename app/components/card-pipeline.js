@@ -1,12 +1,10 @@
-import classic from 'ember-classic-decorator';
-import { classNames } from '@ember-decorators/component';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { get, action } from '@ember/object';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { inject as service } from '@ember/service';
 
-@classic
-@classNames('pipeline')
-class CardPipelineComponent extends Component.extend(addEdit) {
+export default class CardPipelineComponent extends Component {
+  @service data
+
   @action
   setOrder (targetStageId, { sourceList, sourceIndex, targetList, targetIndex }) {
     const items = this.candidates,
@@ -28,7 +26,7 @@ class CardPipelineComponent extends Component.extend(addEdit) {
         candidate.set('stageOrder', i);
 
         if (!movedStage && newIndex - 1 !== i) {
-          this.saveModel(candidate);
+          this.saveRecord(candidate);
         }
       }
     });
@@ -38,7 +36,7 @@ class CardPipelineComponent extends Component.extend(addEdit) {
           candidate = items.findBy('id', targetListCopy.objectAt(newIndex).get('id'));
 
       candidate.set('stage', newStageId);
-      this.saveModel(candidate);
+      this.saveRecord(candidate);
 
       const cb = this.appChangedStage;
 
@@ -55,7 +53,7 @@ class CardPipelineComponent extends Component.extend(addEdit) {
       stageOrder: -1
     });
 
-    this.saveModel(app);
+    this.saveRecord(app);
 
     const cb = this.appChangedStage;
 
@@ -69,7 +67,3 @@ class CardPipelineComponent extends Component.extend(addEdit) {
     // noop
   }
 }
-
-CardPipelineComponent.reopenClass({ positionalParams: [ 'candidates' ] });
-
-export default CardPipelineComponent;

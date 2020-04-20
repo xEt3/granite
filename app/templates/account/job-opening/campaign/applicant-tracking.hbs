@@ -42,11 +42,10 @@
         )
         as |application|
       }}
-        {{list-item/pending-applicant
-          application
-          selected=this.selectedApplications
-          onSelectChange=(action "selectApplication")
-        }}
+        <ListItem::PendingApplicant
+          @model={{application}}
+          @selected={{this.selectedApplications}}
+          @onSelectChange={{action "selectApplication"}} />
       {{/each}}
     </div>
 
@@ -83,57 +82,57 @@
   </h2>
 
   <ConfirmModal @confirmContent="Are you sure you want to hire and onboard this candidate?" as |confirm|>
-    {{card-pipeline
-      this.activeCandidates
-      newScheduledMeeting=this.newScheduledMeeting
-      pipeline=this.model.pipeline
-      onDisqualify=(action (pipe
+    <CardPipeline
+      @candidates={{this.activeCandidates}}
+      @newScheduledMeeting={{this.newScheduledMeeting}}
+      @pipeline={{this.model.pipeline}}
+      @onDisqualify={{action (pipe
         (action this.set "appInDisqualifyConfirm")
         (action this.openModal this.disqualifyModalId "disqualify")
         (action "disqualifyCandidate" this.appInDisqualifyConfirm)
-      ))
-      onUnDisqualify=(action "unDisqualifyCandidate")
-      onUnHire=(action "unSetHire")
-      onSchedule=(action (pipe
+      )}}
+      @onUnDisqualify={{action "unDisqualifyCandidate"}}
+      @onUnHire={{action "unSetHire"}}
+      @onSchedule={{action (pipe
         (action this.set "appInScheduler")
         (action this.resetMeeting)
         (action this.openModal this.schedulerModalId "scheduler")
         (action this.saveMeeting)
-      ))
-      onOnboardCandidate=(action (pipe
+      )}}
+      @onOnboardCandidate={{action (pipe
         (action confirm)
         (action this.beginOnboarding)
-      ))
-      onLinkSharing=(action (pipe
+      )}}
+      @onLinkSharing={{action (pipe
         (action this.set "appInLinkSharing")
         (action this.openModal this.linkSharingModalId "linkSharing")
-      ))
-      onAddLabel=(action (pipe
+      )}}
+      @onAddLabel={{action (pipe
         (action this.set "appInAddLabels")
         (action this.openModal this.labelsModalId "addLabel")
         (action "saveApplicationLabels")
-      ))
-    }}
+      )}}
+    />
   </ConfirmModal>
 
   <Modals::AtsConfirmInject @applicants={{this.selectedApplications}} @modalId={{this.confirmInjectModalId}} @onResponse={{action "modalResponse" "inject"}} />
 
   <Modals::AtsDisqualify @model={{this.appInDisqualifyConfirm}} @modalId={{this.disqualifyModalId}} @onResponse={{action "modalResponse" "disqualify"}} />
 
-  {{modals/ats-scheduler
-    this.appInScheduler
-    this.currentMeeting
-    modalId=this.schedulerModalId
-    availableOrganizers=this.model.employees
-    onResponse=(action "modalResponse" "scheduler")}}
+  <Modals::AtsScheduler
+    @model={{this.appInScheduler}}
+    @meeting={{this.currentMeeting}}
+    @modalId={{this.schedulerModalId}}
+    @availableOrganizers={{this.model.employees}}
+    @onResponse={{action "modalResponse" "scheduler"}} />
 
-  {{modals/ats-link-sharing
-    this.appInLinkSharing
-    modalId=this.linkSharingModalId
-    onResponse=(action "modalResponse" "linkSharing")}}
+  <Modals::AtsLinkSharing
+    @model={{this.appInLinkSharing}}
+    @modalId={{this.linkSharingModalId}}
+    @onResponse={{action "modalResponse" "linkSharing"}} />
 
-  {{modals/ats-add-label
-    this.appInAddLabels
-    modalId=this.labelsModalId
-    onResponse=(action "modalResponse" "addLabel")}}
+  <Modals::AtsAddLabel
+    @model={{this.appInAddLabels}}
+    @modalId={{this.labelsModalId}}
+    @onResponse={{action "modalResponse" "addLabel"}} />
 </div>

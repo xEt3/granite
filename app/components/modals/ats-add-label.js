@@ -1,58 +1,51 @@
-import classic from 'ember-classic-decorator';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
 import { lists } from 'granite/config/forms/lists';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import $ from 'jquery';
 
-@classic
-class AddLabelModalComponent extends Component.extend(addEdit) {
-  @service
-  auth;
+export default class AddLabelModalComponent extends Component {
+  @service auth
+  @service store
+  @service data
 
-  @service
-  store;
-
-  enableNotify = false;
-  currentLabel = null;
-  newLabelForm = lists.labels.elements;
+  enableNotify = false
+  currentLabel = null
+  newLabelForm = lists.labels.elements
 
   resetCurrentLabel () {
-    this.set('currentLabel', null);
+    this.currentLabel = null;
   }
 
   randomColor () {
     let hex = '0123456789ABCDEF',
         color = '#';
+
     for (let i = 0; i < 6; i++) {
       color += hex[Math.floor(Math.random() * hex.length)];
     }
+
     return color;
   }
 
   @action
   async addLabel () {
-    this.set('currentLabel', await this.store.createRecord('label', { color: this.randomColor() }));
+    this.currentLabel = await this.store.createRecord('label', { color: this.randomColor() });
   }
 
   @action
   async saveLabel (label) {
-    let company = await this.get('auth.user.company'),
-        companyLabels = await company.get('labels'),
-        applicationLabels = await this.get('model.labels');
+    const company = await this.auth.user.company,
+          companyLabels = await company.get('labels'),
+          applicationLabels = await this.model.get('labels');
 
     //add label to company, save, then remove phony label
     companyLabels.addObject(label);
-    await this.saveModel(company);
+    await this.saveRecord(company);
     companyLabels.filterBy('id', null).invoke('destroyRecord');
 
     //add saved label to application labels array
-    let newSavedLabel = companyLabels.find(l => {
-      return l.id && l.text === label.text;
-    });
-
-    applicationLabels.addObject(newSavedLabel);
+    applicationLabels.addObject(companyLabels.find(l => l.id && l.text === label.text));
 
     //reset currentLabel so fields are blank to add another label
     this.resetCurrentLabel();
@@ -72,7 +65,3 @@ class AddLabelModalComponent extends Component.extend(addEdit) {
     $(`#${this.modalId}`).modal('hide');
   }
 }
-
-AddLabelModalComponent.reopenClass({ positionalParams: [ 'model' ] });
-
-export default AddLabelModalComponent;

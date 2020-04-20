@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import { filter } from '@ember/object/computed';
 import { A } from '@ember/array';
 import moment from 'moment';
-import modalSupport from 'granite/mixins/modal-support';
+import modalSupport from 'granite/core/modal-support';
 
 @modalSupport
 export default class JobApplicationController extends Controller {

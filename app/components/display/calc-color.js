@@ -1,20 +1,18 @@
+import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import classic from 'ember-classic-decorator';
-import { tagName } from '@ember-decorators/component';
-import { computed } from '@ember/object';
-import Component from '@ember/component';
 
 const fromPercent = (n, max) => Math.round(n / 100 * max);
 
-@classic
-@tagName('')
-class calcColorComponent extends Component {
+export default class CalcColorComponent extends Component {
   @tracked scale = 255;
 
-  @computed('value', 'scale')
+  get scaleValue () {
+    return this.args.scale || this.scale;
+  }
+
   get mixes () {
-    const scale = this.scale,
-          val = this.value;
+    const scale = this.scaleValue,
+          val = this.args.value;
 
     return {
       low:  fromPercent(100 - val, scale),
@@ -22,7 +20,3 @@ class calcColorComponent extends Component {
     };
   }
 }
-
-calcColorComponent.reopenClass({ positionalParams: [ 'value' ] });
-
-export default calcColorComponent;

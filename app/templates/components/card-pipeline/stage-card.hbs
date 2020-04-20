@@ -47,13 +47,13 @@
   <div class="card-content__application-link card-content__score-container">
     <LinkTo @route="account.job-opening.campaign.job-application" @model={{this.application.id}}>Open Application</LinkTo>
     {{#if this.application.isScored}}
-      {{#display/calc-color this.application.scoreAbs as |red green|}}
+      <Display::CalcColor @value={{this.application.scoreAbs}} as |red green|>
         {{! template-lint-disable }}
         <span style="color: rgb({{red}}, {{green}}, 0)" class="card-content__score">
           {{this.application.scoreAbs}}%
         {{! template-lint-enable }}
         </span>
-      {{/display/calc-color}}
+      </Display::CalcColor>
     {{/if}}
     <span class="card-content__entry-method">
       {{if this.application.manualEntry "Manual Entry" "From Quartz"}}

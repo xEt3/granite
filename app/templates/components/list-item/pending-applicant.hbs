@@ -1,28 +1,30 @@
-<div class="content content__flex">
-  <div class="field">
-    <UiCheckbox @checked={{this.isSelected}} @value={{this.isSelected}} />
-  </div>
-  <div class="header">
-    <strong>{{this.model.person.firstName}} {{this.model.person.lastName}}</strong>
-  </div>
-  <div class="ui meta content__flex--pull-right">
-    {{#if this.model.coverLetter}}
-      <span class="ui green label">
-        <i class="check icon"></i>Has Cover Letter
-      </span>
-    {{/if}}
-    {{#if this.model.isScored}}
-      {{#display/calc-color this.model.scoreAbs as |red green|}}
-        {{! template-lint-disable no-inline-styles style-concatenation }}
-        <span class="ui label card-content__score" style="color: rgb({{red}}, {{green}}, 0)">
-          <i class="exchange icon"></i>{{this.model.scoreAbs}}%
-          Match
+<div role="button" class="{{if @isSelected 'is-selected'}}" ...attributes {{on "click" this.click}}>
+  <div class="content content__flex">
+    <div class="field">
+      <UiCheckbox @checked={{@isSelected}} @value={{@isSelected}} />
+    </div>
+    <div class="header">
+      <strong>{{@model.person.firstName}} {{@model.person.lastName}}</strong>
+    </div>
+    <div class="ui meta content__flex--pull-right">
+      {{#if @model.coverLetter}}
+        <span class="ui green label">
+          <i class="check icon"></i>Has Cover Letter
         </span>
-      {{/display/calc-color}}
-    {{/if}}
+      {{/if}}
+      {{#if @model.isScored}}
+        <Display::CalcColor @@model.scoreAbs as |red green|>
+          {{! template-lint-disable no-inline-styles style-concatenation }}
+          <span class="ui label card-content__score" style="color: rgb({{red}}, {{green}}, 0)">
+            <i class="exchange icon"></i>{{@model.scoreAbs}}%
+            Match
+          </span>
+        </Display::CalcColor>
+      {{/if}}
+    </div>
+    <LinkTo @route="account.job-opening.campaign.job-application" @model={{@model.id}} class="ui blue button list-item__button content__link">
+      <EmberTooltip @side="left" @popperContainer="body" @text="Open application" />
+      <i class="fitted external square icon content__link"></i>
+    </LinkTo>
   </div>
-  <LinkTo @route="account.job-opening.campaign.job-application" @model={{this.model.id}} class="ui blue button list-item__button content__link">
-    <EmberTooltip @side="left" @popperContainer="body" @text="Open application" />
-    <i class="fitted external square icon content__link"></i>
-  </LinkTo>
 </div>
