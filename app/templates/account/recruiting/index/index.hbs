@@ -57,7 +57,7 @@
           <EmberTooltip @side="left" @popperContainer="body" @text="Start a campaign" />
           <i id="add-job-opening" class="plus icon"></i>
         </LinkTo>
-        <a href="#" class={{if this.showFilters "text-red"}} {{action this.toggleProperty "showFilters"}}>
+        <a href="#" class={{if this.showFilters "text-red"}} {{on "click" (prevent-default (toggle "showFilters" this))}}>
           <EmberTooltip @side="left" @popperContainer="body" @text="Filters" />
           <i class="{{if this.showFilters "remove" "filter"}} icon"></i>
         </a>
@@ -71,5 +71,5 @@
     @itemComponent="list-item/job-opening-item"
     class="ui divided items"/>
 
-  <Elements::XPagination @page={{readonly this.page}} @pages={{readonly this.pages}} @onchange={{action (mut this.page)}} />
+  <Elements::XPagination @page={{this.page}} @model={{this.model}} @limit={{this.limit}} @onChange={{set this.page _}} />
 </div>

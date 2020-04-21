@@ -73,14 +73,10 @@ export class GraniteResourceRoute extends GraniteRoute {
     this.store.pushPayload(modelName, payload);
 
     // return mapped back records from ED internals
-    let x = ids.map((id, i) => ({
+    return ids.map((id, i) => ({
       record: this.store.peekRecord(modelName, id),
       meta:   extractedPayload[i]
     }));
-
-    console.log('??', x);
-
-    return x;
   }
 
   async afterModel (model, transition) {
@@ -158,7 +154,6 @@ export class GraniteResourceRoute extends GraniteRoute {
 
     // begin resource url override mode
     let result = await this.ajax.request(resourceUrl, { data: query });
-    console.log('results:', result);
 
     // remap data into ED Models
     return this.resourceReturnsModel ? this.__pushPayload(result) : result;

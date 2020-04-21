@@ -3,9 +3,8 @@ import moment from 'moment';
 import { or, reads, equal } from '@ember/object/computed';
 
 export default class ListItemTalentPoolApplicantComponent extends Component {
-  // classNames:     [ 'item', 'talent-pool__applicant' ],
   @or('args.model.record', 'args.model') _model
-  @reads('args.model.meta') _meta
+  @reads('args.model.meta.meta') _meta
   @equal('_meta.timesApplied', 1) firstIsLastApp
 
   get activeTime () {
