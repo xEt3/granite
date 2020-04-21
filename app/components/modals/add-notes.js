@@ -11,25 +11,23 @@ export default class AddNotesModal extends Modal {
     return this.elementId + '-modal';
   }
 
-  @action
   closeModal () {
     $('#' + this.modalId).modal('hide');
   }
 
   @action
   cancel () {
-    this.model.rollbackAttributes();
+    this.args.model.rollbackAttributes();
     this.closeModal();
   }
 
   @action
   async save () {
-    const application = this.model,
+    const application = this.args.model,
           { success, error } = this.data.createStatus();
 
     try {
       await application.save();
-
       success('Saved notes');
       this.closeModal();
     } catch (err) {

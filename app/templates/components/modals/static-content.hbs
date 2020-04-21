@@ -1,14 +1,14 @@
-<UiModal @id={{this.modalId}} @observeChanges={{true}}>
+<UiModal @id={{or @modalId 'modal__static-content'}} @observeChanges={{true}}>
   <i class="close icon"></i>
   <div class="header">
-    {{this.title}}
+    {{@title}}
   </div>
   <div class="content">
     {{yield}}
   </div>
-  {{#unless this.hideActions}}
+  {{#unless @hideActions}}
     <div class="actions">
-      <button class="ui button" {{action "respond" false}}>
+      <button type="button" class="ui button" {{on "click" (fn this.respond false)}}>
         Ok
       </button>
     </div>

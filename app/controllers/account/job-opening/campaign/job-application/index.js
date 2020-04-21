@@ -13,7 +13,7 @@ export default class JobApplicationController extends Controller {
   @filter('events', (event) => moment().isAfter(event.get('start'))) pastEvents
 
   get coverLetterTitle () {
-    return `Cover letter from ${this.model.person.firstName}`;
+    return `Cover letter from ${this.model.get('person.firstName')}`;
   }
 
   get responses () {

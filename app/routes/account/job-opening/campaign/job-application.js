@@ -1,12 +1,9 @@
-import classic from 'ember-classic-decorator';
-import Route from '@ember/routing/route';
-import refreshable from 'granite/mixins/refreshable';
+import Route from 'granite/core/route';
 import { Promise, hash } from 'rsvp';
 
 const modelKeys = [ 'model', 'events', 'stage', 'opening', 'screening' ];
 
-@classic
-export default class JobApplicationRoute extends Route.extend(refreshable) {
+export default class JobApplicationRoute extends Route {
   titleToken = 'Application';
 
   model (params) {
@@ -31,7 +28,7 @@ export default class JobApplicationRoute extends Route.extend(refreshable) {
       'stages._id': stageId,
       limit:        1
     })
-    .then(results => results ? results.get('firstObject.stages').findBy('id', stageId) : results);
+    .then(results => results ? results.get('firstObject.stages').findBy('_id', stageId) : results);
   }
 
   setupController (controller, response) {
