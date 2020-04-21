@@ -1,26 +1,20 @@
-import classic from 'ember-classic-decorator';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
-import refreshable from 'granite/mixins/refreshable';
 
-@classic
-export default class IndexRoute extends Route.extend(refreshable) {
-  @service
-  ajax;
-
-  @service
-  auth;
+export default class AccountEmployeeIndexRoute extends Route {
+  @service ajax
+  @service auth
 
   async model () {
     let employee = this.modelFor('account.employee'),
-        company = await this.get('auth.user.company') || {};
+        company = await this.auth.get('user.company') || {};
 
     if (company.collectEEO) {
       try {
-        let visualId = await this.ajax.request(`/api/v1/eeo/visual-id/${employee.get('id')}`);
-        this.set('visualIdRequired', visualId.visualIdRequired);
+        let visualId = await this.ajax.request(`/api/v1/eeo/visual-id/${employee.id}`);
+        this.visualIdRequired = visualId.visualIdRequired;
       } catch (e) {
-        this.set('visualIdRequired', false);
+        this.visualIdRequired = false;
       }
     }
 

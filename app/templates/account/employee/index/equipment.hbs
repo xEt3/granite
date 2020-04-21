@@ -1,5 +1,5 @@
 <div class="right aligned text">
-  <Input::EquipmentPicker @assignableAssets={{this.assignableAssets}} @onSelect={{action "selectAsset"}} @onCreate={{action "createAsset"}} @newAssetCategory={{action "newAssetCategory"}}>
+  <Input::EquipmentPicker @assignableAssets={{this.assignableAssets}} @onSelect={{this.selectAsset}} @onCreate={{this.createAsset}} @newAssetCategory={{this.newAssetCategory}}>
     <h3 class="ui header"><a href="#"><i class="plus icon text-white"></i></a></h3>
   </Input::EquipmentPicker>
 </div>
@@ -11,7 +11,7 @@
         <ListItem::AssignedAssetItem @asset={{asset}} @employee={{this.employee}} @onUnassign={{action "unassignAsset"}} />
       {{/each}}
     </div>
-    {{#if this.working}}
+    {{#if this.data.statuses.working.isLoading}}
       <div class="ui active dimmer">
         <div class="ui loader"></div>
       </div>
@@ -23,7 +23,7 @@
   </h2>
 {{/if}}
 
-<UiModal @name="new-asset" @class="new-asset" @detachable={{true}} @onApprove={{action "saveAsset"}} @onDeny={{action "abortAsset"}}>
+<UiModal @name="new-asset" @class="new-asset" @detachable={{true}} @onApprove={{this.saveAsset}} @onDeny={{this.abortAsset}}>
   <i class="cancel close icon"></i>
   <div class="header">
     Creating a new item in "{{this.pendingAssetItem.asset.name}}" for {{this.employee.firstName}}
@@ -70,10 +70,10 @@
 
         <div class="ui divided list">
           {{#each this.suggestedDocs as |doc|}}
-            {{list-item/document-suggestion
-              doc
+            <ListItem::DocumentSuggestion
+              @model={{doc}}
               class="item"
-              addAssignment=(action "createAssignment")}}
+              @addAssignment={{this.createAssignment}}/>
           {{/each}}
         </div>
       {{/if}}
@@ -82,11 +82,11 @@
       </h3>
       <div class="ui divided list">
         {{#each this.fileAssignments as |assignment|}}
-          {{list-item/document-assignment
-            assignment
+          <ListItem::DocumentAssignment
+            @model={{assignment}}
             class="item"
-            onRemove=(action "removeAssignment")
-            onChange=(action "updateAssignment")}}
+            @onRemove={{this.removeAssignment}}
+            @onChange={{this.updateAssignment}}/>
         {{else}}
           <h3 class="center aligned light text">Nothing assigned, yet.</h3>
         {{/each}}
@@ -94,10 +94,10 @@
     </form>
   </div>
   <div class="actions">
-    <button class="ui red button" {{action "cancelAssignments"}}>
+    <button class="ui red button" {{on "click" this.cancelAssignments}}>
       Cancel
     </button>
-    <button class="ui primary right labeled icon {{if this.working "loading"}} button" {{action "saveAssignments"}}>
+    <button class="ui primary right labeled icon {{if this.data.statuses.working.isLoading "loading"}} button" {{on "click" this.saveAssignments}}>
       Assign <i class="add user icon"></i>
     </button>
   </div>

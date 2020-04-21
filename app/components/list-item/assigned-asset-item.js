@@ -1,15 +1,14 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { A } from '@ember/array';
 
-export default Component.extend({
-  classNames: [ 'ui centered card' ],
-  didReceiveAttrs () {
-    this.set('details', this.showAttributes);
-  },
+export default class ListItemAssignedAssetItemComponent extends Component {
+  constructor () {
+    super(...arguments);
+    this.details = this.args.showAttributes;
+  }
 
-  attributes: computed('asset.customFields', function () {
-    let fields = this.get('asset.customFields'),
+  get attributes () {
+    let fields = this.args.asset.customFields,
         attributes = A();
 
     for (let key in fields) {
@@ -23,20 +22,10 @@ export default Component.extend({
       });
     }
     return attributes;
-  }),
-
-  assignment: computed('asset.assignments.[]', function () {
-    let assetAssignments = this.get('asset.assignments');
-    return assetAssignments.findBy('employee.id', this.get('employee.id'));
-  }),
-
-  actions: {
-    unassign () {
-      this.onUnassign(this.asset);
-    },
-
-    toggleProperty (prop) {
-      this.toggleProperty(prop);
-    }
   }
-});
+
+  get assignment () {
+    let assetAssignments = this.args.asset.assignments;
+    return assetAssignments.findBy('employee.id', this.args.employee.id);
+  }
+}

@@ -1,18 +1,21 @@
-import Controller from '@ember/controller';
-import ajaxStatus from 'granite/mixins/ajax-status';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import Controller from 'granite/core/controller';
 import { singularize } from 'ember-inflector';
 import { A } from '@ember/array';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import $ from 'jquery';
 
-export default Controller.extend(ajaxStatus, addEdit, {
-  auth: service(),
-  ajax: service(),
+export default class AccountEmployeeEquipmentController extends Controller {
+  @service auth
+  @service ajax
+  @service data
 
-  newAssetItem:    null,
-  suggestedDocs:   A(),
-  fileAssignments: A(),
+  @tracked newAssetItem = null
+  @tracked pendingAssetItem = null
+
+  suggestedDocs =   A()
+  fileAssignments = A()
 
   async getSuggestedDocs (assetItem, employee) {
     let assetDocs = (await assetItem.get('asset.documents')).toArray();
@@ -21,162 +24,174 @@ export default Controller.extend(ajaxStatus, addEdit, {
 
     let idsAssigned = (await this.ajax.request('/api/v1/file-assignments', {
       data: {
-        employee: employee.get('id'),
+        employee: employee.id,
         file:     { $in: combinedDocs.map(({ id }) => id) },
         select:   'file'
       }
     })).fileAssignment;
 
-    return combinedDocs.filter(doc => !idsAssigned.find(({ file }) => file === doc.get('id')));
-  },
+    return combinedDocs.filter(doc => !idsAssigned.find(({ file }) => file === doc.id));
+  }
 
-  actions: {
-    createAsset (category) {
-      let user = this.get('auth.user');
+  @action
+  async createAsset (category) {
+    let user = this.auth.get('user');
 
-      this.set('pendingAssetItem', this.store.createRecord('asset-item', {
-        asset:      category,
-        identifier: this.get('employee.firstName') + '\'s ' + singularize(category.get('name')),
-        creator:    user,
-        company:    user.get('company')
-      }));
+    this.pendingAssetItem = await this.store.createRecord('asset-item', {
+      asset:      category,
+      identifier: this.employee.firstName + '\'s ' + singularize(category.name),
+      creator:    user,
+      company:    user.get('company')
+    });
 
-      $('.new-asset').modal('show');
-    },
+    $('.new-asset').modal('show');
+  }
 
-    saveAsset () {
-      this.ajaxStart();
+  @action
+  async saveAsset () {
+    let { success, error } = this.data.createStatus();
 
-      this.pendingAssetItem.save()
-      .then(asset => {
-        this.send('selectAsset', asset);
-      })
-      .catch(this.ajaxError.bind(this));
-    },
-
-    abortAsset () {
-      let asset = this.pendingAssetItem;
-
-      asset.destroyRecord()
-      .then(() => {
-        this.set('pendingAssetItem', null);
-      });
-    },
-
-    selectAsset (asset) {
-      this.model.addObject(asset);
-      this.ajaxStart();
-
-      let user = this.get('auth.user'),
-          employee = this.employee;
-
-      if (asset.get('assignments').findBy('employee.id', employee.get('id'))) {
-        this.ajaxSuccess(null, true);
-        return;
-      }
-
-      let assignment = this.store.createRecord('asset-assignment', {
-        employee,
-        assigner: user
-      });
-
-      asset.get('assignments').addObject(assignment);
-
-      asset.save()
-      .then(assetItem => {
-        // remove ghost assignment
-        assetItem.assignments.forEach(a => {
-          if (!a.id) {
-            assetItem.assignments.removeObject(a);
-          }
-        });
-
-        this.set('newAssetItem', assetItem);
-        this.getSuggestedDocs(assetItem, employee)
-        .then(suggestedDocs => {
-          if (suggestedDocs.length) {
-            this.send('openAssignmentModal', suggestedDocs, employee);
-          }
-        });
-
-        this.send('refresh');
-        this.ajaxSuccess(null, true);
-      })
-      .catch(this.ajaxError.bind(this));
-    },
-
-    unassignAsset (asset) {
-      this.model.removeObject(asset);
-
-      let assignment = asset.get('assignments').findBy('employee.id', this.get('employee.id'));
-
-      if (assignment) {
-        this.ajaxStart();
-        asset.get('assignments').removeObject(assignment);
-        asset.save()
-        .then(() => {
-          this.ajaxSuccess(null, true);
-          this.send('refresh');
-        })
-        .catch(this.ajaxError.bind(this));
-      }
-    },
-
-    newAssetCategory () {
-      this.send('refresh');
-    },
-
-    openAssignmentModal (suggestedDocs, employee) {
-      this.setProperties({
-        suggestedDocs,
-        employee
-      });
-
-      $('.asset-documents').modal({
-        detachable: true,
-        closable:   false,
-        onHidden:   () => {
-          this.setProperties({
-            suggestedDocs:   A(),
-            fileAssignments: A(),
-            newAssetItem:    null
-          });
-        }
-      }).modal('show');
-    },
-
-    closeAssignmentModal () {
-      $('.asset-documents').modal('hide');
-    },
-
-    createAssignment (file) {
-      let newAssignment = this.store.createRecord('file-assignment', {
-        file,
-        employee:          this.employee,
-        visibleToEmployee: true
-      });
-      this.fileAssignments.addObject(newAssignment);
-      this.suggestedDocs.removeObject(file);
-    },
-
-    saveAssignments () {
-      this.fileAssignments.forEach(fa => {
-        this.saveModel(fa);
-      });
-      this.send('closeAssignmentModal');
-    },
-
-    cancelAssignments () {
-      this.send('closeAssignmentModal');
-    },
-
-    updateAssignment (fileAssignment) {
-      this.fileAssignments.addObject(fileAssignment);
-    },
-
-    removeAssignment (fileAssignment) {
-      this.fileAssignments.removeObject(fileAssignment);
-      this.suggestedDocs.addObject(fileAssignment.file);
+    try {
+      let asset = await this.pendingAssetItem.save();
+      this.selectAsset(asset);
+      success(null, true);
+    } catch (e) {
+      error(e);
     }
   }
-});
+
+  @action
+  async abortAsset () {
+    let asset = this.pendingAssetItem;
+
+    await asset.destroyRecord();
+    this.pendingAssetItem = null;
+  }
+
+  @action
+  async selectAsset (asset) {
+    this.model.addObject(asset);
+    let { success, error } = this.data.createStatus();
+
+    let user = this.auth.get('user'),
+        employee = this.employee;
+
+    if (asset.assignments.findBy('employee.id', employee.id)) {
+      success(null, true);
+      return;
+    }
+
+    let assignment = await this.store.createRecord('asset-assignment', {
+      employee,
+      assigner: user
+    });
+
+    asset.assignments.addObject(assignment);
+
+    try {
+      let assetItem = await asset.save();
+      // remove ghost assignment
+      assetItem.assignments.forEach(a => {
+        if (!a.id) {
+          assetItem.assignments.removeObject(a);
+        }
+      });
+
+      this.newAssetItem = assetItem;
+
+      let suggestedDocs = await this.getSuggestedDocs(assetItem, employee);
+      if (suggestedDocs.length) {
+        this.openAssignmentModal(suggestedDocs, employee);
+      }
+
+      this.send('refreshModel');
+      success(null, true);
+    } catch (e) {
+      error(e);
+    }
+  }
+
+  @action
+  async unassignAsset (asset) {
+    this.model.removeObject(asset);
+
+    let assignment = asset.assignments.findBy('employee.id', this.employee.id);
+
+    if (assignment) {
+      let { success, error } = this.data.createStatus();
+      try {
+        asset.assignments.removeObject(assignment);
+        await asset.save();
+        success(null, true);
+        this.send('refreshModel');
+      } catch (e) {
+        error(e);
+      }
+    }
+  }
+
+  @action
+  newAssetCategory () {
+    this.send('refreshModel');
+  }
+
+  @action
+  openAssignmentModal (suggestedDocs, employee) {
+    this.setProperties({
+      suggestedDocs,
+      employee
+    });
+
+    $('.asset-documents').modal({
+      detachable: true,
+      closable:   false,
+      onHidden:   () => {
+        this.setProperties({
+          suggestedDocs:   A(),
+          fileAssignments: A(),
+          newAssetItem:    null
+        });
+      }
+    }).modal('show');
+  }
+
+  @action
+  closeAssignmentModal () {
+    $('.asset-documents').modal('hide');
+  }
+
+  @action
+  createAssignment (file) {
+    let newAssignment = this.store.createRecord('file-assignment', {
+      file,
+      employee:          this.employee,
+      visibleToEmployee: true
+    });
+    this.fileAssignments.addObject(newAssignment);
+    this.suggestedDocs.removeObject(file);
+  }
+
+  @action
+  saveAssignments () {
+    this.fileAssignments.forEach(fa => {
+      this.data.saveRecord(fa);
+    });
+    this.closeAssignmentModal();
+  }
+
+  @action
+  cancelAssignments () {
+    this.closeAssignmentModal();
+  }
+
+  @action
+  updateAssignment (fileAssignment) {
+    this.fileAssignments.addObject(fileAssignment);
+  }
+
+  @action
+  removeAssignment (fileAssignment) {
+    this.fileAssignments.removeObject(fileAssignment);
+    this.suggestedDocs.addObject(fileAssignment.file);
+  }
+}

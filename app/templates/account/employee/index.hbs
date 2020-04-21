@@ -44,9 +44,9 @@
           {{#if (not this.model.activatedOn)}}
             <div class="item">
               <ConfirmModal as |confirmActivation|>
-                <a href="#" {{action (pipe confirmActivation (action "resend"))}}>
+                <a href="#" {{on "click" (prevent-default (pipe confirmActivation this.resend))}}>
                   <i class="envelope icon"></i>Resend Activation Email...
-                  {{#if this.working}}
+                  {{#if this.data.statuses.resending.isLoading}}
                     <div class="ui active dimmer">
                       <div class="ui text loader">Loading</div>
                     </div>
@@ -58,7 +58,7 @@
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
             <ConfirmModal @deleteContext={{this.model.fullName}} as |confirm|>
-              <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}><i
+              <a href="#" class="text-danger" {{on "click" (prevent-default (pipe confirm (fn this.data.deleteRecord this.model 'working' this.afterSaveOptions)))}}><i
                    class="trash icon"></i>Delete Record</a>
             </ConfirmModal>
           </div>
@@ -67,8 +67,7 @@
     </div>
   </UiMenu>
 
-  <div
-       class="ui basic container segment text-white employee-index-container {{unless this.onSummary "employee__index-container--minimal"}}">
+  <div class="ui basic container segment text-white employee-index-container {{unless this.onSummary "employee__index-container--minimal"}}">
     <div class="ui equal width stackable grid container">
       <div class="twelve wide column">
         <h1 class="ui left floated center aligned header employee-header-group">

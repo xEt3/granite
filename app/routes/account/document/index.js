@@ -1,27 +1,21 @@
-import classic from 'ember-classic-decorator';
-import Route from '@ember/routing/route';
-import { hash } from 'rsvp';
-import refreshable from 'granite/mixins/refreshable';
+import Route from 'granite/core/route';
 
-@classic
-export default class IndexRoute extends Route.extend(refreshable) {
-  titleToken () {
-    return 'Document';
-  }
+export default class AccountDocumentRoute extends Route {
+  titleToken = 'Document'
 
-  model () {
+  async model () {
     let { document } = this.modelFor('account.document');
 
-    return hash({
+    return {
       document,
-      fileAssignments: this.store.query('fileAssignment', {
+      fileAssignments: await this.store.query('fileAssignment', {
         file: document.id,
         sort: {
           readOn:   -1,
           signedOn: -1
         }
       })
-    });
+    };
   }
 
   setupController (controller, model) {

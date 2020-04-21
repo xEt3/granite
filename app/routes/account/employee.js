@@ -1,9 +1,6 @@
-import classic from 'ember-classic-decorator';
-import Route from '@ember/routing/route';
-import refreshable from 'granite/mixins/refreshable';
+import Route from 'granite/core/route';
 
-@classic
-export default class EmployeeRoute extends Route.extend(refreshable) {
+export default class AccountEmployeeRoute extends Route {
   titleToken (model) {
     return model.fullName;
   }
