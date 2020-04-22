@@ -1,18 +1,13 @@
-import classic from 'ember-classic-decorator';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
 
-@classic
-export default class DryRunEmployeeRelationship extends Component {
-  @service
-  store;
+export default class CensusDryRunEmployeeRelationship extends Component {
+  @service store
 
-  @computed('availableFields', 'key', 'value')
   get relationship () {
-    let key = this.key,
-        value = this.value,
-        field = this.availableFields.findBy('path', key) || {};
+    let key = this.args.key,
+        value = this.args.value,
+        field = this.args.availableFields.findBy('path', key) || {};
 
     if (field.isRelationship) {
       if (key === 'supervisor') {

@@ -11,7 +11,7 @@
     <div class="two fields">
       <div class="field">
         <label>Filter by Field</label>
-        <UiDropdown @class="multiple selection" @selected={{this.field}} @onChange={{pipe-action (action "setReset") (action (mut this.field))}} as |execute mapper|>
+        <UiDropdown @class="multiple selection" @selected={{this.field}} @onChange={{pipe-action this.setReset (set this.field _)}} as |execute mapper|>
           <div class="default text">Click to select</div>
           <i class="dropdown icon"></i>
           <div class="menu">
@@ -26,7 +26,7 @@
 
       <div class="field">
         <label>Filter by Creator</label>
-        <UiDropdown @class="multiple selection" @selected={{this.creator}} @onChange={{pipe-action (action "setReset") (action (mut this.creator))}} as |execute mapper|>
+        <UiDropdown @class="multiple selection" @selected={{this.creator}} @onChange={{pipe-action this.setReset (set this.creator _)}} as |execute mapper|>
           <div class="default text">Click to select</div>
           <i class="dropdown icon"></i>
           <div class="menu">
@@ -43,15 +43,15 @@
 
   <div class="ui divider"></div>
 
-  {{#light-table this.table height="90vh" class="ui celled striped table" as |t|}}
-    <t.head @onColumnClick={{action "onColumnClick"}} @iconAscending="up arrow icon" @iconDescending="down arrow icon" @fixed={{true}} />
+  <LightTable @table={{this.table}} @height="90vh" @class="ui celled striped table" as |t|>
+    <t.head @onColumnClick={{this.onColumnClick}} @iconAscending="up arrow icon" @iconDescending="down arrow icon" @fixed={{true}} />
 
-    <t.body @class="light-table__word-break" @scrollBuffer={{20}} @canSelect={{false}} @onScrolledToBottom={{action "onScrolledToBottom"}} as |body|>
+    <t.body @class="light-table__word-break" @scrollBuffer={{20}} @canSelect={{false}} @onScrolledToBottom={{this.onScrolledToBottom}} as |body|>
       {{#if this.isLoading}}
         <body.loader>
           <div class="ui active centered inline loader"></div>
         </body.loader>
       {{/if}}
     </t.body>
-  {{/light-table}}
+  </LightTable>
 </div>

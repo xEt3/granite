@@ -3,7 +3,7 @@
 
   <div class="ui one stackable cards">
     {{#each this.model as |change|}}
-      <ListItem::UnappliedChange @history={{change}} @onApplyNow={{action "notifyNewEffective"}} />
+      <ListItem::UnappliedChange @history={{change}} @onApplyNow={{this.notifyNewEffective}} />
     {{/each}}
   </div>
 {{else}}

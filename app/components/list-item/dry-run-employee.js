@@ -1,14 +1,10 @@
-import classic from 'ember-classic-decorator';
-import { computed } from '@ember/object';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/string';
 
-@classic
-export default class DryRunEmployee extends Component {
-  @computed('dryRunRecord', 'availableFields')
+export default class LIstItemDryRunEmployee extends Component {
   get missingRequiredFields () {
-    const availableFields = this.availableFields,
-          dryRunRecord = this.dryRunRecord;
+    const availableFields = this.args.availableFields,
+          dryRunRecord = this.args.dryRunRecord;
 
     let missingFields = availableFields.reduce((missingField, field) => {
       let [ path, nestedPath ] = field.path.split('.'),

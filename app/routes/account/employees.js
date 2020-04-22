@@ -1,22 +1,17 @@
-import classic from 'ember-classic-decorator';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
-import { hash } from 'rsvp';
-import refreshable from 'granite/mixins/refreshable';
 
-@classic
-export default class EmployeesRoute extends Route.extend(refreshable) {
-  @service
-  ajax;
+export default class AccountEmployeesRoute extends Route {
+  @service ajax;
 
-  model () {
-    return hash({
-      changeQueue: this.ajax.request('/api/v1/changes', {
-        data: {
-          _count:     true,
-          reviewedOn: { $not: { $type: 9 } }
-        }
-      }).then(response => response && response.count)
+  async model () {
+    let response = await this.ajax.request('/api/v1/changes', {
+      data: {
+        _count:     true,
+        reviewedOn: { $not: { $type: 9 } }
+      }
     });
+
+    return { changeQueue: response && response.count };
   }
 }

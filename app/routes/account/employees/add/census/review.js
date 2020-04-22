@@ -1,22 +1,17 @@
-import classic from 'ember-classic-decorator';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
-import refreshable from 'granite/mixins/refreshable';
-import { hash } from 'rsvp';
+// import { hash } from 'rsvp';
 
-@classic
-export default class ReviewRoute extends Route.extend(refreshable) {
-  @service
-  ajax;
+export default class AccountEmployeesAddCensusReviewRoute extends Route {
+  @service ajax;
 
-  model ({ uploadId }) {
-    return this.ajax.request(`/api/v1/employee/census/${uploadId}`)
-    .then(fileData => {
-      return hash({
-        fileData,
-        potentialData: this.ajax.post(`/api/v1/employee/census/${uploadId}/dryrun`, { data: { headerMap: fileData.data[0] } })
-      });
-    });
+  async model ({ uploadId }) {
+    let fileData = await this.ajax.request(`/api/v1/employee/census/${uploadId}`);
+
+    return {
+      fileData,
+      potentialData: await this.ajax.post(`/api/v1/employee/census/${uploadId}/dryrun`, { data: { headerMap: fileData.data[0] } })
+    };
   }
 
   setupController (controller, model) {

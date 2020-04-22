@@ -5,10 +5,12 @@
   Reupload census
 </LinkTo>
 
+{{!-- SOMETHING ON THIS PAGE IS CURRENTLY BROKEN --}}
+
 {{#if this.doingDryRun}}
   <i class="pull-right text-green spinner loading icon"></i>
 {{else}}
-  <a href="#" class="pull-right text-green btn__dry-run" {{action "doDryRun" true}}>
+  <a href="#" class="pull-right text-green btn__dry-run" {{on "click" (prevent-default (fn this.doDryRun true))}}>
     {{if this.displayDryRunResults "Regenerate" "Generate"}} dry run data
   </a>
 {{/if}}
@@ -16,7 +18,7 @@
 {{#if this.displayDryRunResults}}
   <p class="text-center text-white">
     The following would be created as a result of this import:
-    <a href="#" class="text-muted pull-right" {{action "dumpDryRun"}}>
+    <a href="#" class="text-muted pull-right" {{on "click" (prevent-default this.dumpDryRun)}}>
       <i class="times circle icon text-white"></i>
     </a>
   </p>
@@ -28,7 +30,7 @@
 
 <div class="ui divider"></div>
 
-<form {{action "importRecords" on="submit"}}>
+<form {{on "submit" (prevent-default this.importRecords)}}>
   <div class="ui raised very padded fluid container">
     <Display::VisualOverflowTable @class="responsive-table census__table">
       <table class="ui striped celled table">
@@ -43,7 +45,7 @@
             {{#each (object-at 0 this.model.data) as |guesses index|}}
               <th>
                 <div class="field">
-                  <UiDropdown @class="scrolling census__field-selection" @name="guess-column" @selected={{guesses}} @context="table" @onChange={{pipe-action (action "mutateGuess" index) (action "doDryRun")}}>
+                  <UiDropdown @class="scrolling census__field-selection" @name="guess-column" @selected={{guesses}} @context="table" @onChange={{pipe-action (fn this.mutateGuess index) this.doDryRun}}>
                     <div class="default text">Select field for column</div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
@@ -80,19 +82,19 @@
                 {{add-one rowIndex}}
               </td>
               {{#each row as |column columnIndex|}}
-                {{census/table-cell
-                  column
-                  rowIndex
-                  columnIndex
-                  this.potentialData
-                  this.availableFields
-                  this.guesses
-                  (object-at columnIndex (object-at rowIndex this.dataValidation))
-                  addDepartment=(action "showDepartmentModal")
-                  addLocation=(action "showLocationModal")
-                  onRefresh=(action "onRefresh")
-                  onNotify=(action "onNotify")
-                }}
+                <Census::TableCell
+                  @column={{column}}
+                  @rowIndex={{rowIndex}}
+                  @columnIndex={{columnIndex}}
+                  @potentialData={{this.potentialData}}
+                  @availableFields={{this.availableFields}}
+                  @guesses={{this.guesses}}
+                  @validation={{object-at columnIndex (object-at rowIndex this.dataValidation)}}
+                  @addDepartment={{this.showDepartmentModal}}
+                  @addLocation={{this.showLocationModal}}
+                  @onRefresh={{this.onRefresh}}
+                  @onNotify={{this.onNotify}}
+                />
               {{/each}}
             </Census::TableRow>
           {{/each}}
@@ -102,13 +104,13 @@
 
     <div class="ui divider"></div>
 
-    <Form::ActionButton type="submit" class="ui fluid positive big button import-button" @loading={{this.working}}>
+    <Form::ActionButton type="submit" class="ui fluid positive big button import-button" @loading={{this.data.statuses.working.isLoading}}>
       <i class="check icon"></i> Import {{this.rows.length}} records
     </Form::ActionButton>
   </div>
 </form>
 
-<UiModal @id="modal__add-location" @class="small form">
+{{!-- <UiModal @id="modal__add-location" @class="small form">
   <div class="header">
     Add Location
   </div>
@@ -191,4 +193,4 @@
       Create Department<i class="check icon"></i>
     </button>
   </div>
-</UiModal>
+</UiModal> --}}

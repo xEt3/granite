@@ -1,58 +1,59 @@
 /* eslint-disable ember/no-volatile-computed-properties */
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import Controller from 'granite/core/controller';
+import { computed, action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import ajaxStatus from 'granite/mixins/ajax-status';
+import { tracked } from '@glimmer/tracking';
 import titleCase from 'granite/utils/title-case';
 import { decamelize } from '@ember/string';
 import { states } from 'granite/config/statics';
 import $ from 'jquery';
 
-export default Controller.extend(ajaxStatus, {
-  states,
-  ajax:           service(),
-  stateIsMontana: computed.equal('newLocation.addressState', 'MT'),
+export default class AccountEmployeesAddCensusReviewController extends Controller {
+  @service ajax
+  @service data
+  @tracked displayDryRunResults = false
 
-  intros: computed(function () {
-    return [{
-      element:  '.guess-fields-row > th:first-child',
-      intro:    'We\'ve attempted to guess the columns that you uploaded. This row represents our guesses.',
-      position: 'top'
-    }, {
-      element:  '.guess-fields-ro > th.field:first-child input',
-      intro:    'Use a select box to change the field if our guess was incorrect.',
-      position: 'top'
-    }, {
-      element:  '.client-fields-row > th:first-child',
-      intro:    'We show the column labels you originally uploaded here for reference.',
-      position: 'top'
-    }, {
-      element:  '.data-rows',
-      intro:    'Review this section before continuing to make sure your data is imported correctly.',
-      position: 'top'
-    }, {
-      element:  '.btn__dry-run',
-      intro:    'Generate a "dry run" with this button. This allows you to review what data will be created before importing.',
-      position: 'bottom'
-    }, {
-      element:  '.import-button',
-      intro:    'Click import to import the data you have reviewed on this screen.',
-      position: 'bottom'
-    }];
-  }),
+  states = states
+  @computed.equal('newLocation.addressState', 'MT') stateIsMontana
 
-  supportedExtensions: [ 'csv', 'xls', 'xlsx' ],
+  intros = [{
+    element:  '.guess-fields-row > th:first-child',
+    intro:    'We\'ve attempted to guess the columns that you uploaded. This row represents our guesses.',
+    position: 'top'
+  }, {
+    element:  '.guess-fields-ro > th.field:first-child input',
+    intro:    'Use a select box to change the field if our guess was incorrect.',
+    position: 'top'
+  }, {
+    element:  '.client-fields-row > th:first-child',
+    intro:    'We show the column labels you originally uploaded here for reference.',
+    position: 'top'
+  }, {
+    element:  '.data-rows',
+    intro:    'Review this section before continuing to make sure your data is imported correctly.',
+    position: 'top'
+  }, {
+    element:  '.btn__dry-run',
+    intro:    'Generate a "dry run" with this button. This allows you to review what data will be created before importing.',
+    position: 'bottom'
+  }, {
+    element:  '.import-button',
+    intro:    'Click import to import the data you have reviewed on this screen.',
+    position: 'bottom'
+  }]
+
+  supportedExtensions = [ 'csv', 'xls', 'xlsx' ]
 
   convertPathToLabel (path = '') {
     let desegmentedPath = path.replace('[]', '').replace(/\./g, ' '),
         decamelizedPath = desegmentedPath.split(' ').map(x => decamelize(x).replace(/_/g, ' ')).join(' ');
 
     return titleCase([ decamelizedPath ]);
-  },
+  }
 
-  guesses: computed.reads('model.data.0'),
+  @computed.reads('model.data.0') guesses
 
-  dataValidation: computed('rows.[]', 'guesses.[]', 'availableFields.[]', 'potentialData.[]', function () {
+  get dataValidation () {
     const {
       guesses,
       availableFields,
@@ -91,14 +92,14 @@ export default Controller.extend(ajaxStatus, {
         return { invalid: false };
       });
     });
-  }),
+  }
 
-  rows: computed('model.data.[]', function () {
-    return (this.get('model.data') || []).slice(2);
-  }),
+  get rows () {
+    return (this.model.data || []).slice(2);
+  }
 
-  availableFields: computed('model.availableFields.[]', function () {
-    return (this.get('model.availableFields') || []).map(({ path, format, enums, required }) => {
+  get availableFields () {
+    return (this.model.availableFields || []).map(({ path, format, enums, required }) => {
       let label = `${this.convertPathToLabel(path)}${format ? ' - ' + format : ''}`;
 
       if (path === 'customFields') {
@@ -113,131 +114,144 @@ export default Controller.extend(ajaxStatus, {
         isRelationship: format === 'lookup or id' ? true : false
       };
     }).sortBy('label');
-  }),
+  }
 
-  headerMap: computed('model.data.0.[]', function () {
-    const data = this.get('model.data'),
+  get headerMap () {
+    const data = this.model.data,
           [ guesses, orig ] = data;
 
     return guesses.map((path, i) =>
       (path || '').indexOf('customFields') < 0 ? path : `${path}.${orig[i]}`);
-  }).volatile(),
+  }
 
-  actions: {
-    doDryRun (displayDryRunResults = false) {
-      this.analytics.trackEvent('Employees', 'census_dryrun', 'Census Dry Run');
+  @action
+  async doDryRun (displayDryRunResults = false) {
+    this.analytics.trackEvent('Employees', 'census_dryrun', 'Census Dry Run');
 
-      const headerMap = this.headerMap,
-            uploadId = this.get('model.uploadId');
+    const headerMap = this.headerMap,
+          uploadId = this.model.uploadId;
 
-      this.set('doingDryRun', true);
-      this.ajaxStart();
+    this.doingDryRun = true;
+    let { success, error } = this.data.createStatus();
 
-      return this.ajax.post(`/api/v1/employee/census/${uploadId}/dryrun`, { data: { headerMap } }).then(dryrunResult => {
-        this.setProperties({
-          displayDryRunResults,
-          doingDryRun:   null,
-          potentialData: dryrunResult
-        });
-        this.ajaxSuccess(null, true);
-      }).catch(this.ajaxError.bind(this));
-    },
-
-    dumpDryRun () {
-      this.set('displayDryRunResults', null);
-    },
-
-    mutateGuess (index, val) {
-      this.set(`model.data.0.${index}`, val);
-    },
-
-    importRecords () {
-      this.ajaxStart();
-
-      const headerMap = this.headerMap,
-            uploadId = this.get('model.uploadId');
-
-      this.analytics.trackEvent('Employees', 'census_imported', 'Census Imported');
-
-      this.ajax.post('/api/v1/employee/census/' + uploadId + '/process', { data: { headerMap } })
-      .then(() => {
-        this.ajaxSuccess();
-        this.transitionToRoute('account.employees');
-      })
-      .catch(this.ajaxError.bind(this));
-    },
-
-    showLocationModal (locationName) {
+    try {
+      let dryRunResult = await this.ajax.post(`/api/v1/employee/census/${uploadId}/dryrun`, { data: { headerMap } });
       this.setProperties({
-        newLocation:       this.store.createRecord('location', { name: locationName }),
-        respondedLocation: false
+        displayDryRunResults,
+        doingDryRun:   null,
+        potentialData: dryRunResult
       });
 
-      $('#modal__add-location').modal({
-        detachable: true,
-        closable:   false,
-        onHidden:   () => {
-          if (!this.respondedLocation) {
-            this.send('respondLocationModal', false);
-          }
-        }
-      }).modal('show');
-
-      return new Promise((resolveLocation, rejectLocation) => this.setProperties({
-        resolveLocation,
-        rejectLocation
-      }));
-    },
-
-    showDepartmentModal (departmentName) {
-      this.setProperties({
-        newDepartment:     this.store.createRecord('department', { name: departmentName }),
-        respondedLocation: false
-      });
-
-      $('#modal__add-department').modal({
-        detachable: true,
-        closable:   false,
-        onHidden:   () => {
-          if (!this.respondedDepartment) {
-            this.send('respondDepartmentModal', false);
-          }
-        }
-      }).modal('show');
-
-      return new Promise((resolveDepartment, rejectDepartment) => this.setProperties({
-        resolveDepartment,
-        rejectDepartment
-      }));
-    },
-
-    respondLocationModal (response) {
-      if (!response) {
-        this.newLocation.destroyRecord();
-      }
-
-      this.get(response ? 'resolveLocation' : 'rejectLocation')(response ? this.newLocation : null);
-      this.set('respondedLocation', true);
-      $('#modal__add-location').modal('hide');
-    },
-
-    respondDepartmentModal (response) {
-      if (!response) {
-        this.newDepartment.destroyRecord();
-        this.set('newDepartment', null);
-      }
-
-      this.get(response ? 'resolveDepartment' : 'rejectDepartment')(response ? this.newDepartment : null);
-      this.set('respondedDepartment', true);
-      $('#modal__add-department').modal('hide');
-    },
-
-    onNotify (type, msg) {
-      this.send('notify', type, msg);
-    },
-
-    onRefresh () {
-      this.send('refresh');
+      success(null, true);
+    } catch (e) {
+      error(e);
     }
   }
-});
+
+  @action
+  dumpDryRun () {
+    this.displayDryRunResults = null;
+  }
+
+  @action
+  mutateGuess (index, val) {
+    this.model.data[0][index] = val;
+    // this.set(`model.data.0.${index}`, val);
+  }
+
+  @action
+  async importRecords () {
+    let { success, error } = this.data.createStatus();
+
+    const headerMap = this.headerMap,
+          uploadId = this.model.uploadId;
+
+    this.analytics.trackEvent('Employees', 'census_imported', 'Census Imported');
+
+    try {
+      await this.ajax.post('/api/v1/employee/census/' + uploadId + '/process', { data: { headerMap } });
+      success();
+      this.transitionToRoute('account.employees');
+    } catch (e) {
+      error(e);
+    }
+  }
+
+  @action
+  showLocationModal (locationName) {
+    this.setProperties({
+      newLocation:       this.store.createRecord('location', { name: locationName }),
+      respondedLocation: false
+    });
+
+    $('#modal__add-location').modal({
+      detachable: true,
+      closable:   false,
+      onHidden:   () => {
+        if (!this.respondedLocation) {
+          this.respondLocationModal(false);
+        }
+      }
+    }).modal('show');
+
+    return new Promise((resolveLocation, rejectLocation) => this.setProperties({
+      resolveLocation,
+      rejectLocation
+    }));
+  }
+
+  @action
+  showDepartmentModal (departmentName) {
+    this.setProperties({
+      newDepartment:     this.store.createRecord('department', { name: departmentName }),
+      respondedLocation: false
+    });
+
+    $('#modal__add-department').modal({
+      detachable: true,
+      closable:   false,
+      onHidden:   () => {
+        if (!this.respondedDepartment) {
+          this.respondDepartmentModal(false);
+        }
+      }
+    }).modal('show');
+
+    return new Promise((resolveDepartment, rejectDepartment) => this.setProperties({
+      resolveDepartment,
+      rejectDepartment
+    }));
+  }
+
+  @action
+  respondLocationModal (response) {
+    if (!response) {
+      this.newLocation.destroyRecord();
+    }
+
+    this[response ? 'resolveLocation' : 'rejectLocation'](response ? this.newLocation : null);
+    this.respondedLocation = true;
+    $('#modal__add-location').modal('hide');
+  }
+
+  @action
+  respondDepartmentModal (response) {
+    if (!response) {
+      this.newDepartment.destroyRecord();
+      this.newDepartment = null;
+    }
+
+    this[response ? 'resolveDepartment' : 'rejectDepartment'](response ? this.newDepartment : null);
+    this.respondedDepartment = true;
+    $('#modal__add-department').modal('hide');
+  }
+
+  @action
+  onNotify (type, msg) {
+    this.data.notify(type, msg);
+  }
+
+  onRefresh () {
+    this.send('refreshModel');
+  }
+}

@@ -1,15 +1,16 @@
-import classic from 'ember-classic-decorator';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
-import Controller from '@ember/controller';
 
-@classic
-export default class FutureChangesController extends Controller {
+export default class AccountEmployeeFutureChangesController extends Controller {
+  @service data
+
   @action
   notifyNewEffective () {
-    this.send('notify',
+    this.data.notify(
       'success',
       'This change has been recorded.  Please give our system a minute to update',
       { clearDuration: 5000 });
-    this.send('refresh');
+    this.send('refreshModel');
   }
 }

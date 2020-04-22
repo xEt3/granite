@@ -1,12 +1,10 @@
-import classic from 'ember-classic-decorator';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import Component from '@ember/component';
 import { scheduleOnce } from '@ember/runloop';
 
-@classic
-export default class VisualOverflowTable extends Component {
-  didInsertElement () {
-    super.didInsertElement(...arguments);
+export default class DisplayVisualOverflowTable extends Component {
+  constructor () {
+    super(...arguments);
     scheduleOnce('afterRender', this, this.setOverflow);
   }
 
@@ -14,7 +12,7 @@ export default class VisualOverflowTable extends Component {
     let table = this.$('table')[0];
     let view = table.scrollHeight + 'px';
 
-    this.set('overflow', `height:${view}`);
+    this.overflow = `height:${view}`;
   }
 
   @action

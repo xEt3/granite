@@ -1,21 +1,17 @@
-import classic from 'ember-classic-decorator';
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
-import refreshable from 'granite/mixins/refreshable';
+import Route from 'granite/core/route';
 import moment from 'moment';
 
-@classic
-export default class FutureChangesRoute extends Route.extend(refreshable) {
+export default class AccountEmployeeFutureChangesRoute extends Route {
   titleToken = 'Future Changes';
 
-  model () {
+  async model () {
     let employee = this.modelFor('account.employee');
-    return RSVP.hash({
-      pendingChanges: this.store.query('history', {
-        'targetId':    employee.get('id'),
+    return {
+      pendingChanges: await this.store.query('history', {
+        'targetId':    employee.id,
         'effectiveOn': { $gt: moment().add(1, 'minute').toDate() }
       })
-    });
+    };
   }
 
   setupController (controller, model) {
