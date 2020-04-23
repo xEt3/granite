@@ -1,6 +1,5 @@
 import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-// import { hash } from 'rsvp';
 
 export default class AccountEmployeesAddCensusReviewRoute extends Route {
   @service ajax;

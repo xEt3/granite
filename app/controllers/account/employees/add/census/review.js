@@ -12,6 +12,9 @@ export default class AccountEmployeesAddCensusReviewController extends Controlle
   @service ajax
   @service data
   @tracked displayDryRunResults = false
+  @tracked doingDryRun = false
+  @tracked newLocation = {}
+  @tracked newDepartment = {}
 
   states = states
   @computed.equal('newLocation.addressState', 'MT') stateIsMontana
@@ -52,6 +55,8 @@ export default class AccountEmployeesAddCensusReviewController extends Controlle
   }
 
   @computed.reads('model.data.0') guesses
+
+  @tracked potentialData
 
   get dataValidation () {
     const {
@@ -156,7 +161,6 @@ export default class AccountEmployeesAddCensusReviewController extends Controlle
   @action
   mutateGuess (index, val) {
     this.model.data[0][index] = val;
-    // this.set(`model.data.0.${index}`, val);
   }
 
   @action
@@ -251,6 +255,7 @@ export default class AccountEmployeesAddCensusReviewController extends Controlle
     this.data.notify(type, msg);
   }
 
+  @action
   onRefresh () {
     this.send('refreshModel');
   }

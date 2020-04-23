@@ -10,7 +10,7 @@
     </h3>
     <ul>
       {{#each-in @dryRunRecord as |key value|}}
-        <Census::DryRunEmployeeRelationship @key={{key}} @value={{value}} @availableFields={{this.availableFields}} />
+        <Census::DryRunEmployeeRelationship @key={{key}} @value={{value}} @availableFields={{@availableFields}} />
       {{/each-in}}
     </ul>
   </div>

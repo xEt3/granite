@@ -34,16 +34,13 @@ export default class AccountEmployeeHistoryReportController extends Controller {
   }, {
     label:     'Changed On',
     valuePath: 'history.created',
-    sortable:  false,
     format:    val => val ? moment(val).format('M/D/YY [at] h:mma') : val
   }, {
     label:     'Creator',
-    sortable:  false,
     valuePath: 'history.creator.fullName'
   }, {
     label:         'Applied',
     valuePath:     'history.applied',
-    sortable:      false,
     cellComponent: 'tables/cells/boolean-check-value'
   }]
 
