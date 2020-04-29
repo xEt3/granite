@@ -19,67 +19,67 @@ export default class InputQuickFormInputComponent extends Component {
     }
   }
 
-  controller = this.args.controller;
+controller = this.args.controller
 
-  constructor () {
-    super(...arguments);
-    let path = `args.model.${this.args.field.path}`;
+constructor () {
+  super(...arguments);
+  let path = `args.model.${this.args.field.path}`;
 
-    defineProperty(this, 'value', alias(path));
-    this.initialValue = get(this, path);
+  defineProperty(this, 'value', alias(path));
+  this.initialValue = get(this, path);
+}
+
+get computedClassName () {
+  let label = this.args.field.label,
+      classN = this.args.field.class;
+
+  return classN || (label || '').replace(/[^\s\w]/g, '').replace(/\s/g, '-').toLowerCase();
+}
+
+get baseInputClass () {
+  let t = this.args.field.type,
+      ic;
+
+  if (this.args.field.removeBaseClass) {
+    return '';
   }
 
-  get computedClassName () {
-    let label = this.args.field.label,
-        classN = this.args.field.class;
-
-    return classN || (label || '').replace(/[^\s\w]/g, '').replace(/\s/g, '-').toLowerCase();
+  switch (t) {
+  case 'select':
+    ic = 'selection';
+    break;
+  case 'date':
+    ic = 'ui field';
+    break;
+  case 'toggle':
+    ic = 'toggle';
+    break;
+  default:
+    ic = 'ui fluid input';
+    break;
   }
 
-  get baseInputClass () {
-    let t = this.args.field.type,
-        ic;
+  return ic;
+}
 
-    if (this.args.field.removeBaseClass) {
-      return '';
-    }
+get inputClass () {
+  let fieldInputClass = this.args.field.inputClass,
+      baseInputClass = this.baseInputClass;
 
-    switch (t) {
-    case 'select':
-      ic = 'selection';
-      break;
-    case 'date':
-      ic = 'ui field';
-      break;
-    case 'toggle':
-      ic = 'toggle';
-      break;
-    default:
-      ic = 'ui fluid input';
-      break;
-    }
+  return fieldInputClass ? fieldInputClass + ' ' + baseInputClass : baseInputClass;
+}
 
-    return ic;
-  }
-
-  get inputClass () {
-    let fieldInputClass = this.args.field.inputClass,
-        baseInputClass = this.baseInputClass;
-
-    return fieldInputClass ? fieldInputClass + ' ' + baseInputClass : baseInputClass;
-  }
-
-  get rows () {
-    return this.args.field.rows || '6';
-  }
+get rows () {
+  return this.args.field.rows || '6';
+}
 
   @action
-  handleOnChange (hsva) {
-    //used for color picker component if type=color
-    if (this.args.model) {
-      this.args.model.color = hsva.toHEXA().toString();
-    }
+handleOnChange (hsva) {
+  //used for color picker component if type=color
+  if (this.args.model) {
+    this.args.model.color = hsva.toHEXA().toString();
   }
+}
 }
 
 /*

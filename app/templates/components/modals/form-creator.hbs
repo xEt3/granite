@@ -35,12 +35,12 @@
 
     <SortableGroup
       @tagName="ol"
-      class=this.sortGroupClass
+      class={{this.sortGroupClass}}
       @onChange={{this.reorderElements}}
       as |group|>
       {{#each this.form.elements as |element index|}}
         <Form::FormElement
-          element={{element}}
+          @model={{element}}
           @group={{group}}
           @index={{index}}
           @tagName="li"

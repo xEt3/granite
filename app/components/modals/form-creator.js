@@ -14,8 +14,10 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { elementId } from 'granite/core';
 import $ from 'jquery';
 
+@elementId
 export default class ModalsFormCreatorComponent extends Component {
   @service data
   @service auth

@@ -28,7 +28,9 @@
 
     {{#if @onsubmit}}
       <div class="ui divider"></div>
-      <Form::ActionButton type="submit" class={{this._submitClass}} @disabled={{@disabled}} @loading=@working>{{yield}}</Form::ActionButton>
+      <form {{on "submit" (prevent-default @onsubmit)}}>
+        <Form::ActionButton type="submit" class={{this._submitClass}} @disabled={{@disabled}} @loading={{@working}}>{{yield}}</Form::ActionButton>
+      </form>
     {{/if}}
   </Tag>
 {{/let}}

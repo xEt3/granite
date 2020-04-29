@@ -64,6 +64,7 @@ class FormElementComponent extends SortableItem {
     return label;
   }
 
+  @action
   changedSelectProperty () {
     let type = this.model.type;
     this.loadingType = true;

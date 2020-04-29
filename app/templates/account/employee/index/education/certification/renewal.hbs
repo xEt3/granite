@@ -9,12 +9,12 @@
 
 <div class="ui divider"></div>
 
-{{#quick-form
-  this.currentForm.elements
-  this.model.renewal
-  this
-  submitClass="large green fluid"
-  onsubmit=(action "saveRenewal")
-}}
+<QuickForm
+  @form={{this.currentForm.elements}}
+  @model={{this.model.renewal}}
+  @controller={{this}}
+  @submitClass="large green fluid"
+  @onsubmit={{this.saveRenewal}}
+>
   {{#if this.renewal}}Save Changes{{else}}Add Renewal{{/if}}
-{{/quick-form}}
+</QuickForm>

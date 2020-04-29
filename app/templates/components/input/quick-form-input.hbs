@@ -91,7 +91,7 @@
               @label={{if @field.displayKey (get item @field.displayKey) item}}
               @value={{item}}
               @current={{this.value}}
-              @onChange={{set this.value}}/>
+              @onChange={{set this.value _}}/>
           </div>
         {{/each}}
       </div>

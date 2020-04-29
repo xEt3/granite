@@ -5,13 +5,12 @@
 
   <div class="ui divider"></div>
 
-  {{#quick-form
-    this.currentForm.elements
-    this.model
-    this
-    submitClass="large green fluid"
-    onsubmit=(action "save")
-  }}
+  <QuickForm
+    @form={{this.currentForm.elements}}
+    @model={{this.model}}
+    @controller={{this}}
+    @submitClass="large green fluid"
+    @onsubmit={{fn this.data.saveRecord this.model 'working' saveOptions}}>
     Add {{this.type}}
-  {{/quick-form}}
+  </QuickForm>
 </div>

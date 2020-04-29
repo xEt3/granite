@@ -1,10 +1,7 @@
-import classic from 'ember-classic-decorator';
-import Route from '@ember/routing/route';
-import refreshable from 'granite/mixins/refreshable';
+import Route from 'granite/core/route';
 
-@classic
-export default class FormsRoute extends Route.extend(refreshable) {
-  titleToken = 'Forms';
+export default class AccountSettingsFormsRoute extends Route {
+  titleToken = 'Forms'
 
   model () {
     return this.store.query('form', { name: { $not: { $type: 10 } } });

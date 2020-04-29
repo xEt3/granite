@@ -1,13 +1,13 @@
-import classic from 'ember-classic-decorator';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
-import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import { forms } from 'granite/config/forms/educate-add';
 
-@classic
-export default class RenewalController extends Controller.extend(addEdit) {
-  renewal = null;
-  currentForm = forms.certificationRenewal;
+export default class AccountEmployeeEducationCertificationRenewalController extends Controller {
+  @service data
+
+  renewal = null
+  currentForm = forms.certificationRenewal
 
   @action
   async saveRenewal () {
@@ -18,7 +18,7 @@ export default class RenewalController extends Controller.extend(addEdit) {
       certification.renewals.addObject(renewal);
     }
 
-    await this.saveModel(certification);
+    await this.data.saveRecord(certification);
 
     if (!renewalId) {
       certification.renewals.removeObject(renewal);
