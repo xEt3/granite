@@ -10,12 +10,12 @@
 
   <div class="ui divider"></div>
 
-  {{quick-form
-    this.settingsForm
-    this.model
-    this
+  <QuickForm
+    @form={{this.settingsForm}}
+    @model={{this.model}}
+    @controller={{this}}
     class="ui grid padded container"
-    tagName="div"}}
+    @tagName="div"/>
 
   <div class="ui divider"></div>
 

@@ -1,47 +1,47 @@
-import Controller from '@ember/controller';
-import { Promise } from 'rsvp';
+import Controller from 'granite/core/controller';
 import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 import { A } from '@ember/array';
-import ajaxStatus from 'granite/mixins/ajax-status';
 
-export default Controller.extend(ajaxStatus, {
-  auth:            service(),
-  queryParams:     [ 'filter', 'isDsc' ],
-  priorityFilters: [ 'lowest', 'low', 'medium', 'high', 'highest' ],
-  priorityColors:  [ '', 'grey', 'teal', 'red', 'orange' ],
-  filter:          A(),
-  expandFiltered:  false,
-  index:           null,
-  isDsc:           false,
-  enableNotify:    true,
+export default class AccountActionItemsController extends Controller {
+  @service auth
+  @service data
 
-  actions: {
-    toggleSubscription (actionItem) {
-      Promise.resolve(this.get('auth.user.employee'))
-      .then(employee => {
-        let subscribers = actionItem.get('subscribers'),
-            arrayMethod = subscribers.includes(employee) ? 'removeObject' : 'addObject';
+  queryParams =     [ 'filter', 'isDsc' ]
+  priorityFilters = [ 'lowest', 'low', 'medium', 'high', 'highest' ]
+  priorityColors =  [ '', 'grey', 'teal', 'red', 'orange' ]
+  filter =          A()
+  expandFiltered =  false
+  index =           null
+  isDsc =           false
 
-        subscribers[arrayMethod](employee);
+  @action
+  async toggleSubscription (actionItem) {
+    let employee = await this.auth.get('user.employee'),
+        subscribers = actionItem.subscribers,
+        arrayMethod = subscribers.includes(employee) ? 'removeObject' : 'addObject';
 
-        this.ajaxStart();
-        return actionItem.save().then(() => {
-          let verb = arrayMethod === 'addObject' ? 'subscribed' : 'unsubscribed';
-          this.ajaxSuccess(`Successfully ${verb}`);
-        });
-      })
-      .catch(this.ajaxError.bind(this));
-    },
+    subscribers[arrayMethod](employee);
 
-    changeFilter (index) {
-      let indexPlusOne = index + 1,
-          filter = this.filter;
-
-      if (filter.includes(indexPlusOne)) {
-        filter.removeObject(indexPlusOne);
-      } else {
-        filter.addObject(indexPlusOne);
-      }
+    let { success, error } = this.data.createStatus();
+    try {
+      await actionItem.save();
+      let verb = arrayMethod === 'addObject' ? 'subscribed' : 'unsubscribed';
+      success(`Successfully ${verb}`);
+    } catch (e) {
+      error(e);
     }
   }
-});
+
+  @action
+  changeFilter (index) {
+    let indexPlusOne = index + 1,
+        filter = this.filter;
+
+    if (filter.includes(indexPlusOne)) {
+      filter.removeObject(indexPlusOne);
+    } else {
+      filter.addObject(indexPlusOne);
+    }
+  }
+}

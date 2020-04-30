@@ -1,36 +1,33 @@
-import classic from 'ember-classic-decorator';
-import { classNames } from '@ember-decorators/component';
-import { action, computed } from '@ember/object';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { elementId } from 'granite/core';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { Promise } from 'rsvp';
 import $ from 'jquery';
 
-@classic
-@classNames('item', 'action-item__checklist--item')
-class TodoItemComponent extends Component {
-  @computed('elementId')
+@elementId
+export default class ListItemTodoItemComponent extends Component {
+  @tracked newAssignee
+  @tracked respondedAssignee
+
   get modalId () {
     return `${this.elementId}-modal`;
   }
 
+  @action
   willDestroy () {
     $(`#${this.modalId}`).remove();
     super.willDestroy(...arguments);
   }
 
   @action
-  changeStatus () {
-    this.onStatusChange(this.todo);
-  }
-
-  @action
   selectAssignee () {
-    this.set('respondedAssignee', false);
+    this.respondedAssignee = false;
     $(`#${this.modalId}`).modal({
       detachable: true,
       onHidden:   () => {
         if (!this.respondedAssignee) {
-          this.send('respondAssignee', false);
+          this.respondAssignee(false);
         }
       }
     }).modal('show');
@@ -43,26 +40,23 @@ class TodoItemComponent extends Component {
 
   @action
   changeAssignee (assignee) {
-    this.set('newAssignee', null);
-    this.onAssigneeChange(this.todo, assignee);
+    this.newAssignee = null;
+    this.args.onAssigneeChange(this.args.todo, assignee);
   }
 
   @action
   respondAssignee (assignee) {
-    this.get(assignee !== false ? 'resolve' : 'reject')(assignee || null);
-    this.set('respondedAssignee', true);
+    this[assignee !== false ? 'resolve' : 'reject'](assignee || null);
+    this.respondedAssignee = true;
     $(`#${this.modalId}`).modal('hide');
   }
 }
 
-TodoItemComponent.reopenClass({ positionalParams: [ 'todo' ] });
-
-export default TodoItemComponent;
 
 /* Usage
-  {{list-item/todo-item todo
-    onStatusChange=(action 'changeStatus')
-    onAssigneeChange=(action 'changeAssignee')
-    assignableTo=employees
-  }}
+  <ListItem::TodoItem @todo={{todo}}
+    @onStatusChange={{this.changeStatus}}
+    @onAssigneeChange={{this.changeAssignee}}
+    @assignableTo={{employees}}
+  />
 */

@@ -2,70 +2,70 @@
   <div class="content">
     <h6 class="ui header clearfix">
       <div class="meta">
-        Owner: {{this.actionItem.owner.fullName}}
+        Owner: {{@actionItem.owner.fullName}}
         <span class="right floated">
-          {{#if this.actionItem.completedOn}}
-            <strong>Completed</strong> on {{time this.actionItem.completedOn}}
-          {{else if this.actionItem.cancelledOn}}
-            <strong>Cancelled</strong> on {{time this.actionItem.cancelledOn}}
+          {{#if @actionItem.completedOn}}
+            <strong>Completed</strong> on {{time @actionItem.completedOn}}
+          {{else if @actionItem.cancelledOn}}
+            <strong>Cancelled</strong> on {{time @actionItem.cancelledOn}}
           {{else}}
-            <strong>Ongoing</strong> since {{time this.actionItem.created}}
+            <strong>Ongoing</strong> since {{time @actionItem.created}}
           {{/if}}
         </span>
       </div>
     </h6>
     <div class="header">
-      <LinkTo @route="account.action-item" @model={{this.actionItem.slug}}>{{this.actionItem.title}}</LinkTo>
-      <a href="#" class="right floated" title="Toggle subscription" {{action "toggleSubscription"}}><i class="{{if (contains this.userId this.subscriberIds) "hide" "unhide"}} fitted icon"></i></a>
+      <LinkTo @route="account.action-item" @model={{@actionItem.slug}}>{{@actionItem.title}}</LinkTo>
+      <a href="#" class="right floated" title="Toggle subscription" {{on "click" (prevent-default (fn @onToggleSubscription @actionItem))}}><i class="{{if (contains this.userId this.subscriberIds) "hide" "unhide"}} fitted icon"></i></a>
     </div>
   </div>
   <div class="content">
-    {{display/priority-label this.actionItem.priority}}
+    <Display::PriorityLabel @priority={{@actionItem.priority}} />
     <div class="right floated ui label">
       <i class="clock icon"></i>
-      {{#if this.actionItem.dueOn}}
-        {{#if this.actionItem.delayedUntil}}
-          <span class="text-yellow">Delayed Until {{time this.actionItem.delayedUntil}}</span> - Originally
+      {{#if @actionItem.dueOn}}
+        {{#if @actionItem.delayedUntil}}
+          <span class="text-yellow">Delayed Until {{time @actionItem.delayedUntil}}</span> - Originally
         {{else}}
-          Due {{time-ago this.actionItem.dueOn}}
+          Due {{time-ago @actionItem.dueOn}}
         {{/if}}
-        Due on {{time this.actionItem.dueOn}}
+        Due on {{time @actionItem.dueOn}}
       {{else}}
         No due date
       {{/if}}
     </div>
   </div>
   <div class="content">
-    {{#if this.actionItem.checklist.length}}
-      <UiProgress @percent={{this.actionItem.percentComplete}} @class="teal indicating tiny">
+    {{#if @actionItem.checklist.length}}
+      <UiProgress @percent={{@actionItem.percentComplete}} @class="teal indicating tiny">
         <div class="bar"></div>
       </UiProgress>
     {{/if}}
     <h4 class="ui sub header clearfix">
-      {{#if this.actionItem.checklist.length}}
+      {{#if @actionItem.checklist.length}}
         {{#if this.todosComplete}}
           <strong class="text-green">
             <i class="check icon"></i>All todos complete
           </strong>
         {{else}}
-          <LinkTo @route="account.action-item.todo" @model={{this.actionItem.slug}}>{{this.actionItem.incompleteTodos.length}} {{inflect-text "Todos" this.actionItem.incompleteTodos.length}} Left</LinkTo>
+          <LinkTo @route="account.action-item.todo" @model={{@actionItem.slug}}>{{@actionItem.incompleteTodos.length}} {{inflect-text "Todos" @actionItem.incompleteTodos.length}} Left</LinkTo>
         {{/if}}
       {{/if}}
       <span class="right floated meta">
-        {{#if this.actionItem.participants}}{{this.actionItem.participants.length}}{{else}}No{{/if}}
-        {{inflect-text "Participants" this.actionItem.participants.length}}
+        {{#if @actionItem.participants}}{{@actionItem.participants.length}}{{else}}No{{/if}}
+        {{inflect-text "Participants" @actionItem.participants.length}}
       </span>
     </h4>
 
-    {{#if this.actionItem.incompleteTodos.length}}
+    {{#if @actionItem.incompleteTodos.length}}
       <div class="ui list">
-        {{#each this.actionItem.incompleteTodos as |todo|}}
-          {{list-item/todo-item todo}}
+        {{#each @actionItem.incompleteTodos as |todo|}}
+          <ListItem::TodoItem @todo={{todo}}/>
         {{/each}}
       </div>
     {{/if}}
   </div>
   <div class="extra content">
-    <LinkTo @route="account.action-item" @model={{this.actionItem.slug}} class="ui fluid primary button">View Item</LinkTo>
+    <LinkTo @route="account.action-item" @model={{@actionItem.slug}} class="ui fluid primary button">View Item</LinkTo>
   </div>
 </div>

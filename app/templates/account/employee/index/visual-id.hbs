@@ -7,13 +7,13 @@
   </p>
   <div class="ui divider"></div>
 
-  {{#quick-form
-    this.visualIdForm
-    this.visualId
-    this
-    submitClass="large fluid positive"
-    onsubmit=(action "submitVisualId")
-  }}
+  <QuickForm
+    @form={{this.visualIdForm}}
+    @model={{this.visualId}}
+    @controller={{this}}
+    @submitClass="large fluid positive"
+    @onsubmit={{this.submitVisualId}}
+  >
     Complete Visual ID <i class="fitted check icon"></i>
-  {{/quick-form}}
+  </QuickForm>
 </div>

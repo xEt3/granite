@@ -1,31 +1,26 @@
-import classic from 'ember-classic-decorator';
-import { tagName } from '@ember-decorators/component';
-import BaseLiComponent from './base';
-import { get, computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { get, action } from '@ember/object';
 import {
   recordDisplayPropertyMap,
   modelPageMap
 } from 'granite/config/statics';
 
-@classic
-@tagName('')
-export default class NewImportRecordItem extends BaseLiComponent {
-  @computed('model', 'type')
+export default class ListItemNewImportRecordItem extends Component {
   get displayProp () {
-    const properties = recordDisplayPropertyMap[this.type] || [],
-          record = this.model;
+    const properties = recordDisplayPropertyMap[this.args.type] || [],
+          record = this.args.model;
 
     return record && properties.map(key => get(record, key)).join(' ');
   }
 
-  @computed('type')
   get recordRoute () {
-    return modelPageMap[this.type];
+    return modelPageMap[this.args.type];
   }
 
+  @action
   linkToRecord () {
     const recordRoute = this.recordRoute,
-          id = this.get('model._id');
+          id = this.args.model._id;
 
     if (!recordRoute) {
       return;
@@ -37,6 +32,15 @@ export default class NewImportRecordItem extends BaseLiComponent {
       transitionArgs.push(id);
     }
 
-    this.onTransition(transitionArgs);
+    this.args.onTransition(transitionArgs);
   }
 }
+
+/*
+  USAGE:
+  <ListItem::NewImportRecordItem
+    @model={{record}}
+    @type={{importGroup.name}}
+    @onTransition={{this.transitionTo}} />
+
+*/

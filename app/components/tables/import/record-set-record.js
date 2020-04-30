@@ -1,27 +1,16 @@
-import classic from 'ember-classic-decorator';
-import { classNames, classNameBindings, tagName } from '@ember-decorators/component';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { A } from '@ember/array';
-import { get, action, computed } from '@ember/object';
+import { get, action } from '@ember/object';
 import { modelPageMap } from 'granite/config/statics';
 import titleCase from 'granite/utils/title-case';
 
-@classic
-@tagName('tr')
-@classNames('import__record')
-@classNameBindings(
-  'record.duplicate:import__record--duplicate',
-  'isSelected:import__record--is-selected'
-)
-class RecordSetRecordComponent extends Component {
-  @computed('selectedRows.[]', 'record.id')
+export default class TablesImportRecordSetRecordComponent extends Component {
   get isSelected () {
-    return (this.selectedRows || []).includes(this.get('record.id'));
+    return (this.args.selectedRows || []).includes(this.args.record.id);
   }
 
-  @computed('duplicate.matchReason')
   get matchReason () {
-    let match = this.get('duplicate.matchReason');
+    let match = this.duplicate.matchReason;
 
     if (!match) {
       return;
@@ -30,11 +19,10 @@ class RecordSetRecordComponent extends Component {
     return A(match.map(m => titleCase([ m.split('.')[0] ]))).uniq().join(', ');
   }
 
-  @computed('fields.[]', 'record.duplicate', 'recordType')
   get duplicate () {
-    const duplicate = this.get('record.duplicate'),
-          displayField = this.fields[0],
-          page = modelPageMap[this.recordType] || {};
+    const duplicate = this.args.record.duplicate,
+          displayField = this.args.fields[0],
+          page = modelPageMap[this.args.recordType] || {};
 
     return duplicate && {
       page:        page.path,
@@ -59,10 +47,10 @@ class RecordSetRecordComponent extends Component {
       transitionArgs.push(id);
     }
 
-    this.onTransition(transitionArgs);
+    this.args.onTransition(transitionArgs);
   }
 }
 
-RecordSetRecordComponent.reopenClass({ positionalParams: [ 'record', 'selectedRows' ] });
+// RecordSetRecordComponent.reopenClass({ positionalParams: [ 'record', 'selectedRows' ] });
 
-export default RecordSetRecordComponent;
+// export default RecordSetRecordComponent;

@@ -1,30 +1,31 @@
-<h3 class="titlecased text">{{this.recordSet.name}}</h3>
+<h3 class="titlecased text">{{@recordSet.name}}</h3>
 <table class="ui striped stackable responsive table">
   <thead>
     <tr>
       <th class="import__select-all-checkbox">
-        <UiCheckbox @label={{if this.allSelected "Deselect All" "Select All"}} @checked={{this.allSelected}} @onChange={{action this.toggleAllSelected this.recordSet.name this.recordSet.records}} />
+        {{!-- SELECT ALL BROKEN ON THIS COMMIT --}}
+        <UiCheckbox @label={{if this.allSelected "Deselect All" "Select All"}} @checked={{this.allSelected}} @onChange={{fn @toggleAllSelected @recordSet.name @recordSet.records}} />
       </th>
-      {{#each this.recordSet.displayMap as |header|}}
+      {{#each @recordSet.displayMap as |header|}}
         <th>{{humanize-key header}}</th>
       {{/each}}
     </tr>
   </thead>
   <tbody>
-    {{#each this.recordSet.records as |record|}}
+    {{#each @recordSet.records as |record|}}
       {{yield
         (hash
           row=(component
             "tables/import/record-set-record"
-            record
-            this.selectedRows
-            onToggle=(action this.onToggle this.recordSet.name record.id)
-            onTransition=(action this.onTransition)
-            fields=this.recordSet.displayMap
-            recordType=this.recordSet.name
+            record=record
+            selectedRows=@selectedRows
+            onToggle=(fn @onToggle @recordSet.name record.id)
+            onTransition=(fn @onTransition)
+            fields=@recordSet.displayMap
+            recordType=@recordSet.name
           )
         )
-        this.recordSet.displayMap
+        @recordSet.displayMap
       }}
     {{/each}}
   </tbody>

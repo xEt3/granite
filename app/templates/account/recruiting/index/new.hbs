@@ -7,16 +7,16 @@
   </hgroup>
   <div class="ui divider"></div>
 
-  {{#quick-form
-    this.form
-    this.model
-    this
-    working=this.working
-    submitClass="huge fluid green"
-    onsubmit=(action "save" this.model)
-    disabled=(or (not this.model.name) (not this.model.job))
-  }}
+  <QuickForm
+    @form={{this.form}}
+    @model={{this.model}}
+    @controller={{this}}
+    @working={{this.working}}
+    @submitClass="huge fluid green"
+    @onsubmit={{fn this.save this.model}}
+    @disabled={{or (not this.model.name) (not this.model.job)}}
+  >
     Save and Continue
-  {{/quick-form}}
+  </QuickForm>
 
 </div>

@@ -1,11 +1,8 @@
-import classic from 'ember-classic-decorator';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
 
-@classic
-export default class VisualIdRoute extends Route {
-  @service
-  ajax;
+export default class AccountEmployeeVisualIdRoute extends Route {
+  @service ajax
 
   async model () {
     let employee = this.modelFor('account.employee');

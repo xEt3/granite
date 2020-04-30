@@ -46,9 +46,9 @@
     {{if this.editingItem "Edit" "Add"}} item
   </div>
   <div class="content">
-    {{quick-form
-      this.currentForm.elements
-      this.modelForForm}}
+    <QuickForm
+      @form={{this.currentForm.elements}}
+      @model={{this.modelForForm}}/>
   </div>
   <div class="actions">
     <button class="ui red button" {{action "respondModal" false}}>

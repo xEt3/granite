@@ -10,10 +10,10 @@
       <h3 class="titlecased text">{{importGroup.name}}</h3>
       <div class="ui divided list">
         {{#each importGroup.records as |record|}}
-          {{list-item/new-import-record-item
-            record
-            type=importGroup.name
-            onTransition=(action "transitionTo")}}
+          <ListItem::NewImportRecordItem
+            @model={{record}}
+            @type={{importGroup.name}}
+            @onTransition={{this.transitionTo}} />
         {{/each}}
       </div>
       <div class="ui divider"></div>
@@ -31,7 +31,7 @@
 
   {{#if (gt this.totalSelected 0)}}
     <ConfirmModal @class="item" @confirmContent="Are you sure you want to import these records?" as |confirm|>
-      <button class="ui massive fluid green button" {{action (pipe confirm (action "import"))}}>
+      <button class="ui massive fluid green button" {{on "click" (pipe confirm this.import)}}>
         <i class="play icon"></i> Import {{this.totalSelected}} {{inflect-text "Record" this.totalSelected}}
       </button>
       <div class="ui divider"></div>
@@ -39,19 +39,19 @@
   {{/if}}
 
   {{#each this.model.deserialized as |recordSet|}}
-    {{#tables/import/record-set
-      recordSet
-      selectedRows=(get this.selected recordSet.name)
-      toggleAllSelected=(action "toggleAllSelected")
-      onToggle=(action "toggleRowSelection")
-      onTransition=(action "transitionTo")
+    <Tables::Import::RecordSet
+      @recordSet={{recordSet}}
+      @selectedRows={{get this.selected recordSet.name}}
+      @toggleAllSelected={{this.toggleAllSelected}}
+      @onToggle={{this.toggleRowSelection}}
+      @onTransition={{this.transitionTo}}
       as |component fields|
-    }}
+    >
       <component.row as |record|>
         {{#each fields as |field|}}
           <td>{{get record field}}</td>
         {{/each}}
       </component.row>
-    {{/tables/import/record-set}}
+    </Tables::Import::RecordSet>
   {{/each}}
 {{/if}}

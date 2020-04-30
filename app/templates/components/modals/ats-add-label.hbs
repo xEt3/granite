@@ -17,9 +17,9 @@
     </UiDropdown>
     {{#if this.currentLabel}}
       <div class="ui divider"></div>
-      {{quick-form
-        this.newLabelForm
-        this.currentLabel}}
+      <QuickForm
+        @form={{this.newLabelForm}}
+        @model={{this.currentLabel}}/>
       <div class="ui divider"></div>
       <button class="ui blue fluid button" {{action "saveLabel" this.currentLabel}}>Save New Label</button>
     {{/if}}

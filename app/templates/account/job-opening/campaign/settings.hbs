@@ -4,12 +4,12 @@
   </h2>
   <div class="ui form">
     <h2 class="ui horizontal divider header">Campaign Settings</h2>
-    {{quick-form
-      this.campaignSettingsForm
-      this.model
-      this
-      tagName="div"
-      class="content ui grid"}}
+    <QuickForm
+      @form={{this.campaignSettingsForm}}
+      @model={{this.model}}
+      @controller={{this}}
+      @tagName="div"
+      class="content ui grid"/>
 
     <div class="custom-pipeline-toggle">
       <UiCheckbox @id={{this.customPipelineToggle}} @class="toggle" @label="Use custom recruiting stages" @parentClass="sixteen wide column" @checked={{readonly this.customPipeline}} @onChange={{action "toggleCustomPipeline"}} />
@@ -44,12 +44,12 @@
     {{/liquid-if}}
 
     <h2 class="ui horizontal divider header">Job Settings</h2>
-    {{quick-form
-      this.jobSettingsForm
-      this.model
-      this
-      tagName="div"
-      class="content ui grid"}}
+    <QuickForm
+      @form={{this.jobSettingsForm}}
+      @model={{this.model}}
+      @controller={{this}}
+      @tagName="div"
+      class="content ui grid"/>
 
     <div class="ui divider"></div>
 
@@ -69,11 +69,11 @@
       <i class="plus icon"></i>{{if this.editingStage "Edit" "Add"}} recruiting pipeline stage
     </div>
     <div class="content">
-      {{quick-form
-        this.stageForm
-        this.currentStage
-        this
-        tagName="div"}}
+      <QuickForm
+        @form={{this.stageForm}}
+        @model={{this.currentStage}}
+        @controller={{this}}
+        @tagName="div"/>
     </div>
     <div class="actions">
       {{#unless this.editingStage}}

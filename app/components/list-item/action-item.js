@@ -1,20 +1,19 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { computed, action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-export default Component.extend({
-  auth:          service(),
-  userId:        computed.reads('auth.user.employee.id'),
-  subscriberIds: computed.mapBy('actionItem.subscribers', 'id'),
+export default class ListItemActionItemComponent extends Component {
+  @service auth
+  @computed.reads('auth.user.employee.id') userId
+  @computed.mapBy('args.actionItem.subscribers', 'id') subscriberIds
 
-  todosComplete: computed('actionItem.{checklist.length,incompleteTodos.length}', function () {
-    let item = this.actionItem;
-    return item.get('checklist.length') > 0 && item.get('incompleteTodos.length') === 0;
-  }),
-
-  actions: {
-    toggleSubscription () {
-      this.onToggleSubscription(this.actionItem);
-    }
+  get todosComplete () {
+    let item = this.args.actionItem;
+    return item.checklist.length > 0 && item.incompleteTodos.length === 0;
   }
-});
+
+  @action
+  toggleSubscription () {
+    this.args.onToggleSubscription(this.args.actionItem);
+  }
+}

@@ -8,15 +8,15 @@
   </hgroup>
   <div class="ui divider"></div>
 
-  {{#quick-form
-    this.form
-    this.model
-    this
-    working=this.working
-    submitClass="huge fluid green"
-    onsubmit=(action "save" this.model)
-    disabled=(or (not this.model.category) (not this.model.title))
-  }}
+  <QuickForm
+    @form={{this.form}}
+    @model={{this.model}}
+    @controller={{this}}
+    @working={{this.working}}
+    @submitClass="huge fluid green"
+    @onsubmit={{fn this.save this.model}}
+    @disabled={{or (not this.model.category) (not this.model.title)}}
+  >
     Save Job
-  {{/quick-form}}
+  </QuickForm>
 </div>

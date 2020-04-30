@@ -1,5 +1,7 @@
-{{#if hasBlock}}
-  {{yield this.priority this.priorityText this.priorityColor}}
-{{else}}
-  {{this.priorityText}} ({{this.priority}})
-{{/if}}
+<span class="ui {{priorityColor}}">
+  {{#if hasBlock}}
+    {{yield @priority this.priorityText this.priorityColor}}
+  {{else}}
+    {{this.priorityText}} ({{@priority}})
+  {{/if}}
+</span>

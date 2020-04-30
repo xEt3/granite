@@ -1,18 +1,14 @@
-import classic from 'ember-classic-decorator';
-import { action, computed } from '@ember/object';
+import Controller from '@granite/core/controller';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Controller from '@ember/controller';
-import ajaxStatus from 'granite/mixins/ajax-status';
 import { eeocSelectOptions, eeocForm } from 'granite/config/forms/eeo';
 
-@classic
-export default class VisualIdController extends Controller.extend(ajaxStatus) {
-  eeocSelectOptions = eeocSelectOptions;
+export default class AccountEmployeeVisualIdController extends Controller {
+  @service ajax
+  @service data
 
-  @service
-  ajax;
+  eeocSelectOptions = eeocSelectOptions
 
-  @computed('model.{race,gender}')
   get visualIdForm () {
     let model = this.model,
         elements = eeocForm.filter(el => model[el.path]);
@@ -20,7 +16,6 @@ export default class VisualIdController extends Controller.extend(ajaxStatus) {
     return elements;
   }
 
-  @computed('visualId.{race,gender}', 'model.{race,gender}')
   get formInvalid () {
     let { race, gender } = this.model,
         visualId = this.visualId,
@@ -38,16 +33,16 @@ export default class VisualIdController extends Controller.extend(ajaxStatus) {
     const employee = this.employee,
           data = this.visualId;
 
-    this.ajaxStart();
+    let { success, error } = this.data.createStatus();
 
     try {
       await this.ajax.post(`/api/v1/eeo/visual-id/${employee.get('id')}`, { data });
     } catch (e) {
-      return this.ajaxError(e);
+      return error(e);
     }
 
-    this.ajaxSuccess('Visual ID successfully recorded.');
-    this.send('refresh');
+    success('Visual ID successfully recorded.');
+    this.send('refreshModel');
     this.transitionToRoute('account.employee');
   }
 }
