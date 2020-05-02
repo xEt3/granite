@@ -20,7 +20,7 @@
     {{/if}}
   {{/each}}
 {{else}}
-  {{#if this.working}}
+  {{#if this.data.statuses.fetching.isLoading}}
     <div class="ui active inverted dimmer">
       <div class="ui indeterminate massive text loader">
         {{or this.status.status "Importing Records"}}

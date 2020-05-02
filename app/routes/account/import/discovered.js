@@ -6,7 +6,8 @@ export default class AccountImportDiscoveredRoute extends Route {
   titleToken = 'Import Records'
 
   async beforeModel (transition) {
-    const resultSetId = ((transition.params || {})['account.import.discovered'] || {}).result_set_id || (transition.routeInfos[transition.routeInfos.length - 1].context || {})._id,
+    const resultSetId = ((transition.params || {})['account.import.discovered'] || {}).result_set_id || (transition.routeInfos[transition.routeInfos.length - 1].params || {}).result_set_id,
+          // const resultSetId = ((transition.params || {})['account.import.discovered'] || {}).result_set_id || (transition.routeInfos[transition.routeInfos.length - 1].context || {})._id,
           serviceName = transition.to.queryParams.service;
 
     try {
