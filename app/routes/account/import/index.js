@@ -1,8 +1,6 @@
-import classic from 'ember-classic-decorator';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-@classic
-export default class IndexRoute extends Route {
+export default class AccountImportRoute extends Route {
   model () {
     return this.get('auth.user.company');
   }
