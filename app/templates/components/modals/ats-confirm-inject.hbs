@@ -1,16 +1,16 @@
-<UiModal @id={{this.modalId}} @class="basic">
+<UiModal @id={{@modalId}} @class="basic">
   <i class="close icon"></i>
   <div class="header">
     Are you sure?
   </div>
   <div class="content">
-    Are you sure you want to move {{this.applicants.length}} {{inflect-text "applicant" this.applicants.length}} into your recruiting pipeline?
+    Are you sure you want to move {{@applicants.length}} {{inflect-text "applicant" @applicants.length}} into your recruiting pipeline?
   </div>
   <div class="actions">
-    <button class="ui inverted red button" {{action "respond" false}}>
+    <button class="ui inverted red button" {{on "click" (fn this.respond false)}}>
       Cancel
     </button>
-    <button class="ui inverted green right labeled icon button" {{action "respond" true}}>
+    <button class="ui inverted green right labeled icon button" {{on "click" (fn this.respond true)}}>
       Yes
       <i class="check icon"></i>
     </button>

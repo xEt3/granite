@@ -6,29 +6,30 @@
 
     <div class="right aligned text">
       {{#if this.selectedApplications}}
-        <a href="#" class="ui small green button" {{action (pipe
-            (action this.openModal this.confirmInjectModalId "inject")
-            (action this.injectConfirmed this.selectedApplications)
-          )}}
+        <a href="#" class="ui small green button" {{on "click" (prevent-default (pipe
+            (fn this.openModal this.confirmInjectModalId "inject")
+            (fn this.injectConfirmed this.selectedApplications)
+          ))}}
         >
           Move Selected To Pipeline
         </a>
 
-        <a href="#" class="ui small orange button" {{action (pipe
-            (action this.openModal this.disqualifyModalId "disqualify")
-            (action "disqualifyCandidate" this.selectedApplications)
-            (action "deselectAllApplications")
-          )}}
+        {{!-- HERE --}}
+        <a href="#" class="ui small orange button" {{on "click" (prevent-default (pipe
+            (fn this.openModal this.disqualifyModalId "disqualify")
+            (fn this.disqualifyCandidate this.selectedApplications)
+            this.deselectAllApplications
+          ))}}
         >
           Disqualify Selected
         </a>
       {{/if}}
 
       {{#if this.showingAllPending}}
-        <a href="#" class="ui small button" {{action "selectAllApplications"}}>
+        <a href="#" class="ui small button" {{on "click" (prevent-default this.selectAllApplications)}}>
           Select All
         </a>
-        <a href="#" class="ui small negative button" {{action "deselectAllApplications"}}>
+        <a href="#" class="ui small negative button" {{on "click" (prevent-default this.deselectAllApplications)}}>
           Deselect All
         </a>
       {{/if}}
@@ -45,13 +46,13 @@
         <ListItem::PendingApplicant
           @model={{application}}
           @selected={{this.selectedApplications}}
-          @onSelectChange={{action "selectApplication"}} />
+          @onSelectChange={{this.selectApplication}} />
       {{/each}}
     </div>
 
     {{#if (gt this.pendingApplications.length 3)}}
       <h4 class="center aligned text">
-        <a href="#" class="" {{action "toggleProperty" "showingAllPending"}}>
+        <a href="#" class="" {{on "click" (prevent-default (toggle this "showingAllPending"))}}>
           {{#if this.showingAllPending}}
             Show Less <i class="angle up icon"></i>
           {{else}}
@@ -68,13 +69,13 @@
     Your Recruiting Pipeline
 
     <small class="right floated small text">
-      <a href="#" {{action this.toggleProperty "showDisqualified"}}>
+      <a href="#" {{on "click" (prevent-default (toggle this "showDisqualified"))}}>
         {{if this.showDisqualified "Hide" "Show"}} Disqualified Applicants
       </a>
     </small>
 
-    <Modals::AtsAddApplicant @class="ui center aligned text" @model={{this.model}} @pipelines={{this.model.pipeline}} @onNotify={{action "onNotify"}} @refresh={{action "refreshModel"}} as |openAddModal|>
-      <a href="#" class="ats__action--add-applicant smaller text" {{action openAddModal}}>
+    <Modals::AtsAddApplicant class="ui center aligned text" @model={{this.model}} @pipelines={{this.model.pipeline}} @refresh={{route-action "refreshModel"}} as |openAddModal|>
+      <a href="#" class="ats__action--add-applicant smaller text" {{on "click" (prevent-default openAddModal)}}>
         <EmberTooltip @side="bottom" @popperContainer="body" @text="Manually add applicant" />
         <i class="ui plus icon"></i> Add Applicant
       </a>
@@ -115,7 +116,7 @@
     />
   </ConfirmModal>
 
-  <Modals::AtsConfirmInject @applicants={{this.selectedApplications}} @modalId={{this.confirmInjectModalId}} @onResponse={{action "modalResponse" "inject"}} />
+  <Modals::AtsConfirmInject @applicants={{this.selectedApplications}} @modalId={{this.confirmInjectModalId}} @onResponse={{fn this.modalResponse "inject"}} />
 
   <Modals::AtsDisqualify @model={{this.appInDisqualifyConfirm}} @modalId={{this.disqualifyModalId}} @onResponse={{action "modalResponse" "disqualify"}} />
 

@@ -1,6 +1,6 @@
 import Route from 'granite/core/route';
 
-export default class ApplicantTrackingRoute extends Route {
+export default class AccountJobOpeningCampaignApplicantTrackingRoute extends Route {
   titleToken = 'Applicants'
   queryParams = { showDisqualified: { refreshModel: true } }
 

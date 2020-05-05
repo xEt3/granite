@@ -1,46 +1,47 @@
-import classic from 'ember-classic-decorator';
-import { action, computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { elementId } from 'granite/core';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
+import { tracked } from '@glimmer/tracking';
 import { Promise } from 'rsvp';
-import ajaxStatus from 'granite/mixins/ajax-status';
 import $ from 'jquery';
 
-@classic
-export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
-  @service
-  store;
+@elementId
+export default class ModalsAtsAddApplicant extends Component {
+  @service store
+  @service data
 
-  applicantRequiredFields = [ 'firstName', 'lastName', 'phone', 'email' ];
-  fileIsAdded = false;
+  @tracked fileIsAdded = false
+  @tracked uploadProgress = null
+  @tracked newApplicant = {}
+  @tracked newApplication = {}
 
-  @computed('model.jobOpening.id')
+  applicantRequiredFields = [ 'firstName', 'lastName', 'phone', 'email' ]
+
   get resumeEndpoint () {
-    return `/api/v1/upload/resume/${this.get('model.jobOpening.id')}`;
+    return `/api/v1/upload/resume/${this.args.model.jobOpening.id}`;
   }
 
+  @action
   uploadResume () {
     return new Promise((resolveUpload, rejectUpload) => {
-      this.setProperties({
-        resolveUpload,
-        rejectUpload
-      });
+      this.resolveUpload = resolveUpload;
+      this.rejectUpload = rejectUpload;
+
       Dropzone.forElement('.input__dropzone').processQueue();
     });
   }
 
-  @computed('elementId')
   get modalId () {
     return this.elementId + '-modal';
   }
 
+  @action
   createConfirm () {
     const store = this.store;
 
-    this.setProperties({
-      newApplicant:   store.createRecord('applicant', {}),
-      newApplication: store.createRecord('jobApplication', {})
-    });
+    this.newApplicant = store.createRecord('applicant', {});
+    this.newApplication = store.createRecord('jobApplication', {});
 
     $('#' + this.modalId).modal({
       detachable: true,
@@ -48,21 +49,18 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
       context:    '.ember-application'
     }).modal('show');
 
-    return new Promise((resolve, reject) => this.setProperties({
-      resolve,
-      reject
-    }));
+    return new Promise((resolve, reject) => {
+      this.resolve = resolve;
+      this.reject = reject;
+    });
   }
 
-  @computed('modalId')
-  get startApplication () {
-    return this.createConfirm.bind(this);
-  }
-
+  @action
   closeModal () {
     $('#' + this.modalId).modal('hide');
   }
 
+  @action
   requiredFieldsFilled () {
     let applicantRequiredFields = this.applicantRequiredFields;
     let newApplicant = this.newApplicant;
@@ -84,7 +82,7 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
     if (this.fileIsAdded) {
       $dropzone.removeFile(this.fileIsAdded);
     }
-    this.set('fileIsAdded', file);
+    this.fileIsAdded = file;
   }
 
   @action
@@ -102,7 +100,7 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
     }
 
     $dropzone.removeFile(this.fileIsAdded);
-    this.set('fileIsAdded', false);
+    this.fileIsAdded = false;
   }
 
   @action
@@ -117,7 +115,7 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
 
   @action
   uploadProgressUpdate (prog) {
-    this.set('uploadProgress', prog);
+    this.uploadProgress = prog;
   }
 
   @action
@@ -125,17 +123,17 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
     this.newApplicant.destroyRecord();
     this.newApplication.destroyRecord();
 
-    this.send('removeFile');
+    this.removeFile();
     this.closeModal();
   }
 
   @action
-  save () {
+  async save () {
     const store = this.store;
-    this.ajaxStart();
+    let { success, error } = this.data.createStatus();
 
     if (!this.requiredFieldsFilled()) {
-      this.ajaxError('Must fill required fields', true);
+      error('Must fill required fields', true);
       return;
     }
 
@@ -145,39 +143,35 @@ export default class AtsAddApplicant extends Component.extend(ajaxStatus) {
     application.setProperties({
       applicant,
       manualEntry: true,
-      jobOpening:  this.get('model.jobOpening'),
+      jobOpening:  this.args.model.jobOpening,
       reviewedOn:  this.newApplication.stage ? new Date() : null
     });
 
-    applicant.save()
-    .then(() => {
+    try {
+      await applicant.save();
+
+      let response = null;
+
       if (this.fileIsAdded) {
-        return this.uploadResume();
+        response = await this.uploadResume();
       }
-    })
-    .then((response) => {
+
       if (response) {
         store.pushPayload('file', response);
         let fileRecord = store.peekRecord('file', response.file.id);
-        application.set('resume', fileRecord);
+        application.resume = fileRecord;
       }
 
-      return application.save();
-    })
-    .then(() => {
-      this.ajaxSuccess('Saved application successfully');
-      this.setProperties({
-        newApplicant:   null,
-        newApplication: null
-      });
-      this.send('removeFile');
-      this.closeModal();
-      this.refresh();
-    });
-  }
+      await application.save();
 
-  @action
-  notify (type, msg) {
-    this.onNotify(type, msg);
+      success('Saved application successfully');
+      this.newApplicant = {};
+      this.newApplication = {};
+      this.removeFile();
+      this.closeModal();
+      this.args.refresh();
+    } catch (e) {
+      error(e);
+    }
   }
 }
