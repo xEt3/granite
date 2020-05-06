@@ -1,7 +1,7 @@
-<div role="button" class="{{if @isSelected 'is-selected'}}" ...attributes {{on "click" this.click}}>
+<div role="button" class="{{if this.isSelected 'is-selected'}}" ...attributes {{on "click" this.click}}>
   <div class="content content__flex">
     <div class="field">
-      <UiCheckbox @checked={{@isSelected}} @value={{@isSelected}} />
+      <UiCheckbox @checked={{this.isSelected}} @value={{@isSelected}} />
     </div>
     <div class="header">
       <strong>{{@model.person.firstName}} {{@model.person.lastName}}</strong>

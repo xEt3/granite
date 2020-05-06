@@ -33,7 +33,7 @@
 
   <div class="job-application__labels">
     {{#each this.model.labels as |label|}}
-      {{custom-label label size="small" tagName="span"}}
+      <CustomLabel @label={{label}} @size="small" @tagName="span" />
     {{/each}}
   </div>
 

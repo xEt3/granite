@@ -21,6 +21,7 @@ export default class AccountJobOpeningCampaignApplicantTrackingController extend
   @service data
 
   @tracked selectedApplications = A()
+  @tracked appInDisqualifyConfirm = {}
 
   queryParams =              [ 'showDisqualified' ]
   confirmInjectModalId =     'modal__ats-confirm-inject'
@@ -185,7 +186,6 @@ export default class AccountJobOpeningCampaignApplicantTrackingController extend
 
     const jobApps = get(jobApp, 'length') && jobApp.toArray ? jobApp.toArray() : [ jobApp ];
 
-    this.ajaxStart();
     let { success, error } = this.data.createStatus();
 
     try {
@@ -195,12 +195,11 @@ export default class AccountJobOpeningCampaignApplicantTrackingController extend
       }));
 
       success();
-      this.appInDisqualifyConfirm = null;
+      this.appInDisqualifyConfirm = {};
       this.send('refreshModel');
     } catch (e) {
       error(e);
     }
-
   }
 
   @action
@@ -211,7 +210,7 @@ export default class AccountJobOpeningCampaignApplicantTrackingController extend
       disqualificationReason: null,
       disqualified:           false
     });
-    this.saveRecord(jobApp);
+    this.data.saveRecord(jobApp);
   }
 
   @action

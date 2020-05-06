@@ -1,23 +1,25 @@
-<div class="pipeline">
-  {{#each @pipeline.stages as |stage|}}
-    {{card-pipeline/stage-column
-      stage
-      @pipeline.stages
-      newScheduledMeeting=this.newScheduledMeeting
-      activeCandidates=@candidates
-      dispatchReorder=(action "setOrder")
-      moveAppToStage=(action "moveAppToStage")
-      onDisqualify=@onDisqualify
-      onUnDisqualify=@onUnDisqualify
-      onUnHire=@onUnHire
-      onSchedule=@onSchedule
-      disableDragging=this.working
-      onLinkSharing=@onLinkSharing
-      onOnboardCandidate=@onOnboardCandidate
-      onAddLabel=@onAddLabel}}
-  {{/each}}
+<div class="pipeline__stage">
+  <div class="pipeline">
+    {{#each @pipeline.stages as |stage|}}
+      <CardPipeline::StageColumn
+        @stage={{stage}}
+        @stages={{@pipeline.stages}}
+        @newScheduledMeeting={{@newScheduledMeeting}}
+        @activeCandidates={{@candidates}}
+        @dispatchReorder={{this.setOrder}}
+        @moveAppToStage={{this.moveAppToStage}}
+        @onDisqualify={{@onDisqualify}}
+        @onUnDisqualify={{@onUnDisqualify}}
+        @onUnHire={{@onUnHire}}
+        @onSchedule={{@onSchedule}}
+        @disableDragging={{this.data.statuses.working.isLoading}}
+        @onLinkSharing={{@onLinkSharing}}
+        @onOnboardCandidate={{@onOnboardCandidate}}
+        @onAddLabel={{@onAddLabel}} />
+    {{/each}}
 
-  <div class="ui {{if this.workingSlow "active"}} inverted dimmer">
-    <div class="ui text loader">One moment...</div>
+    <div class="ui {{if this.workingSlow "active"}} inverted dimmer">
+      <div class="ui text loader">One moment...</div>
+    </div>
   </div>
 </div>

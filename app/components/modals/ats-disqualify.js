@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import $ from 'jquery';
 
-export default class AtsDisqualify extends Component {
+export default class ModalsAtsDisqualify extends Component {
   @service auth
 
   get disqualificationReasons () {
@@ -11,12 +11,12 @@ export default class AtsDisqualify extends Component {
   }
 
   closeModal () {
-    $('#' + this.modalId).modal('hide');
+    $('#' + this.args.modalId).modal('hide');
   }
 
   @action
   respond (response) {
-    this.onResponse(response);
+    this.args.onResponse(response);
     this.closeModal();
   }
 }

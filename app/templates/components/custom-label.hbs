@@ -1,1 +1,5 @@
-{{this.label.text}}
+{{#let (element (if @tagName @tagName "div")) as |Tag|}}
+  <Tag class="ui label {{@size}}" style={{this.color}}>
+    {{@label.text}}
+  </Tag>
+{{/let}}

@@ -1,19 +1,30 @@
-import classic from 'ember-classic-decorator';
-import { classNames } from '@ember-decorators/component';
-import { computed } from '@ember/object';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { A } from '@ember/array';
 
-@classic
-@classNames('pipeline__stage')
-class PipelineStageComponent extends Component {
-  @computed('activeCandidates.@each.{stageOrder,stage}', 'stage._id')
+export default class CardPipelineStageComponent extends Component {
   get candidates () {
-    const stageId = this.get('stage._id');
-    return A([ stageId, ...(this.activeCandidates || []).filter(candidate => stageId === candidate.get('stage')).sortBy('stageOrder') ]);
+    const stageId = this.args.stage._id;
+    return A([ stageId, ...(this.args.activeCandidates || []).filter(candidate => stageId === candidate.stage).sortBy('stageOrder') ]);
   }
 }
 
-PipelineStageComponent.reopenClass({ positionalParams: [ 'stage', 'stages' ] });
+/*
+  USAGE:
 
-export default PipelineStageComponent;
+  <CardPipeline::StageColumn
+    @stage={{stage}}
+    @stages={{@pipeline.stages}}
+    @newScheduledMeeting={{@newScheduledMeeting}}
+    @activeCandidates={{@candidates}}
+    @dispatchReorder={{this.setOrder}}
+    @moveAppToStage={{this.moveAppToStage}}
+    @onDisqualify={{@onDisqualify}}
+    @onUnDisqualify={{@onUnDisqualify}}
+    @onUnHire={{@onUnHire}}
+    @onSchedule={{@onSchedule}}
+    @disableDragging={{this.data.statuses.working.isLoading}}
+    @onLinkSharing={{@onLinkSharing}}
+    @onOnboardCandidate={{@onOnboardCandidate}}
+    @onAddLabel={{@onAddLabel}} />
+
+*/

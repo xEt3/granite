@@ -17,6 +17,6 @@ export default class PendingApplicant extends Component {
 
   @action
   select () {
-    this.args.onSelectChange(this.args.model, this.args.isSelected);
+    this.args.onSelectChange(this.args.model, this.isSelected);
   }
 }

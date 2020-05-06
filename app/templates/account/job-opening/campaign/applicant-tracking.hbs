@@ -14,7 +14,6 @@
           Move Selected To Pipeline
         </a>
 
-        {{!-- HERE --}}
         <a href="#" class="ui small orange button" {{on "click" (prevent-default (pipe
             (fn this.openModal this.disqualifyModalId "disqualify")
             (fn this.disqualifyCandidate this.selectedApplications)
@@ -52,7 +51,7 @@
 
     {{#if (gt this.pendingApplications.length 3)}}
       <h4 class="center aligned text">
-        <a href="#" class="" {{on "click" (prevent-default (toggle this "showingAllPending"))}}>
+        <a href="#" class="" {{on "click" (prevent-default (toggle "showingAllPending" this))}}>
           {{#if this.showingAllPending}}
             Show Less <i class="angle up icon"></i>
           {{else}}
@@ -69,7 +68,7 @@
     Your Recruiting Pipeline
 
     <small class="right floated small text">
-      <a href="#" {{on "click" (prevent-default (toggle this "showDisqualified"))}}>
+      <a href="#" {{on "click" (prevent-default (toggle "showDisqualified" this))}}>
         {{if this.showDisqualified "Hide" "Show"}} Disqualified Applicants
       </a>
     </small>
@@ -118,7 +117,7 @@
 
   <Modals::AtsConfirmInject @applicants={{this.selectedApplications}} @modalId={{this.confirmInjectModalId}} @onResponse={{fn this.modalResponse "inject"}} />
 
-  <Modals::AtsDisqualify @model={{this.appInDisqualifyConfirm}} @modalId={{this.disqualifyModalId}} @onResponse={{action "modalResponse" "disqualify"}} />
+  <Modals::AtsDisqualify @model={{this.appInDisqualifyConfirm}} @modalId={{this.disqualifyModalId}} @onResponse={{fn this.modalResponse "disqualify"}} />
 
   <Modals::AtsScheduler
     @model={{this.appInScheduler}}

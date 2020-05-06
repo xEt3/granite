@@ -7,7 +7,7 @@ export default class CardPipelineComponent extends Component {
 
   @action
   setOrder (targetStageId, { sourceList, sourceIndex, targetList, targetIndex }) {
-    const items = this.candidates,
+    const items = this.args.candidates,
           item = sourceList.objectAt(sourceIndex),
           movedStage = sourceList !== targetList,
           newIndex = targetIndex === 0 ? 1 : targetIndex;
@@ -21,22 +21,22 @@ export default class CardPipelineComponent extends Component {
     targetListCopy.insertAt(newIndex, item);
 
     targetListCopy.slice(1).forEach((app, i) => {
-      if (app.get && app.get('stageOrder') !== i) {
-        const candidate = items.findBy('id', app.get('id'));
-        candidate.set('stageOrder', i);
+      if (app.get && app.stageOrder !== i) {
+        const candidate = items.findBy('id', app.id);
+        candidate.stageOrder = i;
 
         if (!movedStage && newIndex - 1 !== i) {
-          this.saveRecord(candidate);
+          this.data.saveRecord(candidate);
         }
       }
     });
 
     if (movedStage) {
       let newStageId = targetListCopy[0],
-          candidate = items.findBy('id', targetListCopy.objectAt(newIndex).get('id'));
+          candidate = items.findBy('id', targetListCopy.objectAt(newIndex).id);
 
-      candidate.set('stage', newStageId);
-      this.saveRecord(candidate);
+      candidate.stage = newStageId;
+      this.data.saveRecord(candidate);
 
       const cb = this.appChangedStage;
 
@@ -53,7 +53,7 @@ export default class CardPipelineComponent extends Component {
       stageOrder: -1
     });
 
-    this.saveRecord(app);
+    this.data.saveRecord(app);
 
     const cb = this.appChangedStage;
 

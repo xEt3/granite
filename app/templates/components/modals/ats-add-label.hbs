@@ -10,7 +10,7 @@
       <div class="menu">
         {{#each this.auth.user.company.labels as |label|}}
           <div class="item" data-value={{map-value mapper label}}>
-            {{custom-label label}}
+            <CustomLabel @label={{label}} />
           </div>
         {{/each}}
       </div>
