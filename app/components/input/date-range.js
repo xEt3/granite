@@ -1,11 +1,12 @@
-import classic from 'ember-classic-decorator';
-import { computed } from '@ember/object';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { elementId } from 'granite/core';
 import moment from 'moment';
 
-@classic
-export default class DateRange extends Component {
-  @computed('start')
+@elementId
+export default class InputDateRangeComponent extends Component {
+  @tracked start = null
+
   get endOptions () {
     const start = this.start,
           loopDate = moment(start),

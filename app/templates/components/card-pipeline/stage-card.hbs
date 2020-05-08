@@ -19,6 +19,7 @@
             <i class="setting icon"></i>
             <div class="menu">
               <a href="#" class="item" {{on "click" (prevent-default (fn @onSchedule @application))}}><i class="calendar icon"></i> Schedule...</a>
+              {{!-- HERE --}}
               <a href="#" class="item" {{on "click" (prevent-default (fn @onAddLabel @application))}}><i class="plus icon"></i> Add/Remove labels</a>
               <a href="#" class="item" {{on "click" (prevent-default (fn @onDisqualify @application))}}><i class="remove circle icon"></i> Disqualify candidate...</a>
               <a href="#" class="item" {{on "click" (prevent-default (fn @onLinkSharing @application))}}><i class="globe icon"></i> Sharing...</a>
@@ -108,7 +109,7 @@
         ({{@application.disqualificationReason}})
       {{/if}}
       {{#if @application.disqualificationEmail}}<span class="card-content__notified">Notified</span>{{/if}}
-      <a class="ui right floated" role="button" {{action @onUnDisqualify @application}}>
+      <a class="ui right floated" role="button" {{on "click" (prevent-default (fn @onUnDisqualify @application))}}>
         <i class="history icon"></i>
         Undo
       </a>

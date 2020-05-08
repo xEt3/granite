@@ -1,9 +1,8 @@
-<div>
+<div class="pipeline__stage">
   <h2 class="pipeline-stage__title">
     {{@stage.name}}
   </h2>
-
-  <DragSortList @items={{this.candidates}} @dragEndAction={{fn @dispatchReorder @stage.id}} @classNames="pipeline-stage__cards" @childClass="stage-cards__card" @draggingEnabled={{not @disableDragging}} as |jobApp|>
+  <DragSortList @items={{this.candidates}} @dragEndAction={{fn @dispatchReorder @stage._id}} @classNames="pipeline-stage__cards" @childClass="stage-cards__card" @draggingEnabled={{not @disableDragging}} as |jobApp|>
     {{#if jobApp.id}}
       <CardPipeline::StageCard
         @application={{jobApp}}

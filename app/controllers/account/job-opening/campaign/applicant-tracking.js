@@ -22,6 +22,7 @@ export default class AccountJobOpeningCampaignApplicantTrackingController extend
 
   @tracked selectedApplications = A()
   @tracked appInDisqualifyConfirm = {}
+  @tracked currentMeeting = {}
 
   queryParams =              [ 'showDisqualified' ]
   confirmInjectModalId =     'modal__ats-confirm-inject'
@@ -42,7 +43,7 @@ export default class AccountJobOpeningCampaignApplicantTrackingController extend
 
   @action
   resetMeeting () {
-    if (this.currentMeeting) {
+    if (Object.keys(this.currentMeeting).length > 0) {
       this.currentMeeting.destroy();
     }
 
