@@ -1,7 +1,6 @@
 <div class="ui very padded raised segment animated fadeInUp">
   <div class="ui top attached {{if this.model.disqualified "red" "green"}} label">
     <i class="info circle icon"></i>
-    {{log this}}
     This application is currently
     {{~#if this.model.disqualified}}
       disqualified{{#if this.model.disqualificationReason}} ({{this.model.disqualificationReason}}){{/if}}

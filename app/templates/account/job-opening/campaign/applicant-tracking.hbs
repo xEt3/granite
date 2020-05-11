@@ -86,38 +86,44 @@
       @candidates={{this.activeCandidates}}
       @newScheduledMeeting={{this.newScheduledMeeting}}
       @pipeline={{this.model.pipeline}}
-      @onDisqualify={{action (pipe
-        (action this.set "appInDisqualifyConfirm")
-        (action this.openModal this.disqualifyModalId "disqualify")
-        (action "disqualifyCandidate" this.appInDisqualifyConfirm)
-      )}}
-      @onUnDisqualify={{action "unDisqualifyCandidate"}}
-      @onUnHire={{action "unSetHire"}}
-      @onSchedule={{action (pipe
-        (action this.set "appInScheduler")
-        (action this.resetMeeting)
-        (action this.openModal this.schedulerModalId "scheduler")
-        (action this.saveMeeting)
-      )}}
-      @onOnboardCandidate={{action (pipe
-        (action confirm)
-        (action this.beginOnboarding)
-      )}}
-      @onLinkSharing={{action (pipe
-        (action this.set "appInLinkSharing")
-        (action this.openModal this.linkSharingModalId "linkSharing")
-      )}}
-      @onAddLabel={{action (pipe
-        (action this.set "appInAddLabels")
-        (action this.openModal this.labelsModalId "addLabel")
-        (action "saveApplicationLabels")
-      )}}
+      @onDisqualify={{pipe
+        (set this.appInDisqualifyConfirm _)
+        (fn this.openModal this.disqualifyModalId "disqualify")
+        (fn this.disqualifyCandidate this.appInDisqualifyConfirm)
+      }}
+      @onUnDisqualify={{this.unDisqualifyCandidate}}
+      @onUnHire={{this.unSetHire}}
+      @onSchedule={{pipe
+        (set this.appInScheduler _)
+        this.resetMeeting
+        (fn this.openModal this.schedulerModalId "scheduler")
+        this.saveMeeting
+      }}
+      @onOnboardCandidate={{pipe
+        confirm
+        this.beginOnboarding
+      }}
+      @onLinkSharing={{pipe
+        (set this.appInLinkSharing _)
+        (fn this.openModal this.linkSharingModalId "linkSharing")
+      }}
+      @onAddLabel={{pipe
+        (set this.appInAddLabels _)
+        (fn this.openModal this.labelsModalId "addLabel")
+        this.saveApplicationLabels
+      }}
     />
   </ConfirmModal>
 
-  <Modals::AtsConfirmInject @applicants={{this.selectedApplications}} @modalId={{this.confirmInjectModalId}} @onResponse={{fn this.modalResponse "inject"}} />
+  <Modals::AtsConfirmInject
+    @applicants={{this.selectedApplications}}
+    @modalId={{this.confirmInjectModalId}}
+    @onResponse={{fn this.modalResponse "inject"}} />
 
-  <Modals::AtsDisqualify @model={{this.appInDisqualifyConfirm}} @modalId={{this.disqualifyModalId}} @onResponse={{fn this.modalResponse "disqualify"}} />
+  <Modals::AtsDisqualify
+    @model={{this.appInDisqualifyConfirm}}
+    @modalId={{this.disqualifyModalId}}
+    @onResponse={{fn this.modalResponse "disqualify"}} />
 
   <Modals::AtsScheduler
     @model={{this.appInScheduler}}
@@ -134,5 +140,5 @@
   <Modals::AtsAddLabel
     @model={{this.appInAddLabels}}
     @modalId={{this.labelsModalId}}
-    @onResponse={{action "modalResponse" "addLabel"}} />
+    @onResponse={{fn this.modalResponse "addLabel"}} />
 </div>

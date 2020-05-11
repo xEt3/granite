@@ -1,11 +1,9 @@
-import classic from 'ember-classic-decorator';
+import Route from 'granite/core/route';
 import { action } from '@ember/object';
-import Route from '@ember/routing/route';
 import { resolve } from 'rsvp';
 
-@classic
-export default class EditRoute extends Route {
-  titleToken = 'Edit';
+export default class AccountJobOpeningCampaignJobApplicationEditRoute extends Route {
+  titleToken = 'Edit'
 
   async model () {
     let parentModel = this.modelFor('account.job-opening.campaign.job-application');
@@ -16,7 +14,7 @@ export default class EditRoute extends Route {
         applicant:      await resolve(parentModel.model.applicant)
       },
       pipeline: (await this.store.query('recruiting-pipeline', {
-        $or:   [{ jobOpenings: { $in: [ parentModel.opening.get('id') ] } }, { 'jobOpenings.0': { $exists: false } }],
+        $or:   [{ jobOpenings: { $in: [ parentModel.opening.id ] } }, { 'jobOpenings.0': { $exists: false } }],
         limit: 1,
         sort:  { jobOpenings: -1 }
       })).firstObject
@@ -32,7 +30,7 @@ export default class EditRoute extends Route {
 
   @action
   willTransition (transition) {
-    let model = this.controller.get('model'),
+    let model = this.controller.model,
         jobAppHasChangedAttributes = Object.keys(model.jobApplication.changedAttributes()).length > 0,
         appHasChangedAttributes = Object.keys(model.applicant.changedAttributes()).length > 0;
 

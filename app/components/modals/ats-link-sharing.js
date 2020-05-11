@@ -1,13 +1,18 @@
 import Modal from '.';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { A } from '@ember/array';
 
-export default class AtsLinkSharingModal extends Modal {
+export default class ModalsAtsLinkSharing extends Modal {
   @service ajax
   @service data
 
+  @tracked sendTo = A()
+  @tracked linkNote = null
+
   modalId = 'modal__ats-link-sharing'
+  onResponse = this.args.onResponse
   prevEmails = A()
 
   get publicLink () {
@@ -54,12 +59,10 @@ export default class AtsLinkSharingModal extends Modal {
       if (this.publicLink) {
         await this.ajax.request(`/api/v1/job-application/${model.id}/destroy-sharable-link`);
         success('Successfully turned off link sharing.');
-        this.set('publicLink', null);
         return;
       }
 
-      const response = await this.ajax.request(`/api/v1/job-application/${model.id}/create-sharable-link`);
-      this.publicLink = response.link;
+      await this.ajax.request(`/api/v1/job-application/${model.id}/create-sharable-link`);
       success('Successfully enabled link sharing.');
     } catch (e) {
       error(e);

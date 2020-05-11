@@ -1,24 +1,23 @@
-import classic from 'ember-classic-decorator';
-import { action, computed } from '@ember/object';
+import Controller from 'granite/core/controller';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import Controller from '@ember/controller';
 import { Promise } from 'rsvp';
-import ajaxStatus from 'granite/mixins/ajax-status';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-@classic
-export default class EditController extends Controller.extend(ajaxStatus, addEdit) {
-  @service
-  store;
+export default class AccountJobOpeningCampaignJobApplicationEditController extends Controller {
+  @service store
+  @service data
 
-  applicantRequiredFields = [ 'firstName', 'lastName', 'phone', 'email' ];
-  fileIsAdded = false;
+  @tracked fileIsAdded = false
+  @tracked uploadProgress = null
 
-  @computed('model.jobOpening.id')
+  applicantRequiredFields = [ 'firstName', 'lastName', 'phone', 'email' ]
+
   get resumeEndpoint () {
-    return `/api/v1/upload/resume/${this.get('model.jobApplication.jobOpening.id')}`;
+    return `/api/v1/upload/resume/${this.model.jobApplication.get('jobOpening.id')}`;
   }
 
+  @action
   uploadResume () {
     return new Promise((resolveUpload, rejectUpload) => {
       this.setProperties({
@@ -29,9 +28,10 @@ export default class EditController extends Controller.extend(ajaxStatus, addEdi
     });
   }
 
+  @action
   requiredFieldsFilled () {
     let applicantRequiredFields = this.applicantRequiredFields;
-    let newApplicant = this.get('model.applicant');
+    let newApplicant = this.model.applicant;
     for (let field in applicantRequiredFields) {
       if (field !== '_super') {
         let value = newApplicant[applicantRequiredFields[field]];
@@ -50,7 +50,7 @@ export default class EditController extends Controller.extend(ajaxStatus, addEdi
     if (this.fileIsAdded) {
       $dropzone.removeFile(this.fileIsAdded);
     }
-    this.set('fileIsAdded', file);
+    this.fileIsAdded = file;
   }
 
   @action
@@ -68,7 +68,7 @@ export default class EditController extends Controller.extend(ajaxStatus, addEdi
     }
 
     $dropzone.removeFile(this.fileIsAdded);
-    this.set('fileIsAdded', false);
+    this.fileIsAdded = false;
   }
 
   @action
@@ -83,52 +83,56 @@ export default class EditController extends Controller.extend(ajaxStatus, addEdi
 
   @action
   uploadProgressUpdate (prog) {
-    this.set('uploadProgress', prog);
+    this.uploadProgress = prog;
   }
 
   @action
   cancel () {
-    this.send('removeFile');
+    this.removeFile();
     this.transitionToRoute('account.job-opening.campaign.job-application');
   }
 
   @action
   async save () {
     const store = this.store;
-    this.ajaxStart();
+    let { success, error } = this.data.createStatus();
 
     if (!this.requiredFieldsFilled()) {
-      this.ajaxError('Must fill required fields', true);
+      error('Must fill required fields', true);
       return;
     }
 
-    let applicant = await this.get('model.applicant'),
-        application = this.get('model.jobApplication');
+    let applicant = await this.model.applicant,
+        application = this.model.jobApplication;
 
     application.setProperties({ applicant });
 
-    await applicant.save();
+    try {
+      await applicant.save();
 
-    if (this.fileIsAdded) {
-      var response = await this.uploadResume();
+      if (this.fileIsAdded) {
+        var response = await this.uploadResume();
+      }
+
+      if (response) {
+        store.pushPayload('file', response);
+        var fileRecord = store.peekRecord('file', response.file.id);
+        application.resume = fileRecord;
+      }
+
+      await application.save();
+
+      success('Updated application successfully');
+      this.removeFile();
+      this.send('refreshModel');
+      this.transitionToRoute('account.job-opening.campaign.job-application');
+    } catch (e) {
+      error(e);
     }
-
-    if (response) {
-      store.pushPayload('file', response);
-      var fileRecord = store.peekRecord('file', response.file.id);
-      application.set('resume', fileRecord);
-    }
-
-    await application.save();
-
-    this.ajaxSuccess('Updated application successfully');
-    this.send('removeFile');
-    this.send('refresh');
-    this.transitionToRoute('account.job-opening.campaign.job-application');
   }
 
   @action
   onNotify (type, msg) {
-    this.send('notify', type, msg);
+    this.data.notify(type, msg);
   }
 }

@@ -1,39 +1,39 @@
-<form class="ui form" {{action "save" on="submit"}}>
+<form class="ui form" {{on "submit" (prevent-default this.save)}}>
   <div class="fields">
     <div class="six wide field">
       <label for="first-name">First Name*</label>
       <AutoFocus>
-        <ValidatedInput @type="text" @model={{this.model.applicant}} @valuePath="firstName" @placeholder="name" @id="first-name" @on-change={{action (mut this.model.applicant.firstName)value="target.value"}} />
+        <ValidatedInput @type="text" @model={{this.model.applicant}} @valuePath="firstName" @placeholder="name" @id="first-name" />
       </AutoFocus>
     </div>
     <div class="four wide field">
       <label for="middle-name">Middle Name</label>
-      <Input @type="text" @value={{this.model.applicant.middleName}} placeholder="Middle" @id="middle-name" @on-change={{action (mut this.model.applicant.middleName)value="target.value"}} />
+      <Input @type="text" @value={{this.model.applicant.middleName}} placeholder="Middle" @id="middle-name" />
     </div>
     <div class="six wide field">
       <label for="last-name">Last Name*</label>
-      <ValidatedInput @type="text" @model={{this.model.applicant}} @valuePath="lastName" @placeholder="Last Name" @id="last-name" @on-change={{action (mut this.model.applicant.lastName) value="target.value"}} />
+      <ValidatedInput @type="text" @model={{this.model.applicant}} @valuePath="lastName" @placeholder="Last Name" @id="last-name" />
     </div>
   </div>
   <div class="two fields">
     <div class="field">
       <label for="employee-phone">Phone Number*</label>
-      <MaskedInput @type="tel" @placeholder="Employee Phone #" @id="employee-phone" @mask="(111) 111-1111" @value={{this.model.applicant.phone}} @on-change={{action (mut this.model.applicant.phone) value="target.value"}} />
+      <MaskedInput @type="tel" @placeholder="Employee Phone #" @id="employee-phone" @mask="(111) 111-1111" @value={{this.model.applicant.phone}} />
     </div>
     <div class="field">
       <label for="email">Email*</label>
-      <ValidatedInput @type="email" @model={{this.model.applicant}} @valuePath="email" @placeholder="Email" @id="email" @on-change={{action (mut this.model.applicant.email) value="target.value"}} />
+      <ValidatedInput @type="email" @model={{this.model.applicant}} @valuePath="email" @placeholder="Email" @id="email" />
     </div>
   </div>
 
   <div class="field">
     <label for="stage-selector">Application Stage</label>
-    <UiDropdown @class="selection" @id="stage-selector" @selected={{this.model.jobApplication.stage}} @onChange={{action (mut this.model.jobApplication.stage)}}>
+    <UiDropdown @class="selection" @id="stage-selector" @selected={{this.model.jobApplication.stage}} @onChange={{set this.model.jobApplication.stage _}}>
       <div class="default text">No Stage</div>
       <i class="dropdown icon"></i>
       <div class="menu">
         {{#each this.pipeline.stages as |stage|}}
-          <div class="item" data-value={{stage.id}}>
+          <div class="item" data-value={{stage._id}}>
             {{stage.name}}
           </div>
         {{/each}}
@@ -43,7 +43,7 @@
 
   <div class="field">
     <label for="cover-letter">Cover Letter</label>
-    <Textarea @rows="5" placeholder="Cover Letter" @value={{this.model.jobApplication.coverLetter}} @on-change={{action (mut this.model.jobApplication.coverLetter) value="target.value"}} />
+    <Textarea @rows="5" plfaceholder="Cover Letter" @value={{this.model.jobApplication.coverLetter}} />
   </div>
 
   <div class="field">
@@ -51,20 +51,34 @@
       {{#if this.fileIsAdded}}
         <div class="ui large header text-green clearfix">
           <span><i class="check icon"></i>Resume/CV Added.</span>
-          <a href="#" class="text-red right floated" {{action "removeFile"}}>Remove</a>
+          <a href="#" class="text-red right floated" {{on "click" (prevent-default this.removeFile)}}>Remove</a>
         </div>
       {{else}}
         <i class="attach icon"></i>
         Resume
       {{/if}}
     </label>
-    <DropZone @class="input__dropzone" @url={{this.resumeEndpoint}} @uploadMultiple={{false}} @acceptedFiles=".doc,.docx,.pdf,.rtf,.txt" @maxFiles={{1}} @autoProcessQueue={{false}} @dictDefaultMessage={{if this.model.jobApplication.resume "Drop or Click to Replace Resume" "Drop or Click to Add Resume"}} @thumbnailWidth="175" @headers={{hash X-API-Token=this.auth.token}} @addedfile={{action "addedFile"}} @error={{action "uploadError"}} @uploadprogress={{action "uploadProgressUpdate"}} @success={{action "uploadedFile"}} @capture="camera" />
+    <DropZone
+      @class="input__dropzone"
+      @url={{this.resumeEndpoint}}
+      @uploadMultiple={{false}}
+      @acceptedFiles=".doc,.docx,.pdf,.rtf,.txt"
+      @maxFiles={{1}}
+      @autoProcessQueue={{false}}
+      @dictDefaultMessage={{if this.model.jobApplication.resume "Drop or Click to Replace Resume" "Drop or Click to Add Resume"}}
+      @thumbnailWidth="175"
+      @headers={{hash X-API-Token=this.auth.token}}
+      @addedfile={{this.addedFile}}
+      @error={{this.uploadError}}
+      @uploadprogress={{this.uploadProgressUpdate}}
+      @success={{this.uploadedFile}}
+      @capture="camera" />
   </div>
   <div class="ui divider"></div>
-  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.working}}>
+  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.working.isLoading}}>
     Update Application
   </Form::ActionButton>
-  <button class="ui large fluid inverted red button" {{action "cancel"}}>
+  <button class="ui large fluid inverted red button" {{on "click" this.cancel}}>
     Cancel
   </button>
 </form>

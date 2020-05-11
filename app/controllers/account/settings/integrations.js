@@ -1,48 +1,47 @@
-import classic from 'ember-classic-decorator';
+import Controller from 'granite/core/controller';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Controller from '@ember/controller';
-import ajaxStatus from 'granite/mixins/ajax-status';
 
-@classic
-export default class IntegrationsController extends Controller.extend(ajaxStatus) {
-  @service
-  ajax;
+export default class AccountSettingsIntegrationsController extends Controller {
+  @service ajax
+  @service data
 
-  queryParams = [ 'i', 'g', 's', 'f' ];
+  queryParams = [ 'i', 'g', 's', 'f' ]
   i = null; // intent token
   g = null; // granted service token (success)
   s = null; // service name
   f = null; // failure bool
 
-  grant () {
+  async grant () {
     const { g, i, s } = this;
 
     if (!g || !i) {
       return;
     }
 
-    this.ajaxStart();
+    let { success, error } = this.data.createStatus();
 
-    this.ajax.request('/api/v1/integrations/grant/' + i, {
-      method: 'POST',
-      data:   { grant: g }
-    })
-    .then(() => {
-      this.ajaxSuccess(`Successfully linked ${s}.`);
+    try {
+      await this.ajax.request('/api/v1/integrations/grant/' + i, {
+        method: 'POST',
+        data:   { grant: g }
+      });
+      success(`Successfully linked ${s}.`);
       this.setProperties({
         g: null,
         i: null,
         s: null
       });
-      this.send('refresh');
-    })
-    .catch(this.ajaxError.bind(this));
+
+      this.send('refreshModel');
+    } catch (e) {
+      error(e);
+    }
   }
 
   @action
   onNotify () {
-    this.send.apply(this, [ 'notify', ...arguments ]);
+    this.send.apply(this.data, [ 'notify', ...arguments ]);
   }
 
   @action

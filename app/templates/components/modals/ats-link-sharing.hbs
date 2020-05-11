@@ -1,4 +1,4 @@
-<UiModal @id={{this.modalId}} @observeChanges={{true}} @context=".ember-application">
+<UiModal @id={{or @modalId this.modalId}} @observeChanges={{true}} @context=".ember-application">
   <i class="close icon"></i>
   <div class="header">
     Sharing Configuration<br>
@@ -7,7 +7,7 @@
     </small>
   </div>
   <div class="content ui form">
-    {{#if this.working}}
+    {{#if this.data.statuses.linkSharing.isLoading}}
       <div class="ui active inverted dimmer">
         <div class="ui text loader">Hang on...</div>
       </div>
@@ -19,7 +19,7 @@
           Use link sharing to enable a publicly accessible page for this application, so you can share it with collegues that don't have a Granite HR account.
         </p>
       </label>
-      <UiCheckbox @id="link-sharing" @class="toggle" @label={{if this.publicLink "Link sharing is enabled. Click to turn off link sharing." "Link sharing is disabled. Click to turn on link sharing."}} @checked={{this.publicLink}} @onChange={{action "toggleSharedLink"}} />
+      <UiCheckbox @id="link-sharing" @class="toggle" @label={{if this.publicLink "Link sharing is enabled. Click to turn off link sharing." "Link sharing is disabled. Click to turn on link sharing."}} @checked={{this.publicLink}} @onChange={{fn this.toggleSharedLink}} />
     </div>
 
     {{#if this.publicLink}}
@@ -34,7 +34,7 @@
       <div class="ui divider"></div>
       <div class="field">
         <label>Send public link to emails</label>
-        <UiDropdown @class="fluid search multiple selection" @selected={{this.sendTo}} @allowAdditions={{true}} @onChange={{action (mut this.sendTo)}} as |execute mapper|>
+        <UiDropdown @class="fluid search multiple selection" @selected={{this.sendTo}} @allowAdditions={{true}} @onChange={{set this.sendTo _}} as |execute mapper|>
           <i class="dropdown icon"></i>
           <div class="default text">Add emails to send link</div>
           <div class="menu">
@@ -51,7 +51,7 @@
         <Textarea @rows="3" placeholder="Note" @value={{this.linkNote}} />
       </div>
 
-      <button class="ui fluid primary {{if this.data.statuses.linkSharing.isLoading "loading"}} button" disabled={{or this.working (not this.sendTo.length)}} {{action "sendLink"}}>
+      <button class="ui fluid primary {{if this.data.statuses.linkSharing.isLoading "loading"}} button" disabled={{or this.data.statuses.linkSharing.isLoading (not this.sendTo.length)}} {{on "click" this.sendLink}}>
         Send Link
       </button>
     {{/if}}
@@ -65,7 +65,7 @@
         <p class="text-green">{{this.successMessage}}</p>
       {{/if}}
     </p>
-    <button class="ui right button" disabled={{this.data.statuses.linkSharing.isLoading}} {{action "respond" @model}}>
+    <button class="ui right button" disabled={{this.data.statuses.linkSharing.isLoading}} {{on "click" (fn this.respond @model)}}>
       Close
     </button>
   </div>

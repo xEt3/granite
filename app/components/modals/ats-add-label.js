@@ -1,22 +1,25 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { lists } from 'granite/config/forms/lists';
 import $ from 'jquery';
 
-export default class AddLabelModalComponent extends Component {
+export default class ModalsAtsAddLabelComponent extends Component {
   @service auth
   @service store
   @service data
 
-  enableNotify = false
-  currentLabel = null
+  @tracked currentLabel = null
+
   newLabelForm = lists.labels.elements
 
+  @action
   resetCurrentLabel () {
     this.currentLabel = null;
   }
 
+  @action
   randomColor () {
     let hex = '0123456789ABCDEF',
         color = '#';
@@ -35,13 +38,13 @@ export default class AddLabelModalComponent extends Component {
 
   @action
   async saveLabel (label) {
-    const company = await this.auth.user.company,
-          companyLabels = await company.get('labels'),
-          applicationLabels = await this.model.get('labels');
+    const company = await this.auth.get('user.company'),
+          companyLabels = await company.labels,
+          applicationLabels = await this.args.model.labels;
 
     //add label to company, save, then remove phony label
     companyLabels.addObject(label);
-    await this.saveRecord(company);
+    await this.data.saveRecord(company);
     companyLabels.filterBy('id', null).invoke('destroyRecord');
 
     //add saved label to application labels array
@@ -53,7 +56,7 @@ export default class AddLabelModalComponent extends Component {
 
   @action
   respond (response) {
-    this.onResponse(response);
+    this.args.onResponse(response);
 
     if (!response && this.currentLabel) {
       //kill label record if cancelled
@@ -62,6 +65,6 @@ export default class AddLabelModalComponent extends Component {
 
     this.resetCurrentLabel();
 
-    $(`#${this.modalId}`).modal('hide');
+    $(`#${this.args.modalId}`).modal('hide');
   }
 }

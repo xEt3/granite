@@ -1,21 +1,25 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { A } from '@ember/array';
-import { computed } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import { computed, action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import ajaxStatus from '../../mixins/ajax-status';
 
-export default Component.extend(ajaxStatus, {
-  ajax:              service(),
-  tagName:           'button',
-  type:              'button',
-  apiUri:            '/api/v1/integrations/intent/:service',
-  service:           '',
-  disabled:          computed.reads('working'),
-  attributeBindings: [ 'type', 'disabled' ],
-  classNames:        [ 'ui', 'button' ],
-  classNameBindings: [ 'working:loading', 'alreadyLinked:disabled' ],
-  linkedServices:    A(),
+export default class FormIntegrationButtonComponent extends Component {
+  @service auth
+  @service data
 
+  @tracked linkedServices = A()
+
+  apiUri = '/api/v1/integrations/intent/:service'
+  type =   'button'
+
+  @computed.reads('data.statuses.working.isLoading') disabled
+
+  get alreadyLinked () {
+    return (this.args.linkedServices || []).includes(this.args.service);
+  }
+
+  @action
   click (e) {
     e.preventDefault();
 
@@ -23,30 +27,27 @@ export default Component.extend(ajaxStatus, {
       return;
     }
 
-    this.send('initiateIntegrationIntent');
-  },
+    this.initiateIntegrationIntent();
+  }
 
-  alreadyLinked: computed('linkedServices.[]', 'service', function () {
-    return (this.linkedServices || []).includes(this.service);
-  }),
+  @action
+  async initiateIntegrationIntent () {
+    let { success, error } = this.data.createStatus();
 
-  actions: {
-    initiateIntegrationIntent () {
-      this.ajaxStart();
+    let integration = this.args.service,
+        apiUri = this.apiUri.replace(':service', integration);
 
-      let integration = this.service,
-          apiUri = this.apiUri.replace(':service', integration);
-
-      this.ajax.post(apiUri)
-      .then(response => {
-        this.ajaxSuccess(null, true);
-        window.location = response.authUri;
-      })
-      .catch(this.ajaxError.bind(this));
-    },
-
-    notify () {
-      this.onNotify.apply(null, arguments);
+    try {
+      let response = await this.ajax.post(apiUri);
+      success(null, true);
+      window.location = response.authUri;
+    } catch (e) {
+      error(e);
     }
   }
-});
+
+  @action
+  notify () {
+    this.args.onNotify.apply(null, arguments);
+  }
+}

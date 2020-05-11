@@ -22,6 +22,8 @@ export default class AccountJobOpeningCampaignApplicantTrackingController extend
 
   @tracked selectedApplications = A()
   @tracked appInDisqualifyConfirm = {}
+  @tracked appInLinkSharing = {}
+  @tracked appInAddLabels = {}
   @tracked currentMeeting = {}
 
   queryParams =              [ 'showDisqualified' ]
@@ -134,13 +136,13 @@ export default class AccountJobOpeningCampaignApplicantTrackingController extend
     // if nothing exists, create one
     if (!jobApplication.isEmployee && applicant) {
       let employeeData = Object.assign({}, applicant.getProperties(employeeProps), { onboarding: true });
-      employee = this.store.createRecord('employee', employeeData);
+      employee = await this.store.createRecord('employee', employeeData);
     }
 
     let wasNew = employee.isNew;
 
     employee.setProperties({
-      jobTitle:        job.title,
+      jobTitle:        job.get('title'),
       jobDescription:  job,
       eeoJobCategory:  jobOpening.eeoCategory,
       hiredFromJobApp: jobApplication
@@ -223,6 +225,6 @@ export default class AccountJobOpeningCampaignApplicantTrackingController extend
   @action
   async saveApplicationLabels () {
     this.analytics.trackEvent('Features', 'ats_labels', 'ATS candidate labeling');
-    this.saveRecord(await this.appInAddLabels);
+    this.data.saveRecord(await this.appInAddLabels);
   }
 }
