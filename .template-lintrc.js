@@ -6,5 +6,8 @@ module.exports = {
     'self-closing-void-elements':    false,
     'no-curly-component-invocation': { requireDash: true },
     'no-implicit-this':              { allow: [ '_' ] }
-  }
+  },
+  ignore: [
+    'addon/**'
+  ]
 };
