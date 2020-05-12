@@ -1,43 +1,45 @@
-import classic from 'ember-classic-decorator';
-import { action, computed } from '@ember/object';
+import Controller from 'granite/core/controller';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import Controller from '@ember/controller';
-import ajaxStatus from 'granite/mixins/ajax-status';
 
-@classic
-export default class SetupAccountController extends Controller.extend(ajaxStatus) {
-  @service
-  ajax;
+export default class SetupAccountController extends Controller {
+  @service ajax
+  @service data
 
-  queryParams = [ 'a' ];
-  a = null;
+  @tracked password
+  @tracked passwordConfirm
 
-  @computed('password', 'passwordConfirm')
+  queryParams = [ 'a' ]
+  a = null
+
   get enableActivation () {
     const p = this.password;
     return p && p === this.passwordConfirm;
   }
 
   @action
-  activate () {
-    this.ajaxStart();
+  async activate () {
+    let { success, error } = this.data.createStatus();
     const password = this.password,
-          id = this.get('model._id');
+          id = this.model._id;
 
-    this.ajax.post(`/api/v1/company-user/activate/${id}`, {
-      data: {
-        password,
-        activationId: this.a
-      }
-    })
-    .then(result => {
+    try {
+      let result = await this.ajax.post(`/api/v1/company-user/activate/${id}`, {
+        data: {
+          password,
+          activationId: this.a
+        }
+      });
+
       if (result.activated !== true) {
-        return this.ajaxError('Problem activating');
+        return error('Problem activating');
       }
 
-      this.ajaxSuccess('Successfully activated.');
+      success('Successfully activated.');
       this.transitionToRoute('login');
-    })
-    .catch(this.ajaxError.bind(this));
+    } catch (e) {
+      error(e);
+    }
   }
 }

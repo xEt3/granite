@@ -32,10 +32,10 @@ export default class ListItemTodoItemComponent extends Component {
       }
     }).modal('show');
 
-    return new Promise((resolve, reject) => this.setProperties({
-      resolve,
-      reject
-    }));
+    return new Promise((resolve, reject) => {
+      this.resolve = resolve;
+      this.reject = reject;
+    });
   }
 
   @action

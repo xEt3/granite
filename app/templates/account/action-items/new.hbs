@@ -11,12 +11,12 @@
 
     <div class="ui divider"></div>
 
-    <UiCalendar @class="field" @type="date" @label={{this.calendarLabel}} @placeholder="Assign a date by selecting or typing" @onChange={{action (mut this.model.dueOn)}} />
+    <UiCalendar @class="field" @type="date" @label={{this.calendarLabel}} @placeholder="Assign a date by selecting or typing" @onChange={{set this.model.dueOn _}} />
 
     <div class="field">
       <label for="action-item-priority"><i class="exclamation icon"></i> Priority</label>
       <div class="range-label"><i>Low</i><i>High</i></div>
-      <EmberRangeSlider @id="action-item-priority" @keyboard={{true}} @keyboard_step={{20}} @grid={{true}} @min={{1}} @max={{5}} @step={{1}} @from={{this.model.priority}} @slideStop={{action "updatePriority"}} />
+      <EmberRangeSlider @id="action-item-priority" @keyboard={{true}} @keyboard_step={{20}} @grid={{true}} @min={{1}} @max={{5}} @step={{1}} @from={{this.model.priority}} @slideStop={{this.updatePriority}} />
     </div>
 
     <div class="field">
@@ -26,7 +26,7 @@
         <i class="right floated info icon" id="it__prerequisites"></i>
       </label>
       {{#if this.actionItems}}
-        <UiDropdown @class="fluid search multiple selection" @id="action-item-prerequisites" @selected={{this.model.prerequisites}} @onChange={{action (mut this.model.prerequisites)}} as |execute mapper|>
+        <UiDropdown @class="fluid search multiple selection" @id="action-item-prerequisites" @selected={{this.model.prerequisites}} @onChange={{set this.model.prerequisites _}} as |execute mapper|>
           <i class="dropdown icon"></i>
           <div class="default text">Type or select to assign prerequisites</div>
           <div class="menu">
@@ -48,7 +48,7 @@
     <div class="ui list">
       {{#each this.model.checklist as |item|}}
         <div class="item">
-          <a href="#" class="text-danger" {{action "removeTodo" item}}><i class="minus icon"></i></a>
+          <a href="#" class="text-danger" {{on "click" (prevent-default (fn this.removeTodo item))}}><i class="minus icon"></i></a>
           <span><i class="square outline icon"></i> {{item.title}}</span>
           <small class="right floated meta">
             {{#if item.assignedTo}}
@@ -61,13 +61,13 @@
       {{/each}}
     </div>
 
-    <form class="ui segment" {{action "addTodo" on="submit"}}>
+    <form class="ui segment" {{on "submit" (prevent-default this.addTodo)}}>
       <div class="field">
         <label for="new-todo-item" class="sr-only">Add a new todo item</label>
         <Input @type="text" @value={{this.pendingTodo}} placeholder="Type to add a new todo item" />
       </div>
 
-      <UiDropdown @class="fluid search selection" @id="new-todo-assigned-to" @selected={{this.pendingTodoAssignee}} @onChange={{action (mut this.pendingTodoAssignee)}} as |execute mapper|>
+      <UiDropdown @class="fluid search selection" @id="new-todo-assigned-to" @selected={{this.pendingTodoAssignee}} @onChange={{set this.pendingTodoAssignee _}} as |execute mapper|>
         <i class="dropdown icon"></i>
         <div class="default text">Assign someone to this item</div>
         <div class="menu">
@@ -87,7 +87,7 @@
     </form>
 
     <div class="ui divider"></div>
-    <form {{action "save" on="submit"}}>
+    <form {{on "submit" (prevent-default (pipe (fn this.data.saveRecord this.model 'working' this.afterSaveOptions) this.afterSave))}}>
       <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.working}}>Save project</Form::ActionButton>
     </form>
   </div>

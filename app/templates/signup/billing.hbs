@@ -1,5 +1,5 @@
 <div class="ui tall stacked opaque very padded container segment">
-  <form class="ui form" {{action "submit" this.nonce on="submit"}}>
+  <form class="ui form" {{on "submit" (prevent-default (fn this.submit this.nonce))}}>
     <h1 class="ui header centered"><i class="lock icon"></i>Payment Information</h1>
 
     <div class="ui divider"></div>
@@ -7,11 +7,11 @@
         paypal=(hash
          flow="vault"
         )
-      }} @authorization={{this.braintreeToken.token}} @onNonce={{action (mut this.nonce)}} />
+      }} @authorization={{this.braintreeToken.token}} @onNonce={{set this.nonce _}} />
 
     <div>
       {{#unless this.showPromo}}
-        <a href="#" class="link__promo-toggle" {{action this.toggleProperty "showPromo"}}>Have a promo code?</a>
+        <a href="#" class="link__promo-toggle" {{on "click" (prevent-default (toggle "showPromo" this))}}>Have a promo code?</a>
       {{/unless}}
       <p class="right aligned very small text"><i class="lock icon"></i>Powered by Braintree Payments</p>
     </div>
@@ -31,7 +31,7 @@
             <Input::UiInput @type="text" @inputId="promo" @inputClass="ui large input promo-code__input" @srOnly={{true}} @placeholder="Enter a promo code" @value={{this.promoCode}} />
           </div>
           <div class="three wide column field">
-            <button type="button" class="ui large fluid blue button promo-code__apply" disabled={{not this.promoCode}} {{action "verifyDiscount"}}>Apply</button>
+            <button type="button" class="ui large fluid blue button promo-code__apply" disabled={{not this.promoCode}} {{on "click" this.verifyDiscount}}>Apply</button>
           </div>
         </div>
       </div>

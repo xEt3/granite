@@ -1,4 +1,4 @@
-<form class="ui top-margin very padded piled text segment container form" {{action "activate" on="submit"}}>
+<form class="ui top-margin very padded piled text segment container form" {{on "submit" (prevent-default this.activate)}}>
   <hgroup class="ui center aligned header">
     <h1 class="header text-green">Good {{relative-greeting-time}}, {{this.model.name.first}} {{this.model.name.last}}!</h1>
     <h2>We need to finish your account activation by setting your password.</h2>
@@ -9,5 +9,5 @@
   <Input::UiInput @type="password" @inputId="user-password-confirm" @placeholder="Confirm your password" @value={{this.passwordConfirm}} />
 
   <div class="ui divider"></div>
-  <Form::ActionButton type="submit" class="ui massive fluid green button" @loading={{this.working}} @disabled={{not this.enableActivation}}>Activate Your Account</Form::ActionButton>
+  <Form::ActionButton type="submit" class="ui massive fluid green button" @loading={{this.data.statuses.working.isLoading}} @disabled={{not this.enableActivation}}>Activate Your Account</Form::ActionButton>
 </form>

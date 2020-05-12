@@ -1,34 +1,33 @@
-import classic from 'ember-classic-decorator';
+import Controller from 'granite/core/controller';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import Controller from '@ember/controller';
-import ajaxStatus from 'granite/mixins/ajax-status';
 
-@classic
-export default class LoginController extends Controller.extend(ajaxStatus) {
-  @service
-  ajax;
+export default class LoginController extends Controller {
+  @service ajax
+  @service data
 
-  queryParams = [ 'expired', 'recovery' ];
-  expired = false;
-  recovery = false;
+  @tracked expired = false
+  @tracked recovery = false
+
+  queryParams = [ 'expired', 'recovery' ]
 
   @action
   async login () {
     const email = this.email,
           password = this.password;
 
-    this.ajaxStart();
+    let { success, error } = this.data.createStatus();
 
     if (!email || !password) {
-      return this.ajaxError('Please complete all fields before submitting.');
+      return error('Please complete all fields before submitting.');
     }
 
     try {
       await this.auth.login(email, password);
 
       let previousTransition = this.previousTransition;
-      this.ajaxSuccess('Successfully logged in.');
+      success('Successfully logged in.');
 
       if (previousTransition) {
         previousTransition.retry();
@@ -36,32 +35,32 @@ export default class LoginController extends Controller.extend(ajaxStatus) {
         this.transitionToRoute('account.index');
       }
     } catch (e) {
-      this.ajaxError(e);
+      error(e);
     }
   }
 
   @action
-  recover () {
+  async recover () {
     const email = this.recoveryEmail;
     let wasFatal;
 
-    this.ajaxStart();
-    this.set('recoveryEmail', null);
+    let { success, error } = this.data.createStatus();
+    this.recoveryEmail = null;
 
-    this.ajax.request('/api/v1/recovery/company-user/', { data: { email } })
-    .catch((err = {}) => {
-      if (err.status === 500) {
+    try {
+      await this.ajax.request('/api/v1/recovery/company-user/', { data: { email } });
+    } catch (e) {
+      if (e.status === 500) {
         wasFatal = true;
-        this.ajaxError(err);
+        error(e);
       }
-    })
-    .finally(() => {
-      if (wasFatal) {
-        return;
-      }
+    }
 
-      this.ajaxSuccess('If your email belongs to a GraniteHR account, you\'ll get an email soon.');
-      this.set('recovery', false);
-    });
+    if (wasFatal) {
+      return;
+    }
+
+    success('If your email belongs to a GraniteHR account, you\'ll get an email soon.');
+    this.recovery = false;
   }
 }

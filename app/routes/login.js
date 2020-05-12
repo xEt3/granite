@@ -1,19 +1,17 @@
-import classic from 'ember-classic-decorator';
+import Route from 'granite/core/route';
 import { action } from '@ember/object';
-import Route from '@ember/routing/route';
 
-@classic
 export default class LoginRoute extends Route {
-  titleToken = 'Login';
+  titleToken = 'Login'
 
   resetController (controller, isExiting) {
     if (isExiting) {
-      controller.set('expired', false);
+      controller.expired = false;
     }
   }
 
   @action
   willTransition () {
-    this.controller.set('previousTransition', null);
+    this.controller.previousTransition = null;
   }
 }

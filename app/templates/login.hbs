@@ -13,7 +13,7 @@
 {{/if}}
 
 {{#liquid-if this.recovery use="toLeft"}}
-  <form class="ui very padded raised text segment container form" {{action "recover" on="submit"}}>
+  <form class="ui very padded raised text segment container form" {{on "submit" (prevent-default this.recover)}}>
     <hgroup class="ui center aligned header">
       <h2>It happens.</h2>
       <p class="lightly weighted light text header">Don't worry, we'll send you an email with instructions to reset your password. Enter your email below and we can get started.</p>
@@ -25,15 +25,15 @@
       <Input @type="email" @id="recovery_email" class="ui large fluid input" @tabindex="1" placeholder="Your Account Email" @value={{this.recoveryEmail}} />
     </div>
 
-    <Form::ActionButton type="submit" class="ui massive fluid orange button" @loading={{this.working}} @disabled={{not this.recoveryEmail}}>
+    <Form::ActionButton type="submit" class="ui massive fluid orange button" @loading={{this.data.statuses.working.isLoading}} @disabled={{not this.recoveryEmail}}>
       Recover my account
     </Form::ActionButton>
 
     <div class="ui divider"></div>
-    <a href="#" {{action this.toggleProperty "recovery"}}><i class="fitted left angle icon"></i> Nevermind, I'll log in.</a>
+    <a href="#" {{on "click" (prevent-default (toggle "recovery" this))}}><i class="fitted left angle icon"></i> Nevermind, I'll log in.</a>
   </form>
 {{else}}
-  <form class="ui very padded raised text segment container form" {{action "login" on="submit"}}>
+  <form class="ui very padded raised text segment container form" {{on "submit" (prevent-default this.login)}}>
     <hgroup class="ui center aligned header">
       <h1>Good {{relative-greeting-time}}!</h1>
       <h2>Please enter your login information.</h2>
@@ -47,7 +47,7 @@
     <div class="field">
       <label for="password">
         Password
-        <a href="#" class="right floated" {{action this.toggleProperty "recovery"}}>
+        <a href="#" class="right floated" {{on "click" (prevent-default (toggle "recovery" this))}}>
           <EmberTooltip @side="left" @popperContainer="body" @text="Rescue your account from a forgotten password" />
           <i class="life ring fitted icon"></i>
         </a>
@@ -55,6 +55,6 @@
       <Input @type="password" @id="password" class="ui large fluid input" @tabindex="2" placeholder="Your Account Password" @value={{this.password}} />
     </div>
 
-    <Form::ActionButton type="submit" class="ui massive fluid green button" @loading={{this.working}}>Log In</Form::ActionButton>
+    <Form::ActionButton type="submit" class="ui massive fluid green button" @loading={{this.data.statuses.working.isLoading}}>Log In</Form::ActionButton>
   </form>
 {{/liquid-if}}

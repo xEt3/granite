@@ -1,9 +1,7 @@
-import classic from 'ember-classic-decorator';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-@classic
 export default class SignupRoute extends Route {
-  titleToken = 'Signup';
+  titleToken = 'Signup'
 
   model () {
     return this.store.createRecord('company');

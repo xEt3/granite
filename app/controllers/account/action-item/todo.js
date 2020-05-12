@@ -1,88 +1,81 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import Controller from 'granite/core/controller';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { A } from '@ember/array';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-export default Controller.extend(addEdit, {
-  auth:         service(),
-  enableNotify: false,
-  addingTodo:   false,
-  addedTodos:   A(),
+export default class AccountActionItemTodoController extends Controller {
+  @service auth
+  @service data
 
-  _afterSave () {
+  @tracked addedTodos =   A()
+  @tracked addingTodo =   false
+
+  get userTodos () {
+    let checklist = this.model.incompleteTodos;
+    return checklist ? checklist.filterBy('assignedTo.id', this.auth.get('user.employee.id')) : [];
+  }
+
+  @action
+  afterSave () {
     this.addedTodos.forEach(t => {
       t.destroy();
-      this.get('model.checklist').removeObject(t);
+      this.model.checklist.removeObject(t);
     });
-    this.set('addedTodos', A());
-    this._super(...arguments);
-  },
+    this.addedTodos = A();
+  }
 
-  userTodos: computed('auth.user.employee.id', 'model.incompleteTodos.@each.assignedTo', function () {
-    let checklist = this.get('model.incompleteTodos');
-    return checklist ? checklist.filterBy('assignedTo.id', this.get('auth.user.employee.id')) : [];
-  }),
+  @action
+  async addTodo () {
+    const title = this.pendingTodo,
+          assignee = this.pendingTodoAssignee;
 
-  actions: {
-    toggleProperty (prop) {
-      this.toggleProperty(prop);
-    },
+    let item = await this.store.createRecord('checklist-item', { title });
 
-    addTodo () {
-      const title = this.pendingTodo,
-            assignee = this.pendingTodoAssignee;
-
-      let item = this.store.createRecord('checklist-item', { title });
-
-      if (assignee) {
-        item.setProperties({
-          assignedTo: assignee,
-          assignedBy: this.get('auth.user.employee'),
-          assignedOn: new Date()
-        });
-      }
-
-      this.get('model.checklist').addObject(item);
-      this.addedTodos.addObject(item);
-      this.send('save');
-
-      this.setProperties({
-        pendingTodo:         null,
-        pendingTodoAssignee: null
-      });
-    },
-
-    removeTodo (todo) {
-      this.get('model.checklist').removeObject(todo);
-      this.addedTodos.removeObject(todo);
-      todo.destroy();
-    },
-
-    changeCompletedStatus (todo) {
-      if (!todo.get('completedOn')) {
-        todo.setProperties({
-          completedBy: this.get('auth.user.employee'),
-          completedOn: moment().toDate()
-        });
-      } else {
-        todo.setProperties({
-          completedBy: null,
-          completedOn: null
-        });
-      }
-      this.send('save');
-    },
-
-    changeAssignee (todo, assignedTo) {
-      todo.setProperties({
-        assignedTo,
-        assignedBy: assignedTo ? this.get('auth.user.employee') : null,
+    if (assignee) {
+      item.setProperties({
+        assignedTo: assignee,
+        assignedBy: await this.auth.get('user.employee'),
         assignedOn: new Date()
       });
-
-      this.send('save');
     }
+
+    this.model.checklist.addObject(item);
+    this.addedTodos.addObject(item);
+    await this.data.saveRecord(this.model);
+    this.afterSave();
+
+    this.setProperties({
+      pendingTodo:         null,
+      pendingTodoAssignee: null
+    });
   }
-});
+
+  @action
+  changeCompletedStatus (todo) {
+    if (!todo.completedOn) {
+      todo.setProperties({
+        completedBy: this.auth.get('user.employee'),
+        completedOn: moment().toDate()
+      });
+    } else {
+      todo.setProperties({
+        completedBy: null,
+        completedOn: null
+      });
+    }
+    this.data.saveRecord(this.model);
+  }
+
+  @action
+  changeAssignee (todo, assignedTo) {
+    todo.setProperties({
+      assignedTo,
+      assignedBy: assignedTo ? this.auth.get('user.employee') : null,
+      assignedOn: new Date()
+    });
+
+    this.data.saveRecord(this.model);
+  }
+}

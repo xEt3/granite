@@ -1,26 +1,20 @@
-import classic from 'ember-classic-decorator';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
 
-@classic
 export default class SetupAccountRoute extends Route {
-  titleToken = 'Setup Account';
+  titleToken = 'Setup Account'
 
-  @service
-  ajax;
-
-  @service
-  auth;
+  @service ajax
+  @service auth
 
   beforeModel () {
-    if (this.get('auth.authenticated')) {
+    if (this.auth.authenticated) {
       return this.transitionTo('index');
     }
   }
 
-  model (params) {
-    return this.ajax
-    .request(`/api/v1/company-user/activation-status/${params.user_id}/${params.a}`)
-    .then(res => res.companyUser);
+  async model (params) {
+    let res = await this.ajax.request(`/api/v1/company-user/activation-status/${params.user_id}/${params.a}`);
+    return res.companyUser;
   }
 }

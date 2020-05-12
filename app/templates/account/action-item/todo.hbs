@@ -7,11 +7,12 @@
     <h2 class="ui header">Your Todo Items</h2>
     <div class="ui very relaxed divided list">
       {{#each this.userTodos as |todo|}}
-        {{list-item/todo-item todo
-          onStatusChange=(action "changeCompletedStatus")
-          onAssigneeChange=(action "changeAssignee")
-          assignableTo=this.employees
-        }}
+        <ListItem::TodoItem
+          @todo={{todo}}
+          @onStatusChange={{this.changeCompletedStatus}}
+          @onAssigneeChange={{this.changeAssignee}}
+          @assignableTo={{this.employees}}
+        />
       {{else}}
         <h2 class="center aligned text">{{emoji-icon "tada"}} <div class="content">All up to date!</div></h2>
       {{/each}}
@@ -20,7 +21,7 @@
 
   <div class="ui padded segment">
     <hgroup class="clearfix">
-      <h3 class="ui right floated header"><a href="#" {{action (toggle "addingTodo" this)}}><i class="{{if this.addingTodo "remove orange" "plus"}} icon"></i></a></h3>
+      <h3 class="ui right floated header"><a href="#" {{on "click" (prevent-default (toggle "addingTodo" this))}}><i class="{{if this.addingTodo "remove orange" "plus"}} icon"></i></a></h3>
       <h3 class="ui left floated header">
         <i class="check square icon"></i>
         <div class="content">All Todo Items</div>
@@ -28,12 +29,12 @@
     </hgroup>
 
     {{#if this.addingTodo}}
-      <form class="ui form basic segment animated fadeInUp" {{action "addTodo" on="submit"}}>
+      <form class="ui form basic segment animated fadeInUp" {{on "submit" (prevent-default this.addTodo)}}>
         <div class="field">
           <label for="new-todo-item" class="sr-only">Add a new todo item</label>
           <Input @type="text" @value={{this.pendingTodo}} placeholder="Type to add a new todo item" />
         </div>
-        <UiDropdown @class="fluid search selection" @id="new-todo-assigned-to" @selected={{this.pendingTodoAssignee}} @onChange={{action (mut this.pendingTodoAssignee)}} as |execute mapper|>
+        <UiDropdown @class="fluid search selection" @id="new-todo-assigned-to" @selected={{this.pendingTodoAssignee}} @onChange={{set this.pendingTodoAssignee _}} as |execute mapper|>
           <i class="dropdown icon"></i>
           <div class="default text">Assign someone to this item</div>
           <div class="menu">
@@ -54,11 +55,12 @@
 
     <div class="ui very relaxed divided list">
       {{#each (union this.model.incompleteTodos this.model.completeTodos) as |todo|}}
-        {{list-item/todo-item todo
-          onStatusChange=(action "changeCompletedStatus")
-          onAssigneeChange=(action "changeAssignee")
-          assignableTo=this.employees
-        }}
+        <ListItem::TodoItem
+          @todo={{todo}}
+          @onStatusChange={{this.changeCompletedStatus}}
+          @onAssigneeChange={{this.changeAssignee}}
+          @assignableTo={{this.employees}}
+        />
       {{else}}
         <h4 class="center aligned header">No todos available.</h4>
       {{/each}}

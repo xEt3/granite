@@ -1,20 +1,18 @@
-import classic from 'ember-classic-decorator';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
 
-@classic
-export default class BillingRoute extends Route {
-  titleToken = 'Billing';
+export default class SignupBillingRoute extends Route {
+  titleToken = 'Billing'
 
-  @service
-  ajax;
+  @service ajax
 
-  model () {
-    return RSVP.hash({
-      token:   this.ajax.request('/api/v1/bt/token'),
-      company: this.modelFor('signup.index')
-    });
+  async model () {
+    let company = await this.modelFor('signup/index');
+
+    return {
+      token: await this.ajax.request('/api/v1/bt/token'),
+      company
+    };
   }
 
   setupController (controller, model) {

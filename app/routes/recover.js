@@ -1,9 +1,7 @@
-import classic from 'ember-classic-decorator';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-@classic
 export default class RecoverRoute extends Route {
-  titleToken = 'Recover Account';
+  titleToken = 'Recover Account'
 
   model (params) {
     return params.recovery_id;

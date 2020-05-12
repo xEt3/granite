@@ -1,20 +1,17 @@
-import classic from 'ember-classic-decorator';
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+import Route from 'granite/core/route';
 
-@classic
-export default class TodoRoute extends Route {
-  titleToken = 'Todos';
+export default class AccountActionItemTodoRoute extends Route {
+  titleToken = 'Todos'
 
-  model () {
-    return RSVP.hash({
+  async model () {
+    return {
       actionItem:  super.model(...arguments),
-      actionItems: this.store.query('action-item', {
+      actionItems: await this.store.query('action-item', {
         completedOn: { $not: { $type: 9 } },
         cancelledOn: { $not: { $type: 9 } }
       }),
-      employees: this.store.findAll('employee')
-    });
+      employees: await this.store.findAll('employee')
+    };
   }
 
   setupController (controller, model) {
