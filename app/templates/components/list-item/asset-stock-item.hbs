@@ -3,7 +3,7 @@
     <span class="header clearfix">
       {{@asset.identifier}}
       {{#if this.attributes.length}}
-        <a href="#" {{on "click" (prevent-default (this.toggle "details" this))}}>
+        <a href="#" {{on "click" (prevent-default (toggle "showDetails" this))}}>
           <EmberTooltip @side="top" @popperContainer="body" @text="View attributes" />
           <i class="{{if this.details "up" "down"}} angle icon"></i>
         </a>
@@ -30,8 +30,8 @@
       </div>
     </span>
     <div class="description text small">
-      Assigned to <a href="#" {{on "click" (prevent-default (this.toggle "showAssignments" this))}}>{{@asset.assignments.length}} {{inflect-text "employee" @asset.assignments.length}}</a>
-      - Has <a href="#" {{on "click" (prevent-default (this.toggle "showDocuments" this))}}>{{@asset.documents.length}} {{inflect-text "document" @asset.documents.length}}</a>
+      Assigned to <a href="#" {{on "click" (prevent-default (toggle "showAssignments" this))}}>{{@asset.assignments.length}} {{inflect-text "employee" @asset.assignments.length}}</a>
+      - Has <a href="#" {{on "click" (prevent-default (toggle "showDocuments" this))}}>{{@asset.documents.length}} {{inflect-text "document" @asset.documents.length}}</a>
       - Created {{time-ago @asset.created}}{{#if @asset.creator}} by {{@asset.creator.fullName}}{{/if}}
       {{#liquid-if this.showAssignments}}
         <ul>

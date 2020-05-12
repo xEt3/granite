@@ -43,7 +43,7 @@ module('Acceptance | action items', function (hooks) {
 
     [ 'Lowest', 'Low', 'Medium', 'High', 'Highest' ].forEach((priority, i) => {
       assert.dom(`div.five.ui.buttons > button:nth-child(${i + 1})`).hasText(priority.toLowerCase());
-      assert.dom(`div:nth-child(${i + 1}) > div > div:nth-child(2) > span`).hasText(`${priority} (${i + 1})`);
+      assert.dom(`.ui.cards > .action-items__action-item--card:nth-child(${i + 1}) > .content:nth-child(2) > span`).hasText(`${priority} (${i + 1})`);
     });
 
     for (let i = 1; i <= 5; i++) {

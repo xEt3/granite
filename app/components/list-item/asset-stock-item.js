@@ -1,10 +1,13 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { A } from '@ember/array';
 
 export default class ListItemAssetStockItemComponent extends Component {
+  @tracked showDetails
+
   get details () {
-    return this.args.showAttributes;
+    return this.args.showAttributes || this.showDetails;
   }
 
   get attributes () {

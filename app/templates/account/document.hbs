@@ -59,9 +59,9 @@
   <div class="content">
     <QuickForm
       @form={{this.fileAssignmentForm}}
-      @form={{this.fileAssignment}}
+      @model={{this.fileAssignment}}
       @controller={{this}}
-      @tagName="div"/>
+      @tagName="div" />
 
     <div class="field center aligned text">
       <UiCheckbox @class="toggle" @label="Assign for a future Date" @checked={{this.isExpanded}} @onChange={{action (toggle "isExpanded" this)}} />

@@ -3,8 +3,8 @@
     {{#if hasBlock}}
       {{yield}}
     {{else}}
-      {{this.placeholder}}
+      {{@placeholder}}
     {{/if}}
   </label>
-  <Input @type={{if @type @type this.type}} @id={{@inputId}} @class={{@inputClass}} @placeholder={{@placeholder}} @value={{@value}}/>
+  <Input @type={{if @type @type this.type}} @id={{@inputId}} @class={{@inputClass}} @placeholder={{@placeholder}} @value={{@value}} />
 </div>
