@@ -1,5 +1,3 @@
-import classic from 'ember-classic-decorator';
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
 
-@classic
 export default class JobOpeningController extends Controller {}
