@@ -93,6 +93,7 @@ export default class DataService extends Service {
     if (!_model) {
       return;
     }
+
     const {
       requireFields,
       transitionAfterSave,

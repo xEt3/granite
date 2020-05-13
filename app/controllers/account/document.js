@@ -1,39 +1,48 @@
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
+import { computed, action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { Promise } from 'rsvp';
-import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import $ from 'jquery';
 
-export default Controller.extend(addEdit, {
-  auth:       service(),
-  isExpanded: false,
+export default class DocumentController extends Controller {
+  @service auth
+  @service data
+  @tracked isExpanded = false
+  @tracked fileAssignment
+  @tracked resolveAssignment
+  @tracked rejectAssignment
+  @tracked respondedAssignment
 
-  fileAssignmentForm: computed(() => [{
-    label:       'Assign to',
-    type:        'select',
-    inputClass:  'multiple search',
-    path:        'employees',
-    contentPath: 'controller.employees',
-    displayKey:  'fullName',
-    selectText:  'Select one or multiple'
-  }, {
-    label: 'Your message (optional)',
-    type:  'textarea',
-    rows:  '6',
-    path:  'message'
-  }, {
-    label: 'Visible to employee',
-    type:  'checkbox',
-    path:  'visibleToEmployee'
-  }, {
-    label: 'Require a signature',
-    type:  'checkbox',
-    path:  'signatureRequired'
-  }]),
+  get fileAssignmentForm () {
+    return [{
+      label:       'Assign to',
+      type:        'select',
+      inputClass:  'multiple search',
+      path:        'employees',
+      contentPath: 'controller.employees',
+      displayKey:  'fullName',
+      selectText:  'Select one or multiple'
+    }, {
+      label: 'Your message (optional)',
+      type:  'textarea',
+      rows:  '6',
+      path:  'message'
+    }, {
+      label: 'Visible to employee',
+      type:  'checkbox',
+      path:  'visibleToEmployee'
+    }, {
+      label: 'Require a signature',
+      type:  'checkbox',
+      path:  'signatureRequired'
+    }];
+  }
 
-  imagePreview: computed.match('model.extension', /je?pg|png|gif/i),
+  @computed.match('model.extension', /je?pg|png|gif/i)
+  imagePreview
 
+  @action
   createFileAssignment () {
     if (this.fileAssignment) {
       this.fileAssignment.destroyRecord();
@@ -41,20 +50,24 @@ export default Controller.extend(addEdit, {
 
     let assignment = this.store.createRecord('file-assignment', {
       file:    this.model,
-      creator: this.get('auth.user.employee')
+      creator: this.auth.user.get('employee')
     });
 
-    this.set('fileAssignment', assignment);
+    this.fileAssignment = assignment;
     return assignment;
-  },
+  }
 
+  @action
   afterSave () {
-    this.set('fileAssignment', null);
-    this.set('model.effectiveOn', null);
-    this.send('refresh');
-  },
+    this.fileAssignment = null;
+    this.model.set('effectiveOn', null);
+    this.send('refreshModel');
+    this.transitionToRoute('account.document.index', this.model.id);
+  }
 
+  @action
   remapToModels (assignment) {
+    console.log(assignment);
     let employees = assignment.get('employees'),
         model = this.model;
 
@@ -67,51 +80,46 @@ export default Controller.extend(addEdit, {
 
     let assignmentPojo = assignment.getProperties('file', 'creator', 'company', 'signatureRequired', 'message');
 
-    return [ assignment, ...employees.slice(1).map(employee => {
-      return this.store.createRecord('file-assignment', $.extend({ employee }, assignmentPojo));
-    }) ];
-  },
-
-  actions: {
-    delete () {
-      this.model.destroyRecord()
-      .then(() => {
-        this.transitionToRoute('account.documents');
-      });
-    },
-
-    openAssignmentModal (file) {
-      this.setProperties({
-        respondedAssignment: false,
-        assigningDocument:   file
-      });
-
-      this.createFileAssignment();
-
-      $('#modal__file-assignment').modal({
-        detachable: true,
-        context:    '.ember-application',
-        onHidden:   () => {
-          if (!this.respondedAssignment) {
-            this.send('respondAssignment', false);
-          }
-        }
-      }).modal('show');
-
-      return new Promise((resolveAssignment, rejectAssignment) => this.setProperties({
-        resolveAssignment,
-        rejectAssignment
-      }));
-    },
-
-    respondAssignment (response) {
-      this.get(response ? 'resolveAssignment' : 'rejectAssignment')(response ? this.fileAssignment : null);
-      this.set('respondedAssignment', true);
-      this.send('closeAssignmentModal');
-    },
-
-    closeAssignmentModal () {
-      $('#modal__file-assignment').modal('hide');
-    }
+    return [ assignment, ...employees.slice(1).map(employee => this.store.createRecord('file-assignment', {
+      employee,
+      ...assignmentPojo
+    })) ];
   }
-});
+
+  @action
+  openAssignmentModal (file) {
+    this.setProperties({
+      respondedAssignment: false,
+      assigningDocument:   file
+    });
+
+    this.createFileAssignment();
+
+    $('#modal__file-assignment').modal({
+      detachable: true,
+      context:    '.ember-application',
+      onHidden:   () => {
+        if (!this.respondedAssignment) {
+          this.respondAssignment(false);
+        }
+      }
+    }).modal('show');
+
+    return new Promise((resolveAssignment, rejectAssignment) => Object.assign(this, {
+      resolveAssignment,
+      rejectAssignment
+    }));
+  }
+
+  @action
+  respondAssignment (response) {
+    this[response ? 'resolveAssignment' : 'rejectAssignment'](response ? this.fileAssignment : null);
+    this.respondedAssignment = true;
+    this.closeAssignmentModal();
+  }
+
+  @action
+  closeAssignmentModal () {
+    $('#modal__file-assignment').modal('hide');
+  }
+}
