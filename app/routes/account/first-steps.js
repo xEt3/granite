@@ -1,46 +1,45 @@
-import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
-import { hash } from 'rsvp';
+import Route from 'granite/core/route';
 import { scheduleOnce, later } from '@ember/runloop';
 
-@classic
 export default class FirstStepsRoute extends Route {
-  @service
-  auth;
+  @service auth;
 
-  @service
-  ajax;
+  @service ajax;
 
   titleToken = 'First Steps';
 
-  model () {
-    return hash({
-      company:       this.get('auth.user.company'),
-      employeeCount: this.ajax.request('/api/v1/employees', {
-        data: {
-          _count:       true,
-          terminatedOn: { $not: { $type: 9 } }
-        }
-      }).then(response => response && response.count),
-
-      locationCount: this.ajax.request('/api/v1/locations', {
-        data: {
-          _count: true,
-          name:   { $not: { $type: 10 } }
-        }
-      }).then(response => response && response.count),
-
-      departmentCount: this.ajax.request('/api/v1/departments', {
-        data: {
-          _count: true,
-          name:   { $not: { $type: 10 } }
-        }
-      }).then(response => response && response.count)
+  async model () {
+    let { count: employeeCount } = await this.ajax.request('/api/v1/employees', {
+      data: {
+        _count:       true,
+        terminatedOn: { $not: { $type: 9 } }
+      }
     });
+
+    let { count: locationCount } = await this.ajax.request('/api/v1/locations', {
+      data: {
+        _count: true,
+        name:   { $not: { $type: 10 } }
+      }
+    });
+
+    let { count: departmentCount } = await this.ajax.request('/api/v1/departments', {
+      data: {
+        _count: true,
+        name:   { $not: { $type: 10 } }
+      }
+    });
+
+    return {
+      company: this.auth.user.get('company'),
+      employeeCount,
+      locationCount,
+      departmentCount
+    };
   }
 
-  afterModel (model) {
+  async afterModel (model) {
     const firstStepsCompleted = model.company.get('firstStepsCompleted');
     let change = false;
 
@@ -63,15 +62,14 @@ export default class FirstStepsRoute extends Route {
       return;
     }
 
-    return model.company.save()
-    .then(company => {
-      if (!company.get('firstStepsCompletedOn')) {
-        return;
-      }
+    let company = model.company;
+    await model.company.save();
 
-      scheduleOnce('afterRender', () => {
-        later(() => this.transitionTo('account.index'), 4300);
-      });
+    if (!company.firstStepsCompletedOn) {
+      return;
+    }
+    scheduleOnce('afterRender', () => {
+      later(() => this.transitionTo('account.index'), 4300);
     });
   }
 }

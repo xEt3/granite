@@ -6,10 +6,12 @@
         Once you complete these first steps, you'll see a company activity feed.
       </small>
     </h1>
+    {{log this.model.employeeCount}}
 
     <div class="ui divider"></div>
 
-    <div class="first-steps__container {{if this.model.company.firstStepsCompletedOn "first-steps__container--animating"}}">
+    <div
+         class="first-steps__container {{if this.model.company.firstStepsCompletedOn "first-steps__container--animating"}}">
       {{#if this.model.company.firstStepsCompletedOn}}
         <div class="first-steps-container__message">
           <div class="content">
