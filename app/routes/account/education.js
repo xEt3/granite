@@ -1,14 +1,12 @@
 import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import moment from 'moment';
 
-@classic
 export default class EducationRoute extends Route {
   titleToken = 'Education';
 
-  @service
-  ajax;
+  @service ajax;
 
   queryParams = { granularity: { refreshModel: true } };
 
