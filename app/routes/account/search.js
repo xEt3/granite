@@ -1,11 +1,8 @@
-import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-@classic
 export default class SearchRoute extends Route {
-  @service
-  search;
+  @service search;
 
   queryParams = { q: { refreshModel: true } };
   titleToken = 'Search Results';
