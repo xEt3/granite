@@ -1,34 +1,29 @@
-import classic from 'ember-classic-decorator';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { resolve } from 'rsvp';
 import { scheduleOnce } from '@ember/runloop';
 import { isEmpty } from '@ember/utils';
 
-@classic
 export default class IndexRoute extends Route {
   titleToken = 'Dashboard';
 
-  @service
-  ajax;
+  @service ajax;
 
-  @service
-  auth;
+  @service auth;
 
   queryParams = {
     tag:  { refreshModel: true },
     page: { refreshModel: true }
   };
 
-  beforeModel () {
-    return resolve(this.get('auth.user'))
-    .then(user => resolve(user.get('company')))
-    .then(company => {
-      if (company && !company.get('firstStepsCompletedOn')) {
-        return this.transitionTo('account.first-steps');
-      }
-    });
+  async beforeModel () {
+    let user    = await resolve(this.get('auth.user'));
+    let company = await resolve(user.get('company'));
+
+    if (company && !company.get('firstStepsCompletedOn')) {
+      return this.transitionTo('account.first-steps');
+    }
   }
 
   async model (params) {
@@ -72,21 +67,19 @@ export default class IndexRoute extends Route {
     super.setupController(...arguments);
 
     if (this.cachedActivities && model.page > 0) {
-      this.set('cachedActivities', this.cachedActivities.concat(model.activities.toArray()));
+      this.cachedActivities = this.cachedActivities.concat(model.activities.toArray());
     } else {
-      this.set('cachedActivities', model.activities.toArray());
+      this.cachedActivities = model.activities.toArray();
     }
 
-    controller.setProperties({
-      model:        this.cachedActivities,
-      tags:         model.tags,
-      totalRecords: model.activities.get('meta.totalRecords'),
-      analytics:    model.analytics
-    });
+    controller.model        = this.cachedActivities;
+    controller.tags         = model.tags;
+    controller.totalRecords = model.activities.meta.totalRecords;
+    controller.analytics    = model.analytics;
   }
 
   @action
   willTransition () {
-    this.controller.set('page', 0);
+    this.controller.page = 0;
   }
 }

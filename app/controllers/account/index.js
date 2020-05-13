@@ -12,6 +12,9 @@ export default class IndexController extends Controller {
   tag = '';
   limit = 5;
   @tracked page = 0;
+  @tracked tags;
+  @tracked totalRecords;
+  @tracked analytics;
 
   commonActions = [{
     text: 'Add a new employee',

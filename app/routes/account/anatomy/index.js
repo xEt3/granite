@@ -1,19 +1,16 @@
-import classic from 'ember-classic-decorator';
-import Route from '@ember/routing/route';
-import { hash } from 'rsvp';
+import Route from 'granite/core/route';
 
-@classic
 export default class IndexRoute extends Route {
   titleToken = 'Company Anatomy';
 
-  model () {
-    return hash({
-      supervisors: this.store.query('employee', { $report: 'supervisors' }),
-      orgHead:     this.store.query('employee', { $report: 'organizationHead' })
-    });
+  async model () {
+    return {
+      supervisors: await this.store.query('employee', { $report: 'supervisors' }),
+      orgHead:     await this.store.query('employee', { $report: 'organizationHead' })
+    };
   }
 
   setupController (controller, model) {
-    controller.set('model', [ model.orgHead.get('firstObject'), ...model.supervisors.toArray() ].uniq());
+    controller.model = [ model.orgHead.firstObject, ...model.supervisors.toArray() ].uniq();
   }
 }
