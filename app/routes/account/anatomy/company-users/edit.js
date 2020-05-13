@@ -9,7 +9,7 @@ const crud = [ 'create', 'read', 'update', 'delete' ],
         isVisible:  true
       };
 
-export default class EditRoute extends Route {
+export default class AccountAnatomyCompanyUsersEditRoute extends Route {
   async model (params) {
     return {
       user:        await this.store.findRecord('company-user', params.user_id),

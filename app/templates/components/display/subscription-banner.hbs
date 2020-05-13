@@ -1,4 +1,4 @@
-<div class={{this.bannerClass}}>
+<div class={{this.bannerClass}} {{did-update this.updateAttrs @accountLocked}}>
   <h4>
     <span class="left floated text"><i class="large exclamation triangle icon"></i></span>
     {{#if this.subscription.daysLeftInGracePeriod}}

@@ -1,11 +1,13 @@
-<div class="content comment">
-  <div class="summary">
-    <h6 class="ui horizontal divider header">{{this.comment.commenter.firstName}} - {{time-ago this.comment.created}}</h6>
-    <p>{{this.comment.text}}</p>
-  </div>
-  <div class="meta">
-    <div class="date">
-      {{time this.comment.created "M/D/YY h:mma"}}
+<div ...attributes>
+  <div class="content comment">
+    <div class="summary">
+      <h6 class="ui horizontal divider header">{{@comment.commenter.firstName}} - {{time-ago @comment.created}}</h6>
+      <p>{{@comment.text}}</p>
+    </div>
+    <div class="meta">
+      <div class="date">
+        {{time @comment.created "M/D/YY h:mma"}}
+      </div>
     </div>
   </div>
 </div>

@@ -1,16 +1,16 @@
-import classic from 'ember-classic-decorator';
-import { layout as templateLayout } from '@ember-decorators/component';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+// import { layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/x-tree';
 import { getDescendents, getAncestors } from '../utils/tree';
 import { get, set }  from '@ember/object';
 
-@classic
-@templateLayout(layout)
-export default class XTree extends Component {
-  init () {
-    super.init(...arguments);
-    let tree = this.model;
+// @templateLayout(layout)
+export default class XTreeComponent extends Component {
+  layout = layout
+
+  constructor () {
+    super(...arguments);
+    let tree = this.args.model;
 
     // Make sure chosen item is highlighted and expanded-to in the tree
     let chosenId = this.chosenId;

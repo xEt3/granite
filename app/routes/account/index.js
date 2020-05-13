@@ -1,27 +1,23 @@
+import Route from 'granite/core/route';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Route from 'granite/core/route';
-import { resolve } from 'rsvp';
 import { scheduleOnce } from '@ember/runloop';
 import { isEmpty } from '@ember/utils';
 
-export default class IndexRoute extends Route {
-  titleToken = 'Dashboard';
+export default class AccountIndexRoute extends Route {
+  titleToken = 'Dashboard'
 
-  @service ajax;
-
-  @service auth;
+  @service ajax
+  @service auth
 
   queryParams = {
     tag:  { refreshModel: true },
     page: { refreshModel: true }
-  };
+  }
 
   async beforeModel () {
-    let user    = await resolve(this.get('auth.user'));
-    let company = await resolve(user.get('company'));
-
-    if (company && !company.get('firstStepsCompletedOn')) {
+    let company = await this.auth.get('user.company');
+    if (company && !company.firstStepsCompletedOn) {
       return this.transitionTo('account.first-steps');
     }
   }
@@ -72,14 +68,18 @@ export default class IndexRoute extends Route {
       this.cachedActivities = model.activities.toArray();
     }
 
-    controller.model        = this.cachedActivities;
-    controller.tags         = model.tags;
-    controller.totalRecords = model.activities.meta.totalRecords;
-    controller.analytics    = model.analytics;
+    controller.setProperties({
+      model:        this.cachedActivities,
+      tags:         model.tags,
+      totalRecords: model.activities.meta.totalRecords,
+      analytics:    model.analytics
+    });
   }
 
   @action
-  willTransition () {
-    this.controller.page = 0;
+  willTransition (transition) {
+    if (transition.targetName !== 'account.index') {
+      this.controller.page = 0;
+    }
   }
 }

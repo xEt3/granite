@@ -1,4 +1,4 @@
-<form class="ui form" {{action (pipe (action "permissionCheck") (action "save")) on="submit"}}>
+<form class="ui form" {{on "submit" (prevent-default (pipe this.permissionCheck (fn this.data.saveRecord this.model "working" saveOptions)))}}>
   <hgroup class="clearfix">
     <h1 class="ui header left floated">
       Editing {{this.model.fullName}}
@@ -6,7 +6,8 @@
   </hgroup>
   <div class="ui divider"></div>
   <label class="permission_label">Permissions</label>
+  {{!-- HERE --}}
   <XTree @checkable={{true}} @model={{this.permissionsTree}}></XTree>
   <div class="ui divider"></div>
-  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.working}}>Save Changes</Form::ActionButton>
+  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.working.isLoading}}>Save Changes</Form::ActionButton>
 </form>

@@ -59,7 +59,7 @@ export default class BillingController extends Controller {
       company.set('reactivatedOn', null);
 
       await company.save();
-      this.target.refreshModel();
+      this.send('refreshModel');
       success('Deactivated account', true);
     } catch (err) {
       error(err);
@@ -76,7 +76,7 @@ export default class BillingController extends Controller {
       company.set('deactivatedOn', null);
 
       await company.save();
-      this.target.refreshModel();
+      this.send('refreshModel');
       success('Reactivated account', true);
     } catch (err) {
       error(err);

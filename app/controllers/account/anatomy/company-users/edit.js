@@ -1,12 +1,14 @@
-import classic from 'ember-classic-decorator';
+import Controller from 'granite/core/controller';
 import { action } from '@ember/object';
-import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { inject as service } from '@ember/service';
 
-@classic
-export default class EditController extends Controller.extend(addEdit) {
-  transitionAfterSave = 'account.anatomy.company-users';
-  transitionWithModel = false;
+export default class AccountAnatomyCompanyUsersEditController extends Controller {
+  @service data
+
+  saveOptions = {
+    transitionAfterSave: 'account.anatomy.company-users',
+    transitionWithModel: false
+  }
 
   @action
   presetAttrs () {
@@ -18,7 +20,7 @@ export default class EditController extends Controller.extend(addEdit) {
 
         if (child.isChecked) {
           id.push(child.id);
-          model.set('permissions', id);
+          model.permissions = id;
         }
       });
     });
@@ -36,11 +38,11 @@ export default class EditController extends Controller.extend(addEdit) {
     });
 
     if (checked.length > 1) {
-      this.send('presetAttrs');
+      this.presetAttrs();
     } else {
-      this.ajaxStart();
+      let { error } = this.data.createStatus();
 
-      this.ajaxError('Need at lease one permissions.');
+      error('Need at lease one permissions.');
       throw new Error('Need at lease one permissions.');
     }
   }

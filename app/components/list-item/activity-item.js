@@ -1,7 +1,7 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { computed, action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import ajaxStatus from '../../mixins/ajax-status';
 
 const contextColorMap = {
   positive: 'text-green',
@@ -9,91 +9,92 @@ const contextColorMap = {
   neutral:  ''
 };
 
-export default Component.extend(ajaxStatus, {
-  auth:        service(),
-  store:       service(),
-  classNames:  [ 'account__activity-item', 'event' ],
-  commentSort: [ 'created:desc' ],
+export default class ListItemActivityItemComponent extends Component {
+  @service auth
+  @service data
+  @service store
 
-  enableLikes: computed.equal('activity.context', 'positive'),
-  comments:    computed.sort('activity.comments', 'commentSort'),
+  @tracked comment = null
 
-  contextColor: computed('activity.context', function () {
-    let context = this.get('activity.context');
+  commentSort = [ 'created:desc' ]
+
+  @computed.equal('args.activity.context', 'positive') enableLikes
+  @computed.sort('args.activity.comments', 'commentSort') comments
+
+  get contextColor () {
+    let context = this.args.activity.context;
     return context ? contextColorMap[context] : undefined;
-  }),
+  }
 
-  likesMinusOne: computed('activity.likes.length', function () {
-    return (this.get('activity.likes.length') || 1) - 1;
-  }),
+  get likesMinusOne () {
+    return (this.args.activity.likes.length || 1) - 1;
+  }
 
-  likeByCurrentUser: computed('auth.user', 'activity.likes.@each.liker', function () {
-    return this.get('activity.likes').findBy('liker.id', this.get('auth.user.id'));
-  }),
+  get likeByCurrentUser () {
+    return this.args.activity.likes.findBy('liker.id', this.auth.get('user.id'));
+  }
 
+  @action
   newComment () {
-    this.set('comment', this.store.createRecord('comment', { commenter: this.get('auth.user.employee') }));
-  },
+    this.comment = this.store.createRecord('comment', { commenter: this.auth.get('user.employee') });
+  }
 
-  actions: {
-    notify () {
-      this.onNotify(...arguments);
-    },
-
-    toggleComments () {
-      if (!this.comment) {
-        this.newComment();
-      }
-
-      this.toggleProperty('showComments');
-    },
-
-    saveComment () {
-      this.ajaxStart();
-
-      const activity = this.activity,
-            comment = this.comment,
-            comments = activity.get('comments.content');
-
-      comments.addObject(comment);
-
-      activity.save()
-      .then(() => {
-        comments.removeObject(comment);
-        comment.destroy();
-        this.set('comment', null);
-        this.newComment();
-        this.ajaxSuccess(null, true);
-      })
-      .catch(this.ajaxError.bind(this));
-    },
-
-    like () {
-      this.ajaxStart();
-
-      const activity = this.activity,
-            likes = activity.get('likes.content'),
-            currentLike = this.likeByCurrentUser;
-
-      if (currentLike) {
-        likes.removeObject(currentLike);
-        currentLike.deleteRecord();
-      } else {
-        var like = this.store.createRecord('like', { liker: this.get('auth.user') });
-
-        likes.addObject(like);
-      }
-
-      activity.save()
-      .then(() => {
-        if (like) {
-          like.destroy();
-          likes.removeObject(like);
-        }
-
-        this.ajaxSuccess(null, true);
-      })
-      .catch(this.ajaxError.bind(this));
+  @action
+  toggleComments () {
+    if (!this.comment) {
+      this.newComment();
     }
   }
-});
+
+  @action
+  async saveComment () {
+    let { success, error } = this.data.createStatus();
+
+    const activity = this.args.activity,
+          comment = this.comment,
+          comments = activity.comments.content;
+
+    comments.addObject(comment);
+
+    try {
+      await activity.save();
+      comments.removeObject(comment);
+      comment.destroy();
+      this.comment = null;
+      this.newComment();
+      success(null, true);
+    } catch (e) {
+      error(e);
+    }
+  }
+
+  @action
+  async like () {
+    let { success, error } = this.data.createStatus();
+
+    const activity = this.args.activity,
+          likes = activity.likes.content,
+          currentLike = this.likeByCurrentUser;
+
+    if (currentLike) {
+      likes.removeObject(currentLike);
+      currentLike.deleteRecord();
+    } else {
+      var like = this.store.createRecord('like', { liker: this.auth.get('user') });
+
+      likes.addObject(like);
+    }
+
+    try {
+      await activity.save();
+      if (like) {
+        like.destroy();
+        likes.removeObject(like);
+      }
+
+      success(null, true);
+    } catch (e) {
+      error(e);
+    }
+  }
+}

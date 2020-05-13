@@ -1,7 +1,7 @@
 {{#if hasBlock}}
-  <XTreeBranch @select={{this.select}} @hover={{this.hover}} @hoverOut={{this.hoverOut}} @checkable={{this.checkable}} @syncCheckbox={{this.syncCheckbox}} @chosenId={{this.chosenId}} @model={{this.model}} as |node|>
+  <XTreeBranch @select={{this.select}} @hover={{this.hover}} @hoverOut={{this.hoverOut}} @checkable={{@checkable}} @syncCheckbox={{this.syncCheckbox}} @chosenId={{this.chosenId}} @model={{@model}} as |node|>
     {{yield node}}
   </XTreeBranch>
 {{else}}
-  <XTreeBranch @model={{this.model}} @select={{this.select}} @hover={{this.hover}} @hoverOut={{this.hoverOut}} @checkable={{this.checkable}} @syncCheckbox={{this.syncCheckbox}} @chosenId={{this.chosenId}} />
+  <XTreeBranch @model={{@model}} @select={{this.select}} @hover={{this.hover}} @hoverOut={{this.hoverOut}} @checkable={{@checkable}} @syncCheckbox={{this.syncCheckbox}} @chosenId={{this.chosenId}} />
 {{/if}}

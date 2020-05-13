@@ -107,10 +107,10 @@
         </hgroup>
         <div class="ui large feed">
           {{#each this.model as |activity|}}
-            <ListItem::ActivityItem @activity={{activity}} @onNotify={{action "onNotify"}} />
+            <ListItem::ActivityItem @activity={{activity}} @onNotify={{this.onNotify}} />
           {{/each}}
           <div class="ui divider"></div>
-          <button class="fluid ui button" disabled={{this.disabled}} {{action "loadMoreActivities"}}>Load More...</button>
+          <button class="fluid ui button" disabled={{this.disabled}} {{on "click" this.loadMoreActivities}}>Load More...</button>
         </div>
       </div>
     </div>

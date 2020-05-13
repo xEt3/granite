@@ -1,27 +1,29 @@
-<span role="button" class="toggle-icon" {{action "toggleExpand" bubbles=false}}>
-  {{#if this.model.children.length}}
-    {{#if this.model.isExpanded}}
-      &#x25BC;
+<div class="{{if @model.isSelected "tree-highlight"}} {{if this.isChosen "tree-chosen"}}" onmouseenter={{this.mouseEnter}}>
+  <span role="button" class="toggle-icon" {{on "click" (prevent-default (toggle "isExpanded" @model)) bubbles=false}}>
+    {{#if @model.children.length}}
+      {{#if @model.isExpanded}}
+        &#x25BC;
+      {{else}}
+        &#x25B6;
+      {{/if}}
     {{else}}
-      &#x25B6;
+      &nbsp;&nbsp;
     {{/if}}
-  {{else}}
-    &nbsp;&nbsp;
+  </span>
+  {{#if @checkable}}
+    <div preventsDefault={{false}} class="ui checkbox {{if @model.isIndeterminate "indeterminate" (if @model.isChecked "checked")}}">
+      <Input @type="checkbox" @checked={{@model.isChecked}} @change={{pipe (toggle "isChecked" @model) this.toggleCheck}} @indeterminate={{@model.isIndeterminate}} />
+      <label class="node">
+        {{capitalize @model.name}}
+      </label>
+    </div>
   {{/if}}
-</span>
-{{#if this.checkable}}
-  <div preventsDefault={{false}} class="ui checkbox {{if this.model.isIndeterminate "indeterminate" (if this.model.isChecked "checked")}}">
-    <Input @type="checkbox" @checked={{this.model.isChecked}} @change={{pipe-action (action this.toggleProperty "model.isChecked") (action "toggleCheck")}} @indeterminate={{this.model.isIndeterminate}} />
-    <label class="node">
-      {{capitalize this.model.name}}
-    </label>
-  </div>
-{{/if}}
 
-<span role="button" onclick={{action "toggleCheck"}}>
-  {{#if hasBlock}}
-    {{yield this.model}}
-  {{else}}
-    {{this.model.name}}
-  {{/if}}
-</span>
+  <span role="button" {{on "click" (prevent-default this.toggleCheck)}}>
+    {{#if hasBlock}}
+      {{yield @model}}
+    {{else}}
+      {{@model.name}}
+    {{/if}}
+  </span>
+</div>

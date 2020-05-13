@@ -1,30 +1,23 @@
-import classic from 'ember-classic-decorator';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import ajaxStatus from 'granite/mixins/ajax-status';
 
-@classic
-export default class SubscriptionBanner extends Component.extend(ajaxStatus) {
-  @service
-  auth;
+export default class DisplaySubscriptionBanner extends Component {
+  @service auth
+  @service data
+  @service subscription
 
-  @service
-  subscription;
-
-  didUpdateAttrs () {
-    super.didUpdateAttrs(...arguments);
-
-    if (this.accountLocked) {
-      this.transitionToSubscription();
+  @action
+  updateAttrs () {
+    if (this.args.accountLocked) {
+      this.args.transitionToSubscription();
     }
   }
 
-  @computed('subscription.{daysLeftInGracePeriod,accountSuspended,isCancelled}')
   get bannerClass () {
-    if (this.get('subscription.daysLeftInGracePeriod') || this.get('subscription.accountSuspended')) {
+    if (this.subscription.daysLeftInGracePeriod || this.subscription.accountSuspended) {
       return 'subscription-banner--red';
-    } else if (this.get('subscription.isCancelled')) {
+    } else if (this.subscription.isCancelled) {
       return 'subscription-banner--gray';
     } else {
       return 'subscription-banner--hidden';

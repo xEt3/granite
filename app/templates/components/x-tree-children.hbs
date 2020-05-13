@@ -1,17 +1,19 @@
-{{#if hasBlock}}
-  <XTreeNode @select={{this.select}} @hover={{this.hover}} @hoverOut={{this.hoverOut}} @checkable={{this.checkable}} @chosenId={{this.chosenId}} @recalculateStateAction={{action this.recalculateState}} @model={{this.model}} as |node|>
-    {{yield node}}
-  </XTreeNode>
-
-  {{#if this.model.isExpanded}}
-    <XTreeBranch @select={{this.select}} @hover={{this.hover}} @hoverOut={{this.hoverOut}} @checkable={{this.checkable}} @chosenId={{this.chosenId}} @recalculateStateAction={{action this.recalculateState}} @model={{this.model.children}} as |node|>
+<li class="tree-node">
+  {{#if hasBlock}}
+    <XTreeNode @select={{@select}} @hover={{@hover}} @hoverOut={{@hoverOut}} @checkable={{@checkable}} @chosenId={{@chosenId}} @recalculateStateAction={{this.recalculateState}} @model={{@model}} as |node|>
       {{yield node}}
-    </XTreeBranch>
-  {{/if}}
-{{else}}
-  <XTreeNode @model={{this.model}} @select={{this.select}} @hover={{this.hover}} @hoverOut={{this.hoverOut}} @checkable={{this.checkable}} @syncCheckbox={{this.syncCheckbox}} @recalculateStateAction={{action this.recalculateState}} @chosenId={{this.chosenId}} />
+    </XTreeNode>
 
-  {{#if this.model.isExpanded}}
-    <XTreeBranch @model={{this.model.children}} @select={{this.select}} @hover={{this.hover}} @hoverOut={{this.hoverOut}} @checkable={{this.checkable}} @syncCheckbox={{this.syncCheckbox}} @recalculateStateAction={{action this.recalculateState}} @chosenId={{this.chosenId}} />
+    {{#if @model.isExpanded}}
+      <XTreeBranch @select={{@select}} @hover={{@hover}} @hoverOut={{@hoverOut}} @checkable={{@checkable}} @chosenId={{@chosenId}} @recalculateStateAction={{this.recalculateState}} @model={{@model.children}} as |node|>
+        {{yield node}}
+      </XTreeBranch>
+    {{/if}}
+  {{else}}
+    <XTreeNode @model={{@model}} @select={{@select}} @hover={{@hover}} @hoverOut={{@hoverOut}} @checkable={{@checkable}} @syncCheckbox={{@syncCheckbox}} @recalculateStateAction={{this.recalculateState}} @chosenId={{@chosenId}} />
+
+    {{#if @model.isExpanded}}
+      <XTreeBranch @model={{@model.children}} @select={{@select}} @hover={{@hover}} @hoverOut={{@hoverOut}} @checkable={{@checkable}} @syncCheckbox={{@syncCheckbox}} @recalculateStateAction={{this.recalculateState}} @chosenId={{@chosenId}} />
+    {{/if}}
   {{/if}}
-{{/if}}
+</li>

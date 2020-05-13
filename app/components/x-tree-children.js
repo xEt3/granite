@@ -1,28 +1,25 @@
-import classic from 'ember-classic-decorator';
-import { classNames, tagName } from '@ember-decorators/component';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
-@classic
-@tagName('li')
-@classNames('tree-node')
-export default class XTreeChildren extends Component {
-  didReceiveAttrs () {
-    super.didReceiveAttrs(...arguments);
+export default class XTreeChildrenComponent extends Component {
+  constructor () {
+    super(...arguments);
     this.recalculateState();
   }
 
+  @action
   recalculateState () {
-    const children = this.get('model.children');
+    const children = this.args.model.children;
 
     if (children && children.length) {
       const lengthSelected = children.filterBy('isChecked', true).length;
 
-      this.set('model.isChecked', lengthSelected > 0);
-      this.set('model.isIndeterminate', lengthSelected > 0 && lengthSelected !== children.length);
+      this.args.model.isChecked = lengthSelected > 0;
+      this.args.model.isIndeterminate = lengthSelected > 0 && lengthSelected !== children.length;
     }
 
-    if (this.recalculateStateAction) {
-      this.recalculateStateAction();
+    if (this.args.recalculateStateAction) {
+      this.args.recalculateStateAction();
     }
   }
 }
