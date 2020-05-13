@@ -32,7 +32,7 @@ export default class FirstStepsRoute extends Route {
     });
 
     return {
-      company: this.auth.user.get('company'),
+      company: await this.get('auth.user.company'),
       employeeCount,
       locationCount,
       departmentCount
@@ -63,7 +63,7 @@ export default class FirstStepsRoute extends Route {
     }
 
     let company = model.company;
-    await model.company.save();
+    await company.save();
 
     if (!company.firstStepsCompletedOn) {
       return;
