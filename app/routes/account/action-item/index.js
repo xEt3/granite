@@ -1,5 +1,5 @@
 import { inject as service } from '@ember/service';
-import Route from '@granite/core/route';
+import Route from 'granite/core/route';
 
 export default class IndexRoute extends Route {
   @service rollbar;
