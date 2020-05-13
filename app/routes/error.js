@@ -1,8 +1,6 @@
-import classic from 'ember-classic-decorator';
 import { action } from '@ember/object';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-@classic
 export default class ErrorRoute extends Route {
   titleToken = 'Error';
 
@@ -12,9 +10,8 @@ export default class ErrorRoute extends Route {
           lf = window.localforage;
 
     if (!controller.fromError) {
-      return lf.getItem('graniteRoutePreviousToError').then(previousRoute => {
-        return this.transitionTo(previousRoute && previousRoute !== 'error' ? previousRoute : 'index');
-      });
+      let previousRoute = lf.getItem('graniteRoutePreviousToError');
+      return this.transitionTo(previousRoute && previousRoute !== 'error' ? previousRoute : 'index');
     }
 
     let previousRoute = controller.previousRoute;

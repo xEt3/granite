@@ -1,35 +1,26 @@
-import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+import Route from 'granite/core/route';
 
-@classic
 export default class ActionItemRoute extends Route {
-  @service
-  auth;
+  @service auth;
 
   title (tokens) {
     return tokens.join(' - ') + ' - ' + this.context.title + ' - Granite HR';
   }
 
-  model (params) {
-    return RSVP.hash({
-      actionItem:   this.store.queryRecord('action-item', { title: params.slug.replace(/-(?!!)/g, ' ').replace(/-!/g, '-') }),
-      companyUsers: this.store.query('company-user', {
-        _id:    { $ne: this.get('auth.user._id') },
-        select: 'name employee'
-      })
-    })
-    .then(result => {
-      this.set('transferableTargets', result.companyUsers);
-      return result.actionItem;
+  async model (params) {
+    return await this.store.queryRecord('action-item', { title: params.slug.replace(/-(?!!)/g, ' ').replace(/-!/g, '-') });
+  }
+
+  async afterModel () {
+    this.transferableTargets = await this.store.query('company-user', {
+      _id:    { $ne: this.get('auth.user._id') },
+      select: 'name employee'
     });
   }
 
-  setupController (controller, model) {
-    controller.setProperties({
-      model,
-      transferableTargets: this.transferableTargets
-    });
+  async setupController (controller, model) {
+    controller.model = model;
+    controller.transferableTargets =  this.transferableTargets;
   }
 }

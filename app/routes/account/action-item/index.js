@@ -1,32 +1,25 @@
-import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+import Route from '@granite/core/route';
 
-@classic
 export default class IndexRoute extends Route {
-  @service
-  rollbar;
+  @service rollbar;
 
   titleToken () {
     return 'Project';
   }
 
-  model () {
-    let actionItem = this.modelFor('account.action-item');
-
-    return RSVP.hash({
+  async model () {
+    let actionItem = await this.modelFor('account.action-item');
+    return {
       actionItem,
       //dependents are other action-items that are
       //waiting on this action item
-      dependents: this.store.query('action-item', { prerequisites: { $in: [ actionItem.get('id') ] } })
-    });
+      dependents: await this.store.query('action-item', { prerequisites: { $in: [ actionItem.id ] } })
+    };
   }
 
   setupController (controller, model) {
-    controller.setProperties({
-      model:      model.actionItem,
-      dependents: model.dependents
-    });
+    controller.model      = model.actionItem;
+    controller.dependents = model.dependents;
   }
 }
