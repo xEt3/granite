@@ -30,10 +30,17 @@ export default class AccountAnatomyCompanyUsersEditController extends Controller
   permissionCheck () {
     let checked = [];
 
+    // console.log('this.permissionsTree:', this.permissionsTree);
+
     this.permissionsTree.forEach(permission=>{
+      console.log('permission:', permission);
 
       if (permission.isChecked) {
         checked = permission.id;
+      } else {
+        permission.children.forEach(child => {
+          checked = child.id;
+        });
       }
     });
 

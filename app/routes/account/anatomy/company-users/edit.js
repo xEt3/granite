@@ -10,6 +10,10 @@ const crud = [ 'create', 'read', 'update', 'delete' ],
       };
 
 export default class AccountAnatomyCompanyUsersEditRoute extends Route {
+  titleToken (model) {
+    return `Edit ${model.user.fullName}`;
+  }
+
   async model (params) {
     return {
       user:        await this.store.findRecord('company-user', params.user_id),
@@ -18,29 +22,31 @@ export default class AccountAnatomyCompanyUsersEditRoute extends Route {
   }
 
   setupController (controller, model) {
-    controller.model           = model.user;
-    controller.permission      = model.permissions;
-    controller.permissionsTree = model.permissions.toArray().reduce((parents, permission) => {
-      let { id, key } = permission,
-          verb = key.split(' ').shift();
-      verb = crud.includes(verb) ? verb : 'other';
+    controller.setProperties({
+      model:           model.user,
+      permission:      model.permissions,
+      permissionsTree: model.permissions.toArray().reduce((parents, permission) => {
+        let { id, key } = permission,
+            verb = key.split(' ').shift();
+        verb = crud.includes(verb) ? verb : 'other';
 
-      if (!parents.findBy('name', verb)) {
-        parents.push(Object.assign({
-          id:       verb,
-          name:     verb,
-          children: []
-        }, nodeDefaults));
-      }
+        if (!parents.findBy('name', verb)) {
+          parents.push(Object.assign({
+            id:       verb,
+            name:     verb,
+            children: []
+          }, nodeDefaults));
+        }
 
-      parents.findBy('name', verb).children.push(
-        Object.assign({
-          id,
-          name: key
-        }, nodeDefaults, { isChecked: model.user.permissions.includes(id) })
-      );
+        parents.findBy('name', verb).children.push(
+          Object.assign({
+            id,
+            name: key
+          }, nodeDefaults, { isChecked: model.user.permissions.includes(id) })
+        );
 
-      return parents;
-    }, A()).toArray();
+        return parents;
+      }, A()).toArray()
+    });
   }
 }

@@ -5,8 +5,7 @@
     </h1>
   </hgroup>
   <div class="ui divider"></div>
-  <label class="permission_label">Permissions</label>
-  {{!-- HERE --}}
+  <label class="permission_label">Permissions</label>z
   <XTree @checkable={{true}} @model={{this.permissionsTree}}></XTree>
   <div class="ui divider"></div>
   <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.working.isLoading}}>Save Changes</Form::ActionButton>

@@ -10,7 +10,7 @@ const crud = [ 'create', 'read', 'update', 'delete' ],
         isVisible:  true
       };
 
-export default class AccountAnatomyCompanyUsersAddRoute extends Route {
+export default class AccountAnatomyCompanyUsersNewRoute extends Route {
   @service auth
   titleToken = 'New User'
   modelName =  'company-user'
@@ -29,32 +29,30 @@ export default class AccountAnatomyCompanyUsersAddRoute extends Route {
   }
 
   setupController (controller, model) {
-    controller.setProperties({
-      model:           model.user,
-      employees:       model.employees,
-      permissions:     model.permissions,
-      permissionsTree: model.permissions.toArray().reduce((parents, permission) => {
-        let { id, key } = permission,
-            verb = key.split(' ').shift();
-        verb = crud.includes(verb) ? verb : 'other';
+    controller.model = model.user;
+    controller.employees = model.employees;
+    controller.permissions = model.permissions;
+    controller.permissionsTree = model.permissions.toArray().reduce((parents, permission) => {
+      let { id, key } = permission,
+          verb = key.split(' ').shift();
+      verb = crud.includes(verb) ? verb : 'other';
 
-        if (!parents.findBy('name', verb)) {
-          parents.push(Object.assign({
-            id:       verb,
-            name:     verb,
-            children: []
-          }, nodeDefaults));
-        }
+      if (!parents.findBy('name', verb)) {
+        parents.push(Object.assign({
+          id:       verb,
+          name:     verb,
+          children: []
+        }, nodeDefaults));
+      }
 
-        parents.findBy('name', verb).children.push(
-          Object.assign({
-            id,
-            name: key
-          }, nodeDefaults)
-        );
+      parents.findBy('name', verb).children.push(
+        Object.assign({
+          id,
+          name: key
+        }, nodeDefaults)
+      );
 
-        return parents;
-      }, A()).toArray()
-    });
+      return parents;
+    }, A()).toArray();
   }
 }

@@ -1,10 +1,8 @@
 import Component from '@glimmer/component';
-// import { layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/x-tree';
 import { getDescendents, getAncestors } from '../utils/tree';
 import { get, set }  from '@ember/object';
 
-// @templateLayout(layout)
 export default class XTreeComponent extends Component {
   layout = layout
 

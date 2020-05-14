@@ -1,4 +1,4 @@
-<div class="{{if @model.isSelected "tree-highlight"}} {{if this.isChosen "tree-chosen"}}" onmouseenter={{this.mouseEnter}}>
+<div class="{{if @model.isSelected "tree-highlight"}} {{if this.isChosen "tree-chosen"}}" onmouseenter={{this.mouseEnter}} onmouseleave={{this.mouseLeave}} onclick={{this.click}}>
   <span role="button" class="toggle-icon" {{on "click" (prevent-default (toggle "isExpanded" @model)) bubbles=false}}>
     {{#if @model.children.length}}
       {{#if @model.isExpanded}}
@@ -19,7 +19,7 @@
     </div>
   {{/if}}
 
-  <span role="button" {{on "click" (prevent-default this.toggleCheck)}}>
+  <span role="button" {{on "click" (prevent-default (pipe (toggle "isChecked" @model) this.toggleCheck))}}>
     {{#if hasBlock}}
       {{yield @model}}
     {{else}}
