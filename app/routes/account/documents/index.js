@@ -22,7 +22,8 @@ export default class AccountDocumentsRoute extends Route {
   ]
 
   async beforeModel () {
-    let hints = await this.auth.get('user.shownHints');
+    const user = await this.auth.user,
+          hints = user.get('shownHints');
 
     if (!hints || !hints.includes('documents')) {
       return this.transitionTo('account.documents.intro');

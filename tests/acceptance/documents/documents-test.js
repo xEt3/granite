@@ -7,17 +7,27 @@ module('Acceptance | documents', function (hooks) {
   setupApplicationTest(hooks);
 
   test('getting to documents', async function (assert) {
-    await authenticate.call(this, server);
+    await authenticate.call(this, server, { companyUser: { shownHints: [] } });
 
-    await visit('/account/documents');
+    try {
+      await visit('/account/documents');
+    } catch (err) {
+      // noop. This is a hack for https://github.com/emberjs/ember-test-helpers/issues/332
+    }
+
     await click('.huge.blue.button');
     assert.equal(currentURL(), '/account/documents');
   });
 
   test('elements on documents page', async function (assert) {
-    await authenticate.call(this, server);
+    await authenticate.call(this, server, { companyUser: { shownHints: [] } });
 
-    await visit('/account/documents');
+    try {
+      await visit('/account/documents');
+    } catch (err) {
+      // noop. This is a hack for https://github.com/emberjs/ember-test-helpers/issues/332
+    }
+
     await click('.huge.blue.button');
 
     assert.dom('.ui.header.left').hasText('Documents');
@@ -27,9 +37,14 @@ module('Acceptance | documents', function (hooks) {
   });
 
   test('adding a new document', async function (assert) {
-    await authenticate.call(this, server);
+    await authenticate.call(this, server, { companyUser: { shownHints: [] } });
 
-    await visit('/account/documents');
+    try {
+      await visit('/account/documents');
+    } catch (err) {
+      // noop. This is a hack for https://github.com/emberjs/ember-test-helpers/issues/332
+    }
+
     await click('.huge.blue.button');
     await click('.plus.icon');
 
@@ -55,10 +70,15 @@ module('Acceptance | documents', function (hooks) {
   });
 
   test('document is on page', async function (assert) {
-    await authenticate.call(this, server);
+    await authenticate.call(this, server, { companyUser: { shownHints: [] } });
     let file = await server.create('file');
 
-    await visit('/account/documents');
+    try {
+      await visit('/account/documents');
+    } catch (err) {
+      // noop. This is a hack for https://github.com/emberjs/ember-test-helpers/issues/332
+    }
+
     await click('.huge.blue.button');
 
     assert.dom('.clearing > div.header').includesText(`${file.title}`);
