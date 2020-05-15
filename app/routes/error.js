@@ -1,8 +1,6 @@
-import classic from 'ember-classic-decorator';
 import { action } from '@ember/object';
 import Route from 'granite/core/route';
 
-@classic
 export default class ErrorRoute extends Route {
   titleToken = 'Error';
 

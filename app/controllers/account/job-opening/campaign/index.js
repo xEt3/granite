@@ -1,3 +1,7 @@
 import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
 
-export default Controller.extend({ summaryOpts: { legend: { position: 'bottom' } } });
+export default class ThreadController extends Controller {
+  summaryOpts = { legend: { position: 'bottom' } };
+  @tracked jobOpening
+}

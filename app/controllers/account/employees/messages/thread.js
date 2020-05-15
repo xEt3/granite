@@ -2,6 +2,7 @@ import classic from 'ember-classic-decorator';
 import { action, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
 
 @classic
 export default class ThreadController extends Controller {
@@ -9,7 +10,7 @@ export default class ThreadController extends Controller {
   socket;
 
   queryParams = [ 'sb' ];
-  sb = 0;
+  @tracked sb = 0;
 
   @computed('model.{count,messages.length}')
   get retrievalMax () {

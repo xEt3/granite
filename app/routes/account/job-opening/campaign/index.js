@@ -1,21 +1,18 @@
-import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { A } from '@ember/array';
 import moment from 'moment';
 
-@classic
 export default class IndexRoute extends Route {
   titleToken = 'Summary';
 
-  @service
-  ajax;
+  @service ajax;
 
   async model () {
     const ajax = this.ajax,
           jobOpening = this.modelFor('account.job-opening');
 
-    let _results = A(await ajax.request(`/api/v1/job-openings/${jobOpening.get('id')}?$report=summary`));
+    let _results = A(await ajax.request(`/api/v1/job-openings/${jobOpening.id}?$report=summary`));
     let chart = _results && _results.length > 0 ? {
       labels:   _results.map(x => moment(x._id).format('M/D/YY')),
       datasets: [{
@@ -46,7 +43,7 @@ export default class IndexRoute extends Route {
   }
 
   setupController (controller, model) {
-    controller.setProperties({
+    Object.assign(controller, {
       model:      model.chart,
       jobOpening: model.jobOpening
     });
