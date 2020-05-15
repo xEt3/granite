@@ -9,11 +9,7 @@ export default class IssueRoute extends Route {
   }
 
   setupController (controller, model) {
-    // controller.setProperties({
-    //   model:             model.issue,
-    //   correctiveActions: model.correctiveActions
-    // });
-    controller.model = model.issue;
+    controller.model             = model.issue;
     controller.correctiveActions = model.correctiveActions;
   }
 }
