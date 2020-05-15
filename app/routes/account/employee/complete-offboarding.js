@@ -5,7 +5,7 @@ export default class CompleteOffboardingRoute extends Route {
   titleToken = 'Completed Offboarding';
 
   async afterModel (model) {
-    Object.assign(controller, {
+    Object.assign(model, {
       offboarding:          false,
       offboardingStep:      null,
       offboardingProgress:  null,

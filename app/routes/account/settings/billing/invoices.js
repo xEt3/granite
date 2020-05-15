@@ -1,11 +1,9 @@
 import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-@classic
 export default class InvoicesRoute extends Route {
-  @service
-  ajax;
+  @service ajax;
 
   async model () {
     let company = this.modelFor('account.settings.billing');
@@ -17,7 +15,7 @@ export default class InvoicesRoute extends Route {
   }
 
   setupController (controller, model) {
-    controller.setProperties({
+    Object.assign(controller, {
       model:   model.transactions.transactions,
       company: model.company
     });

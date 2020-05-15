@@ -1,25 +1,20 @@
-import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { resolve } from 'rsvp';
 
-@classic
 export default class CampaignRoute extends Route {
-  @service
-  auth;
+  @service auth;
 
-  model () {
-    return resolve(this.get('auth.user'))
-    .then(user => {
-      return {
-        company:     user.company,
-        parentModel: this.modelFor('account.job-opening')
-      };
-    });
+  async model () {
+    let user = await resolve(this.get('auth.user'));
+    return {
+      company:     user.company,
+      parentModel: this.modelFor('account.job-opening')
+    };
   }
 
   setupController (controller, model) {
-    controller.setProperties({
+    Object.assign(controller, {
       model:      model.parentModel,
       EEOEnabled: model.company.get('collectEEO')
     });

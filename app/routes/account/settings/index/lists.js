@@ -1,17 +1,13 @@
-import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
-import { hash } from 'rsvp';
+import Route from 'granite/core/route';
 
-@classic
 export default class ListsRoute extends Route {
-  @service
-  auth;
+  @service auth;
 
   titleToken = 'Lists';
   queryParams = { list: { refreshModel: true } };
 
-  model (params) {
+  async model (params) {
     let list = [],
         company = this.get('auth.user.company');
 
@@ -23,14 +19,14 @@ export default class ListsRoute extends Route {
       list = company.get('labels');
     }
 
-    return hash({
+    return {
       list,
       company
-    });
+    };
   }
 
   setupController (controller, model) {
-    controller.setProperties({
+    Object.assign(controller, {
       model:   model.list,
       company: model.company
     });
