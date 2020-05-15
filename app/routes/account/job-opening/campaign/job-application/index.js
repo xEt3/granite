@@ -1,9 +1,7 @@
-import classic from 'ember-classic-decorator';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
 const modelKeys = [ 'model', 'events', 'stage', 'opening', 'screening' ];
 
-@classic
 export default class IndexRoute extends Route {
   titleToken = 'Job Application';
 

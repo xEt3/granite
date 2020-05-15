@@ -1,8 +1,6 @@
-import classic from 'ember-classic-decorator';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { articles } from 'granite/config/help';
 
-@classic
 export default class TopicRoute extends Route {
   titleToken (model) {
     return model.title;

@@ -1,11 +1,8 @@
-import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-@classic
 export default class JobApplicationRoute extends Route {
-  @service
-  ajax;
+  @service ajax;
 
   async model (params) {
     let response = await this.ajax.request(`/api/v1/job-application/shared/${params.sharing_id}`);

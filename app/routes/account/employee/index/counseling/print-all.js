@@ -1,9 +1,7 @@
-import classic from 'ember-classic-decorator';
 import { action } from '@ember/object';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { scheduleOnce, later, next } from '@ember/runloop';
 
-@classic
 export default class PrintAllRoute extends Route {
   titleToken = 'Counseling';
 
@@ -14,16 +12,14 @@ export default class PrintAllRoute extends Route {
 
   resetController (controller, isExiting) {
     if (isExiting) {
-      controller.setProperties({
-        issue: undefined,
-        slug:  undefined
-      });
+      controller.issue = undefined;
+      controller.slug  = undefined;
     }
   }
 
   async model (params) {
-    let employee = super.model(...arguments);
-    let queryParams = { employee: employee.get('id') };
+    let employee    = super.model(...arguments);
+    let queryParams = { employee: employee.id };
 
     if (params.issue) {
       this.slug = params.slug;
