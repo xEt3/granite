@@ -10,9 +10,12 @@
     @form={{this.form}}
     @model={{this.model}}
     @controller={{this}}
-    @working={{this.working}}
+    @working={{this.data.statuses.savingJobDesc.isLoading}}
     @submitClass="huge fluid green"
-    @onsubmit={{fn this.save this.model}}
+    @onsubmit={{fn this.data.saveRecord this.model 'savingJobDesc' (hash
+      transitionWithModel=true
+      transitionAfterSave='account.job-description'
+    )}}
     @disabled={{or (not this.model.category) (not this.model.title)}}
   >
     Save

@@ -47,7 +47,6 @@ module('Acceptance | education/webinars', function (hooks) {
     // Expect a list of webinars
     assert.equal(currentURL(), '/account/education/webinars');
     let $webinarCards = await findAll('.webinars-list .webinar__card');
-    await this.pauseTest();
     assert.equal($webinarCards.length, 10);
 
     for (let i = 0; i < webinars.length; i++) {
@@ -102,9 +101,5 @@ module('Acceptance | education/webinars', function (hooks) {
 
     // Link back to webinars
     assert.dom('.webinars-purchased a[href="/account/education/webinars"].button.green.fluid').exists();
-
-    await this.pauseTest();
   });
-
-  skip('shows webinars you have authorization to');
 });

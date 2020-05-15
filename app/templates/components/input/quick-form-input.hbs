@@ -62,7 +62,7 @@
         @spellcheck="true"/>
     {{else if (eq @field.type "richtext")}}
       <Input::RichText
-        @value={{this.value}}
+        @value={{this.initialValue}}
         @onChange={{set this.value _}}/>
     {{else if (or (eq @field.type "checkbox") (eq @field.type "toggle"))}}
       <UiCheckbox
