@@ -1,4 +1,4 @@
-<form class="ui form container" {{action "save" on="submit"}}>
+<form class="ui form container" {{on "submit" (prevent-default (pipe (fn this.data.saveRecord this.model "working" this.saveOptions) (route-action "refreshModel")))}}>
   <div class="field">
     <label for="location-name">Name</label>
     <Input @type="text" @value={{this.model.name}} @id="location-name" placeholder="Location Name" />
@@ -26,7 +26,7 @@
     </div>
     <div class="field">
       <label for="state-name">State</label>
-      <UiDropdown @class="search selection" @selected={{this.model.addressState}} @onChange={{action (mut this.model.addressState)}}>
+      <UiDropdown @class="search selection" @selected={{this.model.addressState}} @onChange={{set this.model.addressState _}}>
         {{#if this.stateIsMontana}}<i class="text-danger heart icon"></i>{{/if}}
         <div class="default text">State</div>
         <i class="dropdown icon"></i>
@@ -45,7 +45,7 @@
     </div>
   </div>
   <div class="ui divider"></div>
-  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.working}}>Add Location</Form::ActionButton>
+  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.working.isLoading}}>Add Location</Form::ActionButton>
   <LinkTo @route="account.anatomy.locations.index">
     <div class="ui huge fluid orange button">Cancel</div>
   </LinkTo>

@@ -1,23 +1,27 @@
-import classic from 'ember-classic-decorator';
+import Controller from 'granite/core/controller';
 import { action } from '@ember/object';
-import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
 import { Promise } from 'rsvp';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { inject as service } from '@ember/service';
 
-@classic
-export default class NewController extends Controller.extend(addEdit) {
-  fileIsAdded = false;
-  transitionAfterSave = 'account.documents.index';
-  transitionWithModel = false;
-  tagSuggestions = [ 'Reference', 'Employee Specific', 'Company Wide', 'Onboarding', 'Offboarding' ];
+export default class AccountDocumentsNewController extends Controller {
+  @service data
+
+  @tracked fileIsAdded = false
+
+  saveOptions = {
+    transitionAfterSave: 'account.documents.index',
+    transitionWithModel: false
+  }
+
+  tagSuggestions = [ 'Reference', 'Employee Specific', 'Company Wide', 'Onboarding', 'Offboarding' ]
 
   @action
   addedFile (file) {
     if (this.fileIsAdded) {
-      this.send('removeFile', this.fileIsAdded);
+      this.removeFile(this.fileIsAdded);
     }
-
-    this.set('fileIsAdded', file);
+    this.fileIsAdded = file;
   }
 
   @action
@@ -31,39 +35,36 @@ export default class NewController extends Controller.extend(addEdit) {
     delete res.file;
     this.store.pushPayload(res);
     this.resolveUpload(this.store.peekRecord('file', res.files[0].id));
-    this.send('removeFile', file);
+    this.removeFile(file);
   }
 
   @action
   removeFile (file) {
     Dropzone.forElement('#input__dropzone--document').removeFile(file);
-    this.set('fileIsAdded', false);
+    this.fileIsAdded = false;
   }
 
   @action
   leaveUpload () {
-    this.send('removeFile', this.fileIsAdded);
-    this.set('fileIsAdded', false);
+    this.removeFile(this.fileIsAdded);
+    this.fileIsAdded = false;
     this.transitionToRoute('account.document.index');
   }
 
+  // HERE
   @action
-  uploadFile () {
-    this.ajaxStart();
+  async uploadFile () {
     let promise = new Promise(resolve => this.set('resolveUpload', resolve));
-    this.send('processQueue');
+    this.processQueue();
 
-    promise.then(file => {
-      let properties = [ 'title', 'description', 'tags' ];
+    let file = await promise;
+    let properties = [ 'title', 'description', 'tags' ];
 
-      properties.forEach(prop => {
-        file.set(prop, this.get(prop));
-        this.set(prop, null);
-      });
+    properties.forEach(prop => {
+      file[prop] = this[prop];
+      this[prop] = null;
+    });
 
-      return file;
-    })
-    .then(this.saveModel.bind(this))
-    .catch(this.ajaxError.bind(this));
+    this.data.saveRecord(this.model);
   }
 }

@@ -1,5 +1,5 @@
 <h2 class="ui header">Editing {{this.model.name}}</h2>
-<form class="ui form container" {{action "save" on="submit"}}>
+<form class="ui form container" {{on "submit" (prevent-default (fn this.data.saveRecord this.model "working" this.saveOptions))}}>
   <div class="field">
     <label for="department-name">Name</label>
     <Input @type="text" @value={{this.model.name}} @id="department-name" placeholder="Department Name" />
@@ -9,7 +9,7 @@
     <Input @type="text" @value={{this.model.code}} @id="department-code" placeholder="Department Code" />
   </div>
   <div class="ui divider"></div>
-  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.working}} @disabled={{not this.model.hasDirtyAttributes}}>Save Department</Form::ActionButton>
+  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.working.isLoading}} @disabled={{not this.model.hasDirtyAttributes}}>Save Department</Form::ActionButton>
   <a href="#" {{action "cancel"}}>
     <div class="ui large fluid danger button">Cancel</div>
   </a>

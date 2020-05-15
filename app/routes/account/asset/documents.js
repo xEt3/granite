@@ -1,5 +1,5 @@
 import Route from 'granite/core/route';
 
-export default class DocumentsRoute extends Route {
+export default class AccountAssetDocumentsRoute extends Route {
   titleToken = 'Documents';
 }

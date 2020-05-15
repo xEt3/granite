@@ -3,13 +3,11 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
-// SOMETHING BROKEN ON SAVE
-
 export default class AccountAnatomyCompanyUsersNewController extends Controller {
   @service data
 
-  @tracked employees
   @tracked permissionsTree
+  @tracked employees
 
   saveOptions = {
     transitionAfterSave: 'account.anatomy.company-users',
@@ -28,13 +26,13 @@ export default class AccountAnatomyCompanyUsersNewController extends Controller 
         user = await this.data.saveRecord(model);
 
     employee.companyUser = user;
-    await this.data.saveRecord(employee);
+    await this.data.saveRecord(employee, 'working', this.saveOptions);
   }
 
   @action
-  presetAttrs () {
+  async presetAttrs () {
     let model = this.model,
-        employee = this.model.employee,
+        employee = await this.model.employee,
         attrs = [ 'firstName', 'middleName', 'lastName' ];
 
     let id = [];
@@ -48,7 +46,7 @@ export default class AccountAnatomyCompanyUsersNewController extends Controller 
     });
 
     attrs.map(a => {
-      model.a = employee.get(a);
+      model[a] = employee[a];
     });
   }
 }

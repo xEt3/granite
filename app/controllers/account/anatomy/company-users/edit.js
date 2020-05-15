@@ -1,9 +1,12 @@
 import Controller from 'granite/core/controller';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
 export default class AccountAnatomyCompanyUsersEditController extends Controller {
   @service data
+
+  @tracked permissionsTree
 
   saveOptions = {
     transitionAfterSave: 'account.anatomy.company-users',
@@ -17,7 +20,6 @@ export default class AccountAnatomyCompanyUsersEditController extends Controller
 
     this.permissionsTree.forEach(permission=>{
       permission.children.forEach(child=>{
-
         if (child.isChecked) {
           id.push(child.id);
           model.permissions = id;
@@ -30,16 +32,12 @@ export default class AccountAnatomyCompanyUsersEditController extends Controller
   permissionCheck () {
     let checked = [];
 
-    // console.log('this.permissionsTree:', this.permissionsTree);
-
     this.permissionsTree.forEach(permission=>{
-      console.log('permission:', permission);
-
       if (permission.isChecked) {
-        checked = permission.id;
+        checked.push(permission.id);
       } else {
         permission.children.forEach(child => {
-          checked = child.id;
+          checked.push(child.id);
         });
       }
     });

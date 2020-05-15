@@ -1,7 +1,7 @@
 <div class="right aligned text floated menu__actions">
   <h3 class="ui header">
-    <Input::DocumentSelectionModal @title="Assign asset documents" @selected={{this.model.documents}} @autoTag="Asset" @onSelected={{pipe-action (action (mut this.model.documents)) (action "save")}} as |execute|>
-      <a href="#" {{action execute "selectDocuments"}}>
+    <Input::DocumentSelectionModal @title="Assign asset documents" @selected={{this.model.documents}} @autoTag="Asset" @onSelected={{pipe-action (set this.model.documents _) (fn this.data.saveRecord this.model)}} as |execute|>
+      <a href="#" {{on "click" (prevent-default (fn execute "selectDocuments"))}}>
         <EmberTooltip @side="left" @popperContainer="body" @text="Add a document" />
         <i class="plus icon"></i>
       </a>

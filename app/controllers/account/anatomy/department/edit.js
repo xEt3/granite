@@ -1,12 +1,14 @@
-import classic from 'ember-classic-decorator';
+import Controller from 'granite/core/controller';
 import { action } from '@ember/object';
-import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { inject as service } from '@ember/service';
 
-@classic
-export default class EditController extends Controller.extend(addEdit) {
-  transitionAfterSave = 'account.anatomy.departments.index';
-  transitionWithModel = false;
+export default class AccountAnatomyDepartmentEditController extends Controller {
+  @service data
+
+  saveOptions = {
+    transitionAfterSave: 'account.anatomy.departments.index',
+    transitionWithModel: false
+  }
 
   @action
   cancel () {

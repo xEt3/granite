@@ -2,7 +2,7 @@ import Route from 'granite/core/route';
 
 export default class AccountAssetEditRoute extends Route {
   titleToken =      'Edit Asset'
-  modelName =     'asset'
+  modelName =       'asset'
   bypassModelHook = true
   routeType = 'edit'
 
@@ -15,9 +15,7 @@ export default class AccountAssetEditRoute extends Route {
   }
 
   setupController (controller, model) {
-    controller.setProperties({
-      model:            model.asset,
-      initialDocuments: model.initialDocuments
-    });
+    controller.model = model.asset;
+    controller.initialDocuments = model.initialDocuments;
   }
 }

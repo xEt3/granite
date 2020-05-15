@@ -2,7 +2,7 @@
   <h2 class="ui dividing header">Add a New Document</h2>
 
   <div class="ui form">
-    <DropZone @id="input__dropzone--document" @class="input__dropzone" @url="/api/v1/file" @uploadMultiple={{false}} @maxFiles={{1}} @autoProcessQueue={{false}} @dictDefaultMessage="Drop or Click to Select a File" @thumbnailWidth="175" @headers={{hash X-API-Token=this.auth.token}} @addedfile={{action "addedFile"}} @success={{action "uploadedFile"}} @capture="camera" />
+    <DropZone @id="input__dropzone--document" @class="input__dropzone" @url="/api/v1/file" @uploadMultiple={{false}} @maxFiles={{1}} @autoProcessQueue={{false}} @dictDefaultMessage="Drop or Click to Select a File" @thumbnailWidth="175" @headers={{hash X-API-Token=this.auth.token}} @addedfile={{this.addedFile}} @success={{this.uploadedFile}} @capture="camera" />
     <div class="ui divider"></div>
 
     <Input::UiInput @type="text" @inputId="file-title" @placeholder="File Title" @value={{this.title}} />
@@ -15,14 +15,14 @@
     {{/if}}
 
     <div class="field center aligned text">
-      <a href="#" {{action (toggle "showDescription" this)}}>
+      <a href="#" {{on "click" (prevent-default (toggle "showDescription" this))}}>
         <i class="angle {{if this.showDescription "up" "down"}} icon"></i>{{if this.showDescription "Hide" "Show"}} Description
       </a>
     </div>
 
     <div class="field animated fadeInUp">
       <label for="file-tags">File Tags</label>
-      <UiDropdown @class="fluid multiple search selection" @allowAdditions={{true}} @hideAdditions={{false}} @selected={{this.tags}} @forceSelection={{false}} @onChange={{action (mut this.tags)}} as |execute mapper|>
+      <UiDropdown @class="fluid multiple search selection" @allowAdditions={{true}} @hideAdditions={{false}} @selected={{this.tags}} @forceSelection={{false}} @onChange={{set this.tags _}} as |execute mapper|>
         <i class="dropdown icon"></i>
         <div class="default text">Type or Select Tags</div>
         <div class="menu">
@@ -37,7 +37,7 @@
 
     <div class="ui divider"></div>
     <form {{action "uploadFile" on="submit"}}>
-      <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.working}} @disabled={{this.disableSubmit}}>Save document</Form::ActionButton>
+      <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.working.isLoading}} @disabled={{this.disableSubmit}}>Save document</Form::ActionButton>
     </form>
   </div>
 </div>

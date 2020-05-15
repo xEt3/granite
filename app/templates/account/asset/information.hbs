@@ -1,6 +1,6 @@
 <div class="ui header clearfix">
   <div class="right floated">
-    <a href="#" class={{if this.addingAttribute "text-danger"}} {{action "toggleProperty" "addingAttribute"}}>
+    <a href="#" class={{if this.addingAttribute "text-danger"}} {{on "click" (prevent-default (toggle "addingAttribute" this))}}>
       <EmberTooltip @side="left" @popperContainer="body" @text={{if this.addingAttribute "Cancel" "Add a new attribute"}} />
       <i class="{{if this.addingAttribute "remove" "plus"}} icon"></i>
     </a>
@@ -8,13 +8,13 @@
 </div>
 
 {{#liquid-if this.addingAttribute}}
-  <form class="ui form container" {{action "saveAttribute" on="submit"}}>
+  <form class="ui form container" {{on "submit" (prevent-default (pipe this.saveAttribute this.afterSave))}}>
     <div class="field">
       <label for="attribute-name">Attribute Name</label>
       <Input @type="text" @value={{this.pendingAttribute}} placeholder="ex. Color" />
     </div>
     <div class="field">
-      <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.working}}>Add Asset Attribute</Form::ActionButton>
+      <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.working.isLoading}}>Add Asset Attribute</Form::ActionButton>
     </div>
   </form>
   <div class="ui divider"></div>
@@ -29,7 +29,7 @@
         </span>
 
         <span class="right floated">
-          <a href="#" class="text-danger" {{action "removeAttribute" attribute}}>
+          <a href="#" class="text-danger" {{on "click" (prevent-default (pipe (fn this.removeAttribute attribute) this.afterSave))}}>
             <EmberTooltip @side="left" @popperContainer="body" @text="Remove attribute" />
             <i class="trash icon"></i>
           </a>
