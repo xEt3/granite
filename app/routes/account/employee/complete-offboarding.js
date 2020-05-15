@@ -5,10 +5,12 @@ export default class CompleteOffboardingRoute extends Route {
   titleToken = 'Completed Offboarding';
 
   async afterModel (model) {
-    model.offboarding          = false;
-    model.offboardingStep      = null;
-    model.offboardingProgress  = null;
-    model.offboardingCompleted = new Date();
+    Object.assign(controller, {
+      offboarding:          false,
+      offboardingStep:      null,
+      offboardingProgress:  null,
+      offboardingCompleted: new Date()
+    });
 
     this.analytics.trackEvent('Employees', 'offboarding_completed', 'Completed Offboarding');
     this.analytics.trackEvent('Features', 'automated_exit_interview', model.autoExitInterview ? 'Used' : 'Did not use');

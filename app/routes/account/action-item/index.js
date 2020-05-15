@@ -19,7 +19,9 @@ export default class IndexRoute extends Route {
   }
 
   setupController (controller, model) {
-    controller.model      = model.actionItem;
-    controller.dependents = model.dependents;
+    Object.assign(controller, {
+      model:      model.actionItem,
+      dependents: model.dependents
+    });
   }
 }

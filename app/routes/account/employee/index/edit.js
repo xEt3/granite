@@ -10,7 +10,7 @@ export default class AccountEmployeeEditRoute extends Route {
   }
 
   setupController (controller, model) {
-    controller.setProperties({
+    Object.assign(controller, {
       model,
       currentDepartment:    model.department,
       initialRelationships: employeeBelongsTo.map(relationshipPath => {

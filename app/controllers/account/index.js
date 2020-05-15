@@ -12,7 +12,9 @@ export default class AccountIndexController extends Controller {
   feedSource = 'all'
   tag = ''
   limit = 5
-
+  @tracked tags
+  @tracked totalRecords
+  @tracked analytics
   @tracked page = 0
 
   commonActions = [{

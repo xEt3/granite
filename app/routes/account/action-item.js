@@ -20,7 +20,9 @@ export default class ActionItemRoute extends Route {
   }
 
   async setupController (controller, model) {
-    controller.model = model;
-    controller.transferableTargets =  this.transferableTargets;
+    Object.assign(controller, {
+      model:               model,
+      transferableTargets: this.transferableTargets
+    });
   }
 }

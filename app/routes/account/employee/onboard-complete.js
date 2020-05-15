@@ -5,9 +5,11 @@ export default class OnboardCompleteRoute extends Route {
   titleToken = 'Onboard Complete';
 
   async afterModel (model) {
-    model.onboarding         = false;
-    model.onboardingStep     = null;
-    model.onboardingProgress = null;
+    Object.assign(model, {
+      onboarding:         false,
+      onboardingStep:     null,
+      onboardingProgress: null
+    });
 
     this.analytics.trackEvent('Employees', 'onboarding_completed', 'Completed Onboarding');
 

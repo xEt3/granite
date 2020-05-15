@@ -13,7 +13,7 @@ export default class DocumentRoute extends Route {
   }
 
   setupController (controller, model) {
-    controller.setProperties({
+    Object.assign(controller, {
       model:     model.document,
       employees: model.employees
     });

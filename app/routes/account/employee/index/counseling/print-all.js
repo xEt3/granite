@@ -12,8 +12,10 @@ export default class PrintAllRoute extends Route {
 
   resetController (controller, isExiting) {
     if (isExiting) {
-      controller.issue = undefined;
-      controller.slug  = undefined;
+      Object.assign(controller, {
+        issue: undefined,
+        slug:  undefined
+      });
     }
   }
 
