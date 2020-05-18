@@ -1,4 +1,4 @@
-<div class="ui field" ...attributes {{did-insert (fn @onInsert this)}} {{will-destroy (fn @onDestroy this)}}>
+<div class="ui field filter-pane__control" ...attributes {{did-insert (fn @onInsert this)}} {{will-destroy (fn @onDestroy this)}}>
   {{#if (eq @type "select")}}
     <UiDropdown @class={{this.selectionClass}} @selected={{@state}} @onChange={{fn this.update}} as |execute mapper|>
       <div class="default text">

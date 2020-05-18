@@ -93,13 +93,13 @@ module('Acceptance | employees', function (hooks) {
     assert.dom('.negative.ui.button.small.text').hasText('Reset All');
 
     for (let i = 2; i <= filters + 1; i++) {
-      assert.dom(`div:nth-child(${i}) > h4 > i.down`).exists();
-      await click(`div:nth-child(${i}) > h4`);
-      assert.dom(`div:nth-child(${i}) > h4 > i.up`).exists();
+      assert.dom(`.filter-pane__section:nth-child(${i}) > h4 > i.down`).exists();
+      await click(`.filter-pane__section:nth-child(${i}) > h4`);
+      assert.dom(`.filter-pane__section:nth-child(${i}) > h4 > i.up`).exists();
     }
 
     [ 'Select a Supervisor', 'Select a Department', 'Select a Location' ].forEach((filter, i) => {
-      assert.dom(`div:nth-child(${i + 2}) > div > div > div > div.default.text`).hasText(filter);
+      assert.dom(`.filter-pane__section:nth-child(${i + 2}) > div > div > div > div.default.text`).hasText(filter);
       assert.equal(findAll(`div:nth-child(${i + 2}) > div > div > div > div > div.item`).length > 1, true, `${filter} dropdown has more than one option`);
     });
 

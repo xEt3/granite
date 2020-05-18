@@ -66,7 +66,7 @@ module('Integration | Component | list-item/educate/webinar-item', function (hoo
         @webinar={{this.webinar}}
         @authorization={{this.webinarAuthorization}} />
     `);
-    await this.pauseTest();
+
     assert.dom(this.element, '.webinar-card__title').includesText(webinar.title);
     assert.dom(this.element, '.webinar-card__description').includesText(webinar.description);
     assert.dom('.webinar-card__purchase').doesNotExist();

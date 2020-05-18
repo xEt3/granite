@@ -34,12 +34,12 @@ export default class ModalBaseComponent extends Component {
   }
 
   getModalById () {
-    return $(`#${this.modalId}`);
+    return $(`#${this.args.modalId || this.modalId}`);
   }
 
   @action
   respond (response) {
-    const modalId = this.modalId;
+    const modalId = this.args.modalId || this.modalId;
     // Bubble response
     let ret = this.onResponse?.(response);
     // Either way close the modal

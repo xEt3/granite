@@ -2,5 +2,9 @@ import ApplicationSerializer from './application';
 
 export default ApplicationSerializer.extend({
   include: [ 'correctiveActionSeverities' ],
-  embed:   true
+  embed:   true,
+
+  keyForAttribute (attr) {
+    return attr;
+  }
 });

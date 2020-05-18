@@ -17,7 +17,7 @@ module('Acceptance | login behaviors', function (hooks) {
     await fillIn('input[type="password"]', '1234');
     await click('button[type="submit"]');
     const controller = this.owner.lookup('controller:login');
-    assert.equal(controller.get('errorMessage'), 'User not found', 'error message is "User not found"');
+    assert.equal(controller.data.statuses.working.error.message, 'User not found', 'error message is "User not found"');
     assert.equal(currentURL(), '/login', 'Still on login page');
     await settled();
   });

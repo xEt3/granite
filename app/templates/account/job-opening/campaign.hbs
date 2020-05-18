@@ -8,12 +8,12 @@
     <LinkTo @route="account.job-opening.campaign.applicant-tracking" class="item">
       <i class="users icon"></i>Applicants
     </LinkTo>
-    {{#if (not this.model.closed)}}
+    {{#unless this.model.closed}}
       <LinkTo @route="account.job-opening.campaign.talent-pool" class="item">
         <i class="archive icon"></i>Talent Pool
       </LinkTo>
-    {{/if}}
-    {{#if this.EEOEnabled}}
+    {{/unless}}
+    {{#if this.company.collectEEO}}
       <LinkTo @route="account.job-opening.campaign.eeo-reporting" class="item">
         <i class="file alternate icon"></i>EEO Reports
       </LinkTo>

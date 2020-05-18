@@ -5,7 +5,6 @@ import Controller from '@ember/controller';
 import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import del from 'granite/mixins/controller-abstractions/delete';
 import { closeMessageMap } from 'granite/config/statics';
-import { tracked } from '@glimmer/tracking';
 
 @classic
 export default class CampaignController extends Controller.extend(addEdit, del) {
@@ -14,7 +13,6 @@ export default class CampaignController extends Controller.extend(addEdit, del) 
 
   transitionAfterDelete = 'account.recruiting.index.index';
   transitionWithModel = false;
-  @tracked  EEOEnabled
 
   @computed('model.{sendCloseNotice,allocateTalentPool}')
   get confirmCloseMessage () {

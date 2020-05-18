@@ -14,10 +14,6 @@ export default class AccountRecruitingNewRoute extends Route {
     };
   }
 
-  get departments () {
-    return this.store.findAll('department');
-  }
-
   getModelDefaults () {
     return { creator: this.auth.get('user.employee') };
   }

@@ -11,12 +11,14 @@
     @form={{this.form}}
     @model={{this.model}}
     @controller={{this}}
-    @working={{this.working}}
+    @working={{this.data.statuses.savingCampaign.isLoading}}
     @submitClass="huge fluid green"
-    @onsubmit={{fn this.save this.model}}
-    @disabled={{or (not this.model.name) (not this.model.job)}}
+    @onsubmit={{fn this.data.saveRecord this.model 'savingCampaign' (hash
+      transitionWithModel=true
+      transitionAfterSave="account.job-opening"
+    )}}
+    @disabled={{or (and (not this.model.name) (not this.model.defaultName)) (not this.model.job)}}
   >
     Save and Continue
   </QuickForm>
-
 </div>
