@@ -1,11 +1,3 @@
-import classic from 'ember-classic-decorator';
-import { action } from '@ember/object';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-@classic
-export default class IssueDocuments extends Component {
-  @action
-  delete () {
-    this.onDelete(this.document);
-  }
-}
+export default class DisplayIssueDocumentsComponent extends Component {}

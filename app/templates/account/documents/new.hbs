@@ -2,15 +2,28 @@
   <h2 class="ui dividing header">Add a New Document</h2>
 
   <div class="ui form">
-    <DropZone @id="input__dropzone--document" @class="input__dropzone" @url="/api/v1/file" @uploadMultiple={{false}} @maxFiles={{1}} @autoProcessQueue={{false}} @dictDefaultMessage="Drop or Click to Select a File" @thumbnailWidth="175" @headers={{hash X-API-Token=this.auth.token}} @addedfile={{this.addedFile}} @success={{this.uploadedFile}} @capture="camera" />
+    <DropZone
+      @id={{this.dropzoneId}}
+      @class="input__dropzone"
+      @url={{this.files.fileEndpoint}}
+      @method="put"
+      @uploadMultiple={{false}}
+      @maxFiles={{1}}
+      @autoProcessQueue={{false}}
+      @dictDefaultMessage="Drop or Click to Select a File"
+      @thumbnailWidth="175"
+      @headers={{hash X-API-Token=this.auth.token}}
+      @addedfile={{this.files.addedFile}}
+      @success={{this.files.uploadedFile}}
+      @capture="camera" />
     <div class="ui divider"></div>
 
-    <Input::UiInput @type="text" @inputId="file-title" @placeholder="File Title" @value={{this.title}} />
+    <Input::UiInput @type="text" @inputId="file-title" @placeholder="File Title" @value={{this.fileData.title}} />
 
     {{#if this.showDescription}}
       <div class="field animated fadeInUp">
         <label for="file-description">Description</label>
-        <Textarea @id="file-description" @rows="3" placeholder="Description" @value={{this.description}} />
+        <Textarea @id="file-description" @rows="3" placeholder="Description" @value={{this.fileData.description}} />
       </div>
     {{/if}}
 
@@ -22,7 +35,7 @@
 
     <div class="field animated fadeInUp">
       <label for="file-tags">File Tags</label>
-      <UiDropdown @class="fluid multiple search selection" @allowAdditions={{true}} @hideAdditions={{false}} @selected={{this.tags}} @forceSelection={{false}} @onChange={{set this.tags _}} as |execute mapper|>
+      <UiDropdown @class="fluid multiple search selection" @allowAdditions={{true}} @hideAdditions={{false}} @selected={{this.tags}} @forceSelection={{false}} @onChange={{set this.fileData.tags _}} as |execute mapper|>
         <i class="dropdown icon"></i>
         <div class="default text">Type or Select Tags</div>
         <div class="menu">
@@ -36,8 +49,8 @@
     </div>
 
     <div class="ui divider"></div>
-    <form {{action "uploadFile" on="submit"}}>
-      <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.working.isLoading}} @disabled={{this.disableSubmit}}>Save document</Form::ActionButton>
+    <form {{on "submit" (prevent-default this.files.upload)}}>
+      <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.fileHandling.isLoading}} @disabled={{this.disableSubmit}}>Save document</Form::ActionButton>
     </form>
   </div>
 </div>

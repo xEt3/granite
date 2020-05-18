@@ -27,9 +27,9 @@
   </div>
 {{/if}}
 
-{{#if model.documents}}
+{{#if this.model.documents}}
   <div class="center aligned text">
-    <a href="#" class="item" {{action (toggle "showDocuments" this)}}>
+    <a href="#" class="item" {{on "click" (prevent-default (toggle "showDocuments" this))}}>
       <i class="eye {{if showDocuments "slash"}} icon"></i>{{if showDocuments "Hide" "Show"}} {{model.documents.length}} supporting {{inflect-text "document" model.documents.length}}
     </a>
   </div>
@@ -37,17 +37,17 @@
 
 {{#if showDocuments}}
   <div class="ui divided items">
-    {{#each model.documents as |document|}}
+    {{#each this.model.documents as |document|}}
       <Display::IssueDocuments
         @document={{document}}
         class="item"
-        @onDelete={{action "delete"}}
+        @onDelete={{fn this.deleteDocument document}}
       />
     {{/each}}
   </div>
 {{/if}}
 
-{{#liquid-if model.followUps.length}}
+{{#liquid-if this.model.followUps.length}}
   <div class="ui divider"></div>
   <h2><i class="repeat icon"></i>Follow ups</h2>
   <Display::ResourceList

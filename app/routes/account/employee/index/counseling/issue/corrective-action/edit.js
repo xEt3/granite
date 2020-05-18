@@ -18,10 +18,8 @@ export default class AccountEmployeeCounselingIssueCorrectiveActionEditRoute ext
   }
 
   setupController (controller, model) {
-    controller.setProperties({
-      model:      model.correctiveAction,
-      issueTypes: model.issueTypes
-    });
+    controller.model =      model.correctiveAction;
+    controller.issueTypes = model.issueTypes;
   }
 
   async getIssueTypes () {
