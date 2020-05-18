@@ -10,62 +10,43 @@ import Validations from './validations/company';
 
 @classic
 export default class Company extends Model.extend(Validations) {
-  @attr('string')
-  name;
+  @attr('string') name;
 
-  @attr('string')
-  email;
+  @attr('string') email;
 
-  @attr('string')
-  ein;
+  @attr('string') ein;
 
-  @attr('string')
-  addressLine1;
+  @attr('string') addressLine1;
 
-  @attr('string')
-  addressLine2;
+  @attr('string') addressLine2;
 
-  @attr('string')
-  addressCity;
+  @attr('string') addressCity;
 
-  @attr('string')
-  addressState;
+  @attr('string') addressState;
 
-  @attr('string')
-  addressZipcode;
+  @attr('string') addressZipcode;
 
-  @attr('string')
-  contactPhone;
+  @attr('string') contactPhone;
 
-  @attr('string')
-  contactExtension;
+  @attr('string') contactExtension;
 
-  @attr('string')
-  contactFirstName;
+  @attr('string') contactFirstName;
 
-  @attr('string')
-  contactMiddleName;
+  @attr('string') contactMiddleName;
 
-  @attr('string')
-  contactLastName;
+  @attr('string') contactLastName;
 
-  @attr('Date')
-  deactivatedOn;
+  @attr('Date') deactivatedOn;
 
-  @attr('Date')
-  reactivatedOn;
+  @attr('Date') reactivatedOn;
 
-  @attr('array')
-  linkedServices;
+  @attr('array') linkedServices;
 
-  @attr('array')
-  employeeCustomFields;
+  @attr('array') employeeCustomFields;
 
-  @hasMany('corrective-action-severity')
-  correctiveActionSeverities;
+  @hasMany('corrective-action-severity') correctiveActionSeverities;
 
-  @attr('string', { defaultValue: () => moment.tz.guess() })
-  tz;
+  @attr('string', { defaultValue: () => moment.tz.guess() }) tz;
 
   @belongsTo('file', {
     async:   true,
@@ -73,20 +54,15 @@ export default class Company extends Model.extend(Validations) {
   })
   logo;
 
-  @attr('string')
-  logoUrl;
+  @attr('string') logoUrl;
 
-  @attr('string')
-  logoDominantColor;
+  @attr('string') logoDominantColor;
 
-  @attr('array')
-  logoPalette;
+  @attr('array') logoPalette;
 
-  @attr('string')
-  probationaryPeriodUnit;
+  @attr('string') probationaryPeriodUnit;
 
-  @attr('number')
-  probationaryPeriodAmount;
+  @attr('number') probationaryPeriodAmount;
 
   @computed('logoPalette')
   get rgbPalette () {
@@ -94,32 +70,23 @@ export default class Company extends Model.extend(Validations) {
     return palette && palette.length ? palette.map(hexToRgb) : false;
   }
 
-  @attr('date')
-  firstStepsCompletedOn;
+  @attr('date') firstStepsCompletedOn;
 
-  @attr('array', { defaultValue: () => A() })
-  firstStepsCompleted;
+  @attr('array', { defaultValue: () => A() }) firstStepsCompleted;
 
-  @attr('array')
-  disqualificationReasons;
+  @attr('array') disqualificationReasons;
 
-  @hasMany('label')
-  labels;
+  @hasMany('label') labels;
 
-  @attr('string')
-  urlPrefix;
+  @attr('string') urlPrefix;
 
-  @attr('boolean')
-  collectEEO;
+  @attr('boolean') collectEEO;
 
-  @attr('boolean')
-  collectAA;
+  @attr('boolean') collectAA;
 
-  @attr('boolean')
-  exposeBetaModules;
+  @attr('boolean') exposeBetaModules;
 
-  @attr('string')
-  accountBillingPromo;
+  @attr('string') accountBillingPromo;
 
   @computed('linkedServices.[]')
   get linkedToSlate () {

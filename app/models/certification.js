@@ -5,47 +5,33 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 
 @classic
 export default class Certification extends Model {
-  @attr('string')
-  name;
+  @attr('string') name;
 
-  @attr('string')
-  note;
+  @attr('string') note;
 
-  @attr('number', { defaultValue: 1 })
-  renewalPeriodAmount; // 1
+  @attr('number', { defaultValue: 1 }) renewalPeriodAmount; // 1
 
-  @attr('string', { defaultValue: 'years' })
-  renewalPeriodUnit; // year
+  @attr('string', { defaultValue: 'years' }) renewalPeriodUnit; // year
 
-  @attr('date')
-  nextRenewalDate;
+  @attr('date') nextRenewalDate;
 
-  @attr('boolean')
-  renews;
+  @attr('boolean') renews;
 
-  @hasMany('renewal')
-  renewals;
+  @hasMany('renewal') renewals;
 
-  @attr('boolean')
-  requiresDocument;
+  @attr('boolean') requiresDocument;
 
-  @attr('date')
-  initialDate;
+  @attr('date') initialDate;
 
-  @belongsTo('file')
-  document;
+  @belongsTo('file') document;
 
-  @belongsTo('company')
-  company;
+  @belongsTo('company') company;
 
-  @belongsTo('employee')
-  creator;
+  @belongsTo('employee') creator;
 
-  @belongsTo('employee')
-  employee;
+  @belongsTo('employee') employee;
 
-  @attr('date')
-  documentUploadedOn;
+  @attr('date') documentUploadedOn;
 
   @attr('date', {
     defaultValue () {

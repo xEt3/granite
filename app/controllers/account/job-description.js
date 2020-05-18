@@ -7,8 +7,7 @@ import del from 'granite/mixins/controller-abstractions/delete';
 
 @classic
 export default class JobDescriptionController extends Controller.extend(addEdit, del) {
-  @service
-  auth;
+  @service auth;
 
   transitionAfterDelete = 'account.recruiting.job-descriptions';
   transitionWithModel = false;

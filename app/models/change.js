@@ -5,17 +5,13 @@ import { belongsTo } from 'ember-data/relationships';
 
 @classic
 export default class Change extends Model {
-  @attr('array')
-  changes;
+  @attr('array') changes;
 
-  @attr('boolean')
-  applied;
+  @attr('boolean') applied;
 
-  @attr('date')
-  reviewedOn;
+  @attr('date') reviewedOn;
 
-  @attr('date')
-  effectiveOn;
+  @attr('date') effectiveOn;
 
   @belongsTo('employee', {
     async:   true,

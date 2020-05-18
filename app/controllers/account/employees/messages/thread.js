@@ -6,8 +6,7 @@ import { tracked } from '@glimmer/tracking';
 
 @classic
 export default class ThreadController extends Controller {
-  @service
-  socket;
+  @service socket;
 
   queryParams = [ 'sb' ];
   @tracked sb = 0;

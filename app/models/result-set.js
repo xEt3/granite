@@ -5,18 +5,13 @@ import { belongsTo } from 'ember-data/relationships';
 
 @classic
 export default class ResultSet extends Model {
-  @attr()
-  deserialized;
+  @attr() deserialized;
 
-  @attr('string')
-  serialized;
+  @attr('string') serialized;
 
-  @belongsTo('company')
-  company;
+  @belongsTo('company') company;
 
-  @belongsTo('employee')
-  creator;
+  @belongsTo('employee') creator;
 
-  @attr('date')
-  created;
+  @attr('date') created;
 }

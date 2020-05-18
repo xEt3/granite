@@ -5,59 +5,41 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 
 @classic
 export default class FileAssignment extends Model {
-  @attr('string')
-  cannedType;
+  @attr('string') cannedType;
 
-  @attr('date')
-  cannedSubmitted;
+  @attr('date') cannedSubmitted;
 
-  @attr('string')
-  message;
+  @attr('string') message;
 
-  @attr('boolean', { defaultValue: true })
-  signatureRequired;
+  @attr('boolean', { defaultValue: true }) signatureRequired;
 
-  @attr('string')
-  signature;
+  @attr('string') signature;
 
-  @attr('date')
-  readOn;
+  @attr('date') readOn;
 
-  @attr('date')
-  signedOn;
+  @attr('date') signedOn;
 
-  @attr('boolean', { defaultValue: true })
-  visibleToEmployee;
+  @attr('boolean', { defaultValue: true }) visibleToEmployee;
 
-  @attr('string')
-  fileType;
+  @attr('string') fileType;
 
-  @belongsTo('employee')
-  creator;
+  @belongsTo('employee') creator;
 
-  @belongsTo('company')
-  company;
+  @belongsTo('company') company;
 
-  @belongsTo('employee')
-  employee;
+  @belongsTo('employee') employee;
 
-  @belongsTo('file')
-  file;
+  @belongsTo('file') file;
 
-  @belongsTo('file')
-  filledFile;
+  @belongsTo('file') filledFile;
 
-  @hasMany('file')
-  supportingDocuments;
+  @hasMany('file') supportingDocuments;
 
-  @attr()
-  fillFile; // passthru for pojo data to fill pdf files
+  @attr() fillFile; // passthru for pojo data to fill pdf files
 
-  @hasMany('file')
-  followups;
+  @hasMany('file') followups;
 
-  @attr('date')
-  effectiveOn; // Placeholder for effective dated changes. This field is only here to pass along to the api
+  @attr('date') effectiveOn; // Placeholder for effective dated changes. This field is only here to pass along to the api
 
   @attr('date', {
     defaultValue () {

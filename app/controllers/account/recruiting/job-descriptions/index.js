@@ -6,8 +6,7 @@ import resource from 'granite/mixins/controller-abstractions/resource';
 
 @classic
 export default class IndexController extends Controller.extend(resource) {
-  @service
-  auth;
+  @service auth;
 
   @computed
   get intros () {

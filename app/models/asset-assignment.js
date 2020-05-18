@@ -5,11 +5,9 @@ import { belongsTo } from 'ember-data/relationships';
 
 @classic
 export default class AssetAssignment extends Model {
-  @belongsTo('employee')
-  employee;
+  @belongsTo('employee') employee;
 
-  @belongsTo('company-user')
-  assigner;
+  @belongsTo('company-user') assigner;
 
   @attr('date', {
     defaultValue () {

@@ -7,36 +7,25 @@ import Validations from './validations/form-element';
 
 @classic
 export default class FormElement extends Model.extend(Validations) {
-  @attr('string')
-  label;
+  @attr('string') label;
 
-  @attr('string')
-  type;
+  @attr('string') type;
 
-  @attr('array', { defaultValue: () => A() })
-  options;
+  @attr('array', { defaultValue: () => A() }) options;
 
-  @attr('number')
-  trueWeight;
+  @attr('number') trueWeight;
 
-  @attr('number')
-  falseWeight;
+  @attr('number') falseWeight;
 
-  @attr('boolean')
-  trueDisqualifies;
+  @attr('boolean') trueDisqualifies;
 
-  @attr('boolean')
-  falseDisqualifies;
+  @attr('boolean') falseDisqualifies;
 
-  @attr('boolean')
-  allowAdditions;
+  @attr('boolean') allowAdditions;
 
-  @attr('boolean')
-  inlineInput;
+  @attr('boolean') inlineInput;
 
-  @attr('boolean')
-  multiple;
+  @attr('boolean') multiple;
 
-  @attr('date', { defaultValue: () => new Date() })
-  created;
+  @attr('date', { defaultValue: () => new Date() }) created;
 }

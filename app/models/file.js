@@ -6,41 +6,29 @@ import Validations from './validations/employee';
 
 @classic
 export default class File extends Model.extend(Validations) {
-  @attr('string')
-  title;
+  @attr('string') title;
 
-  @attr('string')
-  description;
+  @attr('string') description;
 
-  @attr('string')
-  objectPath;
+  @attr('string') objectPath;
 
-  @attr('string')
-  previewPath;
+  @attr('string') previewPath;
 
-  @attr('string')
-  extension;
+  @attr('string') extension;
 
-  @attr('string')
-  mimeType;
+  @attr('string') mimeType;
 
-  @attr('string')
-  url;
+  @attr('string') url;
 
-  @attr('string')
-  directory;
+  @attr('string') directory;
 
-  @attr('string')
-  key;
+  @attr('string') key;
 
-  @attr()
-  associatedData;
+  @attr() associatedData;
 
-  @attr('array')
-  tags;
+  @attr('array') tags;
 
-  @attr('boolean')
-  systemUse;
+  @attr('boolean') systemUse;
 
   @belongsTo('company-user', {
     async:   true,
@@ -60,6 +48,5 @@ export default class File extends Model.extend(Validations) {
   })
   correctiveAction;
 
-  @attr('date', { defaultValue: () => new Date() })
-  created;
+  @attr('date', { defaultValue: () => new Date() }) created;
 }

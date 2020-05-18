@@ -5,26 +5,19 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 
 @classic
 export default class Asset extends Model {
-  @attr('string')
-  name;
+  @attr('string') name;
 
-  @attr('string')
-  description;
+  @attr('string') description;
 
-  @attr('string')
-  icon;
+  @attr('string') icon;
 
-  @attr('boolean')
-  sharable;
+  @attr('boolean') sharable;
 
-  @attr('array')
-  attributes;
+  @attr('array') attributes;
 
-  @belongsTo('company-user')
-  creator;
+  @belongsTo('company-user') creator;
 
-  @belongsTo('company')
-  company;
+  @belongsTo('company') company;
 
   @hasMany('file', {
     inverse: null,

@@ -7,11 +7,9 @@ import moment from 'moment';
 
 @classic
 export default class UnauthorizedController extends Controller {
-  @controller('login')
-  loginController;
+  @controller('login') loginController;
 
-  @service
-  auth;
+  @service auth;
 
   @computed('fromError')
   get unauthorizedReason () {

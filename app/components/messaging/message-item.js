@@ -9,8 +9,7 @@ import inViewportMixin from 'ember-in-viewport';
 @classic
 @classNames('item', 'message')
 class MessageItemComponent extends Component.extend(inViewportMixin) {
-  @service
-  messaging;
+  @service messaging;
 
   @computed('message.readBy.[]', '__didSendReadUpdate', 'user')
   get isReadByCurrentUser () {

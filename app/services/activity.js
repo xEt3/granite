@@ -4,11 +4,9 @@ import { inject as service } from '@ember/service';
 
 @classic
 export default class ActivityService extends Service {
-  @service
-  store;
+  @service store;
 
-  @service
-  auth;
+  @service auth;
 
   create (data = {}) {
     let user = this.get('auth.user');

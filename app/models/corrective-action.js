@@ -8,20 +8,15 @@ import { Promise } from 'rsvp';
 
 @classic
 export default class CorrectiveAction extends Model {
-  @attr('string')
-  type;
+  @attr('string') type;
 
-  @attr('string')
-  descriptionIssues;
+  @attr('string') descriptionIssues;
 
-  @attr('string')
-  descriptionExpectations;
+  @attr('string') descriptionExpectations;
 
-  @attr('string', { defaultValue: formalActionSuggestions.consequences })
-  descriptionConsequences;
+  @attr('string', { defaultValue: formalActionSuggestions.consequences }) descriptionConsequences;
 
-  @belongsTo('company')
-  company;
+  @belongsTo('company') company;
 
   @belongsTo('employee', {
     async:   true,
@@ -29,44 +24,31 @@ export default class CorrectiveAction extends Model {
   })
   creator;
 
-  @belongsTo('employee')
-  employee;
+  @belongsTo('employee') employee;
 
-  @belongsTo('employee-issue')
-  employeeIssue;
+  @belongsTo('employee-issue') employeeIssue;
 
-  @hasMany('employee')
-  excludedEmployees;
+  @hasMany('employee') excludedEmployees;
 
-  @hasMany('corrective-action-followup')
-  followUps;
+  @hasMany('corrective-action-followup') followUps;
 
-  @attr('string')
-  severity;
+  @attr('string') severity;
 
-  @attr('string')
-  notes;
+  @attr('string') notes;
 
-  @attr('string')
-  followUpNotes;
+  @attr('string') followUpNotes;
 
-  @attr('boolean')
-  didResolve;
+  @attr('boolean') didResolve;
 
-  @attr('date')
-  followUpOn;
+  @attr('date') followUpOn;
 
-  @attr('date')
-  resolutionStatusOn;
+  @attr('date') resolutionStatusOn;
 
-  @hasMany('file')
-  documents;
+  @hasMany('file') documents;
 
-  @attr('date', { defaultValue: () => new Date() })
-  issuedOn;
+  @attr('date', { defaultValue: () => new Date() }) issuedOn;
 
-  @attr('date', { defaultValue: () => new Date() })
-  created;
+  @attr('date', { defaultValue: () => new Date() }) created;
 
   @computed('severity', 'company')
   get actionSeverity () {

@@ -6,8 +6,7 @@ import resolveForTypeKey from '../utils/resolve-for-type-key';
 
 @classic
 export default class Comment extends Model {
-  @attr('string')
-  text;
+  @attr('string') text;
 
   @belongsTo('employee', {
     async:   true,
@@ -15,15 +14,11 @@ export default class Comment extends Model {
   })
   commenter;
 
-  @attr('string-or-null')
-  targetId;
+  @attr('string-or-null') targetId;
 
-  @attr('string-or-null')
-  targetType;
+  @attr('string-or-null') targetType;
 
-  @attr('date', { defaultValue: () => new Date() })
-  created;
+  @attr('date', { defaultValue: () => new Date() }) created;
 
-  @resolveForTypeKey('target')
-  target;
+  @resolveForTypeKey('target') target;
 }

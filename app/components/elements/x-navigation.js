@@ -9,8 +9,7 @@ import Component from '@ember/component';
 @classNames('ui menu nav__main', 'menu__container-responsive')
 @classNameBindings('transparent:nav__main-transparent')
 export default class XNavigation extends Component {
-  @service
-  auth;
+  @service auth;
 
   open = false;
 

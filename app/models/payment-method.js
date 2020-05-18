@@ -5,8 +5,7 @@ const { Model, attr, belongsTo } = DS;
 
 @classic
 export default class PaymentMethod extends Model {
-  @attr('string')
-  nonce;
+  @attr('string') nonce;
 
   @belongsTo('company', {
     async:   true,
@@ -14,6 +13,5 @@ export default class PaymentMethod extends Model {
   })
   company;
 
-  @attr('date', { defaultValue: () => new Date() })
-  created;
+  @attr('date', { defaultValue: () => new Date() }) created;
 }

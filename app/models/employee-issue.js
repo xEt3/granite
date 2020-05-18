@@ -7,11 +7,9 @@ import { Promise } from 'rsvp';
 
 @classic
 export default class EmployeeIssue extends Model {
-  @attr('string')
-  title;
+  @attr('string') title;
 
-  @belongsTo('company', { inverse: null })
-  company;
+  @belongsTo('company', { inverse: null }) company;
 
   @belongsTo('employee', {
     async:   false,
@@ -19,23 +17,17 @@ export default class EmployeeIssue extends Model {
   })
   creator;
 
-  @belongsTo('employee', { inverse: null })
-  employee;
+  @belongsTo('employee', { inverse: null }) employee;
 
-  @hasMany('company-user', { inverse: null })
-  excludedUsers;
+  @hasMany('company-user', { inverse: null }) excludedUsers;
 
-  @attr('string')
-  severity;
+  @attr('string') severity;
 
-  @attr('date')
-  resolvedOn;
+  @attr('date') resolvedOn;
 
-  @attr('string')
-  type;
+  @attr('string') type;
 
-  @attr('date', { defaultValue: () => new Date() })
-  created;
+  @attr('date', { defaultValue: () => new Date() }) created;
 
   @computed('severity', 'company')
   get actionSeverity () {

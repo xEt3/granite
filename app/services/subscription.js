@@ -7,11 +7,9 @@ import { once } from '@ember/runloop';
 
 @classic
 export default class SubscriptionService extends Service {
-  @service
-  ajax;
+  @service ajax;
 
-  @service
-  auth;
+  @service auth;
 
   init () {
     super.init(...arguments);

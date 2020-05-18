@@ -5,15 +5,11 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 
 @classic
 export default class MessageThread extends Model {
-  @hasMany('employee')
-  between;
+  @hasMany('employee') between;
 
-  @belongsTo('company')
-  company;
+  @belongsTo('company') company;
 
-  @belongsTo('employee')
-  creator;
+  @belongsTo('employee') creator;
 
-  @attr('date', { defaultValue: () => new Date() })
-  created;
+  @attr('date', { defaultValue: () => new Date() }) created;
 }

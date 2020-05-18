@@ -21,65 +21,45 @@ export default class Employee extends Model.extend(Validations) {
     return fullName.length > 0 ? fullName : undefined;
   }
 
-  @attr('string')
-  firstName;
+  @attr('string') firstName;
 
-  @attr('string')
-  middleName;
+  @attr('string') middleName;
 
-  @attr('string')
-  lastName;
+  @attr('string') lastName;
 
-  @attr('string')
-  suffixName;
+  @attr('string') suffixName;
 
-  @attr('string')
-  gender;
+  @attr('string') gender;
 
-  @attr('string')
-  addressLine1;
+  @attr('string') addressLine1;
 
-  @attr('string')
-  addressLine2;
+  @attr('string') addressLine2;
 
-  @attr('string')
-  addressCity;
+  @attr('string') addressCity;
 
-  @attr('string')
-  addressState;
+  @attr('string') addressState;
 
-  @attr('string')
-  addressZip;
+  @attr('string') addressZip;
 
-  @attr('string')
-  email;
+  @attr('string') email;
 
-  @attr('string')
-  privateEmail;
+  @attr('string') privateEmail;
 
-  @attr('string')
-  emergencyContactNameFirst;
+  @attr('string') emergencyContactNameFirst;
 
-  @attr('string')
-  emergencyContactNameLast;
+  @attr('string') emergencyContactNameLast;
 
-  @attr('string')
-  emergencyContactPhone;
+  @attr('string') emergencyContactPhone;
 
-  @attr('string')
-  picture;
+  @attr('string') picture;
 
-  @attr('string')
-  phone;
+  @attr('string') phone;
 
-  @attr('string')
-  ssn;
+  @attr('string') ssn;
 
-  @attr('string')
-  workersCompClassCode;
+  @attr('string') workersCompClassCode;
 
-  @attr('string')
-  employeeNumber;
+  @attr('string') employeeNumber;
 
   @computed('ssn')
   get ssnMasked () {
@@ -88,35 +68,25 @@ export default class Employee extends Model.extend(Validations) {
   }
 
   // Company and Position Information
-  @attr('date')
-  activatedOn;
+  @attr('date') activatedOn;
 
-  @attr('date')
-  hireDate;
+  @attr('date') hireDate;
 
-  @attr('string')
-  jobTitle;
+  @attr('string') jobTitle;
 
-  @attr('number')
-  payRate;
+  @attr('number') payRate;
 
-  @attr('boolean', { defaultValue: false })
-  exempt;
+  @attr('boolean', { defaultValue: false }) exempt;
 
-  @attr('string', { defaultValue: 'hourly' })
-  payRateType;
+  @attr('string', { defaultValue: 'hourly' }) payRateType;
 
-  @attr('string')
-  eeoJobCategory;
+  @attr('string') eeoJobCategory;
 
-  @attr('date')
-  probationUntil;
+  @attr('date') probationUntil;
 
-  @attr('boolean')
-  onboarding;
+  @attr('boolean') onboarding;
 
-  @attr('number')
-  onboardingStep;
+  @attr('number') onboardingStep;
 
   @belongsTo('company-user', {
     async:   true,
@@ -124,15 +94,12 @@ export default class Employee extends Model.extend(Validations) {
   })
   onboarder;
 
-  @attr('number')
-  onboardingProgress;
+  @attr('number') onboardingProgress;
 
   // Termination
-  @attr('boolean')
-  offboarding;
+  @attr('boolean') offboarding;
 
-  @attr('number')
-  offboardingStep;
+  @attr('number') offboardingStep;
 
   @belongsTo('company-user', {
     async:   true,
@@ -140,69 +107,48 @@ export default class Employee extends Model.extend(Validations) {
   })
   offboarder;
 
-  @attr('number')
-  offboardingProgress;
+  @attr('number') offboardingProgress;
 
-  @attr('date')
-  offboardingCompleted;
+  @attr('date') offboardingCompleted;
 
-  @hasMany('file', { defaultValue: [] })
-  offboardingDocuments;
+  @hasMany('file', { defaultValue: [] }) offboardingDocuments;
 
-  @attr('date')
-  terminatedOn;
+  @attr('date') terminatedOn;
 
-  @attr('string')
-  terminationReason;
+  @attr('string') terminationReason;
 
-  @attr('boolean')
-  eligibleForRehire;
+  @attr('boolean') eligibleForRehire;
 
-  @attr('boolean', { defaultValue: true })
-  finalAddressSelfService;
+  @attr('boolean', { defaultValue: true }) finalAddressSelfService;
 
-  @attr('string')
-  finalAddressLine1;
+  @attr('string') finalAddressLine1;
 
-  @attr('string')
-  finalAddressLine2;
+  @attr('string') finalAddressLine2;
 
-  @attr('string')
-  finalAddressCity;
+  @attr('string') finalAddressCity;
 
-  @attr('string')
-  finalAddressState;
+  @attr('string') finalAddressState;
 
-  @attr('string')
-  finalAddressZip;
+  @attr('string') finalAddressZip;
 
-  @attr('string')
-  finalEmail;
+  @attr('string') finalEmail;
 
-  @attr('date')
-  finalAddressCollected;
+  @attr('date') finalAddressCollected;
 
-  @attr('string')
-  externalLinkService;
+  @attr('string') externalLinkService;
 
-  @attr('string')
-  externalLinkId;
+  @attr('string') externalLinkId;
 
-  @attr('string')
-  externalLinkDocumentLink;
+  @attr('string') externalLinkDocumentLink;
 
-  @attr('boolean')
-  externalLinkAutomaticSync;
+  @attr('boolean') externalLinkAutomaticSync;
 
-  @attr('date')
-  externalLinkLastSync;
+  @attr('date') externalLinkLastSync;
 
   // Auto exit interview
-  @attr('boolean')
-  autoExitInterview;
+  @attr('boolean') autoExitInterview;
 
-  @attr('date')
-  autoExitInterviewDate;
+  @attr('date') autoExitInterviewDate;
 
   @belongsTo('form', {
     async:   true,
@@ -211,11 +157,9 @@ export default class Employee extends Model.extend(Validations) {
   autoExitInterviewForm;
 
   // Auto I9 collection
-  @attr('boolean')
-  autoI9Collection;
+  @attr('boolean') autoI9Collection;
 
-  @attr('boolean')
-  autoW4Collection;
+  @attr('boolean') autoW4Collection;
 
   @belongsTo('company', {
     async:   true,
@@ -265,17 +209,13 @@ export default class Employee extends Model.extend(Validations) {
   })
   creator;
 
-  @attr('date')
-  dateOfBirth;
+  @attr('date') dateOfBirth;
 
-  @attr('date')
-  effectiveOn; // Placeholder for effective dated changes. This field is only here to pass along to the api
+  @attr('date') effectiveOn; // Placeholder for effective dated changes. This field is only here to pass along to the api
 
-  @attr({ defaultValue: () => {} })
-  customFields;
+  @attr({ defaultValue: () => {} }) customFields;
 
-  @attr('string')
-  separationNotes;
+  @attr('string') separationNotes;
 
   @computed('probationUntil')
   get onProbation () {

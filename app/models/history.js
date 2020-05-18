@@ -8,29 +8,21 @@ import humanizeKeyName from '../utils/humanize-key-name';
 
 @classic
 export default class History extends Model {
-  @attr('array')
-  diff;
+  @attr('array') diff;
 
-  @attr()
-  snapshot;
+  @attr() snapshot;
 
-  @attr('boolean')
-  applied;
+  @attr('boolean') applied;
 
-  @attr('boolean')
-  approved;
+  @attr('boolean') approved;
 
-  @attr('string')
-  creatorType;
+  @attr('string') creatorType;
 
-  @attr('string')
-  creatorId;
+  @attr('string') creatorId;
 
-  @attr('string')
-  targetType;
+  @attr('string') targetType;
 
-  @attr('string')
-  targetId;
+  @attr('string') targetId;
 
   @belongsTo('company', {
     async:   true,
@@ -38,20 +30,15 @@ export default class History extends Model {
   })
   company;
 
-  @attr('date')
-  reviewedOn;
+  @attr('date') reviewedOn;
 
-  @attr('date')
-  effectiveOn;
+  @attr('date') effectiveOn;
 
-  @attr('date', { defaultValue: () => new Date() })
-  created;
+  @attr('date', { defaultValue: () => new Date() }) created;
 
-  @resolveForTypeKey('creator')
-  creator;
+  @resolveForTypeKey('creator') creator;
 
-  @resolveForTypeKey('target')
-  target;
+  @resolveForTypeKey('target') target;
 
   @computed('diff.[]')
   get changedKeys () {

@@ -6,51 +6,35 @@ import resolveForTypeKey from '../utils/resolve-for-type-key';
 
 @classic
 export default class Activity extends Model {
-  @attr('string')
-  description;
+  @attr('string') description;
 
-  @attr('string')
-  descriptionHtml;
+  @attr('string') descriptionHtml;
 
-  @attr('string')
-  context;
+  @attr('string') context;
 
-  @attr('string')
-  action;
+  @attr('string') action;
 
-  @attr('string')
-  icon;
+  @attr('string') icon;
 
-  @attr('string')
-  tag;
+  @attr('string') tag;
 
-  @attr('string-or-null')
-  actorId;
+  @attr('string-or-null') actorId;
 
-  @attr('string-or-null')
-  actorType;
+  @attr('string-or-null') actorType;
 
-  @attr('string-or-null')
-  targetId;
+  @attr('string-or-null') targetId;
 
-  @attr('string-or-null')
-  targetType;
+  @attr('string-or-null') targetType;
 
-  @belongsTo('company')
-  company;
+  @belongsTo('company') company;
 
-  @hasMany('comment', { inverse: false })
-  comments;
+  @hasMany('comment', { inverse: false }) comments;
 
-  @hasMany('like', { inverse: false })
-  likes;
+  @hasMany('like', { inverse: false }) likes;
 
-  @attr('date', { defaultValue: () => new Date() })
-  created;
+  @attr('date', { defaultValue: () => new Date() }) created;
 
-  @resolveForTypeKey('actor')
-  actor;
+  @resolveForTypeKey('actor') actor;
 
-  @resolveForTypeKey('target')
-  target;
+  @resolveForTypeKey('target') target;
 }

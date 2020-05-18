@@ -8,8 +8,7 @@ import { closeMessageMap } from 'granite/config/statics';
 
 @classic
 export default class CampaignController extends Controller.extend(addEdit, del) {
-  @service
-  auth;
+  @service auth;
 
   transitionAfterDelete = 'account.recruiting.index.index';
   transitionWithModel = false;

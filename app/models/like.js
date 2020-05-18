@@ -5,9 +5,7 @@ import { belongsTo } from 'ember-data/relationships';
 
 @classic
 export default class Like extends Model {
-  @belongsTo('company-user', { inverse: false })
-  liker;
+  @belongsTo('company-user', { inverse: false }) liker;
 
-  @attr('date', { defaultValue: () => new Date() })
-  created;
+  @attr('date', { defaultValue: () => new Date() }) created;
 }

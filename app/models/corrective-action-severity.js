@@ -5,17 +5,13 @@ import attr from 'ember-data/attr';
 
 @classic
 export default class CorrectiveActionSeverity extends Model {
-  @attr('string')
-  name;
+  @attr('string') name;
 
-  @attr('number')
-  order;
+  @attr('number') order;
 
-  @attr('boolean')
-  formal;
+  @attr('boolean') formal;
 
-  @attr('date', { defaultValue: () => new Date() })
-  created;
+  @attr('date', { defaultValue: () => new Date() }) created;
 
   @computed('name', 'order')
   get title () {

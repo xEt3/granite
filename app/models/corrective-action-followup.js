@@ -5,18 +5,13 @@ import { belongsTo } from 'ember-data/relationships';
 
 @classic
 export default class CorrectiveActionFollowup extends Model {
-  @attr('string')
-  notes;
+  @attr('string') notes;
 
-  @attr('boolean')
-  didResolve;
+  @attr('boolean') didResolve;
 
-  @attr('date')
-  nextFollowup;
+  @attr('date') nextFollowup;
 
-  @belongsTo('employee')
-  creator;
+  @belongsTo('employee') creator;
 
-  @attr('date', { defaultValue: () => new Date() })
-  created;
+  @attr('date', { defaultValue: () => new Date() }) created;
 }

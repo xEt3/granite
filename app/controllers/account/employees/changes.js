@@ -6,8 +6,7 @@ import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
 @classic
 export default class ChangesController extends Controller.extend(addEdit) {
-  @service
-  ajax;
+  @service ajax;
 
   @action
   approveChange (change) {

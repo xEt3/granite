@@ -6,27 +6,19 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 
 @classic
 export default class Job extends Model.extend(Validations) {
-  @attr('string')
-  title;
+  @attr('string') title;
 
-  @attr('string')
-  description;
+  @attr('string') description;
 
-  @attr('string')
-  category;
+  @attr('string') category;
 
-  @belongsTo('company')
-  company;
+  @belongsTo('company') company;
 
-  @belongsTo('employee')
-  creator;
+  @belongsTo('employee') creator;
 
-  @belongsTo('department')
-  department;
+  @belongsTo('department') department;
 
-  @hasMany('asset')
-  assets;
+  @hasMany('asset') assets;
 
-  @attr('date', { defaultValue: () => new Date() })
-  created;
+  @attr('date', { defaultValue: () => new Date() }) created;
 }

@@ -8,11 +8,9 @@ import uriForModel from 'granite/utils/uri-for-model';
 
 @classic
 export default class SuggestionInput extends Component {
-  @service
-  router;
+  @service router;
 
-  @service
-  search;
+  @service search;
 
   @tracked debounceInterval = 100;
 

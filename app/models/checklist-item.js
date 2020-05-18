@@ -5,24 +5,17 @@ const { attr, belongsTo } = DS;
 
 @classic
 export default class ChecklistItem extends Model {
-  @attr('string')
-  title;
+  @attr('string') title;
 
-  @attr('date')
-  completedOn;
+  @attr('date') completedOn;
 
-  @attr('date')
-  assignedOn;
+  @attr('date') assignedOn;
 
-  @attr('number')
-  priority;
+  @attr('number') priority;
 
-  @belongsTo('employee', { async: true })
-  assignedTo;
+  @belongsTo('employee', { async: true }) assignedTo;
 
-  @belongsTo('employee', { async: true })
-  assignedBy;
+  @belongsTo('employee', { async: true }) assignedBy;
 
-  @belongsTo('employee', { async: true })
-  completedBy;
+  @belongsTo('employee', { async: true }) completedBy;
 }

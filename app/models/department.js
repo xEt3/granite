@@ -6,14 +6,11 @@ import { belongsTo } from 'ember-data/relationships';
 
 @classic
 export default class Department extends Model {
-  @attr('string')
-  name;
+  @attr('string') name;
 
-  @attr('string')
-  code;
+  @attr('string') code;
 
-  @belongsTo('company')
-  company;
+  @belongsTo('company') company;
 
   @belongsTo('company-user', {
     async:   true,

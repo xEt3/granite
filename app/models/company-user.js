@@ -6,26 +6,19 @@ import { belongsTo } from 'ember-data/relationships';
 
 @classic
 export default class CompanyUser extends Model {
-  @attr('string')
-  firstName;
+  @attr('string') firstName;
 
-  @attr('string')
-  middleName;
+  @attr('string') middleName;
 
-  @attr('string')
-  lastName;
+  @attr('string') lastName;
 
-  @attr('string')
-  email;
+  @attr('string') email;
 
-  @attr('string')
-  password;
+  @attr('string') password;
 
-  @attr('boolean')
-  inactive;
+  @attr('boolean') inactive;
 
-  @attr('array')
-  shownHints;
+  @attr('array') shownHints;
 
   @belongsTo('company', {
     async:   true,
@@ -39,11 +32,9 @@ export default class CompanyUser extends Model {
   })
   employee;
 
-  @attr('array')
-  permissions;
+  @attr('array') permissions;
 
-  @attr('date')
-  activatedOn;
+  @attr('date') activatedOn;
 
   @attr('date', {
     defaultValue () {

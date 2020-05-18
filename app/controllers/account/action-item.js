@@ -11,7 +11,8 @@ export default class AccountActionItemController extends Controller {
     transitionWithModel:   false
   }
 
-  @action save () {
+  @action
+  save () {
     this.data.saveRecord(this.model, 'working', this.afterSaveOptions);
   }
 

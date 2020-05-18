@@ -4,6 +4,5 @@ import attr from 'ember-data/attr';
 
 @classic
 export default class Permission extends Model {
-  @attr('string')
-  key;
+  @attr('string') key;
 }

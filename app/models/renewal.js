@@ -5,8 +5,7 @@ import { belongsTo } from 'ember-data/relationships';
 
 @classic
 export default class Renewal extends Model {
-  @attr('date')
-  completedOn;
+  @attr('date') completedOn;
 
   @belongsTo('file', {
     async:   true,

@@ -7,36 +7,25 @@ import Validations from './validations/form';
 
 @classic
 export default class Form extends Model.extend(Validations) {
-  @attr('string')
-  name;
+  @attr('string') name;
 
-  @attr('string')
-  formType;
+  @attr('string') formType;
 
-  @attr('string')
-  title;
+  @attr('string') title;
 
-  @attr('string')
-  description;
+  @attr('string') description;
 
-  @hasMany('form-element')
-  elements;
+  @hasMany('form-element') elements;
 
-  @belongsTo('company')
-  company;
+  @belongsTo('company') company;
 
-  @belongsTo('employee')
-  creator;
+  @belongsTo('employee') creator;
 
-  @resolveForTypeKey('target')
-  target;
+  @resolveForTypeKey('target') target;
 
-  @attr('string-or-null')
-  targetId;
+  @attr('string-or-null') targetId;
 
-  @attr('string-or-null')
-  targetType;
+  @attr('string-or-null') targetType;
 
-  @attr('date', { defaultValue: () => new Date() })
-  created;
+  @attr('date', { defaultValue: () => new Date() }) created;
 }

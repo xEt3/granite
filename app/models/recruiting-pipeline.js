@@ -5,15 +5,11 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 
 @classic
 export default class RecruitingPipeline extends Model {
-  @attr('array')
-  stages;
+  @attr('array') stages;
 
-  @hasMany('job-opening', { inverse: null })
-  jobOpenings;
+  @hasMany('job-opening', { inverse: null }) jobOpenings;
 
-  @belongsTo('company', { inverse: null })
-  company;
+  @belongsTo('company', { inverse: null }) company;
 
-  @attr('date', { defaultValue: () => new Date() })
-  created;
+  @attr('date', { defaultValue: () => new Date() }) created;
 }

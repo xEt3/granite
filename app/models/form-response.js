@@ -5,27 +5,19 @@ import { belongsTo } from 'ember-data/relationships';
 
 @classic
 export default class FormResponse extends Model {
-  @attr('array')
-  responses;
+  @attr('array') responses;
 
-  @belongsTo('employee')
-  employee;
+  @belongsTo('employee') employee;
 
-  @belongsTo('company')
-  company;
+  @belongsTo('company') company;
 
-  @belongsTo('employee')
-  creator;
+  @belongsTo('employee') creator;
 
-  @belongsTo('form')
-  form;
+  @belongsTo('form') form;
 
-  @attr('date')
-  submittedOn;
+  @attr('date') submittedOn;
 
-  @attr('string')
-  notificationEmail;
+  @attr('string') notificationEmail;
 
-  @attr('date')
-  created;
+  @attr('date') created;
 }
