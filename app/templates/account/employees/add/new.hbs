@@ -5,7 +5,7 @@
 
   <div class="ui divider"></div>
 
-  <form class="ui form" {{action "save" on="submit"}}>
+  <form class="ui form" {{on "submit" (prevent-default (pipe (fn this.data.saveRecord this.model "working" this.saveOptions) this.afterSave))}}>
     <div class="fields">
       <div class="five wide field">
         <label for="first-name">First Name</label>
@@ -23,7 +23,7 @@
       </div>
       <div class="three wide field">
         <label for="suffix-name">Suffix</label>
-        <UiDropdown @class="selection" @onChange={{action (mut this.model.suffix)}}>
+        <UiDropdown @class="selection" @onChange={{set this.model.suffixName _}}>
           <div class="default text">Suffix</div>
           <i class="dropdown icon"></i>
           <div class="menu">
@@ -37,7 +37,7 @@
       </div>
       <div class="two wide field">
         <label for="suffix-name">Gender</label>
-        <UiDropdown @class="selection" @selected={{this.model.gender}} @onChange={{action (mut this.model.gender)}}>
+        <UiDropdown @class="selection" @selected={{this.model.gender}} @onChange={{set this.model.gender _}}>
           <div class="default text">Gender</div>
           <i class="dropdown icon"></i>
           <div class="menu">
@@ -56,7 +56,7 @@
       </div>
       <div class="field">
         <label for="employee-phone">Phone Number</label>
-        <MaskedInput @type="tel" @placeholder="Employee Phone #" @id="employee-phone" @mask="(111) 111-1111" @on-change={{action (mut this.model.phone) value="target.value"}} />
+        <MaskedInput @type="tel" @placeholder="Employee Phone #" @id="employee-phone" @mask="(111) 111-1111" @value={{this.model.phone}} />
       </div>
       <div class="field">
         <label for="email">Email</label>
@@ -69,6 +69,6 @@
     </div>
 
     <div class="ui divider"></div>
-    <Form::ActionButton type="submit" class="ui massive fluid green button" @disabled={{this.disabled}} @loading={{this.working}}>Begin Onboarding</Form::ActionButton>
+    <Form::ActionButton type="submit" class="ui massive fluid green button" @disabled={{this.disabled}} @loading={{this.data.statuses.working.isLoading}}>Begin Onboarding</Form::ActionButton>
   </form>
 </div>

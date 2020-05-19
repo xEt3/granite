@@ -1,15 +1,20 @@
-import classic from 'ember-classic-decorator';
 import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { action } from '@ember/object';
 import { suffixes, gender } from 'granite/config/statics';
+import { inject as service } from '@ember/service';
 
-@classic
-export default class NewController extends Controller.extend(addEdit) {
+export default class AccountEmployeesAddNewController extends Controller {
+  @service data
+
+  saveOptions = {
+    transitionAfterSave: 'account.employee.onboard.index',
+    transitionWithModel: true
+  }
+
   suffixes = suffixes;
   gender = gender;
-  transitionAfterSave = 'account.employee.onboard.index';
-  transitionWithModel = true;
 
+  @action
   afterSave () {
     this.analytics.trackEvent('Employees', 'manual_add', 'Employee manually added');
   }

@@ -1,19 +1,20 @@
-import classic from 'ember-classic-decorator';
-import { action, computed } from '@ember/object';
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { Promise } from 'rsvp';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import $ from 'jquery';
 
-@classic
-export default class EditController extends Controller.extend(addEdit) {
-  transitionAfterSave = 'account.employee.index';
-  transitionWithModel = true;
+export default class AccountEmployeeEditController extends Controller {
+  @service data
 
-  @computed(
-    'model.{location,department,supervisor,jobDescription}',
-    'initialRelationships.[]'
-  )
+  @tracked responded
+
+  saveOptions = {
+    transitionAfterSave: 'account.employee.index',
+    transitionWithModel: true
+  }
+
   get relationshipsChanged () {
     const initialRelationships = this.initialRelationships;
     for (let i = 0; i < initialRelationships.length; i++) {
@@ -26,27 +27,27 @@ export default class EditController extends Controller.extend(addEdit) {
 
   @action
   selectEffectiveDate () {
-    this.set('responded', false);
+    this.responded = false;
 
     $('#effective-date-modal').modal({
       detachable: true,
       onHidden:   () => {
         if (!this.responded) {
-          this.send('respondEffectiveDateModal', false);
+          this.respondEffectiveDateModal(false);
         }
       }
     }).modal('show');
 
-    return new Promise((resolve, reject) => this.setProperties({
-      resolve,
-      reject
-    }));
+    return new Promise((resolve, reject) => {
+      this.resolve = resolve;
+      this.reject = reject;
+    });
   }
 
   @action
   respondEffectiveDateModal (response) {
-    this.get(response ? 'resolve' : 'reject')();
-    this.set('responded', true);
+    this[response ? 'resolve' : 'reject']();
+    this.responded = true;
     $('#effective-date-modal').modal('hide');
   }
 }

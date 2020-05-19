@@ -1,6 +1,5 @@
 import { GraniteResourceRoute } from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import { action } from '@ember/object';
 
 export default class AccountEmployeesChangesRoute extends GraniteResourceRoute {
   @service auth
@@ -13,9 +12,4 @@ export default class AccountEmployeesChangesRoute extends GraniteResourceRoute {
   }
 
   sort = { created: -1 }
-
-  @action
-  refresh () {
-    return true;
-  }
 }

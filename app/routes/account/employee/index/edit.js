@@ -1,4 +1,5 @@
 import Route from 'granite/core/route';
+import { get } from '@ember/object';
 const employeeBelongsTo = [ 'location', 'department', 'supervisor', 'jobDescription' ];
 
 export default class AccountEmployeeEditRoute extends Route {
@@ -16,7 +17,7 @@ export default class AccountEmployeeEditRoute extends Route {
       initialRelationships: employeeBelongsTo.map(relationshipPath => {
         return {
           relationshipPath,
-          id: model.get(`${relationshipPath}.id`)
+          id: get(model, `${relationshipPath}.id`)
         };
       })
     });

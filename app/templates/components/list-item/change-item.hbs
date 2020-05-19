@@ -10,7 +10,7 @@
         <i class="ui check icon"></i>
         Approve
       </button>
-      <button type="button" class="ui negative labeled icon tiny button" {{on "click" (fn @onReject @model)}}>
+      <button type="button" class="ui negative labeled icon tiny button" {{on "click" (prevent-default (fn @onReject @model))}}>
         <i class="ui times icon"></i>
         Reject
       </button>

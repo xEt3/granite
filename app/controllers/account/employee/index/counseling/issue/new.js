@@ -1,7 +1,6 @@
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import { formalActionSuggestions } from 'granite/config/suggestions';
 
 let formInputs = [{
@@ -39,18 +38,22 @@ let formInputs = [{
   inputAttrs:  { allowAdditions: true }
 }];
 
-export default Controller.extend(addEdit, {
-  auth:                service(),
-  transitionWithModel: true,
-  transitionAfterSave: 'account.employee.index.counseling.issue.corrective-action',
+export default class AccountEmployeeCounselingIssueNewController extends Controller {
+  @service auth
+  @service data
 
-  severities:       computed.reads('auth.user.company.correctiveActionSeverities'),
-  severitySorting:  [ 'order' ],
-  sortedSeverities: computed.sort('severities', 'severitySorting'),
+  severitySorting = [ 'order' ]
+  saveOptions = {
+    transitionWithModel: true,
+    transitionAfterSave: 'account.employee.index.counseling.issue.corrective-action'
+  }
 
-  form: computed('model.severity', 'severities.[]', function () {
-    let severity = this.severities.findBy('id', this.get('model.severity')),
-        severityIsFormal = severity && severity.get('formal');
+  @computed.reads('auth.user.company.correctiveActionSeverities') severities
+  @computed.sort('severities', 'severitySorting') sortedSeverities
+
+  get form () {
+    let severity = this.severities.findBy('id', this.model.severity),
+        severityIsFormal = severity && severity.formal;
 
     return severityIsFormal ? [
       ...formInputs.slice(0, 3), {
@@ -74,5 +77,5 @@ export default Controller.extend(addEdit, {
         rows:  '6'
       }, ...formInputs.slice(3)
     ] : formInputs;
-  })
-});
+  }
+}

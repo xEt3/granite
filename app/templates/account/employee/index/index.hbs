@@ -61,7 +61,7 @@
                     {{#if this.separationNotes}}
                       {{this.model.separationNotes}}
                     {{/if}}
-                    <a href="#" class="right floated" {{action (toggle "separationNotes" this)}}>{{if this.separationNotes "Hide" "View"}} Notes</a>
+                    <a href="#" class="right floated" {{on "click" (prevent-default (toggle "separationNotes" this))}}>{{if this.separationNotes "Hide" "View"}} Notes</a>
                   </u>
                 </div>
               {{/if}}
@@ -219,7 +219,7 @@
                   {{else}}
                     {{this.model.ssnMasked}}
                   {{/if}}
-                  <a href="#" class="right floated" {{action (toggle "showSSN" this)}}><i class="{{if this.showSSN "hide" "unhide"}} icon"></i></a>
+                  <a href="#" class="right floated" {{on "click" (prevent-default (toggle "showSSN" this))}}><i class="{{if this.showSSN "hide" "unhide"}} icon"></i></a>
                 </u>
               </div>
             {{/if}}
@@ -313,7 +313,7 @@
             this.model.externalLinkLastSync
             (time this.model.externalLinkLastSync "h:mm:ssa M/D/YY")
             "Never"}}
-          <a href="#" {{action "forceSync"}}>Force sync from {{this.model.externalLinkService}}</a>
+          <a href="#" {{on "click" (prevent-default this.forceSync)}}>Force sync from {{this.model.externalLinkService}}</a>
           <br />
           Automatic Change Syncing: {{if this.model.externalLinkAutomaticSync "Enabled" "Disabled"}}
           {{#if this.model.externalLinkDocumentLink}}

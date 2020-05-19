@@ -1,18 +1,17 @@
-import classic from 'ember-classic-decorator';
+import Controller from 'granite/core/controller';
 import { action } from '@ember/object';
-import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { tracked } from '@glimmer/tracking';
 import Model from 'ember-data/model';
+import { inject as service } from '@ember/service';
 
-@classic
-export default class NewController extends Controller.extend(addEdit) {
-  transitionAfterSave = 'account.employee.index.documents';
-  transitionWithModel = false;
-  assignments = [];
-  enableNotify = false;
+export default class AccountEmployeeDocumentsNewController extends Controller {
+  @service data
+  @tracked assignments = [];
+  @tracked docModalSelection = [];
 
-  afterSave () {
-    this.send('refresh');
+  saveOptions = {
+    transitionAfterSave: 'account.employee.index.documents',
+    transitionWithModel: false
   }
 
   @action
@@ -26,9 +25,9 @@ export default class NewController extends Controller.extend(addEdit) {
         effectiveOn
       });
 
-      this.saveModel(this.assignments[i]);
+      this.data.saveRecord(this.assignments[i], 'working', this.saveOptions);
     }
-    this.set('assignments', []);
+    this.assignments = [];
   }
 
   @action
@@ -56,17 +55,17 @@ export default class NewController extends Controller.extend(addEdit) {
 
     let _files = Array.isArray(files) ? files : [ files ];
 
+    let { error } = this.data.createStatus();
+
     for (let i = 0; i < _files.length; i++) {
       try {
         await makeAssignment(_files[i]);
       } catch (e) {
-        this.set('enableNotify', true);
-        this.ajaxError(e);
-        this.set('enableNotify', false);
+        error(e);
       }
     }
 
-    this.set('docModalSelection', []);
+    this.docModalSelection = [];
   }
 
   @action

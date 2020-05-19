@@ -23,7 +23,7 @@ export default class ListItemMessageThread extends Component {
   }
 
   willDestroy () {
-    super.model(...arguments);
+    super.willDestroy(...arguments);
     this.messaging.unsubscribe('thread_message', this.id);
   }
 

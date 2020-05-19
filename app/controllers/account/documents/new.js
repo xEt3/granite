@@ -17,11 +17,8 @@ export default class AccountDocumentsNewController extends Controller {
     transitionWithModel: false
   }
 
+  dropzoneId = 'input__dropzone--document'
   tagSuggestions = [ 'Reference', 'Employee Specific', 'Company Wide', 'Onboarding', 'Offboarding' ]
-
-  get dropzoneId () {
-    return `input__dropzone--document-${this.elementId}`;
-  }
 
   @action
   uploadComplete () {
