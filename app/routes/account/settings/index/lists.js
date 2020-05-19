@@ -9,7 +9,7 @@ export default class ListsRoute extends Route {
 
   async model (params) {
     let list = [],
-        company = this.get('auth.user.company');
+        company = await (await this.auth.user).company;
 
     if (params.list === 'dqReasons') {
       list = company.get('disqualificationReasons');
@@ -26,7 +26,7 @@ export default class ListsRoute extends Route {
   }
 
   setupController (controller, model) {
-    Object.assign(controller, {
+    controller.setProperties({
       model:   model.list,
       company: model.company
     });

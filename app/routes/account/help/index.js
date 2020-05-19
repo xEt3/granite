@@ -13,7 +13,7 @@ export default class IndexRoute extends Route {
   }
 
   setupController (controller, model) {
-    Object.assign(controller, {
+    controller.setProperties({
       model: model.articles,
       user:  model.user
     });

@@ -1,11 +1,12 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 export default class UserSettingsController extends Controller {
   @service ajax
   @service data
-  passwords = {}
+  @tracked passwords = {}
 
   @action
   async change () {
@@ -32,7 +33,7 @@ export default class UserSettingsController extends Controller {
       this.passwords = {};
       success('Successfully changed.');
     } catch (e) {
-      this.ajaxError(e);
+      error(e);
     }
   }
 }

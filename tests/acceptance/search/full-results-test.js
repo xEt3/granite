@@ -28,6 +28,7 @@ module('Acceptance | search | full results', function (hooks) {
     await triggerKeyEvent('.search input', 'keypress', 'Enter');
     await settled();
     assert.equal(currentURL(), '/account/search?q=test', 'on results page');
+
     // no results
     assert.dom('.search__no-results').hasText('No results found.');
     assert.dom('.search__result-item').doesNotExist();
@@ -39,7 +40,6 @@ module('Acceptance | search | full results', function (hooks) {
     server.create('department', { name: 'tester' });
     server.create('location', { name: 'tester' });
     server.create('employee', { firstName: 'mr testering' });
-
     assert.dom('nav.menu > .menu__search-input .search input').exists();
     await focus('.search input');
     await typeIn('.search input', 'test');

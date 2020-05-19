@@ -36,7 +36,7 @@ export default class JobRoute extends Route {
   }
 
   setupController (controller, model) {
-    Object.assign(controller, {
+    controller.setProperties({
       model:           model.employee,
       employees:       model.employees,
       departments:     model.departments,

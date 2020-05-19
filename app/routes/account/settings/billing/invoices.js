@@ -15,7 +15,7 @@ export default class InvoicesRoute extends Route {
   }
 
   setupController (controller, model) {
-    Object.assign(controller, {
+    controller.setProperties({
       model:   model.transactions.transactions,
       company: model.company
     });

@@ -14,7 +14,7 @@ export default class CampaignRoute extends Route {
   }
 
   setupController (controller, model) {
-    Object.assign(controller, {
+    controller.setProperties({
       model:   model.parentModel,
       company: model.company
     });

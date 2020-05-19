@@ -5,7 +5,7 @@ export default class AccountSettingsRoute extends Route {
   @service auth
 
   async model () {
-    return await this.auth.get('user.company');
+    return (await this.auth.user).get('company');
   }
 
   afterModel (model) {

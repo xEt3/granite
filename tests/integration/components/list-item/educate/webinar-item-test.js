@@ -2,10 +2,9 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerEvent, click } from '@ember/test-helpers';
 import { A } from '@ember/array';
-import moment from 'moment';
 import sinon from 'sinon';
 import hbs from 'htmlbars-inline-precompile';
-import { assertTooltipRendered, assertTooltipVisible, assertTooltipContent } from 'ember-tooltips/test-support';
+import { assertTooltipRendered, assertTooltipVisible } from 'ember-tooltips/test-support';
 
 module('Integration | Component | list-item/educate/webinar-item', function (hooks) {
   setupRenderingTest(hooks);

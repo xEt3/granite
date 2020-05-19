@@ -141,6 +141,7 @@ module('Acceptance | recruiting-recent activity', function (hooks) {
     assert.dom('form > h2').hasText('Review');
     assert.dom('form > h3').includesText(job.title);
     assert.dom('button.green').hasText('Launch Campaign');
+
     await click('button.green');
     assert.equal(currentURL(), `/account/recruiting/job-opening/${job.id}`);
   });

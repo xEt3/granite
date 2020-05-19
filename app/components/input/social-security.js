@@ -1,7 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 import classic from 'ember-classic-decorator';
 import { tagName } from '@ember-decorators/component';
-import { computed } from '@ember/object';
 import Component from '@ember/component';
 import { run } from '@ember/runloop';
 

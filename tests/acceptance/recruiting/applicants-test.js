@@ -291,7 +291,7 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
 
     assert.dom('div.container > div.padded.segment > div.top.label').isVisible();
     assert.dom('div.container > div.padded.segment > div.top.label').hasClass('green');
-    assert.dom('div.container > div.padded.segment > div.top.label').includesText(application.stage);
+    assert.dom('div.container > div.padded.segment > div.top.label').includesText(pipeline.stages[0].name);
     assert.dom('div.container > div.padded.segment > div.top.label').doesNotIncludeText('Failed test');
   });
 });

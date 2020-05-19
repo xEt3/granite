@@ -12,7 +12,7 @@
   </div>
   <div class="twelve wide stretched column">
     {{#if this.dirtyList}}
-      <button class="ui green fluid button" disabled={{this.working}} {{action "saveList"}}>Save Changes</button>
+      <button type="button" class="ui green fluid button" disabled={{this.data.statuses.working.isLoading}} {{action "saveList"}}>Save Changes</button>
     {{/if}}
     <div class="ui relaxed divided list">
       {{#if this.list}}

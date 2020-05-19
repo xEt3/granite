@@ -68,7 +68,7 @@ export default class AccountIndexRoute extends Route {
       this.cachedActivities = model.activities.toArray();
     }
 
-    Object.assign(controller, {
+    controller.setProperties({
       model:        this.cachedActivities,
       tags:         model.tags,
       totalRecords: model.activities.meta.totalRecords,

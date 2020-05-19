@@ -1,13 +1,12 @@
+import Controller from 'granite/core/controller';
 import { tracked } from '@glimmer/tracking';
-import classic from 'ember-classic-decorator';
-import { action, computed } from '@ember/object';
-import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { lists } from 'granite/config/forms/lists';
 import $ from 'jquery';
 
-@classic
-export default class ListsController extends Controller.extend(addEdit) {
+export default class ListsController extends Controller {
+  @service data
   queryParams = [ 'list' ];
   modalId = 'settings__list-modal';
   @tracked list = null;
@@ -18,10 +17,9 @@ export default class ListsController extends Controller.extend(addEdit) {
     return lists[this.list];
   }
 
-  @computed('currentForm.listType', 'currentItem')
   get modelForForm () {
     //need this bc you have to pass a model object to quick-form
-    return this.get('currentForm.listType') === 'string' ? this : this.currentItem;
+    return this.currentForm.listType === 'string' ? this : this.currentItem;
   }
 
   afterSave () {
@@ -36,8 +34,7 @@ export default class ListsController extends Controller.extend(addEdit) {
 
   @action
   async saveList () {
-    let company = this.company;
-    await this.saveModel(company);
+    await this.data.saveRecord(this.company);
     this.set('dirtyList', false);
   }
 

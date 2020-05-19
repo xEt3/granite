@@ -8,6 +8,7 @@ export default class SignupBillingController extends Controller {
   @service data
 
   @tracked applyingPromo
+  @tracked appliedPromo
 
   @computed.and('applyingPromo', 'working') loadingPromo
 
@@ -43,7 +44,7 @@ export default class SignupBillingController extends Controller {
 
     this.analytics.trackEvent('Signup', 'promo_applied', validity.code);
 
-    this.model.set.accountBillingPromo = validity.code;
+    this.model.accountBillingPromo = validity.code;
     this.appliedPromo = validity;
 
     success(null, true);

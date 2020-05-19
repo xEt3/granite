@@ -5,27 +5,27 @@
 
     <div class="field">
       <label for="company-name" class="sr-only">Company Name</label>
-      <ValidatedInput @type="text" @model={{this.model}} @valuePath="name" @placeholder="Company Name" @id="company-name" />
+      <ValidatedInput @type="text" @model={{this.model}} @valuePath="name" @placeholder="Company Name" id="company-name" />
     </div>
 
     <h3 class="ui horizontal divider header"><i class="phone icon"></i>Primary Contact</h3>
     <div class="three fields">
       <div class="field">
         <label for="first-name" class="sr-only">First Name</label>
-        <ValidatedInput @type="text" @model={{this.model}} @valuePath="contactFirstName" @placeholder="First Name" @id="first-name" />
+        <ValidatedInput @type="text" @model={{this.model}} @valuePath="contactFirstName" @placeholder="First Name" id="first-name" />
       </div>
       <div class="field">
         <label for="middle-name" class="sr-only">Middle Name</label>
-        <Input @type="text" @value={{this.model.contactMiddleName}} placeholder="Middle(Optional)" @id="middle-name" />
+        <Input @type="text" @value={{this.model.contactMiddleName}} placeholder="Middle(Optional)" id="middle-name" />
       </div>
       <div class="field">
         <label for="last-name" class="sr-only">Last Name</label>
-        <ValidatedInput @type="text" @model={{this.model}} @valuePath="contactLastName" @placeholder="Last Name" @id="last-name" />
+        <ValidatedInput @type="text" @model={{this.model}} @valuePath="contactLastName" @placeholder="Last Name" id="last-name" />
       </div>
     </div>
     <div class="field">
       <label for="company-email" class="sr-only">Email Address</label>
-      <ValidatedInput @type="text" @model={{this.model}} @valuePath="email" @placeholder="Email Address" @id="company-email" />
+      <ValidatedInput @type="text" @model={{this.model}} @valuePath="email" @placeholder="Email Address" id="company-email" />
     </div>
     <div class="two fields">
       <div class="twelve wide field">
@@ -42,22 +42,22 @@
     <div class="fields">
       <div class="twelve wide field">
         <label for="street-address"></label>
-        <ValidatedInput @type="text" @model={{this.model}} @valuePath="addressLine1" @placeholder="Street Address" @id="street-address" />
+        <ValidatedInput @type="text" @model={{this.model}} @valuePath="addressLine1" @placeholder="Street Address" id="street-address" />
       </div>
       <div class="four wide field">
         <label for="suite-number"></label>
-        <ValidatedInput @type="text" @model={{this.model}} @valuePath="addressLine2" @placeholder="Suite #" @id="suite-number" />
+        <ValidatedInput @type="text" @model={{this.model}} @valuePath="addressLine2" @placeholder="Suite #" id="suite-number" />
       </div>
     </div>
 
     <div class="three fields">
       <div class="field">
         <label for="city"></label>
-        <ValidatedInput @type="text" @model={{this.model}} @valuePath="addressCity" @placeholder="City" @id="city" />
+        <ValidatedInput @type="text" @model={{this.model}} @valuePath="addressCity" @placeholder="City" id="city" />
       </div>
       <div class="field">
         <label for="state"></label>
-        <ValidatedInput @model={{this.model}} @valuePath="addressState" @id="state">
+        <ValidatedInput @model={{this.model}} @valuePath="addressState" id="state">
           <UiDropdown @class="select__address-state search selection" @selected={{this.model.addressState}} @onChange={{action (mut this.model.addressState)}} as |execute mapper|>
             <div class="default text">Select a State</div>
             <i class="dropdown icon"></i>
@@ -73,14 +73,14 @@
       </div>
       <div class="field">
         <label for="zipcode"></label>
-        <ValidatedInput @type="text" @model={{this.model}} @valuePath="addressZipcode" @placeholder="Zip Code" @id="zipcode" />
+        <ValidatedInput @type="text" @model={{this.model}} @valuePath="addressZipcode" @placeholder="Zip Code" id="zipcode" />
       </div>
     </div>
 
     <h3 class="ui horizontal divider header"><i class="setting icon"></i>Configuration</h3>
     <div class="field">
       <label for="url-prefix" class="sr-only">Employee Access URL</label>
-      <ValidatedInput @type="text" @model={{this.model}} @fieldErrors={{this.fieldErrors}} @valuePath="urlPrefix" @placeholder="Employee Access URL (generally your company's abbreviation)" @id="url-prefix" />
+      <ValidatedInput @type="text" @model={{this.model}} @fieldErrors={{this.fieldErrors}} @valuePath="urlPrefix" @placeholder="Employee Access URL (generally your company's abbreviation)" id="url-prefix" />
     </div>
     <Display::PreviewBrowser>{{if this.model.urlPrefix this.model.urlPrefix "portal"}}</Display::PreviewBrowser>
     <div class="ui divider"></div>

@@ -43,7 +43,7 @@ export default class IndexRoute extends Route {
   }
 
   setupController (controller, model) {
-    Object.assign(controller, {
+    controller.setProperties({
       model:      model.chart,
       jobOpening: model.jobOpening
     });

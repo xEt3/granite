@@ -22,7 +22,7 @@ export default class AccountAnatomyCompanyUsersEditRoute extends Route {
   }
 
   setupController (controller, model) {
-    Object.assign(controller, {
+    controller.setProperties({
       model:           model.user,
       permission:      model.permissions,
       permissionsTree: model.permissions.toArray().reduce((parents, permission) => {
