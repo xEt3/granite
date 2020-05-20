@@ -24,7 +24,7 @@
   <div class="field">
     <label for="asset-description">Documents</label>
     <Input::DocumentSelectionModal @title="Assign asset documents" @selected={{this.model.documents}} @autoTag="Asset" @onSelected={{set this.model.documents _}} as |execute|>
-      <button class="ui basic button" {{on "click" (prevent-default (fn execute "selectDocuments"))}}>
+      <button class="ui basic button" {{on "click" (prevent-default (fn execute "selectDocuments"))}} type="button">
         <i class="folder icon"></i>
         Add asset documents
         {{#if this.model.documents.length}}

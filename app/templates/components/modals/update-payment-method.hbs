@@ -15,10 +15,10 @@
     <p class="right aligned very small text"><i class="lock icon"></i>Powered by Braintree Payments</p>
   </div>
   <div class="actions">
-    <button class="ui button" {{action "closeModal"}}>
+    <button class="ui button" {{action "closeModal"}} type="button">
       Cancel
     </button>
-    <button class="ui green button" {{action "respond" this.nonce}} disabled={{or (not this.nonce) @working}}>
+    <button class="ui green button" {{action "respond" this.nonce}} disabled={{or (not this.nonce) @working}} type="button">
       Save New Payment Method
     </button>
   </div>

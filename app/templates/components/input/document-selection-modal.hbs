@@ -118,7 +118,7 @@
           </div>
         {{/each}}
       </div>
-      <button class="ui huge fluid positive button" {{on "click" this.assign}}>{{if this.assignText this.assignText "Assign Documents"}}</button>
+      <button class="ui huge fluid positive button" {{on "click" this.assign}} type="button">{{if this.assignText this.assignText "Assign Documents"}}</button>
     {{/if}}
 
     {{#if this.selectedDocument}}
@@ -132,7 +132,7 @@
             @onRemove={{this.removeDocument}}/>
         </div>
       </div>
-      <button class="ui huge fluid positive button" {{on "click" this.assign}}>{{if this.assignText this.assignText "Assign Document"}}</button>
+      <button class="ui huge fluid positive button" {{on "click" this.assign}} type="button">{{if this.assignText this.assignText "Assign Document"}}</button>
     {{/if}}
   </div>
 </UiModal>

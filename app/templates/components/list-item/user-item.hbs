@@ -80,8 +80,8 @@
       {{/if}}
     </div>
     <div class="actions">
-      <button class="ui inverted red button" {{on "click" this.cancel}}>Cancel</button>
-      <button class="ui primary button" {{on "click" (pipe this.transferProjects (fn this.toggleInactiveState true))}} disabled={{this.disableDeactivate}}>Confirm Deactivation</button>
+      <button class="ui inverted red button" {{on "click" this.cancel}} type="button">Cancel</button>
+      <button class="ui primary button" {{on "click" (pipe this.transferProjects (fn this.toggleInactiveState true))}} disabled={{this.disableDeactivate}} type="button">Confirm Deactivation</button>
     </div>
   </UiModal>
 </div>

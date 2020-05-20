@@ -62,9 +62,9 @@ export default class ModalsAtsAddApplicant extends Component {
 
   @action
   requiredFieldsFilled () {
-    let applicantRequiredFields = this.applicantRequiredFields;
-    let newApplicant = this.newApplicant;
-    for (let field in applicantRequiredFields) {
+    const { applicantRequiredFields, newApplicant } = this;
+
+    for (var field in applicantRequiredFields) {
       if (field !== '_super') {
         let value = newApplicant[applicantRequiredFields[field]];
         if (value === '' || value === undefined) {

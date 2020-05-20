@@ -11,10 +11,10 @@
     {{if this.confirmContent this.confirmContent (if this.deleteContext (concat "Are you sure you want to remove " this.deleteContext "?") "Are you sure you want to do that?")}}
   </div>
   <div class="actions">
-    <button class="ui inverted red button" {{action "respond" false}}>
+    <button class="ui inverted red button" {{action "respond" false}} type="button">
       {{if this.rejectText this.rejectText "No"}}
     </button>
-    <button class="ui inverted green right labeled icon button" {{action "respond" true}}>
+    <button class="ui inverted green right labeled icon button" {{action "respond" true}} type="button">
       {{if this.confirmText this.confirmText "Yes"}}
       <i class="check icon"></i>
     </button>

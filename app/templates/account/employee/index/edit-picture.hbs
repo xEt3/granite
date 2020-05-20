@@ -7,18 +7,18 @@
 
   {{#if this.fileIsAdded}}
     <div class="field">
-      <button class="ui green fluid huge button" {{action "processQueue"}}>
+      <button class="ui green fluid huge button" {{action "processQueue"}} type="button">
         <i class="upload icon"></i>Save
       </button>
     </div>
     <div class="field">
-      <button class="ui negative fluid button" {{action "removeFile"}}>
+      <button class="ui negative fluid button" {{action "removeFile"}} type="button">
         <i class="undo icon"></i>Remove File
       </button>
     </div>
   {{/if}}
   <div class="field">
-    <button class="ui fluid button" {{action "leaveUpload"}}>
+    <button class="ui fluid button" {{action "leaveUpload"}} type="button">
       <i class="left angle icon"></i>Back
     </button>
   </div>

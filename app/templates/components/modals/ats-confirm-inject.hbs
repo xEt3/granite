@@ -7,10 +7,10 @@
     Are you sure you want to move {{@applicants.length}} {{inflect-text "applicant" @applicants.length}} into your recruiting pipeline?
   </div>
   <div class="actions">
-    <button class="ui inverted red button" {{on "click" (fn this.respond false)}}>
+    <button class="ui inverted red button" {{on "click" (fn this.respond false)}} type="button">
       Cancel
     </button>
-    <button class="ui inverted green right labeled icon button" {{on "click" (fn this.respond true)}}>
+    <button class="ui inverted green right labeled icon button" {{on "click" (fn this.respond true)}} type="button">
       Yes
       <i class="check icon"></i>
     </button>

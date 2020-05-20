@@ -94,10 +94,10 @@
     </form>
   </div>
   <div class="actions">
-    <button class="ui red button" {{on "click" this.cancelAssignments}}>
+    <button class="ui red button" {{on "click" this.cancelAssignments}} type="button">
       Cancel
     </button>
-    <button class="ui primary right labeled icon {{if this.data.statuses.working.isLoading "loading"}} button" {{on "click" this.saveAssignments}}>
+    <button class="ui primary right labeled icon {{if this.data.statuses.working.isLoading "loading"}} button" {{on "click" this.saveAssignments}} type="button">
       Assign <i class="add user icon"></i>
     </button>
   </div>

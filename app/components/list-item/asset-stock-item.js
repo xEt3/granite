@@ -14,7 +14,7 @@ export default class ListItemAssetStockItemComponent extends Component {
     let fields = this.args.asset.customFields,
         attributes = A();
 
-    for (let key in fields) {
+    for (var key in fields) {
       if (!Object.prototype.hasOwnProperty.call(fields, key)) {
         continue;
       }

@@ -56,10 +56,10 @@
       @tagName="div"/>
   </div>
   <div class="actions">
-    <button class="ui red button" {{on "click" (prevent-default (fn this.respondFollowup false))}}>
+    <button class="ui red button" {{on "click" (prevent-default (fn this.respondFollowup false))}} type="button">
       Cancel
     </button>
-    <button class="ui primary right labeled icon button" {{on "click" (prevent-default (fn this.respondFollowup true))}}>
+    <button class="ui primary right labeled icon button" {{on "click" (prevent-default (fn this.respondFollowup true))}} type="button">
       Done
       <i class="check icon"></i>
     </button>

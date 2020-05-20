@@ -33,7 +33,7 @@ export default class AccountEducationWebinarsRoute extends GraniteResourceRoute 
     const resolved = await all(promisesToResolve),
           cacheKeys = Object.keys(updateCache);
 
-    for (let cacheKey in updateCache) {
+    for (var cacheKey in updateCache) {
       if (!Object.prototype.hasOwnProperty.call(updateCache, cacheKey)) {
         continue;
       }

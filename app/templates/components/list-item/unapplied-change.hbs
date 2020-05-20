@@ -32,8 +32,8 @@
         <div class="extra content">
           <div class="ui divider"></div>
           <div class="ui two buttons">
-            <button class="positive ui button" {{on "click" (pipe confirmApply this.modifyEffectiveDate)}}>Apply these changes now</button>
-            <button class="negative ui button" {{on "click" (pipe confirmDelete (fn this.data.deleteRecord @history))}}>Discard these changes</button>
+            <button class="positive ui button" {{on "click" (pipe confirmApply this.modifyEffectiveDate)}} type="button">Apply these changes now</button>
+            <button class="negative ui button" {{on "click" (pipe confirmDelete (fn this.data.deleteRecord @history))}} type="button">Discard these changes</button>
           </div>
         </div>
       </ConfirmModal>

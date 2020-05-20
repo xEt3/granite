@@ -51,7 +51,7 @@
     </div>
   </div>
   <ConfirmModal @confirmContent="Are you sure you want to unassign this item and return it to your stock?" as |confirm|>
-    <button class="ui bottom attached fluid button" role="button" {{on "click" (pipe confirm (fn @onUnassign @asset))}}>
+    <button class="ui bottom attached fluid button" role="button" {{on "click" (pipe confirm (fn @onUnassign @asset))}} type="button">
       <i class="remove user icon"></i>
       Unassign asset
     </button>

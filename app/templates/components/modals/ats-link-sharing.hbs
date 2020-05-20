@@ -51,7 +51,7 @@
         <Textarea @rows="3" placeholder="Note" @value={{this.linkNote}} />
       </div>
 
-      <button class="ui fluid primary {{if this.data.statuses.linkSharing.isLoading "loading"}} button" disabled={{or this.data.statuses.linkSharing.isLoading (not this.sendTo.length)}} {{on "click" this.sendLink}}>
+      <button class="ui fluid primary {{if this.data.statuses.linkSharing.isLoading "loading"}} button" disabled={{or this.data.statuses.linkSharing.isLoading (not this.sendTo.length)}} {{on "click" this.sendLink}} type="button">
         Send Link
       </button>
     {{/if}}
@@ -65,7 +65,7 @@
         <p class="text-green">{{this.successMessage}}</p>
       {{/if}}
     </p>
-    <button class="ui right button" disabled={{this.data.statuses.linkSharing.isLoading}} {{on "click" (fn this.respond @model)}}>
+    <button class="ui right button" disabled={{this.data.statuses.linkSharing.isLoading}} {{on "click" (fn this.respond @model)}} type="button">
       Close
     </button>
   </div>

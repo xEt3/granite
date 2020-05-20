@@ -55,10 +55,10 @@
         </div>
       </div>
       <div class="actions">
-        <button class="ui red button" {{on "click" (fn this.respondAssignee false)}}>
+        <button class="ui red button" {{on "click" (fn this.respondAssignee false)}} type="button">
           Cancel
         </button>
-        <button class="ui primary right labeled icon button" {{on "click" (fn this.respondAssignee this.newAssignee)}}>
+        <button class="ui primary right labeled icon button" {{on "click" (fn this.respondAssignee this.newAssignee)}} type="button">
           {{#if this.newAssignee}}
             Assign to {{this.newAssignee.fullName}}
           {{else}}

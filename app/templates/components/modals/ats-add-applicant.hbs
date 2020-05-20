@@ -89,10 +89,10 @@
       </form>
     </div>
     <div class="actions">
-      <button class="ui inverted red button" {{on "click" this.cancel}}>
+      <button class="ui inverted red button" {{on "click" this.cancel}} type="button">
         Cancel
       </button>
-      <button class="ui green right labeled icon {{if this.data.statuses.working.isLoading "loading"}} button" {{on "click" this.save}}>
+      <button class="ui green right labeled icon {{if this.data.statuses.working.isLoading "loading"}} button" {{on "click" this.save}} type="button">
         Add Application
         <i class="check icon"></i>
       </button>

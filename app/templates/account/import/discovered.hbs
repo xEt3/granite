@@ -31,7 +31,7 @@
 
   {{#if (gt this.totalSelected 0)}}
     <ConfirmModal @class="item" @confirmContent="Are you sure you want to import these records?" as |confirm|>
-      <button class="ui massive fluid green button" {{on "click" (pipe confirm this.import)}}>
+      <button class="ui massive fluid green button" {{on "click" (pipe confirm this.import)}} type="button">
         <i class="play icon"></i> Import {{this.totalSelected}} {{inflect-text "Record" this.totalSelected}}
       </button>
       <div class="ui divider"></div>

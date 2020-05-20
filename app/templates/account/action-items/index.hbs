@@ -18,7 +18,7 @@
 {{#liquid-if this.expandFiltered}}
   <div class="five ui stackable buttons">
     {{#each this.priorityFilters as |priorityFilter index|}}
-      <button class="ui labeled icon {{object-at index this.priorityColors}} button" {{on "click" (fn this.changeFilter index)}}>
+      <button class="ui labeled icon {{object-at index this.priorityColors}} button" {{on "click" (fn this.changeFilter index)}} type="button">
         <i class="{{if (not (contains (inc index) this.filter)) "square outline" "checkmark box"}} icon"></i>
         {{priorityFilter}}
       </button>

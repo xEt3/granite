@@ -21,19 +21,19 @@
         @form={{this.newLabelForm}}
         @model={{this.currentLabel}}/>
       <div class="ui divider"></div>
-      <button class="ui blue fluid button" {{on "click" (fn this.saveLabel this.currentLabel)}}>Save New Label</button>
+      <button class="ui blue fluid button" {{on "click" (fn this.saveLabel this.currentLabel)}} type="button">Save New Label</button>
     {{/if}}
   </div>
   <div class="actions">
     {{#if (not this.currentLabel)}}
-      <button class="ui blue button left floated" {{on "click" this.addLabel}}>
+      <button class="ui blue button left floated" {{on "click" this.addLabel}} type="button">
         Create New Label
       </button>
     {{/if}}
-    <button class="ui inverted red button" {{on "click" (fn this.respond false)}}>
+    <button class="ui inverted red button" {{on "click" (fn this.respond false)}} type="button">
       Cancel
     </button>
-    <button class="ui green right labeled icon button" {{on "click" (fn this.respond true)}}>
+    <button class="ui green right labeled icon button" {{on "click" (fn this.respond true)}} type="button">
       Save Application Labels<i class="check icon"></i>
     </button>
   </div>

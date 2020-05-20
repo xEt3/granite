@@ -6,7 +6,7 @@
       <i class="filter icon"></i> Filters
       <div class="ui horizontal list right floated">
         <div class="item">
-          <button class="negative ui button small text" {{on "click" this.resetFilters}}>Reset All</button>
+          <button class="negative ui button small text" {{on "click" this.resetFilters}} type="button">Reset All</button>
         </div>
         <div class="item">
           <a href="#" class="light text" {{on "click" (prevent-default (toggle "showFilters" this))}}>

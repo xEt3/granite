@@ -105,11 +105,11 @@
   </div>
   <div class="actions">
     {{#unless this.editingCas}}
-      <button class="ui red button" {{on "click" (fn this.respondSeverityAddition false)}}>
+      <button class="ui red button" {{on "click" (fn this.respondSeverityAddition false)}} type="button">
         Cancel
       </button>
     {{/unless}}
-    <button class="ui primary right labeled icon button" {{on "click" (fn this.respondSeverityAddition true)}}>
+    <button class="ui primary right labeled icon button" {{on "click" (fn this.respondSeverityAddition true)}} type="button">
       Done
       <i class="check icon"></i>
     </button>
@@ -129,11 +129,11 @@
   </div>
   <div class="actions">
     {{#unless this.editingStage}}
-      <button class="ui red button" {{on "click" (fn this.respondStageAddition false)}}>
+      <button class="ui red button" {{on "click" (fn this.respondStageAddition false)}} type="button">
         Cancel
       </button>
     {{/unless}}
-    <button class="ui primary right labeled confirm-add-stage icon button" {{on "click" (fn this.respondStageAddition true)}}>
+    <button class="ui primary right labeled confirm-add-stage icon button" {{on "click" (fn this.respondStageAddition true)}} type="button">
       Done
       <i class="check icon"></i>
     </button>

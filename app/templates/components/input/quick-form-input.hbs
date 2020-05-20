@@ -105,7 +105,7 @@
         @onSelected={{set this.value _}}
         as |execute|
       >
-        <button class="ui basic button" {{on "click" (fn execute "selectDocuments")}}>
+        <button class="ui basic button" {{on "click" (fn execute "selectDocuments")}} type="button">
           <i class="folder icon"></i>
           {{or @field.buttonText @field.label}}
           {{#if this.value}}

@@ -30,7 +30,7 @@ export default class DisplayFilterPanesSectionComponent extends Component {
           resets = this.resets;
 
     if (active && activeState) {
-      for (let controlName in activeState) {
+      for (var controlName in activeState) {
         if (!Object.prototype.hasOwnProperty.call(activeState, controlName)) {
           continue;
         }
