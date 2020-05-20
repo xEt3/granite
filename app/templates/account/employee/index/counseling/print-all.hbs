@@ -1,7 +1,7 @@
-{{#each model.issue as |issue|}}
-  {{#each model.correctiveActions as |correctiveAction|}}
+{{#each this.model.issue as |issue|}}
+  {{#each this.model.correctiveActions as |correctiveAction|}}
     {{#if (eq issue.id correctiveAction.employeeIssue.id)}}
-      <div class="print-media__corrective-action {{if (not-eq correctiveAction model.lastObject) "page-break"}}">
+      <div class="print-media__corrective-action {{if (not-eq correctiveAction this.model.lastObject) "page-break"}}">
         <h3 class="ui center aligned header">
           {{issue.title}} 
           {{#if (await correctiveAction.actionSeverity)}}

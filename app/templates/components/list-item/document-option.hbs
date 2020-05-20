@@ -2,16 +2,16 @@
   {{@file.title}}
 
   <div class="right floated content">
-    <a href={{@file.url}} rel="noopener" target="_blank">
+    <a href={{@file.url}} rel="noopener noreferrer" target="_blank">
       <i class="download icon"></i>
     </a>
-    {{#if (not @remove)}}
-      <a href="#" {{on "click" (prevent-default (fn @onAddition @file))}}>
-        <i class="green plus square outline icon"></i>
-      </a>
-    {{else}}
+    {{#if @remove}}
       <a href="#" {{on "click" (prevent-default (fn @onRemove @file))}}>
         <i class="red minus square outline icon"></i>
+      </a>
+    {{else}}
+      <a href="#" {{on "click" (prevent-default (fn @onAddition @file))}}>
+        <i class="green plus square outline icon"></i>
       </a>
     {{/if}}
   </div>

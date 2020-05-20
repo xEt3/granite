@@ -42,10 +42,10 @@
           <UiCheckbox
             @class="small"
             @label="Assign For A Future Date"
-            @checked={{isExpanded}}
+            @checked={{this.isExpanded}}
             @onChange={{toggle "isExpanded" this}}/>
         </div>
-        {{#if isExpanded}}
+        {{#if this.isExpanded}}
           <UiCalendar
             @class="field"
             @type="date"

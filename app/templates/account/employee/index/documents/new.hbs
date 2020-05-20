@@ -12,7 +12,7 @@
       </Input::DocumentSelectionModal>
     </div>
     <div class="ui divided list">
-      {{#each assignments as |assignment|}}
+      {{#each this.assignments as |assignment|}}
         <ListItem::DocumentAssignment
           @model={{assignment}}
           class="item"
@@ -21,7 +21,7 @@
         <h3 class="center aligned light text">Nothing assigned, yet.</h3>
       {{/each}}
     </div>
-    {{#if assignments}}
+    {{#if this.assignments}}
       <div class="ui divider"></div>
       <form {{on "submit" (prevent-default (pipe this.saveAssignment (route-action "refreshModel")))}}>
         <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{working}} @disabled={{not assignments}}>Assign {{assignments.length}} {{inflect-text "Document" assignments.length}}</Form::ActionButton>

@@ -1,11 +1,11 @@
-{{#if (get (await correctiveAction.actionSeverity) "formal")}}
+{{#if (get (await this.correctiveAction.actionSeverity) "formal")}}
   <h3 class="ui header">Issue(s)</h3>
-  <p>{{long-text correctiveAction.descriptionIssues}}</p>
+  <p>{{long-text this.correctiveAction.descriptionIssues}}</p>
   <h3 class="ui header">Expectations going forward</h3>
-  <p>{{long-text correctiveAction.descriptionExpectations}}</p>
+  <p>{{long-text this.correctiveAction.descriptionExpectations}}</p>
   <h3 class="ui header">Consequences if expectations are not met</h3>
-  <p>{{long-text correctiveAction.descriptionConsequences}}</p>
-  {{#unless hideEmployeeSection}}
+  <p>{{long-text this.correctiveAction.descriptionConsequences}}</p>
+  {{#unless this.hideEmployeeSection}}
     <div class="employee-comments text container">
       <h3 class="ui header">Employee Comments</h3>
       <hr class="employee-comments__line">

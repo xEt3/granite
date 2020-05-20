@@ -1,4 +1,4 @@
-<div class={{if dragging "dragging"}} ondragover={{fn dragOver}} ondragenter={{fn dragEnter}} ondragleave={{fn dragLeave}} ondrop={{fn drop}}>
+<div class={{if this.dragging "dragging"}} ondragover={{fn this.dragOver}} ondragenter={{fn this.dragEnter}} ondragleave={{fn this.dragLeave}} ondrop={{fn this.drop}}>
   <div class="ui raised very padded text container segment file-uploader">
     {{#if this.fileError}}
       <p class="ui red segment">

@@ -2,7 +2,7 @@
   {{#if (and this.f this.s)}}
     <div class="ui red inverted text segment">
       <h3>
-        <i class="warning icon"></i> Failed to link {{s}}.
+        <i class="warning icon"></i> Failed to link {{this.s}}.
         <a href="#" class="right floated text-white" {{on "click" (prevent-default this.clearFailure)}}>
           <i class="times icon"></i>
         </a>

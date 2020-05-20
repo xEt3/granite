@@ -4,13 +4,13 @@
     Update Payment Method
   </div>
   <div class="content">
-    {{#if (not @braintreeToken)}}
+    {{#if @braintreeToken}}
+      <BraintreeDropin @braintreeOptions={{hash
+        paypal=(hash flow="vault")}} @authorization={{@braintreeToken.token}} @onNonce={{action (mut this.nonce)}} />
+    {{else}}
       <div class="ui active inverted dimmer">
         <div class="ui text loader">Loading</div>
       </div>
-    {{else}}
-      <BraintreeDropin @braintreeOptions={{hash
-        paypal=(hash flow="vault")}} @authorization={{@braintreeToken.token}} @onNonce={{action (mut this.nonce)}} />
     {{/if}}
     <p class="right aligned very small text"><i class="lock icon"></i>Powered by Braintree Payments</p>
   </div>

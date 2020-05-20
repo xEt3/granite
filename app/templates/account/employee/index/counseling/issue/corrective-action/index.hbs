@@ -30,12 +30,12 @@
 {{#if this.model.documents}}
   <div class="center aligned text">
     <a href="#" class="item" {{on "click" (prevent-default (toggle "showDocuments" this))}}>
-      <i class="eye {{if showDocuments "slash"}} icon"></i>{{if showDocuments "Hide" "Show"}} {{model.documents.length}} supporting {{inflect-text "document" model.documents.length}}
+      <i class="eye {{if this.showDocuments "slash"}} icon"></i>{{if this.showDocuments "Hide" "Show"}} {{this.model.documents.length}} supporting {{inflect-text "document" this.model.documents.length}}
     </a>
   </div>
 {{/if}}
 
-{{#if showDocuments}}
+{{#if this.showDocuments}}
   <div class="ui divided items">
     {{#each this.model.documents as |document|}}
       <Display::IssueDocuments

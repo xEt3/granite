@@ -25,11 +25,11 @@
     {{/if}}
   </div>
   <div class="actions">
-    {{#if (not this.currentLabel)}}
+    {{#unless this.currentLabel}}
       <button class="ui blue button left floated" {{on "click" this.addLabel}} type="button">
         Create New Label
       </button>
-    {{/if}}
+    {{/unless}}
     <button class="ui inverted red button" {{on "click" (fn this.respond false)}} type="button">
       Cancel
     </button>

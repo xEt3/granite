@@ -8,7 +8,7 @@
 
     <div class="right aligned text floated menu__actions">
       <h3 class="ui inline header">
-        {{#if model}}
+        {{#if this.model}}
           <LinkTo @route="account.employee.index.counseling.print-all">
             <EmberTooltip @side="top" @popperContainer="body" @text="Print corrective action history" />
             <i class="print icon"></i>

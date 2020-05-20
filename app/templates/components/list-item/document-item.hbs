@@ -1,9 +1,9 @@
 {{#if this.imagePreview}}
   <div class="ui tiny rounded image">
-    <img src={{@model.url}} alt="">
+    <img src={{@model.url}} alt="Preview of document">
   </div>
 {{else}}
-  <Display::IconForFile @file=@model class="huge"/>
+  <Display::IconForFile @file={{@model}} class="huge"/>
 {{/if}}
 <div class="clearing content">
   <div class="header">

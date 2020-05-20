@@ -27,8 +27,8 @@
         <UiDropdown @class="item icon top right pointing right floated">
           <i class="wrench icon"></i><i class="dropdown icon"></i>
           <div class="menu">
-            {{#if correctiveActions}}
-              <LinkTo class="item" @route="account.employee.index.counseling.print-all" @query={{hash issue=model.id slug=model.slug }}>
+            {{#if this.correctiveActions}}
+              <LinkTo class="item" @route="account.employee.index.counseling.print-all" @query={{hash issue=this.model.id slug=this.model.slug }}>
                 <i class="print icon"></i>
                 Print Corrective Actions
               </LinkTo>

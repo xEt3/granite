@@ -1,5 +1,5 @@
 <Display::EmployeePicture @url={{this.participant.picture}} @employeeId={{this.participant.id}} />
 {{this.participant.fullName}}
 {{#if this.detail}}
-  <div class="{{if this.online "green"}} detail">{{detail}}</div>
+  <div class="{{if this.online "green"}} detail">{{this.detail}}</div>
 {{/if}}

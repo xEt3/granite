@@ -1,7 +1,7 @@
 {{yield (action "execute")}}
 
 {{#unless this.inline}}
-  <label for={{this.calendarId}}>{{label}}</label>
+  <label for={{this.calendarId}}>{{this.label}}</label>
   <div class="ui input left icon" id={{this.calendarId}}>
     <i class="calendar icon"></i>
     {{#if this.value}}

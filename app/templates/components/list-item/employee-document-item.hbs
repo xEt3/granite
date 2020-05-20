@@ -1,6 +1,6 @@
 {{#if this.imagePreview}}
   <div class="ui tiny rounded image">
-    <img src={{this.file.url}} alt="">
+    <img src={{this.file.url}} alt="Employee">
   </div>
 {{else}}
   <Display::IconForFile @file={{this.file}} class="huge"/>
@@ -18,7 +18,7 @@
   </div>
   <div class="right floated">
     {{#if (and this.assignment.cannedType this.assignment.cannedSubmitted)}}
-      <a href={{this.assignment.filledFile.url}} id="action-item__action--download" target="_blank" rel="noopener">
+      <a href={{this.assignment.filledFile.url}} id="action-item__action--download" target="_blank" rel="noopener noreferrer">
         <EmberTooltip @side="left" @popperContainer="body" @text="Download completed form" />
         <i class="download icon"></i>
       </a>
@@ -83,7 +83,7 @@
             <ul>
               {{#each this.assignment.followups as |followup|}}
                 <li>
-                  <a href={{followup.url}} target="_blank" rel="noopener" download>
+                  <a href={{followup.url}} target="_blank" rel="noopener noreferrer" download>
                     {{time followup.created}}
                   </a>
                   by {{followup.creator.fullName}}
@@ -103,7 +103,7 @@
     {{this.assignment.employee.fullName}} signature {{#if this.assignment.file.title}}for {{this.assignment.file.title}}{{/if}}
   </div>
   <div class="content">
-    <img src={{this.assignment.signature}} alt="">
+    <img src={{this.assignment.signature}} alt="Signature of employee">
   </div>
   <div class="actions">
     <button class="ui red button" {{action "closeModal"}} type="button">

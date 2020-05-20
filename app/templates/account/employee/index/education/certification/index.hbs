@@ -3,7 +3,7 @@
   <small class="right floated text">
     <LinkTo @route="account.employee.index.education.certification.edit"><i class="edit icon"></i></LinkTo>
     <ConfirmModal @tagName="span" @deleteContext={{this.model.name}} as |confirm|>
-      <a href="#" class="text-danger" {{on "click" (prevent-default (pipe confirm (fn this.data.deleteRecord this.model "working" deleteOptions)))}}><i class="trash icon"></i></a>
+      <a href="#" class="text-danger" {{on "click" (prevent-default (pipe confirm (fn this.data.deleteRecord this.model "working" this.deleteOptions)))}}><i class="trash icon"></i></a>
     </ConfirmModal>
   </small>
 </h1>

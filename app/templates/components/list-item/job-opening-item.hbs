@@ -9,7 +9,7 @@
         </LinkTo>
       </div>
       {{#if @model.hiring}}
-        <span class="ui right floated"><a href="https://{{this.auth.user.company.urlPrefix}}.granitehr.com/careers/{{@model.slug}}" target="_blank" rel="noopener">View careers link <i class="external alternate fitted icon"></i></a></span>
+        <span class="ui right floated"><a href="https://{{this.auth.user.company.urlPrefix}}.granitehr.com/careers/{{@model.slug}}" target="_blank" rel="noopener noreferrer">View careers link <i class="external alternate fitted icon"></i></a></span>
       {{/if}}
       <div class="meta">
         Hiring for <strong>{{@model.job.title}}</strong> position

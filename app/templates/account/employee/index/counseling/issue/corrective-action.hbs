@@ -17,7 +17,7 @@
             <i class="folder icon"></i>
             Add a Document
           </a>
-          {{#if (and model.followUpOn (not model.resolutionStatusOn))}}
+          {{#if (and this.model.followUpOn (not this.model.resolutionStatusOn))}}
             <a href="#" class="item" {{on "click" (prevent-default (pipe this.openFollowupModal this.saveFollowup this.afterSave))}}>
               <i class="repeat icon"></i>Follow Up
             </a>

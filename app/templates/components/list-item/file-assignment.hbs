@@ -18,7 +18,7 @@
         <h4 class="center aligned text">
           Signed on {{time this.assignment.signedOn}}
         </h4>
-        <img src={{this.assignment.signature}} class="ui medium image" alt="Signature image">
+        <img src={{this.assignment.signature}} class="ui medium image" alt="Signature of employee">
       </EmberPopover>
     </a>
   {{/if}}
@@ -35,7 +35,7 @@
     {{this.assignment.file.title}} signature for {{this.assignment.employee.fullName}}
   </div>
   <div class="content">
-    <img src={{this.assignment.signature}} alt="">
+    <img src={{this.assignment.signature}} alt="Signature of employee">
   </div>
   <div class="actions">
     <button class="ui red button" {{action "closeSignatureModal"}} type="button">

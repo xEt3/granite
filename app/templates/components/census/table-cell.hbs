@@ -1,4 +1,4 @@
-<td class="{{if highlightCell "census__highlight-cell"}}">
+<td class="{{if this.highlightCell "census__highlight-cell"}}">
   {{#if this.missingRelationship}}
     {{@column}}
     <EmberTooltip @side="top" @popperContainer="body" @text={{this.popupMessage}} />
