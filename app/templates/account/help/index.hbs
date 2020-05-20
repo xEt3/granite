@@ -8,7 +8,7 @@
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
           <ConfirmModal @class="item" as |confirm|>
-            <a href="#" class="text-black" {{action (pipe confirm (action "resetIntros"))}}><i class="undo icon"></i>Reset Help Tutorials</a>
+            <a href="#" class="text-black" {{on "click" (prevent-default (pipe confirm this.resetIntros))}}><i class="undo icon"></i>Reset Help Tutorials</a>
           </ConfirmModal>
         </div>
       </UiDropdown>

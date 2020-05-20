@@ -1,20 +1,17 @@
-import classic from 'ember-classic-decorator';
-import { action, computed } from '@ember/object';
+import Controller from 'granite/core/controller';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 
-@classic
-export default class ThreadController extends Controller {
-  @service socket;
+export default class AccountEmployeesMessagesThreadController extends Controller {
+  @service socket
+  @tracked sb = 0
 
-  queryParams = [ 'sb' ];
-  @tracked sb = 0;
+  queryParams = [ 'sb' ]
 
-  @computed('model.{count,messages.length}')
   get retrievalMax () {
-    const msgLen = this.get('model.messages.length');
-    return this.get('model.count') === msgLen || msgLen > 3000;
+    const msgLen = this.model.messages.length;
+    return this.model.count === msgLen || msgLen > 3000;
   }
 
   @action
@@ -26,7 +23,7 @@ export default class ThreadController extends Controller {
     this.socket.emit('thread_message', {
       message,
       file:   file && file._id,
-      thread: this.get('model.thread.id')
+      thread: this.model.thread.id
     });
   }
 

@@ -1,7 +1,7 @@
-import { inject as service } from '@ember/service';
 import Route from 'granite/core/route';
+import { inject as service } from '@ember/service';
 
-export default class CampaignRoute extends Route {
+export default class AccountJobOpeningCampaignRoute extends Route {
   @service auth;
 
   async model () {

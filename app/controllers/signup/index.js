@@ -1,26 +1,25 @@
-import classic from 'ember-classic-decorator';
+import Controller from 'granite/core/controller';
 import { action } from '@ember/object';
-import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 import { states as stateOptions } from 'granite/config';
+import { inject as service } from '@ember/service';
 
-@classic
-export default class IndexController extends Controller.extend(addEdit) {
+export default class SignupIndexController extends Controller {
+  @service data
+
   stateOptions = stateOptions;
-  selectedState = null;
-  useMiddleName = false;
+  selectedState = null
+  useMiddleName = false
 
   @action
-  saveCompany () {
-    let company = this.model;
+  async saveCompany () {
+    let { success, error } = this.data.createStatus();
 
-    this.ajaxStart();
-
-    company.save()
-    .then(() => {
-      this.ajaxSuccess();
+    try {
+      await this.model.save();
+      success();
       this.transitionToRoute('signup.billing');
-    })
-    .catch(this.ajaxError.bind(this));
+    } catch (e) {
+      error(e);
+    }
   }
 }

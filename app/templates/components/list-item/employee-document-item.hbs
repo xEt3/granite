@@ -1,113 +1,115 @@
-{{#if this.imagePreview}}
-  <div class="ui tiny rounded image">
-    <img src={{this.file.url}} alt="Employee">
-  </div>
-{{else}}
-  <Display::IconForFile @file={{this.file}} class="huge"/>
-{{/if}}
-<div class="clearing content">
-  <div class="header">
-    {{#if this.assignment.cannedType}}
-      {{this.assignment.cannedType}} form
-    {{else}}
-      <LinkTo @route="account.document" @model={{this.file.id}}>
-        {{this.file.title}}
-        <span class="light text">{{this.file.extension}}</span>
-      </LinkTo>
-    {{/if}}
-  </div>
-  <div class="right floated">
-    {{#if (and this.assignment.cannedType this.assignment.cannedSubmitted)}}
-      <a href={{this.assignment.filledFile.url}} id="action-item__action--download" target="_blank" rel="noopener noreferrer">
-        <EmberTooltip @side="left" @popperContainer="body" @text="Download completed form" />
-        <i class="download icon"></i>
-      </a>
-    {{/if}}
-    <ConfirmModal @deleteContext={{this.file.title}} @tagName="span" @class="right floated" as |confirm|>
-      <a href="#" id="action-item__action--delete" {{action (pipe confirm (action "delete" this.assignment))}}>
-        <EmberTooltip @side="left" @popperContainer="body" @text="Delete assignment" />
-        <i class="trash icon"></i>
-      </a>
-    </ConfirmModal>
-
-    {{#if (or (not this.assignment.visibleToEmployee) this.assignment.cannedType)}}
-      <Modals::UploadDocument
-        @systemUse={{true}}
-        @uploadComplete={{action "uploadFollowup"}}
-        as |openUploadModal|
-      >
-        <a href="#" class="right floated" {{action openUploadModal}}>
-          <EmberTooltip @side="left" @popperContainer="body" @text="Upload a followup document" />
-          <i class="upload icon"></i>
-        </a>
-      </Modals::UploadDocument>
-    {{/if}}
-  </div>
-
-  <div class="meta">
-    <div class="ui equal width stackable grid">
-      <div class="left aligned column">
-        <div class="ui small text">
-          <p>
-            Document {{if this.pastAssignment "was" "will be"}} assigned on {{time (or this.assignment.effectiveOn this.assignment.created)}}
-            {{#if this.assignment.creator}}
-              by {{this.assignment.creator.fullName}}
-            {{/if}}
-          </p>
-          {{#if this.assignment.readOn}}
-            <p>Viewed: {{time this.assignment.readOn}}</p>
-          {{/if}}
-          {{#if this.assignment.signatureRequired}}
-            <p>
-              {{#if this.assignment.signedOn}}
-                Signed:
-                <a href="#" class="gray-icon" {{action "openModal"}}>
-                  <EmberPopover @side="right" @popperContainer="body" @text={{this.signature}} />
-                  {{time this.assignment.signedOn}}
-                </a>
-              {{else}}
-                {{this.assignment.employee.firstName}} has not signed this document yet.
-              {{/if}}
-            </p>
-          {{/if}}
-          {{#each this.file.tags as |tag|}}
-            <span class="ui tiny label">{{tag}}</span>
-          {{/each}}
-        </div>
-      </div>
-
-      {{#if this.assignment.followups.length}}
-        <div class="left aligned column">
-          <div class="ui small text">
-            Followed up:
-            <ul>
-              {{#each this.assignment.followups as |followup|}}
-                <li>
-                  <a href={{followup.url}} target="_blank" rel="noopener noreferrer" download>
-                    {{time followup.created}}
-                  </a>
-                  by {{followup.creator.fullName}}
-                </li>
-              {{/each}}
-            </ul>
-          </div>
-        </div>
+<div class="item">
+  {{#if this.imagePreview}}
+    <div class="ui tiny rounded image">
+      <img src={{this.file.url}} alt="Employee">
+    </div>
+  {{else}}
+    <Display::IconForFile @file={{this.file}} class="huge"/>
+  {{/if}}
+  <div class="clearing content">
+    <div class="header">
+      {{#if @assignment.cannedType}}
+        {{@assignment.cannedType}} form
+      {{else}}
+        <LinkTo @route="account.document" @model={{this.file.id}}>
+          {{this.file.title}}
+          <span class="light text">{{this.file.extension}}</span>
+        </LinkTo>
       {{/if}}
     </div>
-    <span class="ui small text right floated">Created {{time this.file.created}}</span>
-  </div>
-</div>
+    <div class="right floated">
+      {{#if (and @assignment.cannedType @assignment.cannedSubmitted)}}
+        <a href={{@assignment.filledFile.url}} id="action-item__action--download" target="_blank" rel="noopener noreferrer">
+          <EmberTooltip @side="left" @popperContainer="body" @text="Download completed form" />
+          <i class="download icon"></i>
+        </a>
+      {{/if}}
+      <ConfirmModal @deleteContext={{this.file.title}} @tagName="span" @class="right floated" as |confirm|>
+        <a href="#" id="action-item__action--delete" {{on "click" (prevent-default (pipe confirm (fn this.data.deleteRecord @assignment)))}}>
+          <EmberTooltip @side="left" @popperContainer="body" @text="Delete assignment" />
+          <i class="trash icon"></i>
+        </a>
+      </ConfirmModal>
 
-<UiModal @name="modal__file-assignment-signature" @id={{this.modalId}}>
-  <div class="header">
-    {{this.assignment.employee.fullName}} signature {{#if this.assignment.file.title}}for {{this.assignment.file.title}}{{/if}}
+      {{#if (or (not @assignment.visibleToEmployee) @assignment.cannedType)}}
+        <Modals::UploadDocument
+          @systemUse={{true}}
+          @uploadComplete={{this.uploadFollowup}}
+          as |openUploadModal|
+        >
+          <a href="#" class="right floated" {{on "click" (prevent-default openUploadModal)}}>
+            <EmberTooltip @side="left" @popperContainer="body" @text="Upload a followup document" />
+            <i class="upload icon"></i>
+          </a>
+        </Modals::UploadDocument>
+      {{/if}}
+    </div>
+
+    <div class="meta">
+      <div class="ui equal width stackable grid">
+        <div class="left aligned column">
+          <div class="ui small text">
+            <p>
+              Document {{if this.pastAssignment "was" "will be"}} assigned on {{time (or @assignment.effectiveOn @assignment.created)}}
+              {{#if @assignment.creator}}
+                by {{@assignment.creator.fullName}}
+              {{/if}}
+            </p>
+            {{#if @assignment.readOn}}
+              <p>Viewed: {{time @assignment.readOn}}</p>
+            {{/if}}
+            {{#if @assignment.signatureRequired}}
+              <p>
+                {{#if @assignment.signedOn}}
+                  Signed:
+                  <a href="#" class="gray-icon" {{on "click" (prevent-default this.openModal)}}>
+                    <EmberPopover @side="right" @popperContainer="body" @text={{this.signature}} />
+                    {{time @assignment.signedOn}}
+                  </a>
+                {{else}}
+                  {{@assignment.employee.firstName}} has not signed this document yet.
+                {{/if}}
+              </p>
+            {{/if}}
+            {{#each this.file.tags as |tag|}}
+              <span class="ui tiny label">{{tag}}</span>
+            {{/each}}
+          </div>
+        </div>
+
+        {{#if @assignment.followups.length}}
+          <div class="left aligned column">
+            <div class="ui small text">
+              Followed up:
+              <ul>
+                {{#each @assignment.followups as |followup|}}
+                  <li>
+                    <a href={{followup.url}} target="_blank" rel="noopener noreferrer" download>
+                      {{time followup.created}}
+                    </a>
+                    by {{followup.creator.fullName}}
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+          </div>
+        {{/if}}
+      </div>
+      <span class="ui small text right floated">Created {{time this.file.created}}</span>
+    </div>
   </div>
-  <div class="content">
-    <img src={{this.assignment.signature}} alt="Signature of employee">
-  </div>
-  <div class="actions">
-    <button class="ui red button" {{action "closeModal"}} type="button">
-      Close
-    </button>
-  </div>
-</UiModal>
+
+  <UiModal @name="modal__file-assignment-signature" @id={{this.modalId}}>
+    <div class="header">
+      {{@assignment.employee.fullName}} signature {{#if @assignment.file.title}}for {{@assignment.file.title}}{{/if}}
+    </div>
+    <div class="content">
+      <img src={{@assignment.signature}} alt="">
+    </div>
+    <div class="actions">
+      <button class="ui red button" {{on "click" (prevent-default this.closeModal)}} type="button">
+        Close
+      </button>
+    </div>
+  </UiModal>
+</div>

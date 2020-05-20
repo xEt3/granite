@@ -1,19 +1,17 @@
-import classic from 'ember-classic-decorator';
-import { action, computed } from '@ember/object';
-import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-import del from 'granite/mixins/controller-abstractions/delete';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { closeMessageMap } from 'granite/config/statics';
 
-@classic
-export default class CampaignController extends Controller.extend(addEdit, del) {
-  @service auth;
+export default class AccountJobOpeningCampaignController extends Controller {
+  @service auth
+  @service data
 
-  transitionAfterDelete = 'account.recruiting.index.index';
-  transitionWithModel = false;
+  deleteOptions = {
+    transitionAfterDelete: 'account.recruiting.index.index',
+    transitionWithModel:   false
+  }
 
-  @computed('model.{sendCloseNotice,allocateTalentPool}')
   get confirmCloseMessage () {
     if (!this.model) {
       return null;
@@ -35,12 +33,11 @@ export default class CampaignController extends Controller.extend(addEdit, del) 
 
   @action
   close () {
-    const model = this.model;
-    model.set('closed', true);
-    if (!model.completedOn) {
-      model.set('completedOn', new Date());
+    this.model.closed = true;
+    if (!this.model.completedOn) {
+      this.model.completedOn = new Date();
     }
 
-    this.saveModel(model);
+    this.data.saveRecord(this.model);
   }
 }

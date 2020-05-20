@@ -13,7 +13,7 @@
       </small>
     </label>
     Off
-    <UiCheckbox @class="toggle" @label="On" @checked={{this.model.collectEEO}} @onChange={{pipe-action (action (mut this.model.collectEEO)) (action "save")}} />
+    <UiCheckbox @class="toggle" @label="On" @checked={{this.model.collectEEO}} @onChange={{pipe (set this.model.collectEEO _) (fn this.data.saveRecord this.model)}} />
   </div>
 
   {{#if this.model.collectEEO}}
@@ -25,7 +25,7 @@
         </small>
       </label>
       Off
-      <UiCheckbox @class="toggle" @label="On" @checked={{this.model.collectAA}} @onChange={{pipe-action (action (mut this.model.collectAA)) (action "save")}} />
+      <UiCheckbox @class="toggle" @label="On" @checked={{this.model.collectAA}} @onChange={{pipe (set this.model.collectAA _) (fn this.data.saveRecord this.model)}} />
     </div>
   {{/if}}
 </div>

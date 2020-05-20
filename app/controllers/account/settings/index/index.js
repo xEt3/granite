@@ -1,18 +1,29 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import Controller from 'granite/core/controller';
+import { fileHandling } from 'granite/core';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 import { Promise } from 'rsvp';
 import moment from 'moment';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-import fileSupport from 'granite/mixins/file-handling';
 import { states } from 'granite/config/statics';
 
 const timezones = moment.tz.names();
 
-export default Controller.extend(addEdit, fileSupport, {
-  timezones,
-  states,
+@fileHandling
+export default class SettingsIndexIndexController extends Controller {
+  @service data
+  @service store
 
-  settingsForm: computed(() => [{
+  timezones = timezones
+  states = states
+
+  /* File settings */
+  dropzoneId = 'input__dropzone--company-image'
+  fileData = {
+    systemUse:      true,
+    associatedData: { type: 'companyProfileImage' }
+  }
+
+  settingsForm = [{
     label:       'Company Name',
     type:        'text',
     path:        'name',
@@ -65,31 +76,18 @@ export default Controller.extend(addEdit, fileSupport, {
     contentPath: 'controller.timezones',
     selectText:  'Select a Time Zone',
     parentClass: 'sixteen wide'
-  }]),
+  }]
 
-  /* File settings */
-  dropzoneId: 'input__dropzone--company-image',
-  fileData:   {
-    systemUse:      true,
-    associatedData: { type: 'companyProfileImage' }
-  },
+  @action
+  async saveSettings () {
+    const file = this.files.fileIsAdded;
+    let uploaded = await Promise.resolve(file ? this.files.upload() : null);
 
-  actions: {
-    saveSettings () {
-      const file = this.fileIsAdded;
-
-      Promise.resolve(file ? this.upload() : null)
-      .then(uploaded => {
-        if (uploaded) {
-          this.model.setProperties({
-            logo:    uploaded,
-            logoUrl: uploaded.get('url')
-          });
-        }
-
-        return this.saveModel();
-      })
-      .catch(this.ajaxError.bind(this));
+    if (uploaded) {
+      this.model.logo = uploaded;
+      this.model.logoUrl = uploaded.url;
     }
+
+    return this.data.saveRecord(this.model);
   }
-});
+}

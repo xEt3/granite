@@ -2,24 +2,24 @@
   <Display::FilterPane class="ui content form padded segment container" @onChange={{this.updateFilter}} as |filter|>
     <h2>
       <i class="filter icon"></i> Filters
-      <a href="#" class="ui small text right floated text-red" {{action "resetFilters"}}>Reset All</a>
+      <a href="#" class="ui small text right floated text-red" {{on "click" (prevent-default this.resetFilters)}}>Reset All</a>
     </h2>
 
-    <filter.section @name="Visibility" @activeState=(hash visibleToEmployee=false) as |controls|>
+    <filter.section @name="Visibility" @activeState={{hash visibleToEmployee=false}} as |controls|>
       <controls.toggleControl
         @name="visibleToEmployee"
         @state={{this.visibleToEmployee}}
         @label="Visible To Employee"/>
     </filter.section>
 
-    <filter.section @name="Viewed by Employee" @activeState=(hash readOn=false) as |controls|>
+    <filter.section @name="Viewed by Employee" @activeState={{hash readOn=false}} as |controls|>
       <controls.toggleControl
         @name="readOn"
         @state={{this.readOn}}
         @label="Viewed"/>
     </filter.section>
 
-    <filter.section @name="Signed by Employee" @activeState=(hash signedOn=false) as |controls|>
+    <filter.section @name="Signed by Employee" @activeState={{hash signedOn=false}} as |controls|>
       <controls.toggleControl
         @name="signedOn"
         @state={{this.signedOn}}
@@ -40,7 +40,7 @@
           <EmberTooltip @side="left" @popperContainer="body" @text="Assign a document" />
           <i id="add-document" class="plus icon"></i>
         </LinkTo>
-        <a href="#" class={{if this.showFilters "text-red"}} {{action this.toggleProperty "showFilters"}}>
+        <a href="#" class={{if this.showFilters "text-red"}} {{on "click" (prevent-default (toggle "showFilters" this))}}>
           <EmberTooltip @side="left" @popperContainer="body" @text="Filters" />
           <i class="{{if this.showFilters "remove" "filter"}} icon"></i>
         </a>

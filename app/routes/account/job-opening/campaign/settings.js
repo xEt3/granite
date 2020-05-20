@@ -15,8 +15,8 @@ export default class AccountJobOpeningCampaignSettingsRoute extends Route {
       jobOpening,
       defaultPipeline: defaultPipeline ? defaultPipeline.firstObject : defaultPipeline,
       customPipeline:  customPipeline ? customPipeline.firstObject : customPipeline,
-      locations:       this.store.findAll('location'),
-      employees:       this.store.query('employee', {
+      locations:       await this.store.findAll('location'),
+      employees:       await this.store.query('employee', {
         email:       { $exists: true },
         companyUser: { $exists: true }
       })

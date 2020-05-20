@@ -1,9 +1,10 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { resolve } from 'rsvp';
-import fileSupport from 'granite/mixins/file-handling';
+import { fileHandling } from 'granite/core';
 
-const MessageThreadComponent = Component.extend(fileSupport, {
+@fileHandling
+export default class MessagingMessageThreadComponent extends Component {
   socket: service(),
   auth:   service(),
   store:  service(),
@@ -56,5 +57,3 @@ const MessageThreadComponent = Component.extend(fileSupport, {
 });
 
 MessageThreadComponent.reopenClass({ positionalParams: [ 'messages', 'thread' ] });
-
-export default MessageThreadComponent;

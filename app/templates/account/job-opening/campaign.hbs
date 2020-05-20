@@ -20,12 +20,21 @@
     {{/if}}
     <div class="right menu">
       {{#if (and this.model.completedOn (not this.model.closed))}}
-        <Modals::AtsCloseJobOpening @class="item" @sourcesToClose={{this.model.manualApplicantSources}} as |confirm|>
-          <a href="#" class="text-green" {{action (pipe confirm (action "close"))}}>
-            <EmberTooltip @side="bottom" @popperContainer="body" @text="This job opening meets your requirements for closure. The appropriate number of candidates were hired and you can now close this opening." />
-            <i class="check icon"></i>Close Job Opening...
-          </a>
-        </Modals::AtsCloseJobOpening>
+        {{#if this.model.manualApplicantSources.length}}
+          <Modals::AtsCloseJobOpening class="item" @sourcesToClose={{this.model.manualApplicantSources}} as |confirm|>
+            <a href="#" class="text-green" {{on "click" (prevent-default (pipe confirm this.close))}}>
+              <EmberTooltip @side="bottom" @popperContainer="body" @text="This job opening meets your requirements for closure. The appropriate number of candidates were hired and you can now close this opening." />
+              <i class="check icon"></i>Close Job Opening...
+            </a>
+          </Modals::AtsCloseJobOpening>
+        {{else}}
+          <ConfirmModal @confirmContent="Are you sure you want to close this job opening?" @class="item" as |confirm|>
+            <a href="#" class="text-green" {{on "click" (prevent-default (pipe confirm this.close))}}>
+              <EmberTooltip @side="bottom" @popperContainer="body" @text="This job opening meets your requirements for closure. The appropriate number of candidates were hired and you can now close this opening." />
+              <i class="check icon"></i>Close Job Opening...
+            </a>
+          </ConfirmModal>
+        {{/if}}
       {{/if}}
 
       {{#unless this.model.completedSetup}}
@@ -38,14 +47,14 @@
           <LinkTo @route="account.job-opening.campaign.settings" class="item"><i class="settings icon"></i> Settings</LinkTo>
           {{#if (and this.model.completedSetup (not this.model.closed))}}
             <ConfirmModal @confirmContent="Are you sure you want to close this job opening?" @class="item" as |confirm|>
-              <a href="#" id="job__action--close" class="text-grey" {{action (pipe confirm (action "close"))}}>
+              <a href="#" id="job__action--close" class="text-grey" {{on "click" (prevent-default (pipe confirm this.close))}}>
                 <i class="stop circle icon"></i>Close Job Opening
               </a>
             </ConfirmModal>
           {{/if}}
           <div class="text-danger header">Danger Zone</div>
           <ConfirmModal @deleteContext={{this.model.name}} @class="item" as |confirm|>
-            <a href="#" id="job__action--delete" class="text-danger" {{action (pipe confirm (action "delete"))}}>
+            <a href="#" id="job__action--delete" class="text-danger" {{on "click" (prevent-default (pipe confirm (fn this.data.deleteRecord this.model "working" this.deleteOptions)))}}>
               <i class="trash icon"></i>Delete Record
             </a>
           </ConfirmModal>

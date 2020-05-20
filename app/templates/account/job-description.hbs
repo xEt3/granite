@@ -8,11 +8,11 @@
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
           <div class="header">Actions</div>
-          <a href="#" class="item" {{action "createCampaign"}}><i class="wizard icon"></i>Hire for this job</a>
+          <a href="#" class="item" {{on "click" (prevent-default this.createCampaign)}}><i class="wizard icon"></i>Hire for this job</a>
           <LinkTo @route="account.job-description.edit" @model={{this.model.id}} class="item"><i class="edit icon"></i> Edit</LinkTo>
           <div class="text-danger header">Danger Zone</div>
           <ConfirmModal @deleteContext={{this.model.title}} @class="item" as |confirm|>
-            <a href="#" id="job__action--delete" class="text-danger" {{action (pipe confirm (action "delete"))}}>
+            <a href="#" id="job__action--delete" class="text-danger" {{on "click" (prevent-default (pipe confirm (fn this.data.deleteRecord this.model "working" this.deleteOptions)))}}>
               <i class="trash icon"></i>Delete Record
             </a>
           </ConfirmModal>
