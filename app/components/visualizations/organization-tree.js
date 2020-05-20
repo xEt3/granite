@@ -30,7 +30,7 @@ export default Component.extend({
 
   didUpdateAttrs () {
     this._super(...arguments);
-    this._dataUpdate;
+    this._dataUpdate; //eslint-disable-line
   },
 
   populateChildNodes (node, base) {

@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { computed, observer } from '@ember/object';
+import { computed, observer } from '@ember/object'; //eslint-disable-line
 import { on } from '@ember/object/evented';
 import { A } from '@ember/array';
 import $ from 'jquery';

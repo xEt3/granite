@@ -56,18 +56,19 @@ module('Integration | Component | list-item/educate/webinar-item', function (hoo
 
     this.setProperties({
       webinar,
-      webinarAuthorization
+      webinarAuthorization,
+      onAssign: () => {}
     });
 
     // Render a purchased webinar item and expect title, description, remaining duration, assign button, watch button
     await render(hbs`
       <ListItem::Educate::WebinarItem
         @webinar={{this.webinar}}
+        @onAssign={{this.onAssign}}
         @authorization={{this.webinarAuthorization}} />
     `);
 
     assert.dom(this.element, '.webinar-card__title').includesText(webinar.title);
-    assert.dom(this.element, '.webinar-card__description').includesText(webinar.description);
     assert.dom('.webinar-card__purchase').doesNotExist();
 
     assert.dom('a.webinar-card__watch').exists();

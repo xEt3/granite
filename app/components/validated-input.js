@@ -17,15 +17,20 @@ export default class ValidatedInputComponent extends Component {
 
   @tracked showValidations = false
 
-  @not('showFieldError') hasNoFieldError
+  get hasNoFieldError () {
+    return !this.showFieldError;
+  }
   @not('validation.isValidating') notValidating
   @notEmpty('value') hasContent
   @notEmpty('validation.warnings') hasWarnings
-  @and('hasContent', 'validation.isTruelyValid', 'hasNoFieldError') isValid
   @or('showValidations', 'didValidate', 'hasContent') shouldDisplayValidations
   @and('notValidating', 'showErrorMessage', 'hasContent', 'validation') showErrorClass
   @and('shouldDisplayValidations', 'validation.isInvalid') showErrorMessage
   @and('shouldDisplayValidations', 'hasWarnings', 'isValid') showWarningMessage
+
+  get isValid () {
+    return this.hasContent && (this.validation || {}).isTruelyValid && this.hasNoFieldError;
+  }
 
   get showFieldError () {
     return this.args.fieldErrors ? this.args.fieldErrors[this.args.valuePath] : false;

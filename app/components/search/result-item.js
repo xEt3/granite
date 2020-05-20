@@ -1,4 +1,4 @@
-import BaseLiComponent from '../list-item/base';
+import Component from '@ember/component';
 import { computed, get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import uriForModel from 'granite/utils/uri-for-model';
@@ -38,7 +38,7 @@ const itemProperty = (property) =>
     return propertyMap && get(model, propertyMap);
   });
 
-export default BaseLiComponent.extend({
+export default Component.extend({
   router:            service(),
   tagName:           'a',
   href:              '#',

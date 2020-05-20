@@ -8,7 +8,7 @@ module('Integration | Component | search/result-item', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it requires a result object to display child elements', async function (assert) {
-    await render(hbs`{{search/result-item}}`);
+    await render(hbs`<Search::ResultItem />`);
 
     assert.dom('.search__result-item').exists();
     assert.dom('.search__result-item > *').doesNotExist('has no child elements');
@@ -20,7 +20,7 @@ module('Integration | Component | search/result-item', function (hooks) {
     employee.set('picture', null);
     employee.set('_id', employee.get('id')); // HACK: mimic result item
     this.set('employee', employee);
-    await render(hbs`{{search/result-item employee picture=picture}}`);
+    await render(hbs`<Search::ResultItem @model={{this.employee}} @picture={{this.picture}} />`);
 
     assert.dom('.search__result-item').exists({ count: 1 });
     assert.dom('.search__result-item.search__result-item--employee').exists({ count: 1 });
@@ -41,7 +41,7 @@ module('Integration | Component | search/result-item', function (hooks) {
     const { attrs } = await server.create('department');
     let department = this.owner.lookup('service:store').createRecord('department', attrs);
     this.set('department', department);
-    await render(hbs`{{search/result-item department}}`);
+    await render(hbs`<Search::ResultItem @model={{this.department}} />`);
     assert.dom('.search__result-item').exists({ count: 1 });
     assert.dom('.search__result-item.search__result-item--department').exists({ count: 1 });
     assert.dom('.search__result-item.search__result-item--employee').doesNotExist();
@@ -55,7 +55,7 @@ module('Integration | Component | search/result-item', function (hooks) {
     const { attrs } = await server.create('location');
     let location = this.owner.lookup('service:store').createRecord('location', attrs);
     this.set('location', location);
-    await render(hbs`{{search/result-item location}}`);
+    await render(hbs`<Search::ResultItem @model={{this.location}} />`);
     assert.dom('.search__result-item').exists({ count: 1 });
     assert.dom('.search__result-item.search__result-item--location').exists({ count: 1 });
     assert.dom('.search__result-item.search__result-item--employee').doesNotExist();

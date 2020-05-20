@@ -38,7 +38,7 @@
   </h2>
   <div class="ui relaxed flex link list">
     {{#each this.model.certifications as |record|}}
-      {{list-item/certification-item record}}
+      <ListItem::CertificationItem @model={{record}} />
     {{else}}
       <h3>No certifications available.</h3>
     {{/each}}

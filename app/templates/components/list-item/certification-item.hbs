@@ -1,17 +1,17 @@
-<LinkTo @route="account.employee.index.education.certification" @model={{this.model.id}} class="item">
+<LinkTo @route="account.employee.index.education.certification" @model={{@model.id}} class="item">
   <div class="content">
     <h3 class="header">
-      {{this.model.name}}
-      {{#if this.model.renews}}
+      {{@model.name}}
+      {{#if @model.renews}}
         <small class="light text">
-          Renewal {{time-ago this.model.nextRenewalDate}} on {{time this.model.nextRenewalDate "M/D/YY"}}
+          Renewal {{time-ago @model.nextRenewalDate}} on {{time @model.nextRenewalDate "M/D/YY"}}
         </small>
       {{/if}}
     </h3>
     <div class="meta">
-      {{#if this.model.requiresDocument}}
-        <span class="ui tiny {{if this.model.document "green" "red"}} label">
-          {{#if this.model.document}}
+      {{#if @model.requiresDocument}}
+        <span class="ui tiny {{if @model.document "green" "red"}} label">
+          {{#if @model.document}}
             <i class="check icon"></i>Document uploaded
           {{else}}
             Document required
@@ -21,6 +21,6 @@
     </div>
   </div>
   <div class="right content">
-    <span class="ui small text">Added {{time-ago this.model.created}}{{#if this.model.creator}} by {{this.model.creator.fullName}}{{/if}}</span>
+    <span class="ui small text">Added {{time-ago @model.created}}{{#if @model.creator}} by {{@model.creator.fullName}}{{/if}}</span>
   </div>
 </LinkTo>

@@ -8,13 +8,13 @@
     <h2 class="search__result-category">{{category}}</h2>
     <div class="ui divided link items">
       {{#each group.results as |result|}}
-        {{search/result-item
-          result._source
-          resultItem=result
-          modelName=result._type
-          title=result.title
-          picture=result.picture
-          description=result.description}}
+        <Search::ResultItem
+          @model={{result._source}}
+          @resultItem={{result}}
+          @modelName={{result._type}}
+          @title={{result.title}}
+          @picture={{result.picture}}
+          @description={{result.description}} />
       {{/each}}
     </div>
   {{else}}

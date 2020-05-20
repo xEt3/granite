@@ -19,7 +19,7 @@ export default class ListsController extends Controller {
 
   get modelForForm () {
     //need this bc you have to pass a model object to quick-form
-    return this.currentForm.listType === 'string' ? this : this.currentItem;
+    return (this.currentForm || {}).listType === 'string' ? this : this.currentItem;
   }
 
   afterSave () {

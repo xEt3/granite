@@ -17,7 +17,7 @@ module('Integration | Component | list-item/certification-item', function (hooks
 
     this.set('model', fakeData);
 
-    await render(hbs`{{list-item/certification-item model}}`);
+    await render(hbs`<ListItem::CertificationItem @model={{this.model}} />`);
 
     assert.dom(this.element, '.content .header').includesText(fakeData.name);
     assert.dom(this.element, '.content .header').includesText(`Renewal in a year on ${moment(fakeData.nextRenewalDate).format('M/D/YY')}`);
@@ -36,7 +36,7 @@ module('Integration | Component | list-item/certification-item', function (hooks
 
     this.set('model', fakeData);
 
-    await render(hbs`{{list-item/certification-item model}}`);
+    await render(hbs`<ListItem::CertificationItem @model={{this.model}} />`);
 
     assert.dom(this.element, '.content .header').includesText(fakeData.name);
     assert.dom(this.element, '.content .meta .green.label').includesText('Document uploaded');
