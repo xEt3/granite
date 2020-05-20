@@ -1,7 +1,3 @@
-import classic from 'ember-classic-decorator';
-import { classNames } from '@ember-decorators/component';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-@classic
-@classNames('browser')
-export default class PreviewBrowser extends Component {}
+export default class DisplayPreviewBrowserComponent extends Component {}

@@ -1,33 +1,29 @@
-import classic from 'ember-classic-decorator';
+import { GraniteResourceController } from 'granite/core/controller';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import Controller from '@ember/controller';
-import resource from 'granite/mixins/controller-abstractions/resource';
 
-@classic
-export default class IndexController extends Controller.extend(resource) {
+export default class AccountEmployeeDocumentsController extends GraniteResourceController {
+  @tracked visibleToEmployee = null
+  @tracked readOn = null
+  @tracked signedOn = null
+
+  showFilters = false
   queryParams = [
     'showFilters',
     { visibleToEmployee: { type: 'boolean' } },
     { readOn: { type: 'boolean' } },
     { signedOn: { type: 'boolean' } }
-  ];
-
-  showFilters = false;
-  visibleToEmployee = null;
-  readOn = null;
-  signedOn = null;
+  ]
 
   @action
   updateFilter (filter, value) {
-    this.set(filter, value);
+    this[filter] = value;
   }
 
   @action
   resetFilters () {
-    this.setProperties({
-      visibleToEmployee: null,
-      readOn:            null,
-      signedOn:          null
-    });
+    this.visibleToEmployee = null;
+    this.readOn = null;
+    this.signedOn = null;
   }
 }

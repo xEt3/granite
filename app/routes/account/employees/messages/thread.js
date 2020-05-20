@@ -1,14 +1,13 @@
-import { inject as service } from '@ember/service';
 import Route from 'granite/core/route';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 import { A } from '@ember/array';
 import { resolve } from 'rsvp';
 
-export default class ThreadRoute extends Route {
-  @service socket;
-
-  @service messaging;
-
-  @service notifications;
+export default class AccountEmployeesMessagesThreadRoute extends Route {
+  @service socket
+  @service messaging
+  @service notifications
 
   titleToken (model) {
     let names = model.between ? model.between.toArray() : model.thread.between.toArray();
@@ -20,8 +19,8 @@ export default class ThreadRoute extends Route {
 
   queryParams = { sb: { refreshModel: true } };
 
-  init () {
-    super.init(...arguments);
+  constructor () {
+    super(...arguments);
     this.cache_threadRecord = {};
   }
 
@@ -31,7 +30,7 @@ export default class ThreadRoute extends Route {
     // the message thread
     let thread = await this.getThreadRecord(params);
 
-    const ingressCount = this.get('controller.ingressPushCount');
+    const ingressCount = this.controller.ingressPushCount;
 
     let msgQuery = {};
 
@@ -39,7 +38,7 @@ export default class ThreadRoute extends Route {
       msgQuery.skip = ingressCount;
     }
 
-    if (!this.get('controller.model.messages') && scrollback) {
+    if (!this.controller.model.messages && scrollback) {
       msgQuery.limit = 50 * (scrollback + 1);
       scrollback = false;
     }
@@ -47,7 +46,7 @@ export default class ThreadRoute extends Route {
     let data = await this.retrieveThreadHistory(thread, scrollback, msgQuery);
 
     const hist = data.messages,
-          existingMessages = this.get('controller.model.messages');
+          existingMessages = this.controller.model.messages;
 
     const messages = existingMessages && scrollback ? hist.concat(existingMessages.toArray()).uniqBy('_id') : A(hist);
 
@@ -58,6 +57,7 @@ export default class ThreadRoute extends Route {
     };
   }
 
+  @action
   onMessage ([ message ]) {
     if (!document.hasFocus()) {
       const { content: msg, from } = message || {};
@@ -80,6 +80,7 @@ export default class ThreadRoute extends Route {
     controller.ingressPushCount = (controller.ingressPushCount || 0) + 1;
   }
 
+  @action
   async getThreadRecord ({ thread_id }) {
     const cache = this.cache_threadRecord[thread_id];
     let thread  = await this.store.findRecord('message-thread', thread_id);
@@ -92,6 +93,7 @@ export default class ThreadRoute extends Route {
     return resolve(cache);
   }
 
+  @action
   retrieveThreadHistory (thread, scrollback, q = {}) {
     const socket = this.socket,
           id = thread.id;
@@ -117,10 +119,12 @@ export default class ThreadRoute extends Route {
     });
   }
 
+  @action
   afterModel () {
     this.messaging.subscribe('thread_message', this.onMessage, this, 'thread_controller');
   }
 
+  @action
   resetController (controller, exit, transition) {
     if (exit || !(transition.queryParams || {}).sb) {
       controller.sb = 0;

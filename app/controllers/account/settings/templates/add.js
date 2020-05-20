@@ -1,7 +1,11 @@
-import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
 
-export default Controller.extend(addEdit, {
-  transitionAfterSave: 'account.settings.templates',
-  transitionWithModel: false
-});
+export default class AccountSettingsTemplatesAddController extends Controller {
+  @service data
+
+  saveOptions = {
+    transitionAfterSave: 'account.settings.templates',
+    transitionWithModel: false
+  }
+}

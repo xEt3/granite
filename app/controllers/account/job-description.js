@@ -1,33 +1,34 @@
-import classic from 'ember-classic-decorator';
+import Controller from 'granite/core/controller';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-import del from 'granite/mixins/controller-abstractions/delete';
 
-@classic
-export default class JobDescriptionController extends Controller.extend(addEdit, del) {
-  @service auth;
+export default class AccountJobDescriptionController extends Controller {
+  @service auth
+  @service data
 
-  transitionAfterDelete = 'account.recruiting.job-descriptions';
-  transitionWithModel = false;
+  deleteOptions = {
+    transitionAfterDelete: 'account.recruiting.job-descriptions',
+    transitionWithModel:   false
+  }
 
   @action
-  createCampaign () {
-    this.ajaxStart();
+  async createCampaign () {
+    let { success, error } = this.data.createStatus();
 
     let job = this.model,
-        creator = this.get('auth.user.employee'),
-        jobOpening = this.store.createRecord('job-opening', {
+        creator = await this.auth.get('user.employee'),
+        jobOpening = await this.store.createRecord('job-opening', {
           job,
           creator,
-          name: `${job.get('title')} Recruiting Campaign`
+          name: `${job.title} Recruiting Campaign`
         });
 
-    jobOpening.save()
-    .then(record => {
-      this.transitionToRoute('account.job-opening.setup', record.get('id'));
-    })
-    .catch(this.ajaxError.bind(this));
+    try {
+      let record = await jobOpening.save();
+      success(null, true);
+      this.transitionToRoute('account.job-opening.setup', record.id);
+    } catch (e) {
+      error(e);
+    }
   }
 }

@@ -1,13 +1,13 @@
-import { inject as service } from '@ember/service';
 import Route from 'granite/core/route';
+import { inject as service } from '@ember/service';
 import { articles } from 'granite/config/help';
 
-export default class IndexRoute extends Route {
+export default class AccountHelpRoute extends Route {
   @service auth;
 
-  model () {
+  async model () {
     return {
-      user: this.auth.user,
+      user: await this.auth.user,
       articles
     };
   }

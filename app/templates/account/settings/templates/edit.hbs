@@ -1,7 +1,7 @@
 <h4>Editing Template for {{this.definition.title}}</h4>
 <div class="ui divider"></div>
 
-<form class="ui form" {{action "save" on="submit"}}>
+<form class="ui form" {{on "submit" (prevent-default (fn this.data.saveRecord this.model "working" this.saveOptions))}}>
   {{#if this.definition.isRenderable}}
     <p>
       Templates support the "Mustache" language. See <a href="http://mustache.github.io/mustache.5.html" rel="noopener noreferrer" target="_blank">the mustache manual</a> for more information.
@@ -19,7 +19,7 @@
   {{/each}}
 
   <div class="ui divider"></div>
-  <Form::ActionButton type="submit" @loading={{this.working}} class="ui large green fluid button">
+  <Form::ActionButton type="submit" @loading={{this.data.statuses.working.isLoading}} class="ui large green fluid button">
     Save Template
   </Form::ActionButton>
 

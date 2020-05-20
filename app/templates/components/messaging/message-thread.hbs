@@ -1,9 +1,9 @@
 {{#each this.thread.between as |participant|}}
-  {{messaging/thread-participant
-    participant
-    connectedUsers=this.socket.connectedUsers
-    user=this.auth.user.employee
-    class="messaging-thread__participant"}}
+  <Messaging::ThreadParticipant
+    @participant={{participant}}
+    @connectedUsers={{this.socket.connectedUsers}}
+    @user={{this.auth.user.employee}}
+    class="messaging-thread__participant"/>
 {{/each}}
 
 <div class="ui divider"></div>

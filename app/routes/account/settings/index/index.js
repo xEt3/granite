@@ -1,5 +1,5 @@
 import Route from 'granite/core/route';
 
-export default class IndexRoute extends Route {
-  titleToken = 'Settings';
+export default class SettingsIndexIndexRoute extends Route {
+  titleToken = 'Settings'
 }

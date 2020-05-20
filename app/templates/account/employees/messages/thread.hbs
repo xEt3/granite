@@ -1,7 +1,9 @@
-{{messaging/message-thread
-  this.model.messages
-  this.model.thread
-  retrievalMax=this.retrievalMax
-  onMessage=(action "sendMessage")
-  onScrollback=(action "scrollback")
-}}
+<div class="messaging__thread">
+  <Messaging::MessageThread
+    @messages={{this.model.messages}}
+    @thread={{this.model.thread}}
+    @retrievalMax={{this.retrievalMax}}
+    @onMessage={{this.sendMessage}}
+    @onScrollback={{this.scrollback}}
+  />
+</div>

@@ -17,9 +17,9 @@
           <LinkTo @route="account.asset.settings" class="item"><i class="settings icon"></i>Settings</LinkTo>
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
-            {{#confirm-modal this.as deleteContext=this.model.name as |confirm|}}
-              <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}><i class="trash icon"></i>Delete Record</a>
-            {{/confirm-modal}}
+            <ConfirmModal @deleteContext={{this.model.name}} as |confirm|>
+              <a href="#" class="text-danger" {{on "click" (prevent-default (pipe confirm (fn this.data.deleteRecord this.model "working" this.deleteOptions)))}}><i class="trash icon"></i>Delete Record</a>
+            </ConfirmModal>
           </div>
         </div>
       </UiDropdown>

@@ -1,5 +1,5 @@
 <div class="ui tall stacked opaque very padded container segment">
-  <form class="ui form" {{action "saveCompany" on="submit"}}>
+  <form class="ui form" {{on "submit" (prevent-default this.saveCompany)}}>
     <h1 class="ui header centered">Company Information</h1>
     <div class="ui divider"></div>
 
@@ -30,7 +30,7 @@
     <div class="two fields">
       <div class="twelve wide field">
         <ValidatedInput @model={{this.model}} @valuePath="contactPhone">
-          <MaskedInput @placeholder="Phone Number" @mask="(111) 111-1111" @on-change={{action (mut this.model.contactPhone) value="target.value"}} @name="phone-number" />
+          <MaskedInput @placeholder="Phone Number" @mask="(111) 111-1111" @value={{this.model.contactPhone}} @name="phone-number" />
         </ValidatedInput>
       </div>
       <div class="four wide field">
@@ -58,7 +58,7 @@
       <div class="field">
         <label for="state"></label>
         <ValidatedInput @model={{this.model}} @valuePath="addressState" id="state">
-          <UiDropdown @class="select__address-state search selection" @selected={{this.model.addressState}} @onChange={{action (mut this.model.addressState)}} as |execute mapper|>
+          <UiDropdown @class="select__address-state search selection" @selected={{this.model.addressState}} @onChange={{set this.model.addressState _}} as |execute mapper|>
             <div class="default text">Select a State</div>
             <i class="dropdown icon"></i>
             <div class="menu">
@@ -84,8 +84,6 @@
     </div>
     <Display::PreviewBrowser>{{if this.model.urlPrefix this.model.urlPrefix "portal"}}</Display::PreviewBrowser>
     <div class="ui divider"></div>
-    <Form::ActionButton type="submit" class="ui massive fluid green button" @loading={{this.working}}>Next: Billing</Form::ActionButton>
+    <Form::ActionButton type="submit" class="ui massive fluid green button" @loading={{this.data.statuses.working.isLoading}}>Next: Billing</Form::ActionButton>
   </form>
 </div>
-
-{{this.test}}

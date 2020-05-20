@@ -1,14 +1,9 @@
-import classic from 'ember-classic-decorator';
-import { computed } from '@ember/object';
+import { GraniteResourceController } from 'granite/core/controller';
 import { inject as service } from '@ember/service';
-import Controller from '@ember/controller';
-import resource from 'granite/mixins/controller-abstractions/resource';
 
-@classic
-export default class IndexController extends Controller.extend(resource) {
+export default class AccountRecruitingJobDescriptionController extends GraniteResourceController {
   @service auth;
 
-  @computed
   get intros () {
     return [{
       element:  '.ui.segment.container',

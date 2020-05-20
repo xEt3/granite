@@ -2,7 +2,7 @@
   <Display::FilterPane class="ui content form padded segment container" @onChange={{this.updateFilter}} as |filter|>
     <h2>
       <i class="filter icon"></i> Filters
-      <a href="#" class="ui small text right floated text-red" {{action "resetFilters"}}>Reset All</a>
+      <a href="#" class="ui small text right floated text-red" {{on "click" (prevent-default this.resetFilters)}}>Reset All</a>
     </h2>
 
     <filter.section @name="Visibility" @activeState={{hash visibleToEmployee=false}} as |controls|>
@@ -40,7 +40,7 @@
           <EmberTooltip @side="left" @popperContainer="body" @text="Assign a document" />
           <i id="add-document" class="plus icon"></i>
         </LinkTo>
-        <a href="#" class={{if this.showFilters "text-red"}} {{action this.toggleProperty "showFilters"}}>
+        <a href="#" class={{if this.showFilters "text-red"}} {{on "click" (prevent-default (toggle "showFilters" this))}}>
           <EmberTooltip @side="left" @popperContainer="body" @text="Filters" />
           <i class="{{if this.showFilters "remove" "filter"}} icon"></i>
         </a>

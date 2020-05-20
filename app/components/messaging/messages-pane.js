@@ -1,14 +1,11 @@
+import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import classic from 'ember-classic-decorator';
-import { classNames } from '@ember-decorators/component';
 import { observes } from '@ember-decorators/object';
 import { computed } from '@ember/object';
-import Component from '@ember/component';
 import { scheduleOnce, debounce } from '@ember/runloop';
 
-@classic
-@classNames('messaging-thread__messages-pane')
-class MessagesPaneComponent extends Component {
+// @classNames('messaging-thread__messages-pane')
+export default class MessagesPaneComponent extends Component {
   topOffsetFudgePX = 20;
   @tracked messageThreshold = 49;
   isBottomStuck = true;
@@ -96,6 +93,4 @@ class MessagesPaneComponent extends Component {
   }
 }
 
-MessagesPaneComponent.reopenClass({ positionalParams: [ 'messages' ] });
-
-export default MessagesPaneComponent;
+// MessagesPaneComponent.reopenClass({ positionalParams: [ 'messages' ] });
