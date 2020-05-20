@@ -48,13 +48,13 @@
     <div class="card-content__application-link card-content__score-container">
       <LinkTo @route="account.job-opening.campaign.job-application" @model={{@application.id}}>Open Application</LinkTo>
       {{#if @application.isScored}}
+        {{! template-lint-disable }}
         <Display::CalcColor @value={{@application.scoreAbs}} as |red green|>
-          {{! template-lint-disable }}
           <span style="color: rgb({{red}}, {{green}}, 0)" class="card-content__score">
             {{@application.scoreAbs}}%
-          {{! template-lint-enable }}
           </span>
         </Display::CalcColor>
+        {{! template-lint-enable }}
       {{/if}}
       <span class="card-content__entry-method">
         {{if @application.manualEntry "Manual Entry" "From Quartz"}}
@@ -108,7 +108,7 @@
         ({{@application.disqualificationReason}})
       {{/if}}
       {{#if @application.disqualificationEmail}}<span class="card-content__notified">Notified</span>{{/if}}
-      <a class="ui right floated" role="button" {{on "click" (prevent-default (fn @onUnDisqualify @application))}}>
+      <a href="#" class="ui right floated" role="button" {{on "click" (prevent-default (fn @onUnDisqualify @application))}}>
         <i class="history icon"></i>
         Undo
       </a>

@@ -24,7 +24,7 @@
     {{#if this.assignments}}
       <div class="ui divider"></div>
       <form {{on "submit" (prevent-default (pipe this.saveAssignment (route-action "refreshModel")))}}>
-        <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{working}} @disabled={{not assignments}}>Assign {{assignments.length}} {{inflect-text "Document" assignments.length}}</Form::ActionButton>
+        <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.working}} @disabled={{not this.assignments}}>Assign {{this.assignments.length}} {{inflect-text "Document" this.assignments.length}}</Form::ActionButton>
       </form>
     {{/if}}
   </div>

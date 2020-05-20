@@ -1,6 +1,6 @@
-<a class="avatar">
+<span class="avatar">
   <Display::EmployeePicture @url={{this.comment.commenter.picture}} @employeeId={{this.comment.commenter.id}} />
-</a>
+</span>
 <div class="content">
   <LinkTo @route="account.employee" @model={{this.comment.commenter.id}} @class="author">{{this.comment.commenter.fullName}}</LinkTo>
   <div class="metadata">

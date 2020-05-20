@@ -41,7 +41,7 @@
             <LinkTo @route="account.employee.offboard.index" class="item"><i class="cut icon"></i>Offboard
               Employee...</LinkTo>
           {{/if}}
-          {{#if (not this.model.activatedOn)}}
+          {{#unless this.model.activatedOn}}
             <div class="item">
               <ConfirmModal as |confirmActivation|>
                 <a href="#" {{on "click" (prevent-default (pipe confirmActivation this.resend))}}>
@@ -54,7 +54,7 @@
                 </a>
               </ConfirmModal>
             </div>
-          {{/if}}
+          {{/unless}}
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
             <ConfirmModal @deleteContext={{this.model.fullName}} as |confirm|>

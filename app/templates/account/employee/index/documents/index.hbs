@@ -5,21 +5,21 @@
       <a href="#" class="ui small text right floated text-red" {{action "resetFilters"}}>Reset All</a>
     </h2>
 
-    <filter.section @name="Visibility" @activeState=(hash visibleToEmployee=false) as |controls|>
+    <filter.section @name="Visibility" @activeState={{hash visibleToEmployee=false}} as |controls|>
       <controls.toggleControl
         @name="visibleToEmployee"
         @state={{this.visibleToEmployee}}
         @label="Visible To Employee"/>
     </filter.section>
 
-    <filter.section @name="Viewed by Employee" @activeState=(hash readOn=false) as |controls|>
+    <filter.section @name="Viewed by Employee" @activeState={{hash readOn=false}} as |controls|>
       <controls.toggleControl
         @name="readOn"
         @state={{this.readOn}}
         @label="Viewed"/>
     </filter.section>
 
-    <filter.section @name="Signed by Employee" @activeState=(hash signedOn=false) as |controls|>
+    <filter.section @name="Signed by Employee" @activeState={{hash signedOn=false}} as |controls|>
       <controls.toggleControl
         @name="signedOn"
         @state={{this.signedOn}}

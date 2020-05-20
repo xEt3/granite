@@ -1,5 +1,5 @@
 <p class="text-sm">
-  <a href="#" {{action (toggle "showVersion" this)}}>
+  <a href="#" {{on "click" (prevent-default (toggle "showVersion" this))}}>
     <i class="eye {{if this.showVersion "slash"}} icon"></i>{{if this.showVersion "Hide" "Show"}} version info
   </a>
 
