@@ -67,7 +67,6 @@ export default class DocumentController extends Controller {
 
   @action
   remapToModels (assignment) {
-    console.log(assignment);
     let employees = assignment.get('employees'),
         model = this.model;
 

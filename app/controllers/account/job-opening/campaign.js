@@ -16,7 +16,7 @@ export default class CampaignController extends Controller.extend(addEdit, del) 
   @computed('model.{sendCloseNotice,allocateTalentPool}')
   get confirmCloseMessage () {
     if (!this.model) {
-      return;
+      return null;
     }
 
     const settingProps = this.model.getProperties('sendCloseNotice', 'allocateTalentPool');

@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { computed, observer } from '@ember/object';
+import { computed, observer } from '@ember/object'; // eslint-disable-line
 import { run } from '@ember/runloop';
 import { on } from '@ember/object/evented';
 import { inject as service } from '@ember/service';

@@ -21,7 +21,7 @@ export default Service.extend({
   userId:        computed.reads('session.user'),
 
   initializeClock: on('init', function () {
-    this.clock;
+    this.clock; // eslint-disable-line
   }),
 
   /**
@@ -54,7 +54,7 @@ export default Service.extend({
     .then(record => {
       Logger.debug('AS :: Saved session record in localforage');
       this.set('session', record);
-      this.currentUser;
+      this.currentUser; // eslint-disable-line
       return record;
     });
   },

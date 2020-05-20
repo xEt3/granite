@@ -15,7 +15,7 @@ function authenticated (constructor) {
         return this.transitionTo('login');
       }
 
-      this.addObserver('auth.authenticated', this, this.__authenticationStateChanged);
+      this.addObserver('auth.authenticated', this, this.__authenticationStateChanged); // eslint-disable-line
 
       super.beforeModel(...arguments);
     }

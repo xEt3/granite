@@ -1,9 +1,7 @@
-import classic from 'ember-classic-decorator';
-import { action, computed } from '@ember/object';
 import Component from '@ember/component';
+import { action, computed } from '@ember/object';
 import { assert } from '@ember/debug';
 
-@classic
 export default class StatefulIntroJs extends Component {
   markAsShownOnExit = true;
 

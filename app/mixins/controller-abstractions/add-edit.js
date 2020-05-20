@@ -67,7 +67,7 @@ export default Mixin.create(AjaxHooks, {
   },
 
   async saveModel (model) {
-    console.warn('Mixing in the controller-abstraction for add-edit is deprecated in favor of extending the granite service: data.');
+    console.warn('Mixing in the controller-abstraction for add-edit is deprecated in favor of extending the granite service: data.'); // eslint-disable-line
 
     const _model = model || this.model;
 

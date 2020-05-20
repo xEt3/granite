@@ -1,6 +1,5 @@
-import classic from 'ember-classic-decorator';
-import { inject as service } from '@ember/service';
 import Route from 'granite/core/route';
+import { inject as service } from '@ember/service';
 
 export default class InvoicesRoute extends Route {
   @service ajax;

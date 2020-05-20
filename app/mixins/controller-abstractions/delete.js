@@ -18,7 +18,7 @@ export default Mixin.create(AjaxHooks, {
 
   actions: {
     delete (model) {
-      console.warn('Mixing in the controller-abstraction for delete is deprecated in favor of extending the granite service: data.');
+      console.warn('Mixing in the controller-abstraction for delete is deprecated in favor of extending the granite service: data.'); // eslint-disable-line
 
       const _model = model || this.model;
 

@@ -1,7 +1,7 @@
 /* eslint-disable ember/closure-actions,ember/no-on-calls-in-components */
 // From https://github.com/thefrontside/ember-introjs since CLI install is broken
 import Component from '@ember/component';
-import { computed, observer } from '@ember/object';
+import { computed } from '@ember/object';
 import { run, bind } from '@ember/runloop';
 import { camelize, underscore } from '@ember/string';
 import { on } from '@ember/object/evented';
@@ -32,10 +32,16 @@ var INTRO_JS_OPTIONS = [
 ];
 
 var IntroJSComponent = Component.extend({
-  /* eslint-disable-next-line */
-  setupIntroJS: observer('start-if', function () {
+  didInsertElement () {
     run.scheduleOnce('afterRender', this, this.startIntroJS);
-  }).on('didInsertElement'),
+  },
+
+  didUpdateAttrs () {
+    if (this['start-if'] !== this.shouldStart) {
+      this.shouldStart = this['start-if'];
+      run.scheduleOnce('afterRender', this, this.startIntroJS);
+    }
+  },
 
   /**
    * Options passed to IntroJS. You can specify the options when using the

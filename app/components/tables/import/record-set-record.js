@@ -13,7 +13,7 @@ export default class TablesImportRecordSetRecordComponent extends Component {
     let match = this.duplicate.matchReason;
 
     if (!match) {
-      return;
+      return null;
     }
 
     return A(match.map(m => titleCase([ m.split('.')[0] ]))).uniq().join(', ');

@@ -9,7 +9,7 @@ export default Mixin.create({
   modelDefaults: {},
 
   async model (params) {
-    console.warn('Mixing in the route-abstraction for add is deprecated in favor of extending the granite core route.');
+    console.warn('Mixing in the route-abstraction for add is deprecated in favor of extending the granite core route.'); // eslint-disable-line
 
     const modelName = this.modelName,
           defaults = this.modelDefaults,

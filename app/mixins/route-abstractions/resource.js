@@ -55,7 +55,7 @@ export default Mixin.create({
   },
 
   async model (params) {
-    console.warn('Mixing in the route-abstraction for resource is deprecated in favor of extending the granite core route.');
+    console.warn('Mixing in the route-abstraction for resource is deprecated in favor of extending the granite core route.'); // eslint-disable-line
 
     let query = {
       page:  params.page - 1 || 0,

@@ -6,7 +6,7 @@ export default Mixin.create({
   auth: service(),
 
   model (params) {
-    console.warn('Mixing in the route-abstraction for edit is deprecated in favor of extending the granite core route.');
+    console.warn('Mixing in the route-abstraction for edit is deprecated in favor of extending the granite core route.'); // eslint-disable-line
 
     if (this.bypassModelHook) {
       return this._super(...arguments);
