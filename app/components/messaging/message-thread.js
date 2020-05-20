@@ -1,59 +1,56 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 import { resolve } from 'rsvp';
 import { fileHandling } from 'granite/core';
 
 @fileHandling
 export default class MessagingMessageThreadComponent extends Component {
-  socket: service(),
-  auth:   service(),
-  store:  service(),
+  @service socket
+  @service auth
+  @service store
 
-  classNames: [ 'messaging__thread' ],
-
-  fileData: {
+  fileData = {
     systemUse:      true,
     associatedData: { type: 'messagingAttachment' }
-  },
+  }
 
-  sendMessage () {
-    resolve(this.fileIsAdded ? this.upload() : null)
-    .then(file => {
-      this.onMessage(this.message, file);
-      this.set('message', null);
-      this.send('removeFile');
-    });
-  },
+  @action
+  async sendMessage () {
+    let file = await resolve(this.files.fileIsAdded ? this.files.upload() : null);
+    this.onMessage(this.message, file);
+    this.message = null;
+    this.removeFile();
+  }
 
+  @action
   scrolledToTop () {
     this.onScrollback();
-  },
-
-  actions: {
-    removeFile () {
-      const $dropzone = Dropzone.forElement('.dropzone__messaging');
-
-      if (!$dropzone || !this.fileIsAdded) {
-        return;
-      }
-
-      $dropzone.removeFile(this.fileIsAdded);
-      this.set('fileIsAdded', false);
-    },
-
-    didRemoveFile () {
-      this.set('fileIsAdded', false);
-    },
-
-    uploadError (err) {
-      this.rejectUpload(err);
-    },
-
-    // TODO: use uploadProgress
-    uploadProgressUpdate (prog) {
-      this.set('uploadProgress', prog);
-    }
   }
-});
 
-MessageThreadComponent.reopenClass({ positionalParams: [ 'messages', 'thread' ] });
+  // @action
+  // removeFile () {
+  //   const $dropzone = Dropzone.forElement('.dropzone__messaging');
+  //
+  //   if (!$dropzone || !this.fileIsAdded) {
+  //     return;
+  //   }
+  //
+  //   $dropzone.removeFile(this.fileIsAdded);
+  //   this.fileIsAdded = false;
+  // },
+
+  // didRemoveFile () {
+  //   this.set('fileIsAdded', false);
+  // }
+
+  @action
+  uploadError (err) {
+    this.rejectUpload(err);
+  }
+
+  // TODO: use uploadProgress
+  uploadProgressUpdate (prog) {
+    this.uploadProgress = prog;
+  }
+}
