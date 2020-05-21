@@ -1,11 +1,8 @@
 import Component from '@glimmer/component';
-import layout from '../templates/components/x-tree';
 import { getDescendents, getAncestors } from '../utils/tree';
 import { get, set }  from '@ember/object';
 
 export default class XTreeComponent extends Component {
-  layout = layout
-
   constructor () {
     super(...arguments);
     let tree = this.args.model;

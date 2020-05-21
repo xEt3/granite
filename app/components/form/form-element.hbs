@@ -1,6 +1,6 @@
 <div class="content">
   <div class="form-element__controls">
-    <a href="#" class="text-danger" {{action "removeElement"}}>
+    <a href="#" class="text-danger" {{on "click" (prevent-default (action "removeElement"))}}>
       <i class="trash icon"></i>
     </a>
   </div>

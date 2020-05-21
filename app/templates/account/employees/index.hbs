@@ -6,10 +6,10 @@
       <i class="filter icon"></i> Filters
       <div class="ui horizontal list right floated">
         <div class="item">
-          <button type="button" class="negative ui button small text" {{action "resetFilters"}}>Reset All</button>
+          <button type="button" class="negative ui button small text" {{on "click" (prevent-default (action "resetFilters"))}}>Reset All</button>
         </div>
         <div class="item">
-          <a href="#" class="light text" {{action this.toggleProperty "showFilters"}}>
+          <a href="#" class="light text" {{on "click" (prevent-default (fn this.toggleProperty "showFilters"))}}>
             <i class="remove icon"></i>
           </a>
         </div>
@@ -116,13 +116,13 @@
 
       <h3 class="ui left floated header">
         <EmberTooltip @side="left" @popperContainer="body" @text={{if this.sortAsc "Sort descending" "Sort ascending"}} />
-        <a href="#" class="top pointing inline" {{action (toggle "sortAsc" this)}}>
+        <a href="#" class="top pointing inline" {{on "click" (prevent-default (toggle "sortAsc" this))}}>
           <i class="sort amount {{if this.sortAsc "up" "down"}} icon"></i>
         </a>
       </h3>
 
       <h3 class="ui right floated header">
-        <a href="#" class={{if this.showFilters "text-red"}} {{action this.toggleProperty "showFilters"}}>
+        <a href="#" class={{if this.showFilters "text-red"}} {{on "click" (prevent-default (fn this.toggleProperty "showFilters"))}}>
           <EmberTooltip @side="left" @popperContainer="body" @text="Filters" />
           <i class="{{if this.showFilters "remove" "filter"}} icon"></i>
         </a>

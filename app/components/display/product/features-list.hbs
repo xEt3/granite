@@ -1,7 +1,7 @@
 <ul class="features-list">
   {{#each this.features as |feat|}}
     <li class={{if (eq feat.text this.feature.text) "feature--is-selected"}}>
-      <a href="#" {{action "selectFeature" feat}}>{{feat.text}}</a>
+      <a href="#" {{on "click" (prevent-default (fn (action "selectFeature") feat))}}>{{feat.text}}</a>
     </li>
   {{/each}}
 </ul>

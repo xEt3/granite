@@ -2,21 +2,21 @@
   <div class="four wide column">
     <h3 class="ui header">Select a list</h3>
     <div class="ui vertical fluid tabular menu">
-      <a href="#" class="{{if (eq this.list "dqReasons") "active"}} item" {{action "toggleList" "dqReasons"}}>
+      <a href="#" class="{{if (eq this.list "dqReasons") "active"}} item" {{on "click" (prevent-default (fn (action "toggleList") "dqReasons"))}}>
         Disqualification Reasons
       </a>
-      <a href="#" class="{{if (eq this.list "labels") "active"}} item" {{action "toggleList" "labels"}}>
+      <a href="#" class="{{if (eq this.list "labels") "active"}} item" {{on "click" (prevent-default (fn (action "toggleList") "labels"))}}>
         Labels
       </a>
     </div>
   </div>
   <div class="twelve wide stretched column">
     {{#if this.dirtyList}}
-      <button type="button" class="ui green fluid button" disabled={{this.data.statuses.working.isLoading}} {{action "saveList"}}>Save Changes</button>
+      <button type="button" class="ui green fluid button" disabled={{this.data.statuses.working.isLoading}} {{on "click" (prevent-default (action "saveList"))}}>Save Changes</button>
     {{/if}}
     <div class="ui relaxed divided list">
       {{#if this.list}}
-        <a href="#" class="item" {{action (pipe-action (action "openModal") (action "addItem"))}}>
+        <a href="#" class="item" {{on "click" (prevent-default (pipe-action (action "openModal") (action "addItem")))}}>
           <i class="blue plus icon"></i> New item...
         </a>
       {{/if}}
@@ -51,10 +51,10 @@
       @model={{this.modelForForm}}/>
   </div>
   <div class="actions">
-    <button class="ui red button" {{action "respondModal" false}} type="button">
+    <button class="ui red button" type="button" {{on "click" (prevent-default (fn (action "respondModal") false))}}>
       Cancel
     </button>
-    <button class="ui green right labeled icon button" {{action "respondModal" true}} type="button">
+    <button class="ui green right labeled icon button" type="button" {{on "click" (prevent-default (fn (action "respondModal") true))}}>
       {{if this.editingItem "Edit" "Add"}} List Item<i class="check icon"></i>
     </button>
   </div>

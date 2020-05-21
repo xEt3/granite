@@ -45,7 +45,7 @@
               {{/each}}
             </div>
             {{#if (gt this.analytics.continueActions.length 5)}}
-              <a href="#" {{action this.toggleProperty "expanded"}}>
+              <a href="#" {{on "click" (prevent-default (fn this.toggleProperty "expanded"))}}>
                 Show {{if this.expanded "less" "more"}}...
               </a>
             {{/if}}

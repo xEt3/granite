@@ -26,13 +26,13 @@
 
 <div class="ui divider"></div>
 
-<form class="ui form messaging-thread__message-form" {{action this.sendMessage on="submit"}}>
+<form class="ui form messaging-thread__message-form" {{on "submit" (prevent-default this.sendMessage)}}>
   <div class="ui stackable grid">
     <div class="twelve wide column field">
       <div class="ui icon input">
         <Input @type="text" @value={{this.message}} placeholder={{if this.fileIsAdded "Add a comment to this file..." "Type a message..."}} />
 
-        <i class="paperclip icon dropzone__attach-trigger" role="button" {{action "removeFile"}}></i>
+        <i class="paperclip icon dropzone__attach-trigger" role="button" {{on "click" (prevent-default (action "removeFile"))}}></i>
       </div>
     </div>
     <div class="four wide column field">

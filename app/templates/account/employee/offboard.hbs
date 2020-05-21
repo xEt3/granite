@@ -6,7 +6,7 @@
     <h1 class="ui header">Offboarding {{this.model.fullName}}</h1>
     <div class="ui basic segment">
       {{outlet}}
-      <button class="ui small fluid button"{{action "cancelOffboard"}}type="button">Cancel</button>
+      <button class="ui small fluid button"type="button"{{on "click" (prevent-default (action "cancelOffboard"))}}>Cancel</button>
     </div>
   </div>
   <Display::FormSteps @steps={{this.steps}} @basePath={{this.basePath}} @class="employee__offboarding-steps" />

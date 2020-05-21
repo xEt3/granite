@@ -22,7 +22,7 @@
     </h2>
     <div class="ui divider"></div>
     <div class="field">
-      <button type="button" class="ui labeled icon huge fluid blue button" {{action "done"}}>Alright<i class="check icon"></i></button>
+      <button type="button" class="ui labeled icon huge fluid blue button" {{on "click" (prevent-default (action "done"))}}>Alright<i class="check icon"></i></button>
     </div>
   </div>
 </div>

@@ -9,5 +9,5 @@
 <div class="timeline-detail__pointer"></div>
 
 {{#liquid-if this.group}}
-  <button type="button" class="ui fluid button history-timeline__deselect" {{action "deselectGroup"}}>Return to all events</button>
+  <button type="button" class="ui fluid button history-timeline__deselect" {{on "click" (prevent-default (action "deselectGroup"))}}>Return to all events</button>
 {{/liquid-if}}

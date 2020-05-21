@@ -1,10 +1,11 @@
+import classic from 'ember-classic-decorator';
+import { computed } from '@ember/object';
+import { on } from '@ember-decorators/object';
 /* eslint-disable ember/closure-actions,ember/no-on-calls-in-components */
 // From https://github.com/thefrontside/ember-introjs since CLI install is broken
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { run, bind } from '@ember/runloop';
 import { camelize, underscore } from '@ember/string';
-import { on } from '@ember/object/evented';
 import { A } from '@ember/array';
 import ENV from 'granite/config/environment';
 
@@ -31,17 +32,18 @@ var INTRO_JS_OPTIONS = [
   'disable-interaction'
 ];
 
-var IntroJSComponent = Component.extend({
-  didInsertElement () {
+@classic
+class IntroJSComponent extends Component {
+  didInsertElement() {
     run.scheduleOnce('afterRender', this, this.startIntroJS);
-  },
+  }
 
-  didUpdateAttrs () {
+  didUpdateAttrs() {
     if (this['start-if'] !== this.shouldStart) {
       this.shouldStart = this['start-if'];
       run.scheduleOnce('afterRender', this, this.startIntroJS);
     }
-  },
+  }
 
   /**
    * Options passed to IntroJS. You can specify the options when using the
@@ -76,7 +78,7 @@ var IntroJSComponent = Component.extend({
    *
    * @property
   */
-  introJSOptions: computed(
+  @computed(
     'next-label',
     'prev-label',
     'skip-label',
@@ -94,26 +96,26 @@ var IntroJSComponent = Component.extend({
     'scroll-to-element',
     'overlay-opacity',
     'disable-interaction',
-    'steps',
-    function () {
-      var option, normalizedName, value, options = {};
+    'steps'
+  )
+  get introJSOptions() {
+    var option, normalizedName, value, options = {};
 
-      for (var i = 0; i < INTRO_JS_OPTIONS.length; i++) {
-        option = INTRO_JS_OPTIONS[i];
-        normalizedName = camelize(underscore(option));
-        value = this.get(option);
+    for (var i = 0; i < INTRO_JS_OPTIONS.length; i++) {
+      option = INTRO_JS_OPTIONS[i];
+      normalizedName = camelize(underscore(option));
+      value = this.get(option);
 
-        if (value !== null && value !== undefined) {
-          options[normalizedName] = value;
-        }
+      if (value !== null && value !== undefined) {
+        options[normalizedName] = value;
       }
-
-      options.steps = this.steps;
-      return options;
     }
-  ),
 
-  startIntroJS: function () {
+    options.steps = this.steps;
+    return options;
+  }
+
+  startIntroJS() {
     if (ENV.environment === 'test') {
       return;
     }
@@ -137,9 +139,9 @@ var IntroJSComponent = Component.extend({
       intro.exit();
       this._setIntroJS(null);
     }
-  },
+  }
 
-  registerCallbacksWithIntroJS: function () {
+  registerCallbacksWithIntroJS() {
     var intro = this.introJS;
 
     intro.onbeforechange(bind(this, function (elementOfNewStep) {
@@ -161,34 +163,35 @@ var IntroJSComponent = Component.extend({
     }));
 
     intro.onexit(bind(this, this._onExit));
-  },
+  }
 
-  _setIntroJS: function (intJS) {
+  _setIntroJS(intJS) {
     this.set('introJS', intJS);
-  },
+  }
 
-  _onAfterChange: function (targetElement) {
+  _onAfterChange(targetElement) {
     this.sendAction('on-after-change', this.currentStep, this, targetElement);
-  },
+  }
 
-  _onExit: function () {
+  _onExit() {
     if (!this || this.isDestroying || this.isDestroyed) {
       return;
     }
     this.sendAction('on-exit', this.currentStep, this);
-  },
+  }
 
-  exitIntroJS: on('willDestroyElement', function () {
+  @on('willDestroyElement')
+  exitIntroJS() {
     var intro = this.introJS;
     if (intro) {
       intro.exit();
     }
-  }),
+  }
 
-  _setCurrentStep: function (step) {
+  _setCurrentStep(step) {
     var stepObject = A(this.steps).objectAt(step);
     this.set('currentStep', stepObject);
   }
-});
+}
 
 export default IntroJSComponent;

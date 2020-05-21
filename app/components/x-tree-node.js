@@ -1,10 +1,7 @@
 import Component from '@glimmer/component';
 import { action, set } from '@ember/object';
-import layout from '../templates/components/x-tree-node';
 
 export default class XTreeNode extends Component {
-  layout = layout
-
   get isChosen () {
     return this.args.model.id === this.args.chosenId;
   }

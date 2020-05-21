@@ -9,7 +9,7 @@
             Response by {{response.employee.fullName}} on {{time response.submittedOn "M/D/YY [at] h:mma"}}
           </div>
           <div class="extra">
-            <a href="#" {{action openResponseView response this.form}}>View Responses</a>
+            <a href="#" {{on "click" (prevent-default (fn openResponseView response this.form))}}>View Responses</a>
           </div>
         </div>
       </div>

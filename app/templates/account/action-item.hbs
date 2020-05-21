@@ -27,32 +27,30 @@
           <i class="wrench icon"></i><i class="dropdown icon"></i>
           <div class="menu">
             <div class="header">Actions</div>
-            <a href="#" id="action-item__action--mark-complete" class="item" {{action (pipe
+            <a href="#" id="action-item__action--mark-complete" class="item" {{on "click" (prevent-default (pipe
                 (action "confirmCompletion")
                 (action "toggleComplete")
                 (action "save")
-            )}}>
+            ))}}>
               <i class="check icon"></i>Mark as {{if this.model.completedOn "Incomplete" "Complete"}}
             </a>
-            <a href="#" id="action-item__action--transfer" class="item"
-              {{action (pipe
+            <a href="#" id="action-item__action--transfer" class="item" {{on "click" (prevent-default (pipe
                 (action "selectTransferTarget")
                 (action "transfer")
                 (action "save")
-            )}}>
+            ))}}>
               <i class="random icon"></i>Transfer to New Owner
             </a>
-            <a href="#" id="action-item__action--delay" class="item"
-              {{action (pipe
+            <a href="#" id="action-item__action--delay" class="item" {{on "click" (prevent-default (pipe
                 (action "selectDelay")
                 (action "save")
-            )}}>
+            ))}}>
               <i class="ellipsis horizontal icon"></i>Delay
             </a>
 
             <div class="text-danger header">Danger Zone</div>
             <ConfirmModal @class="item" as |confirm|>
-              <a href="#" id="action-item__action--cancel" {{action (pipe confirm (action "cancelActionItem") (action "save"))}}>
+              <a href="#" id="action-item__action--cancel" {{on "click" (prevent-default (pipe confirm (action "cancelActionItem") (action "save")))}}>
                 <i class="close icon"></i>Cancel Project
               </a>
             </ConfirmModal>
@@ -104,10 +102,10 @@
     </div>
   </div>
   <div class="actions">
-    <button class="ui red button" {{action "respondTransferModal" false}} type="button">
+    <button class="ui red button" type="button" {{on "click" (prevent-default (fn (action "respondTransferModal") false))}}>
       Cancel
     </button>
-    <button class="ui primary right labeled icon button" disabled={{if this.transferTarget false true}} {{action "respondTransferModal" true}} type="button">
+    <button class="ui primary right labeled icon button" disabled={{if this.transferTarget false true}} type="button" {{on "click" (prevent-default (fn (action "respondTransferModal") true))}}>
       Transfer
       {{#if this.transferTarget}}
         to {{this.transferTarget.fullName}}
@@ -129,10 +127,10 @@
     {{/if}}
   </div>
   <div class="actions">
-    <button class="ui inverted red button" {{action "respondConfirmCompleteModal" false}} type="button">
+    <button class="ui inverted red button" type="button" {{on "click" (prevent-default (fn (action "respondConfirmCompleteModal") false))}}>
       Cancel
     </button>
-    <button class="ui inverted green right labeled icon button" {{action "respondConfirmCompleteModal" true}} type="button">
+    <button class="ui inverted green right labeled icon button" type="button" {{on "click" (prevent-default (fn (action "respondConfirmCompleteModal") true))}}>
       Mark {{if this.model.completedOn "Incomplete" "Complete"}}
       <i class="check icon"></i>
     </button>
@@ -148,10 +146,10 @@
     <UiCalendar @class="field" @type="date" @inline={{true}} @onChange={{action (mut this.model.delayedUntil)}} />
   </div>
   <div class="actions">
-    <button class="ui red button" {{action "respondDelayModal" false}} type="button">
+    <button class="ui red button" type="button" {{on "click" (prevent-default (fn (action "respondDelayModal") false))}}>
       Cancel
     </button>
-    <button class="ui green right labeled icon button" {{action "respondDelayModal" true}} type="button">
+    <button class="ui green right labeled icon button" type="button" {{on "click" (prevent-default (fn (action "respondDelayModal") true))}}>
       Delay
       {{#if this.model.delayedUntil}}
         until

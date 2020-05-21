@@ -11,7 +11,7 @@
       {{/if}}
       {{#if this.model.coverLetter}}
         <div class="item">
-          <a href="#" {{action this.openModal this.coverLetterModalId "coverLetter"}}>
+          <a href="#" {{on "click" (prevent-default (fn this.openModal this.coverLetterModalId "coverLetter"))}}>
             <i class="file icon"></i>Cover Letter
           </a>
         </div>
@@ -25,9 +25,9 @@
         Notes
       </h3>
       {{#if this.model.notes}}
-        <a href="#" {{action openAddModal}}><i class="edit icon"></i></a> {{this.model.notes}}
+        <a href="#" {{on "click" (prevent-default openAddModal)}}><i class="edit icon"></i></a> {{this.model.notes}}
       {{else}}
-        <span class="light text">No notes available.</span> <a href="#" {{action openAddModal}}>Add notes</a>
+        <span class="light text">No notes available.</span> <a href="#" {{on "click" (prevent-default openAddModal)}}>Add notes</a>
       {{/if}}
     </Modals::AddNotes>
 
@@ -36,7 +36,7 @@
       <h3>Screening</h3>
       <p>
         {{#if this.model.scoreRelative}}This applicant is a <strong>{{this.model.scoreRelative}}% match</strong> based on their responses to your screening.{{/if}}
-        <a href="#" {{action this.openModal this.responsesModalId "responses"}}>View responses</a>
+        <a href="#" {{on "click" (prevent-default (fn this.openModal this.responsesModalId "responses"))}}>View responses</a>
       </p>
     {{/if}}
   </div>
@@ -50,7 +50,7 @@
       <h3 class={{unless this.showingPastEvents "ui light text"}}>
         Past Events
         <small class="right floated">
-          <a href="#" {{action (toggle "showingPastEvents" this)}}>
+          <a href="#" {{on "click" (prevent-default (toggle "showingPastEvents" this))}}>
             {{if this.showingPastEvents "Hide" "Show"}}
           </a>
         </small>

@@ -1,4 +1,4 @@
-import Controller from '@granite/core/controller';
+import Controller from 'granite/core/controller';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { eeocSelectOptions, eeocForm } from 'granite/config/forms/eeo';

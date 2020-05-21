@@ -2,7 +2,7 @@
   Assets
 </h2>
 
-<form class="ui form" {{action "saveAndContinue" on="submit"}}>
+<form class="ui form" {{on "submit" (prevent-default (action "saveAndContinue"))}}>
   <div class="ui basic segment">
     <div class="right aligned text">
       <Input::EquipmentPicker

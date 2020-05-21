@@ -38,7 +38,7 @@
 </Sg::SgSection>
 
 <Sg::SgSection @name="Buttons" @class="center aligned" @focus={{this.focus}}>
-  <a href="#" {{action "toggleProperty" "toggleLoading"}}>Toggle Loading State</a>
+  <a href="#" {{on "click" (prevent-default (fn (action "toggleProperty") "toggleLoading"))}}>Toggle Loading State</a>
   {{#each this.btnSizes as |size|}}
     <div class="ui raised right aligned segment">
       <h2 class="ui header">ui {{#if size}}{{size}}{{/if}}</h2>
