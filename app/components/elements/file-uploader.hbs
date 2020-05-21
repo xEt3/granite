@@ -1,4 +1,4 @@
-<div class={{if this.dragging "dragging"}} ondragover={{fn this.dragOver}} ondragenter={{fn this.dragEnter}} ondragleave={{fn this.dragLeave}} ondrop={{fn this.drop}}>
+<div class={{if this.dragging "dragging"}} {{on "dragover" (fn this.dragOver)}} {{on "dragenter" (fn this.dragEnter)}} {{on "dragleave" (fn this.dragLeave)}} {{on "drop" (fn this.drop)}}>
   <div class="ui raised very padded text container segment file-uploader">
     {{#if this.fileError}}
       <p class="ui red segment">
@@ -48,7 +48,7 @@
         {{/if}}
 
         <div class="field">
-          <input class="input-hidden" type="file" id={{this.inputId}} multiple={{this.allowMulti}} onChange={{this.selectFile}}>
+          <input class="input-hidden" type="file" id={{this.inputId}} multiple={{this.allowMulti}} {{on "Change" this.selectFile}}>
           {{#if this.saveError}}
             <p>{{this.saveError}}</p>
           {{/if}}

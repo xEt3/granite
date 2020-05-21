@@ -1,5 +1,5 @@
 {{! template-lint-disable no-invalid-interactive}}
-<div role="region" class="{{if @model.isSelected "tree-highlight"}} {{if this.isChosen "tree-chosen"}}" onmouseenter={{this.mouseEnter}} onmouseleave={{this.mouseLeave}} onclick={{this.click}}>
+<div role="region" class="{{if @model.isSelected "tree-highlight"}} {{if this.isChosen "tree-chosen"}}" {{on "mouseenter" this.mouseEnter}} {{on "mouseleave" this.mouseLeave}} {{on "click" this.click}}>
   <span role="button" class="toggle-icon" {{on "click" (prevent-default (toggle "isExpanded" @model)) bubbles=false}}>
     {{#if @model.children.length}}
       {{#if @model.isExpanded}}
