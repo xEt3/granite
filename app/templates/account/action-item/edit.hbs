@@ -22,7 +22,7 @@
         <i class="right floated info icon" id="it__prerequisites"></i>
       </label>
       {{#if this.actionItems}}
-        <UiDropdown @class="fluid search multiple selection" @id="action-item-prerequisites" @selected={{this.model.prerequisites}} @onChange={{action (mut this.model.prerequisites)}} as |execute mapper|>
+        <UiDropdown @class="fluid search multiple selection" @id="action-item-prerequisites" @selected={{this.model.prerequisites}} @onChange={{set this.model.prerequisites _}} as |execute mapper|>
           <i class="dropdown icon"></i>
           <div class="default text">Type or select to assign prerequisites</div>
           <div class="menu">

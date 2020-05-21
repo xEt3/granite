@@ -85,7 +85,7 @@
   <div class="content">
     <div class="field">
       {{#if this.transferableTargets}}
-        <UiDropdown @class="fluid search selection" @id="action-item-transfer-target" @selected={{this.transferTarget}} @onChange={{action (mut this.transferTarget)}} as |execute mapper|>
+        <UiDropdown @class="fluid search selection" @id="action-item-transfer-target" @selected={{this.transferTarget}} @onChange={{set this.transferTarget _}} as |execute mapper|>
           <i class="dropdown icon"></i>
           <div class="default text">Select a new owner</div>
           <div class="menu">
@@ -143,7 +143,7 @@
     When should "{{this.model.title}}" be due?
   </div>
   <div class="content">
-    <UiCalendar @class="field" @type="date" @inline={{true}} @onChange={{action (mut this.model.delayedUntil)}} />
+    <UiCalendar @class="field" @type="date" @inline={{true}} @onChange={{set this.model.delayedUntil _}} />
   </div>
   <div class="actions">
     <button class="ui red button" type="button" {{on "click" (prevent-default (fn (action "respondDelayModal") false))}}>

@@ -9,7 +9,7 @@
           <button type="button" class="negative ui button small text" {{on "click" (prevent-default (action "resetFilters"))}}>Reset All</button>
         </div>
         <div class="item">
-          <a href="#" class="light text" {{on "click" (prevent-default (fn this.toggleProperty "showFilters"))}}>
+          <a href="#" class="light text" {{on "click" (prevent-default (toggle "showFilters" this))}}>
             <i class="remove icon"></i>
           </a>
         </div>
@@ -54,7 +54,7 @@
           @startMode="year"
           @label="Start Date"
           @dateValue={{this.hireDateStart}}
-          @onChange={{action (mut this.hireDateStart)}} />
+          @onChange={{set this.hireDateStart _}} />
         <UiCalendar
           @class="ui field"
           @type="date"
@@ -62,7 +62,7 @@
           @startMode="year"
           @label="End Date"
           @dateValue={{this.hireDateEnd}}
-          @onChange={{action (mut this.hireDateEnd)}} />
+          @onChange={{set this.hireDateEnd _}} />
       </controls.control>
     </filter.section>
 
@@ -97,7 +97,7 @@
     </h1>
 
     <div class="right aligned text floated menu__actions">
-      <UiDropdown @class="left floated top pointing inline" @selected={{this.sortBy}} @onChange={{action (mut this.sortBy)}}>
+      <UiDropdown @class="left floated top pointing inline" @selected={{this.sortBy}} @onChange={{set this.sortBy _}}>
         <h3 class="ui inline header">
           <EmberTooltip @side="left" @popperContainer="body" @text="Choose sort method" />
           <a href="#" id="sort-employee-icon"><i class="sort icon"></i></a>
@@ -122,7 +122,7 @@
       </h3>
 
       <h3 class="ui right floated header">
-        <a href="#" class={{if this.showFilters "text-red"}} {{on "click" (prevent-default (fn this.toggleProperty "showFilters"))}}>
+        <a href="#" class={{if this.showFilters "text-red"}} {{on "click" (prevent-default (toggle "showFilters" this))}}>
           <EmberTooltip @side="left" @popperContainer="body" @text="Filters" />
           <i class="{{if this.showFilters "remove" "filter"}} icon"></i>
         </a>

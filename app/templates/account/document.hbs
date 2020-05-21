@@ -73,7 +73,7 @@
   </div>
 
   {{#if this.isExpanded}}
-    <UiCalendar @class="field" @type="date" @inline={{true}} @onChange={{action (mut this.model.effectiveOn)}} />
+    <UiCalendar @class="field" @type="date" @inline={{true}} @onChange={{set this.model.effectiveOn _}} />
   {{/if}}
 
   <div class="actions">

@@ -7,7 +7,7 @@
   <div class="field">
     <div class="ui divider"></div>
     <label for="basenode-selection">Select a supervisor</label>
-    <UiDropdown @id="basenode-selection" @class="search selection" @selected={{this.selectedNode}} @forceSelection={{false}} @onChange={{action (mut this.selectedNode)}} as |execute mapper|>
+    <UiDropdown @id="basenode-selection" @class="search selection" @selected={{this.selectedNode}} @forceSelection={{false}} @onChange={{set this.selectedNode _}} as |execute mapper|>
       <div class="default text">Select an employee</div>
       <i class="dropdown icon"></i>
       <div class="menu">

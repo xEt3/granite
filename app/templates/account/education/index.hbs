@@ -9,7 +9,7 @@
         <div class="ui column right aligned text">
           <div class="field">
             <label for="graph-granularity" class="sr-only">Amount of data to show on graph</label>
-            <UiDropdown @id="graph-granularity" @class="selection" @selected={{this.granularity}} @onChange={{action (mut this.granularity)}} as |execute mapper|>
+            <UiDropdown @id="graph-granularity" @class="selection" @selected={{this.granularity}} @onChange={{set this.granularity _}} as |execute mapper|>
               <div class="default text">Granularity</div>
               <i class="dropdown icon"></i>
               <div class="menu">

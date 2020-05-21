@@ -13,7 +13,7 @@
   </div>
   <div class="three wide field">
     <label for="suffix-name">Suffix</label>
-    <UiDropdown @class="selection" @selected={{this.model.suffixName}} @onChange={{action (mut this.model.suffixName)}}>
+    <UiDropdown @class="selection" @selected={{this.model.suffixName}} @onChange={{set this.model.suffixName _}}>
       <div class="default text">Suffix</div>
       <i class="dropdown icon"></i>
       <div class="menu">
@@ -27,7 +27,7 @@
   </div>
   <div class="two wide field">
     <label for="suffix-name">Gender</label>
-    <UiDropdown @class="selection" @selected={{this.model.gender}} @onChange={{action (mut this.model.gender)}}>
+    <UiDropdown @class="selection" @selected={{this.model.gender}} @onChange={{set this.model.gender _}}>
       <div class="default text">Gender</div>
       <i class="dropdown icon"></i>
       <div class="menu">
@@ -60,7 +60,7 @@
 </div>
 <div class="two fields">
   <div class="field">
-    <UiCalendar @class="field" @startMode="year" @type="date" @dateValue={{this.model.dateOfBirth}} @label="Birth Date" @onChange={{action (mut this.model.dateOfBirth)}} />
+    <UiCalendar @class="field" @startMode="year" @type="date" @dateValue={{this.model.dateOfBirth}} @label="Birth Date" @onChange={{set this.model.dateOfBirth _}} />
   </div>
   <div class="field">
     <Input::SocialSecurity @value={{this.model.ssn}} />
@@ -84,7 +84,7 @@
   </div>
   <div class="field">
     <label for="state-name">State</label>
-    <UiDropdown @class="search selection" @selected={{this.model.addressState}} @onChange={{action (mut this.model.addressState)}}>
+    <UiDropdown @class="search selection" @selected={{this.model.addressState}} @onChange={{set this.model.addressState _}}>
       {{#if this.stateIsMontana}}<i class="text-danger heart icon"></i>{{/if}}
       <div class="default text">State</div>
       <i class="dropdown icon"></i>

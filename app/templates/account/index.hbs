@@ -92,7 +92,7 @@
             Recent Activity
           </h2>
           <div class="right floated">
-            <UiDropdown @class="fluid multiple selection" @selected={{this.tag}} @onChange={{action (mut this.tag)}}>
+            <UiDropdown @class="fluid multiple selection" @selected={{this.tag}} @onChange={{set this.tag _}}>
               <i class="dropdown icon"></i>
               <div class="default text">Select Filters</div>
               <div class="menu">
