@@ -12,12 +12,12 @@
 </h4>
 
 <div class="history__timeline clearfix">
-  <Display::TimelineGroupDetail @group={{this.selectedGroup}} @groupDisplayOffset={{this.groupDisplayOffset}} @class={{unless this.selectedGroup "hidden"}} @onDeselect={{action "deselectGroup"}} />
+  <Display::TimelineGroupDetail @group={{this.selectedGroup}} @groupDisplayOffset={{this.groupDisplayOffset}} @class={{unless this.selectedGroup "hidden"}} @onDeselect={{this.deselectGroup}} />
 
   {{! template-lint-disable no-inline-styles }}
   <div class="history-timeline__events clearfix" style={{this.timelineStyle}}>
     {{#each this.model as |historyGroup|}}
-      <ListItem::HistoryGroup @group={{historyGroup}} @onSelect={{action "selectGroup"}} />
+      <ListItem::HistoryGroup @group={{historyGroup}} @onSelect={{this.selectGroup}} />
     {{else}}
       <h3 class="ui center aligned header">No history is available for this employee.</h3>
     {{/each}}

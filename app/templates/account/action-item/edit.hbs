@@ -12,7 +12,7 @@
     <div class="field">
       <label for="action-item-priority"><i class="exclamation icon"></i> Priority</label>
       <div class="range-label"><i>Low</i><i>High</i></div>
-      <EmberRangeSlider @id="action-item-priority" @keyboard={{true}} @keyboard_step={{20}} @grid={{true}} @min={{1}} @max={{5}} @step={{1}} @from={{this.model.priority}} @slideStop={{action "updatePriority"}} />
+      <EmberRangeSlider @id="action-item-priority" @keyboard={{true}} @keyboard_step={{20}} @grid={{true}} @min={{1}} @max={{5}} @step={{1}} @from={{this.model.priority}} @slideStop={{this.updatePriority}} />
     </div>
 
     <div class="field">

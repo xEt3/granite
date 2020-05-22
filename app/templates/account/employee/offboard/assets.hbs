@@ -13,7 +13,7 @@
         <div class="item">
           {{item.identifier}}
           <span class="right floated">
-            <a href="#" class="text-green" {{on "click" (prevent-default (fn (action "unassignAsset") item))}}>
+            <a href="#" class="text-green" {{on "click" (prevent-default (fn this.unassignAsset item))}}>
               <EmberTooltip
                 @side="left"
                 @popperContainer="body"

@@ -14,7 +14,7 @@
       @label="Use custom recruiting stages"
       @parentClass="sixteen wide column"
       @checked={{readonly this.customPipeline}}
-      @onChange={{action this.toggleCustomPipeline}}/>
+      @onChange={{fn this.toggleCustomPipeline}} />
   </div>
 
   {{#liquid-if this.customPipeline}}

@@ -9,7 +9,7 @@
       </thead>
       <tbody>
         {{#each this.customFieldArray as |field|}}
-          <Tables::CustomField @key={{field.key}} @value={{field.value}} @onValueChange={{action "editValue"}} @onDelete={{action "deleteCustomField"}} />
+          <Tables::CustomField @key={{field.key}} @value={{field.value}} @onValueChange={{this.editValue}} @onDelete={{this.deleteCustomField}} />
         {{/each}}
 
         {{#if this.adding}}
@@ -23,7 +23,7 @@
           </tr>
           <tr>
             <td class="center aligned text" colspan="2">
-              <a href="#"{{on "click" (prevent-default (action "saveCustomField"))}}><i class="plus icon"></i> Save/New</a>
+              <a href="#"{{on "click" (prevent-default this.saveCustomField)}}><i class="plus icon"></i> Save/New</a>
             </td>
           </tr>
         {{/if}}
@@ -37,7 +37,7 @@
   {{/liquid-if}}
 
   {{#liquid-unless this.adding class="ui header clearfix"}}
-    <button class="ui fluid button" type="button" {{on "click" (prevent-default (action "beginAddingCustomField"))}} >
+    <button class="ui fluid button" type="button" {{on "click" (prevent-default this.beginAddingCustomField)}} >
       <i class="plus icon"></i>
         Add A Custom Field
     </button>

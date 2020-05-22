@@ -8,7 +8,7 @@
   <div class="ui basic segment">
     <div class="ui cards">
       {{#each this.model as |asset|}}
-        <ListItem::AssignedAssetItem @asset={{asset}} @employee={{this.employee}} @onUnassign={{action "unassignAsset"}} />
+        <ListItem::AssignedAssetItem @asset={{asset}} @employee={{this.employee}} @onUnassign={{this.unassignAsset}} />
       {{/each}}
     </div>
     {{#if this.data.statuses.working.isLoading}}

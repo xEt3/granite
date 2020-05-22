@@ -1,24 +1,24 @@
-import classic from 'ember-classic-decorator';
-import { action, computed } from '@ember/object';
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { run } from '@ember/runloop';
 import moment from 'moment';
 
-@classic
+// TODO: Use file handler constructor instead of reinventing the wheel here
+
 export default class EditPictureController extends Controller {
-  pictureExts = [ 'jpg', 'jpeg', 'png' ];
+  pictureExts = [ 'jpg', 'jpeg', 'png' ]
+  @tracked fileIsAdded = false
+  @tracked dropzone
 
-  @computed('model.id')
   get pictureEndpoint () {
-    return `/api/v1/employee/${this.get('model.id')}/picture`;
+    return `/api/v1/employee/${this.model.get('id')}/picture`;
   }
-
-  fileIsAdded = false;
 
   @action
   addedFile (file) {
-    this.set('dropzone', this);
-    this.set('fileIsAdded', file);
+    this.dropzone = this;
+    this.fileIsAdded = file;
   }
 
   @action
@@ -27,25 +27,25 @@ export default class EditPictureController extends Controller {
   }
 
   @action
-  uploadedFile () {
-    this.model.reload().then(model => {
-      model.set('picture', model.get('picture') + '?t=' + moment().unix());
-      run.later(() => {
-        model.rollbackAttributes();
-        this.transitionToRoute('account.employee.index');
-      }, 800);
-    });
+  async uploadedFile () {
+    const model = await this.model.reload();
+    model.set('picture', model.get('picture') + '?t=' + moment().unix());
+
+    run.later(() => {
+      model.rollbackAttributes();
+      this.transitionToRoute('account.employee.index');
+    }, 800);
   }
 
   @action
   removeFile (file) {
     Dropzone.forElement('#input__dropzone--employee-profile-image').removeAllFiles(file);
-    this.set('fileIsAdded', false);
+    this.fileIsAdded = false;
   }
 
   @action
   leaveUpload () {
-    this.send('removeFile', this.fileIsAdded);
+    this.removeFile(this.fileIsAdded);
     this.transitionToRoute('account.employee.index');
   }
 }

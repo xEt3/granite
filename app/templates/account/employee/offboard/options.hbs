@@ -55,7 +55,7 @@
           </LinkTo>
           <Modals::FormCreator
             @formType="exit-interview"
-            @onNotify=true
+            @onNotify={{true}}
             @onCreateForm={{this.interimAddForm}} as |openFormModal|
           >
             <a href="#" class="right floated" {{on "click" (prevent-default (fn openFormModal null))}}>Create a new form...</a>

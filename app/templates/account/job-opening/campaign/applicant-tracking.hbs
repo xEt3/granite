@@ -36,9 +36,9 @@
 
     <div class="ui selectable divided items {{if (not (or this.showingAllPending (lt this.pendingApplications.length 4))) "fade-unless-hovered"}}">
       {{#each
-        (if (not this.showingAllPending)
-          (take 3 this.pendingApplications)
+        (if this.showingAllPending
           this.pendingApplications
+          (take 3 this.pendingApplications)
         )
         as |application|
       }}
@@ -130,12 +130,12 @@
     @meeting={{this.currentMeeting}}
     @modalId={{this.schedulerModalId}}
     @availableOrganizers={{this.model.employees}}
-    @onResponse={{action "modalResponse" "scheduler"}} />
+    @onResponse={{fn this.modalResponse "scheduler"}} />
 
   <Modals::AtsLinkSharing
     @model={{this.appInLinkSharing}}
     @modalId={{this.linkSharingModalId}}
-    @onResponse={{action "modalResponse" "linkSharing"}} />
+    @onResponse={{fn this.modalResponse "linkSharing"}} />
 
   <Modals::AtsAddLabel
     @model={{this.appInAddLabels}}
