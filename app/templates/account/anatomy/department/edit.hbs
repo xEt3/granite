@@ -10,7 +10,7 @@
   </div>
   <div class="ui divider"></div>
   <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.working.isLoading}} @disabled={{not this.model.hasDirtyAttributes}}>Save Department</Form::ActionButton>
-  <a href="#" {{on "click" (prevent-default (action "cancel"))}}>
+  <a href="#" {{on "click" (prevent-default this.cancel)}}>
     <div class="ui large fluid danger button">Cancel</div>
   </a>
 </form>

@@ -34,11 +34,11 @@ var INTRO_JS_OPTIONS = [
 
 @classic
 class IntroJSComponent extends Component {
-  didInsertElement() {
+  didInsertElement () {
     run.scheduleOnce('afterRender', this, this.startIntroJS);
   }
 
-  didUpdateAttrs() {
+  didUpdateAttrs () {
     if (this['start-if'] !== this.shouldStart) {
       this.shouldStart = this['start-if'];
       run.scheduleOnce('afterRender', this, this.startIntroJS);
@@ -78,6 +78,7 @@ class IntroJSComponent extends Component {
    *
    * @property
   */
+
   @computed(
     'next-label',
     'prev-label',
@@ -98,7 +99,7 @@ class IntroJSComponent extends Component {
     'disable-interaction',
     'steps'
   )
-  get introJSOptions() {
+  get introJSOptions () {
     var option, normalizedName, value, options = {};
 
     for (var i = 0; i < INTRO_JS_OPTIONS.length; i++) {
@@ -115,7 +116,7 @@ class IntroJSComponent extends Component {
     return options;
   }
 
-  startIntroJS() {
+  startIntroJS () {
     if (ENV.environment === 'test') {
       return;
     }
@@ -141,7 +142,7 @@ class IntroJSComponent extends Component {
     }
   }
 
-  registerCallbacksWithIntroJS() {
+  registerCallbacksWithIntroJS () {
     var intro = this.introJS;
 
     intro.onbeforechange(bind(this, function (elementOfNewStep) {
@@ -165,15 +166,15 @@ class IntroJSComponent extends Component {
     intro.onexit(bind(this, this._onExit));
   }
 
-  _setIntroJS(intJS) {
+  _setIntroJS (intJS) {
     this.set('introJS', intJS);
   }
 
-  _onAfterChange(targetElement) {
+  _onAfterChange (targetElement) {
     this.sendAction('on-after-change', this.currentStep, this, targetElement);
   }
 
-  _onExit() {
+  _onExit () {
     if (!this || this.isDestroying || this.isDestroyed) {
       return;
     }
@@ -181,14 +182,14 @@ class IntroJSComponent extends Component {
   }
 
   @on('willDestroyElement')
-  exitIntroJS() {
+  exitIntroJS () {
     var intro = this.introJS;
     if (intro) {
       intro.exit();
     }
   }
 
-  _setCurrentStep(step) {
+  _setCurrentStep (step) {
     var stepObject = A(this.steps).objectAt(step);
     this.set('currentStep', stepObject);
   }
