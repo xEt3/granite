@@ -1,7 +1,9 @@
-{{#each this.segments as |segment|}}
-  {{#if segment.divider}}
-    <div class="divider"> / </div>
-  {{else}}
-    <div class="section{{if segment.last " active"}}"><LinkTo @route={{segment.link}}>{{segment.title}}</LinkTo></div>
-  {{/if}}
-{{/each}}
+<div class="ui breadcrumb" ...attributes>
+  {{#each this.segments as |segment|}}
+    {{#if segment.divider}}
+      <div class="divider"> / </div>
+    {{else}}
+      <div class="section{{if segment.last " active"}}"><LinkTo @route={{segment.link}}>{{segment.title}}</LinkTo></div>
+    {{/if}}
+  {{/each}}
+</div>

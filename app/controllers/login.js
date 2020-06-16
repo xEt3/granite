@@ -9,6 +9,7 @@ export default class LoginController extends Controller {
 
   @tracked expired = false
   @tracked recovery = false
+  @tracked previousTransition
 
   queryParams = [ 'expired', 'recovery' ]
 

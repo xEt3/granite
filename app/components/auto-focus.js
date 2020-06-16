@@ -1,11 +1,17 @@
-import classic from 'ember-classic-decorator';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { elementId } from 'granite/core';
+import { action } from '@ember/object';
 import { run } from '@ember/runloop';
 
-@classic
-export default class AutoFocus extends Component {
-  didInsertElement () {
-    super.didInsertElement(...arguments);
-    run.scheduleOnce('afterRender', () => this.$('input').focus());
+@elementId
+export default class AutoFocusComponent extends Component {
+  get autoFocusId () {
+    return 'auto-focus__' + this.elementId;
+  }
+
+  @action
+  didInsert () {
+    console.log('??', document.querySelector(`#${this.autoFocusId} input`));
+    run.scheduleOnce('afterRender', () => document.querySelector(`#${this.autoFocusId} input`).focus());
   }
 }

@@ -1,19 +1,13 @@
-import classic from 'ember-classic-decorator';
-import { classNames } from '@ember-decorators/component';
-import { computed } from '@ember/object';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { A } from '@ember/array';
 import titleCase from 'granite/utils/title-case';
 
-@classic
-@classNames('ui', 'breadcrumb')
-export default class BreadCrumbs extends Component {
-  @computed('currentPath')
+export default class DisplayBreadCrumbsComponent extends Component {
   get segments () {
-    const path = this.currentPath,
+    const path = this.args.currentPath,
           pathSplit = path.split('.'),
           pathLength = pathSplit.length,
-          overrides = this.overrides;
+          overrides = this.args.overrides;
 
     let segments = A(),
         linkUntil;
