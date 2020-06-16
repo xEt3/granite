@@ -1,4 +1,4 @@
-{{#each this.thread.between as |participant|}}
+{{#each @thread.between as |participant|}}
   <Messaging::ThreadParticipant
     @participant={{participant}}
     @connectedUsers={{this.socket.connectedUsers}}
@@ -8,21 +8,21 @@
 
 <div class="ui divider"></div>
 
-{{#messaging/messages-pane
-  this.messages
-  retrievalMax=this.retrievalMax
-  onScrolledToTop=(action this.scrolledToTop)
-}}
+<Messaging::MessagesPane
+  @messages={{@messages}}
+  @retrievalMax={{@retrievalMax}}
+  @onScrolledToTop={{this.scrolledToTop}}
+>
   <div class="ui list">
-    {{#each this.messages as |message|}}
-      {{messaging/message-item
-        message
-        user=this.auth.user}}
+    {{#each @messages as |message|}}
+      <Messaging::MessageItem
+        @message={{message}}
+        @user={{this.auth.user}} />
     {{else}}
       <h2 class="ui center aligned light text header">There's nothing here yet!</h2>
     {{/each}}
   </div>
-{{/messaging/messages-pane}}
+</Messaging::MessagesPane>
 
 <div class="ui divider"></div>
 
@@ -30,17 +30,37 @@
   <div class="ui stackable grid">
     <div class="twelve wide column field">
       <div class="ui icon input">
-        <Input @type="text" @value={{this.message}} placeholder={{if this.fileIsAdded "Add a comment to this file..." "Type a message..."}} />
+        <Input @type="text" @value={{this.message}} placeholder={{if this.files.fileIsAdded "Add a comment to this file..." "Type a message..."}} />
 
-        <i class="paperclip icon dropzone__attach-trigger" role="button" {{on "click" (prevent-default (action "removeFile"))}}></i>
+        <i class="paperclip icon dropzone__attach-trigger" role="button" {{on "click" (prevent-default (fn this.files.removeFile this.files.fileIsAdded))}}></i>
       </div>
     </div>
     <div class="four wide column field">
-      <Form::ActionButton type="submit" @disabled={{not (or this.message this.fileIsAdded)}} class="ui fluid green button">
+      <Form::ActionButton type="submit" @disabled={{not (or this.message this.files.fileIsAdded)}} class="ui fluid green button">
         Send{{if this.fileIsAdded " file"}}
       </Form::ActionButton>
     </div>
   </div>
 
-  <DropZone @id={{this.dropzoneId}} @url={{this.fileEndpoint}} @class="dropzone__messaging" @uploadMultiple={{false}} @acceptedFiles=".doc,.docx,.pdf,.rtf,.txt,.jpg,.png,.gif,.xls,.xlsx" @maxFiles={{1}} @method="put" @autoProcessQueue={{false}} @dictDefaultMessage="" @thumbnailHeight={{100}} @thumbnailWidth={{100}} @thumbnailMethod="contain" @headers={{hash X-API-Token=this.auth.token}} @addedfile={{action "addedFile"}} @error={{action "uploadError"}} @removedfile={{action "didRemoveFile"}} @uploadprogress={{action "uploadProgressUpdate"}} @success={{action "uploadedFile"}} @capture="camera" @addRemoveLinks={{true}} @clickable=".dropzone__attach-trigger" />
+  <DropZone
+    @id={{this.dropzoneId}}
+    @url={{this.files.fileEndpoint}}
+    @class="dropzone__messaging"
+    @uploadMultiple={{false}}
+    @acceptedFiles=".doc,.docx,.pdf,.rtf,.txt,.jpg,.png,.gif,.xls,.xlsx"
+    @maxFiles={{1}}
+    @method="put"
+    @autoProcessQueue={{false}}
+    @dictDefaultMessage=""
+    @thumbnailHeight={{100}}
+    @thumbnailWidth={{100}}
+    @thumbnailMethod="contain"
+    @headers={{hash X-API-Token=this.auth.token}}
+    @addedfile={{this.files.addedFile}}
+    @error={{this.uploadError}}
+    @uploadprogress={{this.uploadProgressUpdate}}
+    @success={{this.files.uploadedFile}}
+    @capture="camera"
+    @addRemoveLinks={{true}}
+    @clickable=".dropzone__attach-trigger" />
 </form>

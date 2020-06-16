@@ -30,7 +30,7 @@ export default class AccountEmployeesMessagesThreadRoute extends Route {
     // the message thread
     let thread = await this.getThreadRecord(params);
 
-    const ingressCount = this.controller.ingressPushCount;
+    const ingressCount = this.controller ? this.controller.ingressPushCount : null;
 
     let msgQuery = {};
 
@@ -38,7 +38,7 @@ export default class AccountEmployeesMessagesThreadRoute extends Route {
       msgQuery.skip = ingressCount;
     }
 
-    if (!this.controller.model.messages && scrollback) {
+    if (this.controller && !this.controller.model.messages && scrollback) {
       msgQuery.limit = 50 * (scrollback + 1);
       scrollback = false;
     }
@@ -46,7 +46,7 @@ export default class AccountEmployeesMessagesThreadRoute extends Route {
     let data = await this.retrieveThreadHistory(thread, scrollback, msgQuery);
 
     const hist = data.messages,
-          existingMessages = this.controller.model.messages;
+          existingMessages = this.controller ? this.controller.model.messages : null;
 
     const messages = existingMessages && scrollback ? hist.concat(existingMessages.toArray()).uniqBy('_id') : A(hist);
 

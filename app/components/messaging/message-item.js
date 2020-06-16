@@ -1,36 +1,30 @@
-import classic from 'ember-classic-decorator';
-import { classNames } from '@ember-decorators/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
 import { A } from '@ember/array';
-import inViewportMixin from 'ember-in-viewport';
 
-@classic
-@classNames('item', 'message')
-class MessageItemComponent extends Component.extend(inViewportMixin) {
-  @service messaging;
+export default class MessagingMessageItemComponent extends Component {
+  @service messaging
+  @service inViewPort
 
-  @computed('message.readBy.[]', '__didSendReadUpdate', 'user')
+  @tracked __didSendReadUpdate
+
   get isReadByCurrentUser () {
-    return this.__didSendReadUpdate || (this.message.readBy || A()).includes(this.user.get('id'));
+    return this.__didSendReadUpdate || (this.args.message.readBy || A()).includes(this.args.user.get('id'));
   }
 
-  @computed('message.file.mimeType')
   get isImage () {
-    return (this.get('message.file.mimeType') || '').indexOf('image/') > -1;
+    return (this.args.message.file.mimeType || '').indexOf('image/') > -1;
   }
 
+  @action
   didEnterViewport () {
     if (this.isReadByCurrentUser) {
       return;
     }
 
-    this.messaging.markMessageRead(this.message);
+    this.messaging.markMessageRead(this.args.message);
     this.__didSendReadUpdate = true;
   }
 }
-
-MessageItemComponent.reopenClass({ positionalParams: [ 'message' ] });
-
-export default MessageItemComponent;

@@ -1,10 +1,12 @@
-{{#if (and this.isFetchable this.retrievalMax this.isTopStuck)}}
-  <div class="messages-pane__head--retrieval-max">No more messages available.</div>
-{{/if}}
+<div id="messages-pane" class="messaging-thread__messages-pane" {{did-insert this.didInsert}} {{did-update this.contentChanged @messages}} onscroll={{this.onScroll}}>
+  {{#if (and this.isFetchable @retrievalMax this.isTopStuck)}}
+    <div class="messages-pane__head--retrieval-max">No more messages available.</div>
+  {{/if}}
 
-{{#if this.isLoading}}
-  <div class="messages-pane__head--loader">
-    <i class="notched circle loading icon"></i> Loading more messages...
-  </div>
-{{/if}}
-{{yield}}
+  {{#if this.isLoading}}
+    <div class="messages-pane__head--loader">
+      <i class="notched circle loading icon"></i> Loading more messages...
+    </div>
+  {{/if}}
+  {{yield}}
+</div>
