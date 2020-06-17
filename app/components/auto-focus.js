@@ -11,7 +11,6 @@ export default class AutoFocusComponent extends Component {
 
   @action
   didInsert () {
-    console.log('??', document.querySelector(`#${this.autoFocusId} input`));
     run.scheduleOnce('afterRender', () => document.querySelector(`#${this.autoFocusId} input`).focus());
   }
 }

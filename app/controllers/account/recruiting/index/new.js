@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 export default class NewCampaignController extends Controller {
   @service data
 
+  // NOT WORKING
   get form () {
     return [{
       //job description select
@@ -16,7 +17,8 @@ export default class NewCampaignController extends Controller {
     }, {
       label: 'Campaign Name',
       type:  'text',
-      path:  this.model.name ? 'name' : 'defaultName'
+      // path:  this.model.name ? 'name' : 'defaultName'
+      path:  'name'
     }];
   }
 }

@@ -1,20 +1,15 @@
-import classic from 'ember-classic-decorator';
-import { classNames, classNameBindings } from '@ember-decorators/component';
-import { computed } from '@ember/object';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
 const dictMap = [ 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten' ];
 
-@classic
-@classNames('ui', 'steps')
-@classNameBindings('dictStep')
 export default class FormSteps extends Component {
+  @action
   didReceiveAttrs () {
-    this.set('_step', this.step);
+    this._step = this.step;
   }
 
-  @computed('steps')
   get dictStep () {
-    return dictMap[this.get('steps.length') - 1];
+    return dictMap[this.args.steps.length - 1];
   }
 }

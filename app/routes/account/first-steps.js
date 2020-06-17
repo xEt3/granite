@@ -1,11 +1,10 @@
-import { inject as service } from '@ember/service';
 import Route from 'granite/core/route';
+import { inject as service } from '@ember/service';
 import { scheduleOnce, later } from '@ember/runloop';
 
-export default class FirstStepsRoute extends Route {
-  @service auth;
-
-  @service ajax;
+export default class AccountFirstStepsRoute extends Route {
+  @service auth
+  @service ajax
 
   titleToken = 'First Steps';
 
@@ -54,7 +53,7 @@ export default class FirstStepsRoute extends Route {
     }
 
     if (firstStepsCompleted.length === 3) {
-      model.company.set('firstStepsCompletedOn', new Date());
+      model.company.firstStepsCompletedOn = new Date();
       change = true;
     }
 

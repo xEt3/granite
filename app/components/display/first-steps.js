@@ -1,17 +1,7 @@
-import classic from 'ember-classic-decorator';
-import { classNames } from '@ember-decorators/component';
-import { computed } from '@ember/object';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-@classic
-@classNames('column')
-class FirstStepsComponent extends Component {
-  @computed('completed')
+export default class DisplayFirstStepsComponent extends Component {
   get linkClass () {
-    return `first-steps__card ${this.completed ? 'first-steps__card--completed' : ''}`;
+    return `first-steps__card ${this.args.completed ? 'first-steps__card--completed' : ''}`;
   }
 }
-
-FirstStepsComponent.reopenClass({ positionalParams: [ 'step' ] });
-
-export default FirstStepsComponent;
