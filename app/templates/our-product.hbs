@@ -1,23 +1,23 @@
 <div class="our-product">
-  {{display/scroll-reveal
-    ".product__section:not(.product__section--img-reverse-rotate) h1"
-    origin="top"
-    mobile=false
-  }}
-  {{display/scroll-reveal
-    ".product__section:not(.product__section--img-reverse-rotate) .section-content__tagline"
-    useDelay="once"
-    delay=500
-    viewFactor=0.1
-    origin="bottom"
-  }}
-  {{display/scroll-reveal
-    ".product__section:not(.product__section--img-reverse-rotate) .section-content__features"
-    useDelay="once"
-    delay=500
-    viewFactor=0.1
-    origin="bottom"
-  }}
+  <Display::ScrollReveal
+    @selector=".product__section:not(.product__section--img-reverse-rotate) h1"
+    @origin="top"
+    @mobile={{false}}
+  />
+  <Display::ScrollReveal
+    @selector=".product__section:not(.product__section--img-reverse-rotate) .section-content__tagline"
+    @useDelay="once"
+    @delay={{500}}
+    @viewFactor={{0.1}}
+    @origin="bottom"
+  />
+  <Display::ScrollReveal
+    @selector=".product__section:not(.product__section--img-reverse-rotate) .section-content__features"
+    @useDelay="once"
+    @delay={{500}}
+    @viewFactor={{0.1}}
+    @origin="bottom"
+  />
   <div class="product__section product__section--img product__section--top">
     <div class="product-section__content">
       <h1 class="product-section__content--granite">Granite HR</h1>
@@ -31,7 +31,7 @@
     <div class="product-section__content">
       <h1 class="section-content__title">Recruiting</h1>
       <h4 class="section-content__tagline">Fast track your hiring process and let Granite do the heavy lifting</h4>
-      {{display/product/features-list this.features.recruiting}}
+      <Display::Product::FeaturesList @features={{this.features.recruiting}} />
     </div>
   </div>
 
@@ -40,7 +40,7 @@
       <h1 class="section-content__title">Counseling</h1>
       <h4 class="section-content__tagline">Document employee issues and easily issue corrective actions</h4>
 
-      {{display/product/features-list this.features.counseling}}
+      <Display::Product::FeaturesList @features={{this.features.counseling}} />
     </div>
   </div>
 
@@ -49,7 +49,7 @@
       <h1 class="section-content__title">Asset Management</h1>
       <h4 class="section-content__tagline">Follow assigned, valuable assets through your organization</h4>
 
-      {{display/product/features-list this.features.assetManagement}}
+      <Display::Product::FeaturesList @features={{this.features.assetManagement}} />
     </div>
   </div>
 
@@ -58,7 +58,7 @@
       <h1 class="section-content__title">Human Capital</h1>
       <h4 class="section-content__tagline">Employee records are at your fingertips, with easy <br /> access to common Human Resource actions</h4>
 
-      {{display/product/features-list this.features.humanCapital}}
+      <Display::Product::FeaturesList @features={{this.features.humanCapital}} />
 
       <Display::ScrollReveal>
         <div class="product-section__cta">

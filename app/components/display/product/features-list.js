@@ -1,29 +1,24 @@
+import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import classic from 'ember-classic-decorator';
-import { classNames } from '@ember-decorators/component';
-import { action, computed } from '@ember/object';
-import Component from '@ember/component';
+import { action } from '@ember/object';
 
-@classic
-@classNames('section-content__features')
-class FeaturesListComponent extends Component {
+export default class FeaturesListComponent extends Component {
   @tracked autoCycle = 0;
+  @tracked selectedFeature;
   autoCycleMs = 5000;
 
-  didInsertElement () {
-    this.scheduleAutoCycle();
+  get feature () {
+    return this.selectedFeature || this.args.features[this.autoCycle];
   }
 
-  willDestroyElement () {
-    this.cancelAutoCycle();
-  }
-
+  @action
   scheduleAutoCycle () {
     if (!this.isDestroyed) {
-      this.set('_autoCycleTimer', setTimeout(this.incrementAutoCycle.bind(this), this.autoCycleMs));
+      this._autoCycleTimer = setTimeout(this.incrementAutoCycle.bind(this), this.autoCycleMs);
     }
   }
 
+  @action
   cancelAutoCycle () {
     let timerId = this._autoCycleTimer;
 
@@ -32,27 +27,19 @@ class FeaturesListComponent extends Component {
     }
   }
 
+  @action
   incrementAutoCycle () {
-    if (this.get('features.length') - 1 === this.autoCycle) {
-      this.set('autoCycle', 0);
+    if (this.args.features.length - 1 === this.autoCycle) {
+      this.autoCycle = 0;
     } else {
-      this.incrementProperty('autoCycle');
+      this.autoCycle++;
     }
 
     this.scheduleAutoCycle();
   }
 
-  @computed('selectedFeature', 'features.[]', 'autoCycle')
-  get feature () {
-    return this.selectedFeature || this.features[this.autoCycle];
-  }
-
   @action
   selectFeature (feature) {
-    this.set('selectedFeature', feature);
+    this.selectedFeature = feature;
   }
 }
-
-FeaturesListComponent.reopenClass({ positionalParams: [ 'features' ] });
-
-export default FeaturesListComponent;
