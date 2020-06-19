@@ -1,52 +1,53 @@
-{{#if this.group.startOfYear}}
-  <span class="history__year-start">
-    {{time this.group.date "YYYY"}}
-  </span>
-{{/if}}
+<div class="history__group-item clearfix">
+  {{#if @group.startOfYear}}
+    <span class="history__year-start">
+      {{time @group.date "YYYY"}}
+    </span>
+  {{/if}}
 
-{{#if this.group.startOfMonth}}
-  <span class="history__month-start">
-    <span class="group-date__month">{{time this.group.date "MMMM"}}</span>
-  </span>
-{{/if}}
+  {{#if @group.startOfMonth}}
+    <span class="history__month-start">
+      <span class="group-date__month">{{time @group.date "MMMM"}}</span>
+    </span>
+  {{/if}}
 
-<div class="history-group__main">
-  <span class="history__group-date animated rollIn" role="button" {{on "click" (prevent-default (action "selectGroup"))}}>
-    <span class="group-date__month">{{time this.group.date "MMM"}}</span>
-    <span class="group-date__day">{{time this.group.date "Do"}}</span>
-  </span>
+  <div class="history-group__main">
+    <span class="history__group-date animated rollIn" role="button" {{on "click" (prevent-default (action "selectGroup"))}}>
+      <span class="group-date__month">{{time @group.date "MMM"}}</span>
+      <span class="group-date__day">{{time @group.date "Do"}}</span>
+    </span>
 
-  <div class="history-group__operation {{if this.oneOperationInDay "history-group__operation-single"}}" role="button" {{on "click" (prevent-default (action "selectGroup"))}}>
-    <div class="operation__content">
-      {{#if this.oneOperationInDay}}
-        One change made to {{join-array this.shownKeys}}
-        {{#if this.hiddenKeys.length}}
-          <strong>
-            and {{this.hiddenKeys.length}} {{inflect-text "other" this.hiddenKeys.length}}
-            <EmberTooltip @side="top" @popperContainer="body" @text={{join-array this.hiddenKeys}} />
-          </strong>
+    <div class="history-group__operation {{if this.oneOperationInDay "history-group__operation-single"}}" role="button" {{on "click" (prevent-default (action "selectGroup"))}}>
+      <div class="operation__content">
+        {{#if this.oneOperationInDay}}
+          One change made to {{join-array this.shownKeys}}
+          {{#if this.hiddenKeys.length}}
+            <strong>
+              and {{this.hiddenKeys.length}} {{inflect-text "other" this.hiddenKeys.length}}
+              <EmberTooltip @side="top" @popperContainer="body" @text={{join-array this.hiddenKeys}} />
+            </strong>
+          {{/if}}
+          {{#if @group.history.firstObject.creator}}
+            by {{@group.history.firstObject.creator.firstName}}
+          {{/if}}
+        {{else}}
+          Changes made to {{join-array this.shownKeys}}
+          {{#if this.hiddenKeys.length}}
+            <strong>
+              and {{this.hiddenKeys.length}} {{inflect-text "other" this.hiddenKeys.length}}
+              <EmberTooltip @side="top" @popperContainer="body" @text={{join-array this.hiddenKeys}} />
+            </strong>
+          {{/if}}
+
+          {{#if @group.history.firstObject.creator}}
+            by {{@group.history.firstObject.creator.firstName}}
+          {{/if}}
         {{/if}}
-        {{#if this.group.history.firstObject.creator}}
-          by {{this.group.history.firstObject.creator.firstName}}
-        {{/if}}
-      {{else}}
-        Changes made to {{join-array this.shownKeys}}
-        {{#if this.hiddenKeys.length}}
-          <strong>
-            and {{this.hiddenKeys.length}} {{inflect-text "other" this.hiddenKeys.length}}
-            <EmberTooltip @side="top" @popperContainer="body" @text={{join-array this.hiddenKeys}} />
-          </strong>
-        {{/if}}
 
-        {{#if this.group.history.firstObject.creator}}
-          by {{this.group.history.firstObject.creator.firstName}}
-        {{/if}}
-      {{/if}}
-
-      <div class="operation__content-helper">
-        <i class="fitted pointing up icon"></i> Click to see details
+        <div class="operation__content-helper">
+          <i class="fitted pointing up icon"></i> Click to see details
+        </div>
       </div>
     </div>
   </div>
 </div>
-{{!-- {{list-item/history-item history=history}} --}}

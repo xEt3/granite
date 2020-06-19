@@ -1,12 +1,14 @@
-<thead>
-  <tr>
-    {{#each this.headers as |header|}}
-      <th>{{header}}</th>
+<table class="ui celled table" ...attributes>
+  <thead>
+    <tr>
+      {{#each this.headers as |header|}}
+        <th>{{header}}</th>
+      {{/each}}
+    </tr>
+  </thead>
+  <tbody>
+    {{#each this.bodyData as |row|}}
+      <Display::ReportViewRow @rowData={{row}} @numColumns={{this.headers.length}} />
     {{/each}}
-  </tr>
-</thead>
-<tbody>
-  {{#each this.bodyData as |row|}}
-    {{display/report-view-row row this.headers.length}}
-  {{/each}}
-</tbody>
+  </tbody>
+</table>

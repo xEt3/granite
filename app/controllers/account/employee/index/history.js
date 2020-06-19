@@ -1,11 +1,13 @@
-import classic from 'ember-classic-decorator';
-import { action, computed } from '@ember/object';
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { htmlSafe } from '@ember/string';
 
-@classic
 export default class HistoryController extends Controller {
-  @computed('timelineOffset')
+  @tracked timelineOffset
+  @tracked selectedGroup
+  @tracked groupDisplayOffset
+
   get timelineStyle () {
     let offset = this.timelineOffset;
     return htmlSafe(offset ? `transform: translate(0, ${offset}px);` : '');

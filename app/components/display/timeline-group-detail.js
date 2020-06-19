@@ -1,13 +1,9 @@
-import classic from 'ember-classic-decorator';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { classNames } from '@ember-decorators/component';
-import Component from '@ember/component';
 
-@classic
-@classNames('history-timeline__detail', 'clearfix')
-export default class TimelineGroupDetail extends Component {
+export default class DisplayTimelineGroupDetail extends Component {
   @action
   deselectGroup () {
-    this.onDeselect();
+    this.args.onDeselect();
   }
 }
