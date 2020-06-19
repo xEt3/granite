@@ -13,10 +13,7 @@
     @controller={{this}}
     @working={{this.data.statuses.savingCampaign.isLoading}}
     @submitClass="huge fluid green"
-    @onsubmit={{fn this.data.saveRecord this.model 'savingCampaign' (hash
-      transitionWithModel=true
-      transitionAfterSave="account.job-opening"
-    )}}
+    @onsubmit={{this.save}}
     @disabled={{or (and (not this.model.name) (not this.model.defaultName)) (not this.model.job)}}
   >
     Save and Continue
