@@ -1,4 +1,4 @@
-<UiSidebar @class="account__sidebar thin vertical inverted sidebar labeled icon menu" @transition="scale down" @ui_context={{this.ui_context}}>
+<UiSidebar @class="account__sidebar thin vertical inverted sidebar labeled icon menu" @transition="scale down" @ui_context={{@ui_context}}>
   {{#each this._links as |link|}}
     <LinkTo @route={{link.fullLink}} class="item"><i class="{{link.icon}} icon"></i>{{link.title}}</LinkTo>
   {{/each}}

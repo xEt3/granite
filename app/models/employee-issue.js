@@ -12,7 +12,7 @@ export default class EmployeeIssue extends Model {
   @belongsTo('company', { inverse: null }) company;
 
   @belongsTo('employee', {
-    async:   false,
+    async:   true,
     inverse: null
   })
   creator;

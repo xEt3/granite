@@ -1,14 +1,13 @@
-import Component from '@ember/component';
-import { action, computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { assert } from '@ember/debug';
 
 export default class StatefulIntroJs extends Component {
   markAsShownOnExit = true;
 
-  @computed('user.shownHints.[]')
   get showSteps () {
-    let shownHints = this.get('user.shownHints'),
-        hintKey = this.hintKey;
+    let shownHints = this.args.user.get('shownHints'),
+        hintKey = this.args.hintKey;
 
     assert('You must specify a hintKey to use stateful-intro-js', !!hintKey);
 
@@ -21,14 +20,14 @@ export default class StatefulIntroJs extends Component {
       return;
     }
 
-    let user = this.get('user.content');
+    let user = this.args.user.get('content');
 
     if (!user) {
       return;
     }
 
-    let hints = user.get('shownHints'),
-        key = this.hintKey;
+    let hints = user.shownHints,
+        key = this.args.hintKey;
 
     if (!hints) {
       return;

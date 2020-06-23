@@ -1,8 +1,8 @@
-<div class="ember-view">
+<div class="ember-view" {{did-update this.updateBodyClass this.topLevel}} {{did-update this.transitionAfterExpiration this.auth.isExpired}}>
   <HeadLayout />
   <NotificationContainer @notifications={{this.notifications}} @position="bottom" />
 
-  <Display::SubscriptionBanner @transitionToSubscription={{action "transitionToSubscription"}} @accountLocked={{this.subscription.accountLocked}} />
+  <Display::SubscriptionBanner @transitionToSubscription={{this.transitionToSubscription}} @accountLocked={{this.subscription.accountLocked}} />
 
   <div class="ui main">
     {{#if (not (or this.topLevel this.noNav))}}
@@ -22,6 +22,6 @@
     </div>
   </div>
   {{#if (and this.auth.isExpiring (not this.auth.isExpired))}}
-    <ConfirmModal @confirmOnRender={{true}} @confirmContent="Your session is expiring. Would you like to continue?" @onResponse={{action "authResponse"}} />
+    <ConfirmModal @confirmOnRender={{true}} @confirmContent="Your session is expiring. Would you like to continue?" @onResponse={{this.authResponse}} />
   {{/if}}
 </div>

@@ -179,7 +179,6 @@ export default class ElementsFileUploaderComponent extends Component {
 
   @action
   shouldSetHasFiles () {
-    // eslint-disable-next-line ember/no-side-effects
     this.hasFiles = this.files && this.files.length > 0;
   }
 
