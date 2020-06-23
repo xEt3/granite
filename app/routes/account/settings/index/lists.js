@@ -9,14 +9,14 @@ export default class ListsRoute extends Route {
 
   async model (params) {
     let list = [],
-        company = await (await this.auth.user).company;
+        company = await this.auth.get('user.company');
 
     if (params.list === 'dqReasons') {
-      list = company.get('disqualificationReasons');
+      list = company.disqualificationReasons;
     }
 
     if (params.list === 'labels') {
-      list = company.get('labels');
+      list = company.labels;
     }
 
     return {

@@ -10,9 +10,12 @@ export default class ListsController extends Controller {
   @service data
   queryParams = [ 'list' ];
   modalId = 'settings__list-modal';
-  @tracked list = null;
-  dirtyList = false;
-  @tracked currentItem = null;
+
+  @tracked dirtyList = false;
+  @tracked list;
+  @tracked currentItem;
+  @tracked index
+  @tracked editingItem
 
   get currentForm () {
     return lists[this.list];
@@ -23,6 +26,7 @@ export default class ListsController extends Controller {
     return (this.currentForm || {}).listType === 'string' ? this : this.currentItem;
   }
 
+  @action
   afterSave () {
     if (this.list === 'labels') {
       this.model.forEach(item => {
@@ -36,35 +40,34 @@ export default class ListsController extends Controller {
   @action
   async saveList () {
     await this.data.saveRecord(this.company);
-    this.set('dirtyList', false);
+    this.dirtyList = false;
+    this.afterSave();
   }
 
   @action
   toggleList (list) {
-    this.set('list', list);
+    this.list = list;
   }
 
   @action
   openModal () {
-    this.set('respondedModal', false);
+    this.respondedModal = false;
 
     if (!this.currentItem) {
       //if we aren't editing, set initial currentItem value for modal usage
-      this.set('currentItem', this.get('currentForm.listType') === 'string' ? '' : {});
+      this.currentItem = this.currentForm.listType === 'string' ? '' : {};
     }
 
     $(`#${this.modalId}`).modal({
       detachable: true,
       context:    '.ember-application',
       onHidden:   () => {
-        this.setProperties({
-          currentItem: null,
-          editingItem: false,
-          index:       null
-        });
+        this.currentItem = null;
+        this.editingItem = false;
+        this.index = null;
 
-        if (!this.get('respondedModal')) {
-          this.send('respondModal', false);
+        if (!this.respondedModal) {
+          this.respondModal(false);
         }
       }
     }).modal('show');
@@ -89,26 +92,24 @@ export default class ListsController extends Controller {
 
   @action
   beginEdit (item, index) {
-    this.setProperties({
-      index,
-      currentItem: item,
-      editingItem: true
-    });
+    this.index = index;
+    this.currentItem = item;
+    this.editingItem = true;
   }
 
   @action
-  addItem () {
+  async addItem () {
     let currentItem = this.currentItem;
 
     if (typeof currentItem === 'object') {
-      currentItem = this.store.createRecord('label', {
+      currentItem = await this.store.createRecord('label', {
         text:  currentItem.text,
         color: currentItem.color
       });
     }
 
     this.model.addObject(currentItem);
-    this.set('dirtyList', true);
+    this.dirtyList = true;
   }
 
   @action
@@ -118,12 +119,12 @@ export default class ListsController extends Controller {
 
     this.model.removeAt(index);
     this.model.insertAt(index, currentItem);
-    this.set('dirtyList', true);
+    this.dirtyList = true;
   }
 
   @action
   deleteItem (item) {
     this.model.removeObject(item);
-    this.set('dirtyList', true);
+    this.dirtyList = true;
   }
 }

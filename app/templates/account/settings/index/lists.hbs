@@ -47,7 +47,7 @@
     <QuickForm
       @form={{this.currentForm.elements}}
       @controller={{this}}
-      @model={{this.modelForForm}}/>
+      @model={{this.modelForForm}} />
   </div>
   <div class="actions">
     <button class="ui red button" type="button" {{on "click" (prevent-default (fn this.respondModal false))}}>

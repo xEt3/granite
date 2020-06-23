@@ -188,23 +188,28 @@ export default function () {
     let id = request.params.id,
         attrs = this.normalizedRequestAttrs();
 
-    attrs.correctiveActionSeverities = processEmbeddedRelationships({
-      model:       correctiveActionSeverities,
-      key:         'correctiveActionSeverities',
-      data:        attrs,
-      parentId:    id,
-      parentKey:   'company',
-      parentModel: companies
-    });
+    if (attrs.correctiveActionSeverities) {
+      attrs.correctiveActionSeverities = processEmbeddedRelationships({
+        model:       correctiveActionSeverities,
+        key:         'correctiveActionSeverities',
+        data:        attrs,
+        parentId:    id,
+        parentKey:   'company',
+        parentModel: companies
+      });
+    }
 
-    attrs.labels = processEmbeddedRelationships({
-      model:       labels,
-      key:         'labels',
-      data:        attrs,
-      parentId:    id,
-      parentKey:   'company',
-      parentModel: companies
-    });
+    if (attrs.labels) {
+      attrs.labels = processEmbeddedRelationships({
+        model:       labels,
+        key:         'labels',
+        data:        attrs,
+        parentId:    id,
+        parentKey:   'company',
+        parentModel: companies
+      });
+    }
+
     return companies.find(id).update(attrs);
   });
 
