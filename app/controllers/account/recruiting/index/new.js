@@ -1,10 +1,10 @@
 import Controller from 'granite/core/controller';
 import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 
 export default class NewCampaignController extends Controller {
   @service data
 
-  // NOT WORKING
   get form () {
     return [{
       //job description select
@@ -17,8 +17,16 @@ export default class NewCampaignController extends Controller {
     }, {
       label: 'Campaign Name',
       type:  'text',
-      // path:  this.model.name ? 'name' : 'defaultName'
-      path:  'name'
+      path:  'defaultName'
     }];
+  }
+
+  @action
+  async save () {
+    this.model.name = this.model.defaultName;
+    await this.data.saveRecord(this.model, 'savingCampaign', {
+      transitionWithModel: true,
+      transitionAfterSave: 'account.job-opening'
+    });
   }
 }

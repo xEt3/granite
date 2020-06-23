@@ -1,11 +1,3 @@
-import classic from 'ember-classic-decorator';
-import { tagName } from '@ember-decorators/component';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-@classic
-@tagName('tr')
-class reportViewRow extends Component {}
-
-reportViewRow.reopenClass({ positionalParams: [ 'rowData', 'numColumns' ] });
-
-export default reportViewRow;
+export default class DisplayReportViewRow extends Component {}

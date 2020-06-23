@@ -12,7 +12,7 @@
 </h4>
 
 <div class="history__timeline clearfix">
-  <Display::TimelineGroupDetail @group={{this.selectedGroup}} @groupDisplayOffset={{this.groupDisplayOffset}} @class={{unless this.selectedGroup "hidden"}} @onDeselect={{this.deselectGroup}} />
+  <Display::TimelineGroupDetail @group={{this.selectedGroup}} @deselectGroup={{this.deselectGroup}} class={{unless this.selectedGroup "hidden"}} />
 
   {{! template-lint-disable no-inline-styles }}
   <div class="history-timeline__events clearfix" style={{this.timelineStyle}}>

@@ -1,16 +1,18 @@
-<h4 class="ui light horizontal divider header">
-  {{this.history.creator.fullName}}
-  made
-  {{this.history.diff.length}}&nbsp;{{inflect-text "changes" this.history.diff.length}}
-  at {{time this.history.created "h:mma"}}
-</h4>
-<div class="ui divided list">
-  {{#each this.history.diff as |diff|}}
-    <div class="item">
-      <strong>{{humanize-key (join-array diff.path ".")}}</strong>
-      changed from
-      <span class="ui label"><DiffValueTranslator @key={{diff.path}} @value={{diff.lhs}} /></span> to
-      <span class="ui green label"><DiffValueTranslator @key={{diff.path}} @value={{diff.rhs}} /></span>
-    </div>
-  {{/each}}
+<div class="history__timeline-item">
+  <h4 class="ui light horizontal divider header">
+    {{@history.creator.fullName}}
+    made
+    {{@history.diff.length}}&nbsp;{{inflect-text "changes" @history.diff.length}}
+    at {{time @history.created "h:mma"}}
+  </h4>
+  <div class="ui divided list">
+    {{#each @history.diff as |diff|}}
+      <div class="item">
+        <strong>{{humanize-key (join-array diff.path ".")}}</strong>
+        changed from
+        <span class="ui label"><DiffValueTranslator @key={{diff.path}} @value={{diff.lhs}} /></span> to
+        <span class="ui green label"><DiffValueTranslator @key={{diff.path}} @value={{diff.rhs}} /></span>
+      </div>
+    {{/each}}
+  </div>
 </div>

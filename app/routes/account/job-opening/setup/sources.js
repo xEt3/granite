@@ -8,7 +8,7 @@ export default class AccountJobOpeningSetupSourcesRoute extends Route {
 
     return {
       jobOpening,
-      job:       jobOpening.job,
+      job:       await jobOpening.job,
       automatic: await this.store.findAll('applicant-source'),
       manual:    await this.store.findAll('manual-applicant-source')
     };

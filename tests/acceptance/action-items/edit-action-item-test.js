@@ -33,7 +33,7 @@ module('Acceptance | edit action items', function (hooks) {
 
     await visit(`/account/project/${action.title}/edit`);
     assert.equal(find('.account__breadcrumb').textContent.trim().replace(/\s\s+|\n/g, ''), 'Account/Projects/Project/Edit');
-    assert.dom('label[for="action-item-title"').hasText('Title');
+    assert.dom('label[for="action-item-title"]').hasText('Title');
     assert.dom('input#action-item-title').hasValue(action.title);
     assert.dom('div:nth-child(2) > label').hasText('Description');
     assert.dom('div.field > textarea[placeholder="Description"]').hasValue(action.description);

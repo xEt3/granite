@@ -1,11 +1,3 @@
-import classic from 'ember-classic-decorator';
-import { tagName } from '@ember-decorators/component';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-@classic
-@tagName('td')
-class reportViewCell extends Component {}
-
-reportViewCell.reopenClass({ positionalParams: [ 'cellData' ] });
-
-export default reportViewCell;
+export default class DisplayReportViewCell extends Component {}
