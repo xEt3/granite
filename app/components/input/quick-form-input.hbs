@@ -114,12 +114,14 @@
         </button>
       </Input::DocumentSelectionModal>
     {{else if (eq @field.type "color")}}
+    {{#if this.color.length}}
       <ColorPicker
         @components={{this.colorPickerComponents}}
         @comparison={{false}}
-        @value={{this.value}}
+        @value={{this.color}}
         @onChange={{this.handleOnChange}}/>
       <span class="ui small text">(Pick a color)</span>
+      {{/if}}
     {{else}}
       <ValidatedInput
         @type={{@field.type}}

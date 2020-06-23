@@ -16,6 +16,7 @@ export default Factory.extend({
   collectEEO:            true,
   exposeBetaModules:     true,
   firstStepsCompletedOn: moment().subtract(1, 'hour').toISOString(),
+  logoDominantColor: 'red',
 
   firstStepsCompleted: [
     'settings',

@@ -167,7 +167,7 @@ export default function () {
     return {};
   });
 
-  let array = [ 'files', 'files/:id', 'file-assignments', 'recruiting-pipelines', 'recruiting-pipelines/:id', 'company-users/:id',
+  let routes = [ 'files', 'files/:id', 'file-assignments', 'recruiting-pipelines', 'recruiting-pipelines/:id', 'company-users/:id',
     'company-users', 'employees/:id', 'companies', 'companies/:id', 'permissions', 'action-items', 'asset-items', 'asset-items/:id',
     'action-items/:id', 'assets', 'assets/:id', 'changes', 'histories', 'departments', 'locations',
     'payment-methods', 'comments', 'comments/:id', 'job-openings', 'jobs', 'jobs/:id', 'job-openings/:id', 'job-applications',
@@ -177,13 +177,13 @@ export default function () {
 
   let verbs = [ 'get', 'put', 'post', 'del' ];
 
-  array.forEach((route)=>{
+  routes.forEach((route)=>{
     verbs.forEach((verb)=>{
       this[verb](`/${route}`);
     });
   });
 
-  this.put('/companies/:id', function ({ companies, correctiveActionSeverities }, request) {
+  this.put('/companies/:id', function ({ companies, correctiveActionSeverities, labels }, request) {
     //needs to be like this because mirage is incapable of processing embedded relationships
     let id = request.params.id,
         attrs = this.normalizedRequestAttrs();
@@ -197,6 +197,14 @@ export default function () {
       parentModel: companies
     });
 
+    attrs.labels = processEmbeddedRelationships({
+      model:       labels,
+      key:         'labels',
+      data:        attrs,
+      parentId:    id,
+      parentKey:   'company',
+      parentModel: companies
+    });
     return companies.find(id).update(attrs);
   });
 

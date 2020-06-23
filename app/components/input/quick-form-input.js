@@ -29,6 +29,10 @@ export default class InputQuickFormInputComponent extends Component {
     this.initialValue = get(this, path);
   }
 
+  get color () {
+    return this.value ? this.value : this.controller.company.logoDominantColor;
+  }
+
   get computedClassName () {
     let label = this.args.field.label,
         classN = this.args.field.class;

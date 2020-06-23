@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { lists } from 'granite/config/forms/lists';
+import { Promise } from 'rsvp';
 import $ from 'jquery';
 
 export default class ListsController extends Controller {
@@ -62,15 +63,15 @@ export default class ListsController extends Controller {
           index:       null
         });
 
-        if (!this.respondedModal) {
+        if (!this.get('respondedModal')) {
           this.send('respondModal', false);
         }
       }
     }).modal('show');
 
-    return new Promise((resolve, reject) => this.setProperties({
-      resolve,
-      reject
+    return new Promise((resolveM, rejectM) => this.setProperties({
+      resolveM,
+      rejectM
     }));
   }
 
@@ -81,9 +82,9 @@ export default class ListsController extends Controller {
 
   @action
   respondModal (response) {
-    this.get(response ? 'resolve' : 'reject')(response);
-    this.set('respondedModal', true);
-    this.send('closeModal');
+    this[response ? 'resolveM' : 'rejectM'](response ? true : null);
+    this.respondedModal = true;
+    this.closeModal();
   }
 
   @action
