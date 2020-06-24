@@ -63,7 +63,7 @@ module('Acceptance | settings/lists', function (hooks) {
 
     await click('button.ui.green.fluid.button');
     assert.dom('button.ui.green.fluid.button').isNotVisible('save button disappears after save');
-    assert.equal(await findAll('.relaxed.divided.list div.item').length, 1, 'Num of displayed is correct after saving');
+    assert.equal(await findAll('.relaxed.divided.list div.item').length, 1, 'Num of labels displayed is correct after saving');
   });
 
   test('Can edit list item and save', async function (assert) {
