@@ -1,38 +1,50 @@
+import classic from 'ember-classic-decorator';
+import { computed } from '@ember/object';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
-import { computed } from '@ember/object';
 
-export default Model.extend({
-  firstName:  attr('string'),
-  middleName: attr('string'),
-  lastName:   attr('string'),
+@classic
+export default class CompanyUser extends Model {
+  @attr('string') firstName;
 
-  email:    attr('string'),
-  password: attr('string'),
-  inactive: attr('boolean'),
+  @attr('string') middleName;
 
-  shownHints: attr('array'),
+  @attr('string') lastName;
 
-  company: belongsTo('company', {
+  @attr('string') email;
+
+  @attr('string') password;
+
+  @attr('boolean') inactive;
+
+  @attr('array') shownHints;
+
+  @belongsTo('company', {
     async:   true,
     inverse: false
-  }),
-  employee: belongsTo('employee', {
+  })
+  company;
+
+  @belongsTo('employee', {
     async:   true,
     inverse: 'companyUser'
-  }),
-  permissions: attr('array'),
+  })
+  employee;
 
-  activatedOn: attr('date'),
+  @attr('array') permissions;
 
-  created: attr('date', {
+  @attr('date') activatedOn;
+
+  @attr('date', {
     defaultValue () {
       return new Date();
     }
-  }),
+  })
+  created;
 
-  fullName: computed('firstName', 'lastName', 'middleInitial', 'suffix', function () {
+  @computed('firstName', 'lastName', 'middleInitial', 'suffix')
+  get fullName () {
     var n = this.getProperties('firstName', 'lastName', 'middleName', 'suffixName'),
         fullName = '';
 
@@ -42,5 +54,5 @@ export default Model.extend({
     fullName += n.suffixName ? ' ' + n.suffixName : '';
 
     return fullName.length > 0 ? fullName : undefined;
-  })
-});
+  }
+}

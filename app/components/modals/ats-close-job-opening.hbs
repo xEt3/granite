@@ -1,0 +1,27 @@
+<div ...attributes>
+  {{#if hasBlock}}
+    {{yield this.createConfirm}}
+  {{/if}}
+
+  <UiModal @name="profile" @id={{this.modalId}}>
+    <div class="header">
+      Make sure to close your manual applicant sources!
+    </div>
+    <div class="content">
+      <ul class="ui list">
+        {{#each @sourcesToClose as |source|}}
+          <li>{{source.name}}</li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="actions">
+      <button class="ui inverted red button" {{on "click" (prevent-default (fn this.respond false))}} type="button">
+        Cancel
+      </button>
+      <button class="ui inverted green right labeled icon button" {{on "click" (prevent-default (fn this.respond true))}} type="button">
+        Close Job Opening
+        <i class="check icon"></i>
+      </button>
+    </div>
+  </UiModal>
+</div>

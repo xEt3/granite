@@ -1,23 +1,27 @@
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
 import Object from '@ember/object';
-import { computed, get } from '@ember/object';
+import { get, action } from '@ember/object';
 import { A } from '@ember/array';
 import { inject as service } from '@ember/service';
 import { singularize } from 'ember-inflector';
+import { tracked } from '@glimmer/tracking';
 import $ from 'jquery';
-import ajaxStatus from 'granite/mixins/ajax-status';
 
-export default Controller.extend(ajaxStatus, {
-  auth: service(),
+export default class AccountEmployeeOnboardEquipmentController extends Controller {
+  @service auth
+  @service data
+  @tracked pendingAssetItem
+  @tracked assignedAssets
+  @tracked assignableAssets
 
-  groupedAssignedAssets: computed('assignedAssets.[]', function () {
-    let assignedAssets = this.get('assignedAssets'),
+  get groupedAssignedAssets () {
+    let assignedAssets = this.assignedAssets,
         groups = A();
 
     let findGroup = asset => groups.findBy('asset.id', get(asset, 'id'));
 
     assignedAssets.forEach(stock => {
-      let asset = get(stock, 'asset'),
+      let asset = stock.asset,
           existingGroup = findGroup(asset);
 
       if (!existingGroup) {
@@ -29,15 +33,15 @@ export default Controller.extend(ajaxStatus, {
         existingGroup = findGroup(asset);
       }
 
-      existingGroup.get('assets').addObject(stock);
+      existingGroup.assets.addObject(stock);
     });
 
     return groups;
-  }),
+  }
 
-  splitAssets: computed('assignableAssets.[]', 'jobSuggestedAssets.[]', function () {
-    let jobSuggestedAssets = this.get('jobSuggestedAssets'),
-        assignableAssets = this.get('assignableAssets'),
+  get splitAssets () {
+    let jobSuggestedAssets = this.jobSuggestedAssets,
+        assignableAssets = this.assignableAssets,
         suggestedAssets = A(),
         remainingAssets = A();
 
@@ -53,105 +57,115 @@ export default Controller.extend(ajaxStatus, {
       suggestedAssets,
       remainingAssets
     };
-  }),
+  }
 
-  actions: {
-    createAsset (category) {
-      let user = this.get('auth.user');
+  @action
+  async createAsset (category) {
+    let user = await this.auth.get('user');
 
-      this.set('pendingAssetItem', this.store.createRecord('asset-item', {
-        asset:      category,
-        identifier: this.get('model.firstName') + '\'s ' + singularize(category.get('name')),
-        creator:    user,
-        company:    user.get('company')
-      }));
+    this.pendingAssetItem = await this.store.createRecord('asset-item', {
+      asset:      category,
+      identifier: this.model.firstName + '\'s ' + singularize(category.name),
+      creator:    user,
+      company:    user.company
+    });
 
-      $('#modal__new-asset').modal({
-        onHidden: () => {
-          if (!this || this.isDestroyed || this.isDestroying) {
-            $('#modal__new-asset').remove();
-          }
-
-          $('#modal__new-asset').appendTo($('#modal__new-asset--placeholder'));
+    $('#modal__new-asset').modal({
+      onHidden: () => {
+        if (!this || this.isDestroyed || this.isDestroying) {
+          $('#modal__new-asset').remove();
         }
-      }).modal('show');
-    },
 
-    saveAsset () {
-      this.ajaxStart();
-
-      this.get('pendingAssetItem').save()
-      .then(asset => {
-        this.send('selectAsset', asset);
-        $('#modal__new-asset').modal('hide');
-      })
-      .catch(this.ajaxError.bind(this));
-    },
-
-    abortAsset () {
-      let asset = this.get('pendingAssetItem');
-
-      asset.destroyRecord()
-      .then(() => {
-        this.set('pendingAssetItem', null);
-        $('#modal__new-asset').modal('hide');
-      });
-    },
-
-    selectAsset (asset) {
-      this.ajaxStart();
-
-      let user = this.get('auth.user'),
-          employee = this.get('model');
-
-      if (asset.get('assignments').findBy('employee.id', employee.get('id'))) {
-        this.ajaxSuccess(null, true);
-        return;
+        $('#modal__new-asset').appendTo($('#modal__new-asset--placeholder'));
       }
+    }).modal('show');
+  }
 
-      let assignment = this.store.createRecord('asset-assignment', {
-        employee,
-        assigner: user
-      });
+  @action
+  async saveAsset () {
+    let { success, error } = this.data.createStatus();
 
-      asset.get('assignments').addObject(assignment);
-
-      asset.save()
-      .then(assetItem => {
-        assetItem.assignments.filterBy('id', null).invoke('destroyRecord');
-        this.get('assignedAssets').addObject(assetItem);
-        this.ajaxSuccess(null, true);
-        this.send('refresh');
-      })
-      .catch(this.ajaxError.bind(this));
-    },
-
-    unassignAsset (asset) {
-      this.get('assignedAssets').removeObject(asset);
-
-      let assignment = asset.get('assignments').findBy('employee.id', this.get('model.id'));
-
-      if (assignment) {
-        this.ajaxStart();
-        asset.get('assignments').removeObject(assignment);
-
-        asset.save()
-        .then(() => this.ajaxSuccess(null, true))
-        .catch(this.ajaxError.bind(this));
-      }
-    },
-
-    newAssetCategory (asset) {
-      this.get('assignableAssets').addObject({
-        asset,
-        stock: null
-      });
-    },
-
-    closeAssetModalAndTransition (link, id) {
-      this.send('abortAsset');
+    try {
+      let asset = await this.pendingAssetItem.save();
+      success(null, true);
+      await this.selectAsset(asset);
       $('#modal__new-asset').modal('hide');
-      this.transitionToRoute(link, id);
+    } catch (e) {
+      error(e);
     }
   }
-});
+
+  @action
+  async abortAsset () {
+    let asset = this.pendingAssetItem;
+
+    await asset.destroyRecord();
+    this.pendingAssetItem = null;
+    $('#modal__new-asset').modal('hide');
+  }
+
+  @action
+  async selectAsset (asset) {
+    let { success, error } = this.data.createStatus();
+
+    let user = await this.auth.get('user'),
+        employee = this.model;
+
+    if (asset.assignments.findBy('employee.id', employee.id)) {
+      success(null, true);
+      return;
+    }
+
+    let assignment = await this.store.createRecord('asset-assignment', {
+      employee,
+      assigner: user
+    });
+
+    asset.assignments.addObject(assignment);
+
+    try {
+      let assetItem = await asset.save();
+      assetItem.assignments.filterBy('id', null).invoke('destroyRecord');
+      this.assignedAssets.addObject(assetItem);
+      success(null, true);
+      this.send('refreshModel');
+    } catch (e) {
+      error(e);
+    }
+  }
+
+  @action
+  async unassignAsset (asset) {
+    this.assignedAssets.removeObject(asset);
+
+    let assignment = asset.assignments.findBy('employee.id', this.model.id);
+
+    if (assignment) {
+      let { success, error } = this.data.createStatus();
+      asset.assignments.removeObject(assignment);
+
+      try {
+        await asset.save();
+        success(null, true);
+        this.send('refreshModel');
+      } catch (e) {
+        error(e);
+      }
+    }
+  }
+
+  @action
+  newAssetCategory (asset) {
+    this.assignableAssets.addObject({
+      asset,
+      stock: null
+    });
+  }
+
+  @action
+  closeAssetModalAndTransition (link, id) {
+    this.abortAsset();
+    $('#modal__new-asset').modal('hide');
+    this.transitionToRoute(link, id);
+  }
+}

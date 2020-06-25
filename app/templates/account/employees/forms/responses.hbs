@@ -9,7 +9,7 @@
             Response by {{response.employee.fullName}} on {{time response.submittedOn "M/D/YY [at] h:mma"}}
           </div>
           <div class="extra">
-            <a href="#" {{action openResponseView response this.form}}>View Responses</a>
+            <a href="#" {{on "click" (prevent-default (fn openResponseView response this.form))}}>View Responses</a>
           </div>
         </div>
       </div>
@@ -17,7 +17,4 @@
   </div>
 </Modals::ViewFormResponse>
 
-{{elements/x-pagination
-  page=(readonly this.page)
-  pages=(readonly this.pages)
-  onchange=(action (mut this.page))}}
+<Elements::XPagination @page={{this.page}} @model={{this.model}} @limit={{this.limit}} @onChange={{set this.page _}} />

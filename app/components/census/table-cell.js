@@ -1,22 +1,21 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { computed, action } from '@ember/object';
 import { htmlSafe } from '@ember/string';
-import ajaxStatus from 'granite/mixins/ajax-status';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { inject as service } from '@ember/service';
 
-const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
-  classNameBindings: [ 'highlightCell:census__highlight-cell' ],
-  tagName:           'td',
-  guessedField:      computed('availableFields', 'guesses', 'columnIndex', function () {
-    return this.get('availableFields').findBy('path', this.get('guesses')[this.get('columnIndex')]);
-  }),
+export default class CensusTableCellComponent extends Component {
+  @service data
 
-  missingRelationship:   computed.reads('validation.missingRelationship'),
-  missingRequiredFields: computed.reads('validation.isRequired'),
-  highlightCell:         computed.or('missingRelationship', 'missingRequiredFields', 'hasEnumInvalidation'),
+  @computed.reads('args.validation.missingRelationship') missingRelationship
+  @computed.reads('args.validation.isRequired') missingRequiredFields
+  @computed.or('missingRelationship', 'missingRequiredFields', 'hasEnumInvalidation') highlightCell
 
-  hasEnumInvalidation: computed('guessedField.enums.[]', function () {
-    let guessedField = this.get('guessedField');
+  get guessedField () {
+    return this.args.availableFields.findBy('path', this.args.guesses[this.args.columnIndex]);
+  }
+
+  get hasEnumInvalidation ()  {
+    let guessedField = this.guessedField;
 
     if (!guessedField || !guessedField.enums) {
       return false;
@@ -25,46 +24,46 @@ const CensusTableCellComponent = Component.extend(addEdit, ajaxStatus, {
     const enums = guessedField.enums,
           enumStr = [ ...enums, enums.indexOf(null) > -1 ? 'or leave this field blank' : null ].filter(Boolean).join(', ');
 
-    let matchingEnum = enums.includes(this.get('column'));
+    let matchingEnum = enums.includes(this.column);
 
     return matchingEnum ? false : `Please use one of these: ${enumStr}`;
-  }),
+  }
 
-  popupMessage: computed('missingRelationship', function () {
-    let relationship = this.get('missingRelationship');
+  get popupMessage () {
+    let relationship = this.missingRelationship;
 
     if (relationship === 'department' || relationship === 'location') {
       return htmlSafe(`Could not find this ${relationship},  click to create.`);
     }
 
     return htmlSafe(`Could not find this ${relationship}.`);
-  }),
-
-  actions: {
-    addAction () {
-      let field = this.get('guessedField'),
-          column = this.get('column'),
-          actionToCall;
-
-      if (field.path === 'department') {
-        actionToCall = this.get('addDepartment');
-      } else if (field.path === 'location') {
-        actionToCall = this.get('addLocation');
-      } else {
-        return;
-      }
-
-      actionToCall(column)
-      .then(newRelationshipModel => this.send('save', newRelationshipModel))
-      .then(() => this.get('onRefresh')());
-    },
-
-    notify (type, msg) {
-      this.get('onNotify')(type, msg);
-    }
   }
-});
 
-CensusTableCellComponent.reopenClass({ positionalParams: [ 'column', 'rowIndex', 'columnIndex', 'potentialData', 'availableFields', 'guesses', 'validation' ] });
+  @action
+  async addAction () {
+    let field = this.guessedField,
+        column = this.args.column,
+        actionToCall;
 
-export default CensusTableCellComponent;
+    if (field.path === 'department') {
+      actionToCall = this.args.addDepartment;
+    } else if (field.path === 'location') {
+      actionToCall = this.args.addLocation;
+    } else {
+      return;
+    }
+
+    let newRelationshipModel = await actionToCall(column);
+    await this.data.saveRecord(newRelationshipModel);
+    this.args.onRefresh();
+  }
+
+  @action
+  notify (type, msg) {
+    this.args.onNotify(type, msg);
+  }
+}
+
+// CensusTableCellComponent.reopenClass({ positionalParams: [ 'column', 'rowIndex', 'columnIndex', 'potentialData', 'availableFields', 'guesses', 'validation' ] });
+//
+// export default CensusTableCellComponent;

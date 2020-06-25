@@ -1,0 +1,4 @@
+<div class="ui {{this.menuClass}} menu {{if this.open "open"}}">
+  {{yield}}
+</div>
+<a href="#" class="collapser item" {{on "click" (prevent-default (action "toggleMenu"))}}><i class="content icon"></i></a>

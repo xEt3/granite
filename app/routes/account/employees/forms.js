@@ -1,3 +1,5 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({ titleToken: 'Forms and responses' });
+export default class FormsRoute extends Route {
+  titleToken = 'Forms and responses';
+}

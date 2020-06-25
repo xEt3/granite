@@ -1,0 +1,14 @@
+<div class={{this.bannerClass}} {{did-update this.updateAttrs @accountLocked}}>
+  <h4>
+    <span class="left floated text"><i class="large exclamation triangle icon"></i></span>
+    {{#if this.subscription.daysLeftInGracePeriod}}
+      Your subscription is past due, {{this.subscription.daysLeftInGracePeriod}} before access is suspended. Update your billing information to avoid interruption.
+
+    {{else if this.subscription.accountSuspended}}
+      Your subscription has been suspended.  Update your billing information to reactivate.
+
+    {{else if this.subscription.isCancelled}}
+      Your subscription has been canceled.  Reactivate your account to regain access.
+    {{/if}}
+  </h4>
+</div>

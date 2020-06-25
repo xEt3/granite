@@ -1,20 +1,11 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-const ThreadParticipantComponent = Component.extend({
-  tagName:           'span',
-  classNames:        [ 'ui', 'image', 'label' ],
-  classNameBindings: [ 'online:green' ],
+export default class MessagingThreadParticipantComponent extends Component {
+  get online () {
+    return this.args.connectedUsers.includes(this.args.participant.id);
+  }
 
-  online: computed('connectedUsers.[]', 'participant', function () {
-    return this.get('connectedUsers').includes(this.get('participant.id'));
-  }),
-
-  detail: computed('online', function () {
-    return this.get('online') ? 'Online' : 'Offline';
-  })
-});
-
-ThreadParticipantComponent.reopenClass({ positionalParams: [ 'participant' ] });
-
-export default ThreadParticipantComponent;
+  get detail () {
+    return this.online ? 'Online' : 'Offline';
+  }
+}

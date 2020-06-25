@@ -1,0 +1,41 @@
+{{#if hasBlock}}
+  {{yield this.openModal}}
+{{/if}}
+
+<UiModal @name="modal__file-upload" id={{this.modalId}}>
+  <div class="header">
+    Upload a File
+  </div>
+  <div class="content">
+    <DropZone
+      @url={{this.files.fileEndpoint}}
+      @id={{this.dropzoneId}}
+      @class="input__dropzone"
+      @method="put"
+      @uploadMultiple={{false}}
+      @maxFiles={{1}}
+      @autoProcessQueue={{false}}
+      @dictDefaultMessage="Drop or Click to Select a File"
+      @thumbnailWidth="175"
+      @headers={{hash X-API-Token=this.auth.token}}
+      @addedfile={{this.files.addedFile}}
+      @success={{this.files.uploadedFile}}
+      @capture="camera" />
+  </div>
+  <div class="actions">
+    <button type="button" class="ui red button" {{on "click" this.closeModal}}>
+      Close
+    </button>
+    <button
+      type="button"
+      disabled={{or (not this.files.fileIsAdded) this.data.statuses.fileHandling.isLoading}}
+      class="ui green right labeled icon {{if this.data.statuses.fileHandling.isLoading 'loading'}} button"
+      {{on "click" (pipe
+        this.files.upload
+        this.closeModal
+      )}}
+    >
+      Upload File<i class="check icon"></i>
+    </button>
+  </div>
+</UiModal>

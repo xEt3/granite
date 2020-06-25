@@ -30,12 +30,12 @@ export default Component.extend({
 
   didUpdateAttrs () {
     this._super(...arguments);
-    this.get('_dataUpdate');
+    this._dataUpdate; //eslint-disable-line
   },
 
   populateChildNodes (node, base) {
-    let ajax = this.get('ajax'),
-        baseNode = this.get('baseNode');
+    let ajax = this.ajax,
+        baseNode = this.baseNode;
 
     set(node, 'children', A());
 
@@ -68,7 +68,7 @@ export default Component.extend({
   },
 
   _simulation: computed('baseNode._id', function () {
-    let baseNode = this.get('baseNode');
+    let baseNode = this.baseNode;
     return this.populateChildNodes(Object.create(baseNode), true);
   }),
 
@@ -80,13 +80,13 @@ export default Component.extend({
 
     return run.next(() => {
       run.scheduleOnce('afterRender', () => {
-        let margin = this.get('margin'),
+        let margin = this.margin,
             width  =  margin.right - margin.left,
             height =  margin.top - margin.bottom;
 
         let zoom = d3Zoom.zoom();
 
-        let svg = d3.select('#' + this.get('elementId'))
+        let svg = d3.select('#' + this.elementId)
             .attr('minwidth', width)
             .attr('minheight', height)
             .call(zoom.on('zoom', () => {
@@ -100,7 +100,7 @@ export default Component.extend({
           g
         });
 
-        return this.get('_dataUpdate');
+        return this._dataUpdate;
       });
     });
   }),
@@ -108,16 +108,16 @@ export default Component.extend({
   _dataUpdate: computed('_simulation', 'nodeRadius', 'baseNodeRadius', function () {
     const minimumXSpacing = 135;
 
-    return this.get('_simulation')
+    return this._simulation
     .then(data => {
       run.scheduleOnce('afterRender', () => {
         let root = hierarchy(data),
-            g = this.get('g'),
+            g = this.g,
             baseNodeId = this.get('baseNode._id'),
-            nr = this.get('nodeRadius'),
-            bnr = this.get('baseNodeRadius'),
-            width = this.get('width'),
-            height = this.get('height');
+            nr = this.nodeRadius,
+            bnr = this.baseNodeRadius,
+            width = this.width,
+            height = this.height;
 
         if (width / root.height > minimumXSpacing) {
           width = minimumXSpacing * root.height;

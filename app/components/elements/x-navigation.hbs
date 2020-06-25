@@ -1,0 +1,38 @@
+<nav class="ui menu nav__main menu__container-responsive {{if @transparent "nav__main-transparent"}}">
+  <div class="header item nav__main-logo">
+    <LinkTo @route="index">
+      <div class="logo"></div>
+      <div class="logo-text">Granite HR</div>
+    </LinkTo>
+  </div>
+
+  {{#if @topLevel}}
+    <div class="right menu">
+      <div class="item">
+        <LinkTo @route="about">About</LinkTo>
+      </div>
+      <div class="item">
+        <LinkTo @route="our-product">Our Product</LinkTo>
+      </div>
+      <div class="item">
+        <LinkTo @route="pricing">Pricing</LinkTo>
+      </div>
+      <div class="item">
+        <LinkTo @route="contact">Contact</LinkTo>
+      </div>
+      {{#if this.auth.authenticated}}
+        <div class="item login_or_dashboard">
+          <LinkTo @route="account" class="ui outlined blue button">Go To Dashboard</LinkTo>
+        </div>
+      {{else}}
+        <div class="item login_or_dashboard">
+          <div class="ui buttons">
+            <LinkTo @route="login" class="ui blue button">Log in</LinkTo>
+            <div class="or"></div>
+            <LinkTo @route="signup" class="ui green button">Sign Up</LinkTo>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
+</nav>

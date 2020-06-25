@@ -1,4 +1,7 @@
-import Controller from '@ember/controller';
-import resource from 'granite/mixins/controller-abstractions/resource';
+import { GraniteResourceController } from 'granite/core/controller';
 
-export default Controller.extend(resource, {});
+export default class AccountJobOpeningCampaignTalentPoolController extends GraniteResourceController {
+  get pages () {
+    return Math.ceil(this.model.length / this.limit);
+  }
+}

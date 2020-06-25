@@ -1,12 +1,16 @@
-{{#confirm-modal confirmContent=this.confirmModalDeleteContext as |confirm|}}
-  <form class="ui form" {{action (pipe confirm (action "saveAndContinue")) on="submit"}}>
+<ConfirmModal @confirmContent={{this.confirmModalDeleteContext}} as |confirm|>
+  <form class="ui form" {{on "submit" (prevent-default (pipe confirm (route-action "saveAndContinue")))}}>
     <h2 class="ui horizontal divider header">Reorganization</h2>
     {{#if this.hasDirectReports}}
       <p>{{this.model.fullName}} has direct reports that wouldn't have a supervisor if {{this.model.firstName}} left. Selecting a stand-in will reorganize those direct reports until you rehire for {{if this.model.jobTitle this.model.jobTitle "their position"}}, if applicable. If you do not rehire for their position, these direct reports will remain in the structure you select below.</p>
       <div class="ui divider"></div>
       <div class="field">
         <label for="replacement-selection">Who should stand-in as the supervisor for {{this.model.firstName}}'s employees?</label>
-        {{#ui-dropdown id="replacement-selection" class="search selection" selected=this.replacement onChange=(action (mut this.replacement)) as |execute mapper|}}
+        <UiDropdown
+          @id="replacement-selection"
+          @class="search selection"
+          @selected={{this.replacement}}
+          @onChange={{set this.replacement _}} as |execute mapper|>
           <div class="default text">Select an employee</div>
           <i class="dropdown icon"></i>
           <div class="menu">
@@ -16,10 +20,12 @@
               </div>
             {{/each}}
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       </div>
 
-      {{visualizations/reorganization-tree baseNode=this.baseNode originalNode=this.originalNode}}
+      <Visualizations::ReorganizationTree
+        @baseNode={{this.baseNode}}
+        @originalNode={{this.originalNode}}/>
     {{else}}
       <h2 class="center aligned light text header">
         <i class="check icon"></i>
@@ -28,6 +34,6 @@
     {{/if}}
 
     <div class="ui divider"></div>
-    {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Next{{/form/action-button}}
+    <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.wizard.isLoading}}>Next</Form::ActionButton>
   </form>
-{{/confirm-modal}}
+</ConfirmModal>

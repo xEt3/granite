@@ -1,17 +1,15 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
 const dictMap = [ 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten' ];
 
-export default Component.extend({
-  classNames:        [ 'ui', 'steps' ],
-  classNameBindings: [ 'dictStep' ],
-
+export default class FormSteps extends Component {
+  @action
   didReceiveAttrs () {
-    this.set('_step', this.get('step'));
-  },
+    this._step = this.step;
+  }
 
-  dictStep: computed('steps', function () {
-    return dictMap[this.get('steps.length') - 1];
-  })
-});
+  get dictStep () {
+    return dictMap[this.args.steps.length - 1];
+  }
+}

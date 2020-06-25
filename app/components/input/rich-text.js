@@ -1,7 +1,8 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  options: {
+export default class InputRichTextComponent extends Component {
+  options = {
     theme:   'snow',
     modules: {
       toolbar: [
@@ -13,11 +14,10 @@ export default Component.extend({
         [ 'clean' ]
       ]
     }
-  },
-
-  actions: {
-    updateText (editor) {
-      this.get('onChange')(editor.root.innerHTML);
-    }
   }
-});
+
+  @action
+  updateText (editor) {
+    this.args.onChange(editor.root.innerHTML);
+  }
+}

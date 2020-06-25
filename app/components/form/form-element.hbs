@@ -1,0 +1,162 @@
+<div class="content">
+  <div class="form-element__controls">
+    <a href="#" class="text-danger" {{on "click" (prevent-default (action "removeElement"))}}>
+      <i class="trash icon"></i>
+    </a>
+  </div>
+
+  {{#if (and this.model.label this.model.type)}}
+    <div class="form-element__preview">
+      <Input::QuickFormInput
+        @field={{hash
+          label=this.label
+          type=this.model.type
+          placeholder=(or this.model.label " ")
+          showLabel=true
+          contentPath="controller.options"
+          displayKey="text"
+          class=this.positionInForm
+          inputClass=(if (and (eq this.model.type "select") (or this.model.multiple this.model.allowAdditions)) "search multiple")
+          inputAttrs=(hash
+            allowAdditions=this.model.allowAdditions
+            inline=this.model.inlineInput
+          )
+        }}
+        @model={{this.emptyObject}}
+        @controller={{this.model}}
+      />
+      <div class="ui divider"></div>
+    </div>
+  {{else if this.loadingType}}
+    <div class="form-element__preview form-element__preview--loading">
+      {{! dummy element}}
+      <Input::QuickFormInput
+        @field={{hash
+          label=this.label
+          type='select'
+          placeholder=(or this.model.label " ")
+          showLabel=true
+        }}
+        @model={{this.emptyObject}}
+        @controller={{this.model}}
+      />
+      <div class="ui divider"></div>
+      <div class="ui active inverted dimmer">
+        <div class="ui text loader">Loading element...</div>
+      </div>
+    </div>
+  {{/if}}
+
+  {{#unless this.showingPreview}}
+    <div class="two fields">
+      <div class="field">
+        <label>What would you like to ask for question #{{this.positionInForm}}?*</label>
+        <Input @type="text" @value={{this.model.label}} placeholder={{this.labelSuggestion}} />
+      </div>
+
+      <div class="field">
+        <label>How should they answer?*</label>
+        <UiDropdown @class="selection" @selected={{this.model.type}} @forceSelection={{false}} @onChange={{set this.model.type _}}>
+          <div class="default text">
+            Select an input type
+          </div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            {{#each this.formTypes as |formType|}}
+              <div class="item" data-value={{formType.use}}>
+                {{#if formType.icon}}
+                  <i class="{{formType.icon}} icon"></i>
+                {{/if}}
+                {{formType.display}}
+              </div>
+            {{/each}}
+          </div>
+        </UiDropdown>
+      </div>
+    </div>
+
+    {{#if (or (eq this.model.type "select") this.loadingType)}}
+      <div class="two fields">
+        <div class="field">
+          <UiCheckbox @class="toggle" @label="Allow multiple selections" @checked={{readonly this.model.multiple}} @onChange={{pipe-action (set this.model.multiple _) this.changedSelectProperty}} />
+        </div>
+        <div class="field">
+          <EmberTooltip @side="top" @popperContainer="body" @text="This option allows users to select from your list of options or add selection(s) of their own." />
+          <UiCheckbox @class="toggle" @label="Allow additions to options" @checked={{readonly this.model.allowAdditions}} @onChange={{pipe-action (set this.model.allowAdditions _) this.changedSelectProperty}} />
+        </div>
+      </div>
+    {{/if}}
+
+    {{#if (eq this.model.type "radio")}}
+      <div class="field">
+        <UiCheckbox @class="toggle" @label="Inline Input" @checked={{readonly this.model.inlineInput}} @onChange={{set this.model.inlineInput _}} />
+      </div>
+    {{/if}}
+
+    <div class="field">
+      {{#liquid-if (and (or (eq this.model.type "checkbox") (eq this.model.type "toggle")) this.model.required)}}
+        <p class="center aligned text text-danger">Note: Requiring this field requires the applicant to select "Yes" to proceed.</p>
+      {{/liquid-if}}
+
+      <UiCheckbox @label="This question is required" @checked={{readonly this.model.required}} @onChange={{set this.model.required _}} />
+    </div>
+
+    {{#if (or this.requiresOptions this.loadingType)}}
+      <div class="field">
+        <label>Add options for the applicant to choose from</label>
+      </div>
+      {{#if this.model.options}}
+        <div class="ui vertically divided vertically padded unpadded grid form-element__options-grid">
+          {{#each this.model.options as |option|}}
+            <div class="row">
+              <div class="{{if this.scoring "eight" "sixteen"}} wide column">
+                <div class="ui field">
+                  <Input @type="text" class="ui mini fluid input" placeholder="Enter option text" @value={{option.text}} />
+                </div>
+                <a href="#" class="text-danger" {{on "click" (prevent-default (fn this.removeOption option))}}><i class="trash icon"></i> Remove</a>
+              </div>
+              {{#if this.scoring}}
+                <div class="eight wide column">
+                  <div class="ui field">
+                    <Input @type="number" class="ui mini fluid input" @min="-100" @max="100" @step="1" placeholder="Weight (+/-100)" @disabled={{option.disqualifier}} @value={{option.weight}} />
+                  </div>
+                  <UiCheckbox @label="Exclude applicants with this answer" @checked={{readonly option.disqualifier}} @onChange={{set option.disqualifier _}} />
+                </div>
+              {{/if}}
+              {{!-- <div class="{{if scoring "four" "eight"}} wide column options-grid__option-controls">
+              </div> --}}
+            </div>
+          {{/each}}
+        </div>
+      {{/if}}
+      <a href="#" {{on "click" (prevent-default this.addOption)}}><i class="plus icon"></i>Add option...</a>
+    {{else if (and this.showScoring (not this.model.required))}}
+      <div class="two fields">
+        <div class="field">
+          <div class="ui field">
+            <label>How should "Yes" be weighted?</label>
+            <Input @type="number" class="ui mini fluid input" @min="-100" @max="100" @step="1" placeholder="Weight (+/-100)" @disabled={{this.model.trueDisqualifies}} @value={{this.model.trueWeight}} />
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui field">
+            <label>How should "No" be weighted?</label>
+            <Input @type="number" class="ui mini fluid input" @min="-100" @max="100" @step="1" placeholder="Weight (+/-100)" @disabled={{this.model.falseDisqualifies}} @value={{this.model.falseWeight}} />
+          </div>
+        </div>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <UiCheckbox @label="Exclude applicants with 'Yes' answer" @checked={{readonly this.model.trueDisqualifies}} @onChange={{set this.model.trueDisqualifies _}} />
+        </div>
+        <div class="field">
+          <UiCheckbox @label="Exclude applicants with 'No' answer" @checked={{readonly this.model.falseDisqualifies}} @onChange={{set this.model.falseDisqualifies _}} />
+        </div>
+      </div>
+    {{/if}}
+  {{/unless}}
+</div>
+
+<div class="form-element__handle">
+  <i class="resize vertical fitted icon"></i>
+</div>

@@ -1,25 +1,27 @@
-import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 import { forms } from 'granite/config/forms/educate-add';
 
-export default Controller.extend(addEdit, {
-  renewal:     null,
-  currentForm: forms.certificationRenewal,
+export default class AccountEmployeeEducationCertificationRenewalController extends Controller {
+  @service data
 
-  actions: {
-    async saveRenewal () {
-      const { renewal, certification } = this.get('model'),
-            renewalId = this.get('renewal');
+  renewal = null
+  currentForm = forms.certificationRenewal
 
-      if (!renewalId) {
-        certification.renewals.addObject(renewal);
-      }
+  @action
+  async saveRenewal () {
+    const { renewal, certification } = this.model,
+          renewalId = this.renewal;
 
-      await this.saveModel(certification);
+    if (!renewalId) {
+      certification.renewals.addObject(renewal);
+    }
 
-      if (!renewalId) {
-        certification.renewals.removeObject(renewal);
-      }
+    await this.data.saveRecord(certification);
+
+    if (!renewalId) {
+      certification.renewals.removeObject(renewal);
     }
   }
-});
+}

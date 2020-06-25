@@ -1,0 +1,71 @@
+<div class="account__activity-item event">
+  {{! template-lint-disable no-triple-curlies}}
+  {{#if @activity.icon}}
+    <div class="label">
+      <i class="{{if this.contextColor this.contextColor}} {{@activity.icon}} icon"></i>
+    </div>
+  {{/if}}
+
+  <div class="content">
+    <div class="summary clearfix">
+      {{{@activity.descriptionHtml}}}
+      {{#if @activity.tag}}
+        <span class="ui right ribbon green label">{{@activity.tag}}</span>
+      {{/if}}
+    </div>
+    <div class="meta">
+      <a href="#" {{on "click" (prevent-default (pipe this.toggleComments (toggle "showComments" this)))}}>
+        <EmberTooltip @side="top" @popperContainer="body" @text="Comments" />
+        <i class="fitted comment icon"></i> {{if @activity.comments.length @activity.comments.length}}
+      </a>
+
+      {{#if this.enableLikes}}
+        <a href="#" class="like {{if this.likeByCurrentUser "text-red"}}" {{on "click" (prevent-default this.like)}}>
+          <EmberTooltip @side="top" @popperContainer="body" @text="Thumbs up" />
+          <i class="thumbs up icon"></i>
+          {{#if this.likeByCurrentUser}}
+            You
+            {{#if this.likesMinusOne}}
+              and {{this.likesMinusOne}} {{inflect-text "other" this.likesMinusOne}}
+            {{/if}}
+            like this
+          {{else}}
+            {{if @activity.likes.length @activity.likes.length}}
+          {{/if}}
+        </a>
+      {{/if}}
+
+      <div class="right floated date">
+        {{time-ago @activity.created}} on {{time @activity.created "M/D/YY"}}
+      </div>
+    </div>
+
+    {{#liquid-if this.showComments use="toUp"}}
+      <form class="ui form account__comments-section" {{on "submit" (prevent-default this.saveComment)}}>
+        <h6 class="ui horizontal divider header"><i class="fitted comments icon"></i> Comments</h6>
+        <div class="field">
+          <label for="comment-text" class="sr-only">Enter your comment</label>
+          <Textarea @name="comment-text" @value={{this.comment.text}} @rows={{2}} placeholder="Type your comment..." />
+        </div>
+
+        {{#liquid-if this.comment.text}}
+          <Form::ActionButton type="submit" class="ui large fluid green button" @loading={{this.data.statuses.working.isLoading}}>Save Comment</Form::ActionButton>
+        {{/liquid-if}}
+      </form>
+
+      <div class="ui feed limited-pane">
+        {{#each this.comments as |comment|}}
+          <ListItem::CommentItem @comment={{comment}} class="event" />
+        {{/each}}
+      </div>
+    {{else}}
+      {{#if this.comments.firstObject}}
+        <div class="account__comments-section account__comments-muted">
+          <div class="ui feed limited-pane">
+            <ListItem::CommentItem @comment={{this.comments.firstObject}} class="event" />
+          </div>
+        </div>
+      {{/if}}
+    {{/liquid-if}}
+  </div>
+</div>

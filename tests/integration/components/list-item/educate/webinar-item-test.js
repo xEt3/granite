@@ -2,10 +2,9 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerEvent, click } from '@ember/test-helpers';
 import { A } from '@ember/array';
-import moment from 'moment';
 import sinon from 'sinon';
 import hbs from 'htmlbars-inline-precompile';
-import { assertTooltipRendered, assertTooltipVisible, assertTooltipContent } from 'ember-tooltips/test-support';
+import { assertTooltipRendered, assertTooltipVisible } from 'ember-tooltips/test-support';
 
 module('Integration | Component | list-item/educate/webinar-item', function (hooks) {
   setupRenderingTest(hooks);
@@ -57,18 +56,19 @@ module('Integration | Component | list-item/educate/webinar-item', function (hoo
 
     this.setProperties({
       webinar,
-      webinarAuthorization
+      webinarAuthorization,
+      onAssign: () => {}
     });
 
     // Render a purchased webinar item and expect title, description, remaining duration, assign button, watch button
     await render(hbs`
       <ListItem::Educate::WebinarItem
         @webinar={{this.webinar}}
+        @onAssign={{this.onAssign}}
         @authorization={{this.webinarAuthorization}} />
     `);
-    await this.pauseTest();
+
     assert.dom(this.element, '.webinar-card__title').includesText(webinar.title);
-    assert.dom(this.element, '.webinar-card__description').includesText(webinar.description);
     assert.dom('.webinar-card__purchase').doesNotExist();
 
     assert.dom('a.webinar-card__watch').exists();

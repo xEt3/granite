@@ -4,14 +4,14 @@
     <div class="ui horizontal list">
       {{#if this.model.resume}}
         <div class="item">
-          <a href={{this.model.resume.url}} rel="noopener" target="_blank">
+          <a href={{this.model.resume.url}} rel="noopener noreferrer" target="_blank">
             <i class="external link icon"></i>Resume/CV
           </a>
         </div>
       {{/if}}
       {{#if this.model.coverLetter}}
         <div class="item">
-          <a href="#" {{action this.openModal this.coverLetterModalId "coverLetter"}}>
+          <a href="#" {{on "click" (prevent-default (fn this.openModal this.coverLetterModalId "coverLetter"))}}>
             <i class="file icon"></i>Cover Letter
           </a>
         </div>
@@ -20,26 +20,23 @@
 
     <div class="ui divider"></div>
 
-    {{#modals/add-notes
-      model=this.model
-      refresh=(action "refreshModel") as |openAddModal|
-    }}
+    <Modals::AddNotes @model={{this.model}} @refresh={{route-action "refreshModel"}} as |openAddModal|>
       <h3 class="dividing header">
         Notes
       </h3>
       {{#if this.model.notes}}
-        <a href="#" {{action openAddModal}}><i class="edit icon"></i></a> {{this.model.notes}}
+        <a href="#" {{on "click" (prevent-default openAddModal)}}><i class="edit icon"></i></a> {{this.model.notes}}
       {{else}}
-        <span class="light text">No notes available.</span> <a href="#" {{action openAddModal}}>Add notes</a>
+        <span class="light text">No notes available.</span> <a href="#" {{on "click" (prevent-default openAddModal)}}>Add notes</a>
       {{/if}}
-    {{/modals/add-notes}}
+    </Modals::AddNotes>
 
     {{#if this.opening.screening}}
       <div class="ui divider"></div>
       <h3>Screening</h3>
       <p>
         {{#if this.model.scoreRelative}}This applicant is a <strong>{{this.model.scoreRelative}}% match</strong> based on their responses to your screening.{{/if}}
-        <a href="#" {{action this.openModal this.responsesModalId "responses"}}>View responses</a>
+        <a href="#" {{on "click" (prevent-default (fn this.openModal this.responsesModalId "responses"))}}>View responses</a>
       </p>
     {{/if}}
   </div>
@@ -53,7 +50,7 @@
       <h3 class={{unless this.showingPastEvents "ui light text"}}>
         Past Events
         <small class="right floated">
-          <a href="#" {{action (toggle "showingPastEvents" this)}}>
+          <a href="#" {{on "click" (prevent-default (toggle "showingPastEvents" this))}}>
             {{if this.showingPastEvents "Hide" "Show"}}
           </a>
         </small>
@@ -68,12 +65,7 @@
   </div>
 </div>
 
-{{#modals/static-content
-  modalId=this.responsesModalId
-  onResponse=(action "modalResponse" "responses")
-  title="Screening responses"
-  hideActions=true
-}}
+<Modals::StaticContent @modalId={{this.responsesModalId}} @onResponse={{fn this.modalResponse "responses"}} @title="Screening responses" @hideActions={{true}}>
   <div class="ui very relaxed list">
     {{#each this.responses as |group|}}
       <div class="item content">
@@ -105,13 +97,8 @@
       </div>
     {{/each}}
   </div>
-{{/modals/static-content}}
+</Modals::StaticContent>
 
-{{#modals/static-content
-  modalId=this.coverLetterModalId
-  onResponse=(action "modalResponse" "coverLetter")
-  title=this.coverLetterTitle
-  hideActions=true
-}}
+<Modals::StaticContent @modalId={{this.coverLetterModalId}} @onResponse={{fn this.modalResponse "coverLetter"}} @title={{this.coverLetterTitle}} @hideActions={{true}}>
   {{this.model.coverLetter}}
-{{/modals/static-content}}
+</Modals::StaticContent>

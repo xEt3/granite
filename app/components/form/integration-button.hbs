@@ -1,0 +1,3 @@
+<button class="ui button {{if this.data.statuses.working.isLoading "loading"}} {{if this.alreadyLinked "disabled"}}" type={{this.type}} disabled={{this.disabled}} ...attributes>
+  {{yield this.alreadyLinked}}
+</button>

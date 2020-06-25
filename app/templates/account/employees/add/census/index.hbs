@@ -1,8 +1,1 @@
-{{elements/file-uploader
-  url="/api/v1/employee/census/upload"
-  autoUpload=true
-  allowedExtensions=this.supportedExtensions
-  dragText="Drag Your Census File Here"
-  onWinning=(action "successHandler")
-  onError=(action "fileUploadError")
-  onNotify=(action "onNotify")}}
+<Elements::FileUploader @url="/api/v1/employee/census/upload" @autoUpload={{true}} @allowedExtensions={{this.supportedExtensions}} @dragText="Drag Your Census File Here" @onWinning={{this.successHandler}} @onError={{this.fileUploadError}} />

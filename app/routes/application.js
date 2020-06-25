@@ -1,5 +1,6 @@
 import Ember from 'ember';
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import progress from 'ember-cli-nprogress';
 import { notifyDefaults } from 'granite/config';
@@ -16,71 +17,73 @@ const errorRouteMap = {
   400: 'error'
 };
 
-export default Route.extend({
+export default class ApplicationRoute extends Route {
   title (tokens) {
     return [ ...tokens, 'Granite HR' ].join(' - ');
-  },
-  auth:          service(),
-  notifications: service('notification-messages'),
+  }
+
+  @service auth
+  @service('notification-messages') notifications
 
   beforeModel () {
-    return IS_TEST ? Promise.resolve() : this.get('auth').initializeExistingSession();
-  },
+    return IS_TEST ? Promise.resolve() : this.auth.initializeExistingSession();
+  }
 
-  actions: {
-    notify (type) {
-      const notifications = this.get('notifications'),
-            args = Array.prototype.slice.call(arguments, 1);
+  @action
+  notify (type) {
+    const notifications = this.notifications,
+          args = Array.prototype.slice.call(arguments, 1);
 
-      args[1] = Object.assign({}, notifyDefaults, args[1]);
+    args[1] = Object.assign({}, notifyDefaults, args[1]);
 
-      if (IS_TEST) {
-        args[1].clearDuration = 1;
+    if (IS_TEST) {
+      args[1].clearDuration = 1;
+    }
+
+    notifications[type].apply(notifications, args);
+  }
+
+  @action
+  error (error) {
+    Logger.error(error);
+
+    var route = 'error',
+        err = error.errors ? error.errors[0] : error;
+
+    if (err && err.status) {
+      var routeInMap = errorRouteMap[ err.status ];
+
+      if (routeInMap) {
+        route = routeInMap;
       }
+    }
 
-      notifications[type].apply(notifications, args);
-    },
+    Logger.log('Routing to', route, 'to handle UX error...');
 
-    error (error) {
-      Logger.error(error);
+    this.controllerFor(route).setProperties({
+      fromError:     err,
+      previousRoute: this.get('controller.currentPath')
+    });
 
-      var route = 'error',
-          err = error.errors ? error.errors[0] : error;
+    this.transitionTo('/' + route);
+  }
 
-      if (err && err.status) {
-        var routeInMap = errorRouteMap[ err.status ];
+  @action
+  async logout (expired) {
+    await this.auth.logout();
 
-        if (routeInMap) {
-          route = routeInMap;
-        }
-      }
-
-      Logger.log('Routing to', route, 'to handle UX error...');
-
-      this.controllerFor(route).setProperties({
-        fromError:     err,
-        previousRoute: this.get('controller.currentPath')
-      });
-
-      this.transitionTo('/' + route);
-    },
-
-    logout (expired) {
-      this.get('auth').logout()
-      .then(() => {
-        if (expired) {
-          this.transitionTo('login', { queryParams: { expired: true } });
-        }
-      });
-    },
-
-    loading (transition) {
-      if (IS_TEST) {
-        return;
-      }
-
-      progress.start();
-      transition.finally(() => progress.done());
+    if (expired) {
+      this.transitionTo('login', { queryParams: { expired: true } });
     }
   }
-});
+
+  @action
+  loading (transition) {
+    if (IS_TEST) {
+      return;
+    }
+
+    progress.start();
+    transition.finally(() => progress.done());
+  }
+}

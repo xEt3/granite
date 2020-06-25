@@ -1,17 +1,19 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { run } from '@ember/runloop';
 
-export default Component.extend({
-  tagName: '',
-  showSsn: true,
+export default class SocialSecurity extends Component {
+  @tracked showSsn = true;
 
-  didInsertElement () {
-    this._super(...arguments);
-    run.later(() => this.set('showSsn', false), 800);
-  },
+  @action
+  didInsert () {
+    run.later(() => {
+      this.showSsn = false;
+    }, 800);
+  }
 
-  ssnInputType: computed('showSsn', function () {
-    return this.get('showSsn') ? 'text' : 'password';
-  })
-});
+  get ssnInputType () {
+    return this.showSsn ? 'text' : 'password';
+  }
+}

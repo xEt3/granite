@@ -1,3 +1,6 @@
 import Modal from '.';
 
-export default Modal.extend({ modalId: 'modal__ats-confirm-inject' });
+export default class AtsConfirmInjectModal extends Modal {
+  modalId = 'modal__ats-confirm-inject'
+  onResponse = this.args.onResponse
+}

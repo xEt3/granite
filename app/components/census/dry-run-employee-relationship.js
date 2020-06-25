@@ -1,24 +1,31 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
-export default Component.extend({
-  store: service(),
+export default class CensusDryRunEmployeeRelationship extends Component {
+  @service store
+  @tracked relationship
 
-  relationship: computed('availableFields', 'key', 'value', function () {
-    let key = this.get('key'),
-        value = this.get('value'),
-        field = this.get('availableFields').findBy('path', key) || {};
+  constructor () {
+    super(...arguments);
+
+    this.setRelationship();
+  }
+
+  async setRelationship () {
+    let key = this.args.key,
+        value = this.args.value,
+        field = this.args.availableFields.findBy('path', key) || {};
 
     if (field.isRelationship) {
       if (key === 'supervisor') {
         //change to employee because no supervisor model
         key = 'employee';
       }
-      //if value is object, return value because its a supervisor in the local upload
-      return typeof value === 'object' ? value : this.get('store').findRecord(key, value);
+      //if value is object, set value because its a supervisor in the local upload
+      this.relationship = typeof value === 'object' ? value : await this.store.findRecord(key, value);
     }
 
     return false;
-  })
-});
+  }
+}

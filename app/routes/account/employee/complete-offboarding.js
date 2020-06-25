@@ -1,11 +1,11 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { run } from '@ember/runloop';
 
-export default Route.extend({
-  titleToken: 'Completed Offboarding',
+export default class CompleteOffboardingRoute extends Route {
+  titleToken = 'Completed Offboarding';
 
-  afterModel (model) {
-    model.setProperties({
+  async afterModel (model) {
+    Object.assign(model, {
       offboarding:          false,
       offboardingStep:      null,
       offboardingProgress:  null,
@@ -15,8 +15,9 @@ export default Route.extend({
     this.analytics.trackEvent('Employees', 'offboarding_completed', 'Completed Offboarding');
     this.analytics.trackEvent('Features', 'automated_exit_interview', model.autoExitInterview ? 'Used' : 'Did not use');
 
-    model.save().then(() => run.scheduleOnce('afterRender', () => run.later(() => {
+    await model.save();
+    run.scheduleOnce('afterRender', () => run.later(() => {
       this.transitionTo('account.employees');
-    }, 3000)));
+    }, 3000));
   }
-});
+}

@@ -1,9 +1,3 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  actions: {
-    delete () {
-      this.get('onDelete')(this.get('document'));
-    }
-  }
-});
+export default class DisplayIssueDocumentsComponent extends Component {}

@@ -1,35 +1,37 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { bind, scheduleOnce } from '@ember/runloop';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { bind, scheduleOnce } from '@ember/runloop';
 import uriForModel from 'granite/utils/uri-for-model';
 
-export default Component.extend({
-  router:           service(),
-  search:           service(),
-  debounceInterval: 100,
+export default class SuggestionInput extends Component {
+  @service router;
 
-  apiSettings: computed('debounceInterval', function () {
+  @service search;
+
+  @tracked debounceInterval = 100;
+
+  get apiSettings () {
     return {
-      throttle:      this.get('debounceInterval'),
+      throttle:      this.debounceInterval,
       responseAsync: bind(this, this.performSearch)
     };
-  }),
+  }
 
   performSearch (settings, callback) {
-    return this.get('search').performSearch(settings.urlData.query)
+    return this.search.performSearch(settings.urlData.query)
     .then(callback)
     .catch(callback);
-  },
+  }
 
   selected (resultItem) {
-    const router = this.get('router');
+    const router = this.router;
 
     router.transitionTo.apply(router, uriForModel(resultItem))
     .then(() =>
       scheduleOnce('afterRender', () =>
         this.set('query', null)));
-  },
+  }
 
   keyPress (e) {
     // detect full page flowthru (enter key)
@@ -37,10 +39,10 @@ export default Component.extend({
       return;
     }
 
-    let q = this.get('query');
+    let q = this.query;
 
-    this.get('router').transitionTo('account.search', { queryParams: { q } });
+    this.router.transitionTo('account.search', { queryParams: { q } });
     this.$('input').blur();
     this.set('query', null);
   }
-});
+}

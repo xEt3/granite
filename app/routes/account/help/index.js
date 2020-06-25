@@ -1,17 +1,16 @@
-import Route from '@ember/routing/route';
-import { articles } from 'granite/config/help';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import { hash } from 'rsvp';
+import { articles } from 'granite/config/help';
 
-export default Route.extend({
-  auth: service(),
+export default class AccountHelpRoute extends Route {
+  @service auth;
 
-  model () {
-    return hash({
-      user: this.get('auth.user'),
+  async model () {
+    return {
+      user: await this.auth.user,
       articles
-    });
-  },
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -19,4 +18,4 @@ export default Route.extend({
       user:  model.user
     });
   }
-});
+}

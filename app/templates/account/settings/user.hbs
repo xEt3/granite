@@ -9,21 +9,33 @@
 <form class="ui form">
   <div class="field">
     <label for="current-password">Current Password</label>
-    {{input type="password" id="current-password" value=passwords.currentPassword placeholder="Enter your current password"}}
+    <Input
+      @type="password"
+      @id="current-password"
+      @value={{this.passwords.currentPassword}}
+      placeholder="Enter your current password" />
   </div>
 
   <div class="field">
     <label for="new-password">New Password</label>
-    {{input type="password" id="new-password" value=passwords.newPassword placeholder="Enter your new password"}}
+    <Input
+      @type="password"
+      @id="new-password"
+      @value={{this.passwords.newPassword}}
+      placeholder="Enter your new password" />
   </div>
 
   <div class="field">
     <label for="confirm-password">Confirm New Password</label>
-    {{input type="password" id="confirm-password" value=passwords.confirmPassword placeholder="Confirm your new password"}}
+    <Input
+      @type="password"
+      @id="confirm-password"
+      @value={{this.passwords.confirmPassword}}
+      placeholder="Confirm your new password" />
   </div>
 </form>
 
 <div class="ui divider"></div>
-<form {{action "change" on="submit"}}>
-  {{#form/action-button class="ui huge fluid yellow button" loading=working}}Change Password{{/form/action-button}}
+<form {{on "submit" (prevent-default this.change)}}>
+  <Form::ActionButton class="ui huge fluid yellow button" @loading={{this.data.statuses.working.isLoading}}>Change Password</Form::ActionButton>
 </form>

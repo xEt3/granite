@@ -9,15 +9,11 @@
     <label for="eeoc">
       Collect EEO data<br />
       <small class="light text">
-        Enabling this feature will collect data required for the EEO-1 report (race & gender). You should only enable this feature if you are required to file an annual EEO-1 Report. To find out if you are required to file an EEO-1 report, contact AE or visit <a href="https://www.eeoc.gov/employers/eeo1survey/faq.cfm" rel="noopener">EEOC FAQ</a>.
+        Enabling this feature will collect data required for the EEO-1 report (race & gender). You should only enable this feature if you are required to file an annual EEO-1 Report. To find out if you are required to file an EEO-1 report, contact AE or visit <a href="https://www.eeoc.gov/employers/eeo1survey/faq.cfm" rel="noopener noreferrer">EEOC FAQ</a>.
       </small>
     </label>
     Off
-    {{ui-checkbox
-      class="toggle"
-      label="On"
-      checked=this.model.collectEEO
-      onChange=(pipe-action (action (mut this.model.collectEEO)) (action "save"))}}
+    <UiCheckbox @class="toggle" @label="On" @checked={{this.model.collectEEO}} @onChange={{pipe (set this.model.collectEEO _) (fn this.data.saveRecord this.model)}} />
   </div>
 
   {{#if this.model.collectEEO}}
@@ -29,11 +25,7 @@
         </small>
       </label>
       Off
-      {{ui-checkbox
-        class="toggle"
-        label="On"
-        checked=this.model.collectAA
-        onChange=(pipe-action (action (mut this.model.collectAA)) (action "save"))}}
+      <UiCheckbox @class="toggle" @label="On" @checked={{this.model.collectAA}} @onChange={{pipe (set this.model.collectAA _) (fn this.data.saveRecord this.model)}} />
     </div>
   {{/if}}
 </div>

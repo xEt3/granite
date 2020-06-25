@@ -1,11 +1,10 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { or } from '@ember/object/computed';
 
-export default Component.extend({
-  tagName:           'img',
-  attributeBindings: [ 'src' ],
-  defaultUrl:        computed('employeeId', function () {
-    return this.get('employeeId') ? `/api/v1/employee/${this.get('employeeId')}/avatar` : 'https://www.gravatar.com/avatar/?f=y&d=mp';
-  }),
-  src: computed.or('url', 'defaultUrl')
-});
+export default class DisplayEmployeePictureComponent extends Component {
+  get defaultUrl () {
+    return this.args.employeeId ? `/api/v1/employee/${this.args.employeeId}/avatar` : 'https://www.gravatar.com/avatar/?f=y&d=mp';
+  }
+
+  @or('args.url', 'defaultUrl') src
+}

@@ -1,26 +1,24 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { action, set } from '@ember/object';
 
-export default Component.extend({
-  tagName:    'li',
-  classNames: [ 'tree-node' ],
-
-  didReceiveAttrs () {
-    this._super(...arguments);
+export default class XTreeChildrenComponent extends Component {
+  constructor () {
+    super(...arguments);
     this.recalculateState();
-  },
+  }
 
+  @action
   recalculateState () {
-    const children = this.get('model.children');
+    const children = this.args.model.children;
 
     if (children && children.length) {
       const lengthSelected = children.filterBy('isChecked', true).length;
-
-      this.set('model.isChecked', lengthSelected > 0);
-      this.set('model.isIndeterminate', lengthSelected > 0 && lengthSelected !== children.length);
+      set(this.args.model, 'isChecked', lengthSelected > 0);
+      set(this.args.model, 'isIndeterminate', lengthSelected > 0 && lengthSelected !== children.length);
     }
 
-    if (this.get('recalculateStateAction')) {
-      this.get('recalculateStateAction')();
+    if (this.args.recalculateStateAction) {
+      this.args.recalculateStateAction();
     }
   }
-});
+}

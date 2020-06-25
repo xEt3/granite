@@ -1,65 +1,75 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import Controller from 'granite/core/controller';
+import { computed, action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import ajaxStatus from 'granite/mixins/ajax-status';
 
-export default Controller.extend(ajaxStatus, {
-  ajax: service(),
+export default class SignupBillingController extends Controller {
+  @service ajax
+  @service data
 
-  loadingPromo: computed.and('applyingPromo', 'working'),
-  savingStep:   computed('applyingPromo', 'working', function () {
-    return !this.get('applyingPromo') && this.get('working');
-  }),
+  @tracked applyingPromo
+  @tracked appliedPromo
 
-  actions: {
-    async verifyDiscount () {
-      const code = this.get('promoCode');
+  @computed.and('applyingPromo', 'working') loadingPromo
 
-      if (!code) {
-        return;
-      }
+  get savingStep () {
+    return !this.applyingPromo && this.working;
+  }
 
-      this.set('applyingPromo', true);
-      this.ajaxStart();
+  get working () {
+    return this.data.statuses.working ? this.data.statuses.working.isLoading : false;
+  }
 
-      try {
-        var validity = await this.ajax.request('/api/v1/bt/discount', { data: { code } });
-      } catch (e) {
-        return this.ajaxError(e, true);
-      }
+  @action
+  async verifyDiscount () {
+    const code = this.promoCode;
 
-      if (!validity.code) {
-        this.analytics.trackEvent('Signup', 'promo_invalid', code);
-        return this.ajaxError('Unable to apply discount.', true);
-      }
+    if (!code) {
+      return;
+    }
 
-      this.analytics.trackEvent('Signup', 'promo_applied', validity.code);
+    this.applyingPromo = true;
+    let { success, error } = this.data.createStatus();
 
-      this.get('model').set('accountBillingPromo', validity.code);
-      this.set('appliedPromo', validity);
+    try {
+      var validity = await this.ajax.request('/api/v1/bt/discount', { data: { code } });
+    } catch (e) {
+      return error(e, true);
+    }
 
-      this.ajaxSuccess(null, true);
-    },
+    if (!validity.code) {
+      this.analytics.trackEvent('Signup', 'promo_invalid', code);
+      return error('Unable to apply discount.', true);
+    }
 
-    submit (nonce) {
-      const model = this.get('model');
+    this.analytics.trackEvent('Signup', 'promo_applied', validity.code);
 
-      this.ajaxStart();
+    this.model.accountBillingPromo = validity.code;
+    this.appliedPromo = validity;
 
-      model.save()
-      .then(company => {
-        var paymentMethod = this.store.createRecord('payment-method', {
-          nonce,
-          company
-        });
-        return paymentMethod.save();
-      })
-      .then(() => {
-        this.analytics.trackEvent('Signup', 'signup', model.name);
-        this.ajaxSuccess();
-        this.transitionToRoute('signup.finish');
-      })
-      .catch(this.ajaxError.bind(this));
+    success(null, true);
+  }
+
+  @action
+  async submit (nonce) {
+    const model = this.model;
+
+    let { success, error } = this.data.createStatus();
+
+    try {
+      let company = await model.save();
+
+      var paymentMethod = await this.store.createRecord('payment-method', {
+        nonce,
+        company
+      });
+      await paymentMethod.save();
+
+      this.analytics.trackEvent('Signup', 'signup', model.name);
+      success();
+      this.transitionToRoute('signup.finish');
+    } catch (e) {
+      error(e);
     }
   }
-});
+}

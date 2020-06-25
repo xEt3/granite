@@ -1,16 +1,13 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { A } from '@ember/array';
 import titleCase from 'granite/utils/title-case';
 
-export default Component.extend({
-  classNames: [ 'ui', 'breadcrumb' ],
-
-  segments: computed('currentPath', function () {
-    const path = this.get('currentPath'),
+export default class DisplayBreadCrumbsComponent extends Component {
+  get segments () {
+    const path = this.args.currentPath,
           pathSplit = path.split('.'),
           pathLength = pathSplit.length,
-          overrides = this.get('overrides');
+          overrides = this.args.overrides;
 
     let segments = A(),
         linkUntil;
@@ -59,5 +56,5 @@ export default Component.extend({
     }
 
     return segments;
-  })
-});
+  }
+}

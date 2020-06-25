@@ -1,0 +1,17 @@
+<div class="ui fluid card">
+  <div class="content">
+    <h3>
+      Employee record #{{x-inc @index}}
+      {{#if this.missingRequiredFields}}
+        <i class="exclamation circle icon text-red">
+          <EmberTooltip @side="right" @popperContainer="body" @text={{this.missingRequiredFields}} />
+        </i>
+      {{/if}}
+    </h3>
+    <ul>
+      {{#each-in @dryRunRecord as |key value|}}
+        <Census::DryRunEmployeeRelationship @key={{key}} @value={{value}} @availableFields={{@availableFields}} />
+      {{/each-in}}
+    </ul>
+  </div>
+</div>

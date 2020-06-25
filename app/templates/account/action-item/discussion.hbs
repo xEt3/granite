@@ -1,8 +1,8 @@
 <div class="ui very padded raised segment animated fadeInUp">
   <div class="ui comments">
-    <form class="ui reply form" {{action "comment" on="submit"}}>
+    <form class="ui reply form" {{on "submit" (prevent-default this.comment)}}>
       <div class="field">
-        {{input/comment-box value=this.commentText}}
+        <Input::CommentBox @value={{this.commentText}} />
       </div>
       <div class="field right aligned text">
         <button type="submit" class="ui blue right labeled submit icon button">
@@ -14,7 +14,7 @@
 
     <h3 class="ui dividing header">Comments</h3>
     {{#each this.model as |comment|}}
-      {{list-item/discussion-comment-item comment}}
+      <ListItem::DiscussionCommentItem @comment={{comment}} />
     {{else}}
       <h3 class="center aligned text header">No comments available.</h3>
     {{/each}}

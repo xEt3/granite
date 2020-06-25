@@ -1,0 +1,72 @@
+<div class="item action-item__checklist--item">
+  {{#if hasBlock}}
+    {{yield @todo}}
+  {{else}}
+    <div class="content">
+      {{#if @onStatusChange}}
+        <a href="#" {{on "click" (prevent-default (fn @onStatusChange @todo))}}><i class="{{if @todo.completedOn "checkmark box" "square outline"}} icon"></i></a>
+      {{else}}
+        <i class="{{if @todo.completedOn "checkmark box" "square outline"}} icon"></i>
+      {{/if}}
+      {{#if @todo.completedOn}}
+        <s>{{@todo.title}}</s>
+        <small class="meta">Completed by {{@todo.completedBy.firstName}} {{time-ago @todo.completedOn}} on {{time @todo.completedOn "M/D/YY [at] h:mma"}}</small>
+      {{else}}
+        {{@todo.title}}
+      {{/if}}
+      <small class="right floated meta">
+        {{#if @todo.assignedTo}}
+          <strong>Assigned</strong> to {{@todo.assignedTo.firstName}} by {{@todo.assignedBy.firstName}} {{time-ago @todo.assignedOn}}
+        {{else}}
+          No owner
+        {{/if}}
+
+        {{#if @onAssigneeChange}}
+          <a href="#" {{on "click" (prevent-default (pipe this.selectAssignee this.changeAssignee))}}><i class="setting icon"></i></a>
+        {{/if}}
+      </small>
+    </div>
+
+    <UiModal @id={{this.modalId}} @class="small form">
+      <i class="close icon"></i>
+      <div class="header">
+        <i class="setting icon"></i>Edit todo's assignee
+      </div>
+      <div class="content">
+        <div class="field">
+          {{#if @assignableTo}}
+            <UiDropdown @class="fluid search selection" @selected={{@todo.assignedTo}} @onChange={{set this.newAssignee _}} as |execute mapper|>
+              <i class="dropdown icon"></i>
+              <div class="default text">Select a new assignee</div>
+              <div class="menu">
+                <div class="item" data-value>
+                  No Assignee
+                </div>
+                {{#each @assignableTo as |item|}}
+                  <div class="item" data-value={{map-value mapper item}}>
+                    {{item.fullName}}
+                  </div>
+                {{/each}}
+              </div>
+            </UiDropdown>
+          {{else}}
+            <p>No assignees available.</p>
+          {{/if}}
+        </div>
+      </div>
+      <div class="actions">
+        <button class="ui red button" {{on "click" (fn this.respondAssignee false)}} type="button">
+          Cancel
+        </button>
+        <button class="ui primary right labeled icon button" {{on "click" (fn this.respondAssignee this.newAssignee)}} type="button">
+          {{#if this.newAssignee}}
+            Assign to {{this.newAssignee.fullName}}
+          {{else}}
+            Unassign
+          {{/if}}
+          <i class="check icon"></i>
+        </button>
+      </div>
+    </UiModal>
+  {{/if}}
+</div>

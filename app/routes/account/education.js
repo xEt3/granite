@@ -1,12 +1,13 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
 
-export default Route.extend({
-  titleToken: 'Education',
-  ajax:       service(),
+export default class EducationRoute extends Route {
+  titleToken = 'Education';
 
-  queryParams: { granularity: { refreshModel: true } },
+  @service ajax;
+
+  queryParams = { granularity: { refreshModel: true } };
 
   async model (params) {
     const range = params.granularity,
@@ -80,4 +81,4 @@ export default Route.extend({
       }
     };
   }
-});
+}

@@ -1,11 +1,14 @@
-import Component from '@ember/component';
+import classic from 'ember-classic-decorator';
+import { classNames, classNameBindings } from '@ember-decorators/component';
 import { computed } from '@ember/object';
+import Component from '@ember/component';
 
-export default Component.extend({
-  classNames:        [ 'sg__section', 'ui stacked segment' ],
-  classNameBindings: [ '_hidden:hidden' ],
-
-  _hidden: computed('focus', 'name', function () {
-    return this.get('focus') && this.get('focus') !== this.get('name');
-  })
-});
+@classic
+@classNames('sg__section', 'ui stacked segment')
+@classNameBindings('_hidden:hidden')
+export default class SgSection extends Component {
+  @computed('focus', 'name')
+  get _hidden () {
+    return this.focus && this.focus !== this.name;
+  }
+}

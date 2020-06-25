@@ -10,9 +10,9 @@
 
   <h2 class="ui clearfix header">
     {{#if (eq this.model.owner.id this.auth.user.employee.id)}}
-      {{#link-to "account.action-item.edit"}}
+      <LinkTo @route="account.action-item.edit">
         <i class="edit fitted icon"></i>
-      {{/link-to}}
+      </LinkTo>
     {{/if}}
     {{this.model.title}}
     <span class="right floated sub header project__sub-header">
@@ -42,7 +42,7 @@
 
     <div class="ui selection list action-item__prerequisites">
       {{#each this.model.prerequisites as |prework|}}
-        {{#link-to "account.action-item.index" prework class="item"}}
+        <LinkTo @route="account.action-item.index" @model={{prework}} class="item">
           <div class="header">
             {{prework.title}}
           </div>
@@ -55,7 +55,7 @@
               {{/each}}
             </div>
           {{/if}}
-        {{/link-to}}
+        </LinkTo>
       {{/each}}
     </div>
   {{/if}}
@@ -79,9 +79,9 @@
     </h3>
     <div class="ui selection list action-item__prerequisites">
       {{#each this.dependents as |dependent|}}
-        {{#link-to "account.action-item.index" dependent class="item"}}
+        <LinkTo @route="account.action-item.index" @model={{dependent}} class="item">
           <div class="header">{{dependent.title}}</div>
-        {{/link-to}}
+        </LinkTo>
       {{/each}}
     </div>
   {{/if}}

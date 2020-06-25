@@ -1,9 +1,12 @@
+import classic from 'ember-classic-decorator';
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 
-export default Service.extend({
-  store: service(),
-  auth:  service(),
+@classic
+export default class ActivityService extends Service {
+  @service store;
+
+  @service auth;
 
   create (data = {}) {
     let user = this.get('auth.user');
@@ -12,10 +15,10 @@ export default Service.extend({
     data.actorId = user.get('id');
     data.company = user.get('company');
 
-    let activity = this.get('store').createRecord('activity', data);
+    let activity = this.store.createRecord('activity', data);
     return activity.save();
   }
-});
+}
 
 /*
 Ember.Controller.extend({

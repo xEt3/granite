@@ -6,15 +6,12 @@
   <div class="right aligned text floated menu__actions">
     <h3 class="ui header">
       {{#liquid-if this.addingDepartment}}
-        {{#link-to "account.anatomy.departments.index" class="right floated text-danger"}}<i class="remove icon"></i>{{/link-to}}
+        <LinkTo @route="account.anatomy.departments.index" class="right floated text-danger"><i class="remove icon"></i></LinkTo>
       {{else}}
-        {{#link-to "account.anatomy.departments.index.new" class="right floated"}}
-          {{ember-tooltip
-            side="left"
-            popperContainer="body"
-            text="Add a department"}}
+        <LinkTo @route="account.anatomy.departments.index.new" class="right floated">
+          <EmberTooltip @side="left" @popperContainer="body" @text="Add a department" />
           <i class="plus icon"></i>
-        {{/link-to}}
+        </LinkTo>
       {{/liquid-if}}
     </h3>
   </div>
@@ -26,10 +23,10 @@
 
 <div class="ui divided items">
   {{#each this.model as |department|}}
-    {{list-item/department-item department=department onDelete=(action "delete" )}}
+    <ListItem::DepartmentItem @department={{department}} @onDelete={{this.data.deleteRecord}} />
   {{else}}
     <h2 class="ui center aligned header">No departments available.</h2>
   {{/each}}
 </div>
 
-{{elements/x-pagination page=(readonly this.page) pages=(readonly this.pages) onchange=(action (mut this.page))}}
+<Elements::XPagination @page={{this.page}} @model={{this.model}} @limit={{this.limit}} @onChange={{set this.page _}} />

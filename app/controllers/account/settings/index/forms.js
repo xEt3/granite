@@ -1,15 +1,16 @@
-import Controller from '@ember/controller';
-import del from 'granite/mixins/controller-abstractions/delete';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import Controller from 'granite/core/controller';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
-export default Controller.extend(del, addEdit, {
+export default class AccountSettingsFormsController extends Controller {
+  @service data
+
   _afterDelete () {
     this.send('refresh');
-  },
-
-  actions: {
-    onNotify (type, msg) {
-      this.send('notify', type, msg);
-    }
   }
-});
+
+  @action
+  onNotify (type, msg) {
+    this.data.notify(type, msg);
+  }
+}

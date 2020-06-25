@@ -1,60 +1,45 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { resolve } from 'rsvp';
-import fileSupport from 'granite/mixins/file-handling';
+import { fileHandling } from 'granite/core';
 
-const MessageThreadComponent = Component.extend(fileSupport, {
-  socket: service(),
-  auth:   service(),
-  store:  service(),
+@fileHandling
+export default class MessagingMessageThreadComponent extends Component {
+  @service socket
+  @service auth
+  @service store
+  @service data
+  @tracked message
 
-  classNames: [ 'messaging__thread' ],
+  dropzoneId = 'dropzone__input--messaging'
 
-  fileData: {
+  fileData = {
     systemUse:      true,
     associatedData: { type: 'messagingAttachment' }
-  },
-
-  sendMessage () {
-    resolve(this.get('fileIsAdded') ? this.upload() : null)
-    .then(file => {
-      this.get('onMessage')(this.get('message'), file);
-      this.set('message', null);
-      this.send('removeFile');
-    });
-  },
-
-  scrolledToTop () {
-    this.get('onScrollback')();
-  },
-
-  actions: {
-    removeFile () {
-      const $dropzone = Dropzone.forElement('.dropzone__messaging');
-
-      if (!$dropzone || !this.get('fileIsAdded')) {
-        return;
-      }
-
-      $dropzone.removeFile(this.get('fileIsAdded'));
-      this.set('fileIsAdded', false);
-    },
-
-    didRemoveFile () {
-      this.set('fileIsAdded', false);
-    },
-
-    uploadError (err) {
-      this.get('rejectUpload')(err);
-    },
-
-    // TODO: use uploadProgress
-    uploadProgressUpdate (prog) {
-      this.set('uploadProgress', prog);
-    }
   }
-});
 
-MessageThreadComponent.reopenClass({ positionalParams: [ 'messages', 'thread' ] });
+  @action
+  async sendMessage () {
+    let file = await resolve(this.files.fileIsAdded ? this.files.upload() : null);
+    this.args.onMessage(this.message, file);
+    this.message = null;
+    this.files.removeFile();
+  }
 
-export default MessageThreadComponent;
+  @action
+  scrolledToTop () {
+    this.args.onScrollback();
+  }
+
+  @action
+  uploadError (err) {
+    this.rejectUpload(err);
+  }
+
+  // TODO: use uploadProgress
+  uploadProgressUpdate (prog) {
+    this.uploadProgress = prog;
+  }
+}

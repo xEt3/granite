@@ -1,31 +1,29 @@
-import Route from '@ember/routing/route';
-import { hash } from 'rsvp';
 import { inject as service } from '@ember/service';
+import Route from 'granite/core/route';
 
-export default Route.extend({
-  auth: service(),
+export default class ListsRoute extends Route {
+  @service auth;
 
-  titleToken: 'Lists',
+  titleToken = 'Lists';
+  queryParams = { list: { refreshModel: true } };
 
-  queryParams: { list: { refreshModel: true } },
-
-  model (params) {
+  async model (params) {
     let list = [],
-        company = this.get('auth.user.company');
+        company = await this.auth.get('user.company');
 
     if (params.list === 'dqReasons') {
-      list = company.get('disqualificationReasons');
+      list = company.disqualificationReasons;
     }
 
     if (params.list === 'labels') {
-      list = company.get('labels');
+      list = company.labels;
     }
 
-    return hash({
+    return {
       list,
       company
-    });
-  },
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -33,4 +31,4 @@ export default Route.extend({
       company: model.company
     });
   }
-});
+}

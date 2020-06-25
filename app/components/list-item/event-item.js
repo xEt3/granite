@@ -1,20 +1,23 @@
-import { computed, get } from '@ember/object';
+import classic from 'ember-classic-decorator';
+import { classNames } from '@ember-decorators/component';
+import { get, computed } from '@ember/object';
 import { A } from '@ember/array';
 import BaseLiComponent from './base';
 
-export default BaseLiComponent.extend({
-  classNames: [ 'event' ],
-
-  attendeeCount: computed('model.{facilitator,attendees.[]}', function () {
+@classic
+@classNames('event')
+export default class EventItem extends BaseLiComponent {
+  @computed('model.{facilitator,attendees.[]}')
+  get attendeeCount () {
     const {
       attendees,
       facilitator,
       attendantId
-    } = this.get('model').getProperties('attendees', 'facilitator', 'attendantId');
+    } = this.model;
 
     const attendeesLength = get(attendees || [], 'length'),
           includeFacilator = facilitator && !(attendees || A()).findBy('id', facilitator.get('id'));
 
     return attendeesLength + (includeFacilator ? 1 : 0) + (attendantId ? 1 : 0) || 0;
-  })
-});
+  }
+}

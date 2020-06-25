@@ -1,6 +1,8 @@
+import classic from 'ember-classic-decorator';
 import Component from '@ember/component';
 
-const EventTimelineComponent = Component.extend({});
+@classic
+class EventTimelineComponent extends Component {}
 
 EventTimelineComponent.reopenClass({ positionalParams: [ 'events' ] });
 

@@ -1,0 +1,59 @@
+<div class="ui centered card">
+  <div class="content">
+    <div class="header">
+      {{@asset.identifier}}<i class="{{@asset.asset.icon}} icon right floated"></i>
+    </div>
+  </div>
+  <div class="content">
+    <h3 class="ui sub header">
+      Activity
+    </h3>
+    <div class="ui small feed">
+      <div class="event">
+        <div class="content">
+          <div class="summary">
+            {{#if this.assignment.assigner}}
+              <LinkTo @route="account.employee" @model={{this.assignment.assigner.employee.id}}>
+                {{this.assignment.assigner.fullName}}
+              </LinkTo>
+              assigned
+            {{else}}
+              Assigned
+            {{/if}}
+            from
+            <LinkTo @route="account.asset" @model={{@asset.asset.id}}>
+              {{@asset.asset.name}}
+            </LinkTo>
+            on {{time @asset.created}}
+          </div>
+        </div>
+      </div>
+      {{#if this.attributes.length}}
+        <a href="#" {{on "click" (prevent-default (toggle "details" this))}}>
+          <EmberTooltip @side="right" @popperContainer="body" @text="View attributes" />
+          <i class="info circle icon"></i>
+        </a>
+      {{/if}}
+      {{#if this.attributes.length}}
+        {{#liquid-if this.details}}
+          <div class="ui segment">
+            {{#each this.attributes as |attr|}}
+              <div class="line-item-value">
+                <i>{{attr.key}}</i>
+                <u>
+                  {{attr.value}}
+                </u>
+              </div>
+            {{/each}}
+          </div>
+        {{/liquid-if}}
+      {{/if}}
+    </div>
+  </div>
+  <ConfirmModal @confirmContent="Are you sure you want to unassign this item and return it to your stock?" as |confirm|>
+    <button class="ui bottom attached fluid button" role="button" {{on "click" (pipe confirm (fn @onUnassign @asset))}} type="button">
+      <i class="remove user icon"></i>
+      Unassign asset
+    </button>
+  </ConfirmModal>
+</div>

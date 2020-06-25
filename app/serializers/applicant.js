@@ -1,14 +1,16 @@
+import classic from 'ember-classic-decorator';
 import ApplicationSerializer from './application';
 import normalizeKeys from '../utils/serialize-object';
 
-export default ApplicationSerializer.extend({
+@classic
+export default class Applicant extends ApplicationSerializer {
   normalize (modelClass, hash) {
     normalizeKeys(hash, 'suffix', 'name');
-    return this._super(...arguments);
-  },
+    return super.normalize(...arguments);
+  }
 
   serialize () {
-    let json = this._super(...arguments),
+    let json = super.serialize(...arguments),
         deleteKeys = [ 'firstName', 'middleName', 'lastName', 'suffixName' ];
 
     json.name = {
@@ -22,4 +24,4 @@ export default ApplicationSerializer.extend({
 
     return json;
   }
-});
+}

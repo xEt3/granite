@@ -1,0 +1,7 @@
+<LinkTo @route="account.employee" @model={{this.participant}} class="ui image label">
+  <Display::EmployeePicture @url={{this.participant.picture}} @employeeId={{this.participant.id}} />
+  {{this.participant.fullName}}
+  {{#if (eq this.participant.id this.owner.id)}}
+    <div class="detail">Owner</div>
+  {{/if}}
+</LinkTo>

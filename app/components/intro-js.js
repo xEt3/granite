@@ -1,10 +1,8 @@
-/* eslint-disable ember/closure-actions,ember/no-on-calls-in-components */
 // From https://github.com/thefrontside/ember-introjs since CLI install is broken
-import Component from '@ember/component';
-import { computed, observer } from '@ember/object';
+import Component from '@glimmer/component';
+import { computed, action } from '@ember/object';
 import { run, bind } from '@ember/runloop';
 import { camelize, underscore } from '@ember/string';
-import { on } from '@ember/object/evented';
 import { A } from '@ember/array';
 import ENV from 'granite/config/environment';
 
@@ -31,11 +29,20 @@ var INTRO_JS_OPTIONS = [
   'disable-interaction'
 ];
 
-var IntroJSComponent = Component.extend({
-  /* eslint-disable-next-line */
-  setupIntroJS: observer('start-if', function () {
+// @classic
+export default class IntroJSComponent extends Component {
+  @action
+  didInsert () {
     run.scheduleOnce('afterRender', this, this.startIntroJS);
-  }).on('didInsertElement'),
+  }
+
+  @action
+  didUpdateAttrs () {
+    if (this.args['start-if'] !== this.shouldStart) {
+      this.shouldStart = this.args['start-if'];
+      run.scheduleOnce('afterRender', this, this.startIntroJS);
+    }
+  }
 
   /**
    * Options passed to IntroJS. You can specify the options when using the
@@ -70,7 +77,8 @@ var IntroJSComponent = Component.extend({
    *
    * @property
   */
-  introJSOptions: computed(
+
+  @computed(
     'next-label',
     'prev-label',
     'skip-label',
@@ -88,40 +96,41 @@ var IntroJSComponent = Component.extend({
     'scroll-to-element',
     'overlay-opacity',
     'disable-interaction',
-    'steps',
-    function () {
-      var option, normalizedName, value, options = {};
+    'steps'
+  )
+  get introJSOptions () {
+    var option, normalizedName, value, options = {};
 
-      for (var i = 0; i < INTRO_JS_OPTIONS.length; i++) {
-        option = INTRO_JS_OPTIONS[i];
-        normalizedName = camelize(underscore(option));
-        value = this.get(option);
+    for (var i = 0; i < INTRO_JS_OPTIONS.length; i++) {
+      option = INTRO_JS_OPTIONS[i];
+      normalizedName = camelize(underscore(option));
+      value = this.option;
 
-        if (value !== null && value !== undefined) {
-          options[normalizedName] = value;
-        }
+      if (value !== null && value !== undefined) {
+        options[normalizedName] = value;
       }
-
-      options.steps = this.get('steps');
-      return options;
     }
-  ),
 
-  startIntroJS: function () {
+    options.steps = this.args.steps;
+    return options;
+  }
+
+  @action
+  startIntroJS () {
     if (ENV.environment === 'test') {
       return;
     }
 
     var intro,
-        options = this.get('introJSOptions');
+        options = this.introJSOptions;
 
-    if (!this.get('introJS')) {
+    if (!this.introJS) {
       this._setIntroJS(introJS());
     }
 
-    intro = this.get('introJS');
+    intro = this.introJS;
 
-    if (this.get('start-if')) {
+    if (this.args['start-if']) {
       intro.setOptions(options);
       this.registerCallbacksWithIntroJS();
       this._setCurrentStep(0);
@@ -131,58 +140,72 @@ var IntroJSComponent = Component.extend({
       intro.exit();
       this._setIntroJS(null);
     }
-  },
+  }
 
-  registerCallbacksWithIntroJS: function () {
-    var intro = this.get('introJS');
+  @action
+  registerCallbacksWithIntroJS () {
+    var intro = this.introJS;
 
     intro.onbeforechange(bind(this, function (elementOfNewStep) {
-      var prevStep = this.get('currentStep');
-      this._setCurrentStep(this.get('introJS._currentStep'));
-      var nextStep = this.get('currentStep');
+      var prevStep = this.currentStep;
+      this._setCurrentStep(this.introJS._currentStep);
+      var nextStep = this.currentStep;
 
-      this.sendAction('on-before-change', prevStep, nextStep, this, elementOfNewStep);
+      if (this.args['on-before-change']) {
+        this['on-before-change'](prevStep, nextStep, this, elementOfNewStep);
+      }
     }));
 
     intro.onchange(bind(this, function (targetElement) {
-      this.sendAction('on-change', this.get('currentStep'), this, targetElement);
+      if (this.args['on-change']) {
+        this.args['on-change'](this.currentStep, this, targetElement);
+      }
     }));
 
     intro.onafterchange(bind(this, this._onAfterChange));
 
     intro.oncomplete(bind(this, function () {
-      this.sendAction('on-complete', this.get('currentStep'));
+      if (this.args['on-complete']) {
+        this.args['on-complete'](this.currentStep);
+      }
     }));
 
     intro.onexit(bind(this, this._onExit));
-  },
+  }
 
-  _setIntroJS: function (intJS) {
-    this.set('introJS', intJS);
-  },
+  @action
+  _setIntroJS (intJS) {
+    this.introJS = intJS;
+  }
 
-  _onAfterChange: function (targetElement) {
-    this.sendAction('on-after-change', this.get('currentStep'), this, targetElement);
-  },
+  @action
+  _onAfterChange (targetElement) {
+    if (this.args['on-after-change']) {
+      this.args['on-after-change'](this.currentStep, this, targetElement);
+    }
+  }
 
-  _onExit: function () {
+  @action
+  _onExit () {
     if (!this || this.isDestroying || this.isDestroyed) {
       return;
     }
-    this.sendAction('on-exit', this.get('currentStep'), this);
-  },
+    if (this.args['on-exit']) {
+      this.args['on-exit'](this.currentStep, this);
+    }
+  }
 
-  exitIntroJS: on('willDestroyElement', function () {
-    var intro = this.get('introJS');
+  @action
+  exitIntroJS () {
+    var intro = this.introJS;
     if (intro) {
       intro.exit();
     }
-  }),
-
-  _setCurrentStep: function (step) {
-    var stepObject = A(this.get('steps')).objectAt(step);
-    this.set('currentStep', stepObject);
   }
-});
 
-export default IntroJSComponent;
+  @action
+  _setCurrentStep (step) {
+    var stepObject = A(this.args.steps).objectAt(step);
+    this.currentStep = stepObject;
+  }
+}

@@ -1,0 +1,140 @@
+{{#let (element (if @tagName @tagName "div")) as |Tag|}}
+  <Tag class="field {{this.computedClassName}} {{@field.parentClass}}" ...attributes>
+    {{#if (not (and (not @field.showLabel) (or (eq @field.type "checkbox") (eq @field.type "toggle"))))}}
+      <label for={{this.computedClassName}} class={{@field.labelClass}}>
+        {{@field.label}}
+        {{#if (and @field.helpText @field.indirectHelp)}}
+          <i class="help circle icon">
+            <EmberTooltip
+              @side="right"
+              @popperContainer="body"
+              @text={{@field.helpText}}/>
+          </i>
+        {{/if}}
+
+        {{#if @field.helpLink}}
+          <LinkTo @route={{@field.helpLink}} class="quick-form__help-text right floated">
+            {{@field.helpText}}
+          </LinkTo>
+        {{/if}}
+      </label>
+
+      {{#if (and (not @field.helpLink) @field.helpText (not @field.indirectHelp))}}
+        <p class="quick-form__help-text">{{@field.helpText}}</p>
+      {{/if}}
+    {{/if}}
+
+    {{#if (eq @field.type "select")}}
+      <UiDropdown
+        @id={{this.computedClassName}}
+        @class={{this.inputClass}}
+        @selected={{readonly (get @model @field.path)}}
+        @forceSelection={{false}}
+        @allowAdditions={{if @field.inputAttrs.allowAdditions true false}}
+        @onChange={{set this.value _}}
+        as |execute mapper|>
+        <div class="default text">
+          {{#if @field.selectText}}
+            {{@field.selectText}}
+          {{else}}
+            --Select--
+          {{/if}}
+        </div>
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          {{#each (get this @field.contentPath) as |item|}}
+            <div class="item" data-value={{map-value mapper (if @field.valuePath (get item @field.valuePath) item)}}>
+              {{#if @field.displayKey}}
+                {{get item @field.displayKey}}
+              {{else}}
+                {{item}}
+              {{/if}}
+            </div>
+          {{/each}}
+        </div>
+      </UiDropdown>
+    {{else if (eq @field.type "textarea")}}
+      <Textarea
+        @value={{this.value}}
+        @id={{this.computedClassName}}
+        @rows={{this.rows}}
+        @placeholder={{or @field.placeholder @field.label}}
+        @spellcheck="true"/>
+    {{else if (eq @field.type "richtext")}}
+      <Input::RichText
+        @value={{this.initialValue}}
+        @onChange={{set this.value _}}/>
+    {{else if (or (eq @field.type "checkbox") (eq @field.type "toggle"))}}
+      <UiCheckbox
+        @id={{this.computedClassName}}
+        @class={{this.inputClass}}
+        @label={{or @field.placeholder @field.label}}
+        @checked={{readonly this.value}}
+        @onChange={{set this.value _}}/>
+    {{else if (eq @field.type "date")}}
+      {{#if @field.inputAttrs.inline}}
+        <UiCalendar
+          @class={{this.inputClass}} @type="date" @inline={{true}} @onChange={{set this.value _}}/>
+      {{else}}
+        <UiCalendar
+          @type="date"
+          @class={{this.inputClass}}
+          @dateValue={{this.initialValue}}
+          @onChange={{set this.value _}}/>
+      {{/if}}
+    {{else if (eq @field.type "radio")}}
+      <div class="{{if @field.inputAttrs.inline "inline" "grouped"}} fields">
+        {{#each (get this @field.contentPath) as |item|}}
+          <div class="field">
+            <UiRadio
+              @name={{this.computedClassName}}
+              @label={{if @field.displayKey (get item @field.displayKey) item}}
+              @value={{item}}
+              @current={{this.value}}
+              @onChange={{set this.value _}}/>
+          </div>
+        {{/each}}
+      </div>
+    {{else if (eq @field.type "file")}}
+      <Input::DocumentSelectionModal
+        @title={{or @field.placeholder @field.label}}
+        @selected={{this.value}}
+        @assignText="Use Document"
+        @singleDoc={{@field.singleDoc}}
+        @autoTag={{@field.autoTag}}
+        @onSelected={{set this.value _}}
+        as |execute|
+      >
+        <button class="ui basic button" {{on "click" (fn execute "selectDocuments")}} type="button">
+          <i class="folder icon"></i>
+          {{or @field.buttonText @field.label}}
+          {{#if this.value}}
+            <span class="ui label">{{this.value.title}}</span>
+          {{/if}}
+        </button>
+      </Input::DocumentSelectionModal>
+    {{else if (eq @field.type "color")}}
+      {{#if this.color.length}}
+        <ColorPicker
+          @components={{this.colorPickerComponents}}
+          @comparison={{false}}
+          @value={{this.color}}
+          @onChange={{this.handleOnChange}}/>
+        <span class="ui small text">(Pick a color)</span>
+      {{/if}}
+    {{else}}
+      <ValidatedInput
+        @type={{@field.type}}
+        @model={{@model}}
+        @valuePath={{@field.path}}
+        @placeholder={{or @field.placeholder @field.label}}
+        @inputAttrs={{@field.inputAttrs}}
+        id={{this.computedClassName}}
+        @inputClass={{this.inputClass}}/>
+    {{/if}}
+
+    {{#if hasBlock}}
+      {{yield}}
+    {{/if}}
+  </Tag>
+{{/let}}

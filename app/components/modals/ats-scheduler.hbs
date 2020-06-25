@@ -1,0 +1,72 @@
+<UiModal @id={{or @modalId this.modalId}} @observeChanges={{true}} @context=".ember-application">
+  <i class="close icon"></i>
+  <div class="header">
+    Schedule a meeting with {{@model.person.firstName}}<br />
+    <small class="text-yellow">
+      <strong>{{@model.person.firstName}} {{if @meeting.skipAttendeeNotification "will not" "will"}} be notified of this meeting</strong>
+    </small>
+  </div>
+  <div class="content ui form">
+    <Input::DateRange @onStartChange={{set @meeting.start _}} @onEndChange={{set @meeting.end _}} />
+    <div class="ui divider"></div>
+    <Input::UiInput @type="text" @inputId="meeting-title" @placeholder="Meeting Title" @value={{@meeting.title}} />
+
+    <div class="ui divider"></div>
+
+    <div class="ui two column grid">
+      <div class="ui field column">
+        <label for="meeting-organizer">Organizer</label>
+        <UiDropdown @class="fluid search selection" @id="meeting-organizer" @selected={{@meeting.organizer}} @onChange={{set @meeting.organizer _}} as |execute mapper|>
+          <i class="dropdown icon"></i>
+          <div class="default text">Meeting Organizer</div>
+          <div class="menu">
+            {{#each @availableOrganizers as |organizer|}}
+              <div class="item" data-value={{map-value mapper organizer}}>
+                {{organizer.fullName}}
+              </div>
+            {{/each}}
+          </div>
+        </UiDropdown>
+      </div>
+      <div class="ui field column">
+        <label for="meeting-facilitator">Facilitator</label>
+        <UiDropdown @class="fluid search selection" @id="meeting-facilitator" @selected={{@meeting.facilitator}} @onChange={{set @meeting.facilitator _}} as |execute mapper|>
+          <i class="dropdown icon"></i>
+          <div class="default text">Meeting Facilitator</div>
+          <div class="menu">
+            {{#each @availableOrganizers as |facilitator|}}
+              <div class="item" data-value={{map-value mapper facilitator}}>
+                {{facilitator.fullName}}
+              </div>
+            {{/each}}
+          </div>
+        </UiDropdown>
+      </div>
+    </div>
+    <div class="field">
+      <label for="meeting-attendees">Additional Attendees</label>
+      <UiDropdown @class="fluid multiple search selection" @id="meeting-attendees" @selected={{@meeting.attendees}} @forceSelection={{false}} @onChange={{set @meeting.attendees _}} as |execute mapper|>
+        <i class="dropdown icon"></i>
+        <div class="default text">Additional Attendees</div>
+        <div class="menu">
+          {{#each @availableOrganizers as |attendee|}}
+            <div class="item" data-value={{map-value mapper attendee}}>
+              {{attendee.fullName}}
+            </div>
+          {{/each}}
+        </div>
+      </UiDropdown>
+    </div>
+  </div>
+  <div class="actions">
+    <UiCheckbox @class="left floated toggle" @label="Do not notify applicant" @checked={{@meeting.skipAttendeeNotification}} @onChange={{set @meeting.skipAttendeeNotification _}} />
+
+    <button type="button" class="ui inverted red button" {{on "click" (fn this.respond false)}}>
+      Cancel
+    </button>
+    <button type="button" class="ui green right labeled icon button" {{on "click" (fn this.respond @meeting)}} disabled={{if (and @meeting.start @meeting.end @meeting.title) false true}}>
+      Schedule
+      <i class="check icon"></i>
+    </button>
+  </div>
+</UiModal>

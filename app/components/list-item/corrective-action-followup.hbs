@@ -1,0 +1,32 @@
+<div class="item">
+  {{#if hasBlock}}
+    {{yield @model this.isExpanded}}
+  {{else}}
+    <div class="content clearfix">
+      <div class="header {{if @model.didResolve "text-green" "light text"}}">
+
+        <i class="{{if @model.didResolve "check" "ellipsis horizontal"}} icon">
+          <EmberTooltip @side="right" @popperContainer="body">
+            {{if @model.didResolve "This follow up marked the issue as resolved." "This follow up did not resolve the issue."}}
+          </EmberTooltip>
+        </i>
+
+        {{time @model.created "MMMM Do YYYY"}}
+        {{#if @model.creator}}
+          by {{@model.creator.firstName}}
+        {{/if}}
+      </div>
+
+      {{#if @model.notes}}
+        <a href="#" class="right floated" {{on "click" (prevent-default (toggle "isExpanded" this))}}>
+          <EmberTooltip @side="left" @popperContainer="body" @text="Toggle notes" />
+          <i class="eye {{if this.isExpanded "slash"}} icon"></i>
+        </a>
+      {{/if}}
+
+      {{#liquid-if this.isExpanded class="meta"}}
+        <p>{{long-text @model.notes}}</p>
+      {{/liquid-if}}
+    </div>
+  {{/if}}
+</div>

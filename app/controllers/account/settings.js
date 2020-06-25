@@ -1,3 +1,3 @@
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
 
-export default Controller.extend({});
+export default class AccountSettingsController extends Controller {}

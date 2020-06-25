@@ -1,12 +1,8 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName:           'tr',
-  classNameBindings: [ 'isInvalid:census__highlight-row' ],
-
-  isInvalid: computed('validation.[]', function () {
-    let v = this.get('validation');
+export default class TableRow extends Component {
+  get isInvalid () {
+    let v = this.args.validation;
     return v && v.some((cell = {}) => cell.invalid);
-  })
-});
+  }
+}

@@ -1,0 +1,25 @@
+<UiModal @id={{this.modalId}} @observeChanges={{true}}>
+  <i class="close icon"></i>
+  <div class="header">
+    Update Payment Method
+  </div>
+  <div class="content">
+    {{#if @braintreeToken}}
+      <BraintreeDropin @braintreeOptions={{hash
+        paypal=(hash flow="vault")}} @authorization={{@braintreeToken.token}} @onNonce={{action (mut this.nonce)}} />
+    {{else}}
+      <div class="ui active inverted dimmer">
+        <div class="ui text loader">Loading</div>
+      </div>
+    {{/if}}
+    <p class="right aligned very small text"><i class="lock icon"></i>Powered by Braintree Payments</p>
+  </div>
+  <div class="actions">
+    <button class="ui button" type="button" {{on "click" (prevent-default (action "closeModal"))}}>
+      Cancel
+    </button>
+    <button class="ui green button" disabled={{or (not this.nonce) @working}} type="button" {{on "click" (prevent-default (fn (action "respond") this.nonce))}}>
+      Save New Payment Method
+    </button>
+  </div>
+</UiModal>

@@ -1,0 +1,19 @@
+<li class="tree-node">
+  {{#if hasBlock}}
+    <XTreeNode @select={{@select}} @hover={{@hover}} @hoverOut={{@hoverOut}} @checkable={{@checkable}} @chosenId={{@chosenId}} @recalculateStateAction={{this.recalculateState}} @model={{@model}} as |node|>
+      {{yield node}}
+    </XTreeNode>
+
+    {{#if @model.isExpanded}}
+      <XTreeBranch @select={{@select}} @hover={{@hover}} @hoverOut={{@hoverOut}} @checkable={{@checkable}} @chosenId={{@chosenId}} @recalculateStateAction={{this.recalculateState}} @model={{@model.children}} as |node|>
+        {{yield node}}
+      </XTreeBranch>
+    {{/if}}
+  {{else}}
+    <XTreeNode @model={{@model}} @select={{@select}} @hover={{@hover}} @hoverOut={{@hoverOut}} @checkable={{@checkable}} @syncCheckbox={{@syncCheckbox}} @recalculateStateAction={{this.recalculateState}} @chosenId={{@chosenId}} />
+
+    {{#if @model.isExpanded}}
+      <XTreeBranch @model={{@model.children}} @select={{@select}} @hover={{@hover}} @hoverOut={{@hoverOut}} @checkable={{@checkable}} @syncCheckbox={{@syncCheckbox}} @recalculateStateAction={{this.recalculateState}} @chosenId={{@chosenId}} />
+    {{/if}}
+  {{/if}}
+</li>

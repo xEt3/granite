@@ -1,0 +1,65 @@
+<div ...attributes>
+  <strong>{{@model.file.title}} ({{@model.file.extension}})</strong>
+
+  <div class="ui mini form right floated">
+    {{#if this.isPendingState}}
+      <div class="ui mini active inline loader"></div> Saving...
+    {{else}}
+      <div class="small field">
+        <UiCheckbox
+          @class="small"
+          @checked={{@model.visibleToEmployee}}
+          @onChange={{
+            pipe
+              (set @model.visibleToEmployee _)
+              this.checkBoxDisplay
+              (if @onChange (fn @onChange @model))
+          }}
+        >
+          <label>
+            Visible To Employee
+          </label>
+        </UiCheckbox>
+      </div>
+      {{#if @model.visibleToEmployee}}
+        <div class="small field">
+          <UiCheckbox
+            @class="small"
+            @disabled={{not @model.visibleToEmployee}}
+            @checked={{@model.signatureRequired}}
+            @onChange={{
+              pipe
+                (set @model.signatureRequired _)
+                (if @onChange (fn @onChange @model))
+            }}
+          >
+            <label>
+              Require Signature
+            </label>
+          </UiCheckbox>
+        </div>
+        <div class="small field">
+          <UiCheckbox
+            @class="small"
+            @label="Assign For A Future Date"
+            @checked={{this.isExpanded}}
+            @onChange={{toggle "isExpanded" this}}/>
+        </div>
+        {{#if this.isExpanded}}
+          <UiCalendar
+            @class="field"
+            @type="date"
+            @dateValue={{@model.effectiveOn}}
+            @onChange={{
+              pipe
+              (set @model.effectiveOn _)
+              (if @onChange (fn @onChange @model))
+            }}/>
+        {{/if}}
+      {{/if}}
+    {{/if}}
+  </div>
+  <div class="small text">
+    <a href="#" class="text-danger" {{on "click" (prevent-default (fn @onRemove @model))}}><i class="minus icon"></i>Remove Assignment</a>
+  </div>
+</div>

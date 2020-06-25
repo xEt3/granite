@@ -143,7 +143,7 @@ module('Acceptance | signup', function (hooks) {
     Object.keys(fieldMap).forEach(key =>
       assert.equal(model.get(key), fakeData[key], `model.${key} is "${fakeData[key]}" after fillIn`));
 
-    controller.set('fieldErrors', { urlPrefix: 'URL Prefix "abc" has already been taken.' });
+    controller.set('fieldErrors', { urlPrefix: 'URL Prefix "abc" has already been used.' });
 
     await settled();
     assert.dom('#url-prefix input + .check').doesNotExist();

@@ -1,9 +1,9 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({
-  titleToken: 'Recover Account',
+export default class RecoverRoute extends Route {
+  titleToken = 'Recover Account'
 
   model (params) {
     return params.recovery_id;
   }
-});
+}

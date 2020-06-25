@@ -19,10 +19,10 @@
       {{/if}}
       <div class="ui clearing stackable three column grid">
         {{#each this.steps as |step|}}
-          {{display/first-steps
-            step
-            completed=(contains step.key this.model.company.firstStepsCompleted)
-          }}
+          <Display::FirstSteps
+            @step={{step}}
+            @completed={{contains step.key this.model.company.firstStepsCompleted}}
+          />
         {{/each}}
       </div>
     </div>

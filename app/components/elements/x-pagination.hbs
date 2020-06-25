@@ -1,0 +1,23 @@
+<div class="ui right floated pagination menu" ...attributes>
+  <a href="#" class="icon item {{if this.onFirstPage "disabled"}}" {{on "click" (prevent-default (fn @onChange this.previousSkipPage))}}>
+    <i class="left double angle icon"></i>
+  </a>
+
+  <a href="#" class="icon item {{if this.onFirstPage "disabled"}}" {{on "click" (prevent-default (fn @onChange this.previousPage))}}>
+    <i class="left angle icon"></i>
+  </a>
+
+  {{#each this.buttons as |page|}}
+    <a href="#" class="item {{if page.active "active"}}" {{on "click" (prevent-default (fn @onChange page.n))}}>
+      <span>{{page.n}}</span>
+    </a>
+  {{/each}}
+
+  <a href="#" class="icon item {{if this.onLastPage "disabled"}}" {{on "click" (prevent-default (fn @onChange this.nextPage))}}>
+    <i class="right angle icon"></i>
+  </a>
+
+  <a href="#" class="icon item {{if this.onLastPage "disabled"}}" {{on "click" (prevent-default (fn @onChange this.nextSkipPage))}}>
+    <i class="right double angle icon"></i>
+  </a>
+</div>

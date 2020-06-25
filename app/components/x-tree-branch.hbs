@@ -1,0 +1,13 @@
+<ul class="tree-branch">
+  {{#each @model as |child|}}
+    {{#if child.isVisible}}
+      {{#if hasBlock}}
+        <XTreeChildren @select={{@select}} @hover={{@hover}} @hoverOut={{@hoverOut}} @checkable={{@checkable}} @chosenId={{@chosenId}} @recalculateStateAction={{@recalculateState}} @model={{child}} as |node|>
+          {{yield node}}
+        </XTreeChildren>
+      {{else}}
+        <XTreeChildren @model={{child}} @select={{@select}} @hover={{@hover}} @hoverOut={{@hoverOut}} @checkable={{@checkable}} @recalculateStateAction={{@recalculateState}} @chosenId={{@chosenId}} />
+      {{/if}}
+    {{/if}}
+  {{/each}}
+</ul>

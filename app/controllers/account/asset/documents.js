@@ -1,14 +1,15 @@
-import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import Controller from 'granite/core/controller';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
-export default Controller.extend(addEdit, {
+export default class AccountAssetDocumentsController extends Controller {
+  @service data
 
-  actions: {
-    removeDocument (doc) {
-      let model = this.get('model');
+  @action
+  removeDocument (doc) {
+    let model = this.model;
 
-      model.get('documents').removeObject(doc);
-      this.send('save', model);
-    }
+    model.documents.removeObject(doc);
+    this.data.saveRecord(model);
   }
-});
+}

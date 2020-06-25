@@ -1,31 +1,30 @@
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import ajaxStatus from 'granite/mixins/ajax-status';
-import pagination from 'granite/mixins/controller-abstractions/pagination';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { tracked } from '@glimmer/tracking';
 
-export default Controller.extend(ajaxStatus, pagination, addEdit, {
-  auth: service(),
+export default class AccountDocumentsController extends Controller {
+  @service auth
+  @service data
+  @tracked tags = null
+  @tracked extension = null
 
-  queryParams:  [ 'page', 'asc', 'sortProp', 'tags', 'extension' ],
-  tags:         null,
-  extension:    null,
-  limit:        20,
-  page:         1,
-  asc:          true,
-  sortProp:     'created',
-  enableNotify: true,
+  queryParams = [ 'page', 'asc', 'sortProp', 'tags', 'extension' ]
+  limit = 20
+  page = 1
+  asc = true
+  sortProp = 'created'
 
-  actions: {
-    updateFilter (filter, value) {
-      this.set(filter, value);
-    },
-
-    resetFilters () {
-      this.setProperties({
-        tags:      null,
-        extension: null
-      });
-    }
+  @action
+  updateFilter (filter, value) {
+    this.filter = value;
   }
-});
+
+  @action
+  resetFilters () {
+    this.setProperties({
+      tags:      null,
+      extension: null
+    });
+  }
+}

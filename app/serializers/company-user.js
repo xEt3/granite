@@ -1,9 +1,11 @@
+import classic from 'ember-classic-decorator';
 import ApplicationSerializer from './application';
 
-export default ApplicationSerializer.extend({
+@classic
+export default class CompanyUser extends ApplicationSerializer {
   normalize (modelClass, hash) {
     if (modelClass.modelName !== 'company-user') {
-      return this._super(...arguments);
+      return super.normalize(...arguments);
     }
 
     if (hash.name) {
@@ -14,11 +16,11 @@ export default ApplicationSerializer.extend({
       delete hash.name;
     }
 
-    return this._super(...arguments);
-  },
+    return super.normalize(...arguments);
+  }
 
   serialize (snapshot, options) {
-    var json = this._super(snapshot, options);
+    var json = super.serialize(snapshot, options);
 
     json.name = {
       first:  json.firstName,
@@ -32,4 +34,4 @@ export default ApplicationSerializer.extend({
 
     return json;
   }
-});
+}

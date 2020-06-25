@@ -1,27 +1,26 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import { hash } from 'rsvp';
-import refreshable from 'granite/mixins/refreshable';
 
-export default Route.extend(refreshable, {
-  titleToken:  'Users',
-  auth:        service(),
-  ajax:        service(),
-  queryParams: { page: { refreshModel: true } },
+export default class AccountAnatomyCompanyUsersRoute extends Route {
+  @service auth
+  @service ajax
+  titleToken = 'Users'
 
-  model (params) {
+  queryParams = { page: { refreshModel: true } }
+
+  async model (params) {
     let limit = 10,
         page = (params.page || 1) - 1;
 
-    return hash({
-      allUsers:     this.ajax.request('/api/v1/company-users', { data: { inactive: { $ne: true } } }),
-      limitedUsers: this.store.query('company-user', {
+    return {
+      allUsers:     await this.ajax.request('/api/v1/company-users', { data: { inactive: { $ne: true } } }),
+      limitedUsers: await this.store.query('company-user', {
         page,
         limit,
-        _id: { $ne: this.get('auth.user.id') }
+        _id: { $ne: this.auth.get('user.id') }
       })
-    });
-  },
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -29,4 +28,4 @@ export default Route.extend(refreshable, {
       allUsers: model.allUsers.companyUser
     });
   }
-});
+}

@@ -1,21 +1,20 @@
-import Route from '@ember/routing/route';
-import resource from 'granite/mixins/route-abstractions/resource';
+import { GraniteResourceRoute } from 'granite/core/route';
 
-export default Route.extend(resource, {
-  modelName: 'form-response',
+export default class AccountEmployeesFormsResponsesRoute extends GraniteResourceRoute {
+  modelName = 'form-response'
 
   titleToken (model) {
     return `Responses for ${model.form.name}`;
-  },
+  }
 
   async model ({ form_id }) {
     this.set('query', { form: form_id });
-    const responses = await this._super(...arguments);
+    const responses = await super.model(...arguments);
     return {
       responses,
       form: await this.store.find('form', form_id)
     };
-  },
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -23,4 +22,4 @@ export default Route.extend(resource, {
       form:  model.form
     });
   }
-});
+}

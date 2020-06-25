@@ -1,11 +1,10 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/string';
 
-export default Component.extend({
-  missingRequiredFields: computed('dryRunRecord', 'availableFields', function () {
-    const availableFields = this.get('availableFields'),
-          dryRunRecord = this.get('dryRunRecord');
+export default class LIstItemDryRunEmployee extends Component {
+  get missingRequiredFields () {
+    const availableFields = this.args.availableFields,
+          dryRunRecord = this.args.dryRunRecord;
 
     let missingFields = availableFields.reduce((missingField, field) => {
       let [ path, nestedPath ] = field.path.split('.'),
@@ -20,5 +19,5 @@ export default Component.extend({
     }, []);
 
     return missingFields.length ? htmlSafe(`Required field${missingFields.length > 1 ? 's are' : ' is'} missing: ${missingFields.join(', ')}`) : null;
-  })
-});
+  }
+}

@@ -1,18 +1,14 @@
-import Component from '@ember/component';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-import del from 'granite/mixins/controller-abstractions/delete';
+import Component from '@glimmer/component';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 
-export default Component.extend(del, addEdit, {
-  classNames:   [ 'history__timeline-item', 'card' ],
-  enableNotify: false,
+export default class ListItemUnappliedChange extends Component {
+  @service data
 
-  actions: {
-    modifyEffectiveDate () {
-      let history = this.get('history');
-      this.set('history.effectiveOn', new Date());
-      this.saveModel(history).then((x) => {
-        this.get('onApplyNow')(x);
-      });
-    }
+  @action
+  async modifyEffectiveDate () {
+    this.args.history.effectiveOn = new Date();
+    await this.data.saveRecord(this.args.history, 'working', { notify: false });
+    this.args.onApplyNow();
   }
-});
+}

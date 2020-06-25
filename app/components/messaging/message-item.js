@@ -1,32 +1,30 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { A } from '@ember/array';
-import inViewportMixin from 'ember-in-viewport';
 
-const MessageItemComponent = Component.extend(inViewportMixin, {
-  messaging: service(),
+export default class MessagingMessageItemComponent extends Component {
+  @service messaging
+  @service inViewPort
 
-  classNames: [ 'item', 'message' ],
+  @tracked __didSendReadUpdate
 
-  isReadByCurrentUser: computed('message.readBy.[]', '__didSendReadUpdate', 'user', function () {
-    return this.__didSendReadUpdate || (this.message.readBy || A()).includes(this.user.get('id'));
-  }),
+  get isReadByCurrentUser () {
+    return this.__didSendReadUpdate || (this.args.message.readBy || A()).includes(this.args.user.get('id'));
+  }
 
-  isImage: computed('message.file.mimeType', function () {
-    return (this.get('message.file.mimeType') || '').indexOf('image/') > -1;
-  }),
+  get isImage () {
+    return (this.args.message.file.mimeType || '').indexOf('image/') > -1;
+  }
 
+  @action
   didEnterViewport () {
     if (this.isReadByCurrentUser) {
       return;
     }
 
-    this.messaging.markMessageRead(this.message);
+    this.messaging.markMessageRead(this.args.message);
     this.__didSendReadUpdate = true;
   }
-});
-
-MessageItemComponent.reopenClass({ positionalParams: [ 'message' ] });
-
-export default MessageItemComponent;
+}

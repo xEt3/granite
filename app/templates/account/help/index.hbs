@@ -4,14 +4,14 @@
       Help &amp; Support
     </h1>
     <div class="right aligned text menu">
-      {{#ui-dropdown class="item icon top right pointing"}}
+      <UiDropdown @class="item icon top right pointing">
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
-          {{#confirm-modal class="item" as |confirm|}}
-            <a href="#" class="text-black" {{action (pipe confirm (action "resetIntros"))}}><i class="undo icon"></i>Reset Help Tutorials</a>
-          {{/confirm-modal}}
+          <ConfirmModal @class="item" as |confirm|>
+            <a href="#" class="text-black" {{on "click" (prevent-default (pipe confirm this.resetIntros))}}><i class="undo icon"></i>Reset Help Tutorials</a>
+          </ConfirmModal>
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
     </div>
   </hgroup>
 
@@ -21,9 +21,9 @@
 
   <div class="ui list">
     {{#each-in this.model as |key value|}}
-      {{#link-to "account.help.topic" key class="item"}}
+      <LinkTo @route="account.help.topic" @model={{key}} class="item">
         {{value.title}}
-      {{/link-to}}
+      </LinkTo>
     {{/each-in}}
   </div>
 

@@ -1,0 +1,12 @@
+<LinkTo @route="account.employees.messages.thread" @model={{@model.id}} class={{this.linkClass}}>
+  <h4 class="ui header message-thread__thread-title">
+    {{this.participantsCondensed}}
+    <div class="minimal margin lightly weighted header message-thread__last-message">
+      {{#if this.lastMsg.content}}
+        {{this.lastMsg.content}}
+      {{else if this.lastMsg.file}}
+        <i class="paperclip icon"></i>Attachment
+      {{/if}}
+    </div>
+  </h4>
+</LinkTo>

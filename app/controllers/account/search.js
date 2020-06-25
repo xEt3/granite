@@ -1,3 +1,7 @@
+import classic from 'ember-classic-decorator';
 import Controller from '@ember/controller';
 
-export default Controller.extend({ queryParams: [ 'q' ] });
+@classic
+export default class SearchController extends Controller {
+  queryParams = [ 'q' ];
+}

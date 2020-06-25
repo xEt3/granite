@@ -25,7 +25,7 @@ module('Integration | Component | list-item/talent-pool-applicant', function (ho
       }
     }));
 
-    await render(hbs`{{list-item/talent-pool-applicant applicantData}}`);
+    await render(hbs`<ListItem::TalentPoolApplicant @model={{this.applicantData}} />`);
 
     assert.dom('.talent-pool__applicant .content').exists();
     assert.dom('.talent-pool__applicant .header').hasText(`${record.firstName} ${record.lastName}`);

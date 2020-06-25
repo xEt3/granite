@@ -1,3 +1,4 @@
+import classic from 'ember-classic-decorator';
 import Component from '@ember/component';
 
 const sroptlist = [
@@ -17,9 +18,10 @@ const sroptlist = [
   'viewOffset'
 ];
 
-const ScrollRevealComponent = Component.extend({
-  reset:    true,
-  duration: 1000,
+@classic
+class ScrollRevealComponent extends Component {
+  reset = true;
+  duration = 1000;
 
   init () {
     if (!window.sr) {
@@ -28,16 +30,16 @@ const ScrollRevealComponent = Component.extend({
 
     this.set('_sr', window.sr);
 
-    if (!this.get('hasBlock') && this.get('selector')) {
+    if (!this.hasBlock && this.selector) {
       this.tagName = '';
     }
 
-    this._super(...arguments);
-  },
+    super.init(...arguments);
+  }
 
   didInsertElement () {
     this.initializeReveal();
-  },
+  }
 
   initializeReveal () {
     const componentOpts = this.getProperties(sroptlist);
@@ -50,12 +52,12 @@ const ScrollRevealComponent = Component.extend({
       return optsObj;
     }, {});
 
-    this.get('_sr').reveal(
-      this.get('selector') || this.$().children().first()[0] || this.$(),
+    this._sr.reveal(
+      this.selector || this.$().children().first()[0] || this.$(),
       opts
     );
   }
-});
+}
 
 ScrollRevealComponent.reopenClass({ positionalParams: [ 'selector' ] });
 

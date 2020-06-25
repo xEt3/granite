@@ -1,16 +1,23 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import Controller from 'granite/core/controller';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 const ACTIVITY_PAGE_HARD_LIMIT = 12;
 
-export default Controller.extend({
-  queryParams: [ 'tag', 'limit', 'page' ],
-  feedSource:  'all',
-  tag:         '',
-  limit:       5,
-  page:        0,
+export default class AccountIndexController extends Controller {
+  @service data
 
-  commonActions: [{
+  queryParams = [ 'tag', 'limit', 'page' ]
+  feedSource = 'all'
+  tag = ''
+  limit = 5
+  @tracked tags
+  @tracked totalRecords
+  @tracked analytics
+  @tracked page = 0
+
+  commonActions = [{
     text: 'Add a new employee',
     link: 'account.employees.add.new'
   }, {
@@ -19,19 +26,19 @@ export default Controller.extend({
   }, {
     text: 'Upload a company document',
     link: 'account.documents.new'
-  }],
+  }];
 
-  disabled: computed('totalRecords', 'model', 'page', function () {
-    return this.page >= ACTIVITY_PAGE_HARD_LIMIT || this.get('totalRecords') <= this.get('model.length') ? true : false;
-  }),
-
-  actions: {
-    onNotify (type, msg) {
-      this.send('notify', type, msg);
-    },
-
-    loadMoreActivities () {
-      this.set('page', this.get('page') + 1);
-    }
+  get disabled () {
+    return this.page >= ACTIVITY_PAGE_HARD_LIMIT || this.totalRecords <= this.model.length ? true : false;
   }
-});
+
+  @action
+  onNotify (type, msg) {
+    this.data.notify(type, msg);
+  }
+
+  @action
+  loadMoreActivities () {
+    this.page = this.page + 1;
+  }
+}

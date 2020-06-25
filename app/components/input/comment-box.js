@@ -12,9 +12,9 @@ export default Component.extend({
   atOptions: {},
 
   _atOptions: computed(function () {
-    return this.get('store').query('employee', { select: 'name' })
+    return this.store.query('employee', { select: 'name' })
     .then(employees => {
-      let opts = this.get('atOptions');
+      let opts = this.atOptions;
       return [
         merge(opts, {
           at:   '@',
@@ -31,7 +31,7 @@ export default Component.extend({
 
   didInsertElement () {
     this._super(...arguments);
-    this.get('_atOptions')
+    this._atOptions
     .then(options => {
       run.scheduleOnce('afterRender', () => {
         let $textarea = this.$('textarea');

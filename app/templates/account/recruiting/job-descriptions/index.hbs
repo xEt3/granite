@@ -1,8 +1,4 @@
-{{stateful-intro-js
-  user=this.auth.user
-  steps=this.intros
-  start-if=true
-  hintKey="job-description-index"}}
+<StatefulIntroJs @user={{this.auth.user}} @steps={{this.intros}} @start-if={{true}} @hintKey="job-description-index" />
 
 <div class="ui raised padded segment container clearfix animated fadeInUp">
   <hgroup class="clearfix">
@@ -12,23 +8,20 @@
 
     <div class="right aligned text floated menu__actions">
       <h3 class="ui inline header">
-        {{#link-to "account.recruiting.job-descriptions.new"}}
+        <LinkTo @route="account.recruiting.job-descriptions.new">
           <i id="add-job-description" class="plus icon"></i>
-        {{/link-to}}
+        </LinkTo>
       </h3>
     </div>
   </hgroup>
   <div class="ui divider"></div>
 
-  {{display/resource-list
-    this.model
-    "list-item/job-item"
-    linkTo="account.job-description"
-    linkClass="item"
-    class="ui divided link items"}}
+  <Display::ResourceList
+    @model={{this.model}}
+    @itemComponent="list-item/job-item"
+    @linkTo="account.job-description"
+    @linkClass="item"
+    class="ui divided link items"/>
 
-  {{elements/x-pagination
-    page=(readonly this.page)
-    pages=(readonly this.pages)
-    onchange=(action (mut this.page))}}
+  <Elements::XPagination @page={{this.page}} @model={{this.model}} @limit={{this.limit}} @onChange={{set this.page _}} />
 </div>

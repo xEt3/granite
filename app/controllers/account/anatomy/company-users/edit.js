@@ -1,44 +1,54 @@
-import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import Controller from 'granite/core/controller';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
 
-export default Controller.extend(addEdit, {
-  transitionAfterSave: 'account.anatomy.company-users',
-  transitionWithModel: false,
+export default class AccountAnatomyCompanyUsersEditController extends Controller {
+  @service data
 
-  actions: {
-    presetAttrs () {
-      let model = this.get('model'),
-          id = [];
+  @tracked permissionsTree
 
-      this.permissionsTree.forEach(permission=>{
-        permission.children.forEach(child=>{
+  saveOptions = {
+    transitionAfterSave: 'account.anatomy.company-users',
+    transitionWithModel: false
+  }
 
-          if (child.isChecked) {
-            id.push(child.id);
-            model.set('permissions', id);
-          }
-        });
-      });
-    },
+  @action
+  presetAttrs () {
+    let model = this.model,
+        id = [];
 
-    permissionCheck () {
-      let checked = [];
-
-      this.permissionsTree.forEach(permission=>{
-
-        if (permission.isChecked) {
-          checked = permission.id;
+    this.permissionsTree.forEach(permission=>{
+      permission.children.forEach(child=>{
+        if (child.isChecked) {
+          id.push(child.id);
+          model.permissions = id;
         }
       });
+    });
+  }
 
-      if (checked.length > 1) {
-        this.send('presetAttrs');
+  @action
+  permissionCheck () {
+    let checked = [];
+
+    this.permissionsTree.forEach(permission=>{
+      if (permission.isChecked) {
+        checked.push(permission.id);
       } else {
-        this.ajaxStart();
-
-        this.ajaxError('Need at lease one permissions.');
-        throw new Error('Need at lease one permissions.');
+        permission.children.forEach(child => {
+          checked.push(child.id);
+        });
       }
+    });
+
+    if (checked.length > 1) {
+      this.presetAttrs();
+    } else {
+      let { error } = this.data.createStatus();
+
+      error('Need at lease one permissions.');
+      throw new Error('Need at lease one permissions.');
     }
   }
-});
+}

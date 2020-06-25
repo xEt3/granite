@@ -1,13 +1,17 @@
+import classic from 'ember-classic-decorator';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 
-export default Model.extend({
-  deserialized: attr(),
-  serialized:   attr('string'),
+@classic
+export default class ResultSet extends Model {
+  @attr() deserialized;
 
-  company: belongsTo('company'),
-  creator: belongsTo('employee'),
+  @attr('string') serialized;
 
-  created: attr('date')
-});
+  @belongsTo('company') company;
+
+  @belongsTo('employee') creator;
+
+  @attr('date') created;
+}

@@ -1,16 +1,15 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { isEmpty } from '@ember/utils';
-import RSVP from 'rsvp';
 
-export default Route.extend({
-  titleToken: 'Projects',
+export default class AccountActionItemsRoute extends Route {
+  titleToken = 'Projects'
 
-  queryParams: {
+  queryParams = {
     filter: { refreshModel: true },
     isDsc:  { refreshModel: true }
-  },
+  }
 
-  model (params) {
+  async model (params) {
     let actionItemQuery = {
       $and: [
         { completedOn: { $not: { $type: 9 } } },
@@ -26,11 +25,11 @@ export default Route.extend({
       actionItemQuery.priority = { $in: params.filter };
     }
 
-    return RSVP.hash({ actionItems: this.store.query('action-item', actionItemQuery) });
-  },
+    return { actionItems: await this.store.query('action-item', actionItemQuery) };
+  }
 
   setupController (controller, model) {
-    this._super(...arguments);
+    super.setupController(...arguments);
     controller.setProperties({ model: model.actionItems });
   }
-});
+}

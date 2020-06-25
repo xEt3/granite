@@ -1,0 +1,48 @@
+<div class="ui field filter-pane__control" ...attributes {{did-insert (fn @onInsert this)}} {{will-destroy (fn @onDestroy this)}}>
+  {{#if (eq @type "select")}}
+    <UiDropdown @class={{this.selectionClass}} @selected={{@state}} @onChange={{fn this.update}} as |execute mapper|>
+      <div class="default text">
+        {{#if this.selectText}}
+          {{this.selectText}}
+        {{else}}
+          Select a {{@section.args.name}}
+        {{/if}}
+      </div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#if this.hasNull}}
+          <div class="item" data-value={{map-value mapper "none"}}>
+            No {{@section.args.name}}
+          </div>
+        {{/if}}
+        {{#each @model as |item|}}
+          <div class="item" data-value={{map-value mapper (if this.itemValuePath (get item this.itemValuePath) item)}}>
+            {{#if hasBlock}}
+              {{yield item}}
+            {{else}}
+              {{if @itemTextPath (get item @itemTextPath) item}}
+            {{/if}}
+          </div>
+        {{/each}}
+      </div>
+    </UiDropdown>
+  {{else if (eq @type "toggle")}}
+    <UiCheckbox
+      @class="toggle"
+      @label={{or @label @name}}
+      @checked={{@state}}
+      @onChange={{fn this.update}} />
+  {{else if (eq @type "radio")}}
+    <UiRadio
+      @class="toggle"
+      @name={{@name}}
+      @label={{or @label @name}}
+      @value={{@value}}
+      @current={{@state}}
+      @onChange={{fn this.update}} />
+  {{else}}
+    {{yield
+      this.update
+    }}
+  {{/if}}
+</div>

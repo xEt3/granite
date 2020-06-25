@@ -1,14 +1,13 @@
-import Route from '@ember/routing/route';
+import { GraniteWizardRoute } from 'granite/core/wizard';
 import { A } from '@ember/array';
-import wizard from 'granite/mixins/wizard/route';
 
-export default Route.extend(wizard, {
-  key:        'onboarding',
-  basePath:   'account.employee.onboard',
-  returnPath: 'account.employee.onboard-complete',
-  setUserOn:  'onboarder',
+export default class AccountEmployeeOnboardRoute extends GraniteWizardRoute {
+  key        = 'onboarding'
+  basePath   = 'account.employee.onboard'
+  returnPath = 'account.employee.onboard-complete'
+  setUserOn  = 'onboarder'
 
-  steps: A([{
+  steps = A([{
     icon:  'home',
     title: 'Personal',
     link:  'index'
@@ -33,4 +32,4 @@ export default Route.extend(wizard, {
     title: 'Custom Info',
     link:  'custom-fields'
   }])
-});
+}

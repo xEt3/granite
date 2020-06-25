@@ -1,0 +1,18 @@
+{{#if this.participant.company}}
+  {{! is employee }}
+  <LinkTo @route="account.employee" @model={{this.participant.id}} class="ui image label">
+    <Display::EmployeePicture @url={{this.participant.picture}} @employeeId={{this.participant.id}} />
+    {{this.participant.fullName}}
+    {{#if this.detail}}
+      <div class="detail">{{this.detail}}</div>
+    {{/if}}
+  </LinkTo>
+{{else}}
+  <span class="ui image label">
+    <Display::EmployeePicture @url={{this.participant.picture}} @employeeId={{this.participant.id}} />
+    {{this.participant.fullName}}
+    {{#if this.detail}}
+      <div class="detail">{{this.detail}}</div>
+    {{/if}}
+  </span>
+{{/if}}

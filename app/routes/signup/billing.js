@@ -1,17 +1,19 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
 
-export default Route.extend({
-  titleToken: 'Billing',
-  ajax:       service(),
+export default class SignupBillingRoute extends Route {
+  titleToken = 'Billing'
 
-  model () {
-    return RSVP.hash({
-      token:   this.get('ajax').request('/api/v1/bt/token'),
-      company: this.modelFor('signup.index')
-    });
-  },
+  @service ajax
+
+  async model () {
+    let company = await this.modelFor('signup/index');
+
+    return {
+      token: await this.ajax.request('/api/v1/bt/token'),
+      company
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -19,4 +21,4 @@ export default Route.extend({
       braintreeToken: model.token
     });
   }
-});
+}

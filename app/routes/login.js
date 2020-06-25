@@ -1,17 +1,17 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
+import { action } from '@ember/object';
 
-export default Route.extend({
-  titleToken: 'Login',
+export default class LoginRoute extends Route {
+  titleToken = 'Login'
 
   resetController (controller, isExiting) {
     if (isExiting) {
-      controller.set('expired', false);
-    }
-  },
-
-  actions: {
-    willTransition () {
-      this.get('controller').set('previousTransition', null);
+      controller.expired = false;
     }
   }
-});
+
+  @action
+  willTransition () {
+    this.controller.previousTransition = null;
+  }
+}

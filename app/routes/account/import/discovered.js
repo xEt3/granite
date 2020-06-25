@@ -1,11 +1,12 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { scheduleOnce } from '@ember/runloop';
 import { A } from '@ember/array';
-import { get } from '@ember/object';
 
-export default Route.extend({
+export default class AccountImportDiscoveredRoute extends Route {
+  titleToken = 'Import Records'
+
   async beforeModel (transition) {
-    const resultSetId = ((transition.params || {})['account.import.discovered'] || {}).result_set_id || (transition.routeInfos[transition.routeInfos.length - 1].context || {})._id,
+    const resultSetId = ((transition.to || {}).params || {}).result_set_id || (transition.routeInfos[transition.routeInfos.length - 1].context || {})._id,
           serviceName = transition.to.queryParams.service;
 
     try {
@@ -13,7 +14,7 @@ export default Route.extend({
         running:           true,
         'context.service': serviceName,
         'context.method':  'import'
-      })).get('firstObject') ||
+      })).firstObject ||
       // no running task, maybe there's one that's done?
       (await this.store.query('task-status', {
         running:               false,
@@ -21,10 +22,10 @@ export default Route.extend({
         'context.service':     serviceName,
         'context.method':      'import',
         'context.resultSetId': resultSetId
-      })).get('firstObject');
+      })).firstObject;
 
       if (!currentTask || currentTask.context.resultSetId === resultSetId) {
-        this.set('matchedTask', currentTask);
+        this.matchedTask = currentTask;
         return;
       }
 
@@ -37,14 +38,14 @@ export default Route.extend({
 
       throw e;
     }
-  },
+  }
 
   model (params) {
     return this.store.find('result-set', params.result_set_id);
-  },
+  }
 
   setupController (controller, model) {
-    let recordSets = get(model, 'deserialized');
+    let recordSets = model.deserialized;
 
     let defaultSelection = recordSets.reduce((selected, recordSet) => Object.assign({
       [recordSet.name]: recordSet.records
@@ -70,6 +71,6 @@ export default Route.extend({
       }
     }
 
-    this._super(...arguments);
+    super.setupController(...arguments);
   }
-});
+}

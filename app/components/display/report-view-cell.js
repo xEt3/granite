@@ -1,7 +1,3 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-const reportViewCell = Component.extend({ tagName: 'td' });
-
-reportViewCell.reopenClass({ positionalParams: [ 'cellData' ] });
-
-export default reportViewCell;
+export default class DisplayReportViewCell extends Component {}

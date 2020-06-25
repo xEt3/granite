@@ -6,7 +6,7 @@ import { visit, currentURL, click, settled } from '@ember/test-helpers';
 module('Acceptance | recruiting-new postion', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('elements on new postion page', async function (assert) {
+  test('elements on new position page', async function (assert) {
     await authenticate.call(this, server, {
       companyUser: {
         shownHints: [
@@ -36,8 +36,8 @@ module('Acceptance | recruiting-new postion', function (hooks) {
     assert.dom('.campaign-name > label').hasText('Campaign Name');
     assert.dom('#job-description > input').isVisible();
     assert.dom('#job-description > input').doesNotIncludeText();
-    assert.dom('input[name="name"]').isVisible();
-    assert.dom('input[name="name"]').doesNotIncludeText();
+    assert.dom('input[name="defaultName"]').isVisible();
+    assert.dom('input[name="defaultName"]').doesNotIncludeText();
     assert.dom('form > button').isDisabled();
     await click('#job-description > input');
     await settled();
@@ -46,7 +46,7 @@ module('Acceptance | recruiting-new postion', function (hooks) {
     assert.dom('form > button').isNotDisabled();
   });
 
-  test('adding a new postion', async function (assert) {
+  test('adding a new position', async function (assert) {
     await authenticate.call(this, server, {
       companyUser: {
         shownHints: [
@@ -68,7 +68,7 @@ module('Acceptance | recruiting-new postion', function (hooks) {
     await click('#job-description div.menu > div.item.selected');
     await settled();
     assert.dom('#job-description > div.text').hasText(job.title);
-    assert.dom('input[name="name"]').hasValue(`${job.title} Recruiting Campaign`);
+    assert.dom('input[name="defaultName"]').hasValue(`${job.title} Recruiting Campaign`);
     await click('form > button');
     assert.equal(currentURL(), `/account/recruiting/job-opening/${job.id}`);
   });

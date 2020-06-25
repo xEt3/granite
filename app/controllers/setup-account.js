@@ -1,39 +1,45 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import Controller from 'granite/core/controller';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import ajaxStatus from 'granite/mixins/ajax-status';
 
-export default Controller.extend(ajaxStatus, {
-  ajax:        service(),
-  queryParams: [ 'a' ],
-  a:           null,
+export default class SetupAccountController extends Controller {
+  @service ajax
+  @service data
 
-  enableActivation: computed('password', 'passwordConfirm', function () {
-    const p = this.get('password');
-    return p && p === this.get('passwordConfirm');
-  }),
+  @tracked password
+  @tracked passwordConfirm
 
-  actions: {
-    activate () {
-      this.ajaxStart();
-      const password = this.get('password'),
-            id = this.get('model._id');
+  queryParams = [ 'a' ]
+  a = null
 
-      this.get('ajax').post(`/api/v1/company-user/activate/${id}`, {
+  get enableActivation () {
+    const p = this.password;
+    return p && p === this.passwordConfirm;
+  }
+
+  @action
+  async activate () {
+    let { success, error } = this.data.createStatus();
+    const password = this.password,
+          id = this.model._id;
+
+    try {
+      let result = await this.ajax.post(`/api/v1/company-user/activate/${id}`, {
         data: {
           password,
-          activationId: this.get('a')
+          activationId: this.a
         }
-      })
-      .then(result => {
-        if (result.activated !== true) {
-          return this.ajaxError('Problem activating');
-        }
+      });
 
-        this.ajaxSuccess('Successfully activated.');
-        this.transitionToRoute('login');
-      })
-      .catch(this.ajaxError.bind(this));
+      if (result.activated !== true) {
+        return error('Problem activating');
+      }
+
+      success('Successfully activated.');
+      this.transitionToRoute('login');
+    } catch (e) {
+      error(e);
     }
   }
-});
+}

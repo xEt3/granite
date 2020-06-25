@@ -1,15 +1,17 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import Model from 'ember-data/model';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-export default Controller.extend(addEdit, {
-  enableNotify: false,
+export default class AccountEmployeeOnboardDocumentsController extends Controller {
+  @service data
+  @tracked assignments
 
-  suggestedDocumentsFiltered: computed('suggestedDocuments', 'assignments.[]', function () {
-    let assignments = this.get('assignments');
+  get suggestedDocumentsFiltered () {
+    let assignments = this.assignments;
 
-    return this.get('suggestedDocuments').filter((sug) => {
+    return this.suggestedDocuments.filter((sug) => {
       let sugId = sug.file.id || sug.file._id;
 
       return !assignments.find(assignment => {
@@ -17,60 +19,62 @@ export default Controller.extend(addEdit, {
         return fileId && fileId === sugId;
       });
     });
-  }),
+  }
 
-  onboardingDocumentsFiltered: computed('onboardingDocuments', 'assignments.[]', function () {
-    let assignments = this.get('assignments');
+  get onboardingDocumentsFiltered ()  {
+    let assignments = this.assignments;
 
-    return this.get('onboardingDocuments').filter((file) =>
+    return this.onboardingDocuments.filter((file) =>
       !assignments.find(assignment =>
-        assignment.belongsTo('file').id() === file.get('id')));
-  }),
+        assignment.belongsTo('file').id() === file.id));
+  }
 
-  actions: {
-    async addAssignment (files) {
-      const makeAssignment = (inputFile) => {
-        let file = inputFile;
+  @action
+  async addAssignment (files) {
+    const makeAssignment = (inputFile) => {
+      let file = inputFile;
 
-        if (!(file instanceof Model)) {
-          this.store.pushPayload('file', { file });
-          file = this.store.peekRecord('file', file.id);
-        }
-
-        let assignment = this.store.createRecord('file-assignment', {
-          file,
-          fileType:          'Onboarding',
-          employee:          this.get('employee'),
-          visibleToEmployee: true
-        });
-
-        this.assignments.pushObject(assignment);
-
-        return this.saveModel(assignment);
-      };
-
-      let _files = Array.isArray(files) ? files : [ files ];
-
-      for (let i = 0; i < _files.length; i++) {
-        try {
-          await makeAssignment(_files[i]);
-        } catch (e) {
-          this.set('enableNotify', true);
-          this.ajaxError(e);
-          this.set('enableNotify', false);
-        }
+      if (!(file instanceof Model)) {
+        this.store.pushPayload('file', { file });
+        file = this.store.peekRecord('file', file.id);
       }
 
-      this.set('docModalSelection', []);
-    },
+      let assignment = this.store.createRecord('file-assignment', {
+        file,
+        fileType:          'Onboarding',
+        employee:          this.employee,
+        visibleToEmployee: true
+      });
 
-    saveAssignmentChanges (assignment) {
-      this.saveModel(assignment);
-    },
+      this.assignments.pushObject(assignment);
 
-    async removeAssignment (assignment) {
-      await assignment.destroyRecord();
-      this.assignments.removeObject(assignment);
+      return this.data.saveRecord(assignment, 'assignment', { notify: false });
+    };
+
+    let _files = Array.isArray(files) ? files : [ files ];
+
+
+    for (let i = 0; i < _files.length; i++) {
+      let { success, error } = this.data.createStatus();
+      try {
+        await makeAssignment(_files[i]);
+        success(null, true);
+      } catch (e) {
+        error(e);
+      }
     }
+
+    this.docModalSelection = [];
   }
-});
+
+  @action
+  saveAssignmentChanges (assignment) {
+    this.data.saveRecord(assignment, 'assignment', { notify: false });
+  }
+
+  @action
+  async removeAssignment (assignment) {
+    await assignment.destroyRecord();
+    this.assignments.removeObject(assignment);
+  }
+}

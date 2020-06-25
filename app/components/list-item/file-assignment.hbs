@@ -1,0 +1,45 @@
+<div class="ui image label">
+  <Display::EmployeePicture @url={{this.assignment.employee.picture}} @employeeId={{this.assignment.employee.id}} />
+  <LinkTo @route="account.employee" @model={{this.assignment.employee.id}} class="item text-black">
+    {{this.assignment.employee.fullName}}
+  </LinkTo>
+  {{#if this.assignment.readOn}}
+    &nbsp;
+    <i class="eye icon gray-icon">
+      <EmberTooltip @side="right" @popperContainer="body">
+        Viewed on {{time this.assignment.readOn}}
+      </EmberTooltip>
+    </i>
+  {{/if}}
+  {{#if this.assignment.signedOn}}
+    <a href="#" class="gray-icon" {{on "click" (prevent-default (action "openSignatureModal"))}}>
+      <i class="edit icon"></i>
+      <EmberPopover @side="right" @popperContainer="body">
+        <h4 class="center aligned text">
+          Signed on {{time this.assignment.signedOn}}
+        </h4>
+        <img src={{this.assignment.signature}} class="ui medium image" alt="Signature of employee">
+      </EmberPopover>
+    </a>
+  {{/if}}
+  <div class="detail">
+    {{if this.pastAssignment "Assigned" "Pending"}}
+    <EmberTooltip @side="right" @popperContainer="body">
+      Document {{if this.pastAssignment "was" "will be"}} assigned on {{time (or this.assignment.effectiveOn this.assignment.created)}} by {{this.assignment.creator.fullName}}
+    </EmberTooltip>
+  </div>
+</div>
+
+<UiModal @name="modal__file-assignment-signature" @id={{this.modalId}}>
+  <div class="header">
+    {{this.assignment.file.title}} signature for {{this.assignment.employee.fullName}}
+  </div>
+  <div class="content">
+    <img src={{this.assignment.signature}} alt="Signature of employee">
+  </div>
+  <div class="actions">
+    <button class="ui red button" type="button" {{on "click" (prevent-default (action "closeSignatureModal"))}}>
+      Close
+    </button>
+  </div>
+</UiModal>

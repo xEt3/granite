@@ -1,3 +1,3 @@
-import BaseLiComponent from './base';
+import Component from '@glimmer/component';
 
-export default BaseLiComponent.extend({});
+export default class ListItemDocumentSuggestionComponent extends Component {}

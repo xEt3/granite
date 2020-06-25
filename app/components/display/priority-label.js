@@ -1,32 +1,24 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
 const priorityMap = [ 'Lowest', 'Low', 'Medium', 'High', 'Highest' ],
       priorityColorMap = [ '', 'grey', 'teal', 'red', 'orange' ];
 
-let PriorityLabelComponent = Component.extend({
-  tagName:           'span',
-  classNames:        [ 'ui' ],
-  classNameBindings: [ 'priorityColor' ],
+export default class DisplayPriorityLabelComponent extends Component {
+  get priorityText () {
+    return priorityMap[this.args.priority - 1] || '';
+  }
 
-  priorityText: computed('priority', function () {
-    return priorityMap[this.get('priority') - 1] || '';
-  }),
+  get priorityColor () {
+    let color = priorityColorMap[this.args.priority - 1] || '';
+    return this.hasBlock ? color : color + ' label';
+  }
+}
 
-  priorityColor: computed('priority', function () {
-    let color = priorityColorMap[this.get('priority') - 1] || '';
-    return this.get('hasBlock') ? color : color + ' label';
-  })
-});
-
-PriorityLabelComponent.reopenClass({ positionalParams: [ 'priority' ] });
-
-export default PriorityLabelComponent;
 /* Usage
   Inline:
-  {{display/priority-label priority}}
+  <Display::PriorityLabel @priority={{priority}} />
   Block:
-  {{#display/priority-label priority as |priority text color|}}
+  <Display::PriorityLabel @priority={{priority}} as |priority text color|}}
     Hey, the priority is {{text}} (#{{priority}}) with color of {{color}}
-  {{/display/priority-label}}
+  </Display::PriorityLabel>
 */

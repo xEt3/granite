@@ -1,32 +1,33 @@
-import Route from '@ember/routing/route';
-import { hash } from 'rsvp';
-import refreshable from 'granite/mixins/refreshable';
+import Route from 'granite/core/route';
+import { action } from '@ember/object';
 
-export default Route.extend(refreshable, {
-  model () {
-    return hash({
+export default class AccountSettingsProcessesRoute extends Route {
+  titleToken = 'Processes'
+
+  async model () {
+    let results = await this.store.query('recruiting-pipeline', { 'jobOpening.0': { $exists: false } });
+
+    return {
       company:  this.modelFor('account.settings'),
-      pipeline: this.store.query('recruiting-pipeline', { 'jobOpening.0': { $exists: false } })
-      .then(results => results ? results.get('firstObject') : results)
-    });
-  },
+      pipeline: results ? results.firstObject : results
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
       model:                model.company,
       pipeline:             model.pipeline,
-      casInitialState:      JSON.parse(JSON.stringify(model.company.get('correctiveActionSeverities').toArray())) || [],
-      pipelineInitialState: JSON.parse(JSON.stringify(model.pipeline.get('stages').toArray())) || []
+      casInitialState:      JSON.parse(JSON.stringify(model.company.correctiveActionSeverities.toArray())) || [],
+      pipelineInitialState: JSON.parse(JSON.stringify(model.pipeline.stages.toArray())) || []
     });
-  },
+  }
 
-  actions: {
-    willTransition (transition) {
-      if (!this.controller.disableSave) {
-        if (!confirm('You have unsaved changes, are you sure you want to leave this page?')) {
-          transition.abort();
-        }
+  @action
+  willTransition (transition) {
+    if (!this.controller.disableSave) {
+      if (!confirm('You have unsaved changes, are you sure you want to leave this page?')) {
+        transition.abort();
       }
     }
   }
-});
+}

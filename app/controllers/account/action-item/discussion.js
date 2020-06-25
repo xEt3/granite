@@ -1,29 +1,28 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { action } from '@ember/object';
 
-export default Controller.extend(addEdit, {
-  auth:                service(),
-  transitionAfterSave: false,
+export default class AccountActionItemDiscussionController extends Controller {
+  @service auth
+  @service data
 
-  actions: {
-    comment () {
-      let text = this.get('commentText'),
-          commenter = this.get('auth.user.employee');
+  transitionAfterSave = false
 
-      this.set('commentText', null);
+  @action
+  async comment () {
+    let text = this.commentText,
+        commenter = this.get('auth.user.employee');
 
-      let comment = this.store.createRecord('comment', {
-        commenter,
-        text,
-        targetId:   this.get('actionItem.id'),
-        targetType: 'ActionItem'
-      });
+    this.set('commentText', null);
 
-      this.saveModel(comment)
-      .then(() => {
-        this.send('refresh');
-      });
-    }
+    let comment = this.store.createRecord('comment', {
+      commenter,
+      text,
+      targetId:   this.get('actionItem.id'),
+      targetType: 'ActionItem'
+    });
+
+    await this.data.saveRecord(comment);
+    this.send('refreshModel');
   }
-});
+}

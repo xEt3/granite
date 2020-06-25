@@ -1,10 +1,10 @@
-import Route from '@ember/routing/route';
-import edit from 'granite/mixins/route-abstractions/edit';
+import Route from 'granite/core/route';
 
-export default Route.extend(edit, {
-  titleToken:      'Edit Asset',
-  modelName:       'asset',
-  bypassModelHook: true,
+export default class AccountAssetEditRoute extends Route {
+  titleToken =      'Edit Asset'
+  modelName =       'asset'
+  bypassModelHook = true
+  routeType = 'edit'
 
   async model () {
     let asset = this.modelFor('account.asset');
@@ -12,12 +12,10 @@ export default Route.extend(edit, {
       asset:            asset,
       initialDocuments: JSON.stringify((await asset.get('documents')).toArray()) || []
     };
-  },
+  }
 
   setupController (controller, model) {
-    controller.setProperties({
-      model:            model.asset,
-      initialDocuments: model.initialDocuments
-    });
+    controller.model = model.asset;
+    controller.initialDocuments = model.initialDocuments;
   }
-});
+}

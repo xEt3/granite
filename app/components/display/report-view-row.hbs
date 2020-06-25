@@ -1,0 +1,11 @@
+<tr>
+  {{#if @rowData.section}}
+    <td colspan={{@numColumns}}>
+      {{@rowData.section}}
+    </td>
+  {{else}}
+    {{#each @rowData as |cell|}}
+      <Display::ReportViewCell @cellData={{cell}} />
+    {{/each}}
+  {{/if}}
+</tr>

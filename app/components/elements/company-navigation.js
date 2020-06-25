@@ -21,7 +21,7 @@ export default Component.extend({
     },
 
     logout () {
-      this.get('logout')();
+      this.logout();
     }
   }
 });

@@ -1,19 +1,19 @@
 <div class="fields">
   <div class="five wide field">
     <label for="first-name">First Name</label>
-    {{validated-input type="text" model=this.model valuePath="firstName" placeholder="First Name" id="first-name"}}
+    <ValidatedInput @type="text" @model={{this.model}} @valuePath="firstName" @placeholder="First Name" @id="first-name" />
   </div>
   <div class="three wide field">
     <label for="middle-name">Middle Name</label>
-    {{input type="text" value=this.model.middleName placeholder="Middle" id="middle-name"}}
+    <Input @type="text" @value={{this.model.middleName}} placeholder="Middle" @id="middle-name" />
   </div>
   <div class="five wide field">
     <label for="last-name">Last Name</label>
-    {{validated-input type="text" model=this.model valuePath="lastName" placeholder="Last Name" id="last-name"}}
+    <ValidatedInput @type="text" @model={{this.model}} @valuePath="lastName" @placeholder="Last Name" @id="last-name" />
   </div>
   <div class="three wide field">
     <label for="suffix-name">Suffix</label>
-    {{#ui-dropdown class="selection" selected=this.model.suffixName onChange=(action (mut this.model.suffixName))}}
+    <UiDropdown @class="selection" @selected={{this.model.suffixName}} @onChange={{set this.model.suffixName _}}>
       <div class="default text">Suffix</div>
       <i class="dropdown icon"></i>
       <div class="menu">
@@ -23,11 +23,11 @@
           </div>
         {{/each}}
       </div>
-    {{/ui-dropdown}}
+    </UiDropdown>
   </div>
   <div class="two wide field">
     <label for="suffix-name">Gender</label>
-    {{#ui-dropdown class="selection" selected=this.model.gender onChange=(action (mut this.model.gender))}}
+    <UiDropdown @class="selection" @selected={{this.model.gender}} @onChange={{set this.model.gender _}}>
       <div class="default text">Gender</div>
       <i class="dropdown icon"></i>
       <div class="menu">
@@ -37,39 +37,33 @@
           </div>
         {{/each}}
       </div>
-    {{/ui-dropdown}}
+    </UiDropdown>
   </div>
 </div>
 <div class="four fields">
   <div class="field">
     <label for="employee-phone">Phone Number</label>
-    {{masked-input type="tel" value=this.model.phone placeholder="Employee Phone #" id="employee-phone" mask="(111) 111-1111"}}
+    <MaskedInput @type="tel" @value={{this.model.phone}} @placeholder="Employee Phone #" @id="employee-phone" @mask="(111) 111-1111" />
   </div>
   <div class="field">
     <label for="email">Email</label>
-    {{validated-input type="email" model=this.model valuePath="email" placeholder="Email" id="email"}}
+    <ValidatedInput @type="email" @model={{this.model}} @valuePath="email" @placeholder="Email" @id="email" />
   </div>
   <div class="field">
     <label for="private-email">Personal Email</label>
-    {{validated-input type="email" model=this.model valuePath="privateEmail" placeholder="Personal Email" id="private-email"}}
+    <ValidatedInput @type="email" @model={{this.model}} @valuePath="privateEmail" @placeholder="Personal Email" @id="private-email" />
   </div>
   <div class="field">
     <label for="employeeNumber">Employee Number</label>
-    {{validated-input model=this.model valuePath="employeeNumber" placeholder="Employee Number" id="employee-number"}}
+    <ValidatedInput @model={{this.model}} @valuePath="employeeNumber" @placeholder="Employee Number" @id="employee-number" />
   </div>
 </div>
 <div class="two fields">
   <div class="field">
-    {{ui-calendar
-      class="field"
-      startMode="year"
-      type="date"
-      dateValue=this.model.dateOfBirth
-      label="Birth Date"
-      onChange=(action (mut this.model.dateOfBirth))}}
+    <UiCalendar @class="field" @startMode="year" @type="date" @dateValue={{this.model.dateOfBirth}} @label="Birth Date" @onChange={{set this.model.dateOfBirth _}} />
   </div>
   <div class="field">
-    {{input/social-security value=this.model.ssn}}
+    <Input::SocialSecurity @value={{this.model.ssn}} />
   </div>
 </div>
 <h3 id="mailing-address" class="ui horizontal header divider section">
@@ -77,20 +71,20 @@
 </h3>
 <div class="field">
   <label for="address-line-1">Address Line 1</label>
-  {{validated-input type="text" model=this.model valuePath="addressLine1" placeholder="Address Line 1" id="address-line-1"}}
+  <ValidatedInput @type="text" @model={{this.model}} @valuePath="addressLine1" @placeholder="Address Line 1" @id="address-line-1" />
 </div>
 <div class="field">
   <label for="address-line-2">Address Line 2</label>
-  {{input type="text" value=this.model.addressLine2 placeholder="Address Line 2" id="address-line-2"}}
+  <Input @type="text" @value={{this.model.addressLine2}} placeholder="Address Line 2" @id="address-line-2" />
 </div>
 <div class="three fields">
   <div class="field">
     <label for="address-city">City</label>
-    {{input type="text" value=this.model.addressCity placeholder="City" id="address-city"}}
+    <Input @type="text" @value={{this.model.addressCity}} placeholder="City" @id="address-city" />
   </div>
   <div class="field">
     <label for="state-name">State</label>
-    {{#ui-dropdown class="search selection" selected=this.model.addressState onChange=(action (mut this.model.addressState))}}
+    <UiDropdown @class="search selection" @selected={{this.model.addressState}} @onChange={{set this.model.addressState _}}>
       {{#if this.stateIsMontana}}<i class="text-danger heart icon"></i>{{/if}}
       <div class="default text">State</div>
       <i class="dropdown icon"></i>
@@ -101,11 +95,11 @@
           </div>
         {{/each}}
       </div>
-    {{/ui-dropdown}}
+    </UiDropdown>
   </div>
   <div class="field">
     <label for="address-zip">Zip</label>
-    {{input type="text" value=this.model.addressZip placeholder="Zip" id="address-zip"}}
+    <Input @type="text" @value={{this.model.addressZip}} placeholder="Zip" @id="address-zip" />
   </div>
 </div>
 
@@ -115,14 +109,14 @@
 <div class="three fields">
   <div class="field">
     <label for="emergency-contact-first" class="">Contact First Name</label>
-    {{input type="text" value=this.model.emergencyContactNameFirst placeholder="First Name" id="emergency-contact-first"}}
+    <Input @type="text" @value={{this.model.emergencyContactNameFirst}} placeholder="First Name" @id="emergency-contact-first" />
   </div>
   <div class="field">
     <label for="emergency-contact-last" class="">Contact Last Name</label>
-    {{input type="text" value=this.model.emergencyContactNameLast placeholder="Last Name" id="emergency-contact-last"}}
+    <Input @type="text" @value={{this.model.emergencyContactNameLast}} placeholder="Last Name" @id="emergency-contact-last" />
   </div>
   <div class="field">
     <label for="emergency-contact-phone" class="">Contact Phone</label>
-    {{input type="tel" value=this.model.emergencyContactPhone placeholder="Emergency Phone #" id="emergency-contact-phone"}}
+    <Input @type="tel" @value={{this.model.emergencyContactPhone}} placeholder="Emergency Phone #" @id="emergency-contact-phone" />
   </div>
 </div>

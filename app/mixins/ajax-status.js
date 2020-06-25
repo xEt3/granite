@@ -44,13 +44,13 @@ export default Mixin.create({
     }
 
     this.setProperties({
-      [this.get('loadingProp')]:          false,
-      [`${this.get('loadingProp')}Slow`]: false,
-      errorMessage:                       errMsg,
-      fieldErrors:                        errorsArray && findFieldErrors(errorsArray)
+      [this.loadingProp]:          false,
+      [`${this.loadingProp}Slow`]: false,
+      errorMessage:                errMsg,
+      fieldErrors:                 errorsArray && findFieldErrors(errorsArray)
     });
 
-    if (this.get('enableNotify')) {
+    if (this.enableNotify) {
       this.send('notify', 'error', 'Whoops! ' + errMsg);
     }
   },
@@ -59,38 +59,38 @@ export default Mixin.create({
     this.__cancelLongRunningProp();
 
     this.setProperties({
-      [this.get('loadingProp')]:          false,
-      [`${this.get('loadingProp')}Slow`]: false,
-      errorMessage:                       null,
-      successMessage:                     success,
-      fieldErrors:                        false
+      [this.loadingProp]:          false,
+      [`${this.loadingProp}Slow`]: false,
+      errorMessage:                null,
+      successMessage:              success,
+      fieldErrors:                 false
     });
 
     setTimeout(() => {
-      if (!this.get('isDestroyed') && !this.get('isDestroying')) {
+      if (!this.isDestroyed && !this.isDestroying) {
         this.set('successMessage', null);
       }
-    }, this.get('successMessageTimeout') * 1000);
+    }, this.successMessageTimeout * 1000);
 
-    if (!silent && this.get('enableNotify')) {
+    if (!silent && this.enableNotify) {
       this.send('notify', 'success', success || 'Successfully saved.');
     }
   },
 
   ajaxStart () {
     this.setProperties({
-      [this.get('loadingProp')]:          true,
-      [`${this.get('loadingProp')}Slow`]: false,
-      errorMessage:                       null,
-      successMessage:                     null,
-      fieldErrors:                        false
+      [this.loadingProp]:          true,
+      [`${this.loadingProp}Slow`]: false,
+      errorMessage:                null,
+      successMessage:              null,
+      fieldErrors:                 false
     });
 
     this.__scheduleLongRunningProp();
   },
 
   __cancelLongRunningProp () {
-    const timeoutId = this.get('__longRunningPropToid');
+    const timeoutId = this.__longRunningPropToid;
 
     if (timeoutId) {
       clearTimeout(timeoutId);
@@ -98,12 +98,12 @@ export default Mixin.create({
   },
 
   __scheduleLongRunningProp () {
-    const loadingProp = this.get('loadingProp');
+    const loadingProp = this.loadingProp;
 
     this.set('__longRunningPropToid', setTimeout(() => {
-      if (!this.get('isDestroyed') && this.get(loadingProp)) {
+      if (!this.isDestroyed && this.get(loadingProp)) {
         this.set(`${loadingProp}Slow`, true);
       }
-    }, this.get('slowRunningThreshold')));
+    }, this.slowRunningThreshold));
   }
 });

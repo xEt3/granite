@@ -1,35 +1,28 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { A } from '@ember/array';
-import { computed, get } from '@ember/object';
+import { get, action } from '@ember/object';
 import { modelPageMap } from 'granite/config/statics';
 import titleCase from 'granite/utils/title-case';
 
-const RecordSetRecordComponent = Component.extend({
-  tagName:           'tr',
-  classNames:        [ 'import__record' ],
-  classNameBindings: [
-    'record.duplicate:import__record--duplicate',
-    'isSelected:import__record--is-selected'
-  ],
+export default class TablesImportRecordSetRecordComponent extends Component {
+  get isSelected () {
+    return (this.args.selectedRows || []).includes(this.args.record.id);
+  }
 
-  isSelected: computed('selectedRows.[]', 'record.id', function () {
-    return (this.get('selectedRows') || []).includes(this.get('record.id'));
-  }),
-
-  matchReason: computed('duplicate.matchReason', function () {
-    let match = this.get('duplicate.matchReason');
+  get matchReason () {
+    let match = this.duplicate.matchReason;
 
     if (!match) {
-      return;
+      return null;
     }
 
     return A(match.map(m => titleCase([ m.split('.')[0] ]))).uniq().join(', ');
-  }),
+  }
 
-  duplicate: computed('fields.[]', 'record.duplicate', 'recordType', function () {
-    const duplicate = this.get('record.duplicate'),
-          displayField = this.get('fields')[0],
-          page = modelPageMap[this.get('recordType')] || {};
+  get duplicate () {
+    const duplicate = this.args.record.duplicate,
+          displayField = this.args.fields[0],
+          page = modelPageMap[this.args.recordType] || {};
 
     return duplicate && {
       page:        page.path,
@@ -38,27 +31,26 @@ const RecordSetRecordComponent = Component.extend({
       id:          duplicate._id,
       matchReason: duplicate.matchReason
     };
-  }),
-
-  actions: {
-    linkToDuplicate () {
-      const { page, id, includeId } = this.get('duplicate') || {};
-
-      if (!page) {
-        return;
-      }
-
-      let transitionArgs = [ page ];
-
-      if (includeId) {
-        transitionArgs.push(id);
-      }
-
-      this.get('onTransition')(transitionArgs);
-    }
   }
-});
 
-RecordSetRecordComponent.reopenClass({ positionalParams: [ 'record', 'selectedRows' ] });
+  @action
+  linkToDuplicate () {
+    const { page, id, includeId } = this.duplicate || {};
 
-export default RecordSetRecordComponent;
+    if (!page) {
+      return;
+    }
+
+    let transitionArgs = [ page ];
+
+    if (includeId) {
+      transitionArgs.push(id);
+    }
+
+    this.args.onTransition(transitionArgs);
+  }
+}
+
+// RecordSetRecordComponent.reopenClass({ positionalParams: [ 'record', 'selectedRows' ] });
+
+// export default RecordSetRecordComponent;

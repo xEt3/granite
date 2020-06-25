@@ -1,16 +1,13 @@
-import Route from '@ember/routing/route';
-import { hash } from 'rsvp';
-import refreshable from 'granite/mixins/refreshable';
+import Route from 'granite/core/route';
 
-export default Route.extend(refreshable, {
-  titleToken: 'Applicants',
+export default class AccountJobOpeningCampaignApplicantTrackingRoute extends Route {
+  titleToken = 'Applicants'
+  queryParams = { showDisqualified: { refreshModel: true } }
 
-  queryParams: { showDisqualified: { refreshModel: true } },
-
-  model (params) {
+  async model (params) {
     const jobOpening = this.modelFor('account.job-opening');
     const applicationsQuery = {
-      jobOpening: jobOpening.get('id'),
+      jobOpening: jobOpening.id,
       sort:       { created: 1 }
     };
 
@@ -18,20 +15,21 @@ export default Route.extend(refreshable, {
       applicationsQuery.disqualified = { $ne: true };
     }
 
-    return hash({
+    let pipeline = await this.store.query('recruiting-pipeline', {
+      $or:   [{ jobOpenings: { $in: [ jobOpening.id ] } }, { 'jobOpenings.0': { $exists: false } }],
+      limit: 1,
+      sort:  { jobOpenings: -1 } // Prefer to get back a jobOpening-tagged pipeline
+    });
+
+    return {
       // Job opening
       jobOpening,
-      job:          jobOpening.get('job'),
+      job:          jobOpening.job,
       // Applications for this pipeline
-      applications: this.store.query('job-application', applicationsQuery),
-      employees:    this.store.query('employee', { sort: { lastName: -1 } }),
+      applications: await this.store.query('job-application', applicationsQuery),
+      employees:    await this.store.query('employee', { sort: { lastName: -1 } }),
       // Recruiting pipeline
-      pipeline:     this.store.query('recruiting-pipeline', {
-        $or:   [{ jobOpenings: { $in: [ jobOpening.get('id') ] } }, { 'jobOpenings.0': { $exists: false } }],
-        limit: 1,
-        sort:  { jobOpenings: -1 } // Prefer to get back a jobOpening-tagged pipeline
-      })
-      .then(results => results ? results.get('firstObject') : results)
-    });
+      pipeline:     pipeline ? pipeline.firstObject : pipeline
+    };
   }
-});
+}

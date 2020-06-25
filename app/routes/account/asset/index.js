@@ -1,9 +1,8 @@
-import Route from '@ember/routing/route';
-import refreshable from 'granite/mixins/refreshable';
+import Route from 'granite/core/route';
 
-export default Route.extend(refreshable, {
-  titleToken:  'Asset Inventory',
-  queryParams: { page: { refreshModel: true } },
+export default class AccountAssetRoute extends Route {
+  titleToken = 'Asset Inventory'
+  queryParams = { page: { refreshModel: true } }
 
   model (params) {
     let page = (params.page || 1) - 1,
@@ -15,4 +14,4 @@ export default Route.extend(refreshable, {
       asset: this.paramsFor('account.asset').id
     });
   }
-});
+}

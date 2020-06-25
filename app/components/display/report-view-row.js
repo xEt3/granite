@@ -1,7 +1,3 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-const reportViewRow = Component.extend({ tagName: 'tr' });
-
-reportViewRow.reopenClass({ positionalParams: [ 'rowData', 'numColumns' ] });
-
-export default reportViewRow;
+export default class DisplayReportViewRow extends Component {}

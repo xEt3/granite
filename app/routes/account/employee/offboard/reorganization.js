@@ -1,38 +1,37 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
 
 const $or = [{ terminatedOn: { $exists: false } }, { terminatedOn: null }];
 
-export default Route.extend({
-  titleToken: 'Reorganization',
-  ajax:       service(),
+export default class AccountEmployeeOffboardReorganizationRoute extends Route {
+  @service ajax
+  titleToken = 'Reorganization'
 
-  model () {
+  async model () {
     let employee = this.modelFor('account.employee.offboard'),
         select = 'name email supervisor';
 
-    return RSVP.hash({
+    return {
       employee,
-      employees: this.store.query('employee', {
+      employees: await this.store.query('employee', {
         select,
         $or,
-        _id: { $ne: employee.get('id') }
+        _id: { $ne: employee.id }
       }),
-      hasDirectReports: this.hasDirectReports(employee)
-    });
-  },
+      hasDirectReports: await this.hasDirectReports(employee)
+    };
+  }
 
-  hasDirectReports (employee) {
-    return this.get('ajax').request('/api/v1/employees', {
+  async hasDirectReports (employee) {
+    let res = await this.ajax.request('/api/v1/employees', {
       data: {
         $or,
         supervisor: employee.get('id'),
         select:     '_id'
       }
-    })
-    .then(res => res.employee && res.employee.length);
-  },
+    });
+    return res.employee && res.employee.length;
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -41,4 +40,4 @@ export default Route.extend({
       hasDirectReports: model.hasDirectReports
     });
   }
-});
+}

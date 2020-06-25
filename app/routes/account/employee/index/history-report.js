@@ -1,64 +1,64 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+import Route from 'granite/core/route';
+import Object, { action } from '@ember/object';
+import humanizeKey from 'granite/utils/humanize-key-name';
 import { inject as service } from '@ember/service';
 import { A } from '@ember/array';
-import Object from '@ember/object';
-import refreshable from 'granite/mixins/refreshable';
-import humanizeKey from 'granite/utils/humanize-key-name';
 
-export default Route.extend(refreshable, {
-  titleToken:  'History Report',
-  ajax:        service(),
-  limit:       5,
-  queryParams: {
+export default class AccountEmployeeHistoryReportRoute extends Route {
+  @service ajax
+
+  titleToken = 'History Report'
+  limit = 5
+
+  queryParams = {
     field:   { refreshModel: true },
     creator: { refreshModel: true }
-  },
+  }
 
-  model (params) {
+  async model (params) {
     let controller = this.controller,
-        page = controller ? controller.get('page') - 1 : 0,
-        employee = this.modelFor('account.employee').get('id');
+        page = controller ? controller.page - 1 : 0,
+        employee = this.modelFor('account.employee').id;
 
     if (controller) {
-      controller.set('isLoading', true);
+      controller.isLoading = true;
     }
 
-    return RSVP.hash({
-      history:  this.getHistory(params, employee, page),
-      fields:   controller && controller.get('fields') ? controller.get('fields') : this.getFields(),
-      creators: this.store.findAll('company-user')
-    });
-  },
+    return {
+      history:  await this.getHistory(params, employee, page),
+      fields:   controller && controller.fields ? controller.fields : await this.getFields(),
+      creators: await this.store.findAll('company-user')
+    };
+  }
 
-  getFields (employee) {
-    return this.get('ajax').request('api/v1/histories', {
+  @action
+  async getFields (employee) {
+    let result = await this.ajax.request('/api/v1/histories', {
       employee,
       select: 'diff -_id'
-    })
-    .then(result => {
-      return result.history ? result.history.reduce((keys, change) => {
-        keys.addObjects(change.diff.map(diff => {
-          let path = diff.path.join('.');
-          return {
-            display: humanizeKey(path),
-            value:   path
-          };
-        }));
-
-        return keys;
-      }, A()).uniqBy('display') : [];
     });
-  },
+    return result.history ? result.history.reduce((keys, change) => {
+      keys.addObjects(change.diff.map(diff => {
+        let path = diff.path.join('.');
+        return {
+          display: humanizeKey(path),
+          value:   path
+        };
+      }));
 
-  getHistory (params, targetId, page) {
+      return keys;
+    }, A()).uniqBy('display') : [];
+  }
+
+  @action
+  async getHistory (params, targetId, page) {
     let controller = this.controller,
         field = params.field;
 
     let query = {
       page,
       targetId,
-      limit:  this.get('limit'),
+      limit:  this.limit,
       select: '-snapshot',
       sort:   { created: -1 }
     };
@@ -71,34 +71,33 @@ export default Route.extend(refreshable, {
       query.creatorId = { $in: params.creator };
     }
 
-    return this.store.query('history', query)
-    .then(result => {
-      if (controller) {
-        controller.set('isLoading', false);
-      }
+    let result = await this.store.query('history', query);
 
-      let existingSet = controller && !controller.get('resetModel') ? controller.get('model') : A(),
-          diffs = A();
+    if (controller) {
+      controller.isLoading = false;
+    }
 
-      result.forEach(item => {
-        item.get('diff').forEach(diff => {
-          if (field && field.length > 0 && !A(field).includes(diff.path.join('.'))) {
-            return;
-          }
+    let existingSet = controller && !controller.resetModel ? controller.model : A(),
+        diffs = A();
 
-          diffs.pushObject(Object.create({
-            diff,
-            history: item
-          }));
-        });
+    result.forEach(item => {
+      item.diff.forEach(diff => {
+        if (field && field.length > 0 && !A(field).includes(diff.path.join('.'))) {
+          return;
+        }
+
+        diffs.pushObject(Object.create({
+          diff,
+          history: item
+        }));
       });
-
-      return {
-        records: A(existingSet.toArray()).addObjects(diffs),
-        meta:    result.get('meta')
-      };
     });
-  },
+
+    return {
+      records: A(existingSet.toArray()).addObjects(diffs),
+      meta:    result.meta
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -109,4 +108,4 @@ export default Route.extend(refreshable, {
       resetModel: false
     });
   }
-});
+}

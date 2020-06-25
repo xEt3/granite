@@ -1,14 +1,13 @@
-import Route from '@ember/routing/route';
+import { GraniteResourceRoute } from 'granite/core/route';
 import { all } from 'rsvp';
-import resource from 'granite/mixins/route-abstractions/resource';
 
-export default Route.extend(resource, {
-  titleToken: 'Webinars',
-  modelName:  'webinar',
+export default class AccountEducationWebinarsRoute extends GraniteResourceRoute {
+  titleToken = 'Webinars'
+  modelName =  'webinar'
 
-  sort: { title: 1 },
+  sort = { title: 1 }
 
-  queryParams: {
+  queryParams = {
     page:    { refreshModel: true },
     limit:   { refreshModel: true },
     sortAsc: { refreshModel: true },
@@ -16,7 +15,7 @@ export default Route.extend(resource, {
       refreshModel: true,
       replace:      true
     }
-  },
+  }
 
   async model ({ q }, transition) {
     const qpTransition = transition.from && transition.from.name === transition.to.name;
@@ -27,14 +26,14 @@ export default Route.extend(resource, {
     };
 
     const promisesToResolve = [
-      !q && this.__cacheWebinars ? this.__cacheWebinars : this._super(...arguments),
+      !q && this.__cacheWebinars ? this.__cacheWebinars : super.model(...arguments),
       this.__cacheAuthorizations ? this.__cacheAuthorizations : this.store.query('webinar-authorization', { sort: { created: -1 } })
     ];
 
     const resolved = await all(promisesToResolve),
           cacheKeys = Object.keys(updateCache);
 
-    for (let cacheKey in updateCache) {
+    for (var cacheKey in updateCache) {
       if (!Object.prototype.hasOwnProperty.call(updateCache, cacheKey)) {
         continue;
       }
@@ -48,7 +47,7 @@ export default Route.extend(resource, {
       webinars:       resolved[0],
       authorizations: resolved[1]
     };
-  },
+  }
 
   mutateQuery (query, params) {
     if (!params.q) {
@@ -58,7 +57,7 @@ export default Route.extend(resource, {
     query.qKey = [ 'title', 'description' ];
     query.q = params.q;
     return query;
-  },
+  }
 
   setupController (controller, model) {
     const { webinars, authorizations } = model;
@@ -68,4 +67,4 @@ export default Route.extend(resource, {
       authorizations
     });
   }
-});
+}

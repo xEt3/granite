@@ -1,6 +1,5 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
-import { inject as controller } from '@ember/controller';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
 
 const baseSteps = [{
   title:       'Company Information',
@@ -19,11 +18,11 @@ const baseSteps = [{
   path:        'signup.finish'
 }];
 
-export default Controller.extend({
-  application: controller(),
+export default class SignupController extends Controller {
+  @service router
 
-  steps: computed('application.currentPath', function () {
-    const appPath = this.get('application.currentPath');
+  get steps () {
+    const appPath = this.router.currentRouteName;
 
     let activeToggled;
 
@@ -41,5 +40,5 @@ export default Controller.extend({
 
       return retObj;
     });
-  })
-});
+  }
+}

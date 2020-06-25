@@ -1,18 +1,21 @@
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-export default Controller.extend(addEdit, {
-  auth:                service(),
-  transitionWithModel: true,
-  transitionAfterSave: 'account.employee.index.counseling.issue',
+export default class AccountEmployeeCounselingNewController extends Controller {
+  @service auth
+  @service data
 
-  severities:       computed.reads('auth.user.company.correctiveActionSeverities'),
-  severitySorting:  [ 'order' ],
-  sortedSeverities: computed.sort('severities', 'severitySorting'),
+  severitySorting = [ 'order' ]
+  saveOptions = {
+    transitionWithModel: true,
+    transitionAfterSave: 'account.employee.index.counseling.issue'
+  }
 
-  form: computed(() => [{
+  @computed.reads('auth.user.company.correctiveActionSeverities') severities
+  @computed.sort('severities', 'severitySorting') sortedSeverities
+
+  form = [{
     label:       'Issue Title',
     inputClass:  'large',
     type:        'text',
@@ -44,5 +47,5 @@ export default Controller.extend(addEdit, {
     contentPath: 'controller.users',
     displayKey:  'fullName',
     selectText:  'Select one or multiple'
-  }])
-});
+  }]
+}

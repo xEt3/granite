@@ -1,31 +1,28 @@
-import Route from '@ember/routing/route';
-import { Promise } from 'rsvp';
-import add from 'granite/mixins/route-abstractions/add';
+import Route from 'granite/core/route';
 
-export default Route.extend(add, {
-  titleToken: 'Screening',
-  modelName:  'form',
+export default class AccountJobOpeningSetupScreeningRoute extends Route {
+  titleToken = 'Screening'
+  modelName =  'form'
+  routeType = 'add'
 
-  modelDefaults: { formType: 'screening' },
+  modelDefaults = { formType: 'screening' }
 
-  model () {
-    let jobOpening = this.modelFor('account.job-opening'),
-        makeNew = this._super.bind(this); // "add" mixin's model hook
+  async model () {
+    let jobOpening = this.modelFor('account.job-opening');
 
     // Attempt to find a form for the current job opening
-    return this.store.query('form', {
+    let response = await this.store.query('form', {
       targetType: 'JobOpening',
-      targetId:   jobOpening.get('id')
-    })
-    // Resolve the found form or otherwise make a new form
-    .then(response => Promise.resolve(response.get('firstObject') || makeNew()))
-    .then(form => {
-      return {
-        form,
-        jobOpening
-      };
+      targetId:   jobOpening.id
     });
-  },
+    // Use the found form or otherwise make a new form
+    let form = await response.firstObject || await super.model(...arguments);
+
+    return {
+      form,
+      jobOpening
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -33,4 +30,4 @@ export default Route.extend(add, {
       form:  model.form
     });
   }
-});
+}

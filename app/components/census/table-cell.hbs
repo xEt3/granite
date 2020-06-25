@@ -1,0 +1,19 @@
+<td class="{{if this.highlightCell "census__highlight-cell"}}">
+  {{#if this.missingRelationship}}
+    {{@column}}
+    <EmberTooltip @side="top" @popperContainer="body" @text={{this.popupMessage}} />
+    <a href="#" {{on "click" (prevent-default this.addAction)}}>
+      <i class="exclamation circle icon"></i>
+    </a>
+  {{else if this.missingRequiredFields}}
+    <EmberTooltip @side="top" @popperContainer="body" @text="This is a required field" />
+    {{@column}}
+    <i class="exclamation circle icon"></i>
+  {{else}}
+    {{#if this.hasEnumInvalidation}}
+      <EmberTooltip @side="top" @popperContainer="body" @text={{this.hasEnumInvalidation}} />
+      <i class="exclamation circle icon"></i>
+    {{/if}}
+    {{@column}}
+  {{/if}}
+</td>

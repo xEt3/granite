@@ -3,20 +3,19 @@
     <h1 class="ui header left floated">
       New Position
     </h1>
-    <h4 class="right floated">{{#link-to "account.recruiting.job-descriptions.new"}}Add a job description...{{/link-to}}</h4>
+    <h4 class="right floated"><LinkTo @route="account.recruiting.job-descriptions.new">Add a job description...</LinkTo></h4>
   </hgroup>
   <div class="ui divider"></div>
 
-  {{#quick-form
-    this.form
-    this.model
-    this
-    working=this.working
-    submitClass="huge fluid green"
-    onsubmit=(action "save" this.model)
-    disabled=(or (not this.model.name) (not this.model.job))
-  }}
+  <QuickForm
+    @form={{this.form}}
+    @model={{this.model}}
+    @controller={{this}}
+    @working={{this.data.statuses.savingCampaign.isLoading}}
+    @submitClass="huge fluid green"
+    @onsubmit={{this.save}}
+    @disabled={{or (and (not this.model.name) (not this.model.defaultName)) (not this.model.job)}}
+  >
     Save and Continue
-  {{/quick-form}}
-
+  </QuickForm>
 </div>

@@ -1,0 +1,4 @@
+<div class="field">
+  <label for={{this.inputId}}>{{@attribute}}{{yield}}</label>
+  <Input @type="text" @id={{this.inputId}} @value={{mut (get @object @attribute)}} @placeholder={{this.placeholder}}/>
+</div>

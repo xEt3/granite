@@ -1,7 +1,6 @@
 import Modal from '.';
 
-const SchedulerModalComponent = Modal.extend({ modalId: 'modal__ats-scheduler' });
-
-SchedulerModalComponent.reopenClass({ positionalParams: [ 'model', 'meeting' ] });
-
-export default SchedulerModalComponent;
+export default class SchedulerModalComponent extends Modal {
+  modalId = 'modal__ats-scheduler'
+  onResponse = this.args.onResponse
+}

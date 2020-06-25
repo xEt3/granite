@@ -1,27 +1,26 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import { hash } from 'rsvp';
 
-export default Route.extend({
-  ajax:       service(),
-  titleToken: 'Document Assignments',
+export default class AccountEmployeeOffboardDocumentsRoute extends Route {
+  @service ajax
+  titleToken = 'Document Assignments'
 
-  model () {
+  async model () {
     const employee = this.modelFor('account.employee.offboard');
 
-    return hash({
+    return {
       employee,
-      offboardingDocuments: this.store.query('file', {
+      offboardingDocuments: await this.store.query('file', {
         tags: { $in: [ 'Offboarding' ] },
         sort: { title: 1 }
       }),
-      assignments: this.store.query('file-assignment', {
-        employee: employee.get('id'),
+      assignments: await this.store.query('file-assignment', {
+        employee: employee.id,
         fileType: { $ne: 'Onboarding' },
         sort:     { created: 1 }
       })
-    });
-  },
+    };
+  }
 
   setupController (controller, model) {
     const {
@@ -36,4 +35,4 @@ export default Route.extend({
       assignments: assignments.toArray()
     });
   }
-});
+}

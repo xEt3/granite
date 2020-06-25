@@ -1,11 +1,11 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { run } from '@ember/runloop';
 
-export default Route.extend({
-  titleToken: 'Setup Finished',
+export default class SetupCompleteRoute extends Route {
+  titleToken = 'Setup Finished';
 
-  afterModel (model) {
-    model.setProperties({
+  async afterModel (model) {
+    Object.assign(model, {
       setup:          false,
       setupStep:      null,
       setupProgress:  null,
@@ -17,8 +17,10 @@ export default Route.extend({
     this.analytics.trackEvent('Features', 'close_notice', model.sendCloseNotice ? 'Used' : 'Did not use');
     this.analytics.trackEvent('Features', 'applicant_sources', model.applicantSources?.length ?? 0);
 
-    model.save().then(() => run.scheduleOnce('afterRender', () => run.later(() => {
+    await model.save();
+
+    run.scheduleOnce('afterRender', () => run.later(() => {
       this.transitionTo('account.job-opening');
-    }, 5000)));
+    }, 5000));
   }
-});
+}

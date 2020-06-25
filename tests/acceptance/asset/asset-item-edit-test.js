@@ -23,7 +23,6 @@ module('Acceptance | edit company asset-items', function (hooks) {
     await fillIn(`input[placeholder="${myAssetCategory.attributes} value"]`, 'updated attribute');
     await click('.ui.huge.green.button');
     await click('.down.angle.icon');
-
     assert.dom('.line-item-value > u').hasText('updated attribute');
   });
 });

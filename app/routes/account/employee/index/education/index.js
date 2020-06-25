@@ -1,7 +1,7 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({
-  titleToken: 'Education & Training',
+export default class IndexRoute extends Route {
+  titleToken = 'Education & Training';
 
   async model () {
     let q = { employee: this.modelFor('account.employee').id };
@@ -11,4 +11,4 @@ export default Route.extend({
       trainingAssignments: await this.store.query('training-assignment', q)
     };
   }
-});
+}

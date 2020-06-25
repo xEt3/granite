@@ -1,18 +1,17 @@
-<form {{action "saveAndContinue" on="submit"}}>
+<form {{on "submit" (prevent-default (route-action "saveAndContinue"))}}>
   <h2 class="ui horizontal divider header">Review</h2>
   <h3 class="ui center aligned lightly weighted header">
     You are hiring <strong>{{this.model.positions}} {{inflect-text this.model.job.title this.model.positions}}</strong> for your <strong>{{this.model.location.name}}</strong> location.
     {{#if this.model.applicantSources.length}}
       After launching your campaign, Granite will post your job to
       <strong>
-        {{#ember-tooltip
-          popperContainer="body"
-          text="Manually add applicant"
-        }}
+        <EmberTooltip
+          @popperContainer="body"
+          @text="Manually add applicant">
           {{#each this.model.applicantSources as |source|}}
             {{source.name}}<br>
           {{/each}}
-        {{/ember-tooltip}}
+        </EmberTooltip>
         {{this.model.applicantSources.length}} {{inflect-text "source" this.model.applicantSources.length}}
       </strong>
       beginning
@@ -37,10 +36,7 @@
 
   <div class="ui divider"></div>
 
-  {{#form/action-button
-    type="submit"
-    class="ui huge fluid green button"
-    loading=this.working}}
+  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.wizard.isLoading}}>
     <i class="rocket icon"></i> Launch Campaign
-  {{/form/action-button}}
+  </Form::ActionButton>
 </form>

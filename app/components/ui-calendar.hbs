@@ -1,0 +1,13 @@
+{{yield (action "execute")}}
+
+{{#unless this.inline}}
+  <label for={{this.calendarId}}>{{this.label}}</label>
+  <div class="ui input left icon" id={{this.calendarId}}>
+    <i class="calendar icon"></i>
+    {{#if this.value}}
+      <input type="text" value={{time this.value "MMMM D, YYYY"}} placeholder={{or this.placeholder "Select or type a date"}}>
+    {{else}}
+      <input type="text" placeholder={{or this.placeholder "Select or type a date"}}>
+    {{/if}}
+  </div>
+{{/unless}}

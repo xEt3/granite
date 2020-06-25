@@ -1,17 +1,17 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import add from 'granite/mixins/route-abstractions/add';
 
-export default Route.extend(add, {
-  titleToken: 'New Document',
-  auth:       service(),
-  modelName:  'file-assignment',
+export default class AccountEmployeeDocumentsNewRoute extends Route {
+  @service auth
+  titleToken = 'New Document'
+  modelName =  'file-assignment'
+  routeType = 'add'
 
   getModelDefaults () {
     return {
-      creator:  this.get('auth.user.employee'),
-      company:  this.get('auth.user.company'),
+      creator:  this.auth.get('user.employee'),
+      company:  this.auth.get('user.company'),
       employee: this.modelFor('account.employee')
     };
   }
-});
+}

@@ -1,29 +1,27 @@
-<div class="ember-view">
-  {{head-layout}}
-  {{notification-container notifications=this.notifications position="bottom"}}
+<div class="ember-view" {{did-update this.updateBodyClass this.topLevel}} {{did-update this.transitionAfterExpiration this.auth.isExpired}}>
+  <HeadLayout />
+  <NotificationContainer @notifications={{this.notifications}} @position="bottom" />
 
-  {{display/subscription-banner
-    transitionToSubscription=(action "transitionToSubscription")
-    accountLocked=this.subscription.accountLocked}}
+  <Display::SubscriptionBanner @transitionToSubscription={{this.transitionToSubscription}} @accountLocked={{this.subscription.accountLocked}} />
 
   <div class="ui main">
     {{#if (not (or this.topLevel this.noNav))}}
-      {{elements/account-navigation links=this.accountNavigationItems ui_context="body .ember-view .main"}}
+      <Elements::AccountNavigation @links={{this.accountNavigationItems}} @ui_context="body .ember-view .main" />
     {{/if}}
     {{! template-lint-disable no-inline-styles }}
     <div class="ember-view ui fluid container {{unless this.topLevel "in__application pusher"}} {{if this.increaseReadability "main__dark-text"}}" style={{if this.backdrop this.backdrop}}>
       {{#if this.topLevel}}
-        {{elements/x-navigation transparent=this.navTransparent topLevel=this.topLevel}}
+        <Elements::XNavigation @transparent={{this.navTransparent}} @topLevel={{this.topLevel}} />
       {{/if}}
 
       <div class="application__outlet-wrapper">
         {{outlet}}
       </div>
 
-      {{elements/x-footer}}
+      <Elements::XFooter />
     </div>
   </div>
   {{#if (and this.auth.isExpiring (not this.auth.isExpired))}}
-    {{confirm-modal confirmOnRender=true confirmContent="Your session is expiring. Would you like to continue?" onResponse=(action "authResponse")}}
+    <ConfirmModal @confirmOnRender={{true}} @confirmContent="Your session is expiring. Would you like to continue?" @onResponse={{this.authResponse}} />
   {{/if}}
 </div>

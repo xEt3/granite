@@ -1,3 +1,5 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({ titleToken: 'Corrective Action' });
+export default class AccountEmployeeIssueCorrectiveActionIndexRoute extends Route {
+  titleToken = 'Corrective Action';
+}

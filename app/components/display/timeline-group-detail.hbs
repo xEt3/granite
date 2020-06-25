@@ -1,0 +1,15 @@
+<div class="history-timeline__detail clearfix" ...attributes>
+  <div class="timeline-detail__content">
+    {{#liquid-if @group}}
+      <h2 class="ui center aligned header">{{@group.history.length}} {{inflect-text "Changes" @group.history.length}} on {{time @group.date "MMMM Do"}}</h2>
+      {{#each @group.history as |history|}}
+        <ListItem::HistoryItem @history={{history}} />
+      {{/each}}
+    {{/liquid-if}}
+  </div>
+  <div class="timeline-detail__pointer"></div>
+
+  {{#liquid-if @group}}
+    <button type="button" class="ui fluid button history-timeline__deselect" {{on "click" (prevent-default @deselectGroup)}}>Return to all events</button>
+  {{/liquid-if}}
+</div>

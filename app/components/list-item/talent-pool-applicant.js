@@ -1,19 +1,18 @@
-import BaseLiComponent from './base';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import moment from 'moment';
+import { or, reads, equal } from '@ember/object/computed';
 
-export default BaseLiComponent.extend({
-  classNames:     [ 'item', 'talent-pool__applicant' ],
-  _model:         computed.or('model.record', 'model'),
-  _meta:          computed.reads('model.meta.meta'),
-  firstIsLastApp: computed.equal('_meta.timesApplied', 1),
+export default class ListItemTalentPoolApplicantComponent extends Component {
+  @or('args.model.record', 'args.model') _model
+  @reads('args.model.meta.meta') _meta
+  @equal('_meta.timesApplied', 1) firstIsLastApp
 
-  activeTime: computed('_meta.firstApplication', function () {
-    return moment().diff(this.get('_meta.firstApplication'), 'days');
-  }),
+  get activeTime () {
+    return moment().diff(this._meta.firstApplication, 'days');
+  }
 
-  scoreAbs: computed('_meta.avgScore', function () {
-    const v = this.get('_meta.avgScore');
+  get scoreAbs () {
+    const v = this._meta.avgScore;
     return v ? v > 100 ? 100 : v < 0 ? 0 : v : v;
-  })
-});
+  }
+}

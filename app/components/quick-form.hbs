@@ -1,0 +1,36 @@
+{{#let (element (if @tagName @tagName "form")) as |Tag|}}
+  <Tag class="ui form" ...attributes>
+    {{#each @form as |field|}}
+      {{#if (not (and field.displayIf (not (get @model field.displayIf))))}}
+        {{#if field.embeddedInput}}
+          <Input::QuickFormInput
+            @field={{field}}
+            @model={{@model}}
+            @controller={{@controller}}
+            class={{field.class}}
+          >
+            <Input::QuickFormInput
+              @field={{field.embeddedInput}}
+              @model={{@model}}
+              @controller={{@controller}}
+              @tagName={{null}}
+              class={{field.class}}/>
+          </Input::QuickFormInput>
+        {{else}}
+          <Input::QuickFormInput
+            @field={{field}}
+            @model={{@model}}
+            @controller={{@controller}}
+            class={{field.class}}/>
+        {{/if}}
+      {{/if}}
+    {{/each}}
+
+    {{#if @onsubmit}}
+      <div class="ui divider"></div>
+      <form {{on "submit" (prevent-default @onsubmit)}}>
+        <Form::ActionButton type="submit" class={{this._submitClass}} @disabled={{@disabled}} @loading={{@working}}>{{yield}}</Form::ActionButton>
+      </form>
+    {{/if}}
+  </Tag>
+{{/let}}

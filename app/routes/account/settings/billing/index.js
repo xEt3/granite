@@ -1,22 +1,20 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 import { hash } from 'rsvp';
-import refreshable from 'granite/mixins/refreshable';
 
-export default Route.extend(refreshable, {
-  ajax:         service(),
-  auth:         service(),
-  subscription: service(),
+export default class BillingRoute extends Route {
+  @service subscription
 
   model () {
-    let company = this.get('auth.user.company');
+    const company = this.auth.user.get('company');
 
     return hash({
       company,
       paymentMethod:    this.store.queryRecord('payment-method', { company: company.get('id') }),
       subscriptionInfo: this.subscription.getSubscription()
     });
-  },
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -25,13 +23,12 @@ export default Route.extend(refreshable, {
       paymentMethod: model.paymentMethod,
       company:       model.company
     });
-  },
+  }
 
-  actions: {
-    willTransition (transition) {
-      if (this.get('subscription.accountLocked') && transition.targetName !== 'account.settings.billing.index' && transition.targetName !== 'index') {
-        transition.abort();
-      }
+  @action
+  willTransition (transition) {
+    if (this.subscription.accountLocked && transition.targetName !== 'account.settings.billing.index' && transition.targetName !== 'index') {
+      transition.abort();
     }
   }
-});
+}

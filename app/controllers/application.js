@@ -1,7 +1,6 @@
-import Controller from '@ember/controller';
-import { computed, observer } from '@ember/object';
+import Controller from 'granite/core/controller';
+import { computed, action } from '@ember/object';
 import { run } from '@ember/runloop';
-import { on } from '@ember/object/evented';
 import { inject as service } from '@ember/service';
 import $ from 'jquery';
 import ENV from 'granite/config/environment';
@@ -21,38 +20,43 @@ const noNavRoutes = [
   'shared'
 ];
 
-export default Controller.extend({
-  auth:          service(),
-  notifications: service('notification-messages'),
-  subscription:  service(),
+export default class ApplicationController extends Controller {
+  @service auth
+  @service('notification-messages') notifications
+  @service subscription
 
-  accountNavigationItems: computed('auth.user.company.exposeBetaModules', function () {
-    let showBetas = this.get('auth.user.company.exposeBetaModules');
+  constructor () {
+    super(...arguments);
+    this.updateBodyClass();
+  }
+
+  get accountNavigationItems () {
+    let showBetas = this.auth.get('user.company.exposeBetaModules');
     return showBetas ? accountNavigationItems : accountNavigationItems.filter(item => !item.beta);
-  }),
+  }
 
-  navTransparent: computed.equal('currentPath', 'index'),
+  @computed.equal('currentPath', 'index') navTransparent
 
-  topLevel: computed('currentPath', function () {
-    const currentPath = this.get('currentPath');
+  get topLevel () {
+    const currentPath = this.currentPath;
     return currentPath && !nonTopLevelRoutes.find(r => currentPath.indexOf(r) > -1);
-  }),
+  }
 
-  noNav: computed('currentPath', function () {
-    const currentPath = this.get('currentPath');
+  get noNav () {
+    const currentPath = this.currentPath;
     return currentPath && noNavRoutes.find(r => currentPath.indexOf(r) > -1);
-  }),
+  }
 
-  /* eslint-disable-next-line */
-  updateBodyClass: on('init', observer('topLevel', function () {
+  @action
+  updateBodyClass () {
     if (ENV.environment !== 'test') {
       run.scheduleOnce('afterRender', () => {
-        $('body')[this.get('topLevel') ? 'removeClass' : 'addClass']('application__in-account');
+        $('body')[this.topLevel ? 'removeClass' : 'addClass']('application__in-account');
       });
     }
-  })),
+  }
 
-  increaseReadability: computed('backdrop', 'currentPath', function () {
+  get increaseReadability () {
     let backdrop = this.backdrop && this.backdrop.toString && this.backdrop.toString();
 
     if (!backdrop) {
@@ -64,14 +68,14 @@ export default Controller.extend({
         [ r, g, b ] = backgroundRGB.map(Number);
 
     return (r * 299 + g * 587 + b * 114) / 1000 > 123 ? true : false;
-  }),
+  }
 
-  backdrop: computed('auth.user.company.rgbPalette', 'currentPath', function () {
+  get backdrop () {
     if (this.currentPath.indexOf('account.') < 0) {
-      return;
+      return undefined;
     }
 
-    const palette = this.get('auth.user.company.rgbPalette');
+    const palette = this.auth.get('user.company.rgbPalette');
     const grad = palette ? `
       linear-gradient(${fadeRgb(lighten(palette[0], 10), 1)}, transparent),
       linear-gradient(80deg, ${fadeRgb(darken(palette[0], 20), 1)}, transparent),
@@ -79,32 +83,32 @@ export default Controller.extend({
       false;
 
     return htmlSafe(grad ? `background: ${grad}` : '');
-  }),
+  }
 
-  /* eslint-disable-next-line */
-  transitionAfterExpiration: observer('auth.isExpired', function () {
-    if (this.get('auth.isExpired')) {
+  @action
+  transitionAfterExpiration () {
+    if (this.auth.get('isExpired')) {
       $('.ui.modal').modal('hide');
       this.send('logout', true);
     }
-  }),
+  }
 
-  actions: {
-    transitionToSubscription () {
-      this.transitionToRoute('account.settings.billing.index');
-    },
+  @action
+  transitionToSubscription () {
+    this.transitionToRoute('account.settings.billing.index');
+  }
 
-    authResponse (response) {
-      let auth = this.get('auth');
+  @action
+  authResponse (response) {
+    let auth = this.auth;
 
-      if (response) {
-        auth.refreshSession()
-        .catch(() => {
-          this.send('logout', true);
-        });
-      } else {
-        this.send('logout');
-      }
+    if (response) {
+      auth.refreshSession()
+      .catch(() => {
+        this.send('logout', true);
+      });
+    } else {
+      this.send('logout');
     }
   }
-});
+}

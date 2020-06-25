@@ -1,16 +1,30 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { A } from '@ember/array';
-import { computed } from '@ember/object';
 
-const PipelineStageComponent = Component.extend({
-  classNames: [ 'pipeline__stage' ],
+export default class CardPipelineStageComponent extends Component {
+  get candidates () {
+    const stageId = this.args.stage._id;
+    return A([ stageId, ...(this.args.activeCandidates || []).filter(candidate => stageId === candidate.stage).sortBy('stageOrder') ]);
+  }
+}
 
-  candidates: computed('activeCandidates.@each.{stageOrder,stage}', 'stage._id', function () {
-    const stageId = this.get('stage._id');
-    return A([ stageId, ...(this.get('activeCandidates') || []).filter(candidate => stageId === candidate.get('stage')).sortBy('stageOrder') ]);
-  })
-});
+/*
+  USAGE:
 
-PipelineStageComponent.reopenClass({ positionalParams: [ 'stage', 'stages' ] });
+  <CardPipeline::StageColumn
+    @stage={{stage}}
+    @stages={{@pipeline.stages}}
+    @newScheduledMeeting={{@newScheduledMeeting}}
+    @activeCandidates={{@candidates}}
+    @dispatchReorder={{this.setOrder}}
+    @moveAppToStage={{this.moveAppToStage}}
+    @onDisqualify={{@onDisqualify}}
+    @onUnDisqualify={{@onUnDisqualify}}
+    @onUnHire={{@onUnHire}}
+    @onSchedule={{@onSchedule}}
+    @disableDragging={{this.data.statuses.working.isLoading}}
+    @onLinkSharing={{@onLinkSharing}}
+    @onOnboardCandidate={{@onOnboardCandidate}}
+    @onAddLabel={{@onAddLabel}} />
 
-export default PipelineStageComponent;
+*/

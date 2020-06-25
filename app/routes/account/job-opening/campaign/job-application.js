@@ -1,11 +1,10 @@
-import Route from '@ember/routing/route';
-import refreshable from 'granite/mixins/refreshable';
+import Route from 'granite/core/route';
 import { Promise, hash } from 'rsvp';
 
 const modelKeys = [ 'model', 'events', 'stage', 'opening', 'screening' ];
 
-export default Route.extend(refreshable, {
-  titleToken: 'Application',
+export default class JobApplicationRoute extends Route {
+  titleToken = 'Application';
 
   model (params) {
     return hash({
@@ -22,17 +21,17 @@ export default Route.extend(refreshable, {
       stage:     hashResults.model.get('stage') ? this.getStage(hashResults.model.get('stage')) : Promise.resolve(),
       screening: hashResults.opening.get('screening')
     })));
-  },
+  }
 
   getStage (stageId) {
     return this.store.query('recruiting-pipeline', {
       'stages._id': stageId,
       limit:        1
     })
-    .then(results => results ? results.get('firstObject.stages').findBy('id', stageId) : results);
-  },
+    .then(results => results ? results.get('firstObject.stages').findBy('_id', stageId) : results);
+  }
 
   setupController (controller, response) {
     modelKeys.forEach(k => controller.set(k, response[k]));
   }
-});
+}

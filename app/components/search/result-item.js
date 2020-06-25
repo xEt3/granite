@@ -1,4 +1,4 @@
-import BaseLiComponent from '../list-item/base';
+import Component from '@ember/component';
 import { computed, get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import uriForModel from 'granite/utils/uri-for-model';
@@ -23,8 +23,8 @@ const modelFieldMap = {
 
 const itemProperty = (property) =>
   computed('modelName', 'model', property, function () {
-    let model = this.get('model'),
-        modelName = this.get('modelName');
+    let model = this.model,
+        modelName = this.modelName;
 
     if (!modelName) {
       return null;
@@ -38,7 +38,7 @@ const itemProperty = (property) =>
     return propertyMap && get(model, propertyMap);
   });
 
-export default BaseLiComponent.extend({
+export default Component.extend({
   router:            service(),
   tagName:           'a',
   href:              '#',
@@ -54,14 +54,14 @@ export default BaseLiComponent.extend({
   _picture:     itemProperty('picture'),
 
   modelClass: computed('modelName', function () {
-    return `search__result-item--${this.get('modelName')}`;
+    return `search__result-item--${this.modelName}`;
   }),
 
   click (e) {
     e.preventDefault();
 
-    const result = this.get('resultItem'),
-          router = this.get('router');
+    const result = this.resultItem,
+          router = this.router;
 
     router.transitionTo.apply(router, uriForModel(result));
   }

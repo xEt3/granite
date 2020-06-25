@@ -1,14 +1,7 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-const FirstStepsComponent = Component.extend({
-  classNames: [ 'column' ],
-
-  linkClass: computed('completed', function () {
-    return `first-steps__card ${this.get('completed') ? 'first-steps__card--completed' : ''}`;
-  })
-});
-
-FirstStepsComponent.reopenClass({ positionalParams: [ 'step' ] });
-
-export default FirstStepsComponent;
+export default class DisplayFirstStepsComponent extends Component {
+  get linkClass () {
+    return `first-steps__card ${this.args.completed ? 'first-steps__card--completed' : ''}`;
+  }
+}

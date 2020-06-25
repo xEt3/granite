@@ -1,31 +1,28 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
 import { inject as service } from '@ember/service';
+import Route from 'granite/core/route';
 
-export default Route.extend({
-  auth: service(),
+export default class ActionItemRoute extends Route {
+  @service auth;
+
   title (tokens) {
     return tokens.join(' - ') + ' - ' + this.context.title + ' - Granite HR';
-  },
+  }
 
-  model (params) {
-    return RSVP.hash({
-      actionItem:   this.store.queryRecord('action-item', { title: params.slug.replace(/-(?!!)/g, ' ').replace(/-!/g, '-') }),
-      companyUsers: this.store.query('company-user', {
-        _id:    { $ne: this.get('auth.user._id') },
-        select: 'name employee'
-      })
-    })
-    .then(result => {
-      this.set('transferableTargets', result.companyUsers);
-      return result.actionItem;
-    });
-  },
+  async model (params) {
+    return await this.store.queryRecord('action-item', { title: params.slug.replace(/-(?!!)/g, ' ').replace(/-!/g, '-') });
+  }
 
-  setupController (controller, model) {
-    controller.setProperties({
-      model,
-      transferableTargets: this.get('transferableTargets')
+  async afterModel () {
+    this.transferableTargets = await this.store.query('company-user', {
+      _id:    { $ne: this.get('auth.user._id') },
+      select: 'name employee'
     });
   }
-});
+
+  async setupController (controller, model) {
+    controller.setProperties({
+      model:               model,
+      transferableTargets: this.transferableTargets
+    });
+  }
+}

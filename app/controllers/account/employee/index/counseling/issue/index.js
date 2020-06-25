@@ -1,5 +1,6 @@
-import Controller from '@ember/controller';
+import { GraniteResourceController } from 'granite/core/controller';
 import { inject as service } from '@ember/service';
-import resource from 'granite/mixins/controller-abstractions/resource';
 
-export default Controller.extend(resource, { auth: service() });
+export default class AccountEmployeeCounselingIssueController extends GraniteResourceController {
+  @service auth;
+}

@@ -1,12 +1,12 @@
 import Modal from '.';
+import { action } from '@ember/object';
 import $ from 'jquery';
 
-export default Modal.extend({
-  modalId: 'modal_update-payment-method',
+export default class UpdatePaymentMethodModal extends Modal {
+  modalId = 'modal_update-payment-method'
 
-  actions: {
-    closeModal () {
-      $(`#${this.get('modalId')}`).modal('hide');
-    }
+  @action
+  closeModal () {
+    $(`#${this.modalId}`).modal('hide');
   }
-});
+}

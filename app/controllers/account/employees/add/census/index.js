@@ -1,29 +1,26 @@
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
 import { run } from '@ember/runloop';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import ajaxStatus from 'granite/mixins/ajax-status';
 
-export default Controller.extend(ajaxStatus, {
-  ajax: service(),
+export default class AccountEmployeesAddCensusController extends Controller {
+  @service auth
+  @service data
 
-  supportedExtensions: [ 'csv', 'xls', 'xlsx' ],
+  supportedExtensions = [ 'csv', 'xls', 'xlsx' ]
 
-  actions: {
-    fileUploadError (err) {
-      this.set('fileUploadError', err);
+  @action
+  fileUploadError (err) {
+    this.fileUploadError = err;
 
-      run.later(() => {
-        this.set('fileUploadError', undefined);
-      }, 1500);
-    },
-
-    successHandler (response) {
-      this.analytics.trackEvent('Employees', 'census_uploaded', 'Census Uploaded');
-      this.transitionToRoute('account.employees.add.census.review', response);
-    },
-
-    onNotify (type, msg) {
-      this.send('notify', type, msg);
-    }
+    run.later(() => {
+      this.fileUploadError = undefined;
+    }, 1500);
   }
-});
+
+  @action
+  successHandler (response) {
+    this.analytics.trackEvent('Employees', 'census_uploaded', 'Census Uploaded');
+    this.transitionToRoute('account.employees.add.census.review', response);
+  }
+}

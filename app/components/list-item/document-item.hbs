@@ -1,0 +1,31 @@
+{{#if this.imagePreview}}
+  <div class="ui tiny rounded image">
+    <img src={{@model.url}} alt="Preview of document">
+  </div>
+{{else}}
+  <Display::IconForFile @file={{@model}} class="huge"/>
+{{/if}}
+<div class="clearing content">
+  <div class="header">
+    <LinkTo @route="account.document" @model={{@model.id}}>
+      {{@model.title}}
+    </LinkTo>
+    <span class="light text">{{@model.extension}}</span>
+  </div>
+
+  <div class="meta">
+    {{#each @model.tags as |tag|}}
+      <span class="ui tiny label">{{tag}}</span>
+    {{/each}}
+    {{#if @deleteAction}}
+      <div class="right floated">
+        <ConfirmModal @confirmContent={{@confirmDeleteContent}} as |confirm|>
+          <a href="#" class="text-danger" id="asset-doc__action--delete" {{on "click" (prevent-default (pipe confirm (fn @deleteAction @model)))}}>
+            <i class="trash icon"></i>
+          </a>
+        </ConfirmModal>
+      </div>
+    {{/if}}
+    <span class="ui small text right floated">Created {{time @model.created}}</span>
+  </div>
+</div>

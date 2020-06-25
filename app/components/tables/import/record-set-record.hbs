@@ -1,0 +1,19 @@
+<tr class="import__record {{if @record.duplicate "import__record--duplicate"}} {{if this.isSelected "import__record--is-selected"}}">
+  <td>
+    {{#if this.duplicate}}
+      <div class="ui red ribbon label import__duplicate-label">
+        <EmberTooltip @side="right" @popperContainer="body">
+          {{this.matchReason}} match
+        </EmberTooltip>
+        Possible duplicate of
+        <a href="#" {{on "click" (prevent-default this.linkToDuplicate)}}>
+          {{this.duplicate.text}}
+        </a>
+      </div>
+    {{/if}}
+    <div>
+      <UiCheckbox @class="" @label="" @checked={{this.isSelected}} @onChange={{@onToggle}} />
+    </div>
+  </td>
+  {{yield @record}}
+</tr>

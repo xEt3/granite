@@ -9,7 +9,7 @@ export default Service.extend({
   connectedUsers: A(),
 
   initialize () {
-    if (this.get('socketIsInitialized')) {
+    if (this.socketIsInitialized) {
       return;
     }
 
@@ -24,7 +24,7 @@ export default Service.extend({
   },
 
   disconnect () {
-    this.get('socket').disconnect();
+    this.socket.disconnect();
 
     this.setProperties({
       socket:              null,
@@ -33,7 +33,7 @@ export default Service.extend({
   },
 
   emit (event, data) {
-    const socket = this.get('socket');
+    const socket = this.socket;
     socket.emit(event, data);
   },
 
@@ -55,7 +55,7 @@ export default Service.extend({
   },
 
   on (event, fn) {
-    this.get('socket').on(event, fn);
+    this.socket.on(event, fn);
   },
 
   __internalEmit (event = '', ...args) {
@@ -84,12 +84,12 @@ export default Service.extend({
 
     socket.on('user_connect', (user) => {
       this.__internalEmit('user_connect', user);
-      this.get('connectedUsers').addObject(user);
+      this.connectedUsers.addObject(user);
     });
 
     socket.on('user_disconnect', (user) => {
       this.__internalEmit('user_disconnect', user);
-      this.get('connectedUsers').removeObject(user);
+      this.connectedUsers.removeObject(user);
     });
   }
 });

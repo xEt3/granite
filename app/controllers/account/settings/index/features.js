@@ -1,4 +1,6 @@
-import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
 
-export default Controller.extend(addEdit, {});
+export default class AccountSettingsFeaturesController extends Controller {
+  @service data
+}

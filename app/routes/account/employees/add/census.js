@@ -1,3 +1,5 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({ titleToken: 'Census Upload' });
+export default class CensusRoute extends Route {
+  titleToken = 'Census Upload';
+}

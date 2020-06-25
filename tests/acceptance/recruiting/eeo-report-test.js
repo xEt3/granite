@@ -7,7 +7,7 @@ module('Acceptance | eeo-report', function (hooks) {
   setupApplicationTest(hooks);
 
   test('eeo report displays correctly', async function (assert) {
-    await authenticate.call(this, server);
+    await authenticate.call(this, server, { company: { collectEEO: true } });
     let job = await server.create('job');
     await server.create('job-opening', {
       job,

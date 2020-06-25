@@ -5,8 +5,7 @@ import { inject as service } from '@ember/service';
 
 export default class WebinarItemComponent extends Component {
   @service ajax
-  @tracked
-  readMore = false
+  @tracked readMore = false
 
   get timeRemaining () {
     return !!this.args.authorization && `${moment(this.args.authorization.expiration).diff(new Date(), 'days')}`;

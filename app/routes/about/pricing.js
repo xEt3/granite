@@ -1,3 +1,5 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({ title: 'Pricing' });
+export default class PricingRoute extends Route {
+  title = 'Pricing';
+}

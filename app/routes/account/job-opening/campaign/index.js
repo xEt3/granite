@@ -1,17 +1,18 @@
-import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import Route from 'granite/core/route';
 import { A } from '@ember/array';
 import moment from 'moment';
 
-export default Route.extend({
-  titleToken: 'Summary',
-  ajax:       service(),
+export default class IndexRoute extends Route {
+  titleToken = 'Summary';
+
+  @service ajax;
 
   async model () {
-    const ajax = this.get('ajax'),
+    const ajax = this.ajax,
           jobOpening = this.modelFor('account.job-opening');
 
-    let _results = A(await ajax.request(`/api/v1/job-openings/${jobOpening.get('id')}?$report=summary`));
+    let _results = A(await ajax.request(`/api/v1/job-openings/${jobOpening.id}?$report=summary`));
     let chart = _results && _results.length > 0 ? {
       labels:   _results.map(x => moment(x._id).format('M/D/YY')),
       datasets: [{
@@ -39,7 +40,7 @@ export default Route.extend({
       chart,
       jobOpening
     };
-  },
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -47,4 +48,4 @@ export default Route.extend({
       jobOpening: model.jobOpening
     });
   }
-});
+}

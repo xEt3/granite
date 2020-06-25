@@ -1,0 +1,11 @@
+<div ...attributes>
+  {{yield
+    (hash
+      section=(component
+        "display/filter-panes/section"
+        resetFilter=(action this.resetFilter)
+        sendComponentUpdate=this.sendComponentUpdate
+      )
+    )
+  }}
+</div>

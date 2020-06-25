@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { visit, currentURL, click, findAll } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import sinon from 'sinon';
@@ -26,19 +26,22 @@ module('Acceptance | education/webinars', function (hooks) {
     assert.dom('h2.ui.header').hasText('Webinars');
   });
 
-  test('shows a list of webinars with and without data', async function (assert) {
+  test('shows a list of webinars without data', async function (assert) {
     await authenticate.call(this, server);
 
     await visit('/account/education/webinars');
     // Expect a blank message
     assert.dom('.page__webinars').exists();
     assert.dom('.page__webinars .webinars-list').includesText('No webinars available');
+  });
+
+  test('shows a list of webinars with data', async function (assert) {
+    await authenticate.call(this, server);
 
     // Generate a list of webinars
     const webinars = await server.createList('webinar', 10);
 
-    // Revisit page...
-    await visit('/account/education');
+    // Visit page...
     await visit('/account/education/webinars');
 
     // Expect a list of webinars
@@ -98,9 +101,5 @@ module('Acceptance | education/webinars', function (hooks) {
 
     // Link back to webinars
     assert.dom('.webinars-purchased a[href="/account/education/webinars"].button.green.fluid').exists();
-
-    await this.pauseTest();
   });
-
-  skip('shows webinars you have authorization to');
 });

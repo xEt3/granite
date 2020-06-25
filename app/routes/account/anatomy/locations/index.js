@@ -1,36 +1,30 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import refreshable from 'granite/mixins/refreshable';
 
-export default Route.extend(refreshable, {
-  titleToken: 'Locations',
+export default class AccountAnatomyLocationsRoute extends Route {
+  @service auth
+  titleToken = 'Locations'
+  queryParams = { page: { refreshModel: true } }
 
-  queryParams: { page: { refreshModel: true } },
-
-  auth: service(),
-
-  model (params) {
-    let limit = this.get('controller.limit') || 20,
+  async model (params) {
+    let limit = 20,
         page = (params.page || 1) - 1,
-        company = this.get('auth.user.company'),
-        companyId = company.get('id'),
-        locations = this.store.query('location', { 'company': companyId }, {
+        company = await this.auth.get('user.company'),
+        locations = await this.store.query('location', { 'company': company.id }, {
           page,
           limit
         });
 
-    return RSVP.hash({
+    return {
       company,
       locations
-    });
-  },
+    };
+  }
 
   setupController (controller, model) {
-    this._super(...arguments);
     controller.setProperties({
       model:   model.locations,
       company: model.company
     });
   }
-});
+}

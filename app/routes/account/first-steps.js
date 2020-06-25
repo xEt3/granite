@@ -1,40 +1,44 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import { hash } from 'rsvp';
 import { scheduleOnce, later } from '@ember/runloop';
 
-export default Route.extend({
-  auth:       service(),
-  ajax:       service(),
-  titleToken: 'First Steps',
+export default class AccountFirstStepsRoute extends Route {
+  @service auth
+  @service ajax
 
-  model () {
-    return hash({
-      company:       this.get('auth.user.company'),
-      employeeCount: this.get('ajax').request('/api/v1/employees', {
-        data: {
-          _count:       true,
-          terminatedOn: { $not: { $type: 9 } }
-        }
-      }).then(response => response && response.count),
+  titleToken = 'First Steps';
 
-      locationCount: this.get('ajax').request('/api/v1/locations', {
-        data: {
-          _count: true,
-          name:   { $not: { $type: 10 } }
-        }
-      }).then(response => response && response.count),
-
-      departmentCount: this.get('ajax').request('/api/v1/departments', {
-        data: {
-          _count: true,
-          name:   { $not: { $type: 10 } }
-        }
-      }).then(response => response && response.count)
+  async model () {
+    let { count: employeeCount } = await this.ajax.request('/api/v1/employees', {
+      data: {
+        _count:       true,
+        terminatedOn: { $not: { $type: 9 } }
+      }
     });
-  },
 
-  afterModel (model) {
+    let { count: locationCount } = await this.ajax.request('/api/v1/locations', {
+      data: {
+        _count: true,
+        name:   { $not: { $type: 10 } }
+      }
+    });
+
+    let { count: departmentCount } = await this.ajax.request('/api/v1/departments', {
+      data: {
+        _count: true,
+        name:   { $not: { $type: 10 } }
+      }
+    });
+
+    return {
+      company: await this.get('auth.user.company'),
+      employeeCount,
+      locationCount,
+      departmentCount
+    };
+  }
+
+  async afterModel (model) {
     const firstStepsCompleted = model.company.get('firstStepsCompleted');
     let change = false;
 
@@ -49,7 +53,7 @@ export default Route.extend({
     }
 
     if (firstStepsCompleted.length === 3) {
-      model.company.set('firstStepsCompletedOn', new Date());
+      model.company.firstStepsCompletedOn = new Date();
       change = true;
     }
 
@@ -57,15 +61,14 @@ export default Route.extend({
       return;
     }
 
-    return model.company.save()
-    .then(company => {
-      if (!company.get('firstStepsCompletedOn')) {
-        return;
-      }
+    let company = model.company;
+    await company.save();
 
-      scheduleOnce('afterRender', () => {
-        later(() => this.transitionTo('account.index'), 4300);
-      });
+    if (!company.firstStepsCompletedOn) {
+      return;
+    }
+    scheduleOnce('afterRender', () => {
+      later(() => this.transitionTo('account.index'), 4300);
     });
   }
-});
+}

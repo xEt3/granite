@@ -1,9 +1,3 @@
-import BaseLiComponent from './base';
+import Component from '@glimmer/component';
 
-export default BaseLiComponent.extend({
-  classNames: [ 'item', 'clearfix' ],
-
-  /* stubs */
-  onApprove: () => {},
-  onReject:  () => {}
-});
+export default class ListItemChangeItem extends Component {}

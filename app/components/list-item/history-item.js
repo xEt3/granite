@@ -1,3 +1,3 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-export default Component.extend({ classNames: [ 'history__timeline-item' ] });
+export default class ListItemHistoryItem extends Component {}

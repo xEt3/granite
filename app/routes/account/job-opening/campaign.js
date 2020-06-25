@@ -1,24 +1,22 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import { resolve } from 'rsvp';
 
-export default Route.extend({
-  auth: service(),
+export default class AccountJobOpeningCampaignRoute extends Route {
+  @service auth;
 
-  model () {
-    return resolve(this.get('auth.user'))
-    .then(user => {
-      return {
-        company:     user.company,
-        parentModel: this.modelFor('account.job-opening')
-      };
-    });
-  },
+  async model () {
+    const user = await this.auth.get('user');
+
+    return {
+      company:     await user.company,
+      parentModel: this.modelFor('account.job-opening')
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
-      model:      model.parentModel,
-      EEOEnabled: model.company.get('collectEEO')
+      model:   model.parentModel,
+      company: model.company
     });
   }
-});
+}

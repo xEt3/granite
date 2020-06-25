@@ -6,26 +6,22 @@
     Your company has elected to collect Equal Employment Opportunity data, so Granite will attempt to collect this information during the application process.
   {{else}}
     <i class="remove circle outline icon"></i>
-    We will not collect Equal Employment Opportunity data for this job. If your company is an applicable employer, you may adjust your EEO settings in {{#link-to "account.settings"}}General Settings{{/link-to}}.
+    We will not collect Equal Employment Opportunity data for this job. If your company is an applicable employer, you may adjust your EEO settings in <LinkTo @route="account.settings">General Settings</LinkTo>.
   {{/if}}
 </h3>
 <div class="ui divider"></div>
 
 {{#if this.collectEEO}}
-  {{quick-form
-    this.eeoSettingsForm
-    this.model
-    this
-    tagName="div"}}
+  <QuickForm
+    @form={{this.eeoSettingsForm}}
+    @model={{this.model}}
+    @controller={{this}}
+    @tagName="div"/>
 {{/if}}
 
 <div class="ui divider"></div>
-<form {{action (route-action "saveAndContinue") on="submit"}}>
-  {{#form/action-button
-    type="submit"
-    class="ui huge fluid green button"
-    loading=this.working
-  }}
+<form {{on "submit" (prevent-default (route-action "saveAndContinue"))}}>
+  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.wizard.isLoading}}>
     Next
-  {{/form/action-button}}
+  </Form::ActionButton>
 </form>

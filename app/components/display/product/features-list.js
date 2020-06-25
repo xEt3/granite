@@ -1,54 +1,45 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
-const FeaturesListComponent = Component.extend({
-  classNames:  [ 'section-content__features' ],
-  autoCycle:   0,
-  autoCycleMs: 5000,
+export default class FeaturesListComponent extends Component {
+  @tracked autoCycle = 0;
+  @tracked selectedFeature;
+  autoCycleMs = 5000;
 
-  didInsertElement () {
-    this.scheduleAutoCycle();
-  },
+  get feature () {
+    return this.selectedFeature || this.args.features[this.autoCycle];
+  }
 
-  willDestroyElement () {
-    this.cancelAutoCycle();
-  },
-
+  @action
   scheduleAutoCycle () {
     if (!this.isDestroyed) {
-      this.set('_autoCycleTimer', setTimeout(this.incrementAutoCycle.bind(this), this.get('autoCycleMs')));
+      this._autoCycleTimer = setTimeout(this.incrementAutoCycle.bind(this), this.autoCycleMs);
     }
-  },
+  }
 
+  @action
   cancelAutoCycle () {
-    let timerId = this.get('_autoCycleTimer');
+    let timerId = this._autoCycleTimer;
 
     if (timerId) {
       clearTimeout(timerId);
     }
-  },
+  }
 
+  @action
   incrementAutoCycle () {
-    if (this.get('features.length') - 1 === this.get('autoCycle')) {
-      this.set('autoCycle', 0);
+    if (this.args.features.length - 1 === this.autoCycle) {
+      this.autoCycle = 0;
     } else {
-      this.incrementProperty('autoCycle');
+      this.autoCycle++;
     }
 
     this.scheduleAutoCycle();
-  },
-
-  feature: computed('selectedFeature', 'features.[]', 'autoCycle', function () {
-    return this.get('selectedFeature') || this.get('features')[this.get('autoCycle')];
-  }),
-
-  actions: {
-    selectFeature (feature) {
-      this.set('selectedFeature', feature);
-    }
   }
-});
 
-FeaturesListComponent.reopenClass({ positionalParams: [ 'features' ] });
-
-export default FeaturesListComponent;
+  @action
+  selectFeature (feature) {
+    this.selectedFeature = feature;
+  }
+}

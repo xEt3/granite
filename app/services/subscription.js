@@ -1,39 +1,49 @@
+import classic from 'ember-classic-decorator';
+import { observes } from '@ember-decorators/object';
+import { computed } from '@ember/object';
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import { once } from '@ember/runloop';
-import { computed, observer } from '@ember/object';
 
-export default Service.extend({
-  ajax: service(),
-  auth: service(),
+@classic
+export default class SubscriptionService extends Service {
+  @service ajax;
+
+  @service auth;
 
   init () {
-    this._super(...arguments);
+    super.init(...arguments);
     this.getSubscription();
-  },
+  }
 
-  company: computed('auth.user.company', function () {
+  @computed('auth.user.company')
+  get company () {
     return this.get('auth.user.company');
-  }),
+  }
 
   /* eslint-disable-next-line */
-  updateSubscription: observer('auth.authenticated', 'auth.user.company', function () {
+  @observes('auth.authenticated', 'auth.user.company')
+  updateSubscription () {
     once(this, this.getSubscription);
-  }),
+  }
 
-  isCancelled: computed('subscription.status', 'company.deactivatedOn', function () {
+  @computed('subscription.status', 'company.deactivatedOn')
+  get isCancelled () {
     return this.get('subscription.status') === 'Canceled' || this.get('company.deactivatedOn') ? true : false;
-  }),
+  }
 
-  accountSuspended: computed('subscription', 'subscription.daysPastDue', function () {
+  @computed('subscription', 'subscription.daysPastDue')
+  get accountSuspended () {
     return this.get('subscription.daysPastDue') > 14 ? true : false;
-  }),
+  }
 
-  accountLocked: computed('isCancelled', 'accountSuspended', function () {
-    return this.get('isCancelled') || this.get('accountSuspended') ? true : false;
-  }),
+  @computed('isCancelled', 'accountSuspended')
+  get accountLocked () {
+    return this.isCancelled || this.accountSuspended ? true : false;
+  }
 
-  daysLeftInGracePeriod: computed('subscription', 'subscription.daysPastDue', function () {
+  @computed('subscription', 'subscription.daysPastDue')
+  get daysLeftInGracePeriod () {
     let days = this.get('subscription.daysPastDue') < 15 ? this.get('subscription.daysPastDue') : null;
 
     if (!days) {
@@ -54,38 +64,45 @@ export default Service.extend({
     }
 
     return daysLeft;
-  }),
+  }
 
-  isActive: computed('subscription.status', function () {
+  @computed('subscription.status')
+  get isActive () {
     return this.get('subscription.status') === 'Active' ? true : false;
-  }),
+  }
 
-  inTrialPeriod: computed('subscription.firstBillingDate', function () {
+  @computed('subscription.firstBillingDate')
+  get inTrialPeriod () {
     return new Date().getTime() < new Date(this.get('subscription.firstBillingDate')).getTime() ? true : false;
-  }),
+  }
 
-  paymentFailure: computed('subscription.failureCount', function () {
+  @computed('subscription.failureCount')
+  get paymentFailure () {
     return this.get('subscription.failureCount') > 0 ? true : false;
-  }),
+  }
 
-  activeEmployeeTotal: computed('subscription.addOns.[0].quantity', function () {
+  @computed('subscription.addOns.[0].quantity')
+  get activeEmployeeTotal () {
     let addOns = (this.get('subscription.addOns')[0] || {}).quantity;
     return addOns > 0 ? addOns + 5 : '5 or Less';
-  }),
+  }
 
-  latestTransaction: computed('subscription.transactions', function () {
+  @computed('subscription.transactions')
+  get latestTransaction () {
     return this.get('subscription.transactions')[0];
-  }),
+  }
 
-  latestTransactionDescription: computed('subscription.latestTransaction', function () {
+  @computed('subscription.latestTransaction')
+  get latestTransactionDescription () {
     let start = moment(this.get('latestTransaction.subscription.billingPeriodStartDate'));
     let end = moment(this.get('latestTransaction.subscription.billingPeriodEndDate'));
     let diff = end.diff(start, 'days');
 
     return diff < 28 ? 'proration charge' : 'monthly billing charge';
-  }),
+  }
 
-  currentPaymentMethod: computed('customer.paymentMethods.[]', 'subscription.paymentMethodToken', function () {
+  @computed('customer.paymentMethods.[]', 'subscription.paymentMethodToken')
+  get currentPaymentMethod () {
     let paymentMethods = this.get('customer.paymentMethods'),
         token = this.get('subscription.paymentMethodToken'),
         matchingPaymentMethod = null;
@@ -97,9 +114,10 @@ export default Service.extend({
     });
 
     return matchingPaymentMethod;
-  }),
+  }
 
-  cardExpiresSoon: computed('currentPaymentMethod', function () {
+  @computed('currentPaymentMethod')
+  get cardExpiresSoon () {
     if (!this.get('currentPaymentMethod.expirationDate')) {
       return false;
     }
@@ -109,13 +127,13 @@ export default Service.extend({
         currentYear = moment(new Date()).format('YYYY');
 
     return expMonth === currentMonth && expYear === currentYear ? true : false;
-  }),
+  }
 
   getSubscription () {
     let company = this.get('auth.user.company.id');
 
     if (this.get('auth.authenticated') && company) {
-      return this.get('ajax').request(`/api/v1/company/${company}/billing`)
+      return this.ajax.request(`/api/v1/company/${company}/billing`)
       .then(response => {
         this.set('subscription', response.subscription);
         this.set('customer', response.customer);
@@ -125,4 +143,4 @@ export default Service.extend({
       this.set('subscription', null);
     }
   }
-});
+}

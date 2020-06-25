@@ -1,66 +1,72 @@
+import Component from '@glimmer/component';
 import Ember from 'ember';
-import Component from '@ember/component';
 import { A } from '@ember/array';
-import { computed } from '@ember/object';
-import { get } from '@ember/object';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 const { Logger: { error } } = Ember;
 
-const PipelineCardComponent = Component.extend({
-  store:             service(),
-  classNames:        [ 'pipeline-card__content' ],
-  classNameBindings: [
-    'application.hired:pipeline-card__content--hired',
-    'application.disqualified:pipeline-card__content--disqualified'
-  ],
+export default class CardPipelineStageCardComponent extends Component {
+  @service store
 
-  allExceptCurrentStage: computed('stages.[]', 'application.stage', function () {
-    const stageId = this.get('application.stage');
-    return (this.get('stages') || []).filter(stage => get(stage, '_id') !== stageId);
-  }),
+  @tracked meetingFetched = false
 
-  nextMeeting: computed('application.[]', 'newScheduledMeeting', function () {
-    if (!this.meetingFetched || this.newScheduledMeeting === this.application.id) {
-      return this.get('getNextMeeting').perform();
+  get allExceptCurrentStage () {
+    const stageId = this.args.application.stage;
+    return (this.args.stages || []).filter(stage => stage._id !== stageId);
+  }
+
+  get nextMeeting () {
+    if (!this.meetingFetched || this.args.newScheduledMeeting === this.args.application.id) {
+      return this.getNextMeeting.perform();
     }
     return false;
-  }),
+  }
 
-  controlsDisabled: computed('application.{hired,disqualified}', function () {
-    return this.get('application.hired') || this.get('application.disqualified');
-  }),
+  get controlsDisabled () {
+    return this.args.application.hired || this.args.application.disqualified;
+  }
 
-  getNextMeeting: task(function*() {
+  @task(function*() {
     try {
-      let results = yield this.get('store').query('event', {
+      let results = yield this.store.query('event', {
         limit:       1,
         start:       { $gt: new Date() },
         sort:        { start: 1 },
         contextType: 'JobApplication',
-        contextId:   this.get('application.id')
+        contextId:   this.args.application.id
       });
 
-      this.set('meetingFetched', true);
+      this.meetingFetched = true;
 
-      return (results || A()).get('firstObject');
+      return (results || A()).firstObject;
     } catch (e) {
       error(e);
     }
-  }),
+  }) getNextMeeting
 
-  actions: {
-    moveTo (stage) {
-      this.get('moveAppToStage')(this.get('application'), stage);
-    },
-
-    toggleProperty (prop) {
-      this.toggleProperty(prop);
-    }
+  @action
+  moveTo (stage) {
+    this.args.moveAppToStage(this.args.application, stage);
   }
-});
+}
 
-PipelineCardComponent.reopenClass({ positionalParams: [ 'application', 'stages' ] });
+/*
+  USAGE:
 
-export default PipelineCardComponent;
+  <CardPipeline::StageCard
+    @application={{jobApp}}
+    @stages={{@this.stages}}
+    @newScheduledMeeting={{this.newScheduledMeeting}}
+    @moveAppToStage={{@moveAppToStage}}
+    @onUnDisqualify={{@onUnDisqualify}}
+    @onDisqualify={{@onDisqualify}}
+    @onUnHire={{@onUnHire}}
+    @onOnboardCandidate={{@onOnboardCandidate}}
+    @onLinkSharing={{@onLinkSharing}}
+    @onSchedule={{@onSchedule}}
+    @onAddLabel={{@onAddLabel}} />
+
+*/

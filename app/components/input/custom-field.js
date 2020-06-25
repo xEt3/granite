@@ -1,14 +1,13 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { elementId } from 'granite/core';
 
-export default Component.extend({
-  classNames: [ 'field' ],
+@elementId
+export default class InputCustomFieldComponent extends Component {
+  get inputId () {
+    return this.elementId + '-' + this.args.attribute;
+  }
 
-  inputId: computed('elementId', 'attribute', function () {
-    return this.get('elementId') + '-' + this.get('attribute');
-  }),
-
-  placeholder: computed('attribute', function () {
-    return this.get('attribute') + ' value';
-  })
-});
+  get placeholder () {
+    return this.args.attribute + ' value';
+  }
+}

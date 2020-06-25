@@ -1,6 +1,6 @@
-{{#link-to "index" class="login__home-link washout__white shadowed padded logo__mountains"}}{{/link-to}}
+<LinkTo @route="index" class="login__home-link washout__white shadowed padded logo__mountains"></LinkTo>
 
-<form class="ui very padded raised text segment container form" {{action "recover" on="submit"}}>
+<form class="ui very padded raised text segment container form" {{on "submit" (prevent-default this.recover)}}>
   <hgroup class="ui center aligned header">
     <h2>Recover your account</h2>
     <p class="lightly weighted light text header">Enter your new preferred password twice below.</p>
@@ -9,32 +9,15 @@
 
   <div class="field">
     <label for="password">Password</label>
-    {{input
-      type="password"
-      id="password"
-      class="ui large fluid input"
-      tabindex="1"
-      placeholder="Your New Password"
-      value=this.password}}
+    <Input @type="password" @id="password" class="ui large fluid input" @tabindex="1" placeholder="Your New Password" @value={{this.password}} />
   </div>
 
   <div class="field">
     <label for="password-confirm">Confirm Password</label>
-    {{input
-      type="password"
-      id="password-confirm"
-      class="ui large fluid input"
-      tabindex="1"
-      placeholder="Confirm Your New Password"
-      value=this.passwordConfirm}}
+    <Input @type="password" @id="password-confirm" class="ui large fluid input" @tabindex="1" placeholder="Confirm Your New Password" @value={{this.passwordConfirm}} />
   </div>
 
-  {{#form/action-button
-    type="submit"
-    class="ui massive fluid orange button"
-    loading=this.working
-    disabled=(not (and this.password this.passwordConfirm))
-  }}
+  <Form::ActionButton type="submit" class="ui massive fluid orange button" @loading={{this.data.statuses.working.isLoading}} @disabled={{not (and this.password this.passwordConfirm)}}>
     Reset my password
-  {{/form/action-button}}
+  </Form::ActionButton>
 </form>

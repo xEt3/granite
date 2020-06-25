@@ -6,12 +6,14 @@ export default Mixin.create({
   auth: service(),
 
   model (params) {
-    if (this.get('bypassModelHook')) {
+    console.warn('Mixing in the route-abstraction for edit is deprecated in favor of extending the granite core route.'); // eslint-disable-line
+
+    if (this.bypassModelHook) {
       return this._super(...arguments);
     }
 
-    const modelName = this.get('modelName'),
-          segmentKey = this.get('segmentKey');
+    const modelName = this.modelName,
+          segmentKey = this.segmentKey;
 
     assert('You must specify a modelName.', modelName);
     return this.store.find(modelName, params[segmentKey || 'id']);

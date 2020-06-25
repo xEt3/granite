@@ -1,0 +1,40 @@
+<UiModal @id={{@modalId}}>
+  <div class="header">
+    Application Labels
+  </div>
+  <div class="content">
+    <label for="label-multi-select">Current labels for {{#if @model.person.firstName}}{{@model.person.firstName}}'s{{/if}} application</label>
+    <UiDropdown @class="fluid multiple selection" @id="label-multi-select" @selected={{@model.labels}} @onChange={{set @model.labels _}} as |execute mapper|>
+      <i class="dropdown icon"></i>
+      <div class="default text">Select labels for application</div>
+      <div class="menu">
+        {{#each this.auth.user.company.labels as |label|}}
+          <div class="item" data-value={{map-value mapper label}}>
+            <CustomLabel @label={{label}} />
+          </div>
+        {{/each}}
+      </div>
+    </UiDropdown>
+    {{#if this.currentLabel}}
+      <div class="ui divider"></div>
+      <QuickForm
+        @form={{this.newLabelForm}}
+        @model={{this.currentLabel}}/>
+      <div class="ui divider"></div>
+      <button class="ui blue fluid button" {{on "click" (fn this.saveLabel this.currentLabel)}} type="button">Save New Label</button>
+    {{/if}}
+  </div>
+  <div class="actions">
+    {{#unless this.currentLabel}}
+      <button class="ui blue button left floated" {{on "click" this.addLabel}} type="button">
+        Create New Label
+      </button>
+    {{/unless}}
+    <button class="ui inverted red button" {{on "click" (fn this.respond false)}} type="button">
+      Cancel
+    </button>
+    <button class="ui green right labeled icon button" {{on "click" (fn this.respond true)}} type="button">
+      Save Application Labels<i class="check icon"></i>
+    </button>
+  </div>
+</UiModal>

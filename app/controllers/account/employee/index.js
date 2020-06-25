@@ -1,15 +1,19 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import Controller from 'granite/core/controller';
 import { inject as controller } from '@ember/controller';
-import del from 'granite/mixins/controller-abstractions/delete';
 import { inject as service } from '@ember/service';
+import { computed, action } from '@ember/object';
 
-export default Controller.extend(del, {
-  ajax:                service(),
-  router:              service(),
-  application:         controller(),
-  transitionAfterSave: 'account.employees',
-  subRoutes:           computed('auth.user.company.exposeBetaModules', function () {
+export default class AccountEmployeeIndexController extends Controller {
+  @service ajax
+  @service data
+  @service router
+  @controller application
+
+  afterSaveOptions = { transitionAfterSave: 'account.employees' }
+
+  @computed.equal('router.currentRouteName', 'account.employee.index.index') onSummary
+
+  get subRoutes () {
     return [{
       route: 'account.employee.index.equipment',
       name:  'Equipment',
@@ -26,28 +30,26 @@ export default Controller.extend(del, {
       route: 'account.employee.index.counseling',
       name:  'Counseling',
       icon:  'folder open'
-    }, this.get('auth.user.company.exposeBetaModules') && {
+    }, this.auth.get('user.company.exposeBetaModules') && {
       route: 'account.employee.index.education',
       name:  'Education & Training',
       icon:  'graduation cap'
     } ].filter(Boolean);
-  }),
+  }
 
-  onSummary: computed.equal('router.currentRouteName', 'account.employee.index.index'),
+  get subRoute () {
+    return this.subRoutes.find(({ route }) => this.router.currentRouteName.indexOf(route.split('.').pop()) > -1);
+  }
 
-  subRoute: computed('router.currentRouteName', function () {
-    return this.subRoutes.find(({ route }) => this.get('router.currentRouteName').indexOf(route.split('.').pop()) > -1);
-  }),
+  @action
+  async resend () {
+    let { success, error } = this.data.createStatus('resending');
 
-  actions: {
-    resend () {
-      this.ajaxStart();
-
-      return this.get('ajax').request(`/api/v1/employee/${this.model.id}/resend-activation`)
-      .then(() => {
-        this.ajaxSuccess('Email sent.');
-      })
-      .catch(this.ajaxError.bind(this));
+    try {
+      await this.ajax.request(`/api/v1/employee/${this.model.id}/resend-activation`);
+      success('Email sent.');
+    } catch (e) {
+      error(e);
     }
   }
-});
+}

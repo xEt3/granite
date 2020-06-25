@@ -1,19 +1,23 @@
-import Controller from '@ember/controller';
-import { Promise } from 'rsvp';
-import { computed } from '@ember/object';
+import Controller from 'granite/core/controller';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import ajaxStatus from 'granite/mixins/ajax-status';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { Promise } from 'rsvp';
 
-export default Controller.extend(ajaxStatus, addEdit, {
-  store:                   service(),
-  applicantRequiredFields: [ 'firstName', 'lastName', 'phone', 'email' ],
-  fileIsAdded:             false,
+export default class AccountJobOpeningCampaignJobApplicationEditController extends Controller {
+  @service store
+  @service data
 
-  resumeEndpoint: computed('model.jobOpening.id', function () {
-    return `/api/v1/upload/resume/${this.get('model.jobApplication.jobOpening.id')}`;
-  }),
+  @tracked fileIsAdded = false
+  @tracked uploadProgress = null
 
+  applicantRequiredFields = [ 'firstName', 'lastName', 'phone', 'email' ]
+
+  get resumeEndpoint () {
+    return `/api/v1/upload/resume/${this.model.jobApplication.get('jobOpening.id')}`;
+  }
+
+  @action
   uploadResume () {
     return new Promise((resolveUpload, rejectUpload) => {
       this.setProperties({
@@ -22,12 +26,13 @@ export default Controller.extend(ajaxStatus, addEdit, {
       });
       Dropzone.forElement('.input__dropzone').processQueue();
     });
-  },
+  }
 
+  @action
   requiredFieldsFilled () {
-    let applicantRequiredFields = this.get('applicantRequiredFields');
-    let newApplicant = this.get('model.applicant');
-    for (let field in applicantRequiredFields) {
+    const { applicantRequiredFields, newApplicant } = this;
+
+    for (var field in applicantRequiredFields) {
       if (field !== '_super') {
         let value = newApplicant[applicantRequiredFields[field]];
         if (value === '' || value === undefined || value === null) {
@@ -36,88 +41,98 @@ export default Controller.extend(ajaxStatus, addEdit, {
       }
     }
     return true;
-  },
+  }
 
-  actions: {
-    addedFile (file) {
-      let  $dropzone = Dropzone.forElement('.input__dropzone');
+  @action
+  addedFile (file) {
+    let  $dropzone = Dropzone.forElement('.input__dropzone');
 
-      if (this.get('fileIsAdded')) {
-        $dropzone.removeFile(this.get('fileIsAdded'));
-      }
-      this.set('fileIsAdded', file);
-    },
+    if (this.fileIsAdded) {
+      $dropzone.removeFile(this.fileIsAdded);
+    }
+    this.fileIsAdded = file;
+  }
 
-    removeFile () {
-      let $dropzone;
+  @action
+  removeFile () {
+    let $dropzone;
 
-      try {
-        $dropzone = Dropzone.forElement('.input__dropzone');
-      } catch (error) {
-        return;
-      }
+    try {
+      $dropzone = Dropzone.forElement('.input__dropzone');
+    } catch (error) {
+      return;
+    }
 
-      if (!$dropzone) {
-        return;
-      }
+    if (!$dropzone) {
+      return;
+    }
 
-      $dropzone.removeFile(this.get('fileIsAdded'));
-      this.set('fileIsAdded', false);
-    },
+    $dropzone.removeFile(this.fileIsAdded);
+    this.fileIsAdded = false;
+  }
 
-    uploadError (err) {
-      this.get('rejectUpload')(err);
-    },
+  @action
+  uploadError (err) {
+    this.rejectUpload(err);
+  }
 
-    uploadedFile (prog, response) {
-      this.get('resolveUpload')(response);
-    },
+  @action
+  uploadedFile (prog, response) {
+    this.resolveUpload(response);
+  }
 
-    uploadProgressUpdate (prog) {
-      this.set('uploadProgress', prog);
-    },
+  @action
+  uploadProgressUpdate (prog) {
+    this.uploadProgress = prog;
+  }
 
-    cancel () {
-      this.send('removeFile');
-      this.transitionToRoute('account.job-opening.campaign.job-application');
-    },
+  @action
+  cancel () {
+    this.removeFile();
+    this.transitionToRoute('account.job-opening.campaign.job-application');
+  }
 
-    async save () {
-      const store = this.get('store');
-      this.ajaxStart();
+  @action
+  async save () {
+    const store = this.store;
+    let { success, error } = this.data.createStatus();
 
-      if (!this.requiredFieldsFilled()) {
-        this.ajaxError('Must fill required fields', true);
-        return;
-      }
+    if (!this.requiredFieldsFilled()) {
+      error('Must fill required fields', true);
+      return;
+    }
 
-      let applicant = await this.get('model.applicant'),
-          application = this.get('model.jobApplication');
+    let applicant = await this.model.applicant,
+        application = this.model.jobApplication;
 
-      application.setProperties({ applicant });
+    application.setProperties({ applicant });
 
+    try {
       await applicant.save();
 
-      if (this.get('fileIsAdded')) {
+      if (this.fileIsAdded) {
         var response = await this.uploadResume();
       }
 
       if (response) {
         store.pushPayload('file', response);
         var fileRecord = store.peekRecord('file', response.file.id);
-        application.set('resume', fileRecord);
+        application.resume = fileRecord;
       }
 
       await application.save();
 
-      this.ajaxSuccess('Updated application successfully');
-      this.send('removeFile');
-      this.send('refresh');
+      success('Updated application successfully');
+      this.removeFile();
+      this.send('refreshModel');
       this.transitionToRoute('account.job-opening.campaign.job-application');
-    },
-
-    onNotify (type, msg) {
-      this.send('notify', type, msg);
+    } catch (e) {
+      error(e);
     }
   }
-});
+
+  @action
+  onNotify (type, msg) {
+    this.data.notify(type, msg);
+  }
+}

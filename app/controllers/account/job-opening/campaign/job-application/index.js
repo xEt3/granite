@@ -1,26 +1,22 @@
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import { filter } from '@ember/object/computed';
 import { A } from '@ember/array';
 import moment from 'moment';
-import modalSupport from 'granite/mixins/modal-support';
+import modalSupport from 'granite/core/modal-support';
 
-export default Controller.extend(modalSupport, {
-  responsesModalId:   'modal__ja-responses',
-  coverLetterModalId: 'modal__ja-cover-letter',
+@modalSupport
+export default class JobApplicationController extends Controller {
+  responsesModalId = 'modal__ja-responses'
+  coverLetterModalId = 'modal__ja-cover-letter'
 
-  upcomingEvents: computed.filter('events', function (event) {
-    return moment().isBefore(event.get('start'));
-  }),
+  @filter('events', (event) => moment().isBefore(event.get('start'))) upcomingEvents
+  @filter('events', (event) => moment().isAfter(event.get('start'))) pastEvents
 
-  pastEvents: computed.filter('events', function (event) {
-    return moment().isAfter(event.get('start'));
-  }),
+  get coverLetterTitle () {
+    return `Cover letter from ${this.model.get('person.firstName')}`;
+  }
 
-  coverLetterTitle: computed('model.person.firstName', function () {
-    return `Cover letter from ${this.get('model.person.firstName')}`;
-  }),
-
-  responses: computed('model.responses.[]', 'screening.elements.[]', function () {
+  get responses () {
     const responses = this.get('model.responses') || A(),
           steps = this.get('screening.elements');
 
@@ -28,11 +24,5 @@ export default Controller.extend(modalSupport, {
       step,
       response: responses.findBy('step', step.get('id'))
     })) : false;
-  }),
-
-  actions: {
-    refreshModel () {
-      this.send('refresh');
-    }
   }
-});
+}

@@ -1,36 +1,52 @@
+import classic from 'ember-classic-decorator';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import Validations from './validations/employee';
 
-export default Model.extend(Validations, {
-  title:       attr('string'),
-  description: attr('string'),
+@classic
+export default class File extends Model.extend(Validations) {
+  @attr('string') title;
 
-  objectPath:     attr('string'),
-  previewPath:    attr('string'),
-  extension:      attr('string'),
-  mimeType:       attr('string'),
-  url:            attr('string'),
-  directory:      attr('string'),
-  key:            attr('string'),
-  associatedData: attr(),
-  tags:           attr('array'),
-  systemUse:      attr('boolean'),
+  @attr('string') description;
 
-  creator: belongsTo('company-user', {
+  @attr('string') objectPath;
+
+  @attr('string') previewPath;
+
+  @attr('string') extension;
+
+  @attr('string') mimeType;
+
+  @attr('string') url;
+
+  @attr('string') directory;
+
+  @attr('string') key;
+
+  @attr() associatedData;
+
+  @attr('array') tags;
+
+  @attr('boolean') systemUse;
+
+  @belongsTo('company-user', {
     async:   true,
     inverse: null
-  }),
-  company: belongsTo('company', {
+  })
+  creator;
+
+  @belongsTo('company', {
     async:   true,
     inverse: null
-  }),
+  })
+  company;
 
-  correctiveAction: belongsTo('corrective-action', {
+  @belongsTo('corrective-action', {
     async:   true,
     inverse: null
-  }),
+  })
+  correctiveAction;
 
-  created: attr('date', { defaultValue: () => new Date() })
-});
+  @attr('date', { defaultValue: () => new Date() }) created;
+}

@@ -1,5 +1,5 @@
 <div class="ui raised padded segment container clearfix animated fadeInUp">
-  {{#confirm-modal deleteContext=this.model.title as |confirmDelete|}}
+  <ConfirmModal @deleteContext={{this.model.title}} as |confirmDelete|>
     <hgroup class="clearfix">
       <p>
         <LinkTo @route="account.employee.index.counseling">
@@ -9,9 +9,9 @@
       </p>
 
       <h2 class="ui left floated header">
-        {{#link-to "account.employee.index.counseling.issue"}}
+        <LinkTo @route="account.employee.index.counseling.issue">
           {{this.model.title}}
-        {{/link-to}}
+        </LinkTo>
 
         <div class="sub header">
           <strong>{{this.model.type}}</strong>
@@ -24,24 +24,24 @@
       </h2>
 
       {{#unless this.onCorrectiveActionSubroute}}
-        {{#ui-dropdown class="item icon top right pointing right floated"}}
+        <UiDropdown @class="item icon top right pointing right floated">
           <i class="wrench icon"></i><i class="dropdown icon"></i>
           <div class="menu">
-            {{#if correctiveActions}}
-              <LinkTo class="item" @route="account.employee.index.counseling.print-all" @query={{hash issue=model.id slug=model.slug }}>
+            {{#if this.correctiveActions}}
+              <LinkTo class="item" @route="account.employee.index.counseling.print-all" @query={{hash issue=this.model.id slug=this.model.slug }}>
                 <i class="print icon"></i>
                 Print Corrective Actions
               </LinkTo>
             {{/if}}
             <div class="text-danger header">Danger Zone</div>
-            <a href="#" class="text-danger item" {{action (pipe confirmDelete (action "delete"))}}>
+            <a href="#" class="text-danger item" {{on "click" (prevent-default (pipe confirmDelete (fn this.data.deleteRecord this.model 'working' this.deleteOptions)))}}>
               <i class="trash icon"></i>Delete Record
             </a>
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       {{/unless}}
     </hgroup>
-  {{/confirm-modal}}
+  </ConfirmModal>
 
   <div class="ui divider"></div>
   {{outlet}}

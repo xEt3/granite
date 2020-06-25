@@ -1,9 +1,12 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import Controller from 'granite/core/controller';
 import { states } from 'granite/config/statics';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { inject as service } from '@ember/service';
 
-export default Controller.extend(addEdit, {
-  states,
-  stateIsMontana: computed.equal('model.addressState', 'MT')
-});
+export default class AccountEmployeeOnboardIndex extends Controller {
+  @service data
+  states = states
+
+  get stateIsMontana () {
+    return this.model.addressState === 'MT';
+  }
+}

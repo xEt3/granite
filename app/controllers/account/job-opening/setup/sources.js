@@ -1,61 +1,69 @@
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
 import { Promise } from 'rsvp';
+import { action } from '@ember/object';
 import $ from 'jquery';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-export default Controller.extend(addEdit, {
+export default class AccountJobOpeningSetupSourcesController extends Controller {
+  @service data
+
+  @action
   mutSelect (type, source) {
-    let selected = this.get(`model.${type}`);
+    let selected = this.model[type];
 
     if (selected.includes(source)) {
       selected.removeObject(source);
     } else {
       selected.pushObject(source);
     }
-  },
-
-  actions: {
-    mutSelection (source) {
-      this.mutSelect('applicantSources', source);
-    },
-
-    mutManualSelection (source) {
-      this.mutSelect('manualApplicantSources', source);
-    },
-
-    addToSelection (source) {
-      this.get('model.manualApplicantSources').addObject(source);
-    },
-
-    addManualSource () {
-      this.setProperties({
-        manualSource:          this.store.createRecord('manual-applicant-source'),
-        respondedManualSource: false
-      });
-
-      $('#modal__add--manual-source').modal({
-        detachable: true,
-        onHidden:   () => {
-          if (!this.get('respondedManualSource')) {
-            this.send('respondManualSource', false);
-          }
-        }
-      }).modal('show');
-
-      return new Promise((resolveMs, rejectMs) => this.setProperties({
-        resolveMs,
-        rejectMs
-      }));
-    },
-
-    respondManualSource (response) {
-      if (!response) {
-        this.get('manualSource').destroyRecord();
-      }
-
-      this.get(response ? 'resolveMs' : 'rejectMs')(response ? this.get('manualSource') : null);
-      this.set('respondedManualSource', true);
-      $('#modal__add--manual-source').modal('hide');
-    }
   }
-});
+
+  @action
+  mutSelection (source) {
+    this.mutSelect('applicantSources', source);
+  }
+
+  @action
+  mutManualSelection (source) {
+    this.mutSelect('manualApplicantSources', source);
+  }
+
+  @action
+  addToSelection (source) {
+    this.model.manualApplicantSources.addObject(source);
+  }
+
+  @action
+  addManualSource () {
+    this.setProperties({
+      manualSource:          this.store.createRecord('manual-applicant-source'),
+      respondedManualSource: false
+    });
+
+    $('#modal__add--manual-source').modal({
+      detachable: true,
+      onHidden:   () => {
+        if (!this.respondedManualSource) {
+          this.respondManualSource(false);
+        }
+      }
+    }).modal('show');
+
+    return new Promise((resolveMs, rejectMs) => this.setProperties({
+      resolveMs,
+      rejectMs
+    }));
+  }
+
+  @action
+  respondManualSource (response) {
+    if (!response) {
+      this.manualSource.destroyRecord();
+    }
+
+    this[response ? 'resolveMs' : 'rejectMs'](response ? this.manualSource : null);
+    // this.get(response ? 'resolveMs' : 'rejectMs')(response ? this.manualSource : null);
+    this.respondedManualSource = true;
+    $('#modal__add--manual-source').modal('hide');
+  }
+}

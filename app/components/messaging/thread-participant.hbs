@@ -1,0 +1,7 @@
+<span class="ui image label {{if this.online "green"}}" ...attributes>
+  <Display::EmployeePicture @url={{@participant.picture}} @employeeId={{@participant.id}} />
+  {{@participant.fullName}}
+  {{#if this.detail}}
+    <div class="{{if this.online "green"}} detail">{{this.detail}}</div>
+  {{/if}}
+</span>

@@ -1,27 +1,26 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+import Route from 'granite/core/route';
 
-export default Route.extend({
-  titleToken: 'Settings',
+export default class AccountJobOpeningSetupSettingsRoute extends Route {
+  titleToken = 'Settings'
 
-  model () {
-    let jobOpening = this.modelFor('account.job-opening');
+  async model () {
+    let jobOpening = this.modelFor('account.job-opening'),
+        defaultPipelineResults = await this.store.query('recruiting-pipeline', { 'jobOpenings.0': { $exists: false } }),
+        customPipelineResults = await this.store.query('recruiting-pipeline', { jobOpenings: { $in: [ jobOpening.id ] } });
 
-    return RSVP.hash({
+
+    return {
       jobOpening,
-      locations: this.store.findAll('location'),
-      employees: this.store.query('employee', {
+      locations: await this.store.findAll('location'),
+      employees: await this.store.query('employee', {
         email:       { $exists: true },
         companyUser: { $exists: true }
       }),
 
-      defaultPipeline: this.store.query('recruiting-pipeline', { 'jobOpenings.0': { $exists: false } })
-      .then(results => results ? results.get('firstObject') : results),
-
-      customPipeline: this.store.query('recruiting-pipeline', { jobOpenings: { $in: [ jobOpening.get('id') ] } })
-      .then(results => results ? results.get('firstObject') : results)
-    });
-  },
+      defaultPipeline: defaultPipelineResults ? defaultPipelineResults.firstObject : defaultPipelineResults,
+      customPipeline:  customPipelineResults ? customPipelineResults.firstObject : customPipelineResults
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -32,4 +31,4 @@ export default Route.extend({
       customPipeline:  model.customPipeline
     });
   }
-});
+}

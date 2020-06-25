@@ -1,19 +1,13 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
-import { inject as controller } from '@ember/controller';
-import del from 'granite/mixins/controller-abstractions/delete';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-import pagination from 'granite/mixins/controller-abstractions/pagination';
+import Controller from 'granite/core/controller';
+import { equal } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
-export default Controller.extend(del, pagination, addEdit, {
-  queryParams: [ 'page' ],
-  application: controller(),
-  addingAsset: computed.equal('application.currentPath', 'account.asset.index.new'),
-  editAsset:   computed.equal('application.currentPath', 'account.asset.index.edit'),
+export default class AccountAssetController extends Controller {
+  @service data
 
-  actions: {
-    toggleProperty (prop) {
-      this.toggleProperty(prop);
-    }
-  }
-});
+  queryParams = [ 'page' ]
+  limit = 10
+
+  @equal('application.currentPath', 'account.asset.index.new') addingAsset
+  @equal('application.currentPath', 'account.asset.index.edit') editAsset
+}

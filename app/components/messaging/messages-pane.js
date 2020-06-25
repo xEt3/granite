@@ -1,95 +1,87 @@
-import Component from '@ember/component';
-import { observer, computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { scheduleOnce, debounce } from '@ember/runloop';
 
-const MessagesPaneComponent = Component.extend({
-  classNames: [ 'messaging-thread__messages-pane' ],
+export default class MessagingMessagesPaneComponent extends Component {
+  @tracked messageThreshold = 49
+  @tracked isLoading
+  @tracked isBottomStuck = true
+  @tracked isTopStuck
+  @tracked lastScrollHeight
 
-  topOffsetFudgePX: 20,
-  messageThreshold: 49,
-  isBottomStuck:    true,
+  topOffsetFudgePX = 20;
 
-  didInsertElement () {
-    this._super(...arguments);
-    this.$()[0].addEventListener('scroll', this.onScroll.bind(this));
+  @action
+  didInsert () {
     this.contentChanged();
-  },
+  }
 
-  willDestroyElement () {
-    this.$()[0].removeEventListener('scroll', this.onScroll.bind(this));
-    this._super(...arguments);
-  },
-
-  /* eslint-disable-next-line */
-  contentChanged: observer('messages.[]', function () {
-    const bottomStuck = this.get('isBottomStuck'),
-          topStuck = this.get('isTopStuck');
+  @action
+  contentChanged () {
+    const bottomStuck = this.isBottomStuck,
+          topStuck = this.isTopStuck;
 
     if (!bottomStuck && !topStuck) {
       return;
     }
 
     scheduleOnce('afterRender', () => {
-      let $this = this.$(),
-          lastScroll = this.get('lastScrollHeight');
+      let $this = document.getElementById('messages-pane'),
+          lastScroll = this.lastScrollHeight;
 
-      this.set('isLoading', false);
+      this.isLoading = false;
 
       if (bottomStuck) {
-        return $this.scrollTop($this[0].scrollHeight);
+        return $this.scrollTo(0, $this.scrollHeight);
       }
 
-      $this.scrollTop(lastScroll ? $this[0].scrollHeight - lastScroll : 0);
+      $this.scrollTo(lastScroll ? $this.scrollHeight - lastScroll : 0);
     });
-  }),
+  }
 
-  isFetchable: computed('messages.length', 'messageThreshold', function () {
-    return this.get('messages.length') > this.get('messageThreshold');
-  }),
+  get isFetchable () {
+    return this.args.messages.length > this.messageThreshold;
+  }
 
+  @action
   onScroll (e) {
     debounce(this, this.__handleScroll, e, 1000);
-  },
+  }
 
+  @action
   triggerTopScrollEvent () {
-    this.set('isLoading', true);
-    this.get('onScrolledToTop')();
-  },
+    this.isLoading = true;
+    this.args.onScrolledToTop();
+  }
 
+  @action
   __handleScroll (e) {
     const t = e.target,
-          isFetchable = this.get('isFetchable');
+          isFetchable = this.isFetchable;
 
-    if (isFetchable && t.scrollTop <= this.get('topOffsetFudgePX')) {
-      this.setProperties({
-        isTopStuck:       true,
-        lastScrollHeight: t.scrollHeight
-      });
+    if (isFetchable && t.scrollTop <= this.topOffsetFudgePX) {
+      this.isTopStuck = true;
+      this.lastScrollHeight = t.scrollHeight;
 
       if (t.scrollHeight > t.clientHeight) {
-        this.set('isBottomStuck', false);
+        this.isBottomStuck = false;
       }
 
-      if (this.get('retrievalMax')) {
+      if (this.args.retrievalMax) {
         return;
       }
 
       return this.triggerTopScrollEvent();
     } else {
-      this.set('isTopStuck', false);
+      this.isTopStuck = false;
     }
 
     if (t.scrollHeight === t.scrollTop + t.clientHeight) {
-      this.setProperties({
-        isTopStuck:    false,
-        isBottomStuck: true
-      });
+      this.isTopStuck = false;
+      this.isBottomStuck = true;
     } else {
-      this.set('isBottomStuck', false);
+      this.isBottomStuck = false;
     }
   }
-});
-
-MessagesPaneComponent.reopenClass({ positionalParams: [ 'messages' ] });
-
-export default MessagesPaneComponent;
+}

@@ -1,14 +1,19 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import Controller from 'granite/core/controller';
+import { tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
 import { forms } from 'granite/config/forms/educate-add';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-export default Controller.extend(addEdit, {
-  queryParams:         [ 'type' ],
-  transitionAfterSave: 'account.employee.index.education.index',
-  transitionWithModel: false,
+export default class AccountEmployeeEducationAddController extends Controller {
+  @service data
+  @tracked type = null
 
-  currentForm: computed('type', function () {
-    return forms[this.get('type')];
-  })
-});
+  queryParams = [ 'type' ]
+  saveOptions = {
+    transitionAfterSave: 'account.employee.index.education.index',
+    transitionWithModel: false
+  }
+
+  get currentForm () {
+    return forms[this.type];
+  }
+}

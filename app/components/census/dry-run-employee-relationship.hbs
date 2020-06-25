@@ -1,0 +1,12 @@
+<li>
+  <strong>{{@key}}:</strong>
+  {{#if @value.firstObject}}
+    <ul>
+      {{#each @value as |subValue|}}
+        <li>{{to-string subValue}}</li>
+      {{/each}}
+    </ul>
+  {{else}}
+    {{to-string (or (or this.relationship.fullName this.relationship.name) @value)}}
+  {{/if}}
+</li>

@@ -1,9 +1,3 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({
-  actions: {
-    refresh () {
-      return true;
-    }
-  }
-});
+export default class AccountEmployeeIndexIndexRoute extends Route {}

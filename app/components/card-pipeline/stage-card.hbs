@@ -1,0 +1,117 @@
+<div class="pipeline-card__content {{if @application.hired "pipeline-card__content--hired"}} {{if @application.disqualified "pipeline-card__content--disqualified"}}">
+  <div class="card-content__wrapper">
+    <div class="card-content__title-bar">
+      <span class="card-content__applicant-name">
+        {{@application.person.firstName}} {{@application.person.lastName}}
+      </span>
+      <div class="card-title-bar__controls">
+        <UiDropdown @class="title-bar__control item icon top right pointing" @direction="downward">
+          <i class="exchange icon"></i>
+          <div class="menu">
+            <div class="header">Move candidate to...</div>
+            {{#each this.allExceptCurrentStage as |stage|}}
+              <a href="#" class="item" {{on "click" (prevent-default (fn this.moveTo stage))}}>{{stage.name}}</a>
+            {{/each}}
+          </div>
+        </UiDropdown>
+        {{#unless this.controlsDisabled}}
+          <UiDropdown @class="title-bar__control item icon top right pointing">
+            <i class="setting icon"></i>
+            <div class="menu">
+              <a href="#" class="item" {{on "click" (prevent-default (fn @onSchedule @application))}}><i class="calendar icon"></i> Schedule...</a>
+              <a href="#" class="item" {{on "click" (prevent-default (fn @onAddLabel @application))}}><i class="plus icon"></i> Add/Remove labels</a>
+              <a href="#" class="item" {{on "click" (prevent-default (fn @onDisqualify @application))}}><i class="remove circle icon"></i> Disqualify candidate...</a>
+              <a href="#" class="item" {{on "click" (prevent-default (fn @onLinkSharing @application))}}><i class="globe icon"></i> Sharing...</a>
+              {{#if @onOnboardCandidate}}
+                <a href="#" class="item" {{on "click" (prevent-default (fn @onOnboardCandidate @application))}}>
+                  <i class="user plus icon"></i> Hire candidate...
+                </a>
+              {{/if}}
+            </div>
+          </UiDropdown>
+        {{/unless}}
+      </div>
+    </div>
+
+    <div class="card-content__email">
+      <a href="mailto:{{@application.person.email}}?subject=Regarding the {{@application.jobOpening.job.title}} position">{{@application.person.email}}</a>
+    </div>
+
+    <div class="card-content__next-schedule">
+      {{#if (await this.nextMeeting)}}
+        Next meeting is {{time-ago (get (await this.nextMeeting) "start")}}
+      {{else}}
+        Nothing scheduled
+      {{/if}}
+    </div>
+
+    <div class="card-content__application-link card-content__score-container">
+      <LinkTo @route="account.job-opening.campaign.job-application" @model={{@application.id}}>Open Application</LinkTo>
+      {{#if @application.isScored}}
+        {{! template-lint-disable }}
+        <Display::CalcColor @value={{@application.scoreAbs}} as |red green|>
+          <span style="color: rgb({{red}}, {{green}}, 0)" class="card-content__score">
+            {{@application.scoreAbs}}%
+          </span>
+        </Display::CalcColor>
+        {{! template-lint-enable }}
+      {{/if}}
+      <span class="card-content__entry-method">
+        {{if @application.manualEntry "Manual Entry" "From Quartz"}}
+      </span>
+    </div>
+
+    {{#if (gt @application.labels.length 0)}}
+      <div class="card-content__labels">
+        {{#each (take 3 @application.labels) as |label|}}
+          <CustomLabel @label={{label}} @size="mini" />
+        {{/each}}
+        {{#if (gt @application.labels.length 3)}}
+          <i class="gray-icon ellipsis horizontal icon">
+            <EmberTooltip @side="top" @popperContainer="body">
+              {{#each (drop 3 @application.labels) as |label|}}
+                <CustomLabel @label={{label}} @tagName="span" @size="mini" />
+              {{/each}}
+            </EmberTooltip>
+          </i>
+        {{/if}}
+      </div>
+    {{/if}}
+  </div>
+
+  {{#if @application.employee.id}}
+    <span class="ui bottom attached blue label">
+      <i class="fitted user icon"></i>
+      Internal applicant
+    </span>
+  {{/if}}
+
+  {{#if @application.hired}}
+    <div class="ui bottom attached green label">
+      <i class="fitted check icon"></i>
+      Marked as hired on {{time @application.hiredSetOn "M/D/YY"}}
+      {{#if @application.hiredSetBy.firstName}}
+        by {{@application.hiredSetBy.firstName}}
+      {{/if}}
+      {{!-- <a class="ui right floated"{{action onUnHire application}}>
+        <i class="history icon"></i>
+        Undo
+      </a> --}}
+    </div>
+  {{/if}}
+
+  {{#if @application.disqualified}}
+    <div class="ui bottom attached red label">
+      <i class="fitted remove icon"></i>
+      Candidate is disqualified
+      {{#if @application.disqualificationReason}}
+        ({{@application.disqualificationReason}})
+      {{/if}}
+      {{#if @application.disqualificationEmail}}<span class="card-content__notified">Notified</span>{{/if}}
+      <a href="#" class="ui right floated" role="button" {{on "click" (prevent-default (fn @onUnDisqualify @application))}}>
+        <i class="history icon"></i>
+        Undo
+      </a>
+    </div>
+  {{/if}}
+</div>

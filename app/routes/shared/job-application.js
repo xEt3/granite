@@ -1,8 +1,8 @@
-import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import Route from 'granite/core/route';
 
-export default Route.extend({
-  ajax: service(),
+export default class JobApplicationRoute extends Route {
+  @service ajax;
 
   async model (params) {
     let response = await this.ajax.request(`/api/v1/job-application/shared/${params.sharing_id}`);
@@ -21,4 +21,4 @@ export default Route.extend({
       resume:         response.resume
     };
   }
-});
+}

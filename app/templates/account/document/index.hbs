@@ -1,7 +1,7 @@
 <div class="content">
   <div class="clearfix">
     {{#if this.imagePreview}}
-      <img class="ui small rounded image left floated" alt="" src={{this.model.url}}>
+      <img class="ui small rounded image left floated" alt="Document preview" src={{this.model.url}}>
     {{/if}}
 
     {{#if this.model.description}}
@@ -13,7 +13,7 @@
     <div class="ui divider"></div>
     <h3>Assignees</h3>
     {{#each this.fileAssignments as |assignment|}}
-      {{list-item/file-assignment assignment=assignment}}
+      <ListItem::FileAssignment @assignment={{assignment}} />
     {{/each}}
   {{/if}}
 </div>

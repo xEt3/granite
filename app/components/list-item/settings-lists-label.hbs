@@ -1,0 +1,11 @@
+<div class="item">
+  <CustomLabel @label={{@item}} />
+  <span class="right floated">
+    <a href="#" {{on "click" (prevent-default (fn @editItem @item @index))}}>
+      <i class="edit icon"></i>
+    </a>
+    <a href="#" {{on "click" (prevent-default (fn @deleteItem @item))}}>
+      <i class="red close icon"></i>
+    </a>
+  </span>
+</div>

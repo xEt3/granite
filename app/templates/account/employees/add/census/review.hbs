@@ -1,18 +1,14 @@
-{{stateful-intro-js
-  user=this.auth.user
-  steps=this.intros
-  start-if=this.model.data
-  hintKey="employees-census"}}
+<StatefulIntroJs @user={{this.auth.user}} @steps={{this.intros}} @start-if={{this.model.data}} @hintKey="employees-census" />
 
-{{#link-to "account.employees.add.census.index" class="item text-danger"}}
+<LinkTo @route="account.employees.add.census.index" class="item text-danger">
   <i class="fa fa-fw fa-refresh"></i>
   Reupload census
-{{/link-to}}
+</LinkTo>
 
 {{#if this.doingDryRun}}
   <i class="pull-right text-green spinner loading icon"></i>
 {{else}}
-  <a href="#" class="pull-right text-green btn__dry-run" {{action "doDryRun" true}}>
+  <a href="#" class="pull-right text-green btn__dry-run" {{on "click" (prevent-default (fn this.doDryRun true))}}>
     {{if this.displayDryRunResults "Regenerate" "Generate"}} dry run data
   </a>
 {{/if}}
@@ -20,46 +16,34 @@
 {{#if this.displayDryRunResults}}
   <p class="text-center text-white">
     The following would be created as a result of this import:
-    <a href="#" class="text-muted pull-right" {{action "dumpDryRun"}}>
+    <a href="#" class="text-muted pull-right" {{on "click" (prevent-default this.dumpDryRun)}}>
       <i class="times circle icon text-white"></i>
     </a>
   </p>
 
   {{#each this.potentialData as |potentialDataRecord index|}}
-    {{list-item/dry-run-employee
-      dryRunRecord=potentialDataRecord
-      index=index
-      availableFields=this.availableFields
-    }}
+    <ListItem::DryRunEmployee @dryRunRecord={{potentialDataRecord}} @index={{index}} @availableFields={{this.availableFields}} />
   {{/each}}
 {{/if}}
 
 <div class="ui divider"></div>
 
-<form {{action "importRecords" on="submit"}}>
+<form {{on "submit" (prevent-default this.importRecords)}}>
   <div class="ui raised very padded fluid container">
-    {{#display/visual-overflow-table class="responsive-table census__table"}}
+    <Display::VisualOverflowTable @class="responsive-table census__table">
       <table class="ui striped celled table">
         <thead>
           <tr class="guess-fields-row overflow">
             <th>
               <div class="ui red ribbon label">
-                {{ember-tooltip
-                  side="right"
-                  popperContainer="body"
-                  text="We have attempted to guess the columns that you uploaded. This row represents our guesses."}}
+                <EmberTooltip @side="right" @popperContainer="body" @text="We have attempted to guess the columns that you uploaded. This row represents our guesses." />
                 Guessed Fields
               </div>
             </th>
             {{#each (object-at 0 this.model.data) as |guesses index|}}
               <th>
                 <div class="field">
-                  {{#ui-dropdown
-                    class="scrolling census__field-selection"
-                    name="guess-column"
-                    selected=guesses
-                    context="table"
-                    onChange=(pipe-action (action "mutateGuess" index)(action "doDryRun"))}}
+                  <UiDropdown @class="scrolling census__field-selection" @name="guess-column" @selected={{guesses}} @context="table" @onChange={{pipe-action (fn this.mutateGuess index) this.doDryRun}}>
                     <div class="default text">Select field for column</div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
@@ -72,7 +56,7 @@
                         Disregard
                       </div>
                     </div>
-                  {{/ui-dropdown}}
+                  </UiDropdown>
                 </div>
               </th>
             {{/each}}
@@ -80,10 +64,7 @@
           <tr class="client-fields-row">
             <th>
               <div class="ui blue ribbon label">
-                {{ember-tooltip
-                  side="right"
-                  popperContainer="body"
-                  text="We show the column labels you originally uploaded here for reference."}}
+                <EmberTooltip @side="right" @popperContainer="body" @text="We show the column labels you originally uploaded here for reference." />
                 Your Columns
               </div>
             </th>
@@ -94,72 +75,72 @@
         </thead>
         <tbody class="monospaced data-rows">
           {{#each this.rows as |row rowIndex|}}
-            {{#census/table-row validation=(object-at rowIndex this.dataValidation)}}
+            <Census::TableRow @validation={{object-at rowIndex this.dataValidation}}>
               <td>
                 {{add-one rowIndex}}
               </td>
               {{#each row as |column columnIndex|}}
-                {{census/table-cell
-                  column
-                  rowIndex
-                  columnIndex
-                  this.potentialData
-                  this.availableFields
-                  this.guesses
-                  (object-at columnIndex (object-at rowIndex this.dataValidation))
-                  addDepartment=(action "showDepartmentModal")
-                  addLocation=(action "showLocationModal")
-                  onRefresh=(action "onRefresh")
-                  onNotify=(action "onNotify")
-                }}
+                <Census::TableCell
+                  @column={{column}}
+                  @rowIndex={{rowIndex}}
+                  @columnIndex={{columnIndex}}
+                  @potentialData={{this.potentialData}}
+                  @availableFields={{this.availableFields}}
+                  @guesses={{this.guesses}}
+                  @validation={{object-at columnIndex (object-at rowIndex this.dataValidation)}}
+                  @addDepartment={{this.showDepartmentModal}}
+                  @addLocation={{this.showLocationModal}}
+                  @onRefresh={{this.onRefresh}}
+                  @onNotify={{this.onNotify}}
+                />
               {{/each}}
-            {{/census/table-row}}
+            </Census::TableRow>
           {{/each}}
         </tbody>
       </table>
-    {{/display/visual-overflow-table}}
+    </Display::VisualOverflowTable>
 
     <div class="ui divider"></div>
 
-    {{#form/action-button type="submit" class="ui fluid positive big button import-button" loading=this.working}}
+    <Form::ActionButton type="submit" class="ui fluid positive big button import-button" @loading={{this.data.statuses.working.isLoading}}>
       <i class="check icon"></i> Import {{this.rows.length}} records
-    {{/form/action-button}}
+    </Form::ActionButton>
   </div>
 </form>
 
-{{#ui-modal id="modal__add-location" class="small form"}}
+<UiModal @id="modal__add-location" @class="small form">
   <div class="header">
     Add Location
   </div>
   <div class="content">
     <div class="field">
       <label for="location-name">Name</label>
-      {{input type="text" value=this.newLocation.name id="location-name" placeholder="Location Name"}}
+      <Input @type="text" @value={{this.newLocation.name}} @id="location-name" placeholder="Location Name" />
     </div>
     <div class="field">
       <label for="location-code">Code</label>
-      {{input type="text" value=this.newLocation.code id="location-code" placeholder="Location Code"}}
+      <Input @type="text" @value={{this.newLocation.code}} @id="location-code" placeholder="Location Code" />
     </div>
     <div class="field">
       <label for="location-phone">Telephone Number</label>
-      {{input type="tel" value=this.newLocation.phone id="location-phone" placeholder="Location Telephone Number"}}
+      <Input @type="tel" @value={{this.newLocation.phone}} @id="location-phone" placeholder="Location Telephone Number" />
     </div>
     <div class="field">
       <label for="address-line-1">Address Line 1</label>
-      {{validated-input type="text" model=this.newLocation valuePath="addressLine1" placeholder="Address Line 1" id="address-line-1"}}
+      <ValidatedInput @type="text" @model={{this.newLocation}} @valuePath="addressLine1" @placeholder="Address Line 1" @id="address-line-1" />
     </div>
     <div class="field">
       <label for="address-line-2">Address Line 2</label>
-      {{input type="text" value=this.newLocation.addressLine2 placeholder="Address Line 2" id="address-line-2"}}
+      <Input @type="text" @value={{this.newLocation.addressLine2}} placeholder="Address Line 2" @id="address-line-2" />
     </div>
     <div class="three fields">
       <div class="field">
         <label for="address-city">City</label>
-        {{input type="text" value=this.newLocation.addressCity placeholder="City" id="address-city"}}
+        <Input @type="text" @value={{this.newLocation.addressCity}} placeholder="City" @id="address-city" />
       </div>
       <div class="field">
         <label for="state-name">State</label>
-        {{#ui-dropdown class="search selection" selected=this.newLocation.addressState onChange=(action (mut this.newLocation.addressState))}}
+        <UiDropdown @class="search selection" @selected={{this.newLocation.addressState}} @onChange={{set this.newLocation.addressState _}}>
           {{#if this.stateIsMontana}}<i class="text-danger heart icon"></i>{{/if}}
           <div class="default text">State</div>
           <i class="dropdown icon"></i>
@@ -170,44 +151,44 @@
               </div>
             {{/each}}
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       </div>
       <div class="field">
         <label for="address-zip">Zip</label>
-        {{input type="text" value=this.newLocation.addressZipcode placeholder="Zip" id="address-zip"}}
+        <Input @type="text" @value={{this.newLocation.addressZipcode}} placeholder="Zip" @id="address-zip" />
       </div>
     </div>
   </div>
   <div class="actions">
-    <button class="ui red button" {{action "respondLocationModal" false}}>
+    <button class="ui red button" {{on "click" (fn this.respondLocationModal false)}} type="button">
       Cancel
     </button>
-    <button class="ui green right labeled icon button" {{action "respondLocationModal" true}}>
+    <button class="ui green right labeled icon button" {{on "click" (fn this.respondLocationModal true)}} type="button">
       Create Location<i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>
 
-{{#ui-modal id="modal__add-department" class="small form"}}
+<UiModal @id="modal__add-department" @class="small form">
   <div class="header">
     Add Department
   </div>
   <div class="content">
     <div class="field">
       <label for="department-name">Name</label>
-      {{input type="text" value=this.newDepartment.name id="department-name" placeholder="Department Name"}}
+      <Input @type="text" @value={{this.newDepartment.name}} @id="department-name" placeholder="Department Name" />
     </div>
     <div class="field">
       <label for="department-code">Code</label>
-      {{input type="text" value=this.newDepartment.code id="department-code" placeholder="Department Code"}}
+      <Input @type="text" @value={{this.newDepartment.code}} @id="department-code" placeholder="Department Code" />
     </div>
   </div>
   <div class="actions">
-    <button class="ui red button" {{action "respondDepartmentModal" false}}>
+    <button class="ui red button" {{on "click" (fn this.respondDepartmentModal false)}} type="button">
       Cancel
     </button>
-    <button class="ui green right labeled icon button" {{action "respondDepartmentModal" true}}>
+    <button class="ui green right labeled icon button" {{on "click" (fn this.respondDepartmentModal true)}} type="button">
       Create Department<i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

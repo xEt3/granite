@@ -1,42 +1,52 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
-export default Controller.extend(addEdit, {
-  transitionAfterSave: 'account.anatomy.company-users',
-  transitionWithModel: false,
+export default class AccountAnatomyCompanyUsersNewController extends Controller {
+  @service data
 
-  disableForm: computed('model.{email,employee}', function () {
-    let model = this.get('model');
-    return !model.get('email') || !model.get('employee');
-  }),
+  @tracked permissionsTree
+  @tracked employees
 
-  actions: {
-    async save () {
-      let model = this.get('model'),
-          employee = await this.get('model.employee'),
-          user = await this.saveModel(model);
-
-      employee.set('companyUser', user);
-      await this.saveModel(employee);
-    },
-
-    presetAttrs () {
-      let model = this.get('model'),
-          employee = this.get('model.employee'),
-          attrs = [ 'firstName', 'middleName', 'lastName' ];
-
-      let id = [];
-      this.permissionsTree.forEach(permission=>{
-        permission.children.forEach(child=>{
-          if (child.isChecked) {
-            id.push(child.id);
-            model.set('permissions', id);
-          }
-        });
-      });
-
-      attrs.map(a => model.set(a, employee.get(a)));
-    }
+  saveOptions = {
+    transitionAfterSave: 'account.anatomy.company-users',
+    transitionWithModel: false
   }
-});
+
+  get disableForm () {
+    let model = this.model;
+    return !model.email || !model.employee;
+  }
+
+  @action
+  async save () {
+    let model = this.model,
+        employee = await this.model.employee,
+        user = await this.data.saveRecord(model);
+
+    employee.companyUser = user;
+    await this.data.saveRecord(employee, 'working', this.saveOptions);
+  }
+
+  @action
+  async presetAttrs () {
+    let model = this.model,
+        employee = await this.model.employee,
+        attrs = [ 'firstName', 'middleName', 'lastName' ];
+
+    let id = [];
+    this.permissionsTree.forEach(permission=>{
+      permission.children.forEach(child=>{
+        if (child.isChecked) {
+          id.push(child.id);
+          model.permissions = id;
+        }
+      });
+    });
+
+    attrs.map(a => {
+      model[a] = employee[a];
+    });
+  }
+}

@@ -1,7 +1,9 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-let EmployeeItemComponent = Component.extend({ tagName: '' });
+export default class ListItemEmployeeItemComponent extends Component {}
 
-EmployeeItemComponent.reopenClass({ positionalParams: [ 'employee' ] });
+/*
+  USAGE
+  <ListItem::EmployeeItem @model={{this.employee}}/>
 
-export default EmployeeItemComponent;
+*/

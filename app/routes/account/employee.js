@@ -1,12 +1,11 @@
-import Route from '@ember/routing/route';
-import refreshable from 'granite/mixins/refreshable';
+import Route from 'granite/core/route';
 
-export default Route.extend(refreshable, {
+export default class AccountEmployeeRoute extends Route {
   titleToken (model) {
     return model.fullName;
-  },
+  }
 
   model (params) {
     return this.store.find('employee', params.id);
   }
-});
+}

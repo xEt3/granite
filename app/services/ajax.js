@@ -1,20 +1,17 @@
 import AjaxService from 'ember-ajax/services/ajax';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
 
-export default AjaxService.extend({
-  auth: service(),
+export default class _AjaxService extends AjaxService {
+  @service auth;
 
-  headers: computed('auth.{authenticated,token}', {
-    get () {
-      let headers = {};
-      const token = this.get('auth.token');
+  get headers () {
+    let headers = {};
+    const token = this.auth.token;
 
-      if (this.get('auth.authenticated')) {
-        headers['X-API-Token'] = token;
-      }
-
-      return headers;
+    if (this.auth.get('authenticated')) {
+      headers['X-API-Token'] = token;
     }
-  })
-});
+
+    return headers;
+  }
+}

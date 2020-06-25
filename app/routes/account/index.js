@@ -1,33 +1,31 @@
-import Route from '@ember/routing/route';
-import { resolve } from 'rsvp';
+import Route from 'granite/core/route';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { scheduleOnce } from '@ember/runloop';
 import { isEmpty } from '@ember/utils';
 
-export default Route.extend({
-  titleToken: 'Dashboard',
-  ajax:       service(),
-  auth:       service(),
+export default class AccountIndexRoute extends Route {
+  titleToken = 'Dashboard'
 
-  queryParams: {
+  @service ajax
+  @service auth
+
+  queryParams = {
     tag:  { refreshModel: true },
     page: { refreshModel: true }
-  },
+  }
 
-  beforeModel () {
-    return resolve(this.get('auth.user'))
-    .then(user => resolve(user.get('company')))
-    .then(company => {
-      if (company && !company.get('firstStepsCompletedOn')) {
-        return this.transitionTo('account.first-steps');
-      }
-    });
-  },
+  async beforeModel () {
+    let company = await this.auth.get('user.company');
+    if (company && !company.firstStepsCompletedOn) {
+      return this.transitionTo('account.first-steps');
+    }
+  }
 
   async model (params) {
     let activityQuery = {
-      limit: this.get('cachedActivities') ? params.limit : params.limit * (params.page + 1),
-      page:  this.get('cachedActivities') ? params.page : 0,
+      limit: this.cachedActivities ? params.limit : params.limit * (params.page + 1),
+      page:  this.cachedActivities ? params.page : 0,
       sort:  { created: -1 }
     };
 
@@ -39,18 +37,18 @@ export default Route.extend({
       page:       params.page || 0,
       activities: await this.store.query('activity', activityQuery),
       analytics:  await this.getAnalytics(),
-      tags:       await this.get('ajax').request('/api/v1/activities', {
+      tags:       await this.ajax.request('/api/v1/activities', {
         data: {
           _distinct: true,
           select:    'tag'
         }
       })
     };
-  },
+  }
 
   async getAnalytics () {
-    return await this.get('ajax').request('/api/v1/company/dashboard-analytics');
-  },
+    return await this.ajax.request('/api/v1/company/dashboard-analytics');
+  }
 
   afterModel (model) {
     if (model.page > 0) {
@@ -59,28 +57,29 @@ export default Route.extend({
         return $activityEl && window.scrollTo(0, $activityEl.offsetHeight);
       });
     }
-  },
+  }
 
   setupController (controller, model) {
-    this._super(...arguments);
+    super.setupController(...arguments);
 
-    if (this.get('cachedActivities') && model.page > 0) {
-      this.set('cachedActivities', this.get('cachedActivities').concat(model.activities.toArray()));
+    if (this.cachedActivities && model.page > 0) {
+      this.cachedActivities = this.cachedActivities.concat(model.activities.toArray());
     } else {
-      this.set('cachedActivities', model.activities.toArray());
+      this.cachedActivities = model.activities.toArray();
     }
 
     controller.setProperties({
-      model:        this.get('cachedActivities'),
+      model:        this.cachedActivities,
       tags:         model.tags,
-      totalRecords: model.activities.get('meta.totalRecords'),
+      totalRecords: model.activities.meta.totalRecords,
       analytics:    model.analytics
     });
-  },
+  }
 
-  actions: {
-    willTransition () {
-      this.controller.set('page', 0);
+  @action
+  willTransition (transition) {
+    if (transition.targetName !== 'account.index') {
+      this.controller.page = 0;
     }
   }
-});
+}

@@ -1,0 +1,11 @@
+{{#if this.actionString}}
+  <h3 class="project-activity__action {{this.actColor}}">{{this.model.title}} {{this.actionString}}.</h3>
+{{/if}}
+
+{{#if this.projectSlug}}
+  <p>
+    <LinkTo @route="account.action-item" @model={{this.projectSlug}}>
+      Go to project
+    </LinkTo>
+  </p>
+{{/if}}

@@ -3,10 +3,10 @@
     <div class="ui top attached label">
       Action content
       <div class="right floated detail">
-        {{#link-to "account.employee.index.counseling.issue.corrective-action.print"}}
+        <LinkTo @route="account.employee.index.counseling.issue.corrective-action.print">
           <i class="print icon"></i>
           Print For Presentation
-        {{/link-to}}
+        </LinkTo>
       </div>
     </div>
     <h3 class="ui header">Issue(s)</h3>
@@ -27,31 +27,31 @@
   </div>
 {{/if}}
 
-{{#if model.documents}}
+{{#if this.model.documents}}
   <div class="center aligned text">
-    <a href="#" class="item" {{action (toggle "showDocuments" this)}}>
-      <i class="eye {{if showDocuments "slash"}} icon"></i>{{if showDocuments "Hide" "Show"}} {{model.documents.length}} supporting {{inflect-text "document" model.documents.length}}
+    <a href="#" class="item" {{on "click" (prevent-default (toggle "showDocuments" this))}}>
+      <i class="eye {{if this.showDocuments "slash"}} icon"></i>{{if this.showDocuments "Hide" "Show"}} {{this.model.documents.length}} supporting {{inflect-text "document" this.model.documents.length}}
     </a>
   </div>
 {{/if}}
 
-{{#if showDocuments}}
+{{#if this.showDocuments}}
   <div class="ui divided items">
-    {{#each model.documents as |document|}}
+    {{#each this.model.documents as |document|}}
       <Display::IssueDocuments
         @document={{document}}
         class="item"
-        @onDelete={{action "delete"}}
+        @onDelete={{fn this.deleteDocument document}}
       />
     {{/each}}
   </div>
 {{/if}}
 
-{{#liquid-if model.followUps.length}}
+{{#liquid-if this.model.followUps.length}}
   <div class="ui divider"></div>
   <h2><i class="repeat icon"></i>Follow ups</h2>
-  {{display/resource-list
-    this.sortedFollowUps
-    "list-item/corrective-action-followup"
-    class="ui divided items"}}
+  <Display::ResourceList
+    @model={{this.sortedFollowUps}}
+    @itemComponent="list-item/corrective-action-followup"
+    class="ui divided items"/>
 {{/liquid-if}}

@@ -7,30 +7,24 @@
     </hgroup>
     <div class="ui divider"></div>
     <div class="center aligned text">
-      {{#input/document-selection-modal
-        title="Add a document"
-        assignText="Use Documents"
-        selection=docModalSelection
-        onSelected=(action "addAssignment")
-        as |execute|}}
-        <a  href="#" {{action execute}}>Choose a Document</a>
-      {{/input/document-selection-modal}}
+      <Input::DocumentSelectionModal @title="Add a document" @assignText="Use Documents" @selection={{this.docModalSelection}} @onSelected={{this.addAssignment}} as |execute|>
+        <a href="#" {{on "click" (prevent-default execute)}}>Choose a Document</a>
+      </Input::DocumentSelectionModal>
     </div>
     <div class="ui divided list">
-      {{#each assignments as |assignment|}}
-        {{list-item/document-assignment
-          assignment
+      {{#each this.assignments as |assignment|}}
+        <ListItem::DocumentAssignment
+          @model={{assignment}}
           class="item"
-          onRemove=(action "removeAssignment")
-        }}
+          @onRemove={{this.removeAssignment}} />
       {{else}}
         <h3 class="center aligned light text">Nothing assigned, yet.</h3>
       {{/each}}
     </div>
-    {{#if assignments}}
+    {{#if this.assignments}}
       <div class="ui divider"></div>
-      <form {{action "saveAssignment" on="submit"}}>
-        {{#form/action-button type="submit" class="ui huge fluid green button" loading=working disabled=(not assignments)}}Assign {{assignments.length}} {{inflect-text "Document" assignments.length}}{{/form/action-button}}
+      <form {{on "submit" (prevent-default (pipe this.saveAssignment (route-action "refreshModel")))}}>
+        <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.working}} @disabled={{not this.assignments}}>Assign {{this.assignments.length}} {{inflect-text "Document" this.assignments.length}}</Form::ActionButton>
       </form>
     {{/if}}
   </div>

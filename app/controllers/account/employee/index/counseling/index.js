@@ -1,11 +1,7 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
-import { inject as service } from '@ember/service';
-import resource from 'granite/mixins/controller-abstractions/resource';
+import { GraniteResourceController } from 'granite/core/controller';
 
-export default Controller.extend(resource, {
-  auth:   service(),
-  intros: computed(function () {
+export default class CounselingIssueIndexController extends GraniteResourceController {
+  get intros () {
     return [{
       element:  '.ui.segment.container',
       intro:    'This page displays overarching categories of disciplinary issues for this employee.',
@@ -15,5 +11,5 @@ export default Controller.extend(resource, {
       intro:    'To start an issue file on this employee\'s record, press the plus button. Adding an issue will allow you to file corrective actions for the issue.',
       position: 'top'
     }];
-  })
-});
+  }
+}

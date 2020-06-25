@@ -4,35 +4,33 @@
   </h2>
   <p>Edit the title and description of your job listing</p>
 
-  {{#input/ui-input value=this.model.title placeholder="What shows as the job name on the listing?"}}
+  <Input::UiInput @value={{this.model.title}} @placeholder="What shows as the job name on the listing?">
     Title
-  {{/input/ui-input}}
+  </Input::UiInput>
 
   <div class="field">
     <label>Description (How your job description displays on the listing)</label>
-    {{input/rich-text
-      value=this.model.description
-      onChange=(action (mut this.model.description))}}
+    <Input::RichText @value={{this.model.description}} @onChange={{set this.model.description _}} />
   </div>
 
   <h2 class="ui horizontal divider header">
     Available Manual Sources
-    <a href="#" {{action
+    <a href="#" {{on "click" (prevent-default
       (pipe
-        (action "addManualSource")
-        (action "save")
-        (action "addToSelection")
-      )
+        this.addManualSource
+        this.data.saveRecord
+        this.addToSelection
+      ))
     }}>
       <i class="plus icon"></i>
     </a>
   </h2>
   <div class="ui divided link items">
     {{#each this.sources.manual as |manualSource|}}
-      {{list-item/applicant-source-select
-        manualSource
-        selected=(contains manualSource this.model.manualApplicantSources)
-        onUpdate=(action "mutManualSelection")}}
+      <ListItem::ApplicantSourceSelect
+        @model={{manualSource}}
+        @selected={{contains manualSource this.model.manualApplicantSources}}
+        @onUpdate={{this.mutManualSelection}}/>
     {{else}}
       <h2 class="center aligned light text header">
         <i class="exclamation triangle icon"></i>
@@ -44,44 +42,39 @@
   <h2 class="ui horizontal divider header">Available Automatic Sources</h2>
   <div class="ui divided link items">
     {{#each this.sources.automatic as |source|}}
-      {{list-item/applicant-source-select
-        source
-        selected=(contains source this.model.applicantSources)
-        onUpdate=(action "mutSelection")}}
+      <ListItem::ApplicantSourceSelect
+        @model={{source}}
+        @selected={{contains source this.model.applicantSources}}
+        @onUpdate={{this.mutSelection}}/>
     {{/each}}
   </div>
 
   <div class="ui divider"></div>
 
-  <form {{action "saveAndContinue" on="submit"}}>
-    {{#form/action-button
-      type="submit"
-      class="ui huge fluid green button"
-      loading=this.working}}
+  <form {{on "submit" (prevent-default (route-action "saveAndContinue"))}}>
+    <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.wizard.isLoading}}>
       Next
-    {{/form/action-button}}
+    </Form::ActionButton>
   </form>
 </div>
 
-{{#ui-modal id="modal__add--manual-source" class="small form"}}
+<UiModal @id="modal__add--manual-source" @class="small form">
   <i class="close icon"></i>
   <div class="header">
     Create a new manual source
   </div>
   <div class="content">
-    {{#input/ui-input
-      value=this.manualSource.name
-      placeholder="ex. Post to Craigslist"}}
+    <Input::UiInput @value={{this.manualSource.name}} @placeholder="ex. Post to Craigslist">
       Manual Source Name
-    {{/input/ui-input}}
+    </Input::UiInput>
   </div>
   <div class="actions">
-    <button type="button" class="ui red button" {{action "respondManualSource" false}}>
+    <button type="button" class="ui red button" {{on "click" (fn this.respondManualSource false)}}>
       Cancel
     </button>
-    <button type="button" class="ui green right labeled icon button" disabled={{not this.manualSource.name}} {{action "respondManualSource" true}}>
+    <button type="button" class="ui green right labeled icon button" disabled={{not this.manualSource.name}} {{on "click" (fn this.respondManualSource true)}}>
       Save Manual Source
       <i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

@@ -1,14 +1,11 @@
-import Component from '@ember/component';
-import layout from '../templates/components/x-tree-branch';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  layout,
-  tagName:    'ul',
-  classNames: [ 'tree-branch' ],
-
+export default class XTreeBranch extends Component {
+  @action
   recalculateState () {
-    if (this.get('recalculateStateAction')) {
-      this.get('recalculateStateAction')();
+    if (this.recalculateStateAction) {
+      this.args.recalculateStateAction();
     }
   }
-});
+}

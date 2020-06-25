@@ -4,41 +4,24 @@
   <div class="field">
     <label for="input__dropzone--company-image">Company Logo</label>
     <div id="template" class="center aligned">
-      {{drop-zone
-        url=this.fileEndpoint
-        id=this.dropzoneId
-        class="input__dropzone"
-        method="put"
-        uploadMultiple=false
-        acceptedFiles="image/*"
-        maxFiles=1
-        autoProcessQueue=false
-        dictDefaultMessage="Drop Files or Click to Replace/Add Picture"
-        thumbnailWidth="175"
-        headers=(hash X-API-Token=this.auth.token)
-        addedfile=(action "addedFile")
-        success=(action "uploadedFile")
-        capture="camera"}}
+      <DropZone @url={{this.files.fileEndpoint}} @id={{this.dropzoneId}} @class="input__dropzone" @method="put" @uploadMultiple={{false}} @acceptedFiles="image/*" @maxFiles={{1}} @autoProcessQueue={{false}} @dictDefaultMessage="Drop Files or Click to Replace/Add Picture" @thumbnailWidth="175" @headers={{hash X-API-Token=this.auth.token}} @addedfile={{this.files.addedFile}} @success={{this.files.uploadedFile}} @capture="camera" />
     </div>
   </div>
 
   <div class="ui divider"></div>
 
-  {{quick-form
-    this.settingsForm
-    this.model
-    this
+  <QuickForm
+    @form={{this.settingsForm}}
+    @model={{this.model}}
+    @controller={{this}}
     class="ui grid padded container"
-    tagName="div"}}
+    @tagName="div"/>
 
   <div class="ui divider"></div>
 
-  <form {{action "saveSettings" on="submit"}}>
-    {{#form/action-button
-      type="submit"
-      class="ui positive fluid huge button"
-      loading=this.working}}
+  <form {{on "submit" (prevent-default this.saveSettings)}}>
+    <Form::ActionButton type="submit" class="ui positive fluid huge button" @loading={{or this.data.statuses.fileHandling.isLoading this.data.statuses.working.isLoading}}>
       Save Changes
-    {{/form/action-button}}
+    </Form::ActionButton>
   </form>
 </div>

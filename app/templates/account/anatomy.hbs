@@ -1,17 +1,17 @@
 <div class="ui container">
   <div class="ui pointing menu">
-    {{#link-to "account.anatomy.index" class="item"}}
+    <LinkTo @route="account.anatomy.index" class="item">
       <i class="list icon"></i>Summary
-    {{/link-to}}
-    {{#link-to "account.anatomy.departments.index" class="item"}}
+    </LinkTo>
+    <LinkTo @route="account.anatomy.departments.index" class="item">
       <i class="cubes icon"></i>Departments
-    {{/link-to}}
-    {{#link-to "account.anatomy.locations.index" class="item"}}
+    </LinkTo>
+    <LinkTo @route="account.anatomy.locations.index" class="item">
       <i class="building icon"></i>Locations
-    {{/link-to}}
-    {{#link-to "account.anatomy.company-users.index" class="item"}}
+    </LinkTo>
+    <LinkTo @route="account.anatomy.company-users.index" class="item">
       <i class="users icon"></i>Users
-    {{/link-to}}
+    </LinkTo>
   </div>
 
   <div class="ui padded raised text segment clearfix">

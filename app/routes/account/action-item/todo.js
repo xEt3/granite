@@ -1,19 +1,18 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+import Route from 'granite/core/route';
 
-export default Route.extend({
-  titleToken: 'Todos',
+export default class AccountActionItemTodoRoute extends Route {
+  titleToken = 'Todos'
 
-  model () {
-    return RSVP.hash({
-      actionItem:  this._super(...arguments),
-      actionItems: this.store.query('action-item', {
+  async model () {
+    return {
+      actionItem:  super.model(...arguments),
+      actionItems: await this.store.query('action-item', {
         completedOn: { $not: { $type: 9 } },
         cancelledOn: { $not: { $type: 9 } }
       }),
-      employees: this.store.findAll('employee')
-    });
-  },
+      employees: await this.store.findAll('employee')
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -22,4 +21,4 @@ export default Route.extend({
       employees:   model.employees
     });
   }
-});
+}

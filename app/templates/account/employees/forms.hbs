@@ -4,12 +4,12 @@
       Forms & Responses
     </h1>
     <div class="right aligned text menu">
-      {{#ui-dropdown class="item icon top right pointing"}}
+      <UiDropdown @class="item icon top right pointing">
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
-          {{#link-to "account.settings.index.forms" class="text-black"}}Manage forms...{{/link-to}}
+          <LinkTo @route="account.settings.index.forms" class="text-black">Manage forms...</LinkTo>
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
     </div>
   </hgroup>
   <div class="ui divider"></div>

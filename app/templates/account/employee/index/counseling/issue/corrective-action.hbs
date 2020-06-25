@@ -1,58 +1,44 @@
-{{#confirm-modal deleteContext=(concat "Corrective Action: " model.type) as |confirmDelete|}}
-  {{#input/document-selection-modal
-    title="New Corrective Action Document"
-    selected=model.file
-    correctiveAction=model
-    assignText="Use Document"
-    singleDoc=true
-    systemUse=true
-    autoTag="corrective Action Document"
-    onSelected=(pipe-action
-      (action (mut model.file))
-      (action "saveDocument"))
-      as |selectDocuments|
-    }}
+<ConfirmModal @deleteContext={{concat "Corrective Action: " this.model.type}} as |confirmDelete|>
+  <Input::DocumentSelectionModal @title="New Corrective Action Document" @selected={{this.model.file}} @correctiveAction={{this.model}} @assignText="Use Document" @singleDoc={{true}} @systemUse={{true}} @autoTag="corrective Action Document" @onSelected={{pipe-action (set this.model.file _) this.saveDocument this.afterSave}} as |selectDocuments|>
     <hgroup>
       <span class="ui header">
-        {{#if (await model.actionSeverity)}}
-          {{get (await model.actionSeverity) "name"}} on
+        {{#if (await this.model.actionSeverity)}}
+          {{get (await this.model.actionSeverity) "name"}} on
         {{/if}}
         {{time
           (if this.model.issuedOn this.model.issuedOn this.model.created)
           "MMMM Do YYYY"}}
       </span>
-      {{#ui-dropdown class="item icon top right pointing right floated"}}
+      <UiDropdown @class="item icon top right pointing right floated">
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
           <div class="header">Actions</div>
-          <a href="#" class="item" {{action selectDocuments}}>
+          <a href="#" class="item" {{on "click" (prevent-default selectDocuments)}}>
             <i class="folder icon"></i>
             Add a Document
           </a>
-          {{#if (and model.followUpOn (not model.resolutionStatusOn))}}
-            <a href="#" class="item" {{action (pipe (action "openFollowupModal") (action "saveFollowup"))}}>
+          {{#if (and this.model.followUpOn (not this.model.resolutionStatusOn))}}
+            <a href="#" class="item" {{on "click" (prevent-default (pipe this.openFollowupModal this.saveFollowup this.afterSave))}}>
               <i class="repeat icon"></i>Follow Up
             </a>
           {{/if}}
-          {{#link-to
-            "account.employee.index.counseling.issue.corrective-action.edit"
-            class="item"}}
+          <LinkTo @route="account.employee.index.counseling.issue.corrective-action.edit" class="item">
             <i class="edit icon"></i>Edit
-          {{/link-to}}
+          </LinkTo>
           <div class="text-danger header">Danger Zone</div>
-          <a href="#" class="text-danger item" {{action (pipe confirmDelete (action "delete"))}}>
+          <a href="#" class="text-danger item" {{on "click" (prevent-default (pipe confirmDelete (fn this.data.deleteRecord this.model "working" this.deleteOptions) this.afterSave))}}>
             <i class="trash icon"></i>Delete Record
           </a>
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
     </hgroup>
-  {{/input/document-selection-modal}}
-{{/confirm-modal}}
+  </Input::DocumentSelectionModal>
+</ConfirmModal>
 
 <div class="ui divider"></div>
 {{outlet}}
 
-{{#ui-modal name="modal__corrective-action--followup" id="modal__corrective-action--followup" class="small form"}}
+<UiModal @name="modal__corrective-action--followup" @id="modal__corrective-action--followup" @class="small form">
   <div class="header">
     Following up to
     {{#if (await this.model.actionSeverity)}}
@@ -63,19 +49,19 @@
       "MMMM Do YYYY"}}
   </div>
   <div class="content">
-    {{quick-form
-      this.followupForm
-      this.followup
-      this
-      tagName="div"}}
+    <QuickForm
+      @form={{this.followupForm}}
+      @model={{this.followup}}
+      @controller={{this}}
+      @tagName="div"/>
   </div>
   <div class="actions">
-    <button class="ui red button" {{action "respondFollowup" false}}>
+    <button class="ui red button" {{on "click" (prevent-default (fn this.respondFollowup false))}} type="button">
       Cancel
     </button>
-    <button class="ui primary right labeled icon button" {{action "respondFollowup" true}}>
+    <button class="ui primary right labeled icon button" {{on "click" (prevent-default (fn this.respondFollowup true))}} type="button">
       Done
       <i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

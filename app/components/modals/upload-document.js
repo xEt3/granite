@@ -1,55 +1,59 @@
 /*
   USAGE
 
-  {{#modals/upload-document
+  <Modals::UploadDocument
     systemUse=true
     uploadComplete=(action 'uploadFollowup') as |openUploadModal|
-  }}
-    <a href="#" {{action openUploadModal}}>
+  >
+    <a href="#" {{on "click" (prevent-default openUploadModal)}}>
       <i class="upload icon"></i>
     </a>
-  {{/modals/upload-document}}
+  </Modals::UploadDocument>
 
   must pass in uploadComplete as function, param will be the file you uploaded --> uploadFollowup (file) {}
 
 */
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { elementId, fileHandling } from 'granite/core';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import fileSupport from 'granite/mixins/file-handling';
 import $ from 'jquery';
 
-export default Component.extend(fileSupport, {
-  auth:  service(),
-  store: service(),
+@fileHandling
+@elementId
+export default class UploadDocumentModalComponent extends Component {
+  @service auth
+  @service data
+  @service store
 
-  tagName: [ 'span' ],
+  get fileData () {
+    return { systemUse: this.args.systemUse };
+  }
 
-  fileData: computed('systemUse', function () {
-    return { systemUse: this.get('systemUse') };
-  }),
+  get modalId () {
+    return `modal__file-upload-${this.elementId}`;
+  }
 
-  startApplication: computed('modalId', function () {
-    return this.openModal.bind(this);
-  }),
-
-  modalId: computed('', function () {
-    return `modal__file-upload-${this.get('elementId')}`;
-  }),
-
-  dropzoneId: computed('elementId', function () {
+  get dropzoneId () {
     return `input__dropzone--document-${this.elementId}`;
-  }),
+  }
 
+  @action
+  uploadComplete (arg) {
+    this.args.uploadComplete(arg);
+  }
+
+  @action
   openModal () {
-    $(`#${this.get('modalId')}`).modal({
+    $(`#${this.modalId}`).modal({
       detachable: true,
       closable:   false
     }).modal('show');
-  },
-
-  closeModal () {
-    this.send('removeFile');
-    $(`#${this.get('modalId')}`).modal('hide');
   }
-});
+
+  @action
+  closeModal () {
+    this.files.removeFile();
+    $(`#${this.modalId}`).modal('hide');
+  }
+}

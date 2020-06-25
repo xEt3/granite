@@ -1,23 +1,22 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
-import edit from 'granite/mixins/route-abstractions/edit';
+import Route from 'granite/core/route';
 
-export default Route.extend(edit, {
-  titleToken:      'Edit',
-  bypassModelHook: true,
+export default class AccountActionItemEditRoute extends Route {
+  routeType = 'edit'
+  titleToken = 'Edit'
+  bypassModelHook = true
 
-  model () {
-    let actionItem = this._super(...arguments);
+  async model () {
+    const actionItem = await super.model(...arguments);
 
-    return RSVP.hash({
+    return {
       actionItem,
-      actionItems: this.store.query('action-item', {
-        _id:         { $ne: actionItem.get('id') },
+      actionItems: await this.store.query('action-item', {
+        _id:         { $ne: actionItem.id },
         completedOn: { $not: { $type: 9 } },
         cancelledOn: { $not: { $type: 9 } }
       })
-    });
-  },
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -25,4 +24,4 @@ export default Route.extend(edit, {
       actionItems: model.actionItems
     });
   }
-});
+}

@@ -1,3 +1,10 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({ titleToken: 'Edit Custom Fields' });
+export default class CustomFieldsRoute extends Route {
+  titleToken = 'Edit Custom Fields'
+
+  setupController (controller) {
+    super.setupController(...arguments);
+    controller.updateCustomFields();
+  }
+}

@@ -1,48 +1,45 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { inject as service } from '@ember/service';
+import { computed, action } from '@ember/object';
 import { htmlSafe } from '@ember/string';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-import del from 'granite/mixins/controller-abstractions/delete';
 import $ from 'jquery';
 import moment from 'moment';
 
-export default Component.extend(addEdit, del, {
-  classNames:   [ 'item' ],
-  tagName:      'div',
-  imagePreview: computed.match('assignment.file.extension', /jpe?g|png|gif/i),
-  file:         computed('assignment.file', function () {
-    return this.get('assignment.file');
-  }),
+export default class ListItemEmployeeDocumentItemComponent extends Component {
+  @service data
 
-  modalId: computed('', function () {
-    return `modal__file-assignment-signature-${this.get('assignment.id')}`;
-  }),
+  @computed.match('args.assignment.file.extension', /jpe?g|png|gif/i) imagePreview
 
-  signature: computed('assignment.signature', function () {
-    return htmlSafe(`<img src=${this.get('assignment.signature')} class="ui medium image">`);
-  }),
-
-  pastAssignment: computed('assignment.effectiveOn', function () {
-    return !this.get('assignment.effectiveOn') ? true : moment(this.get('assignment.effectiveOn')).isBefore(moment());
-  }),
-
-  actions: {
-    openModal () {
-      $(`#${this.get('modalId')}`).modal({ detachable: true }).modal('show');
-    },
-
-    closeModal () {
-      $(`#${this.get('modalId')}`).modal('hide');
-    },
-
-    uploadFollowup (file) {
-      let assignment = this.get('assignment');
-      assignment.get('followups').pushObject(file);
-      this.saveModel(assignment);
-    },
-
-    notify (type, msg) {
-      this.get('onNotify')(type, msg);
-    }
+  get file () {
+    return this.args.assignment.file;
   }
-});
+
+  get modalId () {
+    return `modal__file-assignment-signature-${this.args.assignment.id}`;
+  }
+
+  get signature () {
+    return htmlSafe(`<img src=${this.args.assignment.signature} class="ui medium image">`);
+  }
+
+  get pastAssignment () {
+    return !this.args.assignment.effectiveOn ? true : moment(this.args.assignment.effectiveOn).isBefore(moment());
+  }
+
+  @action
+  openModal () {
+    $(`#${this.modalId}`).modal({ detachable: true }).modal('show');
+  }
+
+  @action
+  closeModal () {
+    $(`#${this.modalId}`).modal('hide');
+  }
+
+  @action
+  uploadFollowup (file) {
+    let assignment = this.args.assignment;
+    assignment.followups.pushObject(file);
+    this.data.saveRecord(assignment);
+  }
+}

@@ -1,0 +1,66 @@
+{{#each @thread.between as |participant|}}
+  <Messaging::ThreadParticipant
+    @participant={{participant}}
+    @connectedUsers={{this.socket.connectedUsers}}
+    @user={{this.auth.user.employee}}
+    class="messaging-thread__participant"/>
+{{/each}}
+
+<div class="ui divider"></div>
+
+<Messaging::MessagesPane
+  @messages={{@messages}}
+  @retrievalMax={{@retrievalMax}}
+  @onScrolledToTop={{this.scrolledToTop}}
+>
+  <div class="ui list">
+    {{#each @messages as |message|}}
+      <Messaging::MessageItem
+        @message={{message}}
+        @user={{this.auth.user}} />
+    {{else}}
+      <h2 class="ui center aligned light text header">There's nothing here yet!</h2>
+    {{/each}}
+  </div>
+</Messaging::MessagesPane>
+
+<div class="ui divider"></div>
+
+<form class="ui form messaging-thread__message-form" {{on "submit" (prevent-default this.sendMessage)}}>
+  <div class="ui stackable grid">
+    <div class="twelve wide column field">
+      <div class="ui icon input">
+        <Input @type="text" @value={{this.message}} placeholder={{if this.files.fileIsAdded "Add a comment to this file..." "Type a message..."}} />
+
+        <i class="paperclip icon dropzone__attach-trigger" role="button" {{on "click" (prevent-default (fn this.files.removeFile this.files.fileIsAdded))}}></i>
+      </div>
+    </div>
+    <div class="four wide column field">
+      <Form::ActionButton type="submit" @disabled={{not (or this.message this.files.fileIsAdded)}} class="ui fluid green button">
+        Send{{if this.fileIsAdded " file"}}
+      </Form::ActionButton>
+    </div>
+  </div>
+
+  <DropZone
+    @id={{this.dropzoneId}}
+    @url={{this.files.fileEndpoint}}
+    @class="dropzone__messaging"
+    @uploadMultiple={{false}}
+    @acceptedFiles=".doc,.docx,.pdf,.rtf,.txt,.jpg,.png,.gif,.xls,.xlsx"
+    @maxFiles={{1}}
+    @method="put"
+    @autoProcessQueue={{false}}
+    @dictDefaultMessage=""
+    @thumbnailHeight={{100}}
+    @thumbnailWidth={{100}}
+    @thumbnailMethod="contain"
+    @headers={{hash X-API-Token=this.auth.token}}
+    @addedfile={{this.files.addedFile}}
+    @error={{this.uploadError}}
+    @uploadprogress={{this.uploadProgressUpdate}}
+    @success={{this.files.uploadedFile}}
+    @capture="camera"
+    @addRemoveLinks={{true}}
+    @clickable=".dropzone__attach-trigger" />
+</form>

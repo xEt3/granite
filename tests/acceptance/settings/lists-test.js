@@ -48,6 +48,24 @@ module('Acceptance | settings/lists', function (hooks) {
     assert.equal(disqualificationReasons[12], 'added item', 'last item on model is newly added item');
   });
 
+  test('Can add a label in list and save', async function (assert) {
+    await authenticate.call(this, server);
+
+    await visit('/account/settings/general/lists?list=labels');
+    await click('div.ui.relaxed.divided.list > a.item');
+
+    assert.dom('div.modal > div.header').includesText('Add', 'Header says adding');
+    assert.dom('div.modal button.ui.green.button').includesText('Add', 'Save button says add');
+    await fillIn('input[name="text"]', 'added item');
+
+    await click('button.ui.green.right.button');
+    assert.dom('button.ui.green.fluid.button').isVisible('save button is visible after list dirtied');
+
+    await click('button.ui.green.fluid.button');
+    assert.dom('button.ui.green.fluid.button').isNotVisible('save button disappears after save');
+    assert.equal(await findAll('.relaxed.divided.list div.item').length, 1, 'Num of labels displayed is correct after saving');
+  });
+
   test('Can edit list item and save', async function (assert) {
     let { company } = await authenticate.call(this, server);
 

@@ -1,7 +1,7 @@
 import { RestSerializer } from 'ember-cli-mirage';
 import { pluralize, camelize, dasherize } from 'ember-cli-mirage/utils/inflector';
 
-const embeddedRecords = [ 'correctiveActionSeverities' ];
+const embeddedRecords = [ 'correctiveActionSeverities', 'labels' ];
 
 export default RestSerializer.extend({
   serializeIds: 'always',
@@ -22,6 +22,7 @@ export default RestSerializer.extend({
         attributes: {}
       }
     };
+
     if (attrs.id) {
       jsonApiPayload.data.id = attrs.id;
     }

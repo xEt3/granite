@@ -1,44 +1,48 @@
 <div class="ui container basic segment">
-  {{#ui-menu menuClass="pointing"}}
-    {{#link-to "account.document.index" class="item"}}
+  <UiMenu @menuClass="pointing">
+    <LinkTo @route="account.document.index" class="item">
       <i class="list icon"></i>Summary
-    {{/link-to}}
+    </LinkTo>
     <div class="right menu">
-      {{#ui-dropdown class="item icon top right pointing"}}
+      <UiDropdown @class="item icon top right pointing">
         <i class="wrench icon"></i><i class="dropdown icon"></i>
         <div class="menu">
           <div class="item">
-            <a href="#" {{action (pipe
-              (action "openAssignmentModal" this.file)
-              (action this.remapToModels)
-              (action "save")
-              (action "closeAssignmentModal")
-            )}}>
+            <a href="#" {{on "click" (prevent-default (pipe
+              (fn this.openAssignmentModal this.file)
+              (fn this.remapToModels this.fileAssignment)
+              this.data.saveRecord
+              this.closeAssignmentModal
+              this.afterSave
+            ))}}>
               <i class="add user icon"></i> Assign (send) to
             </a>
           </div>
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
-            {{#confirm-modal deleteContext=(concat this.model.title " - " this.model.mimeType) as |confirm|}}
-              <a href="#" class="text-danger" {{action (pipe confirm (action "delete"))}}><i class="trash icon"></i>Delete File</a>
-            {{/confirm-modal}}
+            <ConfirmModal @deleteContext={{concat this.model.title " - " this.model.mimeType}} as |confirm|>
+              <a href="#" class="text-danger" {{on "click" (prevent-default (pipe
+                confirm
+                (fn this.data.deleteRecord this.model "working" (hash transitionAfterDelete="account.documents"))
+              ))}}><i class="trash icon"></i>Delete File</a>
+            </ConfirmModal>
           </div>
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
     </div>
-  {{/ui-menu}}
+  </UiMenu>
 
   <div class="ui raised padded segment container clearfix">
     <hgroup>
       <h2>
-        {{display/icon-for-file this.model}}
+        <Display::IconForFile @file={{this.model}}/>
         {{if this.model.title this.model.title "Document"}}
         {{#if this.model.tags}}
           {{#each this.model.tags as |tag|}}
             <span class="ui tiny label">{{tag}}</span>
           {{/each}}
         {{/if}}
-        <a href={{this.model.url}} target="_blank" rel="noopener" class="right floated" download><i class="download fitted icon"></i></a>
+        <a href={{this.model.url}} target="_blank" rel="noopener noreferrer" class="right floated" download><i class="download fitted icon"></i></a>
       </h2>
     </hgroup>
 
@@ -52,39 +56,31 @@
   </div>
 </div>
 
-{{#ui-modal name="modal__file-assignment" id="modal__file-assignment" class="small form"}}
+<UiModal @name="modal__file-assignment" @id="modal__file-assignment" @class="small form">
   <div class="header">
     Assign {{this.model.title}}
   </div>
   <div class="content">
-    {{quick-form
-      this.fileAssignmentForm
-      this.fileAssignment
-      this
-      tagName="div"}}
+    <QuickForm
+      @form={{this.fileAssignmentForm}}
+      @model={{this.fileAssignment}}
+      @controller={{this}}
+      @tagName="div" />
 
     <div class="field center aligned text">
-      {{ui-checkbox
-        class="toggle"
-        label="Assign for a future Date"
-        checked=this.isExpanded
-        onChange=(action (toggle "isExpanded" this))}}
+      <UiCheckbox @class="toggle" @label="Assign for a future Date" @checked={{this.isExpanded}} @onChange={{toggle "isExpanded" this}} />
     </div>
   </div>
 
   {{#if this.isExpanded}}
-    {{ui-calendar
-      class="field"
-      type="date"
-      inline=true
-      onChange=(action (mut this.model.effectiveOn))}}
+    <UiCalendar @class="field" @type="date" @inline={{true}} @onChange={{set this.model.effectiveOn _}} />
   {{/if}}
 
   <div class="actions">
-    <button class="ui red button" {{action "respondAssignment" false}}>
+    <button type="button" class="ui red button" {{on "click" (prevent-default (fn this.respondAssignment false))}}>
       Cancel
     </button>
-    <button class="ui primary right labeled icon {{if this.working "loading"}} button" {{action "respondAssignment" true}} disabled={{lt this.fileAssignment.employees.length 1}}>
+    <button type="button" class="ui primary right labeled icon {{if this.data.statuses.working.isLoading "loading"}} button" disabled={{lt this.fileAssignment.employees.length 1}} {{on "click" (prevent-default (fn this.respondAssignment true))}}>
       Assign
       {{#if (gte this.fileAssignment.employees.length 2)}}
         To {{this.fileAssignment.employees.length}} Employees
@@ -94,4 +90,4 @@
       <i class="add user icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

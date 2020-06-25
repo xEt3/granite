@@ -1,11 +1,11 @@
-import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
 
-export default Controller.extend(addEdit, {
-  transitionAfterSave: 'account.anatomy.departments.index',
-  transitionWithModel: false,
+export default class AccountAnatomyDepartmentsNewController extends Controller {
+  @service data
 
-  afterSave () {
-    this.send('refresh');
+  saveOptions = {
+    transitionAfterSave: 'account.anatomy.departments.index',
+    transitionWithModel: false
   }
-});
+}

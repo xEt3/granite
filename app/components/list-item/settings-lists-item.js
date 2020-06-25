@@ -1,7 +1,3 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-const SettingsListsItem = Component.extend({ classNames: [ 'item' ] });
-
-SettingsListsItem.reopenClass({ positionalParams: [ 'item', 'index' ] });
-
-export default SettingsListsItem;
+export default class SettingsListsItem extends Component {}

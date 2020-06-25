@@ -1,24 +1,17 @@
 <div class="right aligned text">
-  {{#input/equipment-picker
-    assignableAssets=this.assignableAssets
-    onSelect=(action "selectAsset")
-    onCreate=(action "createAsset")
-    newAssetCategory=(action "newAssetCategory")}}
+  <Input::EquipmentPicker @assignableAssets={{this.assignableAssets}} @onSelect={{this.selectAsset}} @onCreate={{this.createAsset}} @newAssetCategory={{this.newAssetCategory}}>
     <h3 class="ui header"><a href="#"><i class="plus icon text-white"></i></a></h3>
-  {{/input/equipment-picker}}
+  </Input::EquipmentPicker>
 </div>
 
 {{#if this.model}}
   <div class="ui basic segment">
     <div class="ui cards">
       {{#each this.model as |asset|}}
-        {{list-item/assigned-asset-item
-          asset=asset
-          employee=this.employee
-          onUnassign=(action "unassignAsset")}}
+        <ListItem::AssignedAssetItem @asset={{asset}} @employee={{this.employee}} @onUnassign={{this.unassignAsset}} />
       {{/each}}
     </div>
-    {{#if this.working}}
+    {{#if this.data.statuses.working.isLoading}}
       <div class="ui active dimmer">
         <div class="ui loader"></div>
       </div>
@@ -30,7 +23,7 @@
   </h2>
 {{/if}}
 
-{{#ui-modal name="new-asset" class="new-asset" detachable=true onApprove=(action "saveAsset") onDeny=(action "abortAsset")}}
+<UiModal @name="new-asset" @class="new-asset" @detachable={{true}} @onApprove={{this.saveAsset}} @onDeny={{this.abortAsset}}>
   <i class="cancel close icon"></i>
   <div class="header">
     Creating a new item in "{{this.pendingAssetItem.asset.name}}" for {{this.employee.firstName}}
@@ -39,13 +32,13 @@
     <form class="ui form container">
       <div class="field">
         <label for="asset-identifier">Asset Identifier</label>
-        {{input type="text" value=this.pendingAssetItem.identifier id="asset-identifier" placeholder="Unique identifier (VIN, Stock #, RFID)"}}
+        <Input @type="text" @value={{this.pendingAssetItem.identifier}} @id="asset-identifier" placeholder="Unique identifier (VIN, Stock #, RFID)" />
       </div>
 
       {{#if this.pendingAssetItem.asset.attributes}}
         <div class="ui divider"></div>
         {{#each this.pendingAssetItem.asset.attributes as |attribute|}}
-          {{input/custom-field object=this.pendingAssetItem.customFields attribute=attribute}}
+          <Input::CustomField @object={{this.pendingAssetItem.customFields}} @attribute={{attribute}} />
         {{/each}}
       {{/if}}
     </form>
@@ -59,9 +52,9 @@
       <i class="check icon"></i>
     </div>
   </div>
-{{/ui-modal}}
+</UiModal>
 
-{{#ui-modal name="asset-documents" class="asset-documents"}}
+<UiModal @name="asset-documents" @class="asset-documents">
   <div class="header">
     Assign Documents related to {{this.newAssetItem.identifier}}?
   </div>
@@ -77,10 +70,10 @@
 
         <div class="ui divided list">
           {{#each this.suggestedDocs as |doc|}}
-            {{list-item/document-suggestion
-              doc
+            <ListItem::DocumentSuggestion
+              @model={{doc}}
               class="item"
-              addAssignment=(action "createAssignment")}}
+              @addAssignment={{this.createAssignment}}/>
           {{/each}}
         </div>
       {{/if}}
@@ -89,11 +82,11 @@
       </h3>
       <div class="ui divided list">
         {{#each this.fileAssignments as |assignment|}}
-          {{list-item/document-assignment
-            assignment
+          <ListItem::DocumentAssignment
+            @model={{assignment}}
             class="item"
-            onRemove=(action "removeAssignment")
-            onChange=(action "updateAssignment")}}
+            @onRemove={{this.removeAssignment}}
+            @onChange={{this.updateAssignment}}/>
         {{else}}
           <h3 class="center aligned light text">Nothing assigned, yet.</h3>
         {{/each}}
@@ -101,11 +94,11 @@
     </form>
   </div>
   <div class="actions">
-    <button class="ui red button" {{action "cancelAssignments"}}>
+    <button class="ui red button" {{on "click" this.cancelAssignments}} type="button">
       Cancel
     </button>
-    <button class="ui primary right labeled icon {{if this.working "loading"}} button" {{action "saveAssignments"}}>
+    <button class="ui primary right labeled icon {{if this.data.statuses.working.isLoading "loading"}} button" {{on "click" this.saveAssignments}} type="button">
       Assign <i class="add user icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

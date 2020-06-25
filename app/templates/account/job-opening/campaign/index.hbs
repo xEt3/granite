@@ -5,11 +5,7 @@
   </h2>
 
   {{#if this.model}}
-    {{ember-chart
-      type="line"
-      data=this.model
-      options=this.summaryOpts
-    }}
+    <EmberChart @type="line" @data={{this.model}} @options={{this.summaryOpts}} />
   {{else}}
     <h2 class="light text center aligned">Not enough recent data to show your summary.</h2>
   {{/if}}

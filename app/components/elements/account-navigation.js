@@ -1,13 +1,11 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName:    '',
-  linkPrefix: 'account.',
+export default class AccountNavigation extends Component {
+  linkPrefix = 'account.';
 
-  _links: computed('links', function () {
-    return [ ...this.get('links') ].map(link => {
-      return Object.assign({}, link, { fullLink: this.get('linkPrefix') + link.link });
+  get _links () {
+    return [ ...this.args.links ].map(link => {
+      return Object.assign({}, link, { fullLink: this.linkPrefix + link.link });
     });
-  })
-});
+  }
+}

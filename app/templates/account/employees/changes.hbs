@@ -11,13 +11,13 @@
   <div class="ui divider"></div>
 
   {{#if this.model}}
-    {{#display/resource-list
-      this.model
-      "list-item/change-item"
+    <Display::ResourceList
+      @model={{this.model}}
+      @itemComponent="list-item/change-item"
       class="ui divided items" as |context|
-    }}
-      {{context.listItem onApprove=(action "approveChange") onReject=(action "rejectChange")}}
-    {{/display/resource-list}}
+    >
+      <context.listItem @onApprove={{this.approveChange}} @onReject={{this.rejectChange}} />
+    </Display::ResourceList>
   {{else}}
     <h2 class="center aligned text">{{emoji-icon "tada"}} <div class="content">No changes left to review!</div></h2>
   {{/if}}

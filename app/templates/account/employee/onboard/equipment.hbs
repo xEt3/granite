@@ -2,17 +2,17 @@
   Assets
 </h2>
 
-<form class="ui form" {{action "saveAndContinue" on="submit"}}>
+<form class="ui form" {{on "submit" (prevent-default (route-action "saveAndContinue"))}}>
   <div class="ui basic segment">
     <div class="right aligned text">
-      {{#input/equipment-picker
-        assignableAssets=this.splitAssets.remainingAssets
-        suggestedAssets=this.splitAssets.suggestedAssets
-        onSelect=(action "selectAsset")
-        onCreate=(action "createAsset")
-        newAssetCategory=(action "newAssetCategory")}}
+      <Input::EquipmentPicker
+        @assignableAssets={{this.splitAssets.remainingAssets}}
+        @suggestedAssets={{this.splitAssets.suggestedAssets}}
+        @onSelect={{this.selectAsset}}
+        @onCreate={{this.createAsset}}
+        @newAssetCategory={{this.newAssetCategory}}>
         <h3 class="ui header"><a href="#"><i class="plus icon"></i></a></h3>
-      {{/input/equipment-picker}}
+      </Input::EquipmentPicker>
     </div>
 
     <div class="ui relaxed divided list">
@@ -27,11 +27,11 @@
           <div class="item">
             {{asset.identifier}}
             <span class="right floated">
-              <a href="#" class="text-danger" {{action "unassignAsset" asset}}>
-                {{ember-tooltip
-                  side="top"
-                  popperContainer="body"
-                  text="Unassign asset"}}
+              <a href="#" class="text-danger" {{on "click" (prevent-default (fn this.unassignAsset asset))}}>
+                <EmberTooltip
+                  @side="top"
+                  @popperContainer="body"
+                  @text="Unassign asset"/>
                 <i class="minus icon"></i>
               </a>
             </span>
@@ -46,11 +46,11 @@
   </div>
 
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class="ui huge fluid green button" loading=this.working}}Next{{/form/action-button}}
+  <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.wizard.isLoading}}>Next</Form::ActionButton>
 </form>
 
 <div id="modal__new-asset--placeholder">
-  {{#ui-modal id="modal__new-asset" name="new-asset" class="new-asset" detachable=true}}
+  <UiModal @id="modal__new-asset" @name="new-asset" @class="new-asset" @detachable={{true}}>
     <i class="cancel close icon"></i>
     <div class="header">
       Creating a new item in "{{this.pendingAssetItem.asset.name}}" for {{this.model.firstName}}
@@ -59,14 +59,14 @@
       <form class="ui form container">
         <div class="field">
           <label for="asset-identifier">Asset Identifier</label>
-          {{input type="text" value=this.pendingAssetItem.identifier id="asset-identifier" placeholder="Unique identifier (VIN, Stock #, RFID)"}}
+          <Input @type="text" @value={{this.pendingAssetItem.identifier}} @id="asset-identifier" @placeholder="Unique identifier (VIN, Stock #, RFID)"/>
         </div>
 
         <div class="field">
           <label for="asset-description">Documents</label>
           <p class="light text">
             Document upload is only available in category view.
-            <a href="#" {{action "closeAssetModalAndTransition" "account.asset.index.new" this.pendingAssetItem.asset.id}}>
+            <a href="#" {{on "click" (prevent-default (fn this.closeAssetModalAndTransition "account.asset.index.new" this.pendingAssetItem.asset.id))}}>
               Go to asset category
             </a>
           </p>
@@ -74,19 +74,19 @@
         {{#if this.pendingAssetItem.asset.attributes}}
           <div class="ui divider"></div>
           {{#each this.pendingAssetItem.asset.attributes as |attribute|}}
-            {{input/custom-field object=this.pendingAssetItem.customFields attribute=attribute}}
+            <Input::CustomField @object={{this.pendingAssetItem.customFields}} @attribute={{attribute}}/>
           {{/each}}
         {{/if}}
       </form>
     </div>
     <div class="actions">
-      <button class="ui red button" {{action "abortAsset"}}>
+      <button class="ui red button" {{on "click" this.abortAsset}} type="button">
         Cancel
       </button>
-      <button class="ui green right labeled icon button" {{action "saveAsset"}}>
+      <button class="ui green right labeled icon button" {{on "click" this.saveAsset}} type="button">
         Create &amp; Assign Asset
         <i class="check icon"></i>
       </button>
     </div>
-  {{/ui-modal}}
+  </UiModal>
 </div>

@@ -1,20 +1,24 @@
+import classic from 'ember-classic-decorator';
+import { classNames } from '@ember-decorators/component';
+import { computed } from '@ember/object';
 import Component from '@ember/component';
 import Base from 'semantic-ui-ember/mixins/base';
-import { computed } from '@ember/object';
 
-export default Component.extend(Base, {
-  module:     'calendar',
-  classNames: [ 'ui', 'calendar' ],
+@classic
+@classNames('ui', 'calendar')
+export default class UiCalendar extends Component.extend(Base) {
+  module = 'calendar';
 
-  calendarId: computed('elementId', function () {
-    return `${this.get('elementId')}__calendar`;
-  }),
+  @computed('elementId')
+  get calendarId () {
+    return `${this.elementId}__calendar`;
+  }
 
   init () {
-    this._super(...arguments);
-    this.set('value', this.get('dateValue'));
+    super.init(...arguments);
+    this.set('value', this.dateValue);
   }
-});
+}
 
 
 /* Usage

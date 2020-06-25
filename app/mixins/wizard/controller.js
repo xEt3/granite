@@ -8,21 +8,21 @@ export default Mixin.create({
   // basePath: computed.reads('target.basePath'),
 
   currentStep: computed('steps.@each.link', 'application.currentPath', function () {
-    const steps = this.get('steps'),
+    const steps = this.steps,
           pathSegment = this.get('application.currentPath').split('.').pop();
 
     return steps.find(step => pathSegment.indexOf(step.link) > -1);
   }),
 
   currentStepIndex: computed('currentStep', 'steps', function () {
-    return this.get('steps').indexOf(this.get('currentStep')) + 1;
+    return this.steps.indexOf(this.currentStep) + 1;
   }),
 
   nextStep: computed('steps', 'currentStepIndex', function () {
-    return this.get('steps').objectAt(this.get('currentStepIndex'));
+    return this.steps.objectAt(this.currentStepIndex);
   }),
 
   progress: computed('currentStepIndex', 'steps', function () {
-    return this.get('currentStepIndex') / this.get('steps.length') * 100;
+    return this.currentStepIndex / this.get('steps.length') * 100;
   })
 });

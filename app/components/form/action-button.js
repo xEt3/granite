@@ -1,9 +1,7 @@
-import Component from '@ember/component';
-import { or } from '@ember/object/computed';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName:           'button',
-  classNameBindings: [ 'loading' ],
-  attributeBindings: [ 'type', '_disabled:disabled' ],
-  _disabled:         or('loading', 'disabled')
-});
+export default class FormActionButtonComponent extends Component {
+  get _disabled () {
+    return this.args.loading || this.args.disabled;
+  }
+}

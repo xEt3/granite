@@ -1,80 +1,73 @@
 import Modal from '.';
 import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { A } from '@ember/array';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
 
-const LinkSharingModalComponent = Modal.extend(addEdit, {
-  ajax:         service(),
-  enableNotify: false,
-  modalId:      'modal__ats-link-sharing',
+export default class ModalsAtsLinkSharing extends Modal {
+  @service ajax
+  @service data
 
-  didReceiveAttrs () {
-    this.set('prevEmails', A());
-  },
+  @tracked sendTo = A()
+  @tracked linkNote = null
 
-  didUpdateAttrs () {
-    this.set('publicLink', this.model && this.model.publicLink);
-  },
+  modalId = 'modal__ats-link-sharing'
+  onResponse = this.args.onResponse
+  prevEmails = A()
 
-  actions: {
-    async sendLink () {
-      const sendTo = this.sendTo,
-            note = this.linkNote;
+  get publicLink () {
+    return this.args.model && this.args.model.publicLink;
+  }
 
-      if (!sendTo || sendTo.length < 1) {
-        return;
-      }
+  @action
+  async sendLink () {
+    const sendTo = this.sendTo,
+          note = this.linkNote;
 
-      this.ajaxStart();
-      this.set('sendingLink', true);
+    if (!sendTo || sendTo.length < 1) {
+      return;
+    }
 
-      try {
-        await this.ajax.post(`/api/v1/job-application/${this.model.id}/send-sharable-link`, {
-          data: {
-            note,
-            emails: sendTo
-          }
-        });
-        this.ajaxSuccess('Successfully sent link.');
-        this.prevEmails.addObjects(sendTo);
-      } catch (e) {
-        this.set('sendingLink', false);
-        this.ajaxError(e);
-        return;
-      }
+    const { success, error } = this.data.createStatus('linkSharing');
+    this.sendingLink = true;
 
-      this.setProperties({
-        sendingLink: false,
-        sendTo:      A(),
-        linkNote:    null
-      });
-    },
-
-    async toggleSharedLink () {
-      this.ajaxStart();
-
-      const model = this.model;
-
-      try {
-        if (this.publicLink) {
-          await this.ajax.request(`/api/v1/job-application/${model.id}/destroy-sharable-link`);
-          this.ajaxSuccess('Successfully turned off link sharing.');
-          this.set('publicLink', null);
-          return;
+    try {
+      await this.ajax.post(`/api/v1/job-application/${this.args.model.id}/send-sharable-link`, {
+        data: {
+          note,
+          emails: sendTo
         }
+      });
+      success('Successfully sent link.');
+      this.prevEmails.addObjects(sendTo);
+    } catch (e) {
+      error(e);
+      return;
+    }
 
-        let response = await this.ajax.request(`/api/v1/job-application/${model.id}/create-sharable-link`);
-        this.set('publicLink', response.link);
-        this.ajaxSuccess('Successfully enabled link sharing.');
-      } catch (e) {
-        this.ajaxError(e);
-      } finally {
-        model.reload();
+    this.sendTo = A();
+    this.linkNote = null;
+  }
+
+  @action
+  async toggleSharedLink () {
+    const { success, error } = this.data.createStatus('linkSharing');
+
+    const model = this.args.model;
+
+    try {
+      if (this.publicLink) {
+        await this.ajax.request(`/api/v1/job-application/${model.id}/destroy-sharable-link`);
+        success('Successfully turned off link sharing.');
+        return;
       }
+
+      await this.ajax.request(`/api/v1/job-application/${model.id}/create-sharable-link`);
+      success('Successfully enabled link sharing.');
+    } catch (e) {
+      error(e);
+    } finally {
+      model.reload();
     }
   }
-});
-
-LinkSharingModalComponent.reopenClass({ positionalParams: [ 'model' ] });
-
-export default LinkSharingModalComponent;
+}

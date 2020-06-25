@@ -1,25 +1,24 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+import Route from 'granite/core/route';
 
-export default Route.extend({
-  titleToken: 'Sources',
+export default class AccountJobOpeningSetupSourcesRoute extends Route {
+  titleToken = 'Sources'
 
-  model () {
+  async model () {
     let jobOpening = this.modelFor('account.job-opening');
 
-    return RSVP.hash({
+    return {
       jobOpening,
-      job:       jobOpening.get('job'),
-      automatic: this.store.findAll('applicant-source'),
-      manual:    this.store.findAll('manual-applicant-source')
-    });
-  },
+      job:       await jobOpening.job,
+      automatic: await this.store.findAll('applicant-source'),
+      manual:    await this.store.findAll('manual-applicant-source')
+    };
+  }
 
   setupController (controller, model) {
-    if (!model.jobOpening.get('description') && !model.jobOpening.get('title')) {
+    if (!model.jobOpening.description && !model.jobOpening.title) {
       model.jobOpening.setProperties({
-        description: model.job.get('description'),
-        title:       model.job.get('title')
+        description: model.job.description,
+        title:       model.job.title
       });
     }
 
@@ -31,4 +30,4 @@ export default Route.extend({
       }
     });
   }
-});
+}

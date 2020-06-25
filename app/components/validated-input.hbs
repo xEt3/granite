@@ -1,0 +1,35 @@
+<div class="validated-input field {{this.fieldClass}} {{if this.showErrorClass 'has-error'}} {{if this.isValid 'has-success'}}" ...attributes>
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    <Input {{on "focusout" this.focusOut}}
+      @type={{or @type "text"}}
+      @tabindex={{this.tabindex}}
+      @value={{this.value}}
+      @placeholder={{or @placeholder ''}}
+      @name={{or @valuePath ''}}
+      @class={{@inputClass}}
+      @min={{@inputAttrs.min}}
+      @max={{@inputAttrs.max}}
+      @step={{@inputAttrs.step}}/>
+  {{/if}}
+
+  {{#if this.isValid}}
+    <i class="check icon"></i>
+  {{/if}}
+
+  {{#if (or this.showErrorMessage this.showWarningMessage this.showFieldError)}}
+    <div class="input-error animated fadeIn">
+      <div class="error">
+        {{#if this.showFieldError}}
+          {{this.showFieldError}}
+        {{else}}
+          {{v-get
+            @model
+            @valuePath
+            (if this.showWarningMessage "warningMessage" "message")}}
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
+</div>

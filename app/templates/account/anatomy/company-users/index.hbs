@@ -5,28 +5,23 @@
 
   <div class="right aligned text floated menu__actions">
     <h3 class="ui right floated header">
-      {{#link-to "account.anatomy.company-users.new" class="right floated"}}
-        {{ember-tooltip
-          side="left"
-          popperContainer="body"
-          text="Add a user"}}
+      <LinkTo @route="account.anatomy.company-users.new" class="right floated">
+        <EmberTooltip @side="left" @popperContainer="body" @text="Add a user" />
         <i class="plus icon"></i>
-      {{/link-to}}
+      </LinkTo>
     </h3>
   </div>
 </hgroup>
 <div class="ui divider"></div>
   <div class="ui divided items">
     {{#each this.model as |user|}}
-      {{list-item/user-item
-        user
-        this.allUsers
-        onNotify=(route-action "notify")
-        onRefresh=(route-action "refresh")
-      }}
+      <ListItem::UserItem
+        @user={{user}}
+        @allUsers={{this.allUsers}}
+        @onRefresh={{route-action "refreshModel"}}
+      />
     {{else}}
       <h2 class="ui center aligned header">No users available.</h2>
     {{/each}}
   </div>
-
-{{elements/x-pagination page=(readonly this.page) pages=(readonly this.pages) onchange=(action (mut this.page))}}
+<Elements::XPagination @page={{this.page}} @model={{this.model}} @limit={{this.limit}} @onChange={{set this.page _}} />

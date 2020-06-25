@@ -1,22 +1,15 @@
-import Route from '@ember/routing/route';
-import resource from 'granite/mixins/route-abstractions/resource';
+import { GraniteResourceRoute } from 'granite/core/route';
 import { inject as service } from '@ember/service';
 
-export default Route.extend(resource, {
-  titleToken: 'Changes',
-  auth:       service(),
-  modelName:  'change',
+export default class AccountEmployeesChangesRoute extends GraniteResourceRoute {
+  @service auth
+  titleToken = 'Changes'
+  modelName = 'change'
 
-  query: {
+  query = {
     '$report':  'changeList',
     reviewedOn: { $not: { $type: 9 } }
-  },
-
-  sort: { created: -1 },
-
-  actions: {
-    refresh () {
-      return true;
-    }
   }
-});
+
+  sort = { created: -1 }
+}

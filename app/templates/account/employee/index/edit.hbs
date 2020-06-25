@@ -1,36 +1,36 @@
-{{#confirm-modal as |confirm|}}
-  <form class="ui raised very padded text segment form" {{action (pipe confirm (action "save")) on="submit"}}>
+<ConfirmModal as |confirm|>
+  <form class="ui raised very padded text segment form" {{on "submit" (prevent-default (pipe confirm (fn this.data.saveRecord this.model "working" this.saveOptions)))}}>
     <h2 class="ui header">Editing {{this.model.fullName}}</h2>
     <div class="ui secondary pointing menu">
-      {{#link-to "account.employee.index.edit.index" class="item"}}Personal{{/link-to}}
-      {{#link-to "account.employee.index.edit.job" class="item"}}Job{{/link-to}}
-      {{#link-to "account.employee.index.edit.custom-fields" class="item"}}Custom Fields{{/link-to}}
-      {{#link-to "account.employee.index.edit.settings" class="item"}}Settings{{/link-to}}
+      <LinkTo @route="account.employee.index.edit.index" class="item">Personal</LinkTo>
+      <LinkTo @route="account.employee.index.edit.job" class="item">Job</LinkTo>
+      <LinkTo @route="account.employee.index.edit.custom-fields" class="item">Custom Fields</LinkTo>
+      <LinkTo @route="account.employee.index.edit.settings" class="item">Settings</LinkTo>
     </div>
     {{outlet}}
     <div class="ui divider"></div>
-    {{#form/action-button type="submit" class="ui massive fluid green button" disabled=(not (or this.model.hasDirtyAttributes this.relationshipsChanged)) loading=this.working}}
+    <Form::ActionButton type="submit" class="ui massive fluid green button" @disabled={{not (or this.model.hasDirtyAttributes this.relationshipsChanged)}} @loading={{this.data.statuses.working.isLoading}}>
       <i class="save icon"></i>Save
-    {{/form/action-button}}
-    <button type="button" class="ui massive fluid basic button" disabled={{not (or this.model.hasDirtyAttributes this.relationshipsChanged)}} {{action (pipe (action "selectEffectiveDate") (action "save"))}}>
+    </Form::ActionButton>
+    <button type="button" class="ui massive fluid basic button" disabled={{not (or this.model.hasDirtyAttributes this.relationshipsChanged)}} {{on "click" (prevent-default (pipe this.selectEffectiveDate (fn this.data.saveRecord this.model "working" this.saveOptions)))}}>
       <i class="calendar icon"></i>Save with effective date
     </button>
   </form>
-{{/confirm-modal}}
+</ConfirmModal>
 
-{{#ui-modal name="effective-date-modal" id="effective-date-modal" class="small form"}}
+<UiModal @name="effective-date-modal" @id="effective-date-modal" @class="small form">
   <i class="close icon"></i>
   <div class="header">
     When would you like to date these changes?
   </div>
   <div class="content">
-    {{ui-calendar class="field" type="date" inline=true onChange=(action (mut this.model.effectiveOn))}}
+    <UiCalendar @class="field" @type="date" @inline={{true}} @onChange={{set this.model.effectiveOn _}} />
   </div>
   <div class="actions">
-    <button class="ui red button" {{action "respondEffectiveDateModal" false}}>
+    <button class="ui red button" {{on "click" (prevent-default (fn this.respondEffectiveDateModal false))}} type="button">
       Cancel
     </button>
-    <button class="ui green right labeled icon button" {{action "respondEffectiveDateModal" true}}>
+    <button class="ui green right labeled icon button" {{on "click" (prevent-default (fn this.respondEffectiveDateModal true))}} type="button">
       Save
       {{#if this.model.effectiveOn}}
         {{time-ago this.model.effectiveOn}}
@@ -40,4 +40,4 @@
       <i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

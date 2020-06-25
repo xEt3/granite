@@ -32,9 +32,9 @@ export default Mixin.create(ajaxStatus, {
   afterModel (model) {
     this._super(...arguments);
 
-    let step = model.get(`${this.get('key')}Step`),
-        steps = this.get('steps'),
-        basePath = this.get('basePath');
+    let step = model.get(`${this.key}Step`),
+        steps = this.steps,
+        basePath = this.basePath;
 
     if (step && step > 1) {
       run.scheduleOnce('afterRender', () => {
@@ -48,8 +48,8 @@ export default Mixin.create(ajaxStatus, {
 
   setupController (controller) {
     controller.setProperties({
-      steps:    this.get('steps'),
-      basePath: this.get('basePath')
+      steps:    this.steps,
+      basePath: this.basePath
     });
 
     this._super(...arguments);
@@ -57,20 +57,20 @@ export default Mixin.create(ajaxStatus, {
 
   actions: {
     saveAndContinue () {
-      const controller = this.get('controller'),
-            model = controller.get('model');
+      const controller = this.controller,
+            model = controller.model;
 
       this.ajaxStart();
 
-      let key = this.get('key'),
+      let key = this.key,
           morph = {};
 
       morph[key] = true;
-      morph[key + 'Step'] = controller.get('currentStepIndex');
-      morph[key + 'Progress'] = parseInt(controller.get('progress'), 0);
+      morph[key + 'Step'] = controller.currentStepIndex;
+      morph[key + 'Progress'] = parseInt(controller.progress, 0);
 
-      if (this.get('setUserOn')) {
-        morph[this.get('setUserOn')] = this.get('auth.user');
+      if (this.setUserOn) {
+        morph[this.setUserOn] = this.get('auth.user');
       }
 
       model.setProperties(morph);
@@ -79,12 +79,12 @@ export default Mixin.create(ajaxStatus, {
       .then(() => {
         this.ajaxSuccess('Successfully saved progress.');
 
-        if (!controller.get('nextStep')) {
-          this.transitionTo(this.get('returnPath'));
+        if (!controller.nextStep) {
+          this.transitionTo(this.returnPath);
           return;
         }
 
-        this.transitionTo(`${this.get('basePath')}.${controller.get('nextStep.link')}`);
+        this.transitionTo(`${this.basePath}.${controller.get('nextStep.link')}`);
       })
       .catch(this.ajaxError.bind(this));
     }

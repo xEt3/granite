@@ -7,8 +7,7 @@
 
   <div class="ui divided list items">
     {{#each this.model as |applicant|}}
-      {{list-item/talent-pool-applicant
-        applicant}}
+      <ListItem::TalentPoolApplicant @model={{applicant}}/>
     {{else}}
       <hgroup class="center aligned text">
         <h2>No applicants found.</h2>
@@ -22,8 +21,5 @@
 
   <div class="ui divider"></div>
 
-  {{elements/x-pagination
-    page=(readonly this.page)
-    pages=(readonly this.pages)
-    onchange=(action (mut this.page))}}
+  <Elements::XPagination @page={{this.page}} @pages={{this.pages}} @limit={{this.limit}} @onChange={{set this.page _}} />
 </div>

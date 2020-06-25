@@ -1,6 +1,8 @@
+import classic from 'ember-classic-decorator';
 import RESTSerializer from 'ember-data/serializers/rest';
 
-export default RESTSerializer.extend({
+@classic
+export default class Application extends RESTSerializer {
   normalize (modelClass, hash) {
     if (!hash.id && hash._id) {
       hash.id = hash._id;
@@ -9,6 +11,6 @@ export default RESTSerializer.extend({
     delete hash._id;
     delete hash.__v;
 
-    return this._super(...arguments);
+    return super.normalize(...arguments);
   }
-});
+}

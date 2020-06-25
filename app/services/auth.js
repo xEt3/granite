@@ -21,7 +21,7 @@ export default Service.extend({
   userId:        computed.reads('session.user'),
 
   initializeClock: on('init', function () {
-    this.get('clock');
+    this.clock; // eslint-disable-line
   }),
 
   /**
@@ -35,11 +35,11 @@ export default Service.extend({
       email,
       password
     };
-    Logger.debug('AS :: Requesting authentication service', this.get('authUrl'));
-    return this.get('ajax').post(this.get('authUrl'), { data })
+    Logger.debug('AS :: Requesting authentication service', this.authUrl);
+    return this.ajax.post(this.authUrl, { data })
     .then(response => {
       Logger.debug('AS :: Got server response', response);
-      var session = this.get('store').createRecord('session', {
+      var session = this.store.createRecord('session', {
         token:   response.token,
         expires: response.expires,
         user:    response.user,
@@ -54,7 +54,7 @@ export default Service.extend({
     .then(record => {
       Logger.debug('AS :: Saved session record in localforage');
       this.set('session', record);
-      this.get('currentUser');
+      this.currentUser; // eslint-disable-line
       return record;
     });
   },
@@ -66,7 +66,7 @@ export default Service.extend({
   logout () {
     Logger.debug('AS :: Logout');
 
-    if (!this.get('session')) {
+    if (!this.session) {
       Logger.debug('AS :: No session available - skipping logout');
       return Promise.resolve();
     }
@@ -74,22 +74,22 @@ export default Service.extend({
     this.analytics.trackEvent('Session', 'logout', 'Session Logout');
 
     Logger.debug('AS :: Destroying session');
-    return this.get('session').destroyRecord()
+    return this.session.destroyRecord()
     .then(() => {
       this.set('session', null);
     });
   },
 
   refreshSession () {
-    if (!this.get('authenticated')) {
+    if (!this.authenticated) {
       return Promise.resolve();
     }
 
     this.analytics.trackEvent('Session', 'refresh', 'Session Refreshed');
 
-    return this.get('ajax').request('/api/v1/grant/' + this.get('session.id') + '/refresh', { method: 'POST' })
+    return this.ajax.request('/api/v1/grant/' + this.get('session.id') + '/refresh', { method: 'POST' })
     .then(response => {
-      let session = this.get('session');
+      let session = this.session;
       session.set('expires', response.expires);
       return session.save();
     });
@@ -102,7 +102,7 @@ export default Service.extend({
    */
   initializeExistingSession (cleanup = true) {
     Logger.debug('AS :: Initializing existing session');
-    return this.get('store').findAll('session').then(sessions => {
+    return this.store.findAll('session').then(sessions => {
       var existingSession;
       Logger.debug('AS :: Got local sessions');
       sessions.toArray().forEach(session => {
@@ -119,7 +119,7 @@ export default Service.extend({
       }
 
       return existingSession ?
-        this.get('user').then(user => user.get('employee')).then(() => existingSession)
+        this.user.then(user => user.get('employee')).then(() => existingSession)
         .catch(err => {
           if (((err || {}).errors || []).filter(e => e.status === '401').length > 0) {
             return this.logout();
@@ -132,20 +132,20 @@ export default Service.extend({
   },
 
   user: computed('userId', function () {
-    const userId = this.get('userId');
+    const userId = this.userId;
 
-    if (!userId || !this.get('authenticated')) {
+    if (!userId || !this.authenticated) {
       return Promise.resolve();
     }
 
-    return this.get('store').find('company-user', userId);
+    return this.store.find('company-user', userId);
   }),
 
   isExpired: computed('clock.minute', 'session.expires', 'authenticated', function () {
-    return this.get('authenticated') && moment(this.get('session.expires')).isBefore(moment());
+    return this.authenticated && moment(this.get('session.expires')).isBefore(moment());
   }),
 
   isExpiring: computed('clock.minute', 'session.expires', function () {
-    return this.get('authenticated') && moment(this.get('session.expires')).subtract(10, 'minutes').isBefore(moment());
+    return this.authenticated && moment(this.get('session.expires')).subtract(10, 'minutes').isBefore(moment());
   })
 });

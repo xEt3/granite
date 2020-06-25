@@ -36,7 +36,7 @@ export default Model.extend({
   }),
 
   person: computed('applicant', 'employee.id', function () {
-    return this.get('employee.id') ? this.get('employee') : this.get('applicant');
+    return this.get('employee.id') ? this.employee : this.applicant;
   }),
 
   hired:      attr('boolean'),
@@ -51,11 +51,11 @@ export default Model.extend({
   created:     attr('date', { defaultValue: () => new Date() }),
 
   isScored: computed('scoreAdditive', 'scoreRelative', 'responses', function () {
-    return !isNaN(this.get('scoreAdditive')) && !isNaN(this.get('scoreRelative')) && !!this.get('responses.firstObject');
+    return !isNaN(this.scoreAdditive) && !isNaN(this.scoreRelative) && !!this.get('responses.firstObject');
   }),
 
   scoreAbs: computed('scoreRelative', function () {
-    const v = this.get('scoreRelative');
+    const v = this.scoreRelative;
     return v ? v > 100 ? 100 : v < 0 ? 0 : v : v;
   }),
 

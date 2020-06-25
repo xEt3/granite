@@ -1,21 +1,17 @@
 <h2 class="ui dividing header">Create a New User</h2>
 
-<form class="ui form" {{action (pipe (action "presetAttrs") (action "save")) on="submit"}}>
-  {{input/ui-input type="email" inputId="user-email" placeholder="Email Address" value=this.model.email}}
+<form class="ui form" {{on "submit" (prevent-default (pipe this.presetAttrs this.save))}}>
+  <Input::UiInput @type="email" @inputId="user-email" @placeholder="Email Address" @value={{this.model.email}} />
   <div class="ui divider"></div>
 
   <div class="field">
     <label>
-      {{ember-tooltip
-        popperContainer="body"
-        side="left"
-        targetId="it__employee-required"
-        text="Users must have an employee record assigned."}}
+      <EmberTooltip @popperContainer="body" @side="left" @targetId="it__employee-required" @text="Users must have an employee record assigned." />
       Employee
       <i id="it__employee-required" class="right floated info icon"></i>
     </label>
     {{#if this.employees}}
-      {{#ui-dropdown class="fluid search selection" id="user-employee-link" selected=this.model.employee onChange=(action (mut this.model.employee)) as |execute mapper|}}
+      <UiDropdown @class="fluid search selection" @id="user-employee-link" @selected={{this.model.employee}} @onChange={{set this.model.employee _}} as |execute mapper|>
         <i class="dropdown icon"></i>
         <div class="default text">Select an employee for this user</div>
         <div class="menu">
@@ -25,7 +21,7 @@
             </div>
           {{/each}}
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
     {{else}}
       <p>No employees are available.</p>
     {{/if}}
@@ -33,9 +29,9 @@
   <div class="field">
     <label>
       Permissions
-      {{#x-tree checkable=true syncCheckbox=true model=this.permissionsTree}}{{/x-tree}}
+      <XTree @checkable={{true}} @syncCheckbox={{true}} @model={{this.permissionsTree}}></XTree>
     </label>
   </div>
   <div class="ui divider"></div>
-  {{#form/action-button type="submit" class="ui huge fluid green button" disabled=this.disableForm loading=this.working}}Save User{{/form/action-button}}
+  <Form::ActionButton type="submit" class="ui huge fluid green button" @disabled={{this.disableForm}} @loading={{this.data.statuses.working.isLoading}}>Save User</Form::ActionButton>
 </form>

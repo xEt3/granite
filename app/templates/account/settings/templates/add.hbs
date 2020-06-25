@@ -1,37 +1,27 @@
 <h4>New Template for {{this.definition.title}}</h4>
 <div class="ui divider"></div>
 
-<form class="ui form" {{action "save" on="submit"}}>
+<form class="ui form" {{on "submit" (prevent-default (pipe (fn this.data.saveRecord this.model "working" this.saveOptions) (route-action "refreshModel")))}}>
   {{#if this.definition.isRenderable}}
     <p>
-      Templates support the "Mustache" language. See <a href="http://mustache.github.io/mustache.5.html" rel="noopener" target="_blank">the mustache manual</a> for more information.
+      Templates support the "Mustache" language. See <a href="http://mustache.github.io/mustache.5.html" rel="noopener noreferrer" target="_blank">the mustache manual</a> for more information.
     </p>
   {{/if}}
   {{#each this.definition.contentKeys as |contentKey|}}
     <div class="ui field">
       <label>
         {{contentKey.title}}
-        {{ember-tooltip
-          side="top"
-          popperContainer="body"
-          text=contentKey.description}}
+        <EmberTooltip @side="top" @popperContainer="body" @text={{contentKey.description}} />
         <i class="info circle icon"></i>
       </label>
-      {{textarea
-        value=(mut (get this.model.content contentKey.key))
-        rows="4"
-        spellcheck="true"}}
+      <Textarea @value={{mut (get this.model.content contentKey.key)}} @rows="4" @spellcheck="true" />
     </div>
   {{/each}}
 
   <div class="ui divider"></div>
-  {{#form/action-button
-    type="submit"
-    loading=this.working
-    class="ui large green fluid button"
-  }}
+  <Form::ActionButton type="submit" @loading={{this.data.statuses.working.isLoading}} class="ui large green fluid button">
     Save Template
-  {{/form/action-button}}
+  </Form::ActionButton>
 
   <h5>Available form data</h5>
   {{#each this.definition.availableData as |data|}}

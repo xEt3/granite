@@ -1,29 +1,29 @@
 <div class="dashboard ui container">
   <div class="dashboard__statistics ui three stackable statistics">
-    {{#link-to "account.recruiting" class="ui inverted statistic"}}
+    <LinkTo @route="account.recruiting" class="ui inverted statistic">
       <div class="value">
         {{this.analytics.stats.unreviewedApplications}}
       </div>
       <div class="label">
         New Job {{inflect-text "Application" this.analytics.stats.unreviewedApplications}}
       </div>
-    {{/link-to}}
-    {{#link-to "account.employees.changes" class="ui inverted statistic"}}
+    </LinkTo>
+    <LinkTo @route="account.employees.changes" class="ui inverted statistic">
       <div class="value">
         {{this.analytics.stats.changes}}
       </div>
       <div class="label">
         Unreviewed {{inflect-text "Change" this.analytics.stats.changes}}
       </div>
-    {{/link-to}}
-    {{#link-to "account.action-items" class="ui inverted statistic"}}
+    </LinkTo>
+    <LinkTo @route="account.action-items" class="ui inverted statistic">
       <div class="value">
         {{this.analytics.stats.projectsDue}}
       </div>
       <div class="label">
         {{inflect-text "Project" this.analytics.stats.projectsDue}} Due
       </div>
-    {{/link-to}}
+    </LinkTo>
   </div>
 
   <div class="ui stackable grid">
@@ -45,7 +45,7 @@
               {{/each}}
             </div>
             {{#if (gt this.analytics.continueActions.length 5)}}
-              <a href="#" {{action this.toggleProperty "expanded"}}>
+              <a href="#" {{on "click" (prevent-default (fn this.toggleProperty "expanded"))}}>
                 Show {{if this.expanded "less" "more"}}...
               </a>
             {{/if}}
@@ -55,7 +55,7 @@
             <div class="dashboard-actions__common ui list">
               {{#each this.commonActions as |act|}}
                 <div class="item">
-                  {{#link-to act.link}}{{act.text}}{{/link-to}}
+                  <LinkTo @route={{act.link}}>{{act.text}}</LinkTo>
                 </div>
               {{/each}}
             </div>
@@ -92,7 +92,7 @@
             Recent Activity
           </h2>
           <div class="right floated">
-            {{#ui-dropdown class="fluid multiple selection" selected=this.tag onChange=(action (mut this.tag))}}
+            <UiDropdown @class="fluid multiple selection" @selected={{this.tag}} @onChange={{set this.tag _}}>
               <i class="dropdown icon"></i>
               <div class="default text">Select Filters</div>
               <div class="menu">
@@ -102,15 +102,15 @@
                   </div>
                 {{/each}}
               </div>
-            {{/ui-dropdown}}
+            </UiDropdown>
           </div>
         </hgroup>
         <div class="ui large feed">
           {{#each this.model as |activity|}}
-            {{list-item/activity-item activity=activity onNotify=(action "onNotify")}}
+            <ListItem::ActivityItem @activity={{activity}} @onNotify={{this.onNotify}} />
           {{/each}}
           <div class="ui divider"></div>
-          <button class="fluid ui button" disabled={{this.disabled}} {{action "loadMoreActivities"}}>Load More...</button>
+          <button class="fluid ui button" disabled={{this.disabled}} {{on "click" this.loadMoreActivities}} type="button">Load More...</button>
         </div>
       </div>
     </div>

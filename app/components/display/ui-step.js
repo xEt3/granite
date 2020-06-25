@@ -1,6 +1,3 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  classNames:        [ 'step' ],
-  classNameBindings: [ 'step.completed:completed', 'step.active:active' ]
-});
+export default class DisplayUiStepComponent extends Component {}

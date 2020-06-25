@@ -1,7 +1,6 @@
-import BaseLiComponent from './base';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 
-export default BaseLiComponent.extend({
-  auth:       service(),
-  classNames: [ 'item' ]
-});
+export default class ListItemJobOpeningItem extends Component {
+  @service auth;
+}

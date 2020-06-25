@@ -20,7 +20,7 @@ export default Service.extend({
     });
 
     if (ENV.environment !== 'test') {
-      run.later(this, this._tick, this.get('refreshResolution'));
+      run.later(this, this._tick, this.refreshResolution);
     }
   })
 });

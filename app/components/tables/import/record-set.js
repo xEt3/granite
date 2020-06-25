@@ -1,12 +1,7 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-const RecordSetComponent = Component.extend({
-  allSelected: computed('selectedRows.length', 'recordSet.records.length', function () {
-    return this.get('selectedRows.length') === this.get('recordSet.records.length');
-  })
-});
-
-RecordSetComponent.reopenClass({ positionalParams: [ 'recordSet' ] });
-
-export default RecordSetComponent;
+export default class TablesImportRecordSetComponent extends Component {
+  get allSelected () {
+    return this.args.selectedRows.length === this.args.recordSet.records.length;
+  }
+}

@@ -1,7 +1,7 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({
+export default class AccountEmployeeIssueCorrectiveActionRoute extends Route {
   model (params) {
     return this.store.find('corrective-action', params.action_id);
   }
-});
+}

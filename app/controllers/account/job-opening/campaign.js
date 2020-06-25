@@ -1,21 +1,23 @@
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
-import del from 'granite/mixins/controller-abstractions/delete';
 import { closeMessageMap } from 'granite/config/statics';
 
-export default Controller.extend(addEdit, del, {
-  auth:                  service(),
-  transitionAfterDelete: 'account.recruiting.index.index',
-  transitionWithModel:   false,
+export default class AccountJobOpeningCampaignController extends Controller {
+  @service auth
+  @service data
 
-  confirmCloseMessage: computed('model.{sendCloseNotice,allocateTalentPool}', function () {
-    if (!this.get('model')) {
-      return;
+  deleteOptions = {
+    transitionAfterDelete: 'account.recruiting.index.index',
+    transitionWithModel:   false
+  }
+
+  get confirmCloseMessage () {
+    if (!this.model) {
+      return null;
     }
 
-    const settingProps = this.get('model').getProperties('sendCloseNotice', 'allocateTalentPool');
+    const settingProps = this.model.getProperties('sendCloseNotice', 'allocateTalentPool');
     const messages = Object.keys(settingProps).reduce((msg, key, index, all) => {
       if (settingProps[key] && closeMessageMap[key]) {
         msg.push(`${all.length > 1 && index === all.length - 1 ? 'and ' : ''}${closeMessageMap[key]}`);
@@ -27,17 +29,15 @@ export default Controller.extend(addEdit, del, {
     return messages.length > 0 ?
       `${closeMessageMap.prefix} ${messages.join(', ')}. ${closeMessageMap.default}` :
       closeMessageMap.default;
-  }),
-
-  actions: {
-    close () {
-      const model = this.get('model');
-      model.set('closed', true);
-      if (!model.completedOn) {
-        model.set('completedOn', new Date());
-      }
-
-      this.saveModel(model);
-    }
   }
-});
+
+  @action
+  close () {
+    this.model.closed = true;
+    if (!this.model.completedOn) {
+      this.model.completedOn = new Date();
+    }
+
+    this.data.saveRecord(this.model);
+  }
+}

@@ -1,7 +1,5 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName:    'footer',
-  classNames: [ 'elements__footer' ],
-  now:        new Date()
-});
+export default class XFooter extends Component {
+  now = new Date();
+}

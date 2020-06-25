@@ -1,14 +1,19 @@
+import classic from 'ember-classic-decorator';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 
-export default Model.extend({
-  content: attr('string'),
+@classic
+export default class Message extends Model {
+  @attr('string') content;
 
-  from:          hasMany('employee'),
-  file:          belongsTo('file'),
-  messageThread: belongsTo('messageThread'),
-  company:       belongsTo('company'),
+  @hasMany('employee') from;
 
-  created: attr('date', { defaultValue: () => new Date() })
-});
+  @belongsTo('file') file;
+
+  @belongsTo('messageThread') messageThread;
+
+  @belongsTo('company') company;
+
+  @attr('date', { defaultValue: () => new Date() }) created;
+}

@@ -10,7 +10,7 @@ export default class Router extends RouterScroll {
   @service analytics;
 
   setTitle (title) {
-    this.get('headData').set('title', title);
+    this.headData.set('title', title);
   }
 
   didTransition () {

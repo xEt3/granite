@@ -126,8 +126,6 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
     });
 
     await visit(`/account/recruiting/job-opening/${job.id}/applicant-tracking`);
-    // await pauseTest();
-    // 'div.pipeline.ember-view > div:nth-child(1) > div > div:nth-child(2)';
     assert.dom('div.pipeline__stage:nth-child(1) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isVisible();
     assert.dom('div.pipeline__stage:nth-child(2) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isNotVisible();
     assert.dom('div.pipeline__stage:nth-child(3) > div.pipeline-stage__cards > div.stage-cards__card:nth-child(2)').isNotVisible();
@@ -293,7 +291,7 @@ module('Acceptance | recruiting-applicant-tracking', function (hooks) {
 
     assert.dom('div.container > div.padded.segment > div.top.label').isVisible();
     assert.dom('div.container > div.padded.segment > div.top.label').hasClass('green');
-    assert.dom('div.container > div.padded.segment > div.top.label').includesText(application.stage);
+    assert.dom('div.container > div.padded.segment > div.top.label').includesText(pipeline.stages[0].name);
     assert.dom('div.container > div.padded.segment > div.top.label').doesNotIncludeText('Failed test');
   });
 });

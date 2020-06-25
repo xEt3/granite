@@ -13,7 +13,7 @@ export default Controller.extend({
 
   actions: {
     logout () {
-      this.get('auth').logout();
+      this.auth.logout();
     }
   }
 });

@@ -1,0 +1,35 @@
+<div class="ui two column grid">
+  <div class="ui column center aligned text">
+    <p>
+      <label for="{{this.elementId}}-start">
+        <i class="step backward icon"></i>
+        <strong>Start</strong>
+      </label>
+    </p>
+    <UiCalendar @class="field" @startMode="month" @inline={{true}} @onChange={{pipe (set this.start _) (fn @onStartChange this.start)}} />
+  </div>
+
+  <div class="ui column center aligned text">
+    {{#if this.start}}
+      <div class="animated fadeInLeft">
+        <p>
+          <label for="ui-date-range-end">
+            <strong>Duration</strong>
+            <i class="clock icon"></i>
+          </label>
+        </p>
+        <UiDropdown @class="fluid selection" @onChange={{@onEndChange}} as |execute mapper|>
+          <i class="dropdown icon"></i>
+          <div class="default text">How long?</div>
+          <div class="menu">
+            {{#each this.endOptions as |opt|}}
+              <div class="item" data-value={{map-value mapper opt.value}}>
+                {{opt.label}}
+              </div>
+            {{/each}}
+          </div>
+        </UiDropdown>
+      </div>
+    {{/if}}
+  </div>
+</div>

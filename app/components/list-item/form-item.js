@@ -1,3 +1,3 @@
-import BaseLiComponent from './base';
+import Component from '@glimmer/component';
 
-export default BaseLiComponent.extend({ classNames: [ 'item' ] });
+export default class ListItemFormItem extends Component {}

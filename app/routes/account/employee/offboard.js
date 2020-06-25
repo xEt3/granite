@@ -1,6 +1,6 @@
-import Route from '@ember/routing/route';
+import { GraniteWizardRoute } from 'granite/core/wizard';
 import { A } from '@ember/array';
-import wizard from 'granite/mixins/wizard/route';
+import { action } from '@ember/object';
 
 const offboardProps = [
   'offboarding',
@@ -14,13 +14,13 @@ const offboardProps = [
   'finalAddressSelfService'
 ];
 
-export default Route.extend(wizard, {
-  key:        'offboarding',
-  basePath:   'account.employee.offboard',
-  returnPath: 'account.employee.complete-offboarding',
-  setUserOn:  'offboarder',
+export default class AccountEmployeeOffboardRoute extends GraniteWizardRoute {
+  key =        'offboarding'
+  basePath =   'account.employee.offboard'
+  returnPath = 'account.employee.complete-offboarding'
+  setUserOn =  'offboarder'
 
-  steps: A([{
+  steps = A([{
     icon:  'info',
     title: 'Start',
     link:  'index'
@@ -44,28 +44,28 @@ export default Route.extend(wizard, {
     icon:  'cubes',
     title: 'Reorganization',
     link:  'reorganization'
-  }]),
+  }])
 
-  actions: {
-    cancelOffboard () {
-      const model = this.get('controller.model');
+  @action
+  async cancelOffboard () {
+    const model = this.controller.model;
 
-      if (!model) {
-        return;
-      }
-
-      offboardProps.map(prop => model.set(prop, undefined));
-
-      this.analytics.trackEvent('Employees', 'offboarding_canceled', 'Canceled Offboarding');
-
-      model.save()
-      .then(() => this.transitionTo('account.employee.index.index'));
-    },
-
-    startOffboarding () {
-      this.analytics.trackEvent('Employees', 'offboarding_started', 'Started Offboarding');
-      this.get('controller').set('model.offboarding', true);
-      this.send('saveAndContinue');
+    if (!model) {
+      return;
     }
+
+    offboardProps.map(prop => model.set(prop, undefined));
+
+    this.analytics.trackEvent('Employees', 'offboarding_canceled', 'Canceled Offboarding');
+
+    await model.save();
+    this.transitionTo('account.employee.index.index');
   }
-});
+
+  @action
+  startOffboarding () {
+    this.analytics.trackEvent('Employees', 'offboarding_started', 'Started Offboarding');
+    this.controller.model.offboarding = true;
+    this.send('saveAndContinue');
+  }
+}

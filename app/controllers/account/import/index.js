@@ -1,24 +1,26 @@
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import ajaxStatus from 'granite/mixins/ajax-status';
 
-export default Controller.extend(ajaxStatus, {
-  ajax: service(),
+export default class AccountImportController extends Controller {
+  @service ajax
+  @service data
 
-  queryParams: [ 'service' ],
-  service:     null,
+  queryParams = [ 'service' ];
+  service = null;
 
-  actions: {
-    discover () {
-      this.ajaxStart();
+  @action
+  async discover () {
+    let { success, error } = this.data.createStatus();
 
-      const serviceName = this.get('service');
+    const serviceName = this.service;
 
-      this.get('ajax').request(`/api/v1/integrations/${serviceName}/discover-import`)
-      .then(response => {
-        this.ajaxSuccess(null, true);
-        this.transitionToRoute('account.import.discovered', response, { queryParams: { service: serviceName } });
-      });
+    try {
+      let response = await this.ajax.request(`/api/v1/integrations/${serviceName}/discover-import`);
+      success(null, true);
+      this.transitionToRoute('account.import.discovered', response, { queryParams: { service: serviceName } });
+    } catch (e) {
+      error(e);
     }
   }
-});
+}

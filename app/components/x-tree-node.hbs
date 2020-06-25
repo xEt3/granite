@@ -1,0 +1,30 @@
+{{! template-lint-disable no-invalid-interactive}}
+<div role="region" class="{{if @model.isSelected "tree-highlight"}} {{if this.isChosen "tree-chosen"}}" {{on "mouseenter" this.mouseEnter}} {{on "mouseleave" this.mouseLeave}} {{on "click" this.click}}>
+  <span role="button" class="toggle-icon" {{on "click" (prevent-default (toggle "isExpanded" @model)) bubbles=false}}>
+    {{#if @model.children.length}}
+      {{#if @model.isExpanded}}
+        &#x25BC;
+      {{else}}
+        &#x25B6;
+      {{/if}}
+    {{else}}
+      &nbsp;&nbsp;
+    {{/if}}
+  </span>
+  {{#if @checkable}}
+    <div preventsDefault={{false}} class="ui checkbox {{if @model.isIndeterminate "indeterminate" (if @model.isChecked "checked")}}">
+      <Input @type="checkbox" @checked={{@model.isChecked}} @change={{pipe (toggle "isChecked" @model) this.toggleCheck}} @indeterminate={{@model.isIndeterminate}} />
+      <label class="node">
+        {{capitalize @model.name}}
+      </label>
+    </div>
+  {{/if}}
+
+  <span role="button" {{on "click" (prevent-default (pipe (toggle "isChecked" @model) this.toggleCheck))}}>
+    {{#if hasBlock}}
+      {{yield @model}}
+    {{else}}
+      {{@model.name}}
+    {{/if}}
+  </span>
+</div>

@@ -6,9 +6,9 @@
   <div class="field">
     <label class="sr-only" for="probationary-period">Probationary Period Length</label>
     <div class="ui left icon input probationary-period-number">
-      {{input type="number" value=this.model.probationaryPeriodAmount id="probationary-period" onChange=(action (mut this.model.probationaryPeriodAmount))}}
+      <Input @type="number" @value={{this.model.probationaryPeriodAmount}} @id="probationary-period" @onChange={{set this.model.probationaryPeriodAmount _}} />
       <i class="calendar icon"></i>
-      {{#ui-dropdown class="inline inside-input probationary-period-unit" selected=this.model.probationaryPeriodUnit onChange=(action (mut this.model.probationaryPeriodUnit))}}
+      <UiDropdown @class="inline inside-input probationary-period-unit" @selected={{this.model.probationaryPeriodUnit}} @onChange={{set this.model.probationaryPeriodUnit _}}>
         <div class="default text">Unit</div>
         <i class="dropdown icon"></i>
         <div class="menu">
@@ -22,7 +22,7 @@
             days
           </div>
         </div>
-      {{/ui-dropdown}}
+      </UiDropdown>
     </div>
   </div>
   <div class="ui divider"></div>
@@ -32,19 +32,19 @@
     review your handbook to make sure your process is communicated to your employees. Consult us if you have questions about this setup.
   </p>
   <div class="ui divider"></div>
-  <button type="button" id="add-cas" class="ui primary fluid button" {{action "openSeverityModal"}}>
+  <button type="button" id="add-cas" class="ui primary fluid button" {{on "click" this.openSeverityModal}}>
     <i class="plus icon"></i>Add Option
   </button>
   <div class="ui list">
     {{#each this.model.correctiveActionSeverities as |severity|}}
       <div class="item">
-        {{#confirm-modal class="item" as |confirm|}}
+        <ConfirmModal @class="item" as |confirm|>
           {{severity.name}} ({{severity.order}})
-          <a href="#" {{action "beginSeverityEdit" severity}}>
+          <a href="#" {{on "click" (prevent-default (fn this.beginSeverityEdit severity))}}>
             <i class="edit icon"></i>
           </a>
-          <a href="#" class="right floated text-danger" {{action (pipe confirm (action "removeSeverity" severity))}}>Remove</a>
-        {{/confirm-modal}}
+          <a href="#" class="right floated text-danger" {{on "click" (prevent-default (pipe confirm (fn this.removeSeverity severity)))}}>Remove</a>
+        </ConfirmModal>
       </div>
     {{else}}
       <p class="center aligned text">You haven't configured options, yet. Use the "Add Option" button to do so.</p>
@@ -59,87 +59,83 @@
   </p>
   <div class="ui divider"></div>
   {{#liquid-if this.canAddStages}}
-    <button type="button" id="add-stage" class="ui primary fluid button" {{action "openStageModal"}}>
+    <button type="button" id="add-stage" class="ui primary fluid button" {{on "click" this.openStageModal}}>
       <i class="plus icon"></i>Add Stage
     </button>
   {{/liquid-if}}
 
-  {{#sortable-group tagName="ul" classNames="pipeline-stage-list__cards" onChange="reorderItems" as |group|}}
+  <SortableGroup @tagName="ul" @classNames="pipeline-stage-list__cards" @onChange={{this.reorderItems}} as |group|>
     {{#each this.pipeline.stages as |stage|}}
-      {{#sortable-item tagName="li" classNames="stage-list__card" model=stage group=group}}
+      <SortableItem @tagName="li" @classNames="stage-list__card" @model={{stage}} @group={{group}}>
         <div class="card-content__wrapper">
           <div class="card-content__title-bar">
-            {{#confirm-modal class="item" as |confirm|}}
+            <ConfirmModal @class="item" as |confirm|>
               <span class="card-content__stage-name">
                 <i class="arrows alternate vertical icon"></i> {{stage.name}}
-                <a href="#" {{action "beginStageEdit" stage}}>
+                <a href="#" {{on "click" (prevent-default (fn this.beginStageEdit stage))}}>
                   <i class="edit icon"></i>
                 </a>
               </span>
-              <a href="#" class="right floated text-danger delete-stage" {{action (pipe confirm (action "removeStage" stage))}}>Remove</a>
-            {{/confirm-modal}}
+              <a href="#" class="right floated text-danger delete-stage" {{on "click" (prevent-default (pipe confirm (fn this.removeStage stage)))}}>Remove</a>
+            </ConfirmModal>
           </div>
         </div>
-      {{/sortable-item}}
+      </SortableItem>
     {{/each}}
-  {{/sortable-group}}
+  </SortableGroup>
 
   <div class="ui divider"></div>
-  <form {{action "save" on="submit"}}>
-    {{#form/action-button
-      type="submit"
-      class="ui positive fluid huge button"
-      disabled=this.disableSave
-      loading=this.working}}
+  <form {{on "submit" (prevent-default this.save)}}>
+    <Form::ActionButton type="submit" class="ui positive fluid huge button" @disabled={{this.disableSave}} @loading={{this.data.statuses.working.isLoading}}>
       Save Changes
-    {{/form/action-button}}
+    </Form::ActionButton>
   </form>
 </div>
 
-{{#ui-modal id="modal__add-cas" class="small form"}}
+<UiModal @id="modal__add-cas" @class="small form">
   <div class="header">
     <i class="plus icon"></i>{{if this.editingCas "Edit" "Add"}} corrective action option
   </div>
   <div class="content">
-    {{quick-form
-      this.severityForm
-      this.currentSeverity
-      this
-      tagName="div"}}
+    <QuickForm
+      @form={{this.severityForm}}
+      @model={{this.currentSeverity}}
+      @controller={{this}}
+      @tagName="div"/>
   </div>
   <div class="actions">
     {{#unless this.editingCas}}
-      <button class="ui red button" {{action "respondSeverityAddition" false}}>
+      <button class="ui red button" {{on "click" (fn this.respondSeverityAddition false)}} type="button">
         Cancel
       </button>
     {{/unless}}
-    <button class="ui primary right labeled icon button" {{action "respondSeverityAddition" true}}>
+    <button class="ui primary right labeled icon button" {{on "click" (fn this.respondSeverityAddition true)}} type="button">
       Done
       <i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>
 
-{{#ui-modal id="modal__add-stage" class="small form"}}
+<UiModal @id="modal__add-stage" @class="small form">
   <div class="header">
     <i class="plus icon"></i>{{if this.editingStage "Edit" "Add"}} recruiting pipeline stage
   </div>
   <div class="content">
-    {{quick-form
-      this.stageForm
-      this.currentStage
-      this
-      tagName="div"}}
+    <QuickForm
+      @form={{this.stageForm}}
+      @model={{this.currentStage}}
+      @controller={{this}}
+      @tagName="div"/>
   </div>
   <div class="actions">
     {{#unless this.editingStage}}
-      <button class="ui red button" {{action "respondStageAddition" false}}>
+      <button class="ui red button" {{on "click" (fn this.respondStageAddition false)}} type="button">
         Cancel
       </button>
     {{/unless}}
-    <button class="ui primary right labeled confirm-add-stage icon button" {{action "respondStageAddition" true}}>
+    <button class="ui primary right labeled confirm-add-stage icon button" {{on "click" (fn this.respondStageAddition true)}} type="button">
       Done
       <i class="check icon"></i>
     </button>
   </div>
-{{/ui-modal}}
+</UiModal>

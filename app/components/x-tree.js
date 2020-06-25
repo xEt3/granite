@@ -1,17 +1,14 @@
-import Component from '@ember/component';
-import layout from '../templates/components/x-tree';
+import Component from '@glimmer/component';
 import { getDescendents, getAncestors } from '../utils/tree';
 import { get, set }  from '@ember/object';
 
-export default Component.extend({
-  layout,
-
-  init () {
-    this._super(...arguments);
-    let tree = this.get('model');
+export default class XTreeComponent extends Component {
+  constructor () {
+    super(...arguments);
+    let tree = this.args.model;
 
     // Make sure chosen item is highlighted and expanded-to in the tree
-    let chosenId = this.get('chosenId');
+    let chosenId = this.chosenId;
     if (chosenId) {
       let chosen = getDescendents(tree).findBy('id', chosenId);
       if (chosen) {
@@ -24,9 +21,9 @@ export default Component.extend({
     }
 
     // Expand to given depth
-    let expandDepth = this.get('expandDepth');
+    let expandDepth = this.expandDepth;
     if (expandDepth) {
       getDescendents(tree, expandDepth).setEach('isExpanded', true);
     }
   }
-});
+}

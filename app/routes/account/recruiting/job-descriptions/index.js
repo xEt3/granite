@@ -1,7 +1,6 @@
-import Route from '@ember/routing/route';
-import resource from 'granite/mixins/route-abstractions/resource';
+import { GraniteResourceRoute } from 'granite/core/route';
 
-export default Route.extend(resource, {
-  titleToken: 'Job Descriptions',
-  modelName:  'job'
-});
+export default class AccountRecruitingJobDescriptionRoute extends GraniteResourceRoute {
+  titleToken = 'Job Descriptions'
+  modelName =  'job'
+}

@@ -1,13 +1,12 @@
-import Route from '@ember/routing/route';
-import { hash } from 'rsvp';
+import Route from 'granite/core/route';
 
-export default Route.extend({
-  titleToken: 'Templates',
+export default class TemplatesRoute extends Route {
+  titleToken = 'Templates';
 
-  model () {
-    return hash({
-      templates:   this.store.query('template', {}),
-      definitions: this.store.findAll('template-definition')
-    });
+  async model () {
+    return {
+      templates:   await this.store.query('template', {}),
+      definitions: await this.store.findAll('template-definition')
+    };
   }
-});
+}

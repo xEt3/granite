@@ -1,12 +1,15 @@
+import classic from 'ember-classic-decorator';
 import Controller from '@ember/controller';
-import { computed, get } from '@ember/object';
+import { get, computed } from '@ember/object';
 import { A } from '@ember/array';
 
 const attendeeKeys = [ 'facilitator', 'organizer', 'attendees', 'attendant' ];
 
-export default Controller.extend({
-  attendees: computed('model.{facilitator.id,organizer.id,attendees.[],attendant.id}', function () {
-    const event = this.get('model');
+@classic
+export default class EventController extends Controller {
+  @computed('model.{facilitator.id,organizer.id,attendees.[],attendant.id}')
+  get attendees () {
+    const event = this.model;
 
     return attendeeKeys.reduce((attendees, k) => {
       const keyIsArray = k === 'attendees',
@@ -26,5 +29,5 @@ export default Controller.extend({
 
       return attendees;
     }, A());
-  })
-});
+  }
+}

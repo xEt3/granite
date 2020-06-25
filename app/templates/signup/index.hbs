@@ -1,40 +1,40 @@
 <div class="ui tall stacked opaque very padded container segment">
-  <form class="ui form" {{action "saveCompany" on="submit"}}>
+  <form class="ui form" {{on "submit" (prevent-default this.saveCompany)}}>
     <h1 class="ui header centered">Company Information</h1>
     <div class="ui divider"></div>
 
     <div class="field">
       <label for="company-name" class="sr-only">Company Name</label>
-      {{validated-input type="text" model=this.model valuePath="name" placeholder="Company Name" id="company-name"}}
+      <ValidatedInput @type="text" @model={{this.model}} @valuePath="name" @placeholder="Company Name" id="company-name" />
     </div>
 
     <h3 class="ui horizontal divider header"><i class="phone icon"></i>Primary Contact</h3>
     <div class="three fields">
       <div class="field">
         <label for="first-name" class="sr-only">First Name</label>
-        {{validated-input type="text" model=this.model valuePath="contactFirstName" placeholder="First Name" id="first-name"}}
+        <ValidatedInput @type="text" @model={{this.model}} @valuePath="contactFirstName" @placeholder="First Name" id="first-name" />
       </div>
       <div class="field">
         <label for="middle-name" class="sr-only">Middle Name</label>
-        {{input type="text" value=this.model.contactMiddleName placeholder="Middle(Optional)" id="middle-name"}}
+        <Input @type="text" @value={{this.model.contactMiddleName}} placeholder="Middle(Optional)" id="middle-name" />
       </div>
       <div class="field">
         <label for="last-name" class="sr-only">Last Name</label>
-        {{validated-input type="text" model=this.model valuePath="contactLastName" placeholder="Last Name" id="last-name"}}
+        <ValidatedInput @type="text" @model={{this.model}} @valuePath="contactLastName" @placeholder="Last Name" id="last-name" />
       </div>
     </div>
     <div class="field">
       <label for="company-email" class="sr-only">Email Address</label>
-      {{validated-input type="text" model=this.model valuePath="email" placeholder="Email Address" id="company-email"}}
+      <ValidatedInput @type="text" @model={{this.model}} @valuePath="email" @placeholder="Email Address" id="company-email" />
     </div>
     <div class="two fields">
       <div class="twelve wide field">
-        {{#validated-input model=this.model valuePath="contactPhone"}}
-          {{masked-input placeholder="Phone Number" mask="(111) 111-1111" on-change=(action (mut this.model.contactPhone) value="target.value") name="phone-number"}}
-        {{/validated-input}}
+        <ValidatedInput @model={{this.model}} @valuePath="contactPhone">
+          <MaskedInput @placeholder="Phone Number" @mask="(111) 111-1111" @value={{this.model.contactPhone}} @name="phone-number" />
+        </ValidatedInput>
       </div>
       <div class="four wide field">
-        {{input type="text" name="phone-extension" value=this.model.contactExtension placeholder="Extension"}}
+        <Input @type="text" @name="phone-extension" @value={{this.model.contactExtension}} placeholder="Extension" />
       </div>
     </div>
 
@@ -42,23 +42,23 @@
     <div class="fields">
       <div class="twelve wide field">
         <label for="street-address"></label>
-        {{validated-input type="text" model=this.model valuePath="addressLine1" placeholder="Street Address" id="street-address"}}
+        <ValidatedInput @type="text" @model={{this.model}} @valuePath="addressLine1" @placeholder="Street Address" id="street-address" />
       </div>
       <div class="four wide field">
         <label for="suite-number"></label>
-        {{validated-input type="text" model=this.model valuePath="addressLine2" placeholder="Suite #" id="suite-number"}}
+        <ValidatedInput @type="text" @model={{this.model}} @valuePath="addressLine2" @placeholder="Suite #" id="suite-number" />
       </div>
     </div>
 
     <div class="three fields">
       <div class="field">
         <label for="city"></label>
-        {{validated-input type="text" model=this.model valuePath="addressCity" placeholder="City" id="city"}}
+        <ValidatedInput @type="text" @model={{this.model}} @valuePath="addressCity" @placeholder="City" id="city" />
       </div>
       <div class="field">
         <label for="state"></label>
-        {{#validated-input model=this.model valuePath="addressState" id="state"}}
-          {{#ui-dropdown class="select__address-state search selection" selected=this.model.addressState onChange=(action (mut this.model.addressState)) as |execute mapper|}}
+        <ValidatedInput @model={{this.model}} @valuePath="addressState" id="state">
+          <UiDropdown @class="select__address-state search selection" @selected={{this.model.addressState}} @onChange={{set this.model.addressState _}} as |execute mapper|>
             <div class="default text">Select a State</div>
             <i class="dropdown icon"></i>
             <div class="menu">
@@ -68,30 +68,22 @@
                 </div>
               {{/each}}
             </div>
-          {{/ui-dropdown}}
-        {{/validated-input}}
+          </UiDropdown>
+        </ValidatedInput>
       </div>
       <div class="field">
         <label for="zipcode"></label>
-        {{validated-input type="text" model=this.model valuePath="addressZipcode" placeholder="Zip Code" id="zipcode"}}
+        <ValidatedInput @type="text" @model={{this.model}} @valuePath="addressZipcode" @placeholder="Zip Code" id="zipcode" />
       </div>
     </div>
 
     <h3 class="ui horizontal divider header"><i class="setting icon"></i>Configuration</h3>
     <div class="field">
       <label for="url-prefix" class="sr-only">Employee Access URL</label>
-      {{validated-input
-        type="text"
-        model=this.model
-        fieldErrors=this.fieldErrors
-        valuePath="urlPrefix"
-        placeholder="Employee Access URL (generally your company's abbreviation)"
-        id="url-prefix"}}
+      <ValidatedInput @type="text" @model={{this.model}} @fieldErrors={{this.fieldErrors}} @valuePath="urlPrefix" @placeholder="Employee Access URL (generally your company's abbreviation)" id="url-prefix" />
     </div>
-    {{#display/preview-browser}}{{if this.model.urlPrefix this.model.urlPrefix "portal"}}{{/display/preview-browser}}
+    <Display::PreviewBrowser>{{if this.model.urlPrefix this.model.urlPrefix "portal"}}</Display::PreviewBrowser>
     <div class="ui divider"></div>
-    {{#form/action-button type="submit" class="ui massive fluid green button" loading=this.working}}Next: Billing{{/form/action-button}}
+    <Form::ActionButton type="submit" class="ui massive fluid green button" @loading={{this.data.statuses.working.isLoading}}>Next: Billing</Form::ActionButton>
   </form>
 </div>
-
-{{this.test}}

@@ -1,9 +1,3 @@
-import Component from '@ember/component';
-import bubbleTo from 'granite/utils/bubble-action';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  actions: {
-    select: bubbleTo('onSelect'),
-    create: bubbleTo('onCreate')
-  }
-});
+export default class InputEquipmentPickerComponent extends Component {}

@@ -27,7 +27,7 @@ export default Component.extend({
 
   coercionType: computed(function () {
     const attributeKinds   = get(Employee, 'fields'),
-          changed          = this.get('pathForChange'),
+          changed          = this.pathForChange,
           transformedAttrs = get(Employee, 'transformedAttributes');
 
     let coercion;
@@ -40,7 +40,7 @@ export default Component.extend({
           transform
         };
         if (coercion.type === 'belongsTo') {
-          coercion.model = get(Employee.typeForRelationship(field, this.get('store')), 'modelName');
+          coercion.model = get(Employee.typeForRelationship(field, this.store), 'modelName');
         }
       }
     });
@@ -49,12 +49,12 @@ export default Component.extend({
   }),
 
   pathForChange: computed('key', function () {
-    const changed = this.get('key');
+    const changed = this.key;
     return changed.join('.');
   }),
 
   computedValue: computed('coercionType', 'pathForChange', function () {
-    const { value, coercionType } = this.getProperties('value', 'coercionType');
+    const { value, coercionType } = this;
 
     if (!coercionType || !value) {
       return value;
@@ -63,7 +63,7 @@ export default Component.extend({
     if (coercionType.transform === 'date') {
       return moment(value).format('M/D/YYYY');
     } else if (coercionType.type === 'belongsTo') {
-      return this.get('store').findRecord(coercionType.model, value);
+      return this.store.findRecord(coercionType.model, value);
     } else {
       return value;
     }

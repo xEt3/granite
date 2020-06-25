@@ -1,0 +1,60 @@
+{{#if hasBlock}}
+  {{yield @model.fullName @model.title}}
+{{else}}
+  <div class="ui tiny rounded image">
+    <Display::EmployeePicture @url={{@model.picture}} @employeeId={{@model.id}} />
+  </div>
+  <div class="content">
+    <div class="header">{{@model.fullName}}</div>
+    <div class="meta">
+      <span>{{@model.jobTitle}}</span>
+      <span class="ui small text right floated">{{time @model.created}}</span>
+    </div>
+    <div class="extra">
+      {{#if @model.externalLinkService}}
+        <div class="ui basic label">
+          <i class="download icon"></i>Imported from {{capitalize @model.externalLinkService}}
+        </div>
+      {{/if}}
+      {{#if @model.onboarding}}
+        <div class="ui green label">
+          <i class="circle thin icon"></i>Onboarding
+          {{#if @model.onboardingProgress}}
+            {{@model.onboardingProgress}}% complete
+          {{else}}
+            in progress
+          {{/if}}
+          {{#if @model.onboarder}}
+            by {{@model.onboarder.fullName}}
+          {{/if}}
+        </div>
+      {{/if}}
+
+      {{#if @model.offboarding}}
+        <div class="ui red label">
+          <i class="remove icon"></i>Offboarding
+          {{#if @model.offboardingProgress}}
+            {{@model.offboardingProgress}}% complete
+          {{else}}
+            in progress
+          {{/if}}
+          {{#if @model.offboarder}}
+            by {{@model.offboarder.fullName}}
+          {{/if}}
+        </div>
+      {{/if}}
+
+      {{#if @model.onProbation}}
+        <div class="ui basic label">
+          In Probation Period
+        </div>
+      {{/if}}
+
+      {{#if @model.terminatedOn}}
+        <div class="ui red label">
+          <i class="user times icon"></i>Terminated on {{time @model.terminatedOn}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+{{/if}}

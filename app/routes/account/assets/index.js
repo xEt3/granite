@@ -1,11 +1,11 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({
-  titleToken:  'Assets',
-  queryParams: { page: { refreshModel: true } },
+export default class AccountAssetsRoute extends Route {
+  titleToken = 'Assets'
+  queryParams = { page: { refreshModel: true } }
 
   model (params) {
-    let limit = this.get('controller.limit') || 20,
+    let limit = 20,
         page = (params.page || 1) - 1;
 
     return this.store.query('asset', {
@@ -13,4 +13,4 @@ export default Route.extend({
       limit
     });
   }
-});
+}

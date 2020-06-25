@@ -1,24 +1,25 @@
-import BaseLiComponent from './base';
-import { or } from '@ember/object/computed';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
-export default BaseLiComponent.extend({
-  isPendingState: or('model.isLoading', 'model.isSaving', 'model.isReloading'),
-
-  actions: {
-    checkBoxDisplay () {
-      let model = this.get('model');
-
-      if (model.visibleToEmployee) {
-        return;
-      }
-      model.setProperties({
-        signatureRequired: false,
-        effectiveOn:       null
-      });
-    }
-  },
-
-  onChange () {
-    //noop
+export default class ListItemDocumentAssignmentComponent extends Component {
+  get isPendingState () {
+    let { model } = this.args;
+    return model.isLoading || model.isSaving || model.isReloading;
   }
-});
+
+  @action
+  checkBoxDisplay () {
+    let { model } = this.args;
+    if (model.visibleToEmployee) {
+      return;
+    }
+
+    model.signatureRequired = false;
+    model.effectiveOn = null;
+  }
+
+  // @action
+  // onChange () {
+  //   //noop
+  // }
+}

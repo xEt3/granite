@@ -27,7 +27,7 @@ export default Mixin.create({
   },
 
   __pushPayload (payload = {}) {
-    const modelName = this.get('modelName'),
+    const modelName = this.modelName,
           extractedPayload = payload[modelName] || [],
           ids = extractedPayload.mapBy('_id');
 
@@ -42,7 +42,7 @@ export default Mixin.create({
   },
 
   async afterModel (model, transition) {
-    let { totalRecords, requestedLimit, requestedPage } = this.getProperties('totalRecords', 'requestedLimit', 'requestedPage'),
+    let { totalRecords, requestedLimit, requestedPage } = this,
         maxPages = Math.ceil(totalRecords / requestedLimit);
 
     if (requestedPage > maxPages && totalRecords > 0) {
@@ -55,14 +55,16 @@ export default Mixin.create({
   },
 
   async model (params) {
+    console.warn('Mixing in the route-abstraction for resource is deprecated in favor of extending the granite core route.'); // eslint-disable-line
+
     let query = {
       page:  params.page - 1 || 0,
       limit: params.limit
     };
 
     // merge static sort
-    if (this.get('sort')) {
-      query.sort = this.get('sort');
+    if (this.sort) {
+      query.sort = this.sort;
     }
 
     // merge dynamic sort
@@ -74,16 +76,16 @@ export default Mixin.create({
     }
 
     // merge static query
-    if (this.get('query')) {
-      query = Object.assign({}, query, this.get('query'));
+    if (this.query) {
+      query = Object.assign({}, query, this.query);
     }
 
     let mutate = this.mutateQuery,
         sorter = this.sortQuery;
 
     // pass filters off to Mixin#filter
-    if (this.get('filters')) {
-      this.filter(query, params, this.get('filters'));
+    if (this.filters) {
+      this.filter(query, params, this.filters);
     }
     // allow query mutation
     if (mutate && typeof mutate === 'function') {
@@ -99,11 +101,11 @@ export default Mixin.create({
       sorter.call(this, query, params);
     }
 
-    let resourceUrl = this.get('resourceUrl');
+    let resourceUrl = this.resourceUrl;
 
     if (!resourceUrl) {
       // normal resource request
-      let modelRecords = await this.store.query(this.get('modelName'), query);
+      let modelRecords = await this.store.query(this.modelName, query);
 
       this.setProperties({
         totalRecords:   modelRecords.meta.totalRecords,
@@ -118,6 +120,6 @@ export default Mixin.create({
     let result = await this.ajax.request(resourceUrl, { data: query });
 
     // remap data into ED Models
-    return this.get('resourceReturnsModel') ? this.__pushPayload(result) : result;
+    return this.resourceReturnsModel ? this.__pushPayload(result) : result;
   }
 });

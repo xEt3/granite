@@ -1,0 +1,31 @@
+<div class="item talent-pool__applicant">
+  <div class="content">
+    <div class="header">{{this._model.fullName}}</div>
+    <div class="meta">
+      {{#unless this.firstIsLastApp}}
+        First Applied {{time-ago this._meta.lastApplication}} on {{time this._meta.lastApplication "M/D/YY"}},
+      {{/unless}}
+      Last Applied {{time-ago this._meta.lastApplication}} on {{time this._meta.lastApplication "M/D/YY"}}
+      ({{this.activeTime}} days since first application)
+    </div>
+
+    {{#if this._meta.avgScore}}
+      <div class="extra">
+        <Display::CalcColor @value={{this.scoreAbs}} as |red green|>
+          {{! template-lint-disable style-concatenation no-inline-styles }}
+          <span style="color: rgb({{red}}, {{green}}, 0)" class="card-content__score ui label">
+            Average Score: {{this.scoreAbs}}%
+          </span>
+        </Display::CalcColor>
+      </div>
+    {{/if}}
+  </div>
+
+  <div class="right floated right aligned text content">
+    {{#if this._meta.lastApplicationId}}
+      <LinkTo @route="account.job-opening.campaign.job-application" @models={{array this._meta.lastApplicationListing this._meta.lastApplicationId}}>
+        Open Last Job Application
+      </LinkTo>
+    {{/if}}
+  </div>
+</div>

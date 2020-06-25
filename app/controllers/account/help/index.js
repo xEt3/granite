@@ -1,12 +1,13 @@
-import Controller from '@ember/controller';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import Controller from 'granite/core/controller';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
-export default Controller.extend(addEdit, {
-  actions: {
-    resetIntros () {
-      let user = this.get('user');
-      user.set('shownHints', []);
-      this.send('save', user);
-    }
+export default class AccountHelpController extends Controller {
+  @service data
+
+  @action
+  resetIntros () {
+    this.user.shownHints = [];
+    this.data.saveRecord(this.user);
   }
-});
+}

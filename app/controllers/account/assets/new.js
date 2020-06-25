@@ -1,14 +1,18 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import Controller from 'granite/core/controller';
 import { htmlSafe } from '@ember/string';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { inject as service } from '@ember/service';
 
-export default Controller.extend(addEdit, {
-  transitionAfterSave: 'account.asset',
-  transitionWithModel: true,
-  icons:               'mobile tablet desktop laptop car lab configure asterisk cube sound photo'.w(),
+export default class AccountAssetsNewController extends Controller {
+  @service data
 
-  sharableLabel: computed('model.name', function () {
-    return this.get('model.name') ? htmlSafe(`Can ${this.get('model.name')} be shared by employees`) : htmlSafe('Can these assets be shared by employees');
-  })
-});
+  saveOptions = {
+    transitionAfterSave: 'account.asset',
+    transitionWithModel: true
+  }
+
+  icons = 'mobile tablet desktop laptop car lab configure asterisk cube sound photo'.w()
+
+  get sharableLabel () {
+    return this.model.name ? htmlSafe(`Can ${this.model.name} be shared by employees`) : htmlSafe('Can these assets be shared by employees');
+  }
+}

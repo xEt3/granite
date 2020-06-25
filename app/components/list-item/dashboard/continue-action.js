@@ -1,5 +1,7 @@
-import BaseLiComponent from '../base';
+import classic from 'ember-classic-decorator';
+import { classNames } from '@ember-decorators/component';
 import { computed } from '@ember/object';
+import BaseLiComponent from '../base';
 
 const ACTIONS = {
   EMPLOYEE_ONBOARDING:  'account.employee.onboard',
@@ -8,10 +10,11 @@ const ACTIONS = {
   JOBOPENING_SETUP:     'account.job-opening.setup'
 };
 
-export default BaseLiComponent.extend({
-  classNames: [ 'item' ],
-
-  link: computed('model.continuationAction', function () {
+@classic
+@classNames('item')
+export default class ContinueAction extends BaseLiComponent {
+  @computed('model.continuationAction')
+  get link () {
     return ACTIONS[this.get('model.continuationAction')];
-  })
-});
+  }
+}

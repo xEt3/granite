@@ -1,0 +1,29 @@
+<div class="step {{if @step.completed "completed"}} {{if @step.active "active"}}">
+  {{#if @link}}
+    <LinkTo @route={{@step.path}}>
+      <div class="content">
+        <div class="title">
+          {{@step.title}}
+          {{#if @step.completed}}
+            <i class="check icon"></i>
+          {{else}}
+            {{#if @step.icon}}<i class="{{@step.icon}} icon"></i>{{/if}}
+          {{/if}}
+        </div>
+        <div class="description">{{@step.description}}</div>
+      </div>
+    </LinkTo>
+  {{else}}
+    <div class="content">
+      <div class="title">
+        {{@step.title}}
+        {{#if @step.completed}}
+          <i class="check icon"></i>
+        {{else}}
+          {{#if @step.icon}}<i class="{{@step.icon}} icon"></i>{{/if}}
+        {{/if}}
+      </div>
+      <div class="description">{{@step.description}}</div>
+    </div>
+  {{/if}}
+</div>

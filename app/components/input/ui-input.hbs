@@ -1,0 +1,10 @@
+<div class="field">
+  <label for={{@inputId}} class={{if @srOnly "sr-only"}}>
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{@placeholder}}
+    {{/if}}
+  </label>
+  <Input @type={{if @type @type this.type}} @id={{@inputId}} @class={{@inputClass}} @placeholder={{@placeholder}} @value={{@value}} />
+</div>

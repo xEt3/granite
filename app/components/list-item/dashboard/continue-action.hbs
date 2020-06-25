@@ -1,0 +1,7 @@
+{{#if this.link}}
+  <LinkTo @route={{this.link}} @model={{this.model.id}}>
+    {{this.model.description}}
+  </LinkTo>
+{{else}}
+  {{this.model.description}}
+{{/if}}

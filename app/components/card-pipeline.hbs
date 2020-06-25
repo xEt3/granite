@@ -1,0 +1,23 @@
+<div class="pipeline">
+  {{#each @pipeline.stages as |stage|}}
+    <CardPipeline::StageColumn
+      @stage={{stage}}
+      @stages={{@pipeline.stages}}
+      @newScheduledMeeting={{@newScheduledMeeting}}
+      @activeCandidates={{@candidates}}
+      @dispatchReorder={{this.setOrder}}
+      @moveAppToStage={{this.moveAppToStage}}
+      @onDisqualify={{@onDisqualify}}
+      @onUnDisqualify={{@onUnDisqualify}}
+      @onUnHire={{@onUnHire}}
+      @onSchedule={{@onSchedule}}
+      @disableDragging={{this.data.statuses.working.isLoading}}
+      @onLinkSharing={{@onLinkSharing}}
+      @onOnboardCandidate={{@onOnboardCandidate}}
+      @onAddLabel={{@onAddLabel}} />
+  {{/each}}
+
+  <div class="ui {{if this.workingSlow "active"}} inverted dimmer">
+    <div class="ui text loader">One moment...</div>
+  </div>
+</div>

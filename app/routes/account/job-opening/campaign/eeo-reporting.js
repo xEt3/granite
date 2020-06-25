@@ -1,9 +1,10 @@
-import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import Route from 'granite/core/route';
 
-export default Route.extend({
-  ajax:       service(),
-  titleToken: 'EEO Report',
+export default class EeoReportingRoute extends Route {
+  @service ajax;
+
+  titleToken = 'EEO Report';
 
   model () {
     const jobOpening = this.modelFor('account.job-opening');
@@ -15,4 +16,4 @@ export default Route.extend({
       }
     });
   }
-});
+}

@@ -1,42 +1,35 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
-const ControlComponent = Component.extend({
-  classNames:    [ 'ui', 'field' ],
-  hasNull:       true,
-  itemValuePath: 'id',
+export default class ControlComponent extends Component {
+  get hasNull () {
+    return typeof this.args.hasNull === 'boolean' ? this.args.hasNull : true;
+  }
 
-  didInsertElement () {
-    this._super(...arguments);
+  get itemValuePath () {
+    return this.args.itemValuePath === false ? false : this.args.itemValuePath || 'id';
+  }
 
-    if (this.get('state') && !this.get('parentView.active')) {
-      this.set('parentView.active', true);
-    }
-  },
-
-  selectionClass: computed('type', 'searchable', function () {
-    if (this.get('type') !== 'select') {
-      return;
+  get selectionClass () {
+    if (this.args.type !== 'select') {
+      return '';
     }
 
     let classText = 'selection';
 
-    if (this.get('multi')) {
+    if (this.args.multi) {
       classText = `multiple ${classText}`;
     }
 
-    if (this.get('searchable')) {
+    if (this.args.searchable) {
       classText = `search ${classText}`;
     }
 
     return classText;
-  }),
-
-  __update (val) {
-    this.get('update')(this.get('controlName'), val);
   }
-});
 
-ControlComponent.reopenClass({ positionalParams: [ 'controlName', 'state' ] });
-
-export default ControlComponent;
+  @action
+  update (val) {
+    this.args.update(this.args.name, val);
+  }
+}

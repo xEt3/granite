@@ -1,18 +1,17 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
-import edit from 'granite/mixins/route-abstractions/edit';
+import Route from 'granite/core/route';
 
-export default Route.extend(edit, {
-  titleToken: 'Edit Asset',
-  modelName:  'asset-item',
-  segmentKey: 'asset_item_id',
+export default class AccountAssetItemEditRoute extends Route {
+  titleToken = 'Edit Asset'
+  modelName =  'asset-item'
+  segmentKey = 'asset_item_id'
+  routeType = 'edit'
 
-  model () {
-    return RSVP.hash({
-      item:  this._super(...arguments),
+  async model () {
+    return {
+      item:  await super.model(...arguments),
       asset: this.modelFor('account.asset')
-    });
-  },
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -20,4 +19,4 @@ export default Route.extend(edit, {
       asset: model.asset
     });
   }
-});
+}

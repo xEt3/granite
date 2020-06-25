@@ -1,3 +1,5 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({ titleToken: 'Intro to Documents' });
+export default class IntroRoute extends Route {
+  titleToken = 'Intro to Documents';
+}

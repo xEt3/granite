@@ -1,7 +1,7 @@
 <div class="ui container wizard">
-  {{#ui-progress percent=this.progress class="indicating wizard__progress"}}
+  <UiProgress @percent={{this.progress}} @class="indicating wizard__progress">
     <div class="bar"></div>
-  {{/ui-progress}}
+  </UiProgress>
 
   <div class="ui padded segment wizard__segment">
     <div class="ui basic segment">
@@ -13,5 +13,5 @@
     </div>
   </div>
 
-  {{display/form-steps steps=this.steps basePath=this.basePath class="wizard__steps"}}
+  <Display::FormSteps @steps={{this.steps}} @basePath={{this.basePath}} class="wizard__steps" />
 </div>

@@ -1,0 +1,21 @@
+<div class="pipeline__stage">
+  <h2 class="pipeline-stage__title">
+    {{@stage.name}}
+  </h2>
+  <DragSortList @items={{this.candidates}} @dragEndAction={{fn @dispatchReorder @stage._id}} @classNames="pipeline-stage__cards" @childClass="stage-cards__card" @draggingEnabled={{not @disableDragging}} as |jobApp|>
+    {{#if jobApp.id}}
+      <CardPipeline::StageCard
+        @application={{jobApp}}
+        @stages={{@this.stages}}
+        @newScheduledMeeting={{this.newScheduledMeeting}}
+        @moveAppToStage={{@moveAppToStage}}
+        @onUnDisqualify={{@onUnDisqualify}}
+        @onDisqualify={{@onDisqualify}}
+        @onUnHire={{@onUnHire}}
+        @onOnboardCandidate={{@onOnboardCandidate}}
+        @onLinkSharing={{@onLinkSharing}}
+        @onSchedule={{@onSchedule}}
+        @onAddLabel={{@onAddLabel}} />
+    {{/if}}
+  </DragSortList>
+</div>

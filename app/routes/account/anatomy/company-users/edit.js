@@ -1,6 +1,5 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { A } from '@ember/array';
-import RSVP from 'rsvp';
 
 const crud = [ 'create', 'read', 'update', 'delete' ],
       nodeDefaults = {
@@ -10,13 +9,17 @@ const crud = [ 'create', 'read', 'update', 'delete' ],
         isVisible:  true
       };
 
-export default Route.extend({
-  model (params) {
-    return RSVP.hash({
-      user:        this.store.findRecord('company-user', params.user_id),
-      permissions: this.store.findAll('permission')
-    });
-  },
+export default class AccountAnatomyCompanyUsersEditRoute extends Route {
+  titleToken (model) {
+    return `Edit ${model.user.fullName}`;
+  }
+
+  async model (params) {
+    return {
+      user:        await this.store.findRecord('company-user', params.user_id),
+      permissions: await this.store.findAll('permission')
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -39,11 +42,11 @@ export default Route.extend({
           Object.assign({
             id,
             name: key
-          }, nodeDefaults, { isChecked: model.user.get('permissions').includes(id) })
+          }, nodeDefaults, { isChecked: model.user.permissions.includes(id) })
         );
 
         return parents;
       }, A()).toArray()
     });
   }
-});
+}

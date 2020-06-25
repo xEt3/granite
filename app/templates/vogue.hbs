@@ -1,20 +1,20 @@
 <h1 class="ui header">
   Granite Living Style Guide
   {{#if this.focus tagName="small"}}
-    {{#link-to "beyonce" (query-params focus="null") class="text-sm"}}<i class="fa fa-fw fa-eye-slash"></i> Clear Focus{{/link-to}}
+    <LinkTo @route="beyonce" @query={{hash focus="null"}} class="text-sm"><i class="fa fa-fw fa-eye-slash"></i> Clear Focus</LinkTo>
   {{/if}}
 </h1>
 <hr />
 
-{{#sg/sg-section name="Colors" class="row" focus=this.focus}}
+<Sg::SgSection @name="Colors" @class="row" @focus={{this.focus}}>
   <div class="ui grid">
     {{#each this.colors as |color|}}
-      {{sg/sg-color color=color}}
+      <Sg::SgColor @color={{color}} />
     {{/each}}
   </div>
-{{/sg/sg-section}}
+</Sg::SgSection>
 
-{{#sg/sg-section name="Typography" focus=this.focus squeeze=true}}
+<Sg::SgSection @name="Typography" @focus={{this.focus}} @squeeze={{true}}>
   <h4 class="text-right">Family</h4>
   <h1 class="text-center">Oxygen</h1>
   <h4 class="text-right">Weights</h4>
@@ -27,18 +27,18 @@
   <p class="text-muted">{{this.ipsum}}</p>
   <h5 class="text-right">text-sm</h5>
   <p class="text-sm">{{this.ipsum}}</p>
-{{/sg/sg-section}}
+</Sg::SgSection>
 
-{{#sg/sg-section name="Headings" focus=this.focus}}
+<Sg::SgSection @name="Headings" @focus={{this.focus}}>
   <h1 class="ui header">First header</h1>
   <h2 class="ui header">Second header</h2>
   <h3 class="ui header">Third header</h3>
   <h4 class="ui header">Fourth header</h4>
   <h5 class="ui header">Fifth header</h5>
-{{/sg/sg-section}}
+</Sg::SgSection>
 
-{{#sg/sg-section name="Buttons" class="center aligned" focus=this.focus}}
-  <a href="#" {{action "toggleProperty" "toggleLoading"}}>Toggle Loading State</a>
+<Sg::SgSection @name="Buttons" @class="center aligned" @focus={{this.focus}}>
+  <a href="#" {{on "click" (prevent-default (fn (action "toggleProperty") "toggleLoading"))}}>Toggle Loading State</a>
   {{#each this.btnSizes as |size|}}
     <div class="ui raised right aligned segment">
       <h2 class="ui header">ui {{#if size}}{{size}}{{/if}}</h2>
@@ -49,16 +49,16 @@
 
     <div class="sg__spacer"></div>
   {{/each}}
-{{/sg/sg-section}}
-{{#sg/sg-section name="Inverted Loading Buttons" focus=this.focus}}
+</Sg::SgSection>
+<Sg::SgSection @name="Inverted Loading Buttons" @focus={{this.focus}}>
   {{#each this.btnSizes as |size|}}
     <div class="ui raised right aligned segment">
       <h2 class="ui header">ui {{#if size}}{{size}}{{/if}}</h2>
     </div>
     {{#each this.btnColors as |color|}}
-      <button class="facebook inverted ui button {{if color color}} {{if size size}}">{{if color color "default"}}</button>
+      <button class="facebook inverted ui button {{if color color}} {{if size size}}" type="button">{{if color color "default"}}</button>
     {{/each}}
 
     <div class="sg__spacer"></div>
   {{/each}}
-{{/sg/sg-section}}
+</Sg::SgSection>

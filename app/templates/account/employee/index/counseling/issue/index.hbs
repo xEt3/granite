@@ -1,17 +1,14 @@
-{{#link-to "account.employee.index.counseling.issue.new" class="ui red fluid button"}}
+<LinkTo @route="account.employee.index.counseling.issue.new" class="ui red fluid button">
   <i class="bullseye icon"></i>Issue a new corrective action
-{{/link-to}}
+</LinkTo>
 
 <div class="ui divider"></div>
 
-{{display/resource-list
-  this.model
-  "list-item/employee-corrective-action-item"
-  linkTo="account.employee.index.counseling.issue.corrective-action"
-  linkClass="item"
-  class="ui divided link items"}}
+<Display::ResourceList
+  @model={{this.model}}
+  @itemComponent="list-item/employee-corrective-action-item"
+  @linkTo="account.employee.index.counseling.issue.corrective-action"
+  @linkClass="item"
+  class="ui divided link items"/>
 
-{{elements/x-pagination
-  page=(readonly this.page)
-  pages=(readonly this.pages)
-  onchange=(action (mut this.page))}}
+<Elements::XPagination @page={{this.page}} @model={{this.model}} @limit={{this.limit}} @onChange={{set this.page _}} />

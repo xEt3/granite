@@ -1,7 +1,7 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({
+export default class IndexRoute extends Route {
   titleToken (model) {
-    return 'Job - ' + model.get('title');
+    return 'Job - ' + model.title;
   }
-});
+}

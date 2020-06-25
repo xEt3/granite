@@ -1,20 +1,20 @@
 <h1 class="ui header titlecased text">
   {{if this.renewal "Editing" "Adding"}} Renewal For {{this.model.certification.name}}
   <small class="right floated">
-    {{#link-to "account.employee.index.education.certification" this.model.certification class="text-danger"}}
+    <LinkTo @route="account.employee.index.education.certification" @model={{this.model.certification}} class="text-danger">
       Cancel
-    {{/link-to}}
+    </LinkTo>
   </small>
 </h1>
 
 <div class="ui divider"></div>
 
-{{#quick-form
-  this.currentForm.elements
-  this.model.renewal
-  this
-  submitClass="large green fluid"
-  onsubmit=(action "saveRenewal")
-}}
+<QuickForm
+  @form={{this.currentForm.elements}}
+  @model={{this.model.renewal}}
+  @controller={{this}}
+  @submitClass="large green fluid"
+  @onsubmit={{this.saveRenewal}}
+>
   {{#if this.renewal}}Save Changes{{else}}Add Renewal{{/if}}
-{{/quick-form}}
+</QuickForm>

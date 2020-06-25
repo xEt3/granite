@@ -1,37 +1,29 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-const QuickFormComponent = Component.extend({
-  tagName:    'form',
-  classNames: [ 'ui form' ],
-
+export default class QuickFormComponent extends Component {
   submit (e) {
     e.preventDefault();
     e.stopPropagation();
-    this.get('onsubmit')();
-  },
+    this.args.onsubmit();
+  }
 
-  _submitClass: computed('submitClass', function () {
-    let userClass = this.get('submitClass') || '';
+  get _submitClass () {
+    let userClass = this.args.submitClass || '';
     return `ui ${userClass} button`;
-  })
-});
-
-QuickFormComponent.reopenClass({ positionalParams: [ 'form', 'model', 'controller' ] });
-
-export default QuickFormComponent;
+  }
+}
 
 /*
  USAGE:
  template
-  {{quick-form
-    formObject
-    model
-    controller
-    onsubmit=(action "iDidItMom")}}
+  <QuickForm
+    @form={{this.formObject}}
+    @model={{this.model}}
+    @controller={{this}}
+    @onsubmit={{this.iDidItMom}}/>
 
   in the controller
-  form: computed(() => [{
+  form = [{
     label: 'Whatcha name',
     labelClass: 'sr-only',
     inputClass: 'large',
@@ -48,5 +40,5 @@ export default QuickFormComponent;
     path: 'department', // value path
     contentPath: 'controller.departments', // values path
     displayKey: 'name' // optional
-  }])
+  }]
  */

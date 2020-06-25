@@ -1,10 +1,14 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { elementId } from 'granite/core';
 import moment from 'moment';
 
-export default Component.extend({
-  endOptions: computed('start', function () {
-    const start = this.get('start'),
+@elementId
+export default class InputDateRangeComponent extends Component {
+  @tracked start = null
+
+  get endOptions () {
+    const start = this.start,
           loopDate = moment(start),
           opts = [];
 
@@ -32,5 +36,5 @@ export default Component.extend({
     }
 
     return opts;
-  })
-});
+  }
+}

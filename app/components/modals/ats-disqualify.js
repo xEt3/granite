@@ -1,23 +1,22 @@
-import Component from '@ember/component';
-import $ from 'jquery';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import $ from 'jquery';
 
-export default Component.extend({
-  auth: service(),
+export default class ModalsAtsDisqualify extends Component {
+  @service auth
 
-  disqualificationReasons: computed('auth.user.company', function () {
-    return this.get('auth.user.company.disqualificationReasons');
-  }),
+  get disqualificationReasons () {
+    return this.auth.user.get('company.disqualificationReasons');
+  }
 
   closeModal () {
-    $('#' + this.get('modalId')).modal('hide');
-  },
-
-  actions: {
-    respond (response) {
-      this.get('onResponse')(response);
-      this.closeModal();
-    }
+    $('#' + this.args.modalId).modal('hide');
   }
-});
+
+  @action
+  respond (response) {
+    this.args.onResponse(response);
+    this.closeModal();
+  }
+}

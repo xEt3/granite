@@ -1,38 +1,40 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import ajaxStatus from 'granite/mixins/ajax-status';
+import { elementId } from 'granite/core';
 import $ from 'jquery';
 
-let UserItemComponent = Component.extend(ajaxStatus, {
-  store: service(),
-  ajax:  service(),
+@elementId
+export default class ListItemUserItemComponent extends Component {
+  @service store
+  @service ajax
+  @service data
 
-  classNames: [ 'item', 'users__user--item' ],
-  projects:   null,
-  newOwner:   null,
+  @tracked projects = null
+  @tracked newOwner = null
 
-  modalId: computed('elementId', function () {
-    return this.get('elementId') + '-modal';
-  }),
+  get modalId () {
+    return this.elementId + '-modal';
+  }
 
-  dropdownId: computed('elementId', function () {
-    return this.get('elementId') + '-dropdown';
-  }),
+  get dropdownId () {
+    return this.elementId + '-dropdown';
+  }
 
-  disableDeactivate: computed('newOwner', 'projects', function () {
-    let projects = this.get('projects');
+  get disableDeactivate () {
+    let projects = this.projects;
 
     if (!projects || !projects.length) {
       return false;
     }
 
-    return this.get('newOwner') ? false : true;
-  }),
+    return this.newOwner ? false : true;
+  }
 
-  users: computed('user.id', 'allUsers', function () {
-    let userId = this.get('user.id'),
-        allUsers = this.get('allUsers');
+  get users () {
+    let userId = this.args.user.id,
+        allUsers = this.args.allUsers;
 
     return allUsers.reduce((userArray, user) => {
       if (user.id !== userId) {
@@ -52,103 +54,93 @@ let UserItemComponent = Component.extend(ajaxStatus, {
       }
       return userArray;
     }, []);
-  }),
+  }
 
   closeTransferModal () {
-    $(`#${this.get('modalId')}`).modal('hide');
-  },
+    $(`#${this.modalId}`).modal('hide');
+  }
 
-  actions: {
-    async openTransferModal () {
-      this.ajaxStart();
+  @action
+  async openTransferModal () {
+    let { success, error } = this.data.createStatus('activation');
+
+    try {
       let { actionItem } = await this.ajax.request('/api/v1/action-items', {
         data: {
-          owner:       this.get('user.employee.id'),
+          owner:       this.args.user.get('employee.id'),
           completedOn: null
         }
       });
-      this.set('projects', actionItem);
-      this.ajaxSuccess(null, true);
-
-      $(`#${this.get('modalId')}`).modal({
-        detachable:  true,
-        showOnFocus: false,
-        closable:    false,
-        onHidden:    () => {
-          this.setProperties({
-            projects: null,
-            newOwner: null
-          });
-        }
-      }).modal('show');
-    },
-
-    async transferProjects () {
-      if (this.get('projects.length') === 0) {
-        return;
-      }
-
-      this.ajaxStart();
-      try {
-        await this.ajax.post('/api/v1/action-item/bulk-transfer', {
-          data: {
-            currentOwner: this.get('user.employee.id'),
-            newOwner:     this.get('newOwner')
-          }
-        });
-      } catch (e) {
-        this.ajaxError(e);
-        this.closeTransferModal();
-        throw e;
-      }
-
-      this.ajaxSuccess('Successfully transferred projects');
-    },
-
-    async toggleInactiveState (val) {
-      let user = this.get('user');
-      user.set('inactive', val);
-
-      this.ajaxStart();
-      try {
-        await user.save();
-      } catch (e) {
-        return this.ajaxError(e);
-      }
-
-      if (val) {
-        this.closeTransferModal();
-        this.ajaxSuccess('Successfully deactivated user');
-      } else {
-        this.ajaxSuccess('Successfully reactivated user');
-      }
-
-      this.send('refresh');
-    },
-
-    cancel () {
-      this.closeTransferModal();
-    },
-
-    notify (type, msg) {
-      this.get('onNotify')(type, msg);
-    },
-
-    refresh () {
-      this.get('onRefresh')();
+      this.projects = actionItem;
+      success(null, true);
+    } catch (e) {
+      error(e);
     }
+
+    $(`#${this.modalId}`).modal({
+      detachable:  true,
+      showOnFocus: false,
+      closable:    false,
+      onHidden:    () => {
+        this.projects = null;
+        this.newOwner = null;
+      }
+    }).modal('show');
   }
-});
 
-UserItemComponent.reopenClass({ positionalParams: [ 'user', 'allUsers' ] });
+  @action
+  async transferProjects () {
+    if (this.projects.length === 0) {
+      return;
+    }
+    let { success, error } = this.data.createStatus();
+    try {
+      await this.ajax.post('/api/v1/action-item/bulk-transfer', {
+        data: {
+          currentOwner: this.args.user.get('employee.id'),
+          newOwner:     this.newOwner
+        }
+      });
+    } catch (e) {
+      error(e);
+      this.closeTransferModal();
+      throw e;
+    }
+    success('Successfully transferred projects');
+  }
 
-export default UserItemComponent;
+  @action
+  async toggleInactiveState (val) {
+    let user = this.args.user;
+    user.inactive = val;
+
+    let { success, error } = this.data.createStatus('activation');
+    try {
+      await user.save();
+    } catch (e) {
+      return error(e);
+    }
+
+    if (val) {
+      this.closeTransferModal();
+      success('Successfully deactivated user');
+    } else {
+      success('Successfully reactivated user');
+    }
+
+    this.args.onRefresh();
+  }
+
+  @action
+  cancel () {
+    this.closeTransferModal();
+  }
+}
 
 /* Usage
-  {{list-item/user-item
-  user
-  allUsers
-  onNotify=(route-action 'notify')
-  onRefresh=(route-action 'refresh')
+  <ListItem::UserItem
+  @user={{user}}
+  @allUsers={{allUsers}}
+  @onRefresh={{route-action 'refreshModel'}}
 }}
 */

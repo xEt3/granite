@@ -9,11 +9,13 @@ module.exports = {
     ecmaFeatures: { legacyDecorators: true }
   },
   plugins: [
-    'ember'
+    'ember',
+    'decorator-position'
   ],
   extends: [
     'eslint:recommended',
-    'plugin:ember/recommended'
+    'plugin:ember/recommended',
+    'plugin:decorator-position/ember'
   ],
   env:   { browser: true },
   rules: {

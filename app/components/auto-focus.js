@@ -1,9 +1,16 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { elementId } from 'granite/core';
+import { action } from '@ember/object';
 import { run } from '@ember/runloop';
 
-export default Component.extend({
-  didInsertElement () {
-    this._super(...arguments);
-    run.scheduleOnce('afterRender', () => this.$('input').focus());
+@elementId
+export default class AutoFocusComponent extends Component {
+  get autoFocusId () {
+    return 'auto-focus__' + this.elementId;
   }
-});
+
+  @action
+  didInsert () {
+    run.scheduleOnce('afterRender', () => document.querySelector(`#${this.autoFocusId} input`).focus());
+  }
+}

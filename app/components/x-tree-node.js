@@ -1,44 +1,45 @@
-import Component from '@ember/component';
-import { computed }  from '@ember/object';
-import layout from '../templates/components/x-tree-node';
+import Component from '@glimmer/component';
+import { action, set } from '@ember/object';
 
-export default Component.extend({
-  layout,
-  classNameBindings: [ 'model.isSelected:tree-highlight', 'isChosen:tree-chosen' ],
+export default class XTreeNode extends Component {
+  get isChosen () {
+    return this.args.model.id === this.args.chosenId;
+  }
 
-  isChosen: computed('model.id', 'chosenId', function () {
-    return this.get('model.id') === this.get('chosenId');
-  }),
-
+  @action
   recalculateState () {
-    if (this.get('recalculateStateAction')) {
-      this.get('recalculateStateAction')();
+    if (this.args.recalculateStateAction) {
+      this.args.recalculateStateAction();
     }
-  },
+  }
 
+  @action
   click () {
-    let select = this.get('select');
+    let select = this.args.select;
     if (select) {
-      select(this.get('model'));
+      select(this.args.model);
     }
-  },
+  }
 
+  @action
   mouseEnter () {
-    this.set('model.isSelected', true);
-    let hover = this.get('hover');
+    set(this.args.model, 'isSelected', true);
+    let hover = this.args.hover;
     if (hover) {
-      hover(this.get('model'));
+      hover(this.args.model);
     }
-  },
+  }
 
+  @action
   mouseLeave () {
-    this.set('model.isSelected', false);
-    let hoverOut = this.get('hoverOut');
+    set(this.args.model, 'isSelected', false);
+    let hoverOut = this.args.hoverOut;
     if (hoverOut) {
-      hoverOut(this.get('model'));
+      hoverOut(this.args.model);
     }
-  },
+  }
 
+  @action
   setChildCheckboxesRecursively (parentNode, checkValue) {
     const children = parentNode.children || [];
 
@@ -48,19 +49,14 @@ export default Component.extend({
         this.setChildCheckboxesRecursively(child, checkValue);
       });
     }
-  },
-
-  actions: {
-    toggleCheck () {
-      if (this.get('model.children.length')) {
-        this.setChildCheckboxesRecursively(this.get('model'), this.get('model.isChecked'));
-      }
-
-      this.recalculateState();
-    },
-
-    toggleExpand () {
-      this.toggleProperty('model.isExpanded');
-    }
   }
-});
+
+  @action
+  toggleCheck () {
+    if (this.args.model.children && this.args.model.children.length) {
+      this.setChildCheckboxesRecursively(this.args.model, this.args.model.isChecked);
+    }
+
+    this.recalculateState();
+  }
+}

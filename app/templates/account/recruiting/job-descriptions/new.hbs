@@ -1,8 +1,4 @@
-{{stateful-intro-js
-  user=this.auth.user
-  steps=this.intros
-  start-if=true
-  hintKey="job-description-new"}}
+<StatefulIntroJs @user={{this.auth.user}} @steps={{this.intros}} @start-if={{true}} @hintKey="job-description-new" />
 
 <div class="ui raised padded segment container clearfix animated fadeInUp">
   <hgroup class="clearfix">
@@ -12,15 +8,18 @@
   </hgroup>
   <div class="ui divider"></div>
 
-  {{#quick-form
-    this.form
-    this.model
-    this
-    working=this.working
-    submitClass="huge fluid green"
-    onsubmit=(action "save" this.model)
-    disabled=(or (not this.model.category) (not this.model.title))
-  }}
+  <QuickForm
+    @form={{this.form}}
+    @model={{this.model}}
+    @controller={{this}}
+    @working={{this.data.statuses.savingDescription.isLoading}}
+    @submitClass="huge fluid green"
+    @onsubmit={{fn this.data.saveRecord this.model 'savingDescription' (hash
+      transitionWithModel=true
+      transitionAfterSave="account.job-description"
+    )}}
+    @disabled={{or (not this.model.category) (not this.model.title)}}
+  >
     Save Job
-  {{/quick-form}}
+  </QuickForm>
 </div>

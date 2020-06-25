@@ -1,13 +1,12 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import refreshable from 'granite/mixins/refreshable';
-import { hash, map } from 'rsvp';
+import { all } from 'rsvp';
 
-export default Route.extend(refreshable, {
-  auth:          service(),
-  ajax:          service(),
-  socket:        service(),
-  notifications: service(),
+export default class AccountEmployeesMessagesRoute extends Route {
+  @service auth
+  @service ajax
+  @service socket
+  @service notifications
 
   title (tokens) {
     if (tokens.length > 0) {
@@ -15,47 +14,51 @@ export default Route.extend(refreshable, {
     }
 
     return tokens.join(' - ') + 'Messaging - HR Self Service';
-  },
+  }
 
   beforeModel () {
-    this.get('socket').initialize();
+    this.socket.initialize();
     this.notifications.requestPermission();
-  },
+  }
 
-  model () {
+  async model () {
     // all message threads,
     // all available employees (except self)
-    return hash({
-      threads: this.store.findAll('message-thread')
-      .then(result => map(result.toArray(), (thread) => {
-        return hash({
-          lastMessage: this.get('store').query('message', {
-            limit:         1,
-            messageThread: thread.get('id'),
-            sort:          { created: -1 }
-          }),
+    let threadResults = await this.store.findAll('message-thread');
 
-          unreadCount: this.get('ajax').request('/api/v1/messages', {
-            data: {
-              _count:        true,
-              messageThread: thread.get('id'),
-              readBy:        { $nin: [ this.get('auth.user.employee.id') ] }
-            }
-          })
-        }).then(results => {
-          thread.set('lastMessage', results.lastMessage.get('firstObject'));
-          thread.set('someUnread', !!results.unreadCount.count);
-          return thread;
-        });
-      })),
-      user:      this.get('auth.user.employee'),
-      employees: this.store.query('employee', {
-        _id:          { $nin: [ this.get('auth.user.employee.id') ] },
+    let threads = await all(threadResults.map(async (thread) => {
+      let results = {
+        lastMessage: await this.store.query('message', {
+          limit:         1,
+          messageThread: thread.id,
+          sort:          { created: -1 }
+        }),
+
+        unreadCount: await this.ajax.request('/api/v1/messages', {
+          data: {
+            _count:        true,
+            messageThread: thread.id,
+            readBy:        { $nin: [ this.auth.get('user.employee.id') ] }
+          }
+        })
+      };
+
+      thread.lastMessage = results.lastMessage.firstObject;
+      thread.someUnread = !!results.unreadCount.count;
+
+      return thread;
+    }));
+
+    return {
+      threads,
+      user:      await this.auth.get('user.employee'),
+      employees: await this.store.query('employee', {
+        _id:          { $nin: [ this.auth.get('user.employee.id') ] },
         terminatedOn: { $not: { $type: 9 } },
         sort:         { 'name.first': 1 }
       })
-    });
-  },
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -64,4 +67,4 @@ export default Route.extend(refreshable, {
       user:         model.user
     });
   }
-});
+}

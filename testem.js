@@ -5,14 +5,14 @@ module.exports = {
   test_page:                  'tests/index.html?hidepassed',
   disable_watching:           true,
   browser_disconnect_timeout: 120,
-  browser_start_timeout:      160,
+  browser_start_timeout:      180,
 
   launch_in_ci: [
-    'bs_win10_edge16',
+    'bs_win10_edgelatest',
     'bs_win10_chromelatest',
     'bs_osxmojave_chromelatest',
-    'bs_osxmojave_safari12',
-    'bs_win10_firefox64pinned'
+    'bs_osxmojave_safarilatest',
+    'bs_win10_firefoxlatest'
     // 'bs_win10_firefoxlatest'
   ],
 
@@ -36,9 +36,9 @@ module.exports = {
   },
 
   launchers: {
-    bs_win10_edge16: {
+    bs_win10_edgelatest: {
       exe:      'node_modules/.bin/browserstack-launch',
-      args:     [ '--os', 'Windows', '--osv', '10', '--b', 'edge', '--bv', '16.0', '--u' ],
+      args:     [ '--os', 'Windows', '--osv', '10', '--b', 'edge', '--bv', 'latest', '--u' ],
       protocol: 'browser'
     },
     bs_win10_chromelatest: {
@@ -51,19 +51,14 @@ module.exports = {
       args:     [ '--os', 'OS X', '--osv', 'Mojave', '--b', 'chrome', '--bv', 'latest', '-t', '600', '--u' ],
       protocol: 'browser'
     },
-    bs_osxmojave_safari12: {
+    bs_osxmojave_safarilatest: {
       exe:      'node_modules/.bin/browserstack-launch',
-      args:     [ '--os', 'OS X', '--osv', 'Mojave', '--b', 'Safari', '--bv', '12.0', '--u' ],
+      args:     [ '--os', 'OS X', '--osv', 'Mojave', '--b', 'Safari', '--bv', 'latest', '--u' ],
       protocol: 'browser'
     },
     bs_win10_firefoxlatest: {
       exe:      'node_modules/.bin/browserstack-launch',
-      args:     [ '--os', 'Windows', '--osv', '10', '--b', 'firefox', '--bv', 'latest', '-t', '600', '--u' ],
-      protocol: 'browser'
-    },
-    bs_win10_firefox64pinned: {
-      exe:      'node_modules/.bin/browserstack-launch',
-      args:     [ '--os', 'Windows', '--osv', '10', '--b', 'firefox', '--bv', '64', '-t', '600', '--u' ],
+      args:     [ '--os', 'Windows', '--osv', '10', '--b', 'firefox', '--bv', '76', '-t', '600', '--u' ],
       protocol: 'browser'
     }
   }

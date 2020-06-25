@@ -1,0 +1,27 @@
+{{#if hasBlock}}
+  {{yield this.openModalFn}}
+{{/if}}
+
+<UiModal @name="notes" @id={{this.modalId}}>
+  <div class="header">
+    Notes
+  </div>
+  <div class="scrolling content ui form">
+    <label for="note-text">Notes for this application</label>
+    <Textarea
+      @name="note-text"
+      @value={{@model.notes}}
+      @spellcheck="true"
+      @rows={{6}}
+      placeholder="Add notes" />
+  </div>
+  <div class="actions">
+    <button type="button" class="ui inverted red button" {{on "click" this.cancel}}>
+      Discard Changes
+    </button>
+    <button type="button" class="ui green right labeled icon {{if this.data.statuses.working.isLoading "loading"}} button" {{on "click" this.save}}>
+      Save Notes
+      <i class="check icon"></i>
+    </button>
+  </div>
+</UiModal>

@@ -1,20 +1,17 @@
 <div class="ui rasied segment">
   <h2 class="ui header">History Report</h2>
   <h4 class="ui center aligned header">
-    {{#link-to "account.employee.index.history"}}
-      {{ember-tooltip
-        side="top"
-        popperContainer="body"
-        text="Switch to timeline view"}}
+    <LinkTo @route="account.employee.index.history">
+      <EmberTooltip @side="top" @popperContainer="body" @text="Switch to timeline view" />
       <i class="circle icon"></i>Timeline View
-    {{/link-to}}
+    </LinkTo>
   </h4>
 
   <div class="ui form">
     <div class="two fields">
       <div class="field">
         <label>Filter by Field</label>
-        {{#ui-dropdown class="multiple selection" selected=this.field onChange=(pipe-action (action "setReset") (action (mut this.field))) as |execute mapper|}}
+        <UiDropdown @class="multiple selection" @selected={{this.field}} @onChange={{pipe-action this.setReset (set this.field _)}} as |execute mapper|>
           <div class="default text">Click to select</div>
           <i class="dropdown icon"></i>
           <div class="menu">
@@ -24,12 +21,12 @@
               </div>
             {{/each}}
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       </div>
 
       <div class="field">
         <label>Filter by Creator</label>
-        {{#ui-dropdown class="multiple selection" selected=this.creator onChange=(pipe-action (action "setReset") (action (mut this.creator))) as |execute mapper|}}
+        <UiDropdown @class="multiple selection" @selected={{this.creator}} @onChange={{pipe-action this.setReset (set this.creator _)}} as |execute mapper|>
           <div class="default text">Click to select</div>
           <i class="dropdown icon"></i>
           <div class="menu">
@@ -39,33 +36,22 @@
               </div>
             {{/each}}
           </div>
-        {{/ui-dropdown}}
+        </UiDropdown>
       </div>
     </div>
   </div>
 
   <div class="ui divider"></div>
 
-  {{#light-table this.table height="90vh" class="ui celled striped table" as |t|}}
-    {{t.head
-      onColumnClick=(action "onColumnClick")
-      iconAscending="up arrow icon"
-      iconDescending="down arrow icon"
-      fixed=true
-    }}
+  <LightTable @table={{this.table}} @height="90vh" @class="ui celled striped table" as |t|>
+    <t.head @onColumnClick={{this.onColumnClick}} @iconAscending="up arrow icon" @iconDescending="down arrow icon" @fixed={{true}} />
 
-    {{#t.body
-      class="light-table__word-break"
-      scrollBuffer=20
-      canSelect=false
-      onScrolledToBottom=(action "onScrolledToBottom")
-      as |body|
-    }}
+    <t.body @class="light-table__word-break" @scrollBuffer={{20}} @canSelect={{false}} @onScrolledToBottom={{this.onScrolledToBottom}} as |body|>
       {{#if this.isLoading}}
-        {{#body.loader}}
+        <body.loader>
           <div class="ui active centered inline loader"></div>
-        {{/body.loader}}
+        </body.loader>
       {{/if}}
-    {{/t.body}}
-  {{/light-table}}
+    </t.body>
+  </LightTable>
 </div>

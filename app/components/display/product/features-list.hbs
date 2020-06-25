@@ -1,0 +1,12 @@
+<div class="section-content__features" {{did-insert this.scheduleAutoCycle}} {{will-destroy this.cancelAutoCycle}}>
+  <ul class="features-list">
+    {{#each @features as |feat|}}
+      <li class={{if (eq feat.text this.feature.text) "feature--is-selected"}}>
+        <a href="#" {{on "click" (prevent-default (fn this.selectFeature feat))}}>{{feat.text}}</a>
+      </li>
+    {{/each}}
+  </ul>
+  <div class="features-screenshot">
+    <img alt="Features" src="assets/images/{{this.feature.screen}}" />
+  </div>
+</div>

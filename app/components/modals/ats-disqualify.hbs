@@ -1,0 +1,46 @@
+<UiModal @id={{@modalId}}>
+  <div class="header">
+    Disqualify Candidate
+  </div>
+  <div class="content">
+    <form class="ui form">
+      <div class="field">
+        <label for="dq-reason">Reason for disqualification</label>
+        <UiDropdown @class="selection" @id="dq-reason" @selected={{@model.disqualificationReason}} @onChange={{set @model.disqualificationReason _}} as |execute mapper|>
+          <i class="dropdown icon"></i>
+          <div class="default text">Reason for disqualification</div>
+          <div class="menu">
+            <div class="item" data-value={{map-value mapper null}}>
+              Do not specify
+            </div>
+            {{#each this.disqualificationReasons as |reason|}}
+              <div class="item" data-value={{map-value mapper reason}}>
+                {{reason}}
+              </div>
+            {{/each}}
+          </div>
+        </UiDropdown>
+      </div>
+      <span>
+        <i>The disqualification reason may be used for EEO reporting.</i>
+      </span>
+    </form>
+  </div>
+  <div class="actions">
+    <UiCheckbox @checked={{@model.disqualificationEmail}} @onChange={{set @model.disqualificationEmail _}}>
+      <label>
+        Send Rejection Notification
+        {{#if @model}}
+          to {{@model.person.firstName}} (<a href="mailto:{{@model.person.email}}" class="ats-confirm-disqualify__email-link">{{@model.person.email}}</a>)
+        {{/if}}?
+      </label>
+    </UiCheckbox>
+    <button type="button" class="ui inverted red button" {{on "click" (fn this.respond false)}}>
+      Cancel
+    </button>
+    <button type="button" class="ui green right labeled icon button" {{on "click" (fn this.respond true)}}>
+      Confirm Disqualify
+      <i class="check icon"></i>
+    </button>
+  </div>
+</UiModal>

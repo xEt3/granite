@@ -1,29 +1,32 @@
-import Controller from '@ember/controller';
-import { computed, observer } from '@ember/object';
-import { on } from '@ember/object/evented';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { A } from '@ember/array';
 import $ from 'jquery';
 
-export default Controller.extend({
-  adding:    false,
-  showTable: computed.or('objectLength', 'adding'),
+export default class EditCustomFieldsController extends Controller {
+  @service data
+  @tracked adding = false
+  @tracked addingCustomFieldName = false
+  @tracked customFieldArray
+  @tracked pendingCustomFieldName
+  @tracked pendingCustomFieldValue
 
-  objectLength: computed('model.customFields', function () {
-    let cf = this.get('model.customFields');
-    return cf ? Object.keys(cf).length : 0;
-  }),
+  get showTable () {
+    return this.objectLength || this.adding;
+  }
 
-  customFieldHelper: computed('addingCustomFieldName', function () {
-    return this.get('addingCustomFieldName') ? 'Cancel' : 'Add a new custom field';
-  }),
+  get objectLength () {
+    return this.model.get('customFields') ? Object.keys(this.model.get('customFields')).length : 0;
+  }
 
-  /* eslint-disable-next-line */
-  recreateCustomFields: on('init', observer('model', function () {
-    this.updateCustomFields();
-  })),
+  get customFieldHelper () {
+    return this.addingCustomFieldName ? 'Cancel' : 'Add a new custom field';
+  }
 
   updateCustomFields () {
-    let customFields = this.get('model.customFields') || {},
+    let customFields = this.model.get('customFields') || {},
         fields = A();
 
     for (var key in customFields) {
@@ -37,66 +40,69 @@ export default Controller.extend({
       });
     }
 
-    this.set('customFieldArray', fields);
-  },
+    this.customFieldArray = fields;
+  }
 
-  actions: {
-    beginAddingCustomField () {
-      this.set('adding', true);
-    },
+  @action
+  beginAddingCustomField () {
+    this.adding = true;
+  }
 
-    toggleProperty (prop) {
-      this.toggleProperty(prop);
-    },
+  @action
+  createCustomField () {
+    $('.new-custom-field').modal('show');
+  }
 
-    createCustomField () {
-      $('.new-custom-field').modal('show');
-    },
+  @action
+  saveCustomField () {
+    const {
+      model,
+      pendingCustomFieldName: attr,
+      pendingCustomFieldValue: value
+    } = this;
 
-    saveCustomField () {
-      let model = this.get('model'),
-          attr = this.get('pendingCustomFieldName'),
-          value = this.get('pendingCustomFieldValue');
+    if (!attr) {
+      this.data.notify('error', 'Custom field name is required.');
+      return;
+    }
 
-      if (!attr) {
-        this.ajaxError('Custom field name is required.');
-        return;
-      } else if (!value) {
-        this.ajaxError('Custom field value is required.');
-        return;
-      }
+    if (!value) {
+      this.data.notify('error', 'Custom field value is required.');
+      return;
+    }
 
-      if (!model.get('customFields')) {
-        model.set('customFields', {});
-      }
+    if (!model.get('customFields')) {
+      model.set('customFields', {});
+    }
 
-      model.set(`customFields.${attr}`, value);
-      this.updateCustomFields();
+    model.set(`customFields.${attr}`, value);
+    this.updateCustomFields();
 
-      this.setProperties({
-        pendingCustomFieldValue: null,
-        pendingCustomFieldName:  null,
-        adding:                  true
-      });
-      model.set('hasDirtyAttributes', true);
-    },
+    this.setProperties({
+      pendingCustomFieldValue: null,
+      pendingCustomFieldName:  null,
+      adding:                  true
+    });
+    model.set('hasDirtyAttributes', true);
+  }
 
-    editValue (key, newValue) {
-      let model = this.get('model');
-      model.set(`customFields.${key}`, newValue);
-      this.updateCustomFields();
-      model.set('hasDirtyAttributes', true);
-    },
+  @action
+  editValue (key, newValue) {
+    let model = this.model;
+    model.set(`customFields.${key}`, newValue);
+    this.updateCustomFields();
+    model.set('hasDirtyAttributes', true);
+  }
 
-    deleteCustomField (key) {
-      let model = this.get('model'),
+  @action
+  deleteCustomField (key) {
+    const model = this.model,
           customFields = model.get('customFields');
 
-      delete customFields[key];
+    delete customFields[key];
 
-      model.set('customFields', customFields);
-      this.updateCustomFields();
-      model.set('hasDirtyAttributes', true);
-    }
+    model.set('customFields', customFields);
+    this.updateCustomFields();
+    model.set('hasDirtyAttributes', true);
   }
-});
+}

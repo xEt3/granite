@@ -1,24 +1,22 @@
-import BaseLiComponent from './base';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { A } from '@ember/array';
 
-export default BaseLiComponent.extend({
-  classNameBindings: [ 'isSelected:is-selected' ],
+export default class PendingApplicant extends Component {
+  get isSelected () {
+    return (this.args.selected || A()).includes(this.args.model);
+  }
 
-  isSelected: computed('selected.[]', 'model', function () {
-    return (this.get('selected') || A()).includes(this.get('model'));
-  }),
-
+  @action
   click (e) {
     if (e.target.className.indexOf('content__link') < 0) {
       e.preventDefault();
-      this.send('select');
-    }
-  },
-
-  actions: {
-    select () {
-      this.get('onSelectChange')(this.get('model'), this.get('isSelected'));
+      this.select();
     }
   }
-});
+
+  @action
+  select () {
+    this.args.onSelectChange(this.args.model, this.isSelected);
+  }
+}

@@ -1,31 +1,29 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
 import { A } from '@ember/array';
-import add from 'granite/mixins/route-abstractions/add';
 import { issueTypes } from 'granite/config/statics';
 
-export default Route.extend(add, {
-  titleToken: 'New Issue',
-  auth:       service(),
-  ajax:       service(),
-  modelName:  'employee-issue',
+export default class AccountEmployeeCounselingNewRoute extends Route {
+  @service auth
+  @service ajax
+  titleToken = 'New Issue'
+  modelName =  'employee-issue'
+  routeType = 'add'
 
-  model () {
-    return RSVP.hash({
-      issue:      this._super(...arguments),
-      issueTypes: this.getIssueTypes(),
-      users:      this.get('users')
-    });
-  },
+  async model () {
+    return {
+      issue:      await super.model(...arguments),
+      issueTypes: await this.getIssueTypes(),
+      users:      this.users
+    };
+  }
 
-  getModelDefaults () {
-    return RSVP.hash({
-      creator:  this.get('auth.user.employee'),
+  async getModelDefaults () {
+    return {
+      creator:  await this.auth.get('user.employee'),
       employee: this.modelFor('account.employee')
-    });
-  },
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -33,21 +31,21 @@ export default Route.extend(add, {
       issueTypes: model.issueTypes,
       users:      model.users
     });
-  },
+  }
 
-  getIssueTypes () {
-    return this.get('ajax').request('/api/v1/employee-issues', {
+  async getIssueTypes () {
+    let res = await this.ajax.request('/api/v1/employee-issues', {
       data: {
         _distinct: true,
         select:    'type'
       }
-    })
-    .then(res => A(issueTypes.concat(res)).uniq());
-  },
+    });
+    return A(issueTypes.concat(res)).uniq();
+  }
 
-  users: computed(function () {
+  get users () {
     // users cannot exclude themselves
-    let $nin = [ this.get('auth.user.id') ];
+    let $nin = [ this.auth.get('user.id') ];
     return this.store.query('company-user', { _id: { $nin } });
-  })
-});
+  }
+}

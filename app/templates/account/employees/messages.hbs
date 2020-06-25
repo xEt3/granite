@@ -5,14 +5,9 @@
 
   <div class="ui stackable grid">
     <div class="ui six wide column">
-      <form class="ui form" {{action "beginThread" on="submit"}}>
+      <form class="ui form" {{on "submit" (prevent-default this.beginThread)}}>
         <div class="field">
-          {{#ui-dropdown
-            class="fluid search multiple selection"
-            id="message-targets"
-            selected=this.messageParticipantTargets
-            onChange=(action (mut this.messageParticipantTargets)) as |execute mapper|
-          }}
+          <UiDropdown @class="fluid search multiple selection" @id="message-targets" @selected={{this.messageParticipantTargets}} @onChange={{set this.messageParticipantTargets _}} as |execute mapper|>
             <i class="dropdown icon"></i>
             <div class="default text">Search or select people to message</div>
             <div class="menu">
@@ -22,21 +17,21 @@
                 </div>
               {{/each}}
             </div>
-          {{/ui-dropdown}}
+          </UiDropdown>
         </div>
 
         {{#liquid-if this.messageParticipantTargets.length}}
-          {{#form/action-button type="submit" class="ui fluid green button"}}
+          <Form::ActionButton type="submit" class="ui fluid green button">
             Start
             {{if (gt this.messageParticipantTargets.length 1) "Group"}}
             Chat
-          {{/form/action-button}}
+          </Form::ActionButton>
         {{/liquid-if}}
       </form>
 
       <div class="ui segments">
         {{#each this.model as |thread|}}
-          {{list-item/message-thread thread user=this.user}}
+          <ListItem::MessageThread @model={{thread}} @user={{this.user}}/>
         {{/each}}
       </div>
     </div>

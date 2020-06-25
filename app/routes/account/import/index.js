@@ -1,7 +1,9 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({
+export default class AccountImportRoute extends Route {
+  titleToken = 'Import'
+
   model () {
     return this.get('auth.user.company');
   }
-});
+}

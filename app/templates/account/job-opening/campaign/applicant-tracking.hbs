@@ -6,29 +6,29 @@
 
     <div class="right aligned text">
       {{#if this.selectedApplications}}
-        <a href="#" class="ui small green button" {{action (pipe
-            (action this.openModal this.confirmInjectModalId "inject")
-            (action this.injectConfirmed this.selectedApplications)
-          )}}
+        <a href="#" class="ui small green button" {{on "click" (prevent-default (pipe
+            (fn this.openModal this.confirmInjectModalId "inject")
+            (fn this.injectConfirmed this.selectedApplications)
+          ))}}
         >
           Move Selected To Pipeline
         </a>
 
-        <a href="#" class="ui small orange button" {{action (pipe
-            (action this.openModal this.disqualifyModalId "disqualify")
-            (action "disqualifyCandidate" this.selectedApplications)
-            (action "deselectAllApplications")
-          )}}
+        <a href="#" class="ui small orange button" {{on "click" (prevent-default (pipe
+            (fn this.openModal this.disqualifyModalId "disqualify")
+            (fn this.disqualifyCandidate this.selectedApplications)
+            this.deselectAllApplications
+          ))}}
         >
           Disqualify Selected
         </a>
       {{/if}}
 
       {{#if this.showingAllPending}}
-        <a href="#" class="ui small button" {{action "selectAllApplications"}}>
+        <a href="#" class="ui small button" {{on "click" (prevent-default this.selectAllApplications)}}>
           Select All
         </a>
-        <a href="#" class="ui small negative button" {{action "deselectAllApplications"}}>
+        <a href="#" class="ui small negative button" {{on "click" (prevent-default this.deselectAllApplications)}}>
           Deselect All
         </a>
       {{/if}}
@@ -36,23 +36,22 @@
 
     <div class="ui selectable divided items {{if (not (or this.showingAllPending (lt this.pendingApplications.length 4))) "fade-unless-hovered"}}">
       {{#each
-        (if (not this.showingAllPending)
-          (take 3 this.pendingApplications)
+        (if this.showingAllPending
           this.pendingApplications
+          (take 3 this.pendingApplications)
         )
         as |application|
       }}
-        {{list-item/pending-applicant
-          application
-          selected=this.selectedApplications
-          onSelectChange=(action "selectApplication")
-        }}
+        <ListItem::PendingApplicant
+          @model={{application}}
+          @selected={{this.selectedApplications}}
+          @onSelectChange={{this.selectApplication}} />
       {{/each}}
     </div>
 
     {{#if (gt this.pendingApplications.length 3)}}
       <h4 class="center aligned text">
-        <a href="#" class="" {{action "toggleProperty" "showingAllPending"}}>
+        <a href="#" class="" {{on "click" (prevent-default (toggle "showingAllPending" this))}}>
           {{#if this.showingAllPending}}
             Show Less <i class="angle up icon"></i>
           {{else}}
@@ -69,88 +68,77 @@
     Your Recruiting Pipeline
 
     <small class="right floated small text">
-      <a href="#" {{action this.toggleProperty "showDisqualified"}}>
+      <a href="#" {{on "click" (prevent-default (toggle "showDisqualified" this))}}>
         {{if this.showDisqualified "Hide" "Show"}} Disqualified Applicants
       </a>
     </small>
 
-    {{#modals/ats-add-applicant
-      class="ui center aligned text"
-      model=this.model
-      pipelines=this.model.pipeline
-      onNotify=(action "onNotify")
-      refresh=(action "refreshModel") as |openAddModal|
-    }}
-      <a href="#" class="ats__action--add-applicant smaller text" {{action openAddModal}}>
-        {{ember-tooltip
-          side="bottom"
-          popperContainer="body"
-          text="Manually add applicant"}}
+    <Modals::AtsAddApplicant class="ui center aligned text" @model={{this.model}} @pipelines={{this.model.pipeline}} @refresh={{route-action "refreshModel"}} as |openAddModal|>
+      <a href="#" class="ats__action--add-applicant smaller text" {{on "click" (prevent-default openAddModal)}}>
+        <EmberTooltip @side="bottom" @popperContainer="body" @text="Manually add applicant" />
         <i class="ui plus icon"></i> Add Applicant
       </a>
-    {{/modals/ats-add-applicant}}
+    </Modals::AtsAddApplicant>
   </h2>
 
-  {{#confirm-modal
-    confirmContent="Are you sure you want to hire and onboard this candidate?"
-    as |confirm|}}
-    {{card-pipeline
-      this.activeCandidates
-      newScheduledMeeting=this.newScheduledMeeting
-      pipeline=this.model.pipeline
-      onDisqualify=(action (pipe
-        (action this.set "appInDisqualifyConfirm")
-        (action this.openModal this.disqualifyModalId "disqualify")
-        (action "disqualifyCandidate" this.appInDisqualifyConfirm)
-      ))
-      onUnDisqualify=(action "unDisqualifyCandidate")
-      onUnHire=(action "unSetHire")
-      onSchedule=(action (pipe
-        (action this.set "appInScheduler")
-        (action this.resetMeeting)
-        (action this.openModal this.schedulerModalId "scheduler")
-        (action this.saveMeeting)
-      ))
-      onOnboardCandidate=(action (pipe
-        (action confirm)
-        (action this.beginOnboarding)
-      ))
-      onLinkSharing=(action (pipe
-        (action this.set "appInLinkSharing")
-        (action this.openModal this.linkSharingModalId "linkSharing")
-      ))
-      onAddLabel=(action (pipe
-        (action this.set "appInAddLabels")
-        (action this.openModal this.labelsModalId "addLabel")
-        (action "saveApplicationLabels")
-      ))
-    }}
-  {{/confirm-modal}}
+  <ConfirmModal @confirmContent="Are you sure you want to hire and onboard this candidate?" as |confirm|>
+    <CardPipeline
+      @candidates={{this.activeCandidates}}
+      @newScheduledMeeting={{this.newScheduledMeeting}}
+      @pipeline={{this.model.pipeline}}
+      @onDisqualify={{pipe
+        (set this.appInDisqualifyConfirm _)
+        (fn this.openModal this.disqualifyModalId "disqualify")
+        (fn this.disqualifyCandidate this.appInDisqualifyConfirm)
+      }}
+      @onUnDisqualify={{this.unDisqualifyCandidate}}
+      @onUnHire={{this.unSetHire}}
+      @onSchedule={{pipe
+        (set this.appInScheduler _)
+        this.resetMeeting
+        (fn this.openModal this.schedulerModalId "scheduler")
+        this.saveMeeting
+      }}
+      @onOnboardCandidate={{pipe
+        confirm
+        this.beginOnboarding
+      }}
+      @onLinkSharing={{pipe
+        (set this.appInLinkSharing _)
+        (fn this.openModal this.linkSharingModalId "linkSharing")
+      }}
+      @onAddLabel={{pipe
+        (set this.appInAddLabels _)
+        (fn this.openModal this.labelsModalId "addLabel")
+        this.saveApplicationLabels
+      }}
+    />
+  </ConfirmModal>
 
-  {{modals/ats-confirm-inject
-    applicants=this.selectedApplications
-    modalId=this.confirmInjectModalId
-    onResponse=(action "modalResponse" "inject")}}
+  <Modals::AtsConfirmInject
+    @applicants={{this.selectedApplications}}
+    @modalId={{this.confirmInjectModalId}}
+    @onResponse={{fn this.modalResponse "inject"}} />
 
-  {{modals/ats-disqualify
-    model=this.appInDisqualifyConfirm
-    modalId=this.disqualifyModalId
-    onResponse=(action "modalResponse" "disqualify")}}
+  <Modals::AtsDisqualify
+    @model={{this.appInDisqualifyConfirm}}
+    @modalId={{this.disqualifyModalId}}
+    @onResponse={{fn this.modalResponse "disqualify"}} />
 
-  {{modals/ats-scheduler
-    this.appInScheduler
-    this.currentMeeting
-    modalId=this.schedulerModalId
-    availableOrganizers=this.model.employees
-    onResponse=(action "modalResponse" "scheduler")}}
+  <Modals::AtsScheduler
+    @model={{this.appInScheduler}}
+    @meeting={{this.currentMeeting}}
+    @modalId={{this.schedulerModalId}}
+    @availableOrganizers={{this.model.employees}}
+    @onResponse={{fn this.modalResponse "scheduler"}} />
 
-  {{modals/ats-link-sharing
-    this.appInLinkSharing
-    modalId=this.linkSharingModalId
-    onResponse=(action "modalResponse" "linkSharing")}}
+  <Modals::AtsLinkSharing
+    @model={{this.appInLinkSharing}}
+    @modalId={{this.linkSharingModalId}}
+    @onResponse={{fn this.modalResponse "linkSharing"}} />
 
-  {{modals/ats-add-label
-    this.appInAddLabels
-    modalId=this.labelsModalId
-    onResponse=(action "modalResponse" "addLabel")}}
+  <Modals::AtsAddLabel
+    @model={{this.appInAddLabels}}
+    @modalId={{this.labelsModalId}}
+    @onResponse={{fn this.modalResponse "addLabel"}} />
 </div>

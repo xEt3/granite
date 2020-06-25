@@ -1,13 +1,13 @@
 <div class="ui container employee__offboarding">
-  {{#ui-progress percent=this.progress class="indicating employee__offboarding-progress"}}
+  <UiProgress @percent={{this.progress}} @class="indicating employee__offboarding-progress">
     <div class="bar"></div>
-  {{/ui-progress}}
+  </UiProgress>
   <div class="ui padded segment employee__offboarding-segment">
     <h1 class="ui header">Offboarding {{this.model.fullName}}</h1>
     <div class="ui basic segment">
       {{outlet}}
-      <button class="ui small fluid button"{{action "cancelOffboard"}}>Cancel</button>
+      <button class="ui small fluid button" type="button" {{on "click" (prevent-default this.cancelOffboard)}}>Cancel</button>
     </div>
   </div>
-  {{display/form-steps steps=this.steps basePath=this.basePath class="employee__offboarding-steps"}}
+  <Display::FormSteps @steps={{this.steps}} @basePath={{this.basePath}} class="employee__offboarding-steps" />
 </div>

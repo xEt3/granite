@@ -1,0 +1,18 @@
+<div class="event_times clearfix">
+  <span class="event__date">{{time this.model.start "M/D"}}</span>
+  <span class="event__time event__meta--right">
+    {{time this.model.start "h:mma"}} - {{time this.model.end "h:mma"}}
+  </span>
+</div>
+<div class="event_details">
+  {{#if this.linkTo}}
+    <LinkTo @route={{this.linkTo}} @model={{this.model.id}} class="event__title">
+      {{this.model.title}}
+    </LinkTo>
+  {{else}}
+    <span class="event__title">{{this.model.title}}</span>
+  {{/if}}
+  <span class="event__participants event__meta--right">
+    <i class="users icon"></i>{{this.attendeeCount}}
+  </span>
+</div>

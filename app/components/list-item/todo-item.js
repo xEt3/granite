@@ -1,63 +1,62 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { elementId } from 'granite/core';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { Promise } from 'rsvp';
 import $ from 'jquery';
 
-let TodoItemComponent = Component.extend({
-  classNames: [ 'item', 'action-item__checklist--item' ],
+@elementId
+export default class ListItemTodoItemComponent extends Component {
+  @tracked newAssignee
+  @tracked respondedAssignee
 
-  modalId: computed('elementId', function () {
-    return `${this.get('elementId')}-modal`;
-  }),
-
-  willDestroy () {
-    $(`#${this.get('modalId')}`).remove();
-    this._super(...arguments);
-  },
-
-  actions: {
-    changeStatus () {
-      this.get('onStatusChange')(this.get('todo'));
-    },
-
-    selectAssignee () {
-      this.set('respondedAssignee', false);
-      $(`#${this.get('modalId')}`).modal({
-        detachable: true,
-        onHidden:   () => {
-          if (!this.get('respondedAssignee')) {
-            this.send('respondAssignee', false);
-          }
-        }
-      }).modal('show');
-
-      return new Promise((resolve, reject) => this.setProperties({
-        resolve,
-        reject
-      }));
-    },
-
-    changeAssignee (assignee) {
-      this.set('newAssignee', null);
-      this.get('onAssigneeChange')(this.get('todo'), assignee);
-    },
-
-    respondAssignee (assignee) {
-      this.get(assignee !== false ? 'resolve' : 'reject')(assignee || null);
-      this.set('respondedAssignee', true);
-      $(`#${this.get('modalId')}`).modal('hide');
-    }
+  get modalId () {
+    return `${this.elementId}-modal`;
   }
-});
 
-TodoItemComponent.reopenClass({ positionalParams: [ 'todo' ] });
+  @action
+  willDestroy () {
+    $(`#${this.modalId}`).remove();
+    super.willDestroy(...arguments);
+  }
 
-export default TodoItemComponent;
+  @action
+  selectAssignee () {
+    this.respondedAssignee = false;
+    $(`#${this.modalId}`).modal({
+      detachable: true,
+      onHidden:   () => {
+        if (!this.respondedAssignee) {
+          this.respondAssignee(false);
+        }
+      }
+    }).modal('show');
+
+    return new Promise((resolve, reject) => {
+      this.resolve = resolve;
+      this.reject = reject;
+    });
+  }
+
+  @action
+  changeAssignee (assignee) {
+    this.newAssignee = null;
+    this.args.onAssigneeChange(this.args.todo, assignee);
+  }
+
+  @action
+  respondAssignee (assignee) {
+    this[assignee !== false ? 'resolve' : 'reject'](assignee || null);
+    this.respondedAssignee = true;
+    $(`#${this.modalId}`).modal('hide');
+  }
+}
+
 
 /* Usage
-  {{list-item/todo-item todo
-    onStatusChange=(action 'changeStatus')
-    onAssigneeChange=(action 'changeAssignee')
-    assignableTo=employees
-  }}
+  <ListItem::TodoItem @todo={{todo}}
+    @onStatusChange={{this.changeStatus}}
+    @onAssigneeChange={{this.changeAssignee}}
+    @assignableTo={{employees}}
+  />
 */

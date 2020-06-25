@@ -35,7 +35,7 @@ export default Mixin.create(AjaxHooks, {
   },
 
   _validateModel (model) {
-    const fields = this.get('requireFields');
+    const fields = this.requireFields;
 
     if (!fields) {
       return false;
@@ -53,12 +53,12 @@ export default Mixin.create(AjaxHooks, {
   },
 
   _afterSave (record) {
-    const transitionAfterSave = this.get('transitionAfterSave');
+    const transitionAfterSave = this.transitionAfterSave;
 
     if (transitionAfterSave) {
       let transitionArgs = [ transitionAfterSave ];
 
-      if (this.get('transitionWithModel')) {
+      if (this.transitionWithModel) {
         transitionArgs.push(record.get(this.getWithDefault('modelIdentifier', 'id')));
       }
 
@@ -67,7 +67,9 @@ export default Mixin.create(AjaxHooks, {
   },
 
   async saveModel (model) {
-    const _model = model || this.get('model');
+    console.warn('Mixing in the controller-abstraction for add-edit is deprecated in favor of extending the granite service: data.'); // eslint-disable-line
+
+    const _model = model || this.model;
 
     if (!_model) {
       return;
@@ -81,14 +83,14 @@ export default Mixin.create(AjaxHooks, {
 
     let invalid = this._validateModel(_model);
 
-    let validationsError = this.get('enableModelValidations') && await this.getModelValidations(_model);
+    let validationsError = this.enableModelValidations && await this.getModelValidations(_model);
 
     if (validationsError) {
       throw validationsError;
     }
 
     if (invalid) {
-      let requireFieldDescriptors = get(this, 'requireFieldDescriptors'),
+      let requireFieldDescriptors = this.requireFieldDescriptors,
           invalidMessage = 'You must specify these fields: ' + invalid.map(field => {
             return requireFieldDescriptors ? requireFieldDescriptors[field] || field : field;
           }).join(', ');

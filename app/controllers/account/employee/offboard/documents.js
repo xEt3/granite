@@ -1,54 +1,60 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
-export default Controller.extend(addEdit, {
-  enableNotify: false,
+export default class AccountEmployeeOffboardDocumentsController extends Controller {
+  @service data
 
-  offboardingDocumentsFiltered: computed('offboardingDocuments', 'assignments.[]', function () {
-    let assignments = this.get('assignments');
+  @tracked offboardingDocuments
+  @tracked assignments
 
-    return this.get('offboardingDocuments').filter((file) =>
+  get offboardingDocumentsFiltered () {
+    let assignments = this.assignments;
+
+    return this.offboardingDocuments.filter((file) =>
       !assignments.find(assignment =>
-        assignment.belongsTo('file').id() === file.get('id')));
-  }),
-
-  actions: {
-    async addAssignment (files) {
-      const makeAssignment = (file) => {
-        let assignment = this.store.createRecord('file-assignment', {
-          file,
-          employee:          this.get('employee'),
-          visibleToEmployee: true
-        });
-
-        this.assignments.pushObject(assignment);
-
-        return this.saveModel(assignment);
-      };
-
-      let _files = Array.isArray(files) ? files : [ files ];
-
-      for (let i = 0; i < _files.length; i++) {
-        try {
-          await makeAssignment(_files[i]);
-        } catch (e) {
-          this.set('enableNotify', true);
-          this.ajaxError(e);
-          this.set('enableNotify', false);
-        }
-      }
-
-      this.set('docModalSelection', []);
-    },
-
-    saveAssignmentChanges (assignment) {
-      this.saveModel(assignment);
-    },
-
-    async removeAssignment (assignment) {
-      await assignment.destroyRecord();
-      this.assignments.removeObject(assignment);
-    }
+        assignment.belongsTo('file').id() === file.id));
   }
-});
+
+  @action
+  async addAssignment (files) {
+    const makeAssignment = (file) => {
+      let assignment = this.store.createRecord('file-assignment', {
+        file,
+        employee:          this.employee,
+        visibleToEmployee: true
+      });
+
+      this.assignments.pushObject(assignment);
+
+      return this.data.saveRecord(assignment, 'assignmentWorking', { notify: false });
+    };
+
+    let _files = Array.isArray(files) ? files : [ files ];
+
+    for (let i = 0; i < _files.length; i++) {
+      try {
+        await makeAssignment(_files[i]);
+      } catch (e) {
+        this.data.ajaxError({
+          label:  'working',
+          notify: true
+        }, e);
+      }
+    }
+
+    this.set('docModalSelection', []);
+  }
+
+  @action
+  async saveAssignmentChanges (assignment) {
+    await this.data.saveRecord(assignment, 'assignmentWorking', { notify: false });
+  }
+
+  @action
+  async removeAssignment (assignment) {
+    await assignment.destroyRecord();
+    this.assignments.removeObject(assignment);
+  }
+}

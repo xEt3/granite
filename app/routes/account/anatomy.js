@@ -1,3 +1,3 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({});
+export default class AnatomyRoute extends Route {}

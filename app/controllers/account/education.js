@@ -1,10 +1,12 @@
+import classic from 'ember-classic-decorator';
 import Controller from '@ember/controller';
 
-export default Controller.extend({
-  queryParams: [ 'granularity' ],
-  granularity: 'last 12 months',
+@classic
+export default class EducationController extends Controller {
+  queryParams = [ 'granularity' ];
+  granularity = 'last 12 months';
 
-  granularities: [{
+  granularities = [{
     label: 'Last Year',
     value: 'last 12 months'
   }, {
@@ -28,5 +30,5 @@ export default Controller.extend({
   }, {
     label: 'This Week',
     value: 'this week'
-  }]
-});
+  }];
+}

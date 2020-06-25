@@ -1,0 +1,32 @@
+{{#let (element (if @tagName @tagName "div")) as |Tag|}}
+  <Tag class={{@class}}>
+    {{#if hasBlock}}
+      {{yield this.createConfirm}}
+    {{/if}}
+
+    <UiModal @name="profile" @id={{this.modalId}} @class="confirm-modal basic small">
+      <i class="close icon"></i>
+      <div class="header">
+        {{if @title @title "Heads up!"}}
+      </div>
+      <div class="content">
+        {{if @confirmContent @confirmContent (if @deleteContext (concat "Are you sure you want to remove " @deleteContext "?") "Are you sure you want to do that?")}}
+      </div>
+      <div class="actions">
+        <button class="ui inverted red button" {{on "click" (prevent-default (fn this.respond false))}} type="button">
+          {{if this.rejectText this.rejectText "No"}}
+        </button>
+        <button class="ui inverted green right labeled icon button" {{on "click" (prevent-default (fn this.respond true))}} type="button">
+          {{if @confirmText @confirmText "Yes"}}
+          <i class="check icon"></i>
+        </button>
+      </div>
+    </UiModal>
+  </Tag>
+{{/let}}
+
+  {{!--
+  <ConfirmModal @confirmContent="that" @class="item" as |confirm|}}
+    <a href="" {{on "click" (prevent-default confirm)}}></a>
+  </ConfirmModal>
+  --}}

@@ -1,7 +1,7 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({
+export default class AccountJobDescriptionRoute extends Route {
   model (params) {
     return this.store.find('job', params.id);
   }
-});
+}

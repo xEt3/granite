@@ -1,20 +1,17 @@
 <div class="ui tall stacked opaque very padded container segment">
-  <form class="ui form" {{action "submit" this.nonce on="submit"}}>
+  <form class="ui form" {{on "submit" (prevent-default (fn this.submit this.nonce))}}>
     <h1 class="ui header centered"><i class="lock icon"></i>Payment Information</h1>
 
     <div class="ui divider"></div>
-    {{braintree-dropin
-      braintreeOptions=(hash
+    <BraintreeDropin @braintreeOptions={{hash
         paypal=(hash
          flow="vault"
         )
-      )
-      authorization=this.braintreeToken.token
-      onNonce=(action (mut this.nonce))}}
+      }} @authorization={{this.braintreeToken.token}} @onNonce={{set this.nonce _}} />
 
     <div>
       {{#unless this.showPromo}}
-        <a href="#" class="link__promo-toggle" {{action this.toggleProperty "showPromo"}}>Have a promo code?</a>
+        <a href="#" class="link__promo-toggle" {{on "click" (prevent-default (toggle "showPromo" this))}}>Have a promo code?</a>
       {{/unless}}
       <p class="right aligned very small text"><i class="lock icon"></i>Powered by Braintree Payments</p>
     </div>
@@ -31,26 +28,20 @@
         {{/if}}
         <div class="ui stackable grid">
           <div class="thirteen wide column field">
-            {{input/ui-input
-              type="text"
-              inputId="promo"
-              inputClass="ui large input promo-code__input"
-              srOnly=true
-              placeholder="Enter a promo code"
-              value=this.promoCode}}
+            <Input::UiInput @type="text" @inputId="promo" @inputClass="ui large input promo-code__input" @srOnly={{true}} @placeholder="Enter a promo code" @value={{this.promoCode}} />
           </div>
           <div class="three wide column field">
-            <button type="button" class="ui large fluid blue button promo-code__apply" disabled={{not this.promoCode}} {{action "verifyDiscount"}}>Apply</button>
+            <button type="button" class="ui large fluid blue button promo-code__apply" disabled={{not this.promoCode}} {{on "click" this.verifyDiscount}}>Apply</button>
           </div>
         </div>
       </div>
     {{/if}}
 
     <h4 class="ui horizontal divider header">Note</h4>
-    <p class="center aligned text">We won't charge your card until after the trial and have added active employees. You may also cancel at any time. Adding your payment information and completing your account setup creates a monthly subscription that adjusts based on active employees. {{#link-to "pricing"}}Learn more about our pricing.{{/link-to}}</p>
+    <p class="center aligned text">We won't charge your card until after the trial and have added active employees. You may also cancel at any time. Adding your payment information and completing your account setup creates a monthly subscription that adjusts based on active employees. <LinkTo @route="pricing">Learn more about our pricing.</LinkTo></p>
 
-    {{#form/action-button type="submit" disabled=(or this.savingStep (not this.nonce)) class="ui massive fluid green button" loading=this.savingStep}}
+    <Form::ActionButton type="submit" @disabled={{or this.savingStep (not this.nonce)}} class="ui massive fluid green button" @loading={{this.savingStep}}>
       Start 14-day trial and setup Granite
-    {{/form/action-button}}
+    </Form::ActionButton>
   </form>
 </div>

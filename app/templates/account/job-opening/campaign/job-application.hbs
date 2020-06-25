@@ -19,20 +19,20 @@
       Job Application for {{this.model.person.firstName}} {{this.model.person.lastName}}
     </span>
 
-    {{#ui-dropdown class="item icon top right floated right pointing"}}
+    <UiDropdown @class="item icon top right floated right pointing">
       <i class="wrench icon"></i><i class="dropdown fitted icon"></i>
       <div class="menu">
         <div class="header">Actions</div>
-        {{#link-to "account.job-opening.campaign.job-application.edit" this.model.id class="item"}}
+        <LinkTo @route="account.job-opening.campaign.job-application.edit" @model={{this.model.id}} class="item">
           <i class="edit icon"></i>Edit Application
-        {{/link-to}}
+        </LinkTo>
       </div>
-    {{/ui-dropdown}}
+    </UiDropdown>
   </hgroup>
 
   <div class="job-application__labels">
     {{#each this.model.labels as |label|}}
-      {{custom-label label size="small" tagName="span"}}
+      <CustomLabel @label={{label}} @size="small" @tagName="span" />
     {{/each}}
   </div>
 

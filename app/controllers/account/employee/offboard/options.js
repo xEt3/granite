@@ -1,19 +1,18 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
 import { states } from 'granite/config/statics';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { action } from '@ember/object';
 
-export default Controller.extend(addEdit, {
-  states,
-  stateIsMontana: computed.equal('model.addressState', 'MT'),
+export default class AccountEmployeeOffboardOptionsController extends Controller {
+  @service data
+  states = states
 
-  actions: {
-    onNotify (type, msg) {
-      this.send('notify', type, msg);
-    },
-
-    interimAddForm (form) {
-      this.availableExitForms.addObject(form);
-    }
+  get stateIsMontana () {
+    return this.model.addressState === 'MT';
   }
-});
+
+  @action
+  interimAddForm (form) {
+    this.availableExitForms.addObject(form);
+  }
+}

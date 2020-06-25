@@ -1,71 +1,70 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { elementId } from 'granite/core';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { Promise } from 'rsvp';
-import { computed } from '@ember/object';
 import { run } from '@ember/runloop';
 import $ from 'jquery';
 
-export default Component.extend({
-  responded: false,
+@elementId
+export default class ConfirmModalComponent extends Component {
+  @tracked responded = false
 
-  modalId: computed('elementId', function () {
-    return this.get('elementId') + '-modal';
-  }),
+  get modalId () {
+    return this.elementId + '-modal';
+  }
 
-  didReceiveAttrs () {
-    if (this.get('confirmOnRender')) {
-      run.scheduleOnce('afterRender', () => this.get('startConfirmation')());
+  constructor () {
+    super(...arguments);
+    if (this.confirmOnRender) {
+      run.scheduleOnce('afterRender', () => this.createConfirm());
     }
-  },
+  }
 
+  @action
   createConfirm () {
-    this.setProperties({
-      responded:     false,
-      _originalArgs: arguments
-    });
+    this.responded = false;
+    this._originalArgs = arguments;
 
-    $('#' + this.get('modalId')).modal({
+    $('#' + this.modalId).modal({
       context:    '.ember-application',
       detachable: true,
       onHidden:   () => {
-        if (this.get('isDestroyed')) {
+        if (this.isDestroyed) {
           return;
         }
-        if (!this.get('responded')) {
-          this.send('respond', false);
+        if (!this.responded) {
+          this.respond(false);
         }
       }
     }).modal('show');
 
-    return new Promise((resolve, reject) => this.setProperties({
-      resolve,
-      reject
-    }));
-  },
+    return new Promise((resolve, reject) => {
+      this.resolve = resolve;
+      this.reject = reject;
+    });
+  }
 
-  startConfirmation: computed('modalId', function () {
-    return this.createConfirm.bind(this);
-  }),
-
+  @action
   closeModal () {
-    $('#' + this.get('modalId')).modal('hide');
-  },
+    $('#' + this.modalId).modal('hide');
+  }
 
-  actions: {
-    respond (response) {
-      if (this.get('isDestroyed')) {
-        return;
-      }
-      let fn = this.get(response ? 'resolve' : 'reject');
-      fn.apply(null, response ? this.get('_originalArgs') : null);
-      this.set('responded', true);
-      this.closeModal();
+  @action
+  respond (response) {
+    if (this.isDestroyed) {
+      return;
+    }
+    let fn = this[response ? 'resolve' : 'reject'];
+    fn.apply(null, response ? this._originalArgs : null);
+    this.responded = true;
+    this.closeModal();
 
-      // Bubble up the response to an action attr if available
-      let onResponse = this.get('onResponse');
+    // Bubble up the response to an action attr if available
+    let onResponse = this.args.onResponse;
 
-      if (onResponse && typeof onResponse === 'function') {
-        onResponse(response);
-      }
+    if (onResponse && typeof onResponse === 'function') {
+      onResponse(response);
     }
   }
-});
+}

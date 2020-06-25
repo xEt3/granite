@@ -1,4 +1,4 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import {
   not,
   notEmpty,
@@ -7,64 +7,49 @@ import {
   readOnly,
   alias
 } from '@ember/object/computed';
-import { defineProperty, computed } from '@ember/object';
+import { defineProperty, action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
-export default Component.extend({
-  classNames:        [ 'validated-input' ],
-  classNameBindings: [ 'showErrorClass:has-error', 'isValid:has-success' ],
-  model:             null,
-  value:             null,
-  type:              'text',
-  valuePath:         '',
-  placeholder:       '',
-  validation:        null,
-  showValidations:   false,
-  didValidate:       false,
+export default class ValidatedInputComponent extends Component {
+  value =             null
+  validation =        null
+  didValidate =       false
 
-  hasNoFieldError:          not('showFieldError'),
-  notValidating:            not('validation.isValidating').readOnly(),
-  hasContent:               notEmpty('value').readOnly(),
-  hasWarnings:              notEmpty('validation.warnings').readOnly(),
-  isValid:                  and('hasContent', 'validation.isTruelyValid', 'hasNoFieldError').readOnly(),
-  shouldDisplayValidations: or(
-    'showValidations',
-    'didValidate',
-    'hasContent'
-  ).readOnly(),
+  @tracked showValidations = false
 
-  showErrorClass: and(
-    'notValidating',
-    'showErrorMessage',
-    'hasContent',
-    'validation'
-  ).readOnly(),
-  showErrorMessage: and(
-    'shouldDisplayValidations',
-    'validation.isInvalid'
-  ).readOnly(),
-  showWarningMessage: and(
-    'shouldDisplayValidations',
-    'hasWarnings',
-    'isValid'
-  ).readOnly(),
+  get hasNoFieldError () {
+    return !this.showFieldError;
+  }
+  @not('validation.isValidating') notValidating
+  @notEmpty('value') hasContent
+  @notEmpty('validation.warnings') hasWarnings
+  @or('showValidations', 'didValidate', 'hasContent') shouldDisplayValidations
+  @and('notValidating', 'showErrorMessage', 'hasContent', 'validation') showErrorClass
+  @and('shouldDisplayValidations', 'validation.isInvalid') showErrorMessage
+  @and('shouldDisplayValidations', 'hasWarnings', 'isValid') showWarningMessage
 
-  init () {
-    this._super(...arguments);
-    let valuePath = this.get('valuePath');
+  get isValid () {
+    return this.hasContent && (this.validation || {}).isTruelyValid && this.hasNoFieldError;
+  }
+
+  get showFieldError () {
+    return this.args.fieldErrors ? this.args.fieldErrors[this.args.valuePath] : false;
+  }
+
+  constructor () {
+    super(...arguments);
+    let valuePath = this.args.valuePath;
 
     defineProperty(
       this,
       'validation',
-      readOnly(`model.validations.attrs.${valuePath}`)
+      readOnly(`args.model.validations.attrs.${valuePath}`)
     );
-    defineProperty(this, 'value', alias(`model.${valuePath}`));
-    defineProperty(this, 'showFieldError', computed(`fieldErrors.${valuePath}`, function () {
-      return this.get(`fieldErrors.${valuePath}`);
-    }));
-  },
-
-  focusOut () {
-    this._super(...arguments);
-    this.set('showValidations', true);
+    defineProperty(this, 'value', alias(`args.model.${valuePath}`));
   }
-});
+
+  @action
+  focusOut () {
+    this.showValidations = true;
+  }
+}

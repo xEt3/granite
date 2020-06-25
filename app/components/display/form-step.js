@@ -1,10 +1,7 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName: '',
-
-  fullLink: computed('step.link', 'basePath', function () {
-    return this.get('basePath') + '.' + this.get('step.link');
-  })
-});
+export default class FormStep extends Component {
+  get fullLink () {
+    return this.args.basePath + '.' + this.args.step.link;
+  }
+}

@@ -1,5 +1,5 @@
 import Service, { inject as service } from '@ember/service';
-import { get } from '@ember/object';
+import { get, action } from '@ember/object';
 import { map } from 'rsvp';
 import { A } from '@ember/array';
 import { notifyDefaults } from 'granite/config';
@@ -28,15 +28,15 @@ function findFieldErrors (errors = []) {
 
 export default class DataService extends Service {
   @service('notification-messages') notifications
+  @service router
   statuses = {}
   __longRunningProps = {}
   enableNotify = true
-  transitionWithModel = true
   successMessageTimeout = 3
   slowRunningThreshold = 500
 
   notify (type) {
-    const notifications = this.get('notifications'),
+    const notifications = this.notifications,
           args = Array.prototype.slice.call(arguments, 1);
 
     args[1] = Object.assign({}, notifyDefaults, args[1]);
@@ -74,13 +74,13 @@ export default class DataService extends Service {
     return invalidFields.length > 0 ? invalidFields : false;
   }
 
-  _afterSave (record) {
-    const transitionAfterSave = this.get('transitionAfterSave');
+  _afterDelete (record) {
+    const transitionAfterSave = this.transitionAfterDelete || this.transitionAfterSave;
 
     if (transitionAfterSave) {
       let transitionArgs = [ transitionAfterSave ];
 
-      if (this.get('transitionWithModel')) {
+      if (this.transitionWithModel) {
         transitionArgs.push(record.get(this.getWithDefault('modelIdentifier', 'id')));
       }
 
@@ -88,28 +88,37 @@ export default class DataService extends Service {
     }
   }
 
-  async saveRecord (_model, label = 'working', notify = true, requireFields) {
+  @action
+  async saveRecord (_model, label = 'working', options) {
     if (!_model) {
       return;
     }
 
-    const { success, error } = this.createStatus(label, notify);
+    const {
+      requireFields,
+      transitionAfterSave,
+      transitionWithModel,
+      modelIdentifier,
+      notify
+    } = options || {};
+
+    const { success, error } = this.createStatus(label, notify ?? true);
 
     if (get(_model, 'length')) {
-      await map(_model, (m, i) => this.saveRecord(m, `label${i}`, false, requireFields));
+      await map(_model, (m, i) => this.saveRecord(m, `label${i}`, false, { requireFields })); // don't pass along transition or we prematurely transition...
       success('Successfully saved.');
       return;
     }
 
     let invalid = this._validateModel(_model, requireFields),
-        validationsError = this.get('enableModelValidations') && await this.getModelValidations(_model);
+        validationsError = this.enableModelValidations && await this.getModelValidations(_model);
 
     if (validationsError) {
       throw validationsError;
     }
 
     if (invalid) {
-      let requireFieldDescriptors = get(this, 'requireFieldDescriptors'),
+      let requireFieldDescriptors = this.requireFieldDescriptors,
           invalidMessage = 'You must specify these fields: ' + invalid.map(field => {
             return requireFieldDescriptors ? requireFieldDescriptors[field] || field : field;
           }).join(', ');
@@ -123,17 +132,57 @@ export default class DataService extends Service {
       record = await _model.save();
 
       success('Successfully saved.');
-
-      if (this.afterSave && typeof this.afterSave === 'function') {
-        this.afterSave(record);
-      }
-
-      this._afterSave(record);
     } catch (e) {
       error(e);
       return false;
     }
+
+    if (transitionAfterSave) {
+      let transitionArgs = [ transitionAfterSave ];
+
+      if (transitionWithModel) {
+        transitionArgs.push(record.get(modelIdentifier || 'id'));
+      }
+
+      this.router.transitionTo.apply(this.router, transitionArgs);
+    }
+
     return record;
+  }
+
+  @action
+  async deleteRecord (_model, label = 'working', options) {
+    if (!_model) {
+      return;
+    }
+
+    const {
+      transitionAfterSave,
+      transitionAfterDelete,
+      transitionWithModel,
+      modelIdentifier,
+      notify
+    } = options || {};
+
+    const { success, error } = this.createStatus(label, notify ?? true);
+
+    try {
+      await _model.destroyRecord();
+      success('Successfully deleted.');
+    } catch (e) {
+      error(e);
+      return false;
+    }
+
+    if (transitionAfterSave || transitionAfterDelete) {
+      let transitionArgs = [ transitionAfterSave || transitionAfterDelete ];
+
+      if (transitionWithModel) {
+        transitionArgs.push(_model.get(modelIdentifier || 'id'));
+      }
+
+      this.router.transitionTo.apply(this.router, transitionArgs);
+    }
   }
 
   createStatus (label = 'working', notify = true) {
@@ -190,7 +239,7 @@ export default class DataService extends Service {
     this.__cancelLongRunningProp(label);
 
     this.set(`statuses.${label}`, {
-      isLoading: true,
+      isLoading: false,
       isLoaded:  true,
       isSlow:    false,
       message:   success,
@@ -199,9 +248,9 @@ export default class DataService extends Service {
 
     if (success && this.successMessageTimeout) {
       setTimeout(() => {
-        if (!this.get('isDestroyed') && !this.get('isDestroying')) {
+        if (!this.isDestroyed && !this.isDestroying) {
           this.set(`statuses.${label}`, {
-            isLoading: true,
+            isLoading: false,
             isLoaded:  true,
             isSlow:    false,
             message:   null,
@@ -226,7 +275,7 @@ export default class DataService extends Service {
 
   __scheduleLongRunningProp (label) {
     this.set(`__longRunningProps.${label}`, setTimeout(() => {
-      if (!this.get('isDestroyed') && this.get(`statuses.${label}.isLoading`)) {
+      if (!this.isDestroyed && this.get(`statuses.${label}.isLoading`)) {
         this.set(`statuses.${label}.isSlow`, true);
       }
     }, this.slowRunningThreshold));

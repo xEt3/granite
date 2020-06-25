@@ -1,21 +1,18 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 import { inject as service } from '@ember/service';
-import { resolve } from 'rsvp';
-import add from 'granite/mixins/route-abstractions/add';
 
-export default Route.extend(add, {
-  titleToken: 'New Location',
-  modelName:  'location',
-  auth:       service(),
+export default class AccountAnatomyLocationsNewRoute extends Route {
+  @service auth
+  titleToken = 'New Location'
+  modelName =  'location'
+  routeType = 'add'
 
-  getModelDefaults () {
-    return resolve(this.get('auth.user.company'))
-    .then(company => {
-      return {
-        company,
-        addressState: company.get('addressState'),
-        creator:      this.get('auth.user')
-      };
-    });
+  async getModelDefaults () {
+    let company = await this.auth.get('user.company');
+    return {
+      company,
+      addressState: company.addressState,
+      creator:      this.auth.user
+    };
   }
-});
+}

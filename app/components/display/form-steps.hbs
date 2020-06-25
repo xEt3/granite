@@ -1,0 +1,5 @@
+<div class="ui steps {{dictStep}}" ...attributes {{did-insert didReceiveAttrs}}>
+  {{#each @steps as |step|}}
+    <Display::FormStep @step={{step}} @basePath={{@basePath}} />
+  {{/each}}
+</div>

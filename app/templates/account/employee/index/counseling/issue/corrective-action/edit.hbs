@@ -1,10 +1,10 @@
-{{quick-form
-  this.form
-  this.model
-  this
-  tagName="div"}}
+<QuickForm
+  @form={{this.form}}
+  @model={{this.model}}
+  @controller={{this}}
+  @tagName="div"/>
 
 <div class="ui divider"></div>
-<form {{action "save" this.model on="submit"}}>
-  {{#form/action-button type="submit" class="ui positive fluid huge button" loading=this.working}}Save Corrective Action{{/form/action-button}}
+<form {{on "submit" (prevent-default (fn this.data.saveRecord this.model "working" this.saveOptions))}}>
+  <Form::ActionButton type="submit" class="ui positive fluid huge button" @loading={{this.data.statuses.working.isLoading}}>Save Corrective Action</Form::ActionButton>
 </form>

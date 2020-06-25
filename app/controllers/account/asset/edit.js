@@ -1,26 +1,29 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import Controller from 'granite/core/controller';
 import { htmlSafe } from '@ember/string';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { inject as service } from '@ember/service';
 
-export default Controller.extend(addEdit, {
-  transitionAfterSave: 'account.asset',
-  transitionWithModel: true,
-  icons:               'mobile tablet desktop laptop car lab configure asterisk cube sound photo'.w(),
+export default class AccountAssetEditController extends Controller {
+  @service data
 
-  sharableLabel: computed('model.name', function () {
-    return this.get('model.name') ? htmlSafe(`Can ${this.get('model.name')} be shared by employees`) : htmlSafe('Can these assets be shared by employees');
-  }),
+  saveOptions = {
+    transitionAfterSave: 'account.asset',
+    transitionWithModel: true
+  }
 
-  disableSave: computed('model.{documents.[],hasDirtyAttributes}', 'initialDocuments.[]', function () {
-    let initialDocuments = this.get('initialDocuments'),
-        dirtyAttributes = this.get('model.hasDirtyAttributes');
+  icons = 'mobile tablet desktop laptop car lab configure asterisk cube sound photo'.w()
 
-    return this.get('model.documents')
-    .then(documents => {
-      let modelDocuments = JSON.stringify(documents.toArray());
-      let dirtyDocuments = modelDocuments === initialDocuments ? false : true;
-      return dirtyDocuments || dirtyAttributes ? false : true;
-    });
-  })
-});
+  get sharableLabel () {
+    return this.model.name ? htmlSafe(`Can ${this.model.name} be shared by employees`) : htmlSafe('Can these assets be shared by employees');
+  }
+
+  get disableSave () {
+    let initialDocuments = this.initialDocuments,
+        dirtyAttributes = this.model.hasDirtyAttributes;
+
+
+    let modelDocuments = JSON.stringify(this.model.documents.toArray());
+    let dirtyDocuments = modelDocuments === initialDocuments ? false : true;
+    return dirtyDocuments || dirtyAttributes ? false : true;
+
+  }
+}

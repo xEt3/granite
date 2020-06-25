@@ -8,11 +8,7 @@
       </small>
     </label>
     Off
-    {{ui-checkbox
-      class="toggle"
-      label="On"
-      checked=this.model.externalLinkAutomaticSync
-      onChange=(action (mut this.model.externalLinkAutomaticSync))}}
+    <UiCheckbox @class="toggle" @label="On" @checked={{this.model.externalLinkAutomaticSync}} @onChange={{set this.model.externalLinkAutomaticSync _}} />
   </div>
 {{else}}
   <h3 class="ui center aligned text">No Settings Available.</h3>

@@ -14,7 +14,7 @@
 
   <h3>Resumé</h3>
   {{#if this.model.resume}}
-    <a href={{this.model.resume.url}} target="_blank" rel="noopener">Download Resume <i class="external link icon"></i></a>
+    <a href={{this.model.resume.url}} target="_blank" rel="noopener noreferrer">Download Resume <i class="external link icon"></i></a>
   {{else}}
     <strong>No resumé was supplied.</strong>
   {{/if}}
@@ -26,7 +26,7 @@
       {{#if this.model.jobApplication.scoreRelative}}This applicant is a <strong>{{this.model.jobApplication.scoreRelative}}% match</strong> based on their responses to pre-screening.{{/if}}
     </p>
     <p>
-      <a href="#" {{action this.toggleProperty "expandResponses"}}>{{if this.expandResponses "Hide" "Show"}} Responses</a>
+      <a href="#" {{on "click" (prevent-default (fn this.toggleProperty "expandResponses"))}}>{{if this.expandResponses "Hide" "Show"}} Responses</a>
 
       {{#if this.expandResponses}}
         <div class="ui very relaxed list">

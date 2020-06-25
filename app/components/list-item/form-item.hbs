@@ -1,0 +1,33 @@
+<div class="item">
+  {{#if hasBlock}}
+    {{yield @model}}
+  {{else}}
+    <div class="content">
+      <div class="header">
+        {{@model.name}}
+        {{#if @model.formType}}
+          <span class="ui blue label">{{@model.formType}}</span>
+        {{/if}}
+      </div>
+      <div class="right floated">
+        {{#if @onEdit}}
+          <a href="#" {{on "click" (prevent-default (fn @onEdit @model))}}>
+            <EmberTooltip @side="left" @popperContainer="body" @text="Edit form" />
+            <i class="ui edit icon"></i>
+          </a>
+        {{/if}}
+        {{#if @onDelete}}
+          <a href="#" class="text-danger" {{on "click" (prevent-default (fn @onDelete @model))}}>
+            <EmberTooltip @side="left" @popperContainer="body" @text="Remove form" />
+            <i class="ui trash icon"></i>
+          </a>
+        {{/if}}
+      </div>
+
+      <div class="meta">
+        {{@model.elements.length}} {{inflect-text "Question" @model.elements.length}}
+        <span class="ui small text right floated">Created {{time @model.created}}{{#if @model.creator}} by {{@model.creator.fullName}}{{/if}}</span>
+      </div>
+    </div>
+  {{/if}}
+</div>

@@ -1,22 +1,25 @@
-import Controller from '@ember/controller';
-import ajaxStatus from 'granite/mixins/ajax-status';
+import Controller from 'granite/core/controller';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 
-export default Controller.extend(ajaxStatus, {
-  actions: {
-    unassignAsset (asset) {
-      let assignment = asset.get('assignments').findBy('employee.id', this.get('employee.id'));
+export default class AccountEmployeeOffboardAssetsController extends Controller {
+  @service data
 
-      if (assignment) {
-        this.ajaxStart();
-        asset.get('assignments').removeObject(assignment);
+  @action
+  async unassignAsset (asset) {
+    let assignment = asset.assignments.findBy('employee.id', this.employee.id);
 
-        asset.save()
-        .then(() => {
-          this.ajaxSuccess(null, true);
-          this.send('refresh');
-        })
-        .catch(this.ajaxError.bind(this));
+    if (assignment) {
+      const { success, error } = this.data.createStatus();
+      asset.assignments.removeObject(assignment);
+
+      try {
+        await asset.save();
+      } catch (e) {
+        error(e);
       }
+      success();
+      this.send('refreshModel');
     }
   }
-});
+}

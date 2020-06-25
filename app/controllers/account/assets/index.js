@@ -1,7 +1,6 @@
-import Controller from '@ember/controller';
-import pagination from 'granite/mixins/controller-abstractions/pagination';
+import Controller from 'granite/core/controller';
 
-export default Controller.extend(pagination, {
-  queryParams: [ 'page' ],
-  limit:       20
-});
+export default class AccountAssetsController extends Controller {
+  queryParams = [ 'page' ]
+  limit = 20
+}

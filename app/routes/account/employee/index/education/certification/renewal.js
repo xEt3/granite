@@ -1,7 +1,7 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({
-  queryParams: { renewal: { refreshModel: true } },
+export default class AccountEmployeeEducationCertificationRenewalRoute extends Route {
+  queryParams = { renewal: { refreshModel: true } };
 
   model ({ renewal }) {
     let certification = this.modelFor('account.employee.index.education.certification');
@@ -13,4 +13,4 @@ export default Route.extend({
         this.store.createRecord('renewal')
     };
   }
-});
+}

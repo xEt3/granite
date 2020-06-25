@@ -1,20 +1,20 @@
 <h1 class="ui header titlecased text">
   Editing {{this.model.name}}
   <small class="right floated">
-    {{#link-to "account.employee.index.education.certification" this.model class="text-danger"}}
+    <LinkTo @route="account.employee.index.education.certification" @model={{this.model}} class="text-danger">
       Cancel
-    {{/link-to}}
+    </LinkTo>
   </small>
 </h1>
 
 <div class="ui divider"></div>
 
-{{#quick-form
-  this.currentForm.elements
-  this.model
-  this
-  submitClass="large green fluid"
-  onsubmit=(action "save")
-}}
+<QuickForm
+  @form={{this.currentForm.elements}}
+  @model={{this.model}}
+  @controller={{this}}
+  @submitClass="large green fluid"
+  @onsubmit={{fn this.data.saveRecord this.model 'working' this.saveOptions}}
+>
   Save Changes
-{{/quick-form}}
+</QuickForm>

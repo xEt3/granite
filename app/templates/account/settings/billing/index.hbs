@@ -36,12 +36,10 @@
     No Payment Method
   {{/if}}
 
-  <a href="#" class="ui right floated small text" {{on "click" (prevent-default (pipe-action
-        (action "getToken")
-        (action this.openModal "modal_update-payment-method" "paymentMethod")
-      )
-    )
-    }}>
+  <a href="#" class="ui right floated small text" {{on "click" (prevent-default (pipe
+    this.getToken
+    (fn this.openModal "modal_update-payment-method" "paymentMethod")
+  ))}}>
     <i class="edit icon"></i>Edit Payment Method
   </a>
 </h4>
@@ -61,28 +59,18 @@
 </h4>
 
 {{#if this.subscription.isCancelled}}
-  {{#confirm-modal confirmContent="Are you sure you want to activate your account?" as |confirm|}}
-    <button class="ui positive fluid button" {{action (pipe confirm (action "activateSubscription"))}}><i class="check circle icon"></i>Activate Subscription</button>
-  {{/confirm-modal}}
+  <ConfirmModal @confirmContent="Are you sure you want to activate your account?" as |confirm|>
+    <button class="ui positive fluid button" type="button" {{on "click" (prevent-default (pipe confirm this.activateSubscription))}}><i class="check circle icon"></i>Activate Subscription</button>
+  </ConfirmModal>
 {{else if (not this.subscription.accountSuspended)}}
-  {{#confirm-modal confirmContent="Are you sure you want to cancel your account? You will immediately lose access until reactivated." as |confirm|}}
-    <button class="ui red fluid button" {{action (pipe confirm (action "cancelSubscription"))}}>
-      {{ember-tooltip
-        side="top"
-        popperContainer="body"
-        text="Pushing this button will cancel your current subscription and you will lose access to your account until you reactivate."}}
+  <ConfirmModal @confirmContent="Are you sure you want to cancel your account? You will immediately lose access until reactivated." as |confirm|>
+    <button class="ui red fluid button" type="button" {{on "click" (prevent-default (pipe confirm this.cancelSubscription))}}>
+      <EmberTooltip @side="top" @popperContainer="body" @text="Pushing this button will cancel your current subscription and you will lose access to your account until you reactivate." />
       <i class="exclamation circle icon"></i>Cancel Subscription
     </button>
-  {{/confirm-modal}}
+  </ConfirmModal>
 {{/if}}
 
 {{outlet}}
 
-{{modals/update-payment-method
-  braintreeToken=this.braintreeToken
-  working=this.working
-  onResponse=(pipe-action
-    (action "savePaymentMethod")
-    (action this.modalResponse "paymentMethod")
-  )
-}}
+<Modals::UpdatePaymentMethod @braintreeToken={{this.braintreeToken}} @working={{this.data.statuses.working.isLoading}} @onResponse={{pipe this.savePaymentMethod (fn this.modalResponse "paymentMethod")}} />

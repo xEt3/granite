@@ -1,35 +1,31 @@
 {{#if this.showFilters}}
-  {{#display/filter-pane
-    class="ui content form padded segment container"
-    onChange=(action "updateFilter") as |filter|
-  }}
+  <Display::FilterPane class="ui content form padded segment container" @onChange={{this.updateFilter}} as |filter|>
     <h2>
       <i class="filter icon"></i> Filters
-      <a href="#" class="ui small text right floated text-red" {{action "resetFilters"}}>Reset All</a>
+      <a href="#" class="ui small text right floated text-red" {{on "click" (prevent-default this.resetFilters)}}>Reset All</a>
     </h2>
 
-    {{#filter.section "Visibility" activeState=(hash visibleToEmployee=false)}}
-      {{filter.toggleControl
-        "visibleToEmployee"
-        this.visibleToEmployee
-        label="Visible To Employee"}}
-    {{/filter.section}}
+    <filter.section @name="Visibility" @activeState={{hash visibleToEmployee=false}} as |controls|>
+      <controls.toggleControl
+        @name="visibleToEmployee"
+        @state={{this.visibleToEmployee}}
+        @label="Visible To Employee"/>
+    </filter.section>
 
-    {{#filter.section "Viewed by Employee" activeState=(hash readOn=false)}}
-      {{filter.toggleControl
-        "readOn"
-        this.readOn
-        label="Viewed"}}
-    {{/filter.section}}
+    <filter.section @name="Viewed by Employee" @activeState={{hash readOn=false}} as |controls|>
+      <controls.toggleControl
+        @name="readOn"
+        @state={{this.readOn}}
+        @label="Viewed"/>
+    </filter.section>
 
-    {{#filter.section "Signed by Employee" activeState=(hash signedOn=false)}}
-      {{filter.toggleControl
-        "signedOn"
-        this.signedOn
-        label="Signed"}}
-    {{/filter.section}}
-
-  {{/display/filter-pane}}
+    <filter.section @name="Signed by Employee" @activeState={{hash signedOn=false}} as |controls|>
+      <controls.toggleControl
+        @name="signedOn"
+        @state={{this.signedOn}}
+        @label="Signed"/>
+    </filter.section>
+  </Display::FilterPane>
 {{/if}}
 
 <div class="ui raised padded segment container clearfix animated fadeInUp">
@@ -40,18 +36,12 @@
 
     <div class="right aligned text floated menu__actions">
       <h3 class="ui inline header">
-        {{#link-to "account.employee.index.documents.new"}}
-          {{ember-tooltip
-            side="left"
-            popperContainer="body"
-            text="Assign a document"}}
+        <LinkTo @route="account.employee.index.documents.new">
+          <EmberTooltip @side="left" @popperContainer="body" @text="Assign a document" />
           <i id="add-document" class="plus icon"></i>
-        {{/link-to}}
-        <a href="#" class={{if this.showFilters "text-red"}} {{action this.toggleProperty "showFilters"}}>
-          {{ember-tooltip
-            side="left"
-            popperContainer="body"
-            text="Filters"}}
+        </LinkTo>
+        <a href="#" class={{if this.showFilters "text-red"}} {{on "click" (prevent-default (toggle "showFilters" this))}}>
+          <EmberTooltip @side="left" @popperContainer="body" @text="Filters" />
           <i class="{{if this.showFilters "remove" "filter"}} icon"></i>
         </a>
       </h3>
@@ -61,17 +51,15 @@
 
   <div class="ui divided items">
     {{#each this.model as |assignment|}}
-      {{list-item/employee-document-item
-        assignment=assignment
-        onNotify=(route-action "notify")
-      }}
+      <ListItem::EmployeeDocumentItem @assignment={{assignment}} @onNotify={{route-action "notify"}} />
     {{else}}
       <h2 class="ui center aligned header">No file assignments available.</h2>
     {{/each}}
   </div>
 
-  {{elements/x-pagination
-    page=(readonly this.page)
-    pages=(readonly this.pages)
-    onchange=(action (mut this.page))}}
+  <Elements::XPagination
+    @page={{this.page}}
+    @model={{this.model}}
+    @limit={{this.limit}}
+    @onChange={{set this.page _}} />
 </div>

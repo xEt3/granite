@@ -1,4 +1,8 @@
 import Controller from '@ember/controller';
-import del from 'granite/mixins/controller-abstractions/delete';
+import { inject as service } from '@ember/service';
 
-export default Controller.extend(del, { transitionAfterSave: 'account.assets' });
+export default class AccountAssetController extends Controller {
+  @service data
+
+  deleteOptions = { transitionAfterSave: 'account.assets' }
+}

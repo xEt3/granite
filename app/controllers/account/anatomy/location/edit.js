@@ -1,18 +1,23 @@
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
 import { states } from 'granite/config/statics';
-import { computed } from '@ember/object';
-import addEdit from 'granite/mixins/controller-abstractions/add-edit';
+import { computed, action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
-export default Controller.extend(addEdit, {
-  states,
-  stateIsMontana:      computed.equal('model.addressState', 'MT'),
-  transitionAfterSave: 'account.anatomy.locations.index',
-  transitionWithModel: false,
+export default class AccountAnatomyLocationEditController extends Controller {
+  @service data
 
-  actions: {
-    cancel () {
-      this.get('model').rollbackAttributes();
-      this.transitionToRoute('account.anatomy.locations.index');
-    }
+  states = states
+
+  saveOptions = {
+    transitionAfterSave: 'account.anatomy.locations.index',
+    transitionWithModel: false
   }
-});
+
+  @computed.equal('model.addressState', 'MT') stateIsMontana
+
+  @action
+  cancel () {
+    this.model.rollbackAttributes();
+    this.transitionToRoute('account.anatomy.locations.index');
+  }
+}

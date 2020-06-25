@@ -1,39 +1,39 @@
-import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
 import { inject as service } from '@ember/service';
+import Route from 'granite/core/route';
 
-export default Route.extend({
-  titleToken: 'Edit Jobs',
-  auth:       service(),
+export default class JobRoute extends Route {
+  titleToken = 'Edit Jobs';
 
-  model () {
+  @service auth;
+
+  async model () {
     let company = this.get('auth.user.company'),
-        companyId = company.get('id'),
+        companyId = company.id,
         employee = this.modelFor('account.employee.index.edit'),
-        employeeId = employee.get('id');
+        employeeId = employee.id;
 
-    return RSVP.hash({
+    return {
       employee,
-      employees: this.store.query('employee', {
+      employees: await this.store.query('employee', {
         'company': companyId,
         _id:       { $ne: employeeId },
         sort:      { 'name.last': 1 }
       }),
-      departments: this.store.query('department', {
+      departments: await this.store.query('department', {
         'company': companyId,
         sort:      { name: 1 }
       }),
-      locations: this.store.query('location', {
+      locations: await this.store.query('location', {
         'company': companyId,
         sort:      { name: 1 }
       }),
-      jobDescriptions: this.store.query('job', {
+      jobDescriptions: await this.store.query('job', {
         'company': companyId,
         sort:      { title: 1 }
       }),
       company
-    });
-  },
+    };
+  }
 
   setupController (controller, model) {
     controller.setProperties({
@@ -45,4 +45,4 @@ export default Route.extend({
       jobDescriptions: model.jobDescriptions
     });
   }
-});
+}

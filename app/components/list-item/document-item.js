@@ -1,12 +1,15 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { match } from '@ember/object/computed';
 
-const DocumentItemComponent = Component.extend({
-  classNames:   [ 'item' ],
-  tagName:      '',
-  imagePreview: computed.match('file.extension', /jpe?g|png|gif/i)
-});
+export default class ListItemDocumentItemComponent extends Component {
+  @match('args.model.extension', /jpe?g|png|gif/i) imagePreview
+}
 
-DocumentItemComponent.reopenClass({ positionalParams: [ 'file' ] });
-
-export default DocumentItemComponent;
+/*
+  USAGE
+  <ListItem::DocumentItem
+    @model={{this.file}}
+    @deleteAction={{this.removeDocument}}
+    @confirmDeleteContent="Are you sure you want to remove this document?"
+  />
+*/

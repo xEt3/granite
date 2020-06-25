@@ -1,0 +1,14 @@
+<table class="ui celled table" ...attributes>
+  <thead>
+    <tr>
+      {{#each this.headers as |header|}}
+        <th>{{header}}</th>
+      {{/each}}
+    </tr>
+  </thead>
+  <tbody>
+    {{#each this.bodyData as |row|}}
+      <Display::ReportViewRow @rowData={{row}} @numColumns={{this.headers.length}} />
+    {{/each}}
+  </tbody>
+</table>

@@ -1,20 +1,19 @@
-import Route from '@ember/routing/route';
-import resource from 'granite/mixins/route-abstractions/resource';
+import { GraniteResourceRoute } from 'granite/core/route';
 
-export default Route.extend(resource, {
-  titleToken: 'Documents',
-  modelName:  'file-assignment',
+export default class AccountEmployeeDocumentsRoute extends GraniteResourceRoute {
+  titleToken = 'Documents'
+  modelName = 'file-assignment'
 
-  queryParams: {
+  queryParams = {
     visibleToEmployee: { refreshModel: true },
     readOn:            { refreshModel: true },
     signedOn:          { refreshModel: true }
-  },
+  }
 
-  sort: { created: -1 },
+  sort = { created: -1 }
 
   mutateQuery (query, params) {
-    query.employee = this.modelFor('account.employee').get('id');
+    query.employee = this.modelFor('account.employee').id;
 
     if (typeof params.visibleToEmployee === 'boolean') {
       query.visibleToEmployee = params.visibleToEmployee;
@@ -30,4 +29,4 @@ export default Route.extend(resource, {
       }
     });
   }
-});
+}

@@ -1,19 +1,26 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import Inflector from 'ember-inflector';
 
 let inflect = new Inflector(Inflector.defaultRules);
 
-let ResourceListComponent = Component.extend({
-  modelIdentifier: 'id',
+export default class DisplayResourceListComponent extends Component {
+  modelIdentifier = 'id';
+
   // resourceName works off of an AdapterPopulatedRecordArray
   // and the type property that returns the query's model
-  resourceName:    computed('model.type', function () {
-    let type = this.get('model.type.modelName');
+  get resourceName () {
+    let type = this.args.model.type.modelName;
     return type ? inflect.pluralize(type) : 'items';
-  })
-});
+  }
+}
 
-ResourceListComponent.reopenClass({ positionalParams: [ 'model', 'itemComponent' ] });
+/*
+  USAGE:
+  <Display::ResourceList
+    @model={{this.model}}
+    @itemComponent="list-item/document-item"
+    @linkTo="account.document"
+    @linkClass="item"
+    class="ui divided link items"/>
 
-export default ResourceListComponent;
+*/

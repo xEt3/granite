@@ -1,14 +1,12 @@
-import Route from '@ember/routing/route';
-import resource from 'granite/mixins/route-abstractions/resource';
+import { GraniteResourceRoute } from 'granite/core/route';
 
-export default Route.extend(resource, {
-  titleToken: 'Issues',
-  modelName:  'corrective-action',
+export default class AccountEmployeeCounselingIssueRoute extends GraniteResourceRoute {
+  titleToken = 'Issues'
+  modelName = 'corrective-action'
 
   mutateQuery (q) {
     // get the corrective actions where employeeIssue
     // is the issue that we're on
-    let model = this.modelFor('account.employee.index.counseling.issue');
-    q.employeeIssue = model.issue.id;
+    q.employeeIssue = this.modelFor('account.employee.index.counseling.issue').issue.id;
   }
-});
+}

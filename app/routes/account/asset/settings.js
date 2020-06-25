@@ -1,3 +1,5 @@
-import Route from '@ember/routing/route';
+import Route from 'granite/core/route';
 
-export default Route.extend({ titleToken: 'Settings' });
+export default class SettingsRoute extends Route {
+  titleToken = 'Settings';
+}
