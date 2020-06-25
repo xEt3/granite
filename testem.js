@@ -8,11 +8,11 @@ module.exports = {
   browser_start_timeout:      160,
 
   launch_in_ci: [
-    'bs_win10_edge16',
+    'bs_win10_edgelatest',
     'bs_win10_chromelatest',
     'bs_osxmojave_chromelatest',
-    'bs_osxmojave_safari12',
-    'bs_win10_firefox64pinned'
+    'bs_osxmojave_safarilatest',
+    'bs_win10_firefoxlatest'
     // 'bs_win10_firefoxlatest'
   ],
 
