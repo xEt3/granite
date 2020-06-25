@@ -58,7 +58,7 @@ module.exports = {
     },
     bs_win10_firefoxlatest: {
       exe:      'node_modules/.bin/browserstack-launch',
-      args:     [ '--os', 'Windows', '--osv', '10', '--b', 'firefox', '--bv', 'latest', '-t', '600', '--u' ],
+      args:     [ '--os', 'Windows', '--osv', '10', '--b', 'firefox', '--bv', '76', '-t', '600', '--u' ],
       protocol: 'browser'
     }
   }
