@@ -37,27 +37,27 @@ module.exports = {
 
   launchers: {
     bs_win10_edgelatest: {
-      exe:      'npx ember-cli-browserstack',
+      exe:      'node_modules/.bin/browserstack-launch',
       args:     [ '--os', 'Windows', '--osv', '10', '--b', 'edge', '--bv', 'latest', '--u' ],
       protocol: 'browser'
     },
     bs_win10_chromelatest: {
-      exe:      'npx ember-cli-browserstack',
+      exe:      'node_modules/.bin/browserstack-launch',
       args:     [ '--os', 'Windows', '--osv', '10', '--b', 'chrome', '--bv', 'latest', '-t', '600', '--u' ],
       protocol: 'browser'
     },
     bs_osxmojave_chromelatest: {
-      exe:      'npx ember-cli-browserstack',
+      exe:      'node_modules/.bin/browserstack-launch',
       args:     [ '--os', 'OS X', '--osv', 'Mojave', '--b', 'chrome', '--bv', 'latest', '-t', '600', '--u' ],
       protocol: 'browser'
     },
     bs_osxmojave_safarilatest: {
-      exe:      'npx ember-cli-browserstack',
+      exe:      'node_modules/.bin/browserstack-launch',
       args:     [ '--os', 'OS X', '--osv', 'Mojave', '--b', 'Safari', '--bv', 'latest', '--u' ],
       protocol: 'browser'
     },
     bs_win10_firefoxlatest: {
-      exe:      'npx ember-cli-browserstack',
+      exe:      'node_modules/.bin/browserstack-launch',
       args:     [ '--os', 'Windows', '--osv', '10', '--b', 'firefox', '--bv', 'latest', '-t', '600', '--u' ],
       protocol: 'browser'
     }
