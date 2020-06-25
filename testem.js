@@ -5,7 +5,7 @@ module.exports = {
   test_page:                  'tests/index.html?hidepassed',
   disable_watching:           true,
   browser_disconnect_timeout: 120,
-  browser_start_timeout:      160,
+  browser_start_timeout:      180,
 
   launch_in_ci: [
     'bs_win10_edgelatest',
@@ -37,27 +37,27 @@ module.exports = {
 
   launchers: {
     bs_win10_edgelatest: {
-      exe:      'node_modules/.bin/browserstack-launch',
+      exe:      'npx ember-cli-browserstack',
       args:     [ '--os', 'Windows', '--osv', '10', '--b', 'edge', '--bv', 'latest', '--u' ],
       protocol: 'browser'
     },
     bs_win10_chromelatest: {
-      exe:      'node_modules/.bin/browserstack-launch',
+      exe:      'npx ember-cli-browserstack',
       args:     [ '--os', 'Windows', '--osv', '10', '--b', 'chrome', '--bv', 'latest', '-t', '600', '--u' ],
       protocol: 'browser'
     },
     bs_osxmojave_chromelatest: {
-      exe:      'node_modules/.bin/browserstack-launch',
+      exe:      'npx ember-cli-browserstack',
       args:     [ '--os', 'OS X', '--osv', 'Mojave', '--b', 'chrome', '--bv', 'latest', '-t', '600', '--u' ],
       protocol: 'browser'
     },
     bs_osxmojave_safarilatest: {
-      exe:      'node_modules/.bin/browserstack-launch',
+      exe:      'npx ember-cli-browserstack',
       args:     [ '--os', 'OS X', '--osv', 'Mojave', '--b', 'Safari', '--bv', 'latest', '--u' ],
       protocol: 'browser'
     },
     bs_win10_firefoxlatest: {
-      exe:      'node_modules/.bin/browserstack-launch',
+      exe:      'npx ember-cli-browserstack',
       args:     [ '--os', 'Windows', '--osv', '10', '--b', 'firefox', '--bv', 'latest', '-t', '600', '--u' ],
       protocol: 'browser'
     }
