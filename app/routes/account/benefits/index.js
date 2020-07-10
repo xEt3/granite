@@ -1,3 +1,5 @@
 import Route from 'granite/core/route';
 
-export default class BenefitsRoute extends Route {}
+export default class BenefitsRoute extends Route {
+  titleToken = 'Summary'
+}
