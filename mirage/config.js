@@ -29,8 +29,8 @@ const processEmbeddedRelationships = ({ model, key, data, parentId, parentKey, p
 };
 
 export default function () {
-  // this.logging = true;
-  this.logging = false;
+  this.logging = true;
+  // this.logging = false;
   this.namespace = '/api/v1';
 
   // These comments are here to help you get started. Feel free to delete them.
@@ -173,7 +173,7 @@ export default function () {
     'payment-methods', 'comments', 'comments/:id', 'job-openings', 'jobs', 'jobs/:id', 'job-openings/:id', 'job-applications',
     'forms', 'applicant-sources', 'applicant-sources', 'manual-applicant-sources', 'applicants', 'applicants/:id',
     'job-applications/:id', 'events', 'certifications', 'training-assignments', 'corrective-actions', 'corrective-actions/:id',
-    'employee-issues/:id', 'employee-issues', 'webinars', 'webinar-authorizations', 'company-user' ];
+    'employee-issues/:id', 'employee-issues', 'webinars', 'webinar-authorizations', 'company-user', 'plans' ];
 
   let verbs = [ 'get', 'put', 'post', 'del' ];
 
