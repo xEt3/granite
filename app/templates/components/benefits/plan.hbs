@@ -1,0 +1,73 @@
+<div class="ui card benefit__plan-card">
+  <div class="content">
+    <div class="right floated">
+      {{@plan.label}} <i class="ui {{@plan.icon}} icon"></i>
+    </div>
+    <div class="header">{{@plan.name}}</div>
+    <div class="description plan-card__description">{{@plan.description}}</div>
+  </div>
+  {{#if @plan.networkName}}
+    <div class="extra content plan-card__network">
+      <strong>Network</strong>
+      <div class="basic segment">
+        {{@plan.networkName}}
+        {{#if @plan.networkDescription}}
+          {{@plan.networkDescription}}
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
+  <div class="extra content plan-card__rates">
+    <strong>Rates</strong>
+    <div class="ui list">
+      {{#if @plan.ratesEmployee}}
+        <div class="line-item-value">
+          <i>Employee</i>
+          <u>{{format-money @plan.ratesEmployee}}</u>
+        </div>
+      {{/if}}
+      {{#if @plan.ratesSpouse}}
+        <div class="line-item-value">
+          <i>Employee &amp; Spouse</i>
+          <u>{{format-money @plan.ratesSpouse}}</u>
+        </div>
+      {{/if}}
+      {{#if @plan.ratesDependent}}
+        <div class="line-item-value">
+          <i>Employee &amp; Dependents</i>
+          <u>{{format-money @plan.ratesDependent}}</u>
+        </div>
+      {{/if}}
+      {{#if @plan.ratesFamily}}
+        <div class="line-item-value">
+          <i>Family</i>
+          <u>{{format-money @plan.ratesFamily}}</u>
+        </div>
+      {{/if}}
+      {{#if @plan.ratesFixed}}
+        <div class="line-item-value">
+          <i>Fixed</i>
+          <u>
+            {{format-money @plan.ratesFixed}}
+            {{#if (and @plan.lifeCoverage (or (eq @plan.type 'L') (eq @plan.type 'DL')))}}
+              / {{format-money @plan.lifeCoverage}}
+            {{/if}}
+          </u>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+  <div class="extra content plan-card__qualifications">
+    <strong>Qualifications</strong>
+    <div class="ui list">
+      <div class="line-item-value">
+        <i>Waiting Period</i>
+        <u>{{@plan.waitingPeriod}}</u>
+      </div>
+      <div class="line-item-value">
+        <i>Minimum Hours</i>
+        <u>{{@plan.minimumHours}}</u>
+      </div>
+    </div>
+  </div>
+</div>

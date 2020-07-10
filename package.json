@@ -58,6 +58,7 @@
     "ember-ajax": "^5.0.0",
     "ember-classic-decorator": "^1.0.8",
     "ember-cli": "~3.13.1",
+    "ember-cli-accounting": "^2.0.2",
     "ember-cli-active-link-wrapper": "^0.5.0",
     "ember-cli-animate-css": "0.0.1",
     "ember-cli-app-version": "^3.2.0",
