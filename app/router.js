@@ -252,6 +252,10 @@ Router.map(function () {
         this.route('assign', { path: '/:authorization_id/assign' });
       });
     });
+    this.route('benefits', function() {
+      this.route('plans');
+      this.route('enrollments');
+    });
   });
 
   this.route('shared', function () {

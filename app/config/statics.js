@@ -328,6 +328,10 @@ const accountNavigationItems = [{
   title: 'Projects',
   link:  'action-items'
 }, {
+  icon:  'heartbeat',
+  title: 'Benefits',
+  link:  'benefits'
+}, {
   icon:  'users',
   title: 'Employees',
   link:  'employees'
