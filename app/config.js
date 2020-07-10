@@ -62,7 +62,47 @@ const states = [
 
 const notifyDefaults = { autoClear: true };
 
+const carriers = [
+  {
+  name: 'Associated Employers Group Benefit Plan & Trust',
+  key: 'ae',
+  logo: "aetrustlogo.png", 
+  phone: '1 (800) 123-1234'
+  },
+    {
+  name: 'JAck and sone',
+  key: 'ae',
+  logo: "./carriers/aetrustlogo.png", 
+  phone: '1 (800) 123-1234'
+  },
+    {
+  name: 'Other',
+  key: 'ae',
+  logo: "aetrustlogo.png", 
+  phone: '1 (800) 123-1234'
+  },
+      {
+  name: 'Black and white',
+  key: 'ae',
+  logo: "aetrustlogo.png", 
+  phone: '1 (800) 123-1234'
+  },
+    {
+  name: 'Ho ho ho ho',
+  key: 'ae',
+  logo: "aetrustlogo.png", 
+  phone: '1 (800) 123-1234'
+  }
+
+
+
+];
+
+
 export {
   states,
-  notifyDefaults
+  notifyDefaults,
+  carriers
 };
+
+
