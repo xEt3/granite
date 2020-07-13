@@ -6149,6 +6149,13 @@ ember-classic-decorator@^1.0.8:
     babel-plugin-filter-imports "^3.0.0"
     ember-cli-babel "^7.11.1"
 
+ember-cli-accounting@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-accounting/-/ember-cli-accounting-2.0.2.tgz#40fb4d00c038b26c090a4023a05a9d31efe4652f"
+  integrity sha512-J2tL4LD11e13Ah5gI9nVoeFJ2dlEIEbQc9J+4zS4UP1Ej0bENU5Z0xWGBq3fU+zQixHl4pn/bhmuZtjS2cpCfg==
+  dependencies:
+    ember-cli-babel "^6.10.0"
+
 ember-cli-active-link-wrapper@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/ember-cli-active-link-wrapper/-/ember-cli-active-link-wrapper-0.5.0.tgz#daf7d6eecde81546fbaca30a05396bce647f2540"
