@@ -1,0 +1,24 @@
+<div class="ui form">
+  <p class="aligned text">
+    <span class='ui right floated'>
+      <div class="ui image carrier_image">
+        <img src={{@model.logo}}>
+      </div>
+    </span>
+    You must request a carrier authorization code and company id from the carrier. Please call {{@model.phone}} and
+    ask for
+    a Granite HR authorization code. The carrier will request some identifying information to verify your account and
+    then
+    provide an authorization code and company id. Do not enter or share this information anywhere except for this page.
+  </p>
+  <div class="field">
+    <Input::UiInput @type="text" @inputId="authorizationCode" @placeholder="Code provided by the carrier" />
+  </div>
+  <div class="field">
+    <label for="companyID">Carrier Company ID</label>
+    <Input @id="companyID" @type="text" @placeholder="Company id provided by the carrier" />
+  </div>
+  <div class="ui divider"></div>
+
+  <button class="ui massive fluid green button" {{action "linkCarrier"}}>Complete Carrier Link</button>
+</div>
