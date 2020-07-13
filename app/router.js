@@ -255,6 +255,7 @@ Router.map(function () {
     this.route('benefits', function() {
       this.route('plans');
       this.route('enrollments');
+      this.route('carrier-link', { path: '/setup/link/:carrier_key' });
     });
   });
 
