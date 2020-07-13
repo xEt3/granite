@@ -29,8 +29,8 @@ const processEmbeddedRelationships = ({ model, key, data, parentId, parentKey, p
 };
 
 export default function () {
-  this.logging = true;
-  // this.logging = false;
+  // this.logging = true;
+  this.logging = false;
   this.namespace = '/api/v1';
 
   // These comments are here to help you get started. Feel free to delete them.
