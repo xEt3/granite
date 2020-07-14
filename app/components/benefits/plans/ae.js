@@ -1,6 +1,4 @@
 import Component from '@glimmer/component';
 
-export default class AeComponent extends Component {
-
-}
+export default class AeComponent extends Component {}
 
