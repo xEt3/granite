@@ -1,7 +1,9 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
-export default class AeComponent extends Component {
+export default class AEComponent extends Component {
+  @service ajax
 
   @action
   async linkCarrier () {
@@ -13,7 +15,6 @@ export default class AeComponent extends Component {
         }
       });
     } catch (e) {
-      error(e);
       throw e;
     }
   }
