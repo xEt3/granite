@@ -1,11 +1,29 @@
 import Controller from 'granite/core/controller';
-import { tracked } from '@glimmer/tracking';
-import { match } from '@ember/object/computed';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default class CarrierLinkController extends Controller {
-  @tracked model
+  @service data
+  @service ajax
 
   get carrierRoute () {
-    return  `benefits/plans/${this.model.key}`
+    return `benefits/plans/${this.model.key}`;
+  }
+
+  @action
+  async linkCarrier () {
+    console.log('jajsjas', this);
+    const { success, error } = this.data.createStatus('carrierLink');
+    try {
+      await this.ajax.post('/api/v1/benefits/plan-download', {
+        data: {
+          carrier:     this.model.key,
+          carrierData: this.carrierData
+        }
+      });
+      success('Successfully downloaded plan data.');
+    } catch (e) {
+      error(e);
+    }
   }
 }
