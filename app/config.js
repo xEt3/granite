@@ -64,34 +64,12 @@ const notifyDefaults = { autoClear: true };
 
 const carriers = [
   {
-  name: 'Associated Employers Group Benefit Plan & Trust',
-  key: 'ae',
-  logo: "https://granitehr-dev.s3.amazonaws.com/uploads/5d6e7d2fd41c6c27661eb678/5f08c43009c42358fdc6fc3e_83SDcMJFX8szueppRoV3.png", 
-  phone: '1 (800) 123-1234'
-  },
-    {
-  name: 'Other',
-  key: 'ot',
-  logo: "https://granitehr-dev.s3.amazonaws.com/uploads/5d6e7d2fd41c6c27661eb678/5f08c43009c42358fdc6fc3e_83SDcMJFX8szueppRoV3.png", 
-  phone: '1 (800) 123-1234'
-  },
-      {
-  name: 'Black and white',
-  key: 'bw',
-  logo: "https://granitehr-dev.s3.amazonaws.com/uploads/5d6e7d2fd41c6c27661eb678/5f08c43009c42358fdc6fc3e_83SDcMJFX8szueppRoV3.png", 
-  phone: '1 (800) 123-1234'
-  },
-    {
-  name: 'Ho ho ho ho',
-  key: 'ho',
-  logo: "https://granitehr-dev.s3.amazonaws.com/uploads/5d6e7d2fd41c6c27661eb678/5f08c43009c42358fdc6fc3e_83SDcMJFX8szueppRoV3.png", 
+  name:  'Associated Employers Group Benefit Plan & Trust',
+  key:   'ae',
+  logo:  "https://granitehr-dev.s3.amazonaws.com/uploads/5d6e7d2fd41c6c27661eb678/5f08c43009c42358fdc6fc3e_83SDcMJFX8szueppRoV3.png", 
   phone: '1 (800) 123-1234'
   }
-
-
-
 ];
-
 
 export {
   states,
