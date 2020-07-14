@@ -1,4 +1,4 @@
-<div class="ui form">
+<form class="ui form" {{on "submit" (prevent-default this.linkCarrier)}}>
   <p class="aligned text">
     <span class='ui right floated'>
       <div class="ui image carrier_logo">
@@ -12,13 +12,13 @@
     provide an authorization code and company id. Do not enter or share this information anywhere except for this page.
   </p>
   <div class="field">
-    <Input::UiInput @type="text" @inputId="authorizationCode" @placeholder="Code provided by the carrier" />
+    <Input::UiInput @type="text" @inputId="authorizationCode" @value={{this.authorizationCode}} @placeholder="Code provided by the carrier" />
   </div>
   <div class="field">
-    <label for="companyID">Carrier Company ID</label>
-    <Input @id="companyID" @type="text" @placeholder="Company id provided by the carrier" />
+    <Input::UiInput @type="text" @inputId="companyID" @value={{this.companyId}} @placeholder="Company id provided by the carrier" />
   </div>
   <div class="ui divider"></div>
-
-  <button class="ui massive fluid green button" {{action "linkCarrier"}}>Complete Carrier Link</button>
-</div>
+  <Form::ActionButton type="submit" class="ui massive fluid green button">
+    Complete Carrier Link
+  </Form::ActionButton>
+</form>
