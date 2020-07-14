@@ -8,9 +8,9 @@
   Select a carrier
 </h4>
 
-<div class="ui four stackable cards benefits-cards">
+<div class="ui four stackable cards carrier-cards">
   {{#each this.model as |carrier|}}
-  <div class="ui card benefits-card__plan">
+  <div class="ui card carrier-card__plan">
     <div class="content">
       <LinkTo @route="account.benefits.carrier-link" @model={{carrier.key}}>
       <div class="ui tiny rounded image">
