@@ -1,22 +1,19 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { carriers } from 'granite/config';
 
 export default class AEComponent extends Component {
-  @service ajax
+  carrier = carriers.find(carrier => carrier.key === 'ae')
 
   @action
-  async linkCarrier () {
-    try {
-      await this.ajax.post('/api/v1/benefits/plan-download', {
-        carrierData: {
-          authorizationCode: this.authorizationCode,
-          companyID:         this.companyId
-        }
-      });
-    } catch (e) {
-      throw e;
-    }
+  updateCarrierData (key, val) {
+    this[key] = val;
+
+    this.args.onDataUpdate({
+      carrierAuthCode: this.carrierAuthCode,
+      companyId:       this.companyId
+    });
+
+    this.args.onValidityChange(!!(this.carrierAuthCode && this.companyId));
   }
 }
-
