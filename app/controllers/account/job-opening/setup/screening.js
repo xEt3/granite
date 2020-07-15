@@ -65,17 +65,12 @@ export default class AccountJobOpeningSetupScreeningController extends Controlle
     });
 
     try {
-                  console.log(f)
-
       let form = await f.save();
-
       this.afterSave();
-
-      // this.model.screening = form;
+      this.model.screening = form;
       await this.target.send('saveAndContinue');
       success(null, true);
     } catch (e) {
-      console.log('ERROR', e)
       error(e);
     }
   }

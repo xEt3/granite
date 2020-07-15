@@ -17,8 +17,8 @@ export default class AccountJobOpeningSetupSourcesRoute extends Route {
   setupController (controller, model) {
     if (!model.jobOpening.description && !model.jobOpening.title) {
       model.jobOpening.setProperties({
-        description:  model.job.get('description'),
-        title:             model.job.get('title')
+        description: model.job.get('description'),
+        title:       model.job.get('title')
       });
     }
 

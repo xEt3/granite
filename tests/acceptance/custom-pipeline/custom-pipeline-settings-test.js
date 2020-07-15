@@ -9,7 +9,7 @@ module('Acceptance | custom pipeline settings', function (hooks) {
   test('toggling custom pipeline displays default stages/ removes stages', async function (assert) {
     let { company } = await authenticate.call(this, server),
         defaultPipeline = server.create('recruiting-pipeline', { company: company.id }),
-        job = server.create('job', { company: company.id }),
+        job = server.create('job', { company: company }),
         jobOpening = server.create('job-opening', {
           company,
           job
@@ -38,7 +38,7 @@ module('Acceptance | custom pipeline settings', function (hooks) {
   test('saving custom pipeline works', async function (assert) {
     let { company } = await authenticate.call(this, server),
         defaultPipeline = server.create('recruiting-pipeline', { company: company.id }),
-        job = server.create('job', { company: company.id }),
+        job = server.create('job', { company: company }),
         jobOpening = server.create('job-opening', {
           company,
           job
@@ -88,7 +88,7 @@ module('Acceptance | custom pipeline settings', function (hooks) {
             order: 3
           }]
         }),
-        job = server.create('job', { company: company.id }),
+        job = server.create('job', { company: company }),
         jobOpening = server.create('job-opening', {
           company,
           job,
@@ -131,7 +131,7 @@ module('Acceptance | custom pipeline settings', function (hooks) {
 
   test('removing and saving a stage works', async function (assert) {
     let { company } = await authenticate.call(this, server),
-        job = server.create('job', { company: company.id }),
+        job = server.create('job', { company: company }),
         jobOpening = server.create('job-opening', {
           company,
           job
@@ -184,7 +184,7 @@ module('Acceptance | custom pipeline settings', function (hooks) {
 
   test('stages can be edited and saved', async function (assert) {
     let { company } = await authenticate.call(this, server),
-        job = server.create('job', { company: company.id }),
+        job = server.create('job', { company: company }),
         jobOpening = server.create('job-opening', {
           company,
           job
@@ -219,7 +219,7 @@ module('Acceptance | custom pipeline settings', function (hooks) {
   test('canceling pipeline-stage add', async function (assert) {
     let { company } = await authenticate.call(this, server),
         pipeline = server.create('recruiting-pipeline', { company: company.id }),
-        job = server.create('job', { company: company.id }),
+        job = server.create('job', { company: company }),
         jobOpening = server.create('job-opening', {
           company,
           job

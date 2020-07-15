@@ -167,49 +167,6 @@ export default function () {
     return {};
   });
 
-  // this.post('/forms/:id', () => {
-  //   return {};
-  // });
-
-  // this.put('/forms/:id', function (db, request) {
-  //   const { ids } = parseIncoming(request, true);
-
-  //   console.log('sdjsjdjsdfjsjsdjsd!!!!!!', ids)
-  //   //needs to be like this because mirage is incapable of processing embedded relationships
-  //   // let id = request.params.id,
-  //   //     attrs = this.normalizedRequestAttrs();
-
-  //   //   attrs.elements = processEmbeddedRelationships({
-  //   //     model:       formElements,
-  //   //     key:         'elements',
-  //   //     data:        attrs,
-  //   //     parentId:    id,
-  //   //     parentKey:   'form',
-  //   //     parentModel: forms
-  //   //   });
-
-  //   // return forms.find(id).update(attrs);
-  // });
-
-  this.put('/job-openings/:id', function (db, request) {
-
-    console.log('HERERE!!!!!!')
-    //needs to be like this because mirage is incapable of processing embedded relationships
-    // let id = request.params.id,
-    //     attrs = this.normalizedRequestAttrs();
-
-    //   attrs.screening = processEmbeddedRelationships({
-    //     model:       forms,
-    //     key:         'screening',
-    //     data:        attrs,
-    //     parentId:    id,
-    //     parentKey:   'form',
-    //     parentModel: forms
-    //   });
-
-    // return jobOpenings.find(id).update(attrs);
-  });
-
   let routes = [ 'files', 'files/:id', 'file-assignments', 'recruiting-pipelines', 'recruiting-pipelines/:id', 'company-users/:id',
     'company-users', 'employees/:id', 'companies', 'companies/:id', 'permissions', 'action-items', 'asset-items', 'asset-items/:id',
     'action-items/:id', 'assets', 'assets/:id', 'changes', 'histories', 'departments', 'locations',
@@ -256,47 +213,31 @@ export default function () {
     return companies.find(id).update(attrs);
   });
 
-  this.put('/forms', function ({forms, formElements}, request) {
-    const { ids } = parseIncoming(request, true);
+  this.post('/forms', function ({ forms, formElements }) {
+    let attrs = this.normalizedRequestAttrs(),
+        elements;
 
-    console.log('sdsdsdsdsdsdsd!!!!!!', ids)
-    //needs to be like this because mirage is incapable of processing embedded relationships
-    let id = request.params.id,
-        attrs = this.normalizedRequestAttrs();
-    // if (formElements){
+    if (attrs.elements) {
+      elements = attrs.elements;
+      attrs.elements = null;
+    }
 
-    //   attrs.elements = processEmbeddedRelationships({
-    //     model:       formElements,
-    //     key:         'elements',
-    //     data:        attrs,
-    //     parentId:    id,
-    //     parentKey:   'form',
-    //     parentModel: forms
-    //   });
-    //       }
-console.log('id', forms.all())
+    let newForm = forms.create(attrs);
+    if (elements) {
+      attrs.elements = elements;
+      newForm.elements = processEmbeddedRelationships({
+        model:       formElements,
+        key:         'elements',
+        data:        attrs,
+        parentId:    newForm.id,
+        parentKey:   'form',
+        parentModel: forms
+      });
+    }
 
-    return forms.find("1").update(attrs);
+    return newForm;
   });
 
-  this.put('/job-openings/:id', function (db, request) {
-
-    console.log('HERERE!!!!!!')
-    //needs to be like this because mirage is incapable of processing embedded relationships
-    // let id = request.params.id,
-    //     attrs = this.normalizedRequestAttrs();
-
-    //   attrs.screening = processEmbeddedRelationships({
-    //     model:       forms,
-    //     key:         'screening',
-    //     data:        attrs,
-    //     parentId:    id,
-    //     parentKey:   'form',
-    //     parentModel: forms
-    //   });
-
-    // return jobOpenings.find(id).update(attrs);
-  });
 
   // quick and dirty mock of search from ES that will function with the mirage db
   this.get('/search', (db, request) => {
