@@ -21,7 +21,7 @@ export default class CarrierLinkController extends Controller {
         }
       });
       success('Successfully downloaded plan data.');
-      this.transitionToRoute("account/benefits/plans/integrations")
+      this.transitionToRoute('account/benefits/plans/integrations');
     } catch (e) {
       error(e);
     }
