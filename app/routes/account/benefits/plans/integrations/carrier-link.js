@@ -8,8 +8,8 @@ export default class CarrierLinkRoute extends Route {
    if (!params) {
      return;
    }
-   const carrier = await carriers.filter(carrier => carrier.key === params.carrier_key);
+   const currentCarrier = await carriers.filter(carrier => carrier.key === params.carrier_key);
 
-   return carrier[0];
+   return currentCarrier[0];
  }
 }
