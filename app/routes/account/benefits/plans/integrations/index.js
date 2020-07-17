@@ -19,12 +19,12 @@ export default class IntegrationsRoute extends Route {
     return {
       groupedPlans,
       carriers
-    }
+    };
   }
   setupController (controller, model) {
     controller.setProperties({
       model: model.carriers,
       plans: model.groupedPlans
     });
-  };
+  }
 }
