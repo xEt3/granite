@@ -10,8 +10,13 @@
     <div class="extra content plan-card__network">
       <strong>Network</strong>
       <div class="basic segment">
-        {{@plan.networkName}}
-        {{#if @plan.networkDescription}}
+            <div class="line-item-value">
+              <i>{{@plan.networkName}}</i>
+              <u>
+                <a href="" {{on "click" (prevent-default (toggle "showDescription" this))}}>{{if this.showDescription "Show Less" "Show More"}}</a>
+              </u>
+            </div>
+        {{#if (and @plan.networkDescription this.showDescription)}}
           {{@plan.networkDescription}}
         {{/if}}
       </div>
@@ -58,7 +63,13 @@
     </div>
   </div>
   <div class="extra content plan-card__qualifications">
-    <strong>Qualifications</strong>
+    <div class="line-item-value">
+      <strong>Qualifications</strong>
+      <u>
+        <a href="#" {{on "click" (prevent-default (toggle "showQualifications"  this))}}>{{if this.showQualifications "Show Less" "Show More"}}</a>
+      </u>
+    </div>
+    {{#if this.showQualifications}}
     <div class="ui list">
       <div class="line-item-value">
         <i>Waiting Period</i>
@@ -69,5 +80,6 @@
         <u>{{@plan.minimumHours}}</u>
       </div>
     </div>
+    {{/if}}
   </div>
 </div>
