@@ -12,7 +12,6 @@ export default class CarrierLinkController extends Controller {
 
   @action
   async linkCarrier () {
-    console.log('jajsjas', this);
     const { success, error } = this.data.createStatus('carrierLink');
     try {
       await this.ajax.post('/api/v1/benefits/plan-download', {
@@ -22,6 +21,7 @@ export default class CarrierLinkController extends Controller {
         }
       });
       success('Successfully downloaded plan data.');
+      this.transitionToRoute("account/benefits/plans")
     } catch (e) {
       error(e);
     }

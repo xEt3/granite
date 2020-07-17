@@ -5,17 +5,15 @@
     </div>
   </span>
   You must request a carrier authorization code and company id from the carrier. Please call {{this.carrier.phone}} and
-  ask for
-  a Granite HR authorization code. The carrier will request some identifying information to verify your account and
-  then
-  provide an authorization code and company id. Do not enter or share this information anywhere except for this page.
+  ask for a Granite HR authorization code. The carrier will request some identifying information to verify your account and
+  then provide an authorization code and company id. Do not enter or share this information anywhere except for this page.
 </p>
 <div class="field">
   <Input::UiInput
     @type="text"
     @inputId="auth-code"
     @keyup={{fn this.updateCarrierData 'carrierAuthCode'}}
-    @placeholder="Code provided by the carrier" />
+    @placeholder="Authorization code provided by the carrier" />
 </div>
 <div class="field">
   <Input::UiInput
