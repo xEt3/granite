@@ -7,9 +7,9 @@
     {{#each this.model as |carrier|}}
       <div class="ui card carrier-card__plan">
         <div class="content">
-          <LinkTo @route="account.benefits.plans.integrations.index.carrier-link" @model={{carrier.key}}>
+          <LinkTo @route="account.benefits.plans.integrations.carrier-link" @model={{carrier.key}}>
             <div class="ui tiny rounded image">
-              <img src={{carrier.logo}}>
+              <img alt="Carrier" src={{carrier.logo}}>
             </div>
           </LinkTo>
         </div>
