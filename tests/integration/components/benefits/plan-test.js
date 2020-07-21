@@ -34,7 +34,7 @@ module('Integration | Component | benefits/plan', function (hooks) {
       assert.dom('.benefit__plan-card > .content > .plan-card__description').hasText(plan.description);
 
       if (plan.networkName) {
-        await click('.benefit__plan-card > .extra.content.plan-card__network a')
+        await click('.benefit__plan-card > .extra.content.plan-card__network a');
         assert.dom('.benefit__plan-card > .extra.content.plan-card__network').includesText(plan.networkName);
         assert.dom('.benefit__plan-card > .extra.content.plan-card__network').includesText(plan.networkDescription);
       }
