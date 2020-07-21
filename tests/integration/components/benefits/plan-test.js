@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import formatMoney from 'accounting/format-money';
 
@@ -32,9 +32,9 @@ module('Integration | Component | benefits/plan', function (hooks) {
       assert.dom('.benefit__plan-card > .content > .right > .icon').hasClass(icon);
       assert.dom('.benefit__plan-card > .content > .header').hasText(plan.name);
       assert.dom('.benefit__plan-card > .content > .plan-card__description').hasText(plan.description);
-      await this.pauseTest();
 
       if (plan.networkName) {
+        await click('.benefit__plan-card > .extra.content.plan-card__network a')
         assert.dom('.benefit__plan-card > .extra.content.plan-card__network').includesText(plan.networkName);
         assert.dom('.benefit__plan-card > .extra.content.plan-card__network').includesText(plan.networkDescription);
       }
