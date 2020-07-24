@@ -2,7 +2,7 @@ import Route from 'granite/core/route';
 import { carriers } from 'granite/config';
 
 export default class CarrierLinkRoute extends Route {
- titleToken='Carrier-Link'
+ titleToken = 'Link Carrier'
 
  async model (params) {
    if (!params) {
