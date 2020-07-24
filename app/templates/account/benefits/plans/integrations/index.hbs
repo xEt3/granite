@@ -1,0 +1,28 @@
+<h3 class="ui header">Setup</h3>
+<h4 class="center aligned text">
+  Select a carrier
+</h4>
+<div class="ui four stackable cards carrier-cards">
+  {{#each this.model as |carrier|}}
+    <div class="ui card carrier-card">
+      <EmberTooltip side="right" container="body">
+        Link your benefits with {{carrier.name}}
+      </EmberTooltip>
+      <div class="content">
+        <LinkTo @route="account.benefits.plans.integrations.carrier-link" @model={{carrier.key}}>
+          <img alt="Carrier: {{carrier.name}}" src={{carrier.logo}}>
+        </LinkTo>
+      </div>
+    </div>
+  {{/each}}
+
+  <div class="ui card carrier-card carrier-card--other">
+    <EmberTooltip @side="right" @container="body">
+      If you don’t see the carrier you are with here, they are not supported in Granite. You must manually add plans, and request an EDI file download or print when you need to submit enrollments.
+    </EmberTooltip>
+    <div class="content center aligned text">
+      <h2>Other</h2>
+    </div>
+  </div>
+</div>
+

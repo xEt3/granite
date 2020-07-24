@@ -252,8 +252,13 @@ Router.map(function () {
         this.route('assign', { path: '/:authorization_id/assign' });
       });
     });
-    this.route('benefits', function() {
-      this.route('plans');
+    this.route('benefits', function () {
+      this.route('plans', function () {
+        this.route('integrations', function () {
+          this.route('index', { path: '/' });
+          this.route('carrier-link', { path: '/setup/link/:carrier_key' });
+        });
+      });
       this.route('enrollments');
     });
   });

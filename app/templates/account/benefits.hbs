@@ -1,6 +1,6 @@
 <div class="ui container basic segment">
   <UiMenu @menuClass="pointing menu__benefits-page">
-    <LinkTo @route="account.benefits" class="item">
+    <LinkTo @route="account.benefits.index" class="item">
       <i class="list icon"></i>Summary
     </LinkTo>
     <LinkTo @route="account.benefits.plans" class="item">
@@ -14,10 +14,10 @@
           <i class="wrench icon"></i><i class="dropdown icon"></i>
           <div class="menu">
             <div class="header">Actions</div>
-            <a href="#" id="action-item__action--delay" class="item" {{!--{{on "click" create}} --}}>
+            <a href="benefits/plans/integrations" id="action-item__action--delay" class="item">
               <i class="ellipsis horizontal icon"></i>link a carrier
             </a>
-            <a href="#" id="action-item__action--delay" class="item" {{!--{{on "click" create}} --}}>
+            <a href="#" id="action-item__action--delay" class="item" {{!--{{on "click" add}} --}}>
               <i class="ellipsis horizontal icon"></i>Manually add a plan
             </a>
           </div>
