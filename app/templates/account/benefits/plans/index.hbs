@@ -1,0 +1,26 @@
+{{#if this.groupedPlans}}
+  <div class="plan-groups">
+    {{#each-in this.groupedPlans as |label plans|}}
+      <section class="plan-groups__group">
+        <h2>
+          {{label}}
+          <small class="right floated">
+            {{plans.length}} {{inflect-text 'Plan' plans.length}}
+          </small>
+        </h2>
+        <div class="ui three stackable cards">
+          {{#each plans as |plan|}}
+            <Benefits::Plan @plan={{plan}} />
+          {{/each}}
+        </div>
+      </section>
+    {{/each-in}}
+  </div>
+{{else}}
+  <div class="ui relaxed divided list">
+    <h2 class="ui center aligned header">Nothing to see here.</h2>
+    <h5 class="center aligned text header">There are no benefits set up. To offer benefit administration through Granite,
+      <LinkTo @route="account.benefits.plans.integrations">add a carrier</LinkTo> or <LinkTo @route="account">manually add plans</LinkTo>.
+    </h5>
+  </div>
+{{/if}}

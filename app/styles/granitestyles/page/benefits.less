@@ -1,13 +1,28 @@
-.carrier-cards{
-  justify-content: center !important;
-  .carrier-card__plan{
-    width: 10% !important;
+.carrier-cards {
+  justify-content: center;
+
+  .carrier-card {
+    height: 150px;
+
+    > .content > a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: @gray;
+    }
+
+    > .content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 }
 
-.carrier_logo{
-  border-width: thin !important;
-  border: solid;
-  border-color: black;
-  padding: .5em;
+.plan-groups {
+  > section.plan-groups__group:not(:last-child) {
+    margin-bottom: 2em;
+    padding-bottom: 3em;
+    border-bottom: 1px solid @gray-lighter;
+  }
 }
