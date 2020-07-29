@@ -39,6 +39,8 @@ export default class PlanModel extends Model {
   @attr('date') termDate
   @attr('number') lifeCoverage
   @attr('date') lifeEffective
+  @attr('number') maximumCoverage
+  @attr('boolean') voluntary
   @attr('string') contactName
   @attr('string') contactPhone
   @attr('string') contactFax
