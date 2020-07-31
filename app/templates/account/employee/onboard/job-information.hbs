@@ -60,6 +60,13 @@
         </div>
       </div>
       <div class="field">
+        <label for="minimum-hours">Minimum Hours</label>
+        <Input
+          @type="number"
+          @id="minimum-hours"
+          @value={{this.model.minimumHours}}/>
+      </div>
+      <div class="field">
         <label for="workers-comp">Workers Comp Class Code</label>
         <Input
           @type="text"
