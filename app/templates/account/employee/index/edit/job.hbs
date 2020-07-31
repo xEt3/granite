@@ -5,7 +5,7 @@
   </div>
   <UiCalendar @class="field" @type="date" @startMode="year" @label="Hire Date" @dateValue={{this.model.hireDate}} @onChange={{set this.model.hireDate _}} />
 </div>
-<div class="three fields">
+<div class="four fields">
   <div class="field">
     <label for="exemption-status">Exemption Status</label>
     <UiDropdown @class="selection" @selected={{this.model.exempt}} @onChange={{set this.model.exempt _}} as |execute mapper|>
@@ -42,6 +42,10 @@
         </div>
       </UiDropdown>
     </div>
+  </div>
+  <div class="field">
+    <label for="minimum-hours">Minimum Hours</label>
+    <Input @type="number" @value={{this.model.minimumHours}} @id="minimum-hours" />
   </div>
   <div class="field">
     <label for="workers-comp">Workers Comp Class Code</label>
