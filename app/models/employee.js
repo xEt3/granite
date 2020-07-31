@@ -70,6 +70,8 @@ export default class Employee extends Model.extend(Validations) {
   // Company and Position Information
   @attr('date') activatedOn;
 
+  @attr('number') minimumHours;
+
   @attr('date') hireDate;
 
   @attr('string') jobTitle;
