@@ -51,7 +51,7 @@
 <h4>
   Enable Benefits: {{if this.company.benefitsEnabled 'On' 'Off'}}
   <span class="ui right floated small text">
-    <UiCheckbox id="test" @class="toggle" @checked={{readonly this.company.benefitsEnabled}} @onChange={{set this.company.benefitsEnabled _}} />
+    <UiCheckbox id="test" @class="toggle" @checked={{readonly this.company.benefitsEnabled}} @onChange={{fn (mut this.company.benefitsEnabled)}} />
   </span>
 </h4>
 <h4>
@@ -70,7 +70,7 @@
   </ConfirmModal>
 {{else if (not this.subscription.accountSuspended)}}
   {{#if this.showUpdate}}
-    <button class="ui positive fluid button" type="button" {{on "click" this.updateSubscription}}><i class="check circle icon"></i>Update Subscription</button>
+    <button class="ui positive fluid button" type="button" {{on "click" (fn this.data.saveRecord this.company)}}><i class="check circle icon"></i>Update Subscription</button>
   {{/if}}
 
   <ConfirmModal @confirmContent="Are you sure you want to cancel your account? You will immediately lose access until reactivated." as |confirm|>
