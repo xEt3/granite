@@ -15,6 +15,10 @@ export default class BillingController extends Controller {
     return this.model.status === 'Active' ? 'text-green' : 'text-danger';
   }
 
+  get disableUpdate () {
+    return this.company.hasDirtyAttributes;
+  }
+
   @action
   async getToken () {
     const { success, error } = this.data.createStatus();
@@ -58,7 +62,7 @@ export default class BillingController extends Controller {
       company.set('deactivatedOn', new Date());
       company.set('reactivatedOn', null);
 
-      await company.save();
+      await this.data.saveRecord(company);
       this.send('refreshModel');
       success('Deactivated account', true);
     } catch (err) {
@@ -78,6 +82,20 @@ export default class BillingController extends Controller {
       await company.save();
       this.send('refreshModel');
       success('Reactivated account', true);
+    } catch (err) {
+      error(err);
+    }
+  }
+
+  @action
+  async updateSubscription () {
+    const { success, error } = this.data.createStatus(),
+          company = this.company;
+
+    try {
+      await company.save();
+      this.send('refreshModel');
+      success('Subscription Updated', true);
     } catch (err) {
       error(err);
     }

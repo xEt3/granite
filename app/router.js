@@ -261,6 +261,7 @@ Router.map(function () {
       });
       this.route('enrollments');
     });
+    this.route('benefits-paywall');
   });
 
   this.route('shared', function () {
