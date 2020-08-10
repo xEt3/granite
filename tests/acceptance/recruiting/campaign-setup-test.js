@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import moment from 'moment';
 import { setupApplicationTest } from 'ember-qunit';
 import authenticate from 'granite/tests/helpers/auth';
-import { visit, click, currentURL, fillIn } from '@ember/test-helpers';
+import { visit, click, currentURL, fillIn, findAll, find } from '@ember/test-helpers';
 
 module('Acceptance | campaign setup test', function (hooks) {
   setupApplicationTest(hooks);
@@ -158,15 +158,73 @@ module('Acceptance | campaign setup test', function (hooks) {
           job,
           company,
           title: job.title
+        }),
+        manualApplicantSource = await server.create('manual-applicant-source'),
+        applicantSource = await server.create('applicant-source');
+
+    await visit(`/account/recruiting/job-opening/${campaign.id}/setup/sources`);
+
+    assert.dom('input[placeholder="What shows as the job name on the listing?"]').hasValue(campaign.title, 'Correct campaign title is displayed on default');
+    assert.dom('div.ql-editor').hasText(campaign.description, 'campaign description is displayed in text editor by default');
+    assert.dom('div.applicant-source__list-item.item div.checkbox > label').hasText(manualApplicantSource.name, 'manual applicant source is displayed');
+    assert.dom(await findAll('div.applicant-source__list-item.item div.checkbox > label')[1]).hasText(applicantSource.name, 'applicant source is displayed');
+
+    await click('div.applicant-source__list-item.item div.checkbox');
+    await click(await findAll('div.applicant-source__list-item.item div.checkbox')[1]);
+    await click('button.ui.huge.fluid.green.button');
+
+    assert.equal(currentURL(), `/account/recruiting/job-opening/${campaign.id}/setup/eeo`, 'next button transitioned correctly');
+
+    const savedCampaign = server.db.jobOpenings.find(campaign.id);
+
+    assert.equal(savedCampaign.applicantSources[0], applicantSource.id);
+    assert.equal(savedCampaign.manualApplicantSources[0], manualApplicantSource.id);
+  });
+
+  test('eeo tab works as intended', async function (assert) {
+    let { company } = await authenticate.call(this, server),
+        job = server.create('job', { company }),
+        campaign = await server.create('job-opening', {
+          job,
+          company,
+          title: job.title
         });
 
-    await visit(`/account/recruiting/job-opening/${campaign.id}/setup/screening`);
+    await visit(`/account/recruiting/job-opening/${campaign.id}/setup/eeo`);
 
-    let done = assert.async();
-    setTimeout(() => {
-      done();
-    }, 5000);
+    await click('div#eeo-job-category > input');
+    await click('div#eeo-job-category > div.menu > div.item:nth-child(1)');
 
-    assert.equal(1, 1, 'test assert passed');
+    const eeoCat = await find('div#eeo-job-category > div.menu > div.item:nth-child(1)').innerText;
+
+    await click('button.ui.huge.fluid.green.button');
+
+    assert.equal(currentURL(), `/account/recruiting/job-opening/${campaign.id}/setup/finish`);
+
+    const savedCampaign = server.db.jobOpenings.find(campaign.id);
+
+    assert.equal(savedCampaign.eeoCategory, eeoCat, 'job opening eeo category saved correctly');
+  });
+
+  test('finish setup and campaign launch work as intended', async function (assert) {
+    let { company } = await authenticate.call(this, server),
+        job = server.create('job', { company }),
+        campaign = await server.create('job-opening', {
+          job,
+          company,
+          title: job.title
+        });
+
+    await visit(`/account/recruiting/job-opening/${campaign.id}/setup/finish`);
+    await click('button.ui.huge.fluid.green.button');
+
+    assert.equal(currentURL(), `/account/recruiting/job-opening/${campaign.id}`, 'launching campaign took us to the campaign home page');
+
+    const savedCampaign = server.db.jobOpenings.find(campaign.id);
+
+    assert.notOk(savedCampaign.setup, 'campaign no longer needs setup');
+    assert.notOk(savedCampaign.setupStep, 'campaign no longer has setup step');
+    assert.notOk(savedCampaign.setupProgress, 'campaign no longer has setup progress');
   });
 });
+
