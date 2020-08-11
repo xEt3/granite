@@ -9,7 +9,7 @@ module('Acceptance | campaign setup test', function (hooks) {
 
   test('Can navigate to setup and get past start tab', async function (assert) {
     let { company } = await authenticate.call(this, server),
-        job = server.create('job', { company }),
+        job = server.create('job', { company: company.id }),
         campaign = await server.create('job-opening', {
           company,
           job,
@@ -27,7 +27,7 @@ module('Acceptance | campaign setup test', function (hooks) {
 
   test('Settings tab works as intended', async function (assert) {
     let { company, companyUser } = await authenticate.call(this, server),
-        job = server.create('job', { company }),
+        job = server.create('job', { company: company.id }),
         location = server.create('location'),
         campaign = await server.create('job-opening', {
           job,
@@ -95,7 +95,7 @@ module('Acceptance | campaign setup test', function (hooks) {
 
   test('screening tab works as intended', async function (assert) {
     let { company } = await authenticate.call(this, server),
-        job = server.create('job', { company }),
+        job = server.create('job', { company: company.id }),
         campaign = await server.create('job-opening', {
           job,
           company,
@@ -153,7 +153,7 @@ module('Acceptance | campaign setup test', function (hooks) {
 
   test('sources tab works as intended', async function (assert) {
     let { company } = await authenticate.call(this, server),
-        job = server.create('job', { company }),
+        job = server.create('job', { company: company.id }),
         campaign = await server.create('job-opening', {
           job,
           company,
@@ -183,7 +183,7 @@ module('Acceptance | campaign setup test', function (hooks) {
 
   test('eeo tab works as intended', async function (assert) {
     let { company } = await authenticate.call(this, server),
-        job = server.create('job', { company }),
+        job = server.create('job', { company: company.id }),
         campaign = await server.create('job-opening', {
           job,
           company,
@@ -208,7 +208,7 @@ module('Acceptance | campaign setup test', function (hooks) {
 
   test('finish setup and campaign launch work as intended', async function (assert) {
     let { company } = await authenticate.call(this, server),
-        job = server.create('job', { company }),
+        job = server.create('job', { company: company.id }),
         campaign = await server.create('job-opening', {
           job,
           company,

@@ -46,6 +46,7 @@ export default RestSerializer.extend({
           } else if (hasManyKeys.includes(key)) {
             let association = hasManyAssociations[key];
             let associationModel = association.modelName;
+
             if ((embeddedRecords || []).indexOf(key) > -1) {
               jsonApiPayload.data.attributes[key] = attrs[key];
               return;

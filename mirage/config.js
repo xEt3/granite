@@ -238,7 +238,6 @@ export default function () {
     return newForm;
   });
 
-
   // quick and dirty mock of search from ES that will function with the mirage db
   this.get('/search', (db, request) => {
     const { q } = request.queryParams || {};
