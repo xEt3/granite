@@ -1,7 +1,7 @@
 import { RestSerializer } from 'ember-cli-mirage';
 import { pluralize, camelize, dasherize } from 'ember-cli-mirage/utils/inflector';
 
-const embeddedRecords = [ 'correctiveActionSeverities', 'labels' ];
+const embeddedRecords = [ 'correctiveActionSeverities', 'labels', 'subscribers', 'elements' ];
 
 export default RestSerializer.extend({
   serializeIds: 'always',

@@ -37,7 +37,7 @@ export default class InputQuickFormInputComponent extends Component {
     let label = this.args.field.label,
         classN = this.args.field.class;
 
-    return classN || (label || '').replace(/[^\s\w]/g, '').replace(/\s/g, '-').toLowerCase();
+    return classN ? `${classN}-${Math.round(Math.random() * Math.pow(10, 10))}` : (label || '').replace(/[^\s\w]/g, '').replace(/\s/g, '-').toLowerCase();
   }
 
   get baseInputClass () {

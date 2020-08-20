@@ -4,7 +4,7 @@ export default class AccountJobOpeningSetupSourcesRoute extends Route {
   titleToken = 'Sources'
 
   async model () {
-    let jobOpening = this.modelFor('account.job-opening');
+    let jobOpening =  this.modelFor('account.job-opening');
 
     return {
       jobOpening,
@@ -17,8 +17,8 @@ export default class AccountJobOpeningSetupSourcesRoute extends Route {
   setupController (controller, model) {
     if (!model.jobOpening.description && !model.jobOpening.title) {
       model.jobOpening.setProperties({
-        description: model.job.description,
-        title:       model.job.title
+        description: model.job.get('description'),
+        title:       model.job.get('title')
       });
     }
 
