@@ -25,5 +25,7 @@ export default Factory.extend({
   created:                   faker.date.past,
   location:                  null,
   hiring:                    false,
-  job:                       null
+  job:                       null,
+  subscribers:               [],
+  screening:                 null
 });

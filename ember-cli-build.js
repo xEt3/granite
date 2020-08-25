@@ -2,6 +2,7 @@
 
 const EmberApp  = require('ember-cli/lib/broccoli/ember-app'),
       ENV = process.env.EMBER_ENV,
+      NODE_ENV = process.env.NODE_ENV,
       globSync  = require('glob').sync;
 
 const nodeIncludes = [
@@ -19,6 +20,7 @@ const nodeIncludes = [
 
 module.exports = function (defaults) {
   var app = new EmberApp(defaults, {
+    hinting:     NODE_ENV !== 'production',
     lessOptions: {
       paths: [
         'node_modules/semantic-ui-less'

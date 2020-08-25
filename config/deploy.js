@@ -1,12 +1,14 @@
 'use strict';
 
 module.exports = function (/* targetEnv */) {
-  let ENV = {};
+  let ENV = { hinting: false };
 
   ENV['revision-data'] = {
     type: 'file-hash',
     scm:  false
   };
+
+  ENV['ember-cli-mirage'] = { enabled: false };
 
   let packageJson = require('../package.json'),
       gitHash = (process.env.SOURCE_VERSION || '').substr(0, 7);
@@ -17,6 +19,8 @@ module.exports = function (/* targetEnv */) {
     revisionKey:        `${packageJson.version}+${gitHash}`,
     minifiedPrependUrl: 'https://www.granitehr.com/'
   };
+
+  console.log(process.env);
 
   console.log('Deploy environment is', ENV); /* eslint-disable-line */
 
