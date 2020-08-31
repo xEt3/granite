@@ -211,6 +211,20 @@ export default class Employee extends Model.extend(Validations) {
   })
   creator;
 
+  @attr('number') contributionsEmployeeAmount
+  @attr('string') contributionsEmployeeType
+
+  @attr('number') contributionsSpouseAmount
+  @attr('string') contributionsSpouseType
+
+  @attr('number') contributionsChildrenAmount
+  @attr('string') contributionsChildrenType
+
+  @attr('number') contributionsFamilyAmount
+  @attr('string') contributionsFamilyType
+
+  @attr('boolean') wellnessPlan
+
   @attr('date') dateOfBirth;
 
   @attr('date') effectiveOn; // Placeholder for effective dated changes. This field is only here to pass along to the api

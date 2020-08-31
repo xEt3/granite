@@ -81,6 +81,8 @@ export default class Company extends Model.extend(Validations) {
   @attr('string') urlPrefix;
 
   @attr('boolean') collectEEO;
+  
+  @attr('boolean') wellnessPlan
 
   @attr('boolean') collectAA;
 

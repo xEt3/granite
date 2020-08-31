@@ -258,6 +258,10 @@ Router.map(function () {
           this.route('index', { path: '/' });
           this.route('carrier-link', { path: '/setup/link/:carrier_key' });
         });
+        this.route('contributions', function () {
+          this.route('edit', { path: 'edit/:plan_id/' });
+          this.route('edit-all');
+        });
       });
       this.route('enrollments');
     });

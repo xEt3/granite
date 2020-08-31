@@ -1,0 +1,140 @@
+  <tr>
+    <td data-label="plan">
+      <h4>{{@plan.label}}</h4>
+      <div>
+      {{@plan.name}}
+      </div>
+    </td>
+
+    <td data-label="employee">
+      <div class="ui left icon input field pay-rate-number">
+        <Input @type="number" @value={{mut @plan.contributionsEmployeeAmount}} />
+          {{#if (eq this.model.contributionsEmployeeType "dollar") }}
+            <i class="dollar icon"></i>
+          {{else}}
+            <i class="percent icon"></i>
+          {{/if}}
+        <UiDropdown @class="inline pay-rate-unit" @selected={{mut @plan.contributionsEmployeeType}} @onChange={{set @plan.contributionsEmployeeType _}}>
+          <div class="default text">Unit</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item" data-value="dollar">
+              $
+            </div>
+            <div class="item" data-value="percent of cost">
+              %
+            </div>
+          </div>
+        </UiDropdown>
+      </div>
+      {{#if this.wellnessPlan}}
+        <div class="field">
+          <label for="employee-Wellness-Modifier">On Wellness Plan</label>
+          <div class="ui left icon input pay-rate-number">
+            <EmberTooltip>This is a rate adjustment for an employee on the wellness plan. This should be a negative number</EmberTooltip>                             
+            <Input id="employee-Wellness-Modifier" @type="number" @max={{0}} @value={{mut @plan.contributionsEmployeeWellnessModifier}} />
+            <i class="dollar icon"></i>
+          </div>
+        </div>
+      {{/if}}
+    </td>
+
+    <td data-label="spouse">
+      <div class="ui left icon input field pay-rate-number">
+        <Input @type="number" @value={{mut @plan.contributionsSpouseAmount}} />
+          {{#if (eq this.model.contributionsSpouseType "dollar") }}
+            <i class="dollar icon"></i>
+          {{else}}
+            <i class="percent icon"></i>
+          {{/if}}
+        <UiDropdown @class="inline pay-rate-unit" @selected={{@plan.contributionsSpouseType}} @onChange={{set @plan.contributionsSpouseType _}}>
+          <div class="default text">Unit</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item" data-value="dollar">
+              $
+            </div>
+            <div class="item" data-value="percent of cost">
+              %
+            </div>
+          </div>
+        </UiDropdown>
+      </div>
+      {{#if this.wellnessPlan}}
+        <div class="field">
+          <label for="spouse-Wellness-Modifier">On Wellness Plan</label>
+          <div class="ui left icon input pay-rate-number">
+            <EmberTooltip>This is a rate adjustment for an employee on the wellness plan. This should be a negative number"</EmberTooltip>
+            <Input id="spouse-Wellness-Modifier" @type="number" @max={{0}} @value={{mut @plan.contributionsSpouseWellnessModifier}} />
+            <i class="dollar icon"></i>
+          </div>
+        </div>
+      {{/if}}
+    </td>
+
+    <td data-label="children">
+      <div class="ui left icon input field pay-rate-number">
+        <Input @type="number" @value={{mut @plan.contributionsChildrenAmount}} />
+          {{#if (eq this.model.contributionsChildrenType "dollar") }}
+            <i class="dollar icon"></i>
+          {{else}}
+            <i class="percent icon"></i>
+          {{/if}}
+        <UiDropdown @class="inline pay-rate-unit" @selected={{@plan.contributionsChildrenType}} @onChange={{set @plan.contributionsChildrenType _}}>
+          <div class="default text">Unit</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item" data-value="dollar">
+              $
+            </div>
+            <div class="item" data-value="percent of cost">
+              %
+            </div>
+          </div>
+        </UiDropdown>
+      </div>
+      {{#if this.wellnessPlan}}
+        <div class="field">
+          <label for="children-Wellness-Modifier">On Wellness Plan</label>
+          <div class="ui left icon input pay-rate-number">
+            <EmberTooltip>This is a rate adjustment for an employee on the wellness plan. This should be a negative number"</EmberTooltip>
+            <Input id="children-Wellness-Modifier" @type="number" @max={{0}} @value={{mut @plan.contributionsChildrenWellnessModifier}} />
+            <i class="dollar icon"></i>
+          </div>
+        </div>
+      {{/if}}
+    </td>
+
+    <td data-label="family">
+      <div class="ui left icon field input pay-rate-number">
+        <Input @type="number" @value={{mut @plan.contributionsFamilyAmount}} />
+          {{#if (eq this.model.contributionsFamilyType "dollar") }}
+            <i class="dollar icon"></i>
+          {{else}}
+            <i class="percent icon"></i>
+          {{/if}}
+        <UiDropdown @class="inline pay-rate-unit" @selected={{mut @plan.contributionsFamilyType}} @onChange={{set @plan.contributionsFamilyType _}}>
+          <div class="default text">Unit</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item" data-value="dollar">
+              $
+            </div>
+            <div class="item" data-value="percent of cost">
+              %
+            </div>
+          </div>
+        </UiDropdown>
+      </div>
+      {{#if this.wellnessPlan}}
+        <div class="field">
+          <label for="family-Wellness-Modifier">On Wellness Plan</label>
+          <div class="ui left icon input pay-rate-number">
+            <EmberTooltip>This is a rate adjustment for an employee on the wellness plan. This should be a negative number"</EmberTooltip>
+            <Input id="family-Wellness-Modifier" @type="number" @max={{0}} @value={{mut @plan.contributionsFamilyWellnessModifier}} />
+            <i class="dollar icon"></i>
+          </div>
+        </div>
+      {{/if}}
+    </td>
+</tr>
