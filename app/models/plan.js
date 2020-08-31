@@ -56,7 +56,7 @@ export default class PlanModel extends Model {
   @attr('number') ratesFamily
   @attr('number') ratesFixed
 
-  @attr('number', { defaultValue: 0 }) contributionsEmployeeAmount 
+  @attr('number', { defaultValue: 0 }) contributionsEmployeeAmount
   @attr('number', { defaultValue: 0 }) contributionsEmployeeWellnessModifier
   @attr('string', { defaultValue: 'dollar' }) contributionsEmployeeType
 
