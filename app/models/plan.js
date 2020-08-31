@@ -58,19 +58,19 @@ export default class PlanModel extends Model {
 
   @attr('number', { defaultValue: 0 }) contributionsEmployeeAmount 
   @attr('number', { defaultValue: 0 }) contributionsEmployeeWellnessModifier
-  @attr('string', { defaultValue: "dollar" }) contributionsEmployeeType
+  @attr('string', { defaultValue: 'dollar' }) contributionsEmployeeType
 
   @attr('number', { defaultValue: 0 }) contributionsSpouseAmount
   @attr('number', { defaultValue: 0 }) contributionsSpouseWellnessModifier
-  @attr('string', { defaultValue: "dollar" }) contributionsSpouseType
+  @attr('string', { defaultValue: 'dollar' }) contributionsSpouseType
 
   @attr('number', { defaultValue: 0 }) contributionsChildrenAmount
   @attr('number', { defaultValue: 0 }) contributionsChildrenWellnessModifier
-  @attr('string', { defaultValue: "dollar" }) contributionsChildrenType
+  @attr('string', { defaultValue: 'dollar' }) contributionsChildrenType
 
   @attr('number', { defaultValue: 0 }) contributionsFamilyAmount
   @attr('number', { defaultValue: 0 }) contributionsFamilyWellnessModifier
-  @attr('string', { defaultValue: "dollar" }) contributionsFamilyType
+  @attr('string', { defaultValue: 'dollar' }) contributionsFamilyType
   @attr('boolean') wellnessPlan
 
   // @computed('type')
