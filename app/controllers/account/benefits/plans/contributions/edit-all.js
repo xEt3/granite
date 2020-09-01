@@ -17,9 +17,7 @@ export default class ContributionsEditAllController extends Controller {
 
   @action
   cancel () {
-    this.model.forEach(plan => {
-      plan.rollbackAttributes();
-    });
+    this.model.invoke('rollbackAttributes');
     this.transitionToRoute('account.benefits.plans');
   }
 }

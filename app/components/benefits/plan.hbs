@@ -28,25 +28,46 @@
       {{#if @plan.ratesEmployee}}
         <div class="line-item-value">
           <i>Employee</i>
-          <u>{{format-money @plan.ratesEmployee}}{{if @plan.contributionsEmployeeWellnessModifier (concat " (" (format-money @plan.contributionsEmployeeWellnessModifier) "w/ wellness)") }}</u>
+          <u>
+            {{format-money @plan.ratesEmployee}}
+            {{#if @plan.contributionsEmployeeWellnessModifier}}
+              {{format-money @plan.contributionsEmployeeWellnessModifier}} w/ wellness 
+            {{/if}}
+          </u>
         </div>
       {{/if}}
       {{#if @plan.ratesSpouse}}
         <div class="line-item-value">
           <i>Employee &amp; Spouse</i>
-          <u>{{format-money @plan.ratesSpouse}} {{if @plan.contributionsSpouseWellnessModifier (concat " (" (format-money @plan.contributionsSpouseWellnessModifier) "w/ wellness)") }}</u>
+          <u>
+            {{format-money @plan.ratesSpouse}} 
+            {{#if @plan.contributionsSpouseWellnessModifier}}
+              ({{format-money @plan.contributionsSpouseWellnessModifier}} w/ wellness)       
+            {{/if}}
+          </u>
         </div>
       {{/if}}
       {{#if @plan.ratesDependent}}
         <div class="line-item-value">
           <i>Employee &amp; Dependents</i>
-          <u>{{format-money @plan.ratesDependent}} {{if @plan.contributionsChildrenWellnessModifier (concat " (" (format-money @plan.contributionsChildrenWellnessModifier) "w/ wellness)") }}</u>
+          <u>
+            {{format-money @plan.ratesDependent}}
+            {{#if @plan.contributionsChildrenWellnessModifier}}
+              
+              ( {{format-money @plan.contributionsChildrenWellnessModifier}} w/ wellness);
+            {{/if}}
+          </u>
         </div>
       {{/if}}
       {{#if @plan.ratesFamily}}
         <div class="line-item-value">
           <i>Family</i>
-          <u>{{format-money @plan.ratesFamily}} {{if @plan.contributionsFamilyWellnessModifier (concat " (" (format-money @plan.contributionsFamilyWellnessModifier) "w/ wellness)") }}</u>
+          <u>
+            {{format-money @plan.ratesFamily}} 
+            {{#if @plan.contributionsFamilyWellnessModifier}}
+              ({{format-money @plan.contributionsFamilyWellnessModifier}} w/ wellness)
+            {{/if}}
+          </u>
         </div>
       {{/if}}
       {{#if @plan.ratesFixed}}
@@ -54,7 +75,7 @@
           <i>Fixed</i>
           <u>
             {{format-money @plan.ratesFixed}}
-            {{#if (and @plan.lifeCoverage (or (eq @plan.type 'L') (eq @plan.type 'DL')))}}
+            {{#if (and @plan.lifeCoverage (or (eq @plan.type "L") (eq @plan.type "DL")))}}
               / {{format-money @plan.lifeCoverage}}
             {{/if}}
           </u>
@@ -71,7 +92,7 @@
       {{#if @plan.contributionsEmployeeAmount}}
         <div class="line-item-value">
           <i>Employee</i>
-          {{#if (eq @plan.contributionsEmployeeType 'dollar')}}
+          {{#if (eq @plan.contributionsEmployeeType "dollar")}}
             <u>{{format-money @plan.contributionsEmployeeAmount}}</u>
           {{else}}
             <u>{{@plan.contributionsEmployeeAmount}}%</u>
@@ -81,7 +102,7 @@
       {{#if @plan.contributionsSpouseAmount}}
         <div class="line-item-value">
           <i>Spouse</i>
-          {{#if (eq @plan.contributionsSpouseType 'dollar')}}
+          {{#if (eq @plan.contributionsSpouseType "dollar")}}
             <u>{{format-money @plan.contributionsSpouseAmount}}</u>
           {{else}}
             <u>{{@plan.contributionsSpouseAmount}}%</u>
@@ -91,7 +112,7 @@
       {{#if @plan.contributionsChildrenAmount}}
         <div class="line-item-value">
           <i>Children</i>
-          {{#if (eq @plan.contributionsChildrenType 'dollar')}}
+          {{#if (eq @plan.contributionsChildrenType "dollar")}}
             <u>{{format-money @plan.contributionsChildrenAmount}}</u>
           {{else}}
             <u>{{@plan.contributionsChildrenAmount}}%</u>
@@ -101,7 +122,7 @@
       {{#if @plan.contributionsFamilyAmount}}
         <div class="line-item-value">
           <i>Family</i>
-          {{#if (eq @plan.contributionsFamilyType 'dollar')}}
+          {{#if (eq @plan.contributionsFamilyType "dollar")}}
             <u>{{format-money @plan.contributionsFamilyAmount}}</u>
           {{else}}
             <u>{{@plan.contributionsFamilyAmount}}%</u>

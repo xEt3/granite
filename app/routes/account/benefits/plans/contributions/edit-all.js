@@ -8,7 +8,7 @@ export default class ContributionsRoute extends Route {
     let company = await this.auth.get('user.company');
 
     return {
-      company: await this.auth.get('user.company'),
+      company,
       plans:   await this.store.query('plan', { company: company._id })
     };
   }

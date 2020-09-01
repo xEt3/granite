@@ -18,14 +18,14 @@
 
   {{#if this.model.benefitsEnabled}}
     <div class="field">
-      <label for="wellnessPlan">
+      <label for="wellness-plan">
         Wellness Plan<br />
         <small class="light text">
-        Does you company offer a wellness plan?, Enable this to change the contribution for wellness participants. 
+          Does your company offer a wellness plan? Enable this to change benefit contributions for wellness participants.
         </small>
       </label>
       Off
-      <UiCheckbox @class="toggle" @label="On" @checked={{this.model.wellnessPlan}} @onChange={{pipe (set this.model.wellnessPlan _) (fn this.data.saveRecord this.model)}} />
+      <UiCheckbox @id="wellness-plan" @class="toggle" @label="On" @checked={{this.model.wellnessPlan}} @onChange={{pipe (set this.model.wellnessPlan _) (fn this.data.saveRecord this.model)}} />
     </div>
   {{/if}}
 
