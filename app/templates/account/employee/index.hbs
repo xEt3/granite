@@ -12,7 +12,7 @@
       More<i class="dropdown icon"></i>
       <div class="menu">
         {{#each this.subRoutes as |subRoute|}}
-          <LinkTo @route={{subRoute.route}} class="{{if (eq subRoute this.subRoute) 'active '}}item">
+          <LinkTo @route={{subRoute.route}} class="{{if (eq subRoute this.subRoute) "active "}}item">
             <i class="{{subRoute.icon}} icon"></i> {{subRoute.name}}
           </LinkTo>
         {{/each}}
@@ -58,7 +58,7 @@
           <div class="text-danger header">Danger Zone</div>
           <div class="item">
             <ConfirmModal @deleteContext={{this.model.fullName}} as |confirm|>
-              <a href="#" class="text-danger" {{on "click" (prevent-default (pipe confirm (fn this.data.deleteRecord this.model 'working' this.afterSaveOptions)))}}><i
+              <a href="#" class="text-danger" {{on "click" (prevent-default (pipe confirm (fn this.data.deleteRecord this.model "working" this.afterSaveOptions)))}}><i
                    class="trash icon"></i>Delete Record</a>
             </ConfirmModal>
           </div>

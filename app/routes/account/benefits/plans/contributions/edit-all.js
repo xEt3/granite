@@ -9,7 +9,7 @@ export default class ContributionsRoute extends Route {
 
     return {
       company,
-      plans:   await this.store.query('plan', { company: company._id })
+      plans: await this.store.query('plan', { company: company._id })
     };
   }
 

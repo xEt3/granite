@@ -87,7 +87,7 @@
     </form>
 
     <div class="ui divider"></div>
-    <form {{on "submit" (prevent-default (pipe (fn this.data.saveRecord this.model 'working' this.afterSaveOptions) this.afterSave))}}>
+    <form {{on "submit" (prevent-default (pipe (fn this.data.saveRecord this.model "working" this.afterSaveOptions) this.afterSave))}}>
       <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.working}}>Save project</Form::ActionButton>
     </form>
   </div>

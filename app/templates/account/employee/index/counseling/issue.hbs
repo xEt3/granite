@@ -34,7 +34,7 @@
               </LinkTo>
             {{/if}}
             <div class="text-danger header">Danger Zone</div>
-            <a href="#" class="text-danger item" {{on "click" (prevent-default (pipe confirmDelete (fn this.data.deleteRecord this.model 'working' this.deleteOptions)))}}>
+            <a href="#" class="text-danger item" {{on "click" (prevent-default (pipe confirmDelete (fn this.data.deleteRecord this.model "working" this.deleteOptions)))}}>
               <i class="trash icon"></i>Delete Record
             </a>
           </div>
