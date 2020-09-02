@@ -5,7 +5,6 @@ import serializeKeys from '../utils/expand-serialized-object';
 export default class Plan extends ApplicationSerializer {
   normalize (modelClass, hash) {
     normalizeKeys(hash, true, 'contact', 'network', 'rates', 'contributions');
-
     return super.normalize(...arguments);
   }
 
