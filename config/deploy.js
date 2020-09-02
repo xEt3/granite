@@ -20,8 +20,6 @@ module.exports = function (/* targetEnv */) {
     minifiedPrependUrl: 'https://www.granitehr.com/'
   };
 
-  console.log(process.env);
-
   console.log('Deploy environment is', ENV); /* eslint-disable-line */
 
   return ENV;
