@@ -16,8 +16,8 @@ export default class AccountEmployeesChangesController extends Controller {
 
     try {
       await this.ajax.post(`/api/v1/change/${change.id}/apply`);
-      success(`Successfully applied ${change.changes.length} changes for ${change.employee.firstName}.`);
-      this.send('refreshModel');
+      success(`Successfully applied ${change.changes.length} changes for ${change.employee.get('firstName')}.`);
+      this.send('refresher');
     } catch (e) {
       error(e);
     }
@@ -33,6 +33,6 @@ export default class AccountEmployeesChangesController extends Controller {
     change.reviewedOn = new Date();
 
     await this.data.saveRecord(change);
-    this.send('refreshModel');
+    this.send('refresher');
   }
 }
