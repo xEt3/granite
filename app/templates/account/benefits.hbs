@@ -17,9 +17,9 @@
             <a href="benefits/plans/integrations" id="action-item__action--delay" class="item">
               <i class="ellipsis horizontal icon"></i>link a carrier
             </a>
-            <a href="#" id="action-item__action--delay" class="item" {{!--{{on "click" add}} --}}>
-              <i class="ellipsis horizontal icon"></i>Manually add a plan
-            </a>
+            <LinkTo @route="account.benefits.plans.add" class="item">
+              <i class="window restore outline icon"></i>Manually add a plan
+            </LinkTo>
           </div>
         </UiDropdown>
       </div>

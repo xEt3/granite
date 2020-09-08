@@ -2,11 +2,11 @@ import Component from '@glimmer/component';
 
 const az = 'abcdefghijklmnopqrstuvwxyz',
       typeColors = {
-        M:  [ 25, 75 ],
-        D:  [ 20, 5 ],
-        V:  [ 105, 25 ],
-        L:  [ 205, 150 ],
-        DL: [ 205, 100 ]
+        M: [ 25, 75 ],
+        D: [ 20, 5 ],
+        V: [ 105, 25 ],
+        L: [ 205, 150 ],
+        O: [ 205, 100 ]
       };
 
 export default class BenefitsPlanComponent extends Component {
