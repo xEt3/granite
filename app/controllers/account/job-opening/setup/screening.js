@@ -27,9 +27,13 @@ export default class AccountJobOpeningSetupScreeningController extends Controlle
   }
 
   @action
-  addFormElement () {
+  async addFormElement () {
     let formElement = this.store.createRecord('form-element', {});
     this.form.elements.pushObject(formElement);
+    if (this.form.elements.length > 1) {
+      this.incremental = true;
+      await this.saveAndContinue();
+    }
   }
 
   @action
@@ -67,6 +71,11 @@ export default class AccountJobOpeningSetupScreeningController extends Controlle
     try {
       let form = await f.save();
       this.afterSave();
+      if (this.incremental) {
+        this.incremental = false;
+        success('Saving');
+        return;
+      }
       this.model.screening = form;
       await this.target.send('saveAndContinue');
       success(null, true);
