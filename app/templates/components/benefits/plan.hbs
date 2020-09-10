@@ -54,7 +54,7 @@
           <i>Fixed</i>
           <u>
             {{format-money @plan.ratesFixed}}
-            {{#if (and @plan.lifeCoverage (or (eq @plan.type 'L') (eq @plan.type 'DL')))}}
+            {{#if (and @plan.lifeCoverage (or (eq @plan.type "L") (eq @plan.type "DL")))}}
               / {{format-money @plan.lifeCoverage}}
             {{/if}}
           </u>

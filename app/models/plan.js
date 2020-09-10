@@ -72,7 +72,7 @@ export default class PlanModel extends Model {
   @attr('number', { defaultValue: 0 }) contributionsFamilyWellnessModifier
   @attr('string', { defaultValue: 'dollar' }) contributionsFamilyType
   @attr('boolean') wellnessPlan
-  
+
   // @computed('type')
   get icon () {
     return (typeMap[this.type] || {}).icon;
