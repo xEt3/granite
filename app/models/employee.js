@@ -31,6 +31,8 @@ export default class Employee extends Model.extend(Validations) {
 
   @attr('string') gender;
 
+  @attr('string') maritalStatus;
+
   @attr('string') addressLine1;
 
   @attr('string') addressLine2;
