@@ -39,11 +39,13 @@ export default class AccountJobOpeningSetupScreeningController extends Controlle
   @action
   deleteFormElement (element) {
     this.form.elements.removeObject(element);
+    this.form.save();
   }
 
   @action
   reorderElements (elements) {
     this.form.elements = elements;
+    this.form.save();
   }
 
   @action
