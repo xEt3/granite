@@ -1,6 +1,7 @@
 import Controller from 'granite/core/controller';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { openEnrollments } from 'granite/config';
 
 export default class CarrierLinkController extends Controller {
   @service data
@@ -14,6 +15,11 @@ export default class CarrierLinkController extends Controller {
   async linkCarrier () {
     const { success, error } = this.data.createStatus('carrierLink');
     try {
+      await this.store.createRecord('openEnrollment', {
+        company: await this.auth.get('user.company.id'),
+        start:   openEnrollments[0].start,
+        end:     openEnrollments[0].end
+      }).save();
       await this.ajax.post('/api/v1/benefits/plan-download', {
         data: {
           carrier:     this.model.key,

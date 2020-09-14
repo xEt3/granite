@@ -69,8 +69,14 @@ const carriers = [{
   phone: '1 (406) 248-6224'
 }];
 
+const openEnrollments = [{
+  start: '12/01',
+  end:   '3/01'
+}];
+
 export {
   states,
+  openEnrollments,
   notifyDefaults,
   carriers
 };
