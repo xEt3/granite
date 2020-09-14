@@ -7,8 +7,4 @@ export default class PlanAddRoute extends Route {
   async model () {
     return this.store.createRecord('plan');
   }
-
-  setupController (controller, model) {
-    controller.setProperties({ model });
-  }
 }
