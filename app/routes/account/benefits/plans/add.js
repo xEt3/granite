@@ -5,7 +5,7 @@ export default class PlanAddRoute extends Route {
   @service store
 
   async model () {
-    return this.store.createRecord('plan', { fromService: 'manual' });
+    return this.store.createRecord('plan');
   }
 
   setupController (controller, model) {
