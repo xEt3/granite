@@ -1,4 +1,5 @@
 .ui.hero {
+  position: relative;
   padding: 30px;
   background-position: center;
   background-repeat: no-repeat;
@@ -25,11 +26,25 @@
     background-blend-mode: multiply;
   }
 
+  .hero__colorway-overlay {
+    .three-point-gradient(fade(@granite-grey, 80%), fade(darken(@granite-blue, 25%), 90%), fade(@granite-green, 60%));
+    background: @gradient;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
   .hero__title {
     text-align: center;
-    font-size: 3.5em;
+    font-size: 4em;
     color: white;
     text-shadow: 1px 1px 2px fade(@black, 80%);
+
+    .hero-title__nimble {
+      font-weight: 100;
+    }
   }
 
   .hero__subcontent {
@@ -53,7 +68,12 @@
     .ui.button {
       padding-top: 30px;
       padding-bottom: 30px;
+      font-size: 1.3em;
     }
+  }
+
+  .hero__title .hero-title__segment {
+    display: inline-block;
   }
 }
 
@@ -70,10 +90,13 @@
 @media screen and (max-width: @screen-md) {
   .ui.hero {
     padding: 10px;
-    background-color: @granite-grey;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-blend-mode: multiply;
+
+    &:not(.index__callout) {
+      background-color: @granite-grey;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-blend-mode: multiply;
+    }
 
     &.cover {
       background-size: cover;
