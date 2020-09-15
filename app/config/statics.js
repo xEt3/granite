@@ -353,6 +353,10 @@ const accountNavigationItems = [{
   title: 'Company Anatomy',
   link:  'anatomy'
 }, {
+  icon:  'handshake outline',
+  title: 'HR Resources',
+  link:  'hr'
+}, {
   icon:  'life ring outline',
   title: 'Help',
   link:  'help'
