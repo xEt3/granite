@@ -82,7 +82,7 @@
     </div>
     {{/if}}
   </div>
-  {{#if (eq @plan.fromService "manual") }}
+  {{#unless @plan.fromService}}
     <div class="ui extra content center aligned plan-card__edit">
     <strong>
       <LinkTo @route="account.benefits.plans.edit" @model={{@plan.id}}>
@@ -90,5 +90,5 @@
       </LinkTo>
       </strong>
     </div>
-  {{/if}}
+  {{/unless}}
 </div>
