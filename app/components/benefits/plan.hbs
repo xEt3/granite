@@ -13,7 +13,7 @@
             <div class="line-item-value">
               <i>{{@plan.networkName}}</i>
               <u>
-                <a href="" {{on "click" (prevent-default (toggle "showDescription" this))}}>{{if this.showDescription "Show Less" "Show More"}}</a>
+                <a href="#" {{on "click" (prevent-default (toggle "showDescription" this))}}>{{if this.showDescription "Show Less" "Show More"}}</a>
               </u>
             </div>
         {{#if (and @plan.networkDescription this.showDescription)}}
