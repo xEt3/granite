@@ -10,12 +10,12 @@
     <div class="extra content plan-card__network">
       <strong>Network</strong>
       <div class="basic segment">
-            <div class="line-item-value">
-              <i>{{@plan.networkName}}</i>
-              <u>
-                <a href="#" {{on "click" (prevent-default (toggle "showDescription" this))}}>{{if this.showDescription "Show Less" "Show More"}}</a>
-              </u>
-            </div>
+        <div class="line-item-value">
+          <i>{{@plan.networkName}}</i>
+          <u>
+            <a href="#" {{on "click" (prevent-default (toggle "showDescription" this))}}>{{if this.showDescription "Show Less" "Show More"}}</a>
+          </u>
+        </div>
         {{#if (and @plan.networkDescription this.showDescription)}}
           {{@plan.networkDescription}}
         {{/if}}
@@ -31,7 +31,10 @@
           <u>
             {{format-money @plan.ratesEmployee}}
             {{#if @plan.contributionsEmployeeWellnessModifier}}
-              {{format-money @plan.contributionsEmployeeWellnessModifier}} w/ wellness 
+              / {{x-inc @plan.ratesEmployee @plan.contributionsEmployeeWellnessModifier}}
+              <EmberTooltip @side="top" @popperContainer="body">
+                With wellness modifier of {{format-money @plan.contributionsEmployeeWellnessModifier}}
+              </EmberTooltip>
             {{/if}}
           </u>
         </div>
