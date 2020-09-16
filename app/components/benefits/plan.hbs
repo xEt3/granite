@@ -31,7 +31,7 @@
           <u>
             {{format-money @plan.ratesEmployee}}
             {{#if @plan.contributionsEmployeeWellnessModifier}}
-              / {{x-inc @plan.ratesEmployee @plan.contributionsEmployeeWellnessModifier}}
+              / {{format-money (x-inc @plan.ratesEmployee @plan.contributionsEmployeeWellnessModifier)}}
               <EmberTooltip @side="top" @popperContainer="body">
                 With wellness modifier of {{format-money @plan.contributionsEmployeeWellnessModifier}}
               </EmberTooltip>
