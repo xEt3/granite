@@ -128,7 +128,7 @@
       </div>
       {{#if this.wellnessPlan}}
         <div class="field">
-          <label for="family-Wellness-Modifier">On Wellness Plan</label>
+          <label for="family-wellness-modifier">On Wellness Plan</label>
           <div class="ui left icon input pay-rate-number">
             <EmberTooltip>This is a rate adjustment for an employee on the wellness plan. This should be a negative number"</EmberTooltip>
             <Input id="family-wellness-modifier" @type="number" @max={{0}} @value={{mut @plan.contributionsFamilyWellnessModifier}} />
