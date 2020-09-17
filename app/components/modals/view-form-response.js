@@ -1,34 +1,37 @@
 import Modal from '.';
-import { computed } from '@ember/object';
 import $ from 'jquery';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
-export default Modal.extend({
-  modalId: 'modal__view-form-response',
+export default class ViewFormResponseModal extends Modal {
+modalId = 'modal__view-form-response'
 
-  responses: computed('response.responses.[]', 'form.elements.[]', function () {
-    return this.form?.elements && this.form.elements.map(element => {
-      return {
-        question: element.label,
-        response: this.get('response.responses').findBy('step', element.id)
-      };
-    });
-  }),
+@tracked form
+@tracked response
 
-  openModal (response, form) {
-    this.setProperties({
-      response,
-      form
-    });
+get responses () {
+  return this.form && this.form.elements.map(element => {
+    return {
+      question: element.label,
+      response: this.response.get('responses').findBy('step', element.id)
+    };
+  });
+}
 
-    this.dispatchSemanticModal();
-  },
+@action
+openModal (response, form) {
+  this.response = response;
+  this.form = form;
 
-  closeModal () {
-    if (this.form.isNew) {
-      this.form.deleteRecord();
-      this.set('form', null);
-    }
+  this.dispatchSemanticModal();
+}
 
-    $(`#${this.modalId}`).modal('hide');
+@action
+closeModal () {
+  if (this.form.isNew) {
+    this.form.deleteRecord();
+    this.form = null;
   }
-});
+  $(`#${this.modalId}`).modal('hide');
+}
+}
