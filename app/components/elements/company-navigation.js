@@ -1,27 +1,19 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 import { htmlSafe } from '@ember/string';
 import $ from 'jquery';
 
-export default Component.extend({
-  auth:       service(),
-  tagName:    'nav',
-  classNames: [ 'ui menu account__navigation' ],
+export default class CompanyNavigationComponent extends Component {
+  @service() auth
 
-  logoUrl: computed('auth.user.company.logoUrl', function () {
-    // let img = this.get('auth.user.company.logoUrl') || '/assets/images/granite-logo-mountains.png';
-    let img = this.get('auth.user.company.logoUrl') || '/assets/images/beta_granite-logo-mountains.png';
+  get logoUrl () {
+    let img = this.auth.get('user.company.logoUrl') || '/assets/images/granite-logo-mountains.png';
     return htmlSafe(`background-image: url('${img}')`);
-  }),
-
-  actions: {
-    toggle () {
-      $('.ui.sidebar').sidebar('toggle');
-    },
-
-    logout () {
-      this.logout();
-    }
   }
-});
+
+  @action
+  toggle () {
+    $('.ui.sidebar').sidebar('toggle');
+  }
+}

@@ -1,19 +1,20 @@
-import Controller from '@ember/controller';
+import Controller from 'granite/core/controller';
 import { inject as controller } from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import { action } from '@ember/object';
 import breadcrumbOverrides from '../config/breadcrumb';
 
-export default Controller.extend({
-  breadcrumbOverrides,
+export default class AccountController extends Controller {
+  breadcrumbOverrides = breadcrumbOverrides
 
-  auth:        service(),
-  application: controller(),
-  currentPath: computed.reads('application.currentPath'),
+  @service auth
+  @controller() application
 
-  actions: {
-    logout () {
-      this.auth.logout();
-    }
+  @computed.reads('application.currentPath') currentPath
+
+  @action
+  logout () {
+    this.auth.logout();
   }
-});
+}
