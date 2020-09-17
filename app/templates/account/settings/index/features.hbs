@@ -16,6 +16,19 @@
     <UiCheckbox @class="toggle" @label="On" @checked={{this.model.collectEEO}} @onChange={{pipe (set this.model.collectEEO _) (fn this.data.saveRecord this.model)}} />
   </div>
 
+  {{#if this.model.benefitsEnabled}}
+    <div class="field">
+      <label for="wellness-plan">
+        Wellness Plan<br />
+        <small class="light text">
+          Does your company offer a wellness plan? Enable this to change benefit contributions for wellness participants.
+        </small>
+      </label>
+      Off
+      <UiCheckbox @id="wellness-plan" @class="toggle" @label="On" @checked={{this.model.wellnessPlan}} @onChange={{pipe (set this.model.wellnessPlan _) (fn this.data.saveRecord this.model)}} />
+    </div>
+  {{/if}}
+
   {{#if this.model.collectEEO}}
     <div class="field">
       <label for="aa">

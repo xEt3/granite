@@ -130,3 +130,105 @@
     </div>
   </UiDropdown>
 </div>
+{{#if this.company.benefitsEnabled}}
+  <h3 id="benefit-contributions" class="ui horizontal header divider section">
+    <i class="heartbeat icon"></i>Benefit Contributions
+  </h3>
+  {{#if this.company.wellnessPlan}}
+    <UiCheckbox @class="checkbox" @label="Employee is on wellness plan" @checked={{readonly this.model.wellnessPlan}} @onChange={{set this.model.wellnessPlan _}} />
+  {{/if}}
+  <div class="four fields">
+    <div class="field">
+      <label for="address-city">Employee</label>
+      <div class="ui left icon input pay-rate-number">
+        <Input @type="number" @value={{this.model.contributionsEmployeeAmount}} />
+        {{#if (eq this.model.contributionsEmployeeType "dollar") }}
+          <i class="dollar icon"></i>
+        {{else}}
+          <i class="percent icon"></i>
+        {{/if}}
+        <UiDropdown @class="inline pay-rate-unit" @selected={{this.model.contributionsEmployeeType}} @onChange={{set this.model.contributionsEmployeeType _}}>
+          <div class="default text">Unit</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item" data-value="dollar">
+              $
+            </div>
+            <div class="item" data-value="percent of cost">
+              %
+            </div>
+          </div>
+        </UiDropdown>
+      </div> 
+    </div>
+    <div class="field">
+      <label for="address-city">Employee and Spouse</label>
+      <div class="ui left icon input pay-rate-number">
+        <Input @type="number" @value={{this.model.contributionsSpouseAmount}} />
+        {{#if (eq this.model.contributionsSpouseType "dollar") }}
+          <i class="dollar icon"></i>
+        {{else}}
+          <i class="percent icon"></i>
+        {{/if}}
+        <UiDropdown @class="inline pay-rate-unit" @selected={{this.model.contributionsSpouseType}} @onChange={{set this.model.contributionsSpouseType _}}>
+          <div class="default text">Unit</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item" data-value="dollar">
+              $
+            </div>
+            <div class="item" data-value="percent of cost">
+              %
+            </div>
+          </div>
+        </UiDropdown>
+      </div>
+    </div>
+    <div class="field">
+      <label for="state-name">Employee and Children</label>
+      <div class="ui left icon input pay-rate-number">
+        <Input @type="number" @value={{mut this.model.contributionsChildrenAmount}} />
+        {{#if (eq this.model.contributionsChildrenType "dollar") }}
+          <i class="dollar icon"></i>
+        {{else}}
+          <i class="percent icon"></i>
+        {{/if}}
+        <UiDropdown @class="inline pay-rate-unit" @selected={{this.model.contributionsChildrenType}} @onChange={{set this.model.contributionsChildrenType _}}>
+          <div class="default text">Unit</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item" data-value="dollar">
+              $
+            </div>
+            <div class="item" data-value="percent of cost">
+              %
+            </div>
+          </div>
+        </UiDropdown>
+      </div>
+    </div>
+    <div class="field">
+      <label for="address-zip">Employee and Family</label>
+        <div class="ui left icon input pay-rate-number">
+          <Input @type="number" @value={{mut this.model.contributionsFamilyAmount}} />
+          {{#if (eq this.model.contributionsFamilyType "dollar") }}
+            <i class="dollar icon"></i>
+          {{else}}
+            <i class="percent icon"></i>
+          {{/if}}
+          <UiDropdown @class="inline pay-rate-unit" @selected={{this.model.contributionsFamilyType}} @onChange={{set this.model.contributionsFamilyType _}}>
+            <div class="default text">Unit</div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <div class="item" data-value="dollar">
+                $
+              </div>
+              <div class="item" data-value="percent of cost">
+                %
+              </div>
+            </div>
+          </UiDropdown>
+        </div>
+    </div>
+  </div>
+{{/if}}
