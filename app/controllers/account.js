@@ -9,7 +9,7 @@ export default class AccountController extends Controller {
   breadcrumbOverrides = breadcrumbOverrides
 
   @service auth
-  @controller() application
+  @controller application
 
   @computed.reads('application.currentPath') currentPath
 
