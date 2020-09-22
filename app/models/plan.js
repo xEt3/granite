@@ -40,7 +40,6 @@ export default class PlanModel extends Model {
   @attr('number') lifeCoverage
   @attr('date') lifeEffective
   @attr('number') maximumCoverage
-  @attr('boolean') voluntary
   @attr('string') contactName
   @attr('string') contactPhone
   @attr('string') contactFax
@@ -55,6 +54,16 @@ export default class PlanModel extends Model {
   @attr('number') ratesDependent
   @attr('number') ratesFamily
   @attr('number') ratesFixed
+  @attr('array') additionalDocuments
+  @attr('boolean') voluntary
+  @attr('string') coinsurance
+  @attr('number') medicalDeductible
+  @attr('number') dentalDeductible
+  @attr('number') deductibleFamily
+  @attr('number') maxOutOfPocket
+  @attr('number') maxOutOfPocketFamily
+  @attr('string') sbcLink
+  @attr('string') spdLink
 
   @attr('number', { defaultValue: 0 }) contributionsEmployeeAmount
   @attr('number', { defaultValue: 0 }) contributionsEmployeeWellnessModifier
@@ -73,12 +82,10 @@ export default class PlanModel extends Model {
   @attr('string', { defaultValue: 'dollar' }) contributionsFamilyType
   @attr('boolean') wellnessPlan
 
-  // @computed('type')
   get icon () {
     return (typeMap[this.type] || {}).icon;
   }
 
-  // @computed('type')
   get label () {
     return (typeMap[this.type] || {}).label;
   }
