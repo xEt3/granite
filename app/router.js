@@ -252,6 +252,7 @@ Router.map(function () {
         this.route('assign', { path: '/:authorization_id/assign' });
       });
     });
+    this.route('hr');
     this.route('benefits', function () {
       this.route('plans', function () {
         this.route('integrations', function () {
