@@ -12,23 +12,19 @@ export default class OpenEnrollment extends Model {
 
   @attr('date', { defaultValue: () => new Date() }) created;
 
-  @computed('start')
   get startMonth () {
-    return Number(moment(this.start).format('M'));
+    return Number(moment(this.start).month());
   }
 
-  @computed('start')
   get startDay () {
-    return Number(moment(this.start).format('D'));
+    return Number(moment(this.start).date());
   }
 
-  @computed('end')
   get endMonth () {
-    return Number(moment(this.end).format('M'));
+    return Number(moment(this.end).month());
   }
 
-  @computed('end')
   get endDay () {
-    return Number(moment(this.end).format('D'));
+    return Number(moment(this.end).date());
   }
 }

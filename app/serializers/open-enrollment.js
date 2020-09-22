@@ -19,12 +19,12 @@ export default class OpenEnrollment extends ApplicationSerializer {
         end   = new Date(json.end);
 
     json.start = {
-      month: start.getMonth() + 1,
+      month: start.getMonth(),
       day:   start.getDate()
     };
 
     json.end = {
-      month: end.getMonth() + 1,
+      month: end.getMonth(),
       day:   end.getDate()
     };
 
