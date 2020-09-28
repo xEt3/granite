@@ -1,5 +1,5 @@
 import classic from 'ember-classic-decorator';
-import { classNameBindings } from '@ember-decorators/component';
+import { classNameBindings, classNames } from '@ember-decorators/component';
 import SortableItem from 'ember-sortable/components/sortable-item';
 import { formTypes } from 'granite/config/statics';
 import Object, { action } from '@ember/object';
@@ -25,9 +25,9 @@ const typesWithScore = [
 
 @classic
 @classNameBindings('removing:form-element__list-item--removing')
+@classNames('form-element__list-item')
 class FormElementComponent extends SortableItem {
   formTypes = formTypes;
-  class = [ 'form-element__list-item' ];
   handle = '.form-element__handle';
 
   get emptyObject () {
