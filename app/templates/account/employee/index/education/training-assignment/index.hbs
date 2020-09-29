@@ -1,0 +1,22 @@
+<h1>
+  {{this.model.name}}
+  <small class="right floated text">
+    <ConfirmModal @tagName="span" @deleteContext={{this.model.name}} as |confirm|>
+      <a href="#" class="text-danger" {{on "click" (prevent-default (pipe confirm (fn this.data.deleteRecord this.model "working" this.deleteOptions)))}}>
+        <i class="trash icon"></i>
+      </a>
+    </ConfirmModal>
+  </small>
+</h1>
+<div class="ui divider"></div>
+<h3>
+  <small>
+    {{#if this.model.webinar}}
+      Webinar: {{this.model.webinar.webinar.title}}
+    {{/if}}
+  </small>
+  <div class="right floated">
+    Status: 
+    <small class="light text">{{this.model.status}}</small>
+  </div>
+</h3>
