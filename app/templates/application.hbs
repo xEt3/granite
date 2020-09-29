@@ -4,6 +4,10 @@
 
   <Display::SubscriptionBanner @transitionToSubscription={{this.transitionToSubscription}} @accountLocked={{this.subscription.accountLocked}} />
 
+  {{#if (not (or this.topLevel this.noNav))}}
+    <Display::EaHelpLink />
+  {{/if}}
+
   <div class="ui main">
     {{#if (not (or this.topLevel this.noNav))}}
       <Elements::AccountNavigation @links={{this.accountNavigationItems}} @ui_context="body .ember-view .main" />
