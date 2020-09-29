@@ -1,0 +1,26 @@
+.ea-help-link {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 1;
+  // font-size: 2em;
+  .three-point-gradient(fade(white, 80%), fade(lighten(@granite-green, 25%), 90%), fade(white, 60%));
+  background: @gradient;
+border-radius: 50%;
+  // color:@granite-grey;
+
+  padding: 1em;
+  // width: 40px;
+  // height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: .6;
+  box-shadow: 1px 1px 3px fade(@granite-grey, 70%);
+  transition: all .4s ease-in-out;
+
+  &:hover {
+    box-shadow: 2px 2px 4px fade(@granite-grey, 60%);
+    opacity: 1;
+  }
+}
