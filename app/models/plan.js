@@ -17,9 +17,9 @@ const typeMap = {
     icon:  'life ring outline',
     label: 'Life'
   },
-  DL: {
-    icon:  'life ring outline',
-    label: 'Dependent Life'
+  O: {
+    icon:  'plus square',
+    label: 'Other'
   }
 };
 
@@ -54,6 +54,7 @@ export default class PlanModel extends Model {
   @attr('number') ratesDependent
   @attr('number') ratesFamily
   @attr('number') ratesFixed
+  @attr('string') fromService
   @attr('array') additionalDocuments
   @attr('boolean') voluntary
   @attr('string') coinsurance

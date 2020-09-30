@@ -1,0 +1,20 @@
+<QuickForm
+  @form={{this.currentForm}}
+  @model={{@plan}}
+  @controller={{this}}
+  @submitClass="large green fluid"
+  @onsubmit={{@save}}
+  @disabled={{or (not @plan.type) (not @plan.name)}}
+  @working={{this.data.statuses.working.isLoading}}
+>
+  {{#if @edit}}
+    Save Changes
+  {{else}}
+    Add Plan
+  {{/if}}
+</QuickForm>
+<div class="actions">
+  <button class="ui large fluid red button" {{on "click" @cancel}} type="button">
+    Cancel
+  </button>
+</div>
