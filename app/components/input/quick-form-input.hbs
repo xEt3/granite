@@ -80,6 +80,9 @@
           @type="date"
           @class={{this.inputClass}}
           @dateValue={{this.initialValue}}
+          @startMode={{@field.startMode}}
+          @disableYear={{@field.disableYear}}
+          @formatter={{@field.formatter}}
           @onChange={{set this.value _}}/>
       {{/if}}
     {{else if (eq @field.type "radio")}}

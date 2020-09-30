@@ -7,7 +7,8 @@ import serializeKeys from '../utils/expand-serialized-object';
 export default class Employee extends ApplicationSerializer {
   normalize (modelClass, hash) {
     normalizeKeys(hash, 'suffix', 'name');
-    normalizeKeys(hash, true, 'address', 'emergencyContact', 'finalAddress', 'externalLink');
+    normalizeKeys(hash, true, 'address', 'emergencyContact', 'finalAddress', 'externalLink', 'contributions');
+
     return super.normalize(...arguments);
   }
 
@@ -20,6 +21,17 @@ export default class Employee extends ApplicationSerializer {
     keys.forEach(key => {
       if (isNull(json[key])) {
         delete json[key];
+      }
+    });
+
+    let titles = [ 'Employee', 'Spouse', 'Children', 'Family' ];
+    titles.forEach(title =>{
+      deleteKeys.push(...[ `contributions${title}Amount`, `contributions${title}Type` ]);
+      if (`contributions${title}Amount`) {
+        json[`${title}`.toLowerCase()] = {
+          amount: json[`contributions${title}Amount`],
+          type:   json[`contributions${title}Type`]
+        };
       }
     });
 

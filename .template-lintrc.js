@@ -8,7 +8,8 @@ module.exports = {
       requireDash: true,
       allow:       [ 'relative-greeting-time', 'app-version', 'liquid-outlet' ]
     },
-    'no-implicit-this': { allow: [ '_', 'relative-greeting-time', 'app-version' ] }
+    'no-implicit-this': { allow: [ '_', 'relative-greeting-time', 'app-version' ] },
+    quotes:             [ 'error', 'double' ]
   },
   ignore: [
     'addon/**'

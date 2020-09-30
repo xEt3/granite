@@ -1,0 +1,17 @@
+<form class="ui form" {{on "submit" (prevent-default (pipe (fn this.data.saveRecord this.model 'working' this.afterSaveOptions) this.afterSave))}}>
+  <QuickForm class="ui two fields"
+    @form={{this.enrollmentForm}}
+    @model={{this.model}}
+    @controller={{this}}
+    @inputClass="field"
+    @tagName="div" 
+  />
+  <div class="ui divider"></div>
+  <Form::ActionButton 
+    type="submit" class="ui big fluid green button" @loading={{this.data.statuses.working.isLoading}} @disabled={{not (and this.model.end this.model.start)}}>Add</Form::ActionButton>
+  <button class="ui large fluid orange button" {{on "click" (fn this.cancel)}} type="button">
+    Cancel
+  </button>
+</form>
+
+{{outlet}}

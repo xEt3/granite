@@ -31,6 +31,8 @@ export default class Employee extends Model.extend(Validations) {
 
   @attr('string') gender;
 
+  @attr('string') maritalStatus;
+
   @attr('string') addressLine1;
 
   @attr('string') addressLine2;
@@ -210,6 +212,20 @@ export default class Employee extends Model.extend(Validations) {
     inverse: null
   })
   creator;
+
+  @attr('number') contributionsEmployeeAmount
+  @attr('string') contributionsEmployeeType
+
+  @attr('number') contributionsSpouseAmount
+  @attr('string') contributionsSpouseType
+
+  @attr('number') contributionsChildrenAmount
+  @attr('string') contributionsChildrenType
+
+  @attr('number') contributionsFamilyAmount
+  @attr('string') contributionsFamilyType
+
+  @attr('boolean') wellnessPlan
 
   @attr('date') dateOfBirth;
 

@@ -1,0 +1,16 @@
+<form class="ui form" {{on "submit" (prevent-default (fn this.data.saveRecord this.model 'working' this.afterSaveOptions))}}>
+  <QuickForm class="ui two fields"
+    @form={{this.enrollmentForm}}
+    @model={{this.model}}
+    @controller={{this}}
+    @inputClass="field"
+    @tagName="div" 
+  />
+  <div class="ui divider"></div>
+  <Form::ActionButton type="submit" class="ui big fluid green button" @loading={{this.data.statuses.working.isLoading}} @disabled={{not (and this.model.end this.model.start)}}>Update</Form::ActionButton>
+  <LinkTo @route="account.benefits.open-enrollment">
+    <div class="ui large fluid orange button">Cancel</div>
+  </LinkTo>
+</form>
+
+{{outlet}}

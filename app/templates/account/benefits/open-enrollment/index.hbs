@@ -1,0 +1,33 @@
+<div class="ui divided items">
+  {{#each this.model as |enrollment|}}
+    <div class="item">
+      <div class="content">
+        <div class="header">
+          {{time enrollment.start 'M/D'}} - {{time enrollment.end 'M/D'}}
+        </div>
+        <div class="right floated">
+          <LinkTo @route="account.benefits.open-enrollment.edit" @model={{enrollment.id}}>
+            <EmberTooltip @side="left" @popperContainer="body" @text="Edit Enrollment" />
+            <i class="edit icon"></i>
+          </LinkTo>
+          <ConfirmModal @confirmContent={{concat "Are you sure you want to delete this Open Enrollment ( " (time enrollment.start 'M/D') " - " (time enrollment.end 'M/D')" )"  }} @tagName="span" as |confirm|>
+            <a href="#" class="text-danger" {{on "click" (prevent-default (pipe confirm (fn this.data.deleteRecord enrollment)))}}>
+              <EmberTooltip @side="left" @popperContainer="body" @text="Remove Open Enrollment" />
+              <i class="trash icon"></i>
+            </a>
+          </ConfirmModal>
+        </div>
+        <div class="meta">
+          <span class="ui small text right floated">Created {{time-ago enrollment.created}}</span>
+        </div>
+      </div>
+    </div>
+    {{else}}
+      <div class="ui relaxed divided list">
+        <h2 class="ui center aligned header">Nothing to see here.</h2>
+        <h5 class="center aligned text header">No open enrollments available.
+          <LinkTo @route="account.benefits.open-enrollment.add">Add one</LinkTo>
+        </h5>
+      </div>
+  {{/each}}
+</div>

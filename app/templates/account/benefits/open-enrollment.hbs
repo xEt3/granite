@@ -1,0 +1,15 @@
+<hgroup class="clearfix">
+  <h1 class="ui header left floated">
+    Open Enrollments
+  </h1>
+  <div class="right aligned text floated menu__actions">
+    <h3 class="ui right floated header">
+      <LinkTo @route="account.benefits.open-enrollment.add" class="right floated">
+        <EmberTooltip @side="left" @popperContainer="body" @text="Create an Open Enrollment" />
+        <i class="plus icon"></i>
+      </LinkTo>
+    </h3>
+  </div>
+</hgroup>
+<div class="ui divider"></div>
+{{outlet}}

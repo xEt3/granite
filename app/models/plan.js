@@ -40,7 +40,6 @@ export default class PlanModel extends Model {
   @attr('number') lifeCoverage
   @attr('date') lifeEffective
   @attr('number') maximumCoverage
-  @attr('boolean') voluntary
   @attr('string') contactName
   @attr('string') contactPhone
   @attr('string') contactFax
@@ -56,13 +55,38 @@ export default class PlanModel extends Model {
   @attr('number') ratesFamily
   @attr('number') ratesFixed
   @attr('string') fromService
+  @attr('array') additionalDocuments
+  @attr('boolean') voluntary
+  @attr('string') coinsurance
+  @attr('number') medicalDeductible
+  @attr('number') dentalDeductible
+  @attr('number') deductibleFamily
+  @attr('number') maxOutOfPocket
+  @attr('number') maxOutOfPocketFamily
+  @attr('string') sbcLink
+  @attr('string') spdLink
 
-  // @computed('type')
+  @attr('number', { defaultValue: 0 }) contributionsEmployeeAmount
+  @attr('number', { defaultValue: 0 }) contributionsEmployeeWellnessModifier
+  @attr('string', { defaultValue: 'dollar' }) contributionsEmployeeType
+
+  @attr('number', { defaultValue: 0 }) contributionsSpouseAmount
+  @attr('number', { defaultValue: 0 }) contributionsSpouseWellnessModifier
+  @attr('string', { defaultValue: 'dollar' }) contributionsSpouseType
+
+  @attr('number', { defaultValue: 0 }) contributionsChildrenAmount
+  @attr('number', { defaultValue: 0 }) contributionsChildrenWellnessModifier
+  @attr('string', { defaultValue: 'dollar' }) contributionsChildrenType
+
+  @attr('number', { defaultValue: 0 }) contributionsFamilyAmount
+  @attr('number', { defaultValue: 0 }) contributionsFamilyWellnessModifier
+  @attr('string', { defaultValue: 'dollar' }) contributionsFamilyType
+  @attr('boolean') wellnessPlan
+
   get icon () {
     return (typeMap[this.type] || {}).icon;
   }
 
-  // @computed('type')
   get label () {
     return (typeMap[this.type] || {}).label;
   }

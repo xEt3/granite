@@ -252,16 +252,27 @@ Router.map(function () {
         this.route('assign', { path: '/:authorization_id/assign' });
       });
     });
+    this.route('hr');
     this.route('benefits', function () {
       this.route('plans', function () {
         this.route('integrations', function () {
           this.route('index', { path: '/' });
           this.route('carrier-link', { path: '/setup/link/:carrier_key' });
         });
+
         this.route('add');
         this.route('edit', { path: '/:plan_id/edit' });
+
+        this.route('contributions', function () {
+          this.route('edit', { path: 'edit/:plan_id/' });
+          this.route('edit-all');
+        });
       });
       this.route('enrollments');
+      this.route('open-enrollment', function () {
+        this.route('add');
+        this.route('edit', { path: 'edit/:enrollment_id' });
+      });
     });
   });
 
