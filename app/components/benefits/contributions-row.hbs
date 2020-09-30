@@ -9,7 +9,7 @@
     <td data-label="employee">
       <div class="ui left icon input field pay-rate-number">
         <Input @type="number" @value={{mut @plan.contributionsEmployeeAmount}} />
-          {{#if (eq this.model.contributionsEmployeeType "dollar") }}
+          {{#if (eq @plan.contributionsEmployeeType "dollar") }}
             <i class="dollar icon"></i>
           {{else}}
             <i class="percent icon"></i>
@@ -38,11 +38,10 @@
         </div>
       {{/if}}
     </td>
-
     <td data-label="spouse">
       <div class="ui left icon input field pay-rate-number">
         <Input @type="number" @value={{mut @plan.contributionsSpouseAmount}} />
-          {{#if (eq this.model.contributionsSpouseType "dollar") }}
+          {{#if (eq @plan.contributionsSpouseType "dollar") }}
             <i class="dollar icon"></i>
           {{else}}
             <i class="percent icon"></i>
@@ -75,7 +74,7 @@
     <td data-label="children">
       <div class="ui left icon input field pay-rate-number">
         <Input @type="number" @value={{mut @plan.contributionsChildrenAmount}} />
-          {{#if (eq this.model.contributionsChildrenType "dollar") }}
+          {{#if (eq @plan.contributionsChildrenType "dollar") }}
             <i class="dollar icon"></i>
           {{else}}
             <i class="percent icon"></i>
@@ -108,7 +107,7 @@
     <td data-label="family">
       <div class="ui left icon field input pay-rate-number">
         <Input @type="number" @value={{mut @plan.contributionsFamilyAmount}} />
-          {{#if (eq this.model.contributionsFamilyType "dollar") }}
+          {{#if (eq @plan.contributionsFamilyType "dollar") }}
             <i class="dollar icon"></i>
           {{else}}
             <i class="percent icon"></i>
