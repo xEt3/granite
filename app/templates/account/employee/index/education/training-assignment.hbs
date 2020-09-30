@@ -1,4 +1,37 @@
 <div class="ui raised padded segment container clearfix animated fadeInUp">
-  <LinkTo @route="account.employee.index.education">Back to education</LinkTo>
+  <ConfirmModal @deleteContext={{this.model.title}} as |confirmDelete|>
+    <hgroup class="clearfix">
+      <p>
+        <LinkTo @route="account.employee.index.counseling">
+          <i class="angle left icon"></i>
+          Back To Education
+        </LinkTo>
+      </p>
+
+      <h2 class="ui left floated header">
+      <LinkTo @route="account.employee.index.education.training-assignment" @model={{@model.id}}>
+          {{this.model.name}}
+        </LinkTo>
+        <div class="sub header">
+          {{#if @model.webinar}}
+            <strong>Webinar: {{@model.webinar.webinar.title}}</strong>
+          {{/if}}
+        </div>
+      </h2>
+
+        <UiDropdown @class="item icon top right pointing right floated">
+          <i class="wrench icon"></i><i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="text-danger header">Danger Zone</div>
+            <a href="#" class="text-danger item"
+               {{on "click" (prevent-default (pipe confirmDelete (fn this.data.deleteRecord this.model 'working' this.deleteOptions)))}}>
+              <i class="trash icon"></i>Delete Assignment
+            </a>
+          </div>
+        </UiDropdown>
+    </hgroup>
+  </ConfirmModal>
+
+  <div class="ui divider"></div>
   {{outlet}}
 </div>

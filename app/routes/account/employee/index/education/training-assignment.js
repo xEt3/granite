@@ -1,6 +1,6 @@
 import Route from 'granite/core/route';
 
-export default class TrainingAssignmentRoute extends Route {
+export default class AccountEmployeeTrainingAssignmentRoute extends Route {
   titleToken (model) {
     return model.name;
   }
