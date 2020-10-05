@@ -28,6 +28,7 @@ export default class PlanModel extends Model {
   @attr('string') type
   @attr('string') description
   @attr('string') carrierPlanId
+  @attr('string') carrier
   @attr('string') name
   @attr('number') companyNumber
   @attr('date') effectiveDate
