@@ -81,39 +81,38 @@
     </Modals::AtsAddApplicant>
   </h2>
 
-  <ConfirmModal @confirmContent="Are you sure you want to hire and onboard this candidate?" as |confirm|>
-    <CardPipeline
-      @candidates={{this.activeCandidates}}
-      @newScheduledMeeting={{this.newScheduledMeeting}}
-      @pipeline={{this.model.pipeline}}
-      @onDisqualify={{pipe
-        (set this.appInDisqualifyConfirm _)
-        (fn this.openModal this.disqualifyModalId "disqualify")
-        (fn this.disqualifyCandidate this.appInDisqualifyConfirm)
-      }}
-      @onUnDisqualify={{this.unDisqualifyCandidate}}
-      @onUnHire={{this.unSetHire}}
-      @onSchedule={{pipe
-        (set this.appInScheduler _)
-        this.resetMeeting
-        (fn this.openModal this.schedulerModalId "scheduler")
-        this.saveMeeting
-      }}
-      @onOnboardCandidate={{pipe
-        confirm
-        this.beginOnboarding
-      }}
-      @onLinkSharing={{pipe
-        (set this.appInLinkSharing _)
-        (fn this.openModal this.linkSharingModalId "linkSharing")
-      }}
-      @onAddLabel={{pipe
-        (set this.appInAddLabels _)
-        (fn this.openModal this.labelsModalId "addLabel")
-        this.saveApplicationLabels
-      }}
-    />
-  </ConfirmModal>
+  <CardPipeline
+    @candidates={{this.activeCandidates}}
+    @newScheduledMeeting={{this.newScheduledMeeting}}
+    @pipeline={{this.model.pipeline}}
+    @onDisqualify={{pipe
+      (set this.appInDisqualifyConfirm _)
+      (fn this.openModal this.disqualifyModalId "disqualify")
+      (fn this.disqualifyCandidate this.appInDisqualifyConfirm)
+    }}
+    @onUnDisqualify={{this.unDisqualifyCandidate}}
+    @onUnHire={{this.unSetHire}}
+    @onSchedule={{pipe
+      (set this.appInScheduler _)
+      this.resetMeeting
+      (fn this.openModal this.schedulerModalId "scheduler")
+      this.saveMeeting
+    }}
+    @onOnboardCandidate={{pipe
+      (set this.appInHireConfirm _)
+      (fn this.openModal this.confirmHireModalId "hire")
+      (fn this.beginOnboarding this.appInHireConfirm)
+    }}
+    @onLinkSharing={{pipe
+      (set this.appInLinkSharing _)
+      (fn this.openModal this.linkSharingModalId "linkSharing")
+    }}
+    @onAddLabel={{pipe
+      (set this.appInAddLabels _)
+      (fn this.openModal this.labelsModalId "addLabel")
+      this.saveApplicationLabels
+    }}
+  />
 
   <Modals::AtsConfirmInject
     @applicants={{this.selectedApplications}}
@@ -124,6 +123,13 @@
     @model={{this.appInDisqualifyConfirm}}
     @modalId={{this.disqualifyModalId}}
     @onResponse={{fn this.modalResponse "disqualify"}} />
+
+  <Modals::AtsHire
+    @model={{hash
+      onboardingForms=this.model.onboardingForms
+      candidate=this.appInHireConfirm}}
+    @modalId={{this.confirmHireModalId}}
+    @onResponse={{fn this.modalResponse "hire"}} />
 
   <Modals::AtsScheduler
     @model={{this.appInScheduler}}

@@ -1,0 +1,95 @@
+<UiModal @id={{this.modalId}} @class={{if @model.candidate.employee  "modal__ats-employee-hire-confirm"}}>
+  <div class="header">
+    Hire Candidate
+  </div>
+  {{#if (and @model.candidate (not @model.candidate.employee))}}
+    <div class="content">
+      <form class="ui form">
+        <div class={{if @model.candidate.autoOnboarding "three fields" "field"}}>
+          <div class="field">
+            <label for="onboarding-questions">
+              Request more information for onboarding
+              <i class="ui question circle icon">
+                <EmberTooltip
+                  side="right"
+                  popperContainer="#onboarding-questions"
+                  text="Automated requesting for more onboarding information allows you to select a time and form, and we take care of the rest. On the date selected, otherwise immediately, we'll send a link via email to a onboarding questions for the employee to fill out. When they do, you'll be notified." />
+              </i>
+            </label>
+            <UiCheckbox
+              @id="onboarding-questions"
+              @class="toggle"
+              @label={{if @model.candidate.autoOnboarding "Obtain more onboarding information" "Obtain onboarding information directly"}}
+              @checked={{@model.candidate.autoOnboarding}}
+              @onChange={{set @model.candidate.autoOnboarding _}} />
+          </div>
+          {{#if @model.candidate.autoOnboarding}}
+            <div class="field">
+              <UiCalendar
+                @class="field"
+                @type="date"
+                @label="When should the onboarding questions become available?"
+                @dateValue={{@model.candidate.delayOnboardingResponseDate}}
+                @onChange={{set @model.candidate.delayOnboardingResponseDate _}} />
+            </div>
+
+            <div class="field">
+              <label for="onboarding-questions-form">
+                Form to use*
+                <LinkTo @route="account.settings.index.forms" @target="_blank">
+                  <EmberTooltip
+                    @side="top"
+                    @popperContainer="body"
+                    @text="Manage your forms" />
+                  <i class="ui wrench icon"></i>
+                </LinkTo>
+                <Modals::FormCreator
+                  @formType="onboarding-questions"
+                  @allowMultiple={{true}}
+                  @mapFields={{this.employeeFields}}
+                  @onCreateForm={{this.interimAddForm}} as |openFormModal|>
+                  <a href="#" class="right floated" {{on "click" (prevent-default (fn openFormModal null))}}>Create a new form...</a>
+                </Modals::FormCreator>
+              </label>
+              <UiDropdown
+                @id="onboarding-questions-form"
+                @class="search selection"
+                @selected={{@model.candidate.onboardingQuestionForm}}
+                @onChange={{set @model.candidate.onboardingQuestionForm _}} as |execute mapper| >
+                <div class="default text">Select a form to use</div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                  <div class="item" data-value="">Default Form</div>
+                  {{#each this.model.onboardingForms as |onboardingQuestions|}}
+                    <div class="item" data-value={{map-value mapper onboardingQuestions}}>
+                      {{onboardingQuestions.name}}
+                    </div>
+                  {{/each}}
+                </div>
+              </UiDropdown>
+            </div>
+          {{/if}}
+        </div>
+
+      </form>
+    </div>
+  {{/if}}
+  <div class="actions">
+    {{#if (and (not @model.candidate.employee) @model.candidate.autoOnboarding)}}
+      <span>
+        Sending onboarding questions to
+        {{#if @model.candidate}}
+          to {{@model.candidate.person.firstName}} (<a href="mailto:{{@model.candidate.person.email}}"
+             class="ats-confirm-disqualify__email-link">{{@model.candidate.person.email}}</a>)
+        {{/if}}
+      </span>
+    {{/if}}
+    <button class="ui inverted red button" type="button" {{on "click" (fn this.respond false)}}>
+      Cancel
+    </button>
+    <button class="ui green right labeled icon button" type="button" {{on "click" (fn this.respond true)}}>
+      Confirm Hire
+      <i class="check icon"></i>
+    </button>
+  </div>
+</UiModal>

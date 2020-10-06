@@ -61,6 +61,16 @@ export default class Employee extends Model.extend(Validations) {
 
   @attr('string') employeeNumber;
 
+  @attr('Boolean') autoOnboarding;
+
+  @attr('date') delayOnboardingResponseDate;
+
+  @belongsTo('form', {
+    async:   true,
+    inverse: null
+  })
+  onboardingQuestionForm;
+
   @computed('ssn')
   get ssnMasked () {
     var ssn = this.ssn;

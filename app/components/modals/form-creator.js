@@ -1,7 +1,7 @@
 /*
   USAGE
-
   <Modals::FormCreator
+    @allowMultiple=Boolean
     @formType="exit-interview"
     @onCreateForm={{this.setForm}} as |openFormModal|
   >
@@ -47,7 +47,7 @@ export default class ModalsFormCreatorComponent extends Component {
 
   @action
   openFormModal (existingForm) {
-    const { store, args: { formType } } = this;
+    const { args: { formType }, store, allowMultiple = false } = this;
 
     this.form = existingForm || store.createRecord('form', {
       formType,
@@ -57,6 +57,7 @@ export default class ModalsFormCreatorComponent extends Component {
     $(`#${this.modalId}`).modal({
       detachable: true,
       closable:   false,
+      allowMultiple,
       context:    '.ember-application'
     }).modal('show');
   }
