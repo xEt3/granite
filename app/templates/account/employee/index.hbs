@@ -41,6 +41,11 @@
             <LinkTo @route="account.employee.offboard.index" class="item"><i class="cut icon"></i>Offboard
               Employee...</LinkTo>
           {{/if}}
+          {{#if (and this.model.eligibleForRehire this.model.terminatedOn)}}
+            <a href="#" class="item" {{on 'click' (fn this.rehire)}}>
+              <i class="corner undo icon"></i> Rehire
+            </a>
+          {{/if}}
           {{#unless this.model.activatedOn}}
             <div class="item">
               <ConfirmModal as |confirmActivation|>

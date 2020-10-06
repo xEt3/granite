@@ -43,7 +43,7 @@
 
 <div class="ui stackable two column grid">
   <div class="column">
-    {{#if this.model.offboardingCompleted}}
+    {{#if (and this.model.offboardingCompleted this.model.terminatedOn)}}
       <div class="ui raised segment">
         <span class="ui orange left ribbon label"><i class="cut icon"></i>Final Information</span>
         {{!-- {{#link-to "account.employee.index.edit.index" class="ui right corner orange label"}}
@@ -207,7 +207,32 @@
       </LinkTo>
       <div class="ui basic segment">
         <p class="text">
-          {{#if (or this.model.probationUntil this.model.ssn)}}
+          {{#if (or this.model.probationUntil this.model.ssn this.model.eventHistory.length) }}
+            <UiModal @name="modal__notes" @id="modal__notes" @class="small form">
+              <i class="close icon"></i>
+              <div class="header">
+                Separation Notes
+              </div>
+              <div class="content">
+                {{#each-in this.model.eventHistory as |key event|}}
+                  <div class="line-item-value">
+                    <i>{{time event.termination 'M/D/YYYY'}}</i>
+                    <u>{{event.notes}}</u>
+                  </div>
+                {{/each-in}}
+              </div>
+            </UiModal>
+            {{#if this.model.eventHistory}}
+              <div class="line-item-value">
+                <i>
+                  Notes
+                </i>
+                <EmberTooltip @side='right' @text='View all notes'/>
+                <u>
+                  <a href="#" class="right floated" {{on "click" (fn this.openNotesModal)}}>View</a>
+                </u>
+              </div>
+            {{/if}}
             {{#if this.model.ssn}}
               <div class="line-item-value">
                 <i>
