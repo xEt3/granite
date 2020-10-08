@@ -22,7 +22,9 @@ export default class JobApplicationController extends Controller {
 
     return steps && responses ? steps.toArray().map(step => ({
       step,
-      response: responses.findBy('step', step.get('id'))
+      response: responses.findBy('step', step.get('id')),
+      date:     typeof this.response.value === 'array' ? this.response.value.text && moment(this.response.value.text).isValid() : this.response.value && moment(this.response.value).isValid()
+
     })) : false;
   }
 }
