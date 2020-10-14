@@ -11,7 +11,7 @@ export default class IntegrationsRoute extends Route {
   setupController (controller, plans) {
     controller.setProperties({
       plans,
-      groupedPlans: plans && plans.reduce((group, plan) => {
+      groupedPlans: plans && plans.length && plans.reduce((group, plan) => {
         const { label } = plan;
 
         if (!group[label]) {
