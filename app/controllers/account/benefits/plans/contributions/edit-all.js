@@ -7,9 +7,9 @@ export default class ContributionsEditAllController extends Controller {
 
   @action
   async save (wp) {
-    let plans = await this.get(';model');
-    for (let i = 0; i <= plans.length; i++) {
-      await plans[i].set('wellnessPlan', wp);
+    let plans = await this.model;
+    for (let i = 0; i <= plans.length - 1; i++) {
+      plans[i].wellnessPlan = wp;
       await this.data.saveRecord(plans[i]);
     }
     this.transitionToRoute('account.benefits.plans');
