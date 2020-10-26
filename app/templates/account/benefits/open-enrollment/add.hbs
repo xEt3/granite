@@ -1,4 +1,4 @@
-<form class="ui form" {{on "submit" (prevent-default (pipe (fn this.data.saveRecord this.model 'working' this.afterSaveOptions) this.afterSave))}}>
+<form class="ui form" {{on "submit" (prevent-default (pipe (fn this.data.saveRecord this.model "working" this.afterSaveOptions) this.afterSave))}}>
   <QuickForm class="ui two fields"
     @form={{this.enrollmentForm}}
     @model={{this.model}}

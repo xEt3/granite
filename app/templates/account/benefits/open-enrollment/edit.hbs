@@ -1,4 +1,4 @@
-<form class="ui form" {{on "submit" (prevent-default (fn this.data.saveRecord this.model 'working' this.afterSaveOptions))}}>
+<form class="ui form" {{on "submit" (prevent-default (fn this.data.saveRecord this.model "working" this.afterSaveOptions))}}>
   <QuickForm class="ui two fields"
     @form={{this.enrollmentForm}}
     @model={{this.model}}

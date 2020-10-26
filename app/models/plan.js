@@ -1,4 +1,5 @@
 import Model, { attr } from '@ember-data/model';
+import { hasMany } from '@ember-data/model';
 
 const typeMap = {
   M: {
@@ -67,6 +68,10 @@ export default class PlanModel extends Model {
   @attr('string') sbcLink
   @attr('string') spdLink
 
+  @hasMany('age-rate-tier') ratesAgeTiersEmployee
+  @hasMany('age-rate-tier') ratesAgeTiersSpouse
+  @hasMany('age-rate-tier') ratesAgeTiersDependent
+
   @attr('number', { defaultValue: 0 }) contributionsEmployeeAmount
   @attr('number', { defaultValue: 0 }) contributionsEmployeeWellnessModifier
   @attr('string', { defaultValue: 'dollar' }) contributionsEmployeeType
@@ -90,5 +95,39 @@ export default class PlanModel extends Model {
 
   get label () {
     return (typeMap[this.type] || {}).label;
+  }
+
+  get priceRange () {
+    const prices = [
+      this.ratesEmployee,
+      this.ratesSpouse,
+      this.ratesDependent,
+      this.ratesFamily,
+      this.ratesFixed
+    ].filter(Boolean);
+
+    let ratesAgeTiers = [ 'Employee', 'Spouse', 'Dependent' ];
+
+    let ageTiers = {};
+
+    ratesAgeTiers.map(tier => {
+      if ((this[`ratesAgeTiers${tier}`] || []).length) {
+        const tieredRates = this[`ratesAgeTiers${tier}`].mapBy('rate');
+        ageTiers[tier.toLowerCase()] = {
+          min: Math.min(...tieredRates),
+          max: Math.max(...tieredRates)
+        };
+        return ageTiers;
+      }
+    });
+
+    if (ageTiers) {
+      return ageTiers;
+    }
+
+    return {
+      min: Math.min(...prices),
+      max: Math.max(...prices)
+    };
   }
 }

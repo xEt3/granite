@@ -1,7 +1,6 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
-import { computed } from '@ember/object';
 
 export default class OpenEnrollment extends Model {
   @belongsTo('company') company
