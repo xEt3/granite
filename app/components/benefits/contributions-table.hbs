@@ -11,8 +11,10 @@
     </thead>
     <tbody>
     {{#each @plan as |plan|}}
-      <Benefits::ContributionsRow @plan={{plan}} />
-      {{else}}
+      {{#if (not-eq plan.type "L") }}
+        <Benefits::ContributionsRow @plan={{plan}} />
+      {{/if}}
+    {{else}}
       <Benefits::ContributionsRow @plan={{@plan}} />
     {{/each}}
     </tbody>

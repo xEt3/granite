@@ -86,54 +86,56 @@
       {{/if}}
     </div>
   </div>
-  <div class="extra content plan-card__contributions">
-    <strong>Contributions</strong>
-      <LinkTo @route="account.benefits.plans.contributions.edit"  @model={{@plan.id}} class="right floated">
-        <i class="ui pencil icon"></i>Edit
-      </LinkTo>
-    <div class="ui list">
-      {{#if @plan.contributionsEmployeeAmount}}
-        <div class="line-item-value">
-          <i>Employee</i>
-          {{#if (eq @plan.contributionsEmployeeType "dollar")}}
-            <u>{{format-money @plan.contributionsEmployeeAmount}}</u>
-          {{else}}
-            <u>{{@plan.contributionsEmployeeAmount}}%</u>
-          {{/if}}
-        </div>
-      {{/if}}
-      {{#if @plan.contributionsSpouseAmount}}
-        <div class="line-item-value">
-          <i>Spouse</i>
-          {{#if (eq @plan.contributionsSpouseType "dollar")}}
-            <u>{{format-money @plan.contributionsSpouseAmount}}</u>
-          {{else}}
-            <u>{{@plan.contributionsSpouseAmount}}%</u>
-          {{/if}}
-        </div>
-      {{/if}}
-      {{#if @plan.contributionsChildrenAmount}}
-        <div class="line-item-value">
-          <i>Children</i>
-          {{#if (eq @plan.contributionsChildrenType "dollar")}}
-            <u>{{format-money @plan.contributionsChildrenAmount}}</u>
-          {{else}}
-            <u>{{@plan.contributionsChildrenAmount}}%</u>
-          {{/if}}
-        </div>
-      {{/if}}
-      {{#if @plan.contributionsFamilyAmount}}
-        <div class="line-item-value">
-          <i>Family</i>
-          {{#if (eq @plan.contributionsFamilyType "dollar")}}
-            <u>{{format-money @plan.contributionsFamilyAmount}}</u>
-          {{else}}
-            <u>{{@plan.contributionsFamilyAmount}}%</u>
-          {{/if}}
-        </div>
-      {{/if}}
+  {{#if (not-eq @plan.type "L") }}
+    <div class="extra content plan-card__contributions">
+      <strong>Contributions</strong>
+        <LinkTo @route="account.benefits.plans.contributions.edit"  @model={{@plan.id}} class="right floated">
+          <i class="ui pencil icon"></i>Edit
+        </LinkTo>
+      <div class="ui list">
+        {{#if @plan.contributionsEmployeeAmount}}
+          <div class="line-item-value">
+            <i>Employee</i>
+            {{#if (eq @plan.contributionsEmployeeType "dollar")}}
+              <u>{{format-money @plan.contributionsEmployeeAmount}}</u>
+            {{else}}
+              <u>{{@plan.contributionsEmployeeAmount}}%</u>
+            {{/if}}
+          </div>
+        {{/if}}
+        {{#if @plan.contributionsSpouseAmount}}
+          <div class="line-item-value">
+            <i>Spouse</i>
+            {{#if (eq @plan.contributionsSpouseType "dollar")}}
+              <u>{{format-money @plan.contributionsSpouseAmount}}</u>
+            {{else}}
+              <u>{{@plan.contributionsSpouseAmount}}%</u>
+            {{/if}}
+          </div>
+        {{/if}}
+        {{#if @plan.contributionsChildrenAmount}}
+          <div class="line-item-value">
+            <i>Children</i>
+            {{#if (eq @plan.contributionsChildrenType "dollar")}}
+              <u>{{format-money @plan.contributionsChildrenAmount}}</u>
+            {{else}}
+              <u>{{@plan.contributionsChildrenAmount}}%</u>
+            {{/if}}
+          </div>
+        {{/if}}
+        {{#if @plan.contributionsFamilyAmount}}
+          <div class="line-item-value">
+            <i>Family</i>
+            {{#if (eq @plan.contributionsFamilyType "dollar")}}
+              <u>{{format-money @plan.contributionsFamilyAmount}}</u>
+            {{else}}
+              <u>{{@plan.contributionsFamilyAmount}}%</u>
+            {{/if}}
+          </div>
+        {{/if}}
+      </div>
     </div>
-  </div>
+  {{/if}}
   <div class="extra content plan-card__qualifications">
     <div class="line-item-value">
       <i>Qualifications</i>
