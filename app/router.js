@@ -274,6 +274,7 @@ Router.map(function () {
         this.route('edit', { path: 'edit/:enrollment_id' });
       });
     });
+    this.route('task', { path: 'task/:task_id' });
   });
 
   this.route('shared', function () {
