@@ -1,0 +1,36 @@
+<div class="ui raised padded segment container task-container {{if this.model.taskPending 'task-container--loading'}}">
+  <h2>
+    <i class="cloud icon"></i> Task - {{this.model.name}}
+  </h2>
+  <div class="ui divider"></div>
+
+  {{#if this.model.taskPending}}
+    <div class="ui active inverted dimmer">
+      <div class="ui indeterminate massive text loader">
+        {{or this.model.status "Task queued"}}
+        <div class="smaller text">This might take some time. You can bookmark this page and come back later, or check in this tab later.</div>
+      </div>
+    </div>
+  {{else if this.model.error}}
+    <h1 class="center aligned text text-danger"><i class="times icon"></i> Error running task</h1>
+    <p class="center aligned text">
+      {{this.model.error}}
+    </p>
+  {{else}}
+    <h1 class="center aligned text text-green"><i class="check icon"></i> {{this.model.status}}</h1>
+    {{#if this.data.statuses.generateSecureLink.isLoading}}
+      <div class="ui active inverted dimmer">
+        <div class="ui indeterminate large text loader">
+          Generating a secure link for your file
+        </div>
+      </div>
+    {{/if}}
+    <p class="center aligned text">
+      {{#if this.secureUrl}}
+        <a href={{this.secureUrl}} download><i class="cloud download icon"></i> Download/View File</a>
+      {{else if this.model.result.hasSecuredFile}}
+        <a href="#" {{on "click" this.generateSecureLink}}><i class="arrow down icon"></i> Get Secure File Download</a>
+      {{/if}}
+    </p>
+  {{/if}}
+</div>

@@ -1,0 +1,11 @@
+<UiDropdown @class="right floated top pointing inline" ...attributes>
+  <h3 class="ui inline header">
+    <EmberTooltip @side="left" @popperContainer="body" @text="Export current enrollment data..." />
+    <a href="#" id="export-trigger"><i class="download icon"></i></a>
+  </h3>
+  <div class="menu">
+    <a href="#" class="item" {{on "click" (prevent-default (fn this.exportBenefits "csv"))}}>
+      CSV (Comma-separated)
+    </a>
+  </div>
+</UiDropdown>
