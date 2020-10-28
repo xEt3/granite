@@ -1,0 +1,26 @@
+<div class="ui raised segment">
+  <div class="ui equal width stackable grid container">
+    <div class="twelve wide column">
+      <h1>
+        <div class="ui small rounded image">
+          <Display::EmployeePicture @url={{this.model.employee.picture}} @employeeId={{this.model.employee.id}} />
+        </div>
+        <div class="content">
+          Benefit Enrollment for {{this.model.employee.fullName}}
+          {{!-- <div class="sub header text-white">
+            {{#if this.model.jobDescription}}
+              <LinkTo @route="account.job-description" @model={{this.model.jobDescription.id}}>
+                {{this.model.jobTitle}} <br>
+              </LinkTo>
+            {{else}}
+              {{this.model.jobTitle}} <br>
+            {{/if}}
+            {{#if this.model.hireDate}}
+              Since {{time this.model.hireDate "MMMM YYYY"}}
+            {{/if}}
+          </div> --}}
+        </div>
+      </h1>
+    </div>
+  </div>
+</div>
