@@ -81,6 +81,19 @@
   </div>
   <div class="ui column">
     <h2>Enrolled Products</h2>
+    <div class="ui two cards">
+      <Benefits::DependentElectionCard
+        class="ui card"
+        @enrollment={{this.model}}
+        @model={{this.model.employee}} />
+
+      {{#each this.model.dependents as |dependent|}}
+        <Benefits::DependentElectionCard
+          class="ui card"
+          @enrollment={{this.model}}
+          @model={{dependent}} />
+      {{/each}}
+    </div>
   </div>
   <div class="ui column">
     <h2>Estimated Cost</h2>

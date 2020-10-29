@@ -27,8 +27,8 @@ export default class BenefitsDependentElectionCardComponent extends Component {
         ...cat,
         elections: electionsForType.filter(elec => isEmployee || elec.dependents.find(dep => dep.id === id)).map(elec => {
           return {
-            ...elec,
-            amount: (elec.amounts || []).find(amtGroup => isEmployee ? !amtGroup.dependent : amtGroup.dependent === id)
+            model:  elec,
+            amount: ((elec.amounts || []).find(amtGroup => isEmployee ? !amtGroup.dependent : amtGroup.dependent === id) || {}).amount
           };
         })
       };

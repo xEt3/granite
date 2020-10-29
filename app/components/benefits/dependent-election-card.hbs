@@ -10,12 +10,10 @@
       {{#each this.electedCategories as |category|}}
         <div>
           <span class="ui basic label">{{category.title}}</span>
-          {{#each category.election as |elect|}}
-          {{log elect}}
-          {{log elect.plan}}
-            {{elect.plan.name}}
-            {{#if (eq elect.planType "L")}}
-              ${{or elect.amount elect.plan.lifeCoverage}}
+          {{#each category.elections as |elect|}}
+            {{elect.model.plan.name}}
+            {{#if (eq elect.model.planType "L")}}
+              {{format-money (or elect.amount elect.model.plan.lifeCoverage) precision=0}}
             {{/if}}
           {{/each}}
         </div>

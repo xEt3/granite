@@ -10,7 +10,7 @@ export default class EnrollmentCostBreakdownSubelectionItemComponent extends Com
             relationship ?
               'Dependent' :
               'Employee',
-          ageTier = plan.get('tierForAge')(dependentType, dependentForCoverage.age) || {};
+          ageTier = plan.get('tierForAge')(dependentType, dependentForCoverage.get('age')) || {};
 
     return (subElection.amount || 0) / plan.get('lifeCoverage') * (ageTier.rate || 0);
   }
