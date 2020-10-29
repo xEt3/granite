@@ -20,6 +20,7 @@ export default class EnrollmentModel extends Model {
   @attr('string') signature
   @attr('string') signatureIP
   @attr('string') qualifyingEvent
+  @attr() electionsByType
 
   // Dates
   @attr('date', { defaultValue: Date.now }) created
@@ -51,4 +52,22 @@ export default class EnrollmentModel extends Model {
   @hasMany('election') elections
   // @hasMany('beneficiary') beneficiaries
 
+
+  get electionsByTypeComputed () {
+    return this.elections.reduce((typeMap, elect) => {
+      const planType = elect.planType;
+
+      if (!planType) {
+        return typeMap;
+      }
+
+      if (!typeMap[planType]) {
+        typeMap[planType] = [];
+      }
+
+      typeMap[planType].push(elect);
+
+      return typeMap;
+    }, {});
+  }
 }
