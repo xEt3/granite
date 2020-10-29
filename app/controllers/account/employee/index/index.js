@@ -2,6 +2,8 @@ import Controller from 'granite/core/controller';
 import { computed, action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
+import $ from 'jquery';
+import moment from 'moment';
 
 export default class AccountEmployeeIndexIndexController extends Controller {
   @service ajax
@@ -62,5 +64,10 @@ export default class AccountEmployeeIndexIndexController extends Controller {
 
     model.customFields = customFields;
     this.data.saveRecord(this.model);
+  }
+
+  @action
+  openNotesModal () {
+    $('#modal__notes').modal({ detachable: true }).modal('show');
   }
 }

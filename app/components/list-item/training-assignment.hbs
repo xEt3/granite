@@ -1,8 +1,9 @@
 <div class="item">
-  {{!-- {{#link-to "account.employee.index.education.certification" model.id class="item"}} --}}
   <div class="content">
     <h3 class="header">
-      {{@model.name}}
+      <LinkTo @route="account.employee.index.education.training-assignment" @model={{@model.id}} class="item">
+        {{@model.name}}
+      </LinkTo>
     </h3>
     <div class="meta">
       {{#if @model.webinar}}
@@ -14,5 +15,4 @@
     <strong>{{@model.status}}</strong>
     <div class="ui small text">Added {{time-ago @model.created}}{{#if @model.creator}} by {{@model.creator.fullName}}{{/if}}</div>
   </div>
-  {{!-- {{/link-to}} --}}
 </div>

@@ -124,6 +124,9 @@ Router.map(function () {
             this.route('edit');
             this.route('renewal');
           });
+          this.route('training-assignment', { path: '/training-assignment/:assignment_id' }, function () {
+            this.route('index');
+          });
         });
       });
       this.route('onboard', function () {

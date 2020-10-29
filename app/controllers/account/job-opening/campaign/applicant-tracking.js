@@ -31,6 +31,7 @@ export default class AccountJobOpeningCampaignApplicantTrackingController extend
   confirmDisqualifyModalId = 'modal__ats-confirm-disqualify'
   disqualifyModalId =        'modal__ats-disqualify'
   schedulerModalId =         'modal__ats-scheduler'
+  confirmHireModalId =       'modal__ats-confirm-hire'
   linkSharingModalId =       'modal__ats-link-sharing'
   labelsModalId =            'modal__ats-labels'
   showDisqualified =         false
@@ -135,7 +136,12 @@ export default class AccountJobOpeningCampaignApplicantTrackingController extend
     // Check for existing employee record,
     // if nothing exists, create one
     if (!jobApplication.isEmployee && applicant) {
-      let employeeData = Object.assign({}, applicant.getProperties(employeeProps), { onboarding: true });
+      let employeeData = Object.assign({}, applicant.getProperties(employeeProps), {
+        onboarding:                  true,
+        autoOnboarding:              jobApplication.autoOnboarding,
+        onboardingQuestionForm:      jobApplication.onboardingQuestionForm,
+        delayOnboardingResponseDate: jobApplication.delayOnboardingResponseDate
+      });
       employee = await this.store.createRecord('employee', employeeData);
     }
 
@@ -155,7 +161,7 @@ export default class AccountJobOpeningCampaignApplicantTrackingController extend
       await employee.save();
 
       if (wasNew) {
-        this.transitionToRoute('account.employee.onboard', employee.id);
+        this.transitionToRoute(!employee.autoOnboarding ? 'account.employee.onboard' : 'account.employee', employee.get('id'));
       }
 
       success(null, true);

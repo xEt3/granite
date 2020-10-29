@@ -99,7 +99,7 @@ export default class AccountEmployeeIssueCorrectiveActionController extends Cont
       detachable: true,
       onHidden:   () => {
         if (!this.respondedFollowup) {
-          this.respondedFollowup(false);
+          this.respondFollowup(false);
 
         }
       }

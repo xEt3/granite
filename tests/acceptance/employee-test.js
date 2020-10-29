@@ -56,9 +56,9 @@ module('Acceptance | employee', function (hooks) {
       assert.dom(`.ui.stackable.two.column.grid .column:nth-child(${columnIndex + 1}) .raised.segment:nth-child(${i + 1}) span`).hasText(header);
     }));
 
-    assert.dom('.segment.ui p.text div').hasText('SSN ***-**-4444');
+    assert.dom('.segment.ui p.text div.line-item-value').hasText('SSN ***-**-4444');
     await click('div.line-item-value u a i.icon');
-    assert.dom('.segment.ui p.text div').hasText('SSN 123-12-4444');
+    assert.dom('.segment.ui p.text div.line-item-value').hasText('SSN 123-12-4444');
     assert.dom('div.column:nth-child(1) .raised:nth-child(2) div.segment.basic').hasText(`${employee.addressLine1}, ${employee.addressCity}, ${employee.addressState} ${employee.addressZip}`);
     assert.dom('.column .raised:nth-child(2) .basic p.text').hasText(`Date of Birth ${moment(employee.dateOfBirth).format('M/D/YY')}`);
     assert.dom('div.list div.line-item-value u').hasText(Object.values(employee.customFields)[0]);

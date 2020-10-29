@@ -16,7 +16,9 @@ export default class AccountIndexRoute extends Route {
   }
 
   async beforeModel () {
-    let company = await this.auth.get('user.company');
+    let user = await this.auth.get('user'),
+        company = await user.get('company');
+
     if (company && !company.firstStepsCompletedOn) {
       return this.transitionTo('account.first-steps');
     }

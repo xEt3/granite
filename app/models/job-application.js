@@ -45,6 +45,7 @@ export default Model.extend({
     async:   true,
     inverse: null
   }),
+  autoOnboarding: attr('boolean'),
 
   completedOn: attr('date'),
   reviewedOn:  attr('date'),

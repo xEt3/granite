@@ -25,6 +25,8 @@ export default class Employee extends Model.extend(Validations) {
 
   @attr('string') middleName;
 
+  @attr('array') eventHistory;
+
   @attr('string') lastName;
 
   @attr('string') suffixName;
@@ -61,7 +63,16 @@ export default class Employee extends Model.extend(Validations) {
 
   @attr('string') employeeNumber;
 
-  @computed('ssn')
+  @attr('Boolean') autoOnboarding;
+
+  @attr('date') delayOnboardingResponseDate;
+
+  @belongsTo('form', {
+    async:   true,
+    inverse: null
+  })
+  onboardingQuestionForm;
+
   get ssnMasked () {
     var ssn = this.ssn;
     return ssn ? ssn.replace(/\D/g, '').replace(/(?:\d{5})(\d{4})/, '***-**-$1') : ssn;
@@ -104,8 +115,7 @@ export default class Employee extends Model.extend(Validations) {
   @belongsTo('company-user', {
     async:   true,
     inverse: null
-  })
-  offboarder;
+  }) offboarder;
 
   @attr('number') offboardingProgress;
 

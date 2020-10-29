@@ -24,7 +24,11 @@ export default class AccountJobOpeningCampaignApplicantTrackingRoute extends Rou
     return {
       // Job opening
       jobOpening,
-      job:          jobOpening.job,
+      job:             jobOpening.job,
+      onboardingForms: (await this.store.query('form', {
+        formType: 'onboarding-questions',
+        company:  jobOpening.get('company.id')
+      })).toArray(),
       // Applications for this pipeline
       applications: await this.store.query('job-application', applicationsQuery),
       employees:    await this.store.query('employee', { sort: { lastName: -1 } }),

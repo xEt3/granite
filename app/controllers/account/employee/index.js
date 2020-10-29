@@ -52,4 +52,26 @@ export default class AccountEmployeeIndexController extends Controller {
       error(e);
     }
   }
+
+  @action
+  async rehire () {
+    this.model.eventHistory.push({
+      termination: this.model.terminatedOn,
+      rehired:     new Date(),
+      notes:       this.model.separationNotes
+    });
+    this.model.setProperties({
+      hireDate:             null,
+      terminatedOn:         null,
+      activatedOn:          null,
+      eligibleForRehire:    null,
+      activationId:         null,
+      offboardingComplete:  null,
+      probationUntil:       null,
+      offboardingCompleted: null,
+      offboarder:           null
+    });
+    await this.model.save();
+    this.transitionToRoute('account.employee.onboard.index');
+  }
 }

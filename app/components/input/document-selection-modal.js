@@ -27,6 +27,7 @@ export default class InputDocumentSelectionModalComponent extends Component {
   searchText =        ''
   selectedDocuments = A()
   show =              false
+  systemUse =         false
 
   constructor () {
     super(...arguments);

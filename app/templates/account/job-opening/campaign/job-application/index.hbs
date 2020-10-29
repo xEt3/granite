@@ -91,7 +91,11 @@
                 No response
               </div>
             {{/if}}
-            {{or group.response.value.text group.response.value}}
+            {{#if group.date}}
+              {{time (or group.response.value group.response.value.text)}}
+            {{else}}
+              {{or group.response.value.text group.response.value}}
+            {{/if}}
           {{/if}}
         </p>
       </div>
