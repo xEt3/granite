@@ -1,0 +1,51 @@
+{{#if @election.plan.lifeCoverage}}
+  {{#if @election.plan.ratesFixed}}
+    <div class="line-item-value">
+      <i>{{format-money @election.plan.lifeCoverage precision=0}} {{@election.plan.name}}</i>
+      <u>
+        {{format-money @election.plan.ratesFixed}}
+      </u>
+    </div>
+  {{else}}
+    <p>{{@election.plan.name}}</p>
+    {{#each this.sortedAmounts as |subElection|}}
+      <Enrollment::CostBreakdownSubelectionItem
+        @employee={{@employee}}
+        @enrollment={{@enrollment}}
+        @subElection={{subElection}}
+        @plan={{@election.plan}}
+        @election={{@election}} />
+    {{/each}}
+  {{/if}}
+{{else}}
+  <div class="line-item-value">
+    <i>
+      <span class="ui basic mini label">{{@election.coverageLevelHumanized}}</span>
+      {{@election.plan.description}}
+    </i>
+    <u>
+      {{#if @election.grossCost}}
+        {{format-money @election.grossCost}}
+      {{else}}
+        N/A
+      {{/if}}
+    </u>
+  </div>
+{{/if}}
+
+{{#if
+  (if @useWellnessRate
+    @election.employerContributions.wellness
+    @election.employerContributions.nonWellness
+)}}
+  <div class="line-item-value">
+    <i>Employer Contribution</i>
+    <u class="text-green">
+      {{format-money (if
+        @useWellnessRate
+        @election.employerContributions.wellness
+        @election.employerContributions.nonWellness
+      )}}
+    </u>
+  </div>
+{{/if}}

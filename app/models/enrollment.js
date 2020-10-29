@@ -18,12 +18,15 @@ export default class EnrollmentModel extends Model {
   @attr('array') waivingDependents
   @attr('string') waivingDependentsReason
   @attr('string') signature
+  @attr('string') signatureIP
+  @attr('string') qualifyingEvent
 
   // Dates
   @attr('date', { defaultValue: Date.now }) created
   @attr('date') signedOn
 
   // Relationships
+  @belongsTo('file') qualifyingDoc
   @belongsTo('company', {
     async:   true,
     inverse: null

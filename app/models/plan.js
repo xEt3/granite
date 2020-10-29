@@ -24,7 +24,18 @@ const typeMap = {
   }
 };
 
+const AZ = 'abcdefghijklmnopqrstuvwxyz'.split('');
+
+function generateHSLStr (h, s, l) {
+  return `hsl(${h}deg, ${s}%, ${l}%)`;
+}
+
 export default class PlanModel extends Model {
+  constructor () {
+    super(...arguments);
+    this.tierForAge = this.tierForAge.bind(this);
+  }
+
   @attr('string') number
   @attr('string') type
   @attr('string') description
@@ -89,6 +100,15 @@ export default class PlanModel extends Model {
   @attr('string', { defaultValue: 'dollar' }) contributionsFamilyType
   @attr('boolean') wellnessPlan
 
+  get rates () {
+    return {
+      employee:   this.contributionsEmployeeAmount + (this.wellnessPlan ? this.contributionsEmployeeWellnessModifier : 0),
+      spouse:     this.contributionsSpouseAmount + (this.wellnessPlan ? this.contributionsSpouseWellnessModifier : 0),
+      family:     this.contributionsFamilyAmount + (this.wellnessPlan ? this.contributionsFamilyWellnessModifier : 0),
+      dependents: this.contributionsChildrenAmount + (this.wellnessPlan ? this.contributionsChildrenWellnessModifier : 0)
+    };
+  }
+
   get icon () {
     return (typeMap[this.type] || {}).icon;
   }
@@ -129,5 +149,70 @@ export default class PlanModel extends Model {
       min: Math.min(...prices),
       max: Math.max(...prices)
     };
+  }
+
+
+  get numRepresentation () {
+    return btoa(`${this.type} ${this.name} ${this.networkName}`).substr(0, 100).split('').reduce((tot, b) => {
+      return tot + (!isNaN(parseInt(b, 0)) ? parseInt(b, 0) : AZ.indexOf(b.toLowerCase())) || 1;
+    }, 0);
+  }
+
+  get colorway () {
+    const hue = this.numRepresentation % 227, // this dodges purple, it looks gross :P
+          saturation = Math.max(Math.min(this.numRepresentation % 90, 60), 30),
+          lightness = Math.max(this.numRepresentation % 75, 60);
+
+    return {
+      hue,
+      saturation,
+      lightness,
+      whiteText: lightness / 100 <= 0.2,
+      string:    generateHSLStr(hue, saturation, lightness)
+    };
+  }
+
+  get colorwayShades () {
+    const {
+      hue,
+      saturation,
+      lightness
+    } = this.colorway;
+
+    const waveMult = 15;
+
+    return [{
+      hue:        hue + waveMult,
+      saturation: saturation + waveMult,
+      lightness:  lightness + waveMult
+    }, {
+      hue:        hue - waveMult,
+      saturation: saturation - waveMult,
+      lightness:  lightness - waveMult
+    }].map(o => ({
+      ...o,
+      string: generateHSLStr(o.hue, o.saturation, o.lightness)
+    }));
+  }
+
+  get colorwayGradient () {
+    const { colorway, colorwayShades } = this;
+
+    return `linear-gradient(${colorwayShades[0].string}, transparent),
+    linear-gradient(90deg, ${colorway.string}, transparent),
+    linear-gradient(-90deg, ${colorwayShades[1].string}, transparent)`;
+  }
+
+  get exclusiveCategory () {
+    return [ 'M', 'D' ].includes(this.type);
+  }
+
+  tierForAge (type, age) {
+    if (![ 'Employee', 'Spouse', 'Dependent' ].includes(type)) {
+      throw new Error(`Invalid tier type: ${type}`);
+    }
+
+    const tiersToSearch = this[`ratesAgeTiers${type}`];
+    return tiersToSearch.find(tier => age > tier.ageStart && age <= tier.ageEnd);
   }
 }

@@ -20,6 +20,7 @@ export default class ElectionModel extends Model {
   @belongsTo('plan') plan
   @attr('array') amounts
   @attr('string') planType
+  @hasMany('dependent') dependents
 
   get coverageLevelHumanized () {
     return coverageLevelMap[this.coverageLevel];

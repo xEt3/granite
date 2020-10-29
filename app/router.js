@@ -270,7 +270,7 @@ Router.map(function () {
       });
       this.route('enrollments', function () {
         this.route('index', { path: '/' });
-        this.route('enrollment', { path: 'enrollment/:enrollment_id' });
+        this.route('enrollment', { path: 'enrollment/:enrollment_id' }, function () {});
       });
       this.route('open-enrollment', function () {
         this.route('add');

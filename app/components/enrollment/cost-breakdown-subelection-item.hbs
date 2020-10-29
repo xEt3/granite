@@ -1,0 +1,12 @@
+<div class="line-item-value">
+  <i>
+    {{format-money @subElection.amount precision=0}} coverage for {{this.dependentForCoverage.fullName}}
+  </i>
+  <u>
+    {{#if this.cost}}
+      {{format-money this.cost}}
+    {{else}}
+      N/A
+    {{/if}}
+  </u>
+</div>
