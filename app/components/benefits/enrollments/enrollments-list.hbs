@@ -1,0 +1,72 @@
+<div class="ui tiny rounded image">
+  <Display::EmployeePicture @url={{@model.employee.picture}} @employeeId={{@model.employee.id}} />
+</div>
+<div class="content">
+  <div class="header">{{@model.employee.fullName}}</div>
+  <div class="meta">
+    <span>{{@model.employee.jobTitle}}</span>
+    <span class="ui text right floated"> 
+      {{#if @model.pending }}
+        Started on {{time @model.created}}
+      {{else}}
+        Signed on {{time @model.signedOn}}
+      {{/if}}
+    </span>
+  </div>
+  <div class="extra">
+    {{#if @model.employee.onProbation}}
+      <div class="ui green label">
+        <i class="remove icon"></i>New Hire
+      </div>
+    {{/if}}
+    {{#if @model.pending}}
+      <div class="ui green label">
+        <EmberTooltip>
+          {{@model.pendingProgress}}% Complete
+          <br>
+          On "{{this.step}}" page
+        </EmberTooltip>
+        <i class="ellipsis horizontal icon"></i>In Progress
+      </div>
+    {{/if}}
+    {{#if @model.supersedes}}
+      <div class="ui yellow label">
+        <i class="undo icon"></i>Change
+      </div>
+    {{/if}}
+    {{#if this.waivedBenefits.waived}}
+      <div class="ui red label">
+        <EmberTooltip>
+          Benefits were waived for  
+          {{this.waivedBenefits.benefitsWaived}}
+        </EmberTooltip>
+        <i class="remove icon"></i>Waived Benefits
+      </div>
+    {{/if}}
+    {{#if @model.elections}}
+      <div class="ui blue label">
+        <EmberTooltip @side="right" class="election-list" @popperContainer="body">
+          {{#each-in this.planNames as |plan label|}}
+            <p>
+              {{#if (get this.elections label)}}
+                {{#let (get this.elections label) as |election|}}
+                  <i class="check icon"></i>{{label}} - 
+                  {{#if (and (eq label "Life") (gt election.count 1))}}
+                    {{election.count}} Products
+                  {{else}}
+                    {{election.name}}
+                    <br>
+                    <strong>{{election.coverageLevelHumanized}}</strong>
+                  {{/if}}
+                {{/let}}
+              {{else}}
+                <i class="remove icon"></i>{{label}}
+              {{/if}}
+            </p>
+          {{/each-in}}
+        </EmberTooltip>
+        <i class="check square outline icon"></i>Enrolled In {{@model.elections.length}} Products
+      </div>
+    {{/if}}
+  </div>
+</div>

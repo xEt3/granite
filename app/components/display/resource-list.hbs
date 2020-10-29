@@ -7,7 +7,7 @@
       )}}
     {{else}}
       {{#if @linkTo}}
-        <LinkTo @route={{@linkTo}} @model={{get item this.modelIdentifier}} class={{@linkClass}}>
+        <LinkTo @route={{@linkTo}} @model={{get (if @embedded (get item @embedded) item) this.modelIdentifier}} class={{@linkClass}}>
           {{component @itemComponent model=item class=@componentClass}}
         </LinkTo>
       {{else}}
