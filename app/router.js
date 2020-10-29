@@ -268,7 +268,9 @@ Router.map(function () {
           this.route('edit-all');
         });
       });
-      this.route('enrollments');
+      this.route('enrollments', function () {
+        this.route('index', { path: '/' });
+      });
       this.route('open-enrollment', function () {
         this.route('add');
         this.route('edit', { path: 'edit/:enrollment_id' });
