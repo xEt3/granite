@@ -10,8 +10,8 @@ export default class ContributionsEditAllController extends Controller {
     let plans = await this.model;
     for (let i = 0; i <= plans.length - 1; i++) {
       plans[i].wellnessPlan = wp;
-      await this.data.saveRecord(plans[i]);
     }
+    await this.data.saveRecord(plans);
     this.transitionToRoute('account.benefits.plans');
   }
 
