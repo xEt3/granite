@@ -1,0 +1,108 @@
+{{#if this.model.pending}}
+  <div class="ui top attached gray label">
+    <div class="right floated detail">
+      Pending enrollment
+    </div>
+  </div>
+{{else if this.model.signedOn}}
+  <div class="ui top attached green label">
+    <div class="right floated detail">
+      Signed and completed on {{time this.model.signedOn}}
+    </div>
+  </div>
+{{/if}}
+
+<div class="ui header enrollment-header">
+  <div class="ui large rounded image">
+    <Display::EmployeePicture @url={{this.model.employee.picture}} @employeeId={{this.model.employee.id}} />
+  </div>
+  <div class="content">
+    <h1>Benefit Enrollment</h1>
+    <h2>{{this.model.employee.fullName}}</h2>
+    <h4 class="light text">
+      {{this.model.employee.jobTitle}}
+      <div class="right floated">
+        {{#if (or this.model.pending (not this.model.signedOn))}}
+          Created on {{time this.model.created}}
+        {{else}}
+          Completed on {{time this.model.signedOn}}
+        {{/if}}
+      </div>
+    </h4>
+  </div>
+</div>
+
+<div class="ui divider"></div>
+
+<div class="ui stackable two column grid">
+  <div class="ui column">
+    <h2>Details</h2>
+    {{#if this.model.superseded}}
+      <p>
+        Supersedes an
+        <LinkTo @route="account.benefits.enrollments.enrollment" @model={{this.model.superseded}}>
+          enrollment from {{time this.model.superseded.created}}
+        </LinkTo>
+      </p>
+    {{/if}}
+    {{#if this.model.supersededBy}}
+      <p>
+        Superseded by an
+        <LinkTo @route="account.benefits.enrollments.enrollment" @model={{this.model.supersededBy}}>
+          enrollment from {{time this.model.supersededBy.created}}
+        </LinkTo>
+      </p>
+    {{/if}}
+    <p>
+      Started on {{time this.model.created}}
+      {{#if this.model.signedOn}}
+        and signed on {{time this.model.signedOn}}
+      {{/if}}
+    </p>
+    {{#if this.model.qualifyingEvent}}
+      <p>
+        <strong>{{this.model.qualifyingEvent}}</strong>
+        life event
+        {{#if this.model.qualifyingDoc}}
+          (<a href={{this.model.qualifyingDoc.url}} target="_blank" rel="noopener noreferrer" download><i class="download icon"></i> Download attached document</a>)
+        {{/if}}
+      </p>
+    {{/if}}
+  </div>
+  <div class="ui column center aligned text">
+    {{#if this.model.signature}}
+      <div class="ui bordered large image">
+        <img src={{this.model.signature}} alt="{{this.model.employee.firstName}}'s signature" />
+      </div>
+      <p class="center aligned text text-green">
+        <i class="check icon"></i> E-signed by {{this.model.signatureIP}} at {{time this.model.signedOn "h:mma M/D/YY"}}
+      </p>
+    {{/if}}
+  </div>
+  <div class="ui column">
+    <h2>Enrolled Products</h2>
+    <div class="ui two cards">
+      <Benefits::DependentElectionCard
+        class="ui card"
+        @enrollment={{this.model}}
+        @model={{this.model.employee}} />
+
+      {{#each this.sortedDependents as |dependent|}}
+        <Benefits::DependentElectionCard
+          class="ui card"
+          @enrollment={{this.model}}
+          @model={{dependent}} />
+      {{/each}}
+    </div>
+  </div>
+  <div class="ui column">
+    <h2>Estimated Cost</h2>
+    <Enrollment::CostBreakdown
+      class="basic"
+      @isExpanded={{true}}
+      @hideHeader={{true}}
+      @elections={{this.model.elections}}
+      @employee={{this.model.employee}}
+      @company={{this.model.company}} />
+  </div>
+</div>

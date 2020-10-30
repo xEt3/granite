@@ -18,12 +18,16 @@ export default class EnrollmentModel extends Model {
   @attr('array') waivingDependents
   @attr('string') waivingDependentsReason
   @attr('string') signature
+  @attr('string') signatureIP
+  @attr('string') qualifyingEvent
+  @attr() electionsByType
 
   // Dates
   @attr('date', { defaultValue: Date.now }) created
   @attr('date') signedOn
 
   // Relationships
+  @belongsTo('file') qualifyingDoc
   @belongsTo('company', {
     async:   true,
     inverse: null
@@ -48,4 +52,22 @@ export default class EnrollmentModel extends Model {
   @hasMany('election') elections
   // @hasMany('beneficiary') beneficiaries
 
+
+  get electionsByTypeComputed () {
+    return this.elections.reduce((typeMap, elect) => {
+      const planType = elect.planType;
+
+      if (!planType) {
+        return typeMap;
+      }
+
+      if (!typeMap[planType]) {
+        typeMap[planType] = [];
+      }
+
+      typeMap[planType].push(elect);
+
+      return typeMap;
+    }, {});
+  }
 }
