@@ -46,7 +46,7 @@ export default class EnrollmentCostBreakdownComponent extends Component {
                   relationship ?
                     'Dependent' :
                     'Employee',
-                ageTier = plan.get('tierForAge')(dependentType, dependentForCoverage.age) || {};
+                ageTier = plan.get('tierForAge')(dependentType, dependentForCoverage.get('age')) || {};
 
           return tot + (amtGroup.amount || 0) / plan.get('lifeCoverage') * (ageTier.rate || 0);
         }, 0);
