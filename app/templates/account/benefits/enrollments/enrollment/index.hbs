@@ -87,7 +87,7 @@
         @enrollment={{this.model}}
         @model={{this.model.employee}} />
 
-      {{#each this.model.dependents as |dependent|}}
+      {{#each this.sortedDependents as |dependent|}}
         <Benefits::DependentElectionCard
           class="ui card"
           @enrollment={{this.model}}
