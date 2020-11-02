@@ -7,6 +7,7 @@ import { inject as service } from '@ember/service';
 export default class FormIntegrationButtonComponent extends Component {
   @service auth
   @service data
+  @service ajax
 
   @tracked linkedServices = A()
 
