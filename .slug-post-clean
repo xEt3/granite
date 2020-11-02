@@ -3,6 +3,4 @@ node_modules
 app
 mirage
 public
-config
-blueprints
-vendor
+tmp
