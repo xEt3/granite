@@ -18,7 +18,7 @@
     "dock": "ember server --proxy http://$DOCKER_IP:$DOCKER_LB_PORT",
     "lint:hbs": "./node_modules/.bin/ember-template-lint app/templates/**/*",
     "lint:js": "./node_modules/.bin/eslint app tests",
-    "start": "ember server --proxy http://localhost:4000",
+    "start": "ember server --proxy http://localhost:4000 --port $EMBERPORT",
     "test": "ember test",
     "lint:fixer-up": "./node_modules/.bin/eslint app tests --fix",
     "test-ci": "ember test --query=nolint",
