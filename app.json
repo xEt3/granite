@@ -4,9 +4,6 @@
   ],
   "buildpacks": [
     {
-      "url": "https://codon-buildpacks.s3.amazonaws.com/buildpacks/aedev/emberjs.tgz"
-    },
-    {
       "url": "heroku/nodejs"
     }
   ],
