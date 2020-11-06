@@ -23,7 +23,7 @@ export default class EnrollmentListComponent extends Component {
   }
 
   get step () {
-    return this.stepNames[ this.args.model.pendingStep ];
+    return this.stepNames[ this.args.model.pendingStep - 1 ];
   }
 
   get elections () {
