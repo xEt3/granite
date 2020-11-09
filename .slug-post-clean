@@ -1,6 +1,6 @@
-bower_components
 node_modules
+bower_components
+tmp/deploy-dist/assets
 app
 mirage
 public
-tmp
