@@ -3,4 +3,4 @@ node_modules
 app
 mirage
 public
-tmp/deploy-dist/assets
+tmp
