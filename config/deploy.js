@@ -23,8 +23,9 @@ module.exports = async function (/* targetEnv */) {
     minifiedPrependUrl: 'https://www.granitehr.com/'
   };
 
-  console.log('Removing deploy dist files'); /* eslint-disable-line */
-  await exec('rm -rf tmp/deploy-dist/*');
+  console.log('Removing deploy dist files');
+  const { stdout, stderr } = await exec('rm -rf tmp/deploy-dist/*');
+  console.log(stdout, stderr);
 
   console.log('Deploy environment is', ENV); /* eslint-disable-line */
 
