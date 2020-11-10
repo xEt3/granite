@@ -38,6 +38,9 @@ export default [{
   when:         'eeo',
   overrideName: 'Equal Employment Opportunity'
 }, {
+  when:         'hr',
+  overrideName: 'HR Resources'
+}, {
   when:         'action-items',
   overrideName: 'Projects'
 }, {

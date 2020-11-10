@@ -9,7 +9,7 @@ export default class DisplayResourceListComponent extends Component {
   // resourceName works off of an AdapterPopulatedRecordArray
   // and the type property that returns the query's model
   get resourceName () {
-    let type = this.args.model.type.modelName;
+    let type = this.args.modelName || this.args.model.type.modelName;
     return type ? inflect.pluralize(type) : 'items';
   }
 }

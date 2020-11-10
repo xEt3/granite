@@ -13,5 +13,9 @@ export default Factory.extend({
     'job-description-index',
     'job-description-new',
     'counseling-index'
-  ]
+  ],
+
+  fullName () {
+    return `${this.firstName} ${this.lastName}`;
+  }
 });

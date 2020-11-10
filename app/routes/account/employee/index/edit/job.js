@@ -7,9 +7,9 @@ export default class JobRoute extends Route {
   @service auth;
 
   async model () {
-    let company = this.get('auth.user.company'),
-        companyId = company.get('id'),
-        employee = this.modelFor('account.employee.index.edit'),
+    let company    = this.get('auth.user.company'),
+        companyId  = company.get('id'),
+        employee   = this.modelFor('account.employee.index.edit'),
         employeeId = employee.id;
 
     return {

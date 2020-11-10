@@ -82,6 +82,8 @@ export default class Company extends Model.extend(Validations) {
 
   @attr('boolean') collectEEO;
 
+  @attr('boolean') wellnessPlan
+
   @attr('boolean') collectAA;
 
   @attr('boolean') exposeBetaModules;

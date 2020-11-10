@@ -1,14 +1,10 @@
-import classic from 'ember-classic-decorator';
-import { computed } from '@ember/object';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import Validations from './validations/employee';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 
-@classic
 export default class Employee extends Model.extend(Validations) {
   // Personal Information
-  @computed('firstName', 'lastName', 'middleName', 'suffix')
   get fullName () {
     var n = this.getProperties('firstName', 'lastName', 'middleName', 'suffixName'),
         fullName = '';
@@ -21,6 +17,10 @@ export default class Employee extends Model.extend(Validations) {
     return fullName.length > 0 ? fullName : undefined;
   }
 
+  get age () {
+    return Math.ceil(moment().diff(this.dateOfBirth, 'years', true));
+  }
+
   @attr('string') firstName;
 
   @attr('string') middleName;
@@ -30,6 +30,8 @@ export default class Employee extends Model.extend(Validations) {
   @attr('string') suffixName;
 
   @attr('string') gender;
+
+  @attr('string') maritalStatus;
 
   @attr('string') addressLine1;
 
@@ -61,7 +63,6 @@ export default class Employee extends Model.extend(Validations) {
 
   @attr('string') employeeNumber;
 
-  @computed('ssn')
   get ssnMasked () {
     var ssn = this.ssn;
     return ssn ? ssn.replace(/\D/g, '').replace(/(?:\d{5})(\d{4})/, '***-**-$1') : ssn;
@@ -211,6 +212,20 @@ export default class Employee extends Model.extend(Validations) {
   })
   creator;
 
+  @attr('number') contributionsEmployeeAmount
+  @attr('string') contributionsEmployeeType
+
+  @attr('number') contributionsSpouseAmount
+  @attr('string') contributionsSpouseType
+
+  @attr('number') contributionsChildrenAmount
+  @attr('string') contributionsChildrenType
+
+  @attr('number') contributionsFamilyAmount
+  @attr('string') contributionsFamilyType
+
+  @attr('boolean') wellnessPlan
+
   @attr('date') dateOfBirth;
 
   @attr('date') effectiveOn; // Placeholder for effective dated changes. This field is only here to pass along to the api
@@ -219,7 +234,6 @@ export default class Employee extends Model.extend(Validations) {
 
   @attr('string') separationNotes;
 
-  @computed('probationUntil')
   get onProbation () {
     return this.probationUntil && moment(this.probationUntil).isAfter(moment());
   }

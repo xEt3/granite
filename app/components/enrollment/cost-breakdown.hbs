@@ -1,0 +1,63 @@
+<div class="ui raised padded segment cost-breakdown" ...attributes>
+  {{#unless @hideHeader}}
+    <h3 class="cost-breakdown__header">
+      Benefit Cost Breakdown
+      {{#unless @isExpanded}}
+        <small class="right floated">
+          <a href="#" {{on "click" (prevent-default (toggle "display" this))}}>
+            {{#if this.display}}
+              Hide <i class="angle up icon"></i>
+            {{else}}
+              Show <i class="angle down icon"></i>
+            {{/if}}
+          </a>
+        </small>
+      {{/unless}}
+    </h3>
+  {{/unless}}
+  {{#liquid-if (or this.display @isExpanded)}}
+    {{#unless @hideHeader}}<div class="ui divider"></div>{{/unless}}
+    {{#each this.groups as |group|}}
+      {{#if (or (not group.hideWhenEmpty) group.elections.length)}}
+        <div class="cost-breakdown__group">
+          <h3>{{group.title}}</h3>
+          {{#each group.elections as |election|}}
+            <div class="ui minimally padded basic segment">
+              <Enrollment::CostBreakdownElectionItem
+                @election={{election}}
+                @employee={{@employee}}
+                @useWellnessRate={{this.useWellnessRate}} />
+            </div>
+          {{else}}
+            <p class="light text">No elections.</p>
+          {{/each}}
+        </div>
+      {{/if}}
+    {{/each}}
+
+    <div class="ui divider"></div>
+    {{#if (and this.totals.gross (not-eq this.totals.gross this.totals.net))}}
+      <div class="ui divider"></div>
+      <div class="line-item-value">
+        <i>Estimated price</i>
+        <u>
+          {{format-money this.totals.gross}}
+        </u>
+      </div>
+    {{/if}}
+    {{#if this.totals.deductions}}
+      <div class="line-item-value">
+        <i>Total deductions</i>
+        <u class="text-green">
+          {{format-money this.totals.deductions}}
+        </u>
+      </div>
+    {{/if}}
+    <div class="line-item-value">
+      <i>Estimated cost per month</i>
+      <u>
+        {{format-money this.totals.net}}
+      </u>
+    </div>
+  {{/liquid-if}}
+</div>

@@ -64,7 +64,7 @@
     "ember-cli-app-version": "^3.2.0",
     "ember-cli-babel": "^7.13.2",
     "ember-cli-braintree": "^1.1.0",
-    "ember-cli-browserstack": "^0.0.6",
+    "ember-cli-browserstack": "^1.1.0",
     "ember-cli-chart": "git+https://github.com/jandillmann/ember-cli-chart.git#patch-1",
     "ember-cli-cjs-transform": "^2.0.0",
     "ember-cli-dependency-checker": "^3.1.0",
@@ -81,9 +81,9 @@
     "ember-cli-inject-live-reload": "^2.0.1",
     "ember-cli-less": "2.0.4",
     "ember-cli-maskedinput": "0.1.2",
-    "ember-cli-mirage": "^1.1.6",
+    "ember-cli-mirage": "^1.1.8",
     "ember-cli-moment-shim": "3.7.1",
-    "ember-cli-notifications": "git+https://github.com/associatedemployers/ember-cli-notifications.git#configurable-icons",
+    "ember-cli-notifications": "git+https://github.com/associatedemployers/ember-cli-notifications.git#0a315072b42bf084a9d81d04830ab25d500abfa5",
     "ember-cli-nprogress": "0.3.1",
     "ember-cli-range-slider": "0.2.7",
     "ember-cli-sri": "^2.1.1",
@@ -122,7 +122,7 @@
     "ember-sinon": "^4.1.1",
     "ember-sortable": "1.11.2",
     "ember-source": "~3.16.8",
-    "ember-template-lint": "^2.7.0",
+    "ember-template-lint": "^2.10.0",
     "ember-tooltips": "^3.4.0",
     "ember-truth-helpers": "2.0.0",
     "ember-videojs": "^0.0.24",
@@ -146,7 +146,7 @@
     "video.js": "^7.6.6"
   },
   "engines": {
-    "node": "8.* || >= 10.*",
+    "node": "14.* || 12.*",
     "yarn": ">= 1.0.0"
   }
 }

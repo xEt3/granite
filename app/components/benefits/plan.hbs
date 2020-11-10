@@ -1,0 +1,309 @@
+<div class="ui card benefit__plan-card" style={{this.cardStyle}}>
+  <div class="content">
+    <div class="right floated">
+      {{@plan.label}} <i class="ui {{@plan.icon}} icon"></i>
+    </div>
+    <div class="header">{{@plan.name}}</div>
+    <div class="description plan-card__description">{{@plan.description}}</div>
+  </div>
+  {{#if @plan.networkName}}
+    <div class="extra content plan-card__network">
+      <strong>Network</strong>
+      <div class="basic segment">
+        <div class="line-item-value">
+          <i>{{@plan.networkName}}</i>
+          <u>
+            <a href="#" {{on "click" (prevent-default (toggle "showDescription" this))}}>{{if this.showDescription "Show Less" "Show More"}}</a>
+          </u>
+        </div>
+        {{#if (and @plan.networkDescription this.showDescription)}}
+          {{@plan.networkDescription}}
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
+  <div class="extra content plan-card__rates">
+    <strong>Rates</strong>
+    <div class="ui list">
+      {{#if @plan.ratesEmployee}}
+        <div class="line-item-value">
+          <i>Employee</i>
+          {{#if @plan.ratesAgeTiersEmployee.length}}
+            <u>
+              {{#unless this.showEmployee}}
+                {{#each-in @plan.priceRange.employee as |key cost|}}
+                  {{format-money cost}}
+                  {{#if (eq key "min")}}
+                    -
+                  {{/if}}
+                {{/each-in}}
+                <EmberTooltip>Minimum / Maximum rate</EmberTooltip>
+              {{/unless}}
+              <a href="#" {{on "click" (prevent-default (toggle "showEmployee" this))}}>
+                {{#if this.showEmployee}}
+                  <i class="caret up icon"></i>
+                {{else}}
+                  <i class="caret down icon"></i>
+                {{/if}}
+              </a>
+            </u>
+            {{#if this.showEmployee}}
+              {{#each @plan.ratesAgeTiersEmployee as |ageTier|}}
+                <div class="line-item-value">
+                  <i>{{ageTier.ageStart}} - {{ageTier.ageEnd}}</i>
+                  <u>{{format-money ageTier.rate}}</u>
+                </div>
+              {{/each}}
+            {{/if}}
+          {{else}}
+            <u>
+              {{#if @plan.ratesAgeTiersEmployee.length}}
+                {{#each-in @plan.priceRange.employee as |key value|}}
+                  {{format-money value}}
+                {{/each-in}}
+              {{else}}
+                {{format-money @plan.ratesEmployee}}
+                {{#if @plan.contributionsEmployeeWellnessModifier}}
+                  ({{format-money @plan.contributionsEmployeeWellnessModifier}} w/ wellness)
+                {{/if}}
+              {{/if}}
+            </u>
+          {{/if}}
+        </div>
+      {{/if}}
+      {{#if @plan.ratesSpouse}}
+        <div class="line-item-value">
+          <i>Employee &amp; Spouse</i>
+          {{#if @plan.ratesAgeTiersSpouse.length}}
+            <u>
+              {{#unless this.showSpouse}}
+                {{#each-in @plan.priceRange.spouse as |key cost|}}
+                  {{format-money cost}}
+                  {{#if (eq key "min")}}
+                    -
+                  {{/if}}
+                {{/each-in}}
+                <EmberTooltip>Minimum / Maximum rate</EmberTooltip>
+              {{/unless}}
+              <a href="#" {{on "click" (prevent-default (toggle "showSpouse" this))}}>
+                {{#if this.showSpouse}}
+                  <i class="caret up icon"></i>
+                {{else}}
+                  <i class="caret down icon"></i>
+                {{/if}}
+              </a>
+            </u>
+            {{#if this.showSpouse}}
+              {{#each @plan.ratesAgeTiersSpouse as |ageTier|}}
+                <div class="line-item-value">
+                  <i>{{ageTier.ageStart}} - {{ageTier.ageEnd}}</i>
+                  <u>{{format-money ageTier.rate}}</u>
+                </div>
+              {{/each}}
+            {{/if}}
+          {{else}}
+            <u>
+              {{#if @plan.ratesAgeTiersSpouse.length}}
+                {{#each-in @plan.priceRange.spouse as |key value|}}
+                  {{format-money value}}
+                {{/each-in}}
+              {{else}}
+                {{format-money @plan.ratesSpouse}}
+                {{#if @plan.contributionsSpouseWellnessModifier}}
+                  ({{format-money @plan.contributionsSpouseWellnessModifier}} w/ wellness)
+                {{/if}}
+              {{/if}}
+            </u>
+          {{/if}}
+        </div>
+      {{/if}}
+      {{#if @plan.ratesDependent}}
+        <div class="line-item-value">
+          <i>Employee &amp; Dependents </i>
+          {{#if @plan.ratesAgeTiersDependent.length}}
+            <u>
+              {{#unless this.showDependent}}
+                {{#each-in @plan.priceRange.dependent as |key cost|}}
+                  {{format-money cost}}
+                  {{#if (eq key "min")}}
+                    -
+                  {{/if}}
+                {{/each-in}}
+                <EmberTooltip>Minimum / Maximum rate</EmberTooltip>
+              {{/unless}}
+              <a href="#" {{on "click" (prevent-default (toggle "showDependent" this))}}>
+                {{#if this.showDependent}}
+                  <i class="caret up icon"></i>
+                {{else}}
+                  <i class="caret down icon"></i>
+                {{/if}}
+              </a>
+            </u>
+            {{#if this.showDependent}}
+              {{#each @plan.ratesAgeTiersDependent as |ageTier|}}
+                <div class="line-item-value">
+                  <i>{{ageTier.ageStart}} - {{ageTier.ageEnd}}</i>
+                  <u>{{format-money ageTier.rate}}</u>
+                </div>
+              {{/each}}
+            {{/if}}
+          {{else}}
+            <u>
+              {{#if @plan.ratesAgeTiersDependent.length}}
+              <a href="#" {{on "click" (prevent-default (toggle "showDependent" this))}}>
+                {{#if this.showDependent}}
+                  <i class="caret up icon"></i>
+                {{else}}
+                  <i class="caret down icon"></i>
+                {{/if}}
+              </a>
+                {{#each-in @plan.priceRange.dependent as |key value|}}
+                  {{format-money value}}
+                {{/each-in}}
+              {{else}}
+                {{format-money @plan.ratesDependent}}
+                {{#if @plan.contributionsDependentWellnessModifier}}
+                  ({{format-money @plan.contributionsDependentWellnessModifier}} w/ wellness)
+                {{/if}}
+              {{/if}}
+            </u>
+          {{/if}}
+        </div>
+      {{/if}}
+      {{#if @plan.ratesFamily}}
+        <div class="line-item-value">
+          <i>Family</i>
+          {{#if @plan.ratesAgeTiersFamily.length}}
+            <u>
+              {{#unless this.showFamily}}
+                {{#each-in @plan.priceRange.family as |key cost|}}
+                  {{format-money cost}}
+                  {{#if (eq key "min")}}
+                    -
+                  {{/if}}
+                {{/each-in}}
+                <EmberTooltip>Minimum / Maximum rate</EmberTooltip>
+              {{/unless}}
+              <a href="#" {{on "click" (prevent-default (toggle "showFamily" this))}}>
+                {{#if this.showFamily}}
+                  <i class="caret up icon"></i>
+                {{else}}
+                  <i class="caret down icon"></i>
+                {{/if}}
+              </a>
+            </u>
+            {{#if this.showFamily}}
+              {{#each @plan.ratesAgeTiersFamily as |ageTier|}}
+                <div class="line-item-value">
+                  <i>{{ageTier.ageStart}} - {{ageTier.ageEnd}}</i>
+                  <u>{{format-money ageTier.rate}}</u>
+                </div>
+              {{/each}}
+            {{/if}}
+          {{else}}
+            <u>
+              {{#if @plan.ratesAgeTiersFamily.length}}
+                <a href="#" {{on "click" (prevent-default (toggle "showFamily" this))}}>
+                  {{#if this.showFamily}}
+                    <i class="caret up icon"></i>
+                  {{else}}
+                    <i class="caret down icon"></i>
+                  {{/if}}
+                </a>
+                {{#each-in @plan.priceRange.family as |key value|}}
+                  {{format-money value}}
+                {{/each-in}}
+              {{else}}
+                {{format-money @plan.ratesFamily}}
+                {{#if @plan.contributionsFamilyWellnessModifier}}
+                  ({{format-money @plan.contributionsFamilyWellnessModifier}} w/ wellness)
+                {{/if}}
+              {{/if}}
+            </u>
+          {{/if}}
+        </div>
+      {{/if}}
+      {{#if @plan.ratesFixed}}
+        <div class="line-item-value">
+          <i>Fixed</i>
+          <u>
+            {{format-money @plan.ratesFixed}}
+            {{#if (and @plan.lifeCoverage (eq @plan.type "L"))}}
+              / {{format-money @plan.lifeCoverage}}
+            {{/if}}
+          </u>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+  {{#if (not-eq @plan.type "L") }}
+    <div class="extra content plan-card__contributions">
+      <strong>Contributions</strong>
+        <LinkTo @route="account.benefits.plans.contributions.edit"  @model={{@plan.id}} class="right floated">
+          <i class="ui pencil icon"></i>Edit
+        </LinkTo>
+      <div class="ui list">
+        {{#if @plan.contributionsEmployeeAmount}}
+          <div class="line-item-value">
+            <i>Employee</i>
+            {{#if (eq @plan.contributionsEmployeeType "dollar")}}
+              <u>{{format-money @plan.contributionsEmployeeAmount}}</u>
+            {{else}}
+              <u>{{@plan.contributionsEmployeeAmount}}%</u>
+            {{/if}}
+          </div>
+        {{/if}}
+        {{#if @plan.contributionsSpouseAmount}}
+          <div class="line-item-value">
+            <i>Spouse</i>
+            {{#if (eq @plan.contributionsSpouseType "dollar")}}
+              <u>{{format-money @plan.contributionsSpouseAmount}}</u>
+            {{else}}
+              <u>{{@plan.contributionsSpouseAmount}}%</u>
+            {{/if}}
+          </div>
+        {{/if}}
+        {{#if @plan.contributionsChildrenAmount}}
+          <div class="line-item-value">
+            <i>Children</i>
+            {{#if (eq @plan.contributionsChildrenType "dollar")}}
+              <u>{{format-money @plan.contributionsChildrenAmount}}</u>
+            {{else}}
+              <u>{{@plan.contributionsChildrenAmount}}%</u>
+            {{/if}}
+          </div>
+        {{/if}}
+        {{#if @plan.contributionsFamilyAmount}}
+          <div class="line-item-value">
+            <i>Family</i>
+            {{#if (eq @plan.contributionsFamilyType "dollar")}}
+              <u>{{format-money @plan.contributionsFamilyAmount}}</u>
+            {{else}}
+              <u>{{@plan.contributionsFamilyAmount}}%</u>
+            {{/if}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
+  <div class="extra content plan-card__qualifications">
+    <div class="line-item-value">
+      <i>Qualifications</i>
+      <u>
+        <a href="#" {{on "click" (prevent-default (toggle "showQualifications"  this))}}>{{if this.showQualifications "Show Less" "Show More"}}</a>
+      </u>
+    </div>
+    {{#if this.showQualifications}}
+    <div class="ui list">
+      <div class="line-item-value">
+        <i>Waiting Period</i>
+        <u>{{@plan.waitingPeriod}}</u>
+      </div>
+      <div class="line-item-value">
+        <i>Minimum Hours</i>
+        <u>{{@plan.minimumHours}}</u>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</div>

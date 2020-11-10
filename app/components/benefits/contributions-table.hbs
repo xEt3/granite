@@ -1,0 +1,30 @@
+<h3 class="ui header">Contributions</h3>
+<form class="ui form" {{on "submit" (prevent-default (fn @save this.wp))}}>
+  <table class="ui celled table">
+    <thead>
+      <tr>
+        <th></th>
+        {{#each this.contributionGroups as |contributionGroup|}}
+          <th>{{contributionGroup}}</th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+    {{#each @plan as |plan|}}
+      {{#if (not-eq plan.type "L") }}
+        <Benefits::ContributionsRow @plan={{plan}} />
+      {{/if}}
+    {{else}}
+      <Benefits::ContributionsRow @plan={{@plan}} />
+    {{/each}}
+    </tbody>
+  </table>
+  <div class="ui divider"></div>
+    <Form::ActionButton
+      type="submit"
+      class="ui large fluid green button"
+      @loading={{this.data.statuses.working.isLoading}}>
+      Complete
+    </Form::ActionButton>
+  <button type="button" {{on "click" (prevent-default (fn @cancel))}} class="ui large fluid orange button">cancel</button>
+</form>

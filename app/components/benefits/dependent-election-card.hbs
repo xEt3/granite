@@ -1,0 +1,31 @@
+<div ...attributes>
+  <div class="content">
+    <div class="header">{{@model.fullName}}</div>
+    <div class="meta">
+      <span>
+        {{or @model.relationship "Employee"}}
+      </span>
+    </div>
+    <div class="description">
+      {{#each this.electedCategories as |category|}}
+        <div>
+          <span class="ui basic label">{{category.title}}</span>
+          {{#each category.elections as |elect|}}
+            {{elect.model.plan.name}}
+            {{#if (eq elect.model.planType "L")}}
+              {{format-money (or elect.amount elect.model.plan.lifeCoverage) precision=0}}
+            {{/if}}
+          {{/each}}
+        </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="extra content">
+    Waived/Not enrolled
+    <p>
+      {{#each this.waivedCategories as |category|}}
+        <span class="ui basic label">{{category.title}}</span>
+      {{/each}}
+    </p>
+  </div>
+</div>

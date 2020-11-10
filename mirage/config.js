@@ -171,7 +171,7 @@ export default function () {
     'company-users', 'employees/:id', 'companies', 'companies/:id', 'permissions', 'action-items', 'asset-items', 'asset-items/:id',
     'action-items/:id', 'assets', 'assets/:id', 'changes', 'histories', 'departments', 'locations',
     'payment-methods', 'comments', 'comments/:id', 'job-openings', 'jobs', 'jobs/:id', 'job-openings/:id', 'job-applications',
-    'forms', 'applicant-sources', 'applicant-sources', 'manual-applicant-sources', 'applicants', 'applicants/:id',
+    'forms', 'forms/:id', 'applicant-sources', 'applicant-sources', 'manual-applicant-sources', 'applicants', 'applicants/:id',
     'job-applications/:id', 'events', 'certifications', 'training-assignments', 'corrective-actions', 'corrective-actions/:id',
     'employee-issues/:id', 'employee-issues', 'webinars', 'webinar-authorizations', 'company-user', 'plans' ];
 
@@ -211,6 +211,31 @@ export default function () {
     }
 
     return companies.find(id).update(attrs);
+  });
+
+  this.post('/forms', function ({ forms, formElements }) {
+    let attrs = this.normalizedRequestAttrs(),
+        elements;
+
+    if (attrs.elements) {
+      elements = attrs.elements;
+      attrs.elements = null;
+    }
+
+    let newForm = forms.create(attrs);
+    if (elements) {
+      attrs.elements = elements;
+      newForm.elements = processEmbeddedRelationships({
+        model:       formElements,
+        key:         'elements',
+        data:        attrs,
+        parentId:    newForm.id,
+        parentKey:   'form',
+        parentModel: forms
+      });
+    }
+
+    return newForm;
   });
 
   // quick and dirty mock of search from ES that will function with the mirage db
