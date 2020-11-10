@@ -4,7 +4,7 @@ import { belongsTo } from 'ember-data/relationships';
 
 export default class OpenEnrollment extends Model {
   @belongsTo('company') company
-  
+
   @attr('date') start
 
   @attr('date') end

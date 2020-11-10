@@ -16,6 +16,7 @@ module('Integration | Component | search/result-item', function (hooks) {
 
   test('employee type renders correct elements', async function (assert) {
     const { attrs } = await server.create('employee');
+    delete attrs.fullName;
     let employee = this.owner.lookup('service:store').createRecord('employee', attrs);
     employee.set('picture', null);
     employee.set('_id', employee.get('id')); // HACK: mimic result item
