@@ -1,6 +1,9 @@
 'use strict';
 
-module.exports = function (/* targetEnv */) {
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
+
+module.exports = async function (/* targetEnv */) {
   let ENV = { hinting: false };
 
   ENV['revision-data'] = {
@@ -19,6 +22,9 @@ module.exports = function (/* targetEnv */) {
     revisionKey:        `${packageJson.version}+${gitHash}`,
     minifiedPrependUrl: 'https://www.granitehr.com/'
   };
+
+  console.log('Removing deploy dist files'); /* eslint-disable-line */
+  await exec('rm -rf tmp/deploy-dist/*');
 
   console.log('Deploy environment is', ENV); /* eslint-disable-line */
 
