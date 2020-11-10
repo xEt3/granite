@@ -8,7 +8,7 @@ const baseSteps = [{
   path:        'signup.index'
 }, {
   title:       'Billing',
-  description: 'Begin your 14-day trial',
+  description: 'Begin your subscription',
   icon:        'cubes',
   path:        'signup.billing'
 }, {
