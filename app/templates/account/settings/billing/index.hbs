@@ -49,6 +49,12 @@
     <span class="ui small text">(On {{time this.model.nextBillingDate}})</span>
   </h4>
 <h4>
+  Enable Benefits: {{if this.company.benefitsEnabled 'On' 'Off'}}
+  <span class="ui right floated small text">
+    <UiCheckbox id="test" @class="toggle" @checked={{readonly this.company.benefitsEnabled}} @onChange={{fn (mut this.company.benefitsEnabled)}} />
+  </span>
+</h4>
+<h4>
   Last Transaction:
   {{#if this.subscription.latestTransaction.amount}}
     ${{this.subscription.latestTransaction.amount}}
@@ -63,6 +69,10 @@
     <button class="ui positive fluid button" type="button" {{on "click" (prevent-default (pipe confirm this.activateSubscription))}}><i class="check circle icon"></i>Activate Subscription</button>
   </ConfirmModal>
 {{else if (not this.subscription.accountSuspended)}}
+  {{#if this.showUpdate}}
+    <button class="ui positive fluid button" type="button" {{on "click" (fn this.data.saveRecord this.company)}}><i class="check circle icon"></i>Update Subscription</button>
+  {{/if}}
+
   <ConfirmModal @confirmContent="Are you sure you want to cancel your account? You will immediately lose access until reactivated." as |confirm|>
     <button class="ui red fluid button" type="button" {{on "click" (prevent-default (pipe confirm this.cancelSubscription))}}>
       <EmberTooltip @side="top" @popperContainer="body" @text="Pushing this button will cancel your current subscription and you will lose access to your account until you reactivate." />

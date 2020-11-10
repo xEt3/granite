@@ -5,9 +5,22 @@ import routeAbs from './abstractions/routes';
 
 export default class GraniteRoute extends Route {
   @service auth
+  subscriptionRoute
 
   __methodForRouteType (methodName) {
     return this.routeType && routeAbs[this.routeType][methodName];
+  }
+
+  beforeModel () {
+    super.beforeModel(...arguments);
+    let { flag, redirectsTo } = this.subscriptionRoute || {};
+
+    if (flag === 'benefitsEnabled') {
+      if (!this.auth.get(`user.company.${flag}`)) {
+        this.transitionTo(redirectsTo);
+      }
+    }
+    return;
   }
 
   model () {

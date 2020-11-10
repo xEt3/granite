@@ -90,6 +90,8 @@ export default class Company extends Model.extend(Validations) {
 
   @attr('string') accountBillingPromo;
 
+  @attr('boolean') benefitsEnabled;
+
   @computed('linkedServices.[]')
   get linkedToSlate () {
     let services = this.linkedServices;

@@ -15,6 +15,10 @@ export default class BillingController extends Controller {
     return this.model.status === 'Active' ? 'text-green' : 'text-danger';
   }
 
+  get showUpdate () {
+    return this.company.hasDirtyAttributes;
+  }
+
   @action
   async getToken () {
     const { success, error } = this.data.createStatus();
