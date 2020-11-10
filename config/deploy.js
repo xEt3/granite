@@ -24,7 +24,7 @@ module.exports = async function (/* targetEnv */) {
   };
 
   console.log('Removing deploy dist files');
-  const { stdout, stderr } = await exec('rm -rf tmp/deploy-dist/*');
+  const { stdout, stderr } = await exec('rm -rf /app/tmp/deploy-dist/assets/*');
   console.log(stdout, stderr);
 
   console.log('Deploy environment is', ENV); /* eslint-disable-line */
