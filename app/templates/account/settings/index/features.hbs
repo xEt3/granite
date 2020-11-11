@@ -41,4 +41,36 @@
       <UiCheckbox @class="toggle" @label="On" @checked={{this.model.collectAA}} @onChange={{pipe (set this.model.collectAA _) (fn this.data.saveRecord this.model)}} />
     </div>
   {{/if}}
+
+  {{#if this.model.benefitsEnabled}}
+    <div class="field">
+      <label for="benefit-notification">
+        Benefit Notifications<br />
+        <small class="light text">If no users are selected, all company users will be emailed</small>
+      </label>
+      <div class="fields" id="benefit-notifications">
+        <div class="eight wide field">
+          <label for="benefit-notifications-internal">Internal Users</label>
+          <UiDropdown @id="benefit-notifications-internal" @class="fluid multiple selection" @selected={{this.model.notificationListBenefits}} @onChange={{set this.model.notificationListBenefits _}}>
+            <i class="dropdown icon"></i>
+            <div class="default text">Select User</div>
+            <div class="menu">
+              {{#each this.users as |user|}}
+                <div class="item segment__activity" data-value={{user}}>
+                  {{user.fullName}}
+                </div>
+              {{/each}}
+            </div>
+          </UiDropdown>
+        </div>
+        <div class="eight wide field">
+          DROPDOWN HERE TO ADD EXTERNAL
+        </div>
+      </div>
+
+      {{#each this.model.notificationListBenefits as |contact|}}
+        
+      {{/each}}
+    </div>
+  {{/if}}
 </div>

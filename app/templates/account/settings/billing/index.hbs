@@ -49,10 +49,15 @@
     <span class="ui small text">(On {{time this.model.nextBillingDate}})</span>
   </h4>
 <h4>
-  Enable Benefits: {{if this.company.benefitsEnabled 'On' 'Off'}}
+  Enable Benefits: {{if this.company.benefitsEnabled "On" "Off"}}
   <span class="ui right floated small text">
     <UiCheckbox id="test" @class="toggle" @checked={{readonly this.company.benefitsEnabled}} @onChange={{fn (mut this.company.benefitsEnabled)}} />
   </span>
+  {{#liquid-if this.company.benefitsEnabled}}
+    <LinkTo @route="account.settings.index.features" class="ui small text">
+      Additional configuration available on feature page
+    </LinkTo>
+  {{/liquid-if}}
 </h4>
 <h4>
   Last Transaction:
