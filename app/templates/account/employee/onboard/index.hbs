@@ -111,21 +111,11 @@
   </div>
   {{#if this.model.company.linkedToSlate}}
     <div class="ui divider"></div>
-    <div class="field">
-      <label for="exemption-status">Automatically link with Slate</label>
-      <UiCheckbox
-        @class="toggle"
-        @label="Link"
-        @checked={{this.model.externalLinkAutomaticSync}}
-        @onChange={{set this.model.externalLinkAutomaticSync _}} />
-    </div>
-
     {{#if this.model.externalLinkAutomaticSync}}
       <h3 class="ui horizontal header divider section">
         <i class="dollar sign icon"></i>
         Bank Information
       </h3> 
-
         {{#each this.model.bankAccounts as |bankAccount|}}
           <p class="item">
             <span class="ui green label">{{bankAccount.type}}</span> {{bankAccount.number}} ({{bankAccount.routing}})
