@@ -1,0 +1,83 @@
+<div class="field">
+  <h4>Federal Tax (From W-4)</h4>
+  <label for="federal-tax-status">Federal Filing Status</label>
+      <UiDropdown id="federal-tax-status" @class="selection {{if @disable 'disabled'}}" @selected={{@model.federalTaxFilingStatus}} @onChange={{fn this.updateFederalTaxFilingStatus}} >
+      <div class="default text">
+        Filing Status
+      </div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each @model.federalTaxFilingStatus as |FilingStatus|}}
+          <div class="item">
+            {{FilingStatus}}
+          </div>
+        {{/each}}
+      </div>
+    </UiDropdown>
+</div>
+
+{{! New W-4 year}}
+<div class="field">
+  <label for="federal-tax-step2">W-4 Step 2</label>
+    <UiDropdown id="federal-tax-step2" @class="selection {{if @disable 'disabled'}}" @selected={{@model.federalTaxStep2}} @onChange={{set @model.federalTaxStep2 _}} as |execute mapper|>
+      <div class="default text">
+        Select a type
+      </div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each @model.federalTaxStep2 as |step2|}}
+          <div class="item" data-value={{map-value mapper step2}}>
+            {{step2}}
+          </div>
+        {{/each}}
+      </div>
+    </UiDropdown>
+</div>
+
+<div class="field">
+  <div class="form-group left-inner-addon">
+    <Input::UiInput
+      @type="number"
+      @id="federal-tax-step3"
+      @value={{@model.federalTaxStep3}}
+      @step="500"
+      @min="0"
+      @disabled={{or this.isExempt @disable}}
+      @focus-out={{this.updateStep3}}
+      @placeholder="W-4 Step 3 - Add the amounts and enter the total here" />
+  </div>
+</div>
+<div class="ui three fields">
+  <div class="field">
+    <div class="form-group left-inner-addon">
+      <Input::UiInput
+        @type="number"
+        @id="federal-tax-step4a"
+        @value={{@model.federalTaxStep4a}}
+        @disabled={{or this.isExempt @disable}}
+        @placeholder="W-4 Step 4(a) - Other income (not from jobs)" />
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="form-group left-inner-addon">
+      <Input::UiInput
+        @type="number"
+        @id="federal-tax-step4b"
+        @value={{@model.federalTaxStep4b}}
+        @disabled={{or this.isExempt @disable}}
+        @placeholder="W-4 Step 4(b) - Deductions" />
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="form-group left-inner-addon">
+      <Input::UiInput
+        @type="number"
+        @id="federal-tax-step4c"
+        @value={{@model.federalTaxStep4c}}
+        @disabled={{or this.isExempt @disable}}
+        @placeholder="W-4 Step 4(c) - Extra withholding" />
+    </div>
+  </div>
+</div>

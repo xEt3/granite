@@ -1,14 +1,16 @@
 import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
-import Model from 'ember-data/model';
-import attr from 'ember-data/attr';
+import Model from '@ember-data/model';
+import { attr } from '@ember-data/model';
 import Validations from './validations/employee';
-import { belongsTo, hasMany } from 'ember-data/relationships';
+import { belongsTo } from 'ember-data/relationships';
+import { hasMany } from '@ember-data/model';
+import { statesIncomeTaxExempt } from 'granite/config/statics';
 
 @classic
 export default class Employee extends Model.extend(Validations) {
   // Personal Information
-  @computed('firstName', 'lastName', 'middleName', 'suffix')
+  @computed('firstName', 'lastName', 'middleName', 'suffix', 'suffixName')
   get fullName () {
     var n = this.getProperties('firstName', 'lastName', 'middleName', 'suffixName'),
         fullName = '';
@@ -151,7 +153,7 @@ export default class Employee extends Model.extend(Validations) {
 
   @attr('string') externalLinkDocumentLink;
 
-  @attr('boolean') externalLinkAutomaticSync;
+  @attr('boolean', { defaultValue: true }) externalLinkAutomaticSync;
 
   @attr('date') externalLinkLastSync;
 
@@ -219,10 +221,38 @@ export default class Employee extends Model.extend(Validations) {
   })
   creator;
 
-  @attr('date') dateOfBirth;
+  @attr('string') hsaAccount
+  @attr('string') hsaRouting
+  @attr('string') hsaType
 
+  @hasMany('bank-account', {
+    async:   true,
+    inverse: null
+  }) bankAccounts;
+
+  @attr('string') workersCompensation
+  @attr('string') workersCompClass
+  @attr('number', { defaultValue: 0 }) federalTaxAllowances
+  @attr('number', { defaultValue: 0 }) federalTaxAdditionalWithholding
+  @attr('string') federalTaxFilingStatusType
+  @attr('boolean') federalTaxStep2
+  @attr('number') federalTaxStep3
+  @attr('number') federalTaxStep4a
+  @attr('number') federalTaxStep4b
+  @attr('number') federalTaxStep4c
+
+  @attr('string', { defaultValue: 'MT' }) stateTaxName
+  @attr('number', { defaultValue: 0 }) stateTaxAllowances
+  @attr('number', { defaultValue: 0 })stateTaxAdditionalWithholding
+  @attr('string') stateTaxFilingStatus
+  @attr('string', { defaultValue: 'MT' }) stateTaxUnemploymentInsurance
+  @attr('date') dateOfBirth;
   @attr('date') effectiveOn; // Placeholder for effective dated changes. This field is only here to pass along to the api
 
+  @computed('stateTaxName')
+  get stateIncomeTaxExempt () {
+    return statesIncomeTaxExempt.includes(this.stateTaxName);
+  }
   @attr({ defaultValue: () => {} }) customFields;
 
   @attr('string') separationNotes;

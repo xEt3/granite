@@ -289,6 +289,11 @@ const formTypes = [{
   use:     'toggle'
 }];
 
+const bankAccountTypes = [
+  'Checking',
+  'Savings'
+];
+
 const issueTypes = [ 'Performance', 'Behavior', 'Performance & Behavior' ];
 
 const closeMessageMap = {
@@ -362,6 +367,25 @@ const accountNavigationItems = [{
   link:  'help'
 }];
 
+var maritalStatuses = [
+  'Single',
+  'Married'
+];
+
+const statesIncomeTaxExempt = [
+  'AK',
+  'FL',
+  'NV',
+  'NH',
+  'SD',
+  'TN',
+  'TX',
+  'WA',
+  'WY'
+];
+
+const filingStatuses = [ 'Exempt', ...maritalStatuses, 'Head of Household' ];
+
 export {
   accountNavigationItems,
   gender,
@@ -374,5 +398,8 @@ export {
   formTypes,
   closeMessageMap,
   modelPageMap,
-  recordDisplayPropertyMap
+  recordDisplayPropertyMap,
+  bankAccountTypes,
+  filingStatuses,
+  statesIncomeTaxExempt
 };
