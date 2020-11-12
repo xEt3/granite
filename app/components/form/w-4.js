@@ -20,8 +20,8 @@ export default class w4Component extends Component {
   }
 
   @action
-  updateFederalTaxFilingStatus (val) {
-    this.model.set('federalTaxFilingStatus', val);
+  updateFederalTaxFilingStatus (v, val) {
+    this.args.model.set('federalTaxFilingStatus', val);
 
     if (this.isExempt) {
       this.args.model.setProperties({

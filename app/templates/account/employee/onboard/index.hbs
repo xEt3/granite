@@ -109,6 +109,7 @@
         @mask="(111) 111-1111"/>
     </div>
   </div>
+
   {{#if this.model.company.linkedToSlate}}
     <div class="ui divider"></div>
     {{#if this.model.externalLinkAutomaticSync}}
@@ -158,7 +159,7 @@
           <div class="field">
             <Input::UiInput
               @type="text"
-              @value={{this.pendingBankAccount.account}}
+              @value={{this.pendingBankAccount.number}}
               @placeholder="Account Number"
               @id="account-number" />
           </div>
@@ -187,14 +188,14 @@
           <button type="button" class="ui huge fluid positive button"  {{on "click" (prevent-default (fn this.addBankAccount))}}>Add Bank Account</button>
         </div>
         <div class="form-group">
-          <button type="button" class="ui huge fluid negative button" {{on "click" (prevent-default (fn this.deletePendingBankAccount))}}>Cancel</button>
+          <button type="button" class="ui fluid negative button" {{on "click" (prevent-default (fn this.deletePendingBankAccount))}}>Cancel</button>
         </div>
-        {{else}}
-          <div class="ui center aligned text">
-            <a href="#" {{on "click" (prevent-default (fn this.addPendingBankAccount))}}>Add Bank Account...</a>
-          </div>
+      {{else}}
+        <div class="ui center aligned text">
+          <a href="#" {{on "click" (prevent-default (fn this.addPendingBankAccount))}}>Add Bank Account...</a>
+        </div>
       {{/if}}
-      
+
       <h3 class="ui horizontal header divider section">
         <i class="plus square icon"></i>
         HSA Information
@@ -219,7 +220,7 @@
         <div class="field">
           <Input::UiInput
             @type="text"
-            @value={{this.model.hsa-routing}}
+            @value={{this.model.hsaRouting}}
             @placeholder="HSA Routing Number"
             @id="hsa-routing" />
         </div>
@@ -286,7 +287,7 @@
       </div>
       <div class="field">
         <label for="state-filing-status" class="">State Filing Status</label>
-        <UiDropdown id="state-filing-status" @class="selection" @selected={{this.model.stateTaxFilingStatus}}>
+        <UiDropdown id="state-filing-status" @class="selection" @selected={{this.model.stateTaxFilingStatus}} @onChange={{set this.model.stateTaxFilingStatus _}}>
           <div class="default text">
             Filing Status
           </div>
@@ -313,7 +314,7 @@
         <p class="center aligned text">
           <strong>Federal W-4 Auto Collection is available in the Onboarding "Documents" step. You don't have to fill out the following information if you have auto W-4 enabled.</strong>
         </p>
-        <Form::W-4 @model={{this.model}} @disable={{this.model.autoW4Collection}} />
+        <Form::W-4 @model={{this.model}} @disable={{or this.model.autoW4Collection}} />
       {{/if}}
     {{/if}}
   {{/if}}

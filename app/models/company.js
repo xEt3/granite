@@ -1,5 +1,3 @@
-import classic from 'ember-classic-decorator';
-import { computed } from '@ember/object';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
@@ -8,7 +6,6 @@ import moment from 'moment';
 import hexToRgb from 'granite/utils/hex-to-rgb';
 import Validations from './validations/company';
 
-@classic
 export default class Company extends Model.extend(Validations) {
   @attr('string') name;
 
@@ -64,7 +61,6 @@ export default class Company extends Model.extend(Validations) {
 
   @attr('number') probationaryPeriodAmount;
 
-  @computed('logoPalette')
   get rgbPalette () {
     const palette = this.logoPalette;
     return palette && palette.length ? palette.map(hexToRgb) : false;
@@ -88,7 +84,6 @@ export default class Company extends Model.extend(Validations) {
 
   @attr('string') accountBillingPromo;
 
-  @computed('linkedServices.[]')
   get linkedToSlate () {
     let services = this.linkedServices;
     return services ? services.includes('slate') : false;

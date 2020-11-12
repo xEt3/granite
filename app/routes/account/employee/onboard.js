@@ -32,4 +32,8 @@ export default class AccountEmployeeOnboardRoute extends GraniteWizardRoute {
     title: 'Custom Info',
     link:  'custom-fields'
   }])
+
+  afterSaveAndContinue (model) {
+    model.bankAccounts.filterBy('id', null).invoke('destroyRecord');
+  }
 }

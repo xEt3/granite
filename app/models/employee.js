@@ -234,7 +234,7 @@ export default class Employee extends Model.extend(Validations) {
   @attr('string') workersCompClass
   @attr('number', { defaultValue: 0 }) federalTaxAllowances
   @attr('number', { defaultValue: 0 }) federalTaxAdditionalWithholding
-  @attr('string') federalTaxFilingStatusType
+  @attr('string') federalTaxFilingStatus
   @attr('boolean') federalTaxStep2
   @attr('number') federalTaxStep3
   @attr('number') federalTaxStep4a
