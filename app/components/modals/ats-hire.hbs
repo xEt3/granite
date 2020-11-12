@@ -5,6 +5,14 @@
   {{#if (and @model.candidate (not @model.candidate.employee))}}
     <div class="content">
       <form class="ui form">
+        <div class="field">
+          <label for="exemption-status">Automatically link with Slate</label>
+          <UiCheckbox
+            @class="toggle"
+            @label="Link"
+            @checked={{@model.candidate.externalLinkAutomaticSync}}
+            @onChange={{set @model.candidate.externalLinkAutomaticSync _}} />
+        </div>
         <div class={{if @model.candidate.autoOnboarding "three fields" "field"}}>
           <div class="field">
             <label for="onboarding-questions">
@@ -70,7 +78,6 @@
             </div>
           {{/if}}
         </div>
-
       </form>
     </div>
   {{/if}}

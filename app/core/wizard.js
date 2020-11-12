@@ -72,6 +72,10 @@ class GraniteWizardRoute extends GraniteRoute {
 
     try {
       await model.save();
+
+      if (this.afterSaveAndContinue) {
+        await this.afterSaveAndContinue(model);
+      }
       success('Successfully saved progress.');
 
       if (!controller.nextStep) {

@@ -67,7 +67,20 @@
         <ValidatedInput @model={{this.model}} @valuePath="employeeNumber" @placeholder="Employee Number" @id="employee-number" />
       </div>
     </div>
-
+    <div class="field">
+      <label for="exemption-status">Automatically link with Slate</label>
+      <UiCheckbox
+        @class="toggle"
+        @label="Link"
+        @checked={{this.model.externalLinkAutomaticSync}}
+        @onChange={{set this.model.externalLinkAutomaticSync _}} />
+        <i class="ui question circle icon">
+          <EmberTooltip
+            side="right"
+            popperContainer="#onboarding-questions"
+            text="Automatically link with slate." />
+        </i>
+    </div>
     <div class="ui divider"></div>
     <Form::ActionButton type="submit" class="ui massive fluid green button" @disabled={{this.disabled}} @loading={{this.data.statuses.working.isLoading}}>Begin Onboarding</Form::ActionButton>
   </form>

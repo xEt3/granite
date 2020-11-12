@@ -110,6 +110,215 @@
     </div>
   </div>
 
+  {{#if this.model.company.linkedToSlate}}
+    <div class="ui divider"></div>
+    {{#if this.model.externalLinkAutomaticSync}}
+      <h3 class="ui horizontal header divider section">
+        <i class="dollar sign icon"></i>
+        Bank Information
+      </h3> 
+        {{#each this.model.bankAccounts as |bankAccount|}}
+          <p class="item">
+            <span class="ui green label">{{bankAccount.type}}</span> {{bankAccount.number}} ({{bankAccount.routing}})
+            <small class="text-muted">{{bankAccount.achAmount}} ({{bankAccount.achType}})</small>
+            <span class="pull-right">
+              <a href="#" class="text-danger" {{on "click" (prevent-default  (fn this.removeBankAccount bankAccount))}}>
+                <EmberTooltip @side="left" @popperContainer="body" @text="Remove bank account" />
+                <i class="trash icon"></i>
+              </a>
+            </span>
+          </p>
+        {{else}}
+          <h5 class="ui center aligned text"><i class="fa fa-fw fa-exclamation-triangle"></i>No Bank Accounts.</h5>
+        {{/each}}
+      {{#if this.pendingBankAccount}}
+        <div class="field">
+          <label for="bank-type">Account Type</label>
+          <UiDropdown id="bank-type" @class="selection" @selected={{this.pendingBankAccount.type}} @onChange={{set this.pendingBankAccount.type _}} as |execute mapper|>
+            <div class="default text">
+              Select a type
+            </div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              {{#each this.bankAccountTypes as |bankAccountType|}}
+                <div class="item" data-value={{map-value mapper bankAccountType}}>
+                  {{bankAccountType}}
+                </div>
+              {{/each}}
+            </div>
+          </UiDropdown>
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <Input::UiInput
+              @type="text"
+              @value={{this.pendingBankAccount.routing}}
+              @placeholder="Routing Number"
+              @id="routing-number" />
+          </div>
+          <div class="field">
+            <Input::UiInput
+              @type="text"
+              @value={{this.pendingBankAccount.number}}
+              @placeholder="Account Number"
+              @id="account-number" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="achAmount">ACH Amount</label>
+          <div class="ui left icon input pay-rate-number">
+            <Input @type="number" @step="0.01" @value={{this.pendingBankAccount.achAmount}} @id="achAmount" />
+            <i class="{{if (eq this.pendingBankAccount.achType "$") "dollar" "percent"}} icon"></i>
+            <UiDropdown @class="inline pay-rate-unit" @selected={{this.pendingBankAccount.achType}} @onChange={{set this.pendingBankAccount.achType _}}>
+              <div class="default text">Unit</div>
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                <div class="item" data-value="$">
+                  Dollar
+                </div>
+                <div class="item" data-value="%">
+                  Percentage
+                </div>
+              </div>
+            </UiDropdown>
+          </div>
+        </div> 
+        <hr>
+        <div class="form-group">
+          <button type="button" class="ui huge fluid positive button"  {{on "click" (prevent-default (fn this.addBankAccount))}}>Add Bank Account</button>
+        </div>
+        <div class="form-group">
+          <button type="button" class="ui fluid negative button" {{on "click" (prevent-default (fn this.deletePendingBankAccount))}}>Cancel</button>
+        </div>
+      {{else}}
+        <div class="ui center aligned text">
+          <a href="#" {{on "click" (prevent-default (fn this.addPendingBankAccount))}}>Add Bank Account...</a>
+        </div>
+      {{/if}}
+
+      <h3 class="ui horizontal header divider section">
+        <i class="plus square icon"></i>
+        HSA Information
+      </h3>
+      <div class="field">
+        <label for="hsa-type" class="">HSA Type</label>
+        <UiDropdown id="federal-tax-status" @class="selection" @selected={{this.model.hsaType}} @onChange={{set this.model.hsaType _}}>
+          <div class="default text">
+            Select Type
+          </div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            {{#each this.bankAccountTypes as |bankAccountType|}}
+              <div class="item">
+                {{bankAccountType}}
+              </div>
+            {{/each}}
+          </div>
+        </UiDropdown>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <Input::UiInput
+            @type="text"
+            @value={{this.model.hsaRouting}}
+            @placeholder="HSA Routing Number"
+            @id="hsa-routing" />
+        </div>
+        <div class="field">
+          <Input::UiInput
+            @type="text"
+            @value={{this.model.hsaAccount}}
+            @placeholder="HSA Account"
+            @id="hsa-account" />
+        </div>
+      </div>
+
+      <h3 class="ui horizontal header divider section">
+        <i class="balance scale icon"></i>
+        Tax Information
+      </h3>
+      <div class="field">
+        <label for="tax-state" class="">State</label>
+        <UiDropdown id="tax-state" @class="selection" @selected={{this.model.stateTaxName}} @onChange={{set this.model.stateTaxName _}} as |execute mapper|>
+          <div class="default text">
+            Tax state
+          </div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            {{#each this.states as |state|}}
+              <div class="item" data-value={{map-value mapper state.value}}>
+                {{state.label}}
+              </div>
+            {{/each}}
+          </div>
+        </UiDropdown>
+      </div>
+      <div class="field">
+        <label for="unemployment-state" class="">Unemployment State</label>
+          <UiDropdown id="unemployment-state" @class="selection" @selected={{this.model.stateTaxUnemploymentInsurance}} @onChange={{set this.model.stateTaxUnemploymentInsurance _}} as |execute mapper|>
+            <div class="default text">
+              Unemployment State
+            </div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              {{#each this.states as |state|}}
+                <div class="item" data-value={{map-value mapper state.value}}>
+                  {{state.label}}
+                </div>
+              {{/each}}
+            </div>
+          </UiDropdown>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <Input::UiInput
+            @type="number"
+            @value={{this.model.stateTaxAllowances}}
+            @placeholder="State Allowances"
+            @id="state-allowances" />
+        </div>
+        <div class="field">
+          <Input::UiInput
+            @type="number"
+            @value={{this.model.stateTaxAdditionalWithholding}}
+            @placeholder="State withholding"
+            @id="state-withholding" />
+        </div>
+      </div>
+      <div class="field">
+        <label for="state-filing-status" class="">State Filing Status</label>
+        <UiDropdown id="state-filing-status" @class="selection" @selected={{this.model.stateTaxFilingStatus}} @onChange={{set this.model.stateTaxFilingStatus _}}>
+          <div class="default text">
+            Filing Status
+          </div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            {{#each this.filingStatuses as |filingStatus|}}
+              <div class="item">
+                {{filingStatus}}
+              </div>
+            {{/each}}
+          </div>
+        </UiDropdown>
+      </div>
+
+      <h3 class="ui horizontal header divider section">
+        <i class="university icon"></i>
+        Federal Tax (from W-4)
+      </h3>
+      {{#if this.model.autoW4Collection}}
+        <p class="center aligned light text">
+          <i class="check icon"></i>Federal W-4 Auto Collection is enabled. You cannot input this data manually unless you disable this in the documents page.
+        </p>
+      {{else}}
+        <p class="center aligned text">
+          <strong>Federal W-4 Auto Collection is available in the Onboarding "Documents" step. You don't have to fill out the following information if you have auto W-4 enabled.</strong>
+        </p>
+        <Form::W-4 @model={{this.model}} @disable={{or this.model.autoW4Collection}} />
+      {{/if}}
+    {{/if}}
+  {{/if}}
+
   <div class="ui divider"></div>
   <Form::ActionButton type="submit" class="ui huge fluid green button" @loading={{this.data.statuses.wizard.isLoading}}>Next</Form::ActionButton>
 </form>

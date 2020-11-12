@@ -1,13 +1,14 @@
-import classic from 'ember-classic-decorator';
+import DS from 'ember-data';
 import ApplicationSerializer from './application';
 import normalizeKeys from '../utils/serialize-object';
 import serializeKeys from '../utils/expand-serialized-object';
 
-@classic
-export default class Employee extends ApplicationSerializer {
+export default class Employee extends ApplicationSerializer.extend(DS.EmbeddedRecordsMixin) {
+  attrs = { bankAccounts: { embedded: 'always' } }
+
   normalize (modelClass, hash) {
     normalizeKeys(hash, 'suffix', 'name');
-    normalizeKeys(hash, true, 'address', 'emergencyContact', 'finalAddress', 'externalLink');
+    normalizeKeys(hash, true, 'address', 'emergencyContact', 'finalAddress', 'federalTax', 'stateTax', 'hsa', 'externalLink');
     return super.normalize(...arguments);
   }
 
@@ -40,7 +41,7 @@ export default class Employee extends ApplicationSerializer {
 
     deleteKeys.map(k => delete json[k]);
 
-    serializeKeys(json, 'address', 'finalAddress', 'externalLink');
+    serializeKeys(json, 'address', 'finalAddress', 'federalTax', 'stateTax', 'hsa', 'externalLink');
 
     json.finalAddressSelfService = json.finalAddress.selfService;
     delete json.finalAddress.selfService;
