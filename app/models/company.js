@@ -83,6 +83,7 @@ export default class Company extends Model.extend(Validations) {
   @attr('boolean') exposeBetaModules;
 
   @attr('string') accountBillingPromo;
+  @attr() captcha
 
   get linkedToSlate () {
     let services = this.linkedServices;

@@ -83,7 +83,22 @@
       <ValidatedInput @type="text" @model={{this.model}} @fieldErrors={{this.fieldErrors}} @valuePath="urlPrefix" @placeholder="Employee Access URL (generally your company's abbreviation)" id="url-prefix" />
     </div>
     <Display::PreviewBrowser>{{if this.model.urlPrefix this.model.urlPrefix "portal"}}</Display::PreviewBrowser>
+    {{#if this.useCaptcha}}
+      <div class="ui basic segment">
+        <GRecaptcha
+          @onSuccess={{set this.model.captcha _}}
+          @onExpired={{set this.model.captcha false}}
+        />
+      </div>
+    {{/if}}
     <div class="ui divider"></div>
-    <Form::ActionButton type="submit" class="ui massive fluid green button" @loading={{this.data.statuses.working.isLoading}}>Next: Billing</Form::ActionButton>
+    <Form::ActionButton
+      type="submit"
+      class="ui massive fluid green button"
+      @disabled={{or (not this.model.validations.isValid) (and this.useCaptcha (not this.model.captcha))}}
+      @loading={{this.data.statuses.working.isLoading}}
+    >
+      Next: Billing
+    </Form::ActionButton>
   </form>
 </div>

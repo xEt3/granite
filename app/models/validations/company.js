@@ -45,6 +45,7 @@ export default buildValidations({
 
   urlPrefix: [
     validator('presence', true),
-    validator('length', { max: 45 })
+    validator('length', { max: 25 }),
+    validator('urlprefix')
   ]
 });
