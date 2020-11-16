@@ -2,16 +2,22 @@ import Controller from 'granite/core/controller';
 import { action } from '@ember/object';
 import { states as stateOptions } from 'granite/config';
 import { inject as service } from '@ember/service';
+import ENV from 'granite/config/environment';
 
 export default class SignupIndexController extends Controller {
   @service data
 
-  stateOptions = stateOptions;
+  useCaptcha = ENV === 'production'
+  stateOptions = stateOptions
   selectedState = null
   useMiddleName = false
 
   @action
   async saveCompany () {
+    if (!this.model.validations.isValid) {
+      return;
+    }
+
     let { success, error } = this.data.createStatus();
 
     try {

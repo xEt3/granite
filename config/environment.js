@@ -21,6 +21,8 @@ module.exports = function (environment) {
       accessToken: '6f016ff3c5ef495b9c894871857aefd4'
     },
 
+    gReCaptcha: { siteKey: '6LdXxd8ZAAAAANlOAvqrSaGC6BYabZixmwxhNIOD' },
+
     SemanticUI: {
       import: {
         css:        false,
