@@ -7,7 +7,7 @@ import ENV from 'granite/config/environment';
 export default class SignupIndexController extends Controller {
   @service data
 
-  useCaptcha = ENV === 'production'
+  useCaptcha = ENV.environment === 'production'
   stateOptions = stateOptions
   selectedState = null
   useMiddleName = false
