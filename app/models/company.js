@@ -92,7 +92,7 @@ export default class Company extends Model.extend(Validations) {
 
   @attr('boolean') benefitsEnabled;
 
-  @attr('array') notificationListBenefits
+  @attr('array') benefitNotification
 
   @computed('linkedServices.[]')
   get linkedToSlate () {

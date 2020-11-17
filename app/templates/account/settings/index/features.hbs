@@ -51,12 +51,12 @@
       <div class="fields" id="benefit-notifications">
         <div class="eight wide field">
           <label for="benefit-notifications-internal">Internal Users</label>
-          <UiDropdown @id="benefit-notifications-internal" @class="fluid multiple selection" @selected={{this.selectedUsers}} @onChange={{fn this.updateRecipients}} as |execute mapper|>
+          <UiDropdown @id="benefit-notifications-internal" @class="fluid multiple selection" @selected={{this.selectedUsers}} @onChange={{fn this.updateRecipients false}} as |execute mapper|>
             <i class="dropdown icon"></i>
             <div class="default text">Select User</div>
             <div class="menu">
               {{#each this.users as |user|}}
-                <div class="item" data-value={{map-value mapper user}}>
+                <div class="item" data-value={{map-value mapper user.id}}>
                   {{user.fullName}}
                 </div>
               {{/each}}
@@ -64,11 +64,18 @@
           </UiDropdown>
         </div>
         <div class="eight wide field">
-          DROPDOWN HERE TO ADD EXTERNAL
+          <label for="benefit-notifications-external">External Emails</label>
+          <UiDropdown @id="benefit-notifications-external" @class="search multiple selection" @allowAdditions={{true}} @onChange={{fn this.updateRecipients true}}>
+            <i class="dropdown icon"></i>
+            <div class="default text">Type and hit enter to add email addresses</div>
+            {{!-- <div class="menu">
+              
+            </div> --}}
+          </UiDropdown>
         </div>
       </div>
 
-      {{#if this.model.notificationListBenefits.length}}
+      {{#if this.model.benefitNotification.length}}
         <table class="ui celled table">
           <thead>
             <tr>
@@ -76,25 +83,22 @@
               {{#each this.notificationTypes as |type|}}
                 <th>
                   {{type.label}}
-                  ADD EMBERTOOLTIP HERE
+                  {{#if type.description}}
+                    <i id="notification-description__{{type.label}}" class="info circle icon"></i>
+                    <EmberTooltip 
+                      @popperContainer="body" 
+                      @side="left"
+                      @targetId="notification-description__{{type.label}}"
+                      @text={{type.description}} />                   
+                  {{/if}}
                 </th>
               {{/each}}
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {{#each this.model.notificationListBenefits as |recipient|}}
-              <tr>
-                <td>{{if recipient.user.fullName recipient.user.fullName recipient.user.email}}</td>
-                {{#each this.notificationTypes as |type|}}
-                  <Benefits::NotificationRow @type={{type.label}} @recipient={{recipient}} @dirtyNotificationList={{this.dirtyNotificationList}} />
-                {{/each}}
-                <td>
-                  <a href="#" class="text-danger" {{on "click" (prevent-default (fn this.deleteRecipient recipient))}}>
-                    <i class="trash icon"></i>
-                  </a>
-                </td>
-              </tr>
+            {{#each this.model.benefitNotification as |recipient|}}
+              <Benefits::NotificationRow @recipient={{recipient}} @notificationTypes={{this.notificationTypes}} @dirtyNotificationList={{this.dirtyNotificationList}} @deleteRecipient={{this.deleteRecipient}} />
             {{/each}}
           </tbody>
         </table>

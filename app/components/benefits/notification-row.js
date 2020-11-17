@@ -1,23 +1,15 @@
 import Component from '@glimmer/component';
-import { action, computed, set } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
-export default class BenefitsNotificationRowComponent extends Component {
-  @computed('args.recipient.notifications.[]')
-  get checked () {
-    let { recipient: { notifications }, type } = this.args;
-    return notifications.includes(type);
-  }
+export default class BenefitNotificationRowComponent extends Component {
+  @service store
+  @tracked user
 
   @action
-  async modifyNotifications () {
-    let { recipient, type, dirtyNotificationList } = this.args;
-
-    if (recipient.notifications.includes(type)) {
-      set(recipient, 'notifications', recipient.notifications.filter(item => item !== type));
-    } else {
-      set(recipient, 'notifications', [ ...recipient.notifications, type ]);
-    }
-
-    dirtyNotificationList();
+  async findUser () {
+    let { user, email } = this.args.recipient;
+    this.user = user ? await this.store.findRecord('companyUser', user) : email;
   }
 }

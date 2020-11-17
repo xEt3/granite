@@ -9,26 +9,40 @@ export default class AccountSettingsFeaturesController extends Controller {
 
   notificationTypes = [{
     label:       'Weekly',
-    description: 'weekly desc'
+    description: 'Weekly summary notifications'
   }, {
     label:       'Per Enrollment',
-    description: 'per enroll desc'
+    description: 'Notification for new enrollments or changes'
   }]
 
   get selectedUsers () {
-    return this.model.notificationListBenefits.map(notif => {
+    return this.model.benefitNotification.map(notif => {
       return notif.user;
     });
   }
 
   @action
-  updateRecipients (users) {
-    this.model.notificationListBenefits = users.map(user => {
-      return {
-        user,
+  updateRecipients (external, users) {
+    if (external) {
+      this.model.benefitNotification.addObject({
+        email:         users[0],
         notifications: []
-      };
-    });
+      });
+    } else {
+      const notificationsBefore = this.model.benefitNotification,
+            externalEmails = this.model.benefitNotification.filter(notif => notif.email);
+
+      this.model.benefitNotification = users.map(user => {
+        let currentUser = notificationsBefore.findBy('user', user);
+
+        return {
+          user,
+          notifications: currentUser ? currentUser.notifications : []
+        };
+      });
+      this.model.benefitNotification.addObjects(externalEmails);
+    }
+
 
     this.dirtyNotificationList();
   }
@@ -41,7 +55,7 @@ export default class AccountSettingsFeaturesController extends Controller {
 
   @action
   deleteRecipient (recipient) {
-    this.model.notificationListBenefits.removeObject(recipient);
+    this.model.benefitNotification.removeObject(recipient);
     this.dirtyNotificationList();
   }
 }
