@@ -65,12 +65,9 @@
         </div>
         <div class="eight wide field">
           <label for="benefit-notifications-external">External Emails</label>
-          <UiDropdown @id="benefit-notifications-external" @class="search multiple selection" @allowAdditions={{true}} @onChange={{fn this.updateRecipients true}}>
+          <UiDropdown @id="benefit-notifications-external" @class="fluid search multiple selection" @allowAdditions={{true}} @onChange={{fn this.updateRecipients true}}>
             <i class="dropdown icon"></i>
             <div class="default text">Type and hit enter to add email addresses</div>
-            {{!-- <div class="menu">
-              
-            </div> --}}
           </UiDropdown>
         </div>
       </div>

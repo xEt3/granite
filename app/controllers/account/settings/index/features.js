@@ -43,7 +43,6 @@ export default class AccountSettingsFeaturesController extends Controller {
       this.model.benefitNotification.addObjects(externalEmails);
     }
 
-
     this.dirtyNotificationList();
   }
 
