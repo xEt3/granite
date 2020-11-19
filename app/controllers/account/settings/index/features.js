@@ -16,9 +16,7 @@ export default class AccountSettingsFeaturesController extends Controller {
   }]
 
   get selectedUsers () {
-    return this.model.benefitNotification.map(notif => {
-      return notif.user;
-    });
+    return this.model.benefitNotification.map(notif => notif.user);
   }
 
   @action
