@@ -28,7 +28,7 @@ export default class AccountEmployeesIndexController extends Controller {
   hireDateStart = null
   hireDateEnd   = null
   sortBy        = 'name.last'
-  sortAsc       = false
+  sortAsc       = true
 
   sortOptions = [{
     label: 'First Name',
