@@ -9,6 +9,14 @@
 
     <div class="ui divider"></div>
 
+    <UiCalendar
+      @class="field"
+      @type="date"
+      @label={{this.calendarLabel}}
+      @placeholder="Assign a date by selecting or typing"
+      @dateValue={{this.model.dueOn}}
+      @onChange={{set this.model.dueOn _}} />
+
     <div class="field">
       <label for="action-item-priority"><i class="exclamation icon"></i> Priority</label>
       <div class="range-label"><i>Low</i><i>High</i></div>
@@ -40,8 +48,7 @@
     <div class="ui divider"></div>
     <form {{on "submit" (prevent-default (fn this.data.saveRecord this.model 'working' this.afterSaveOptions))}}>
       <Form::ActionButton
-        @type="submit"
-        @class="ui huge fluid green button"
+        class="ui huge fluid green button"
         @loading={{this.data.statuses.working.isLoading}}
       >
         Save project

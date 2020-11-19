@@ -27,6 +27,10 @@
           <i class="wrench icon"></i><i class="dropdown icon"></i>
           <div class="menu">
             <div class="header">Actions</div>
+            <LinkTo @route="account.action-item.edit" class="item">
+              <i class="edit icon"></i> Edit
+            </LinkTo>
+
             <a href="#" id="action-item__action--mark-complete" class="item" {{on "click" (prevent-default (pipe
                 this.confirmCompletion
                 this.toggleComplete

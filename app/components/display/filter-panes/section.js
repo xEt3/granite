@@ -43,7 +43,7 @@ export default class DisplayFilterPanesSectionComponent extends Component {
       }
 
       if (this.childViews.length > 1) {
-        return this.childViews.map(view => this.resetFilter(view.name));
+        return this.childViews.map(view => this.args.resetFilter(view.args.name));
       }
 
       this.args.resetFilter(resets || this.childViews[0].name || (this.args.name || '').toLowerCase());

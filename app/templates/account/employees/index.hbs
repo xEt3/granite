@@ -94,6 +94,10 @@
   <hgroup class="clearfix">
     <h1 class="ui header left floated">
       Employees
+      ({{this.model.meta.totalRecords}})
+      <EmberTooltip @popperContainer="body">
+        {{this.model.meta.totalRecords}} employees with current filters
+      </EmberTooltip>
     </h1>
 
     <div class="right aligned text floated menu__actions">
@@ -140,7 +144,6 @@
       </UiDropdown>
     </div>
   </hgroup>
-
   <div class="ui divider"></div>
 
   <Display::ResourceList

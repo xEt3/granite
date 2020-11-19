@@ -20,7 +20,11 @@ export default class ProjectActivity extends BaseLiComponent {
 
     switch (model.type) {
     case 'dueOn':
-      ret = `${mVal.isBefore(moment()) ? 'was' : 'is'} due ${mVal.fromNow()}`;
+      if (!mVal.isValid()) {
+        ret = 'in progress';
+      } else {
+        ret = `${mVal.isBefore(moment()) ? 'was' : 'is'} due ${mVal.fromNow()}`;
+      }
       break;
     case 'cancelledOn':
       ret = `was cancelled ${mVal.fromNow()}`;
