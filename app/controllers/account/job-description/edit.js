@@ -1,8 +1,9 @@
 import Controller from 'granite/core/controller';
 import { inject as service } from '@ember/service';
+import { jobCategories } from 'granite/config/statics';
 
 export default class JobDescriptionEditController extends Controller {
-  jobCategories
+  jobCategories = jobCategories
   @service data
 
   get form () {
