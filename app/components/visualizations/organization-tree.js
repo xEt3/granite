@@ -42,7 +42,8 @@ export default Component.extend({
     return ajax.request('/api/v1/employees', {
       data: {
         select,
-        supervisor: get(node, '_id')
+        supervisor: get(node, '_id'),
+        $or:        [{ terminatedOn: { $not: { $type: 9 } } }, { terminatedOn: { $gte: new Date() } }]
       }
     })
     .then(res => {

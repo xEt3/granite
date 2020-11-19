@@ -37,7 +37,8 @@ export default class VisualizationsReorganizationTreeComponent extends Component
     let res = await ajax.request('/api/v1/employees', {
       data: {
         select,
-        supervisor: get(node, '_id')
+        supervisor: get(node, '_id'),
+        $or:        [{ terminatedOn: { $not: { $type: 9 } } }, { terminatedOn: { $gte: new Date() } }]
       }
     });
 
