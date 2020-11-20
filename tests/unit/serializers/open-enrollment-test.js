@@ -26,7 +26,7 @@ module('Unit | Serializer | open enrollment', function (hooks) {
     assert.ok(serializedRecord);
 
     [ 'start', 'end' ].forEach(time => {
-      assert.equal(serializedRecord[time].month, moment(record[time]).format('M'), `${time} month has the correct number`);
+      assert.equal(serializedRecord[time].month + 1, moment(record[time]).format('M'), `${time} month has the correct number`);
       assert.equal(serializedRecord[time].day, moment(record[time]).format('D'), `${time} day has the correct number`);
     });
   });

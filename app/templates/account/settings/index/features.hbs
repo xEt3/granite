@@ -41,4 +41,73 @@
       <UiCheckbox @class="toggle" @label="On" @checked={{this.model.collectAA}} @onChange={{pipe (set this.model.collectAA _) (fn this.data.saveRecord this.model)}} />
     </div>
   {{/if}}
+
+  {{#if this.model.benefitsEnabled}}
+    <div class="field">
+      <label for="benefit-notification">
+        Benefit Notifications<br />
+        <small class="light text">If no granite users are selected, all users will receive notifications</small>
+      </label>
+      <div class="fields" id="benefit-notifications">
+        <div class="eight wide field">
+          <label for="benefit-notifications-internal">Internal Users</label>
+          <UiDropdown @id="benefit-notifications-internal" @class="fluid multiple selection" @selected={{this.selectedUsers}} @onChange={{fn this.updateRecipients false}} as |execute mapper|>
+            <i class="dropdown icon"></i>
+            <div class="default text">Select User</div>
+            <div class="menu">
+              {{#each this.users as |user|}}
+                <div class="item" data-value={{map-value mapper user.id}}>
+                  {{user.fullName}}
+                </div>
+              {{/each}}
+            </div>
+          </UiDropdown>
+        </div>
+        <div class="eight wide field">
+          <label for="benefit-notifications-external">External Emails</label>
+          <UiDropdown @id="benefit-notifications-external" @class="fluid search multiple selection" @allowAdditions={{true}} @onChange={{fn this.updateRecipients true}}>
+            <i class="dropdown icon"></i>
+            <div class="default text">Type and hit enter to add email addresses</div>
+          </UiDropdown>
+        </div>
+      </div>
+
+      {{#if this.model.benefitNotification.length}}
+        <table class="ui celled table">
+          <thead>
+            <tr>
+              <th>Recipient</th>
+              {{#each this.notificationTypes as |type|}}
+                <th>
+                  {{type.label}}
+                  {{#if type.description}}
+                    <i id="notification-description__{{type.label}}" class="info circle icon"></i>
+                    <EmberTooltip 
+                      @popperContainer="body" 
+                      @side="left"
+                      @targetId="notification-description__{{type.label}}"
+                      @text={{type.description}} />                   
+                  {{/if}}
+                </th>
+              {{/each}}
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each this.model.benefitNotification as |recipient|}}
+              <Benefits::NotificationRow @recipient={{recipient}} @notificationTypes={{this.notificationTypes}} @dirtyNotificationList={{this.dirtyNotificationList}} @deleteRecipient={{this.deleteRecipient}} />
+            {{/each}}
+          </tbody>
+        </table>
+      {{/if}}
+
+      {{#if this.notificationListDirtied}}
+        <form {{on "submit" (prevent-default (pipe (fn this.data.saveRecord this.model) (set this.notificationListDirtied false)))}}>
+          <Form::ActionButton type="submit" class="ui large fluid green button" @loading={{this.data.statuses.working.isLoading}}>
+            Save changes to notifications
+          </Form::ActionButton>
+        </form>
+      {{/if}}
+    </div>
+  {{/if}}
 </div>

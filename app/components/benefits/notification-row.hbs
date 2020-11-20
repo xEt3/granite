@@ -1,0 +1,11 @@
+<tr {{did-insert this.findUser @recipient}}>
+  <td>{{if this.user.fullName this.user.fullName this.user}}</td>
+  {{#each @notificationTypes as |type|}}
+    <Benefits::NotificationCell @type={{type.label}} @notifications={{@recipient.notifications}} @dirtyNotificationList={{@dirtyNotificationList}} />
+  {{/each}}
+  <td>
+    <a href="#" class="text-danger" {{on "click" (prevent-default (fn @deleteRecipient @recipient))}}>
+      <i class="trash icon"></i>
+    </a>
+  </td>
+</tr>
